@@ -1,0 +1,361 @@
+/**
+ * Copyright 2021 Markus Bordihn
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+package de.markusbordihn.easymobfarm.block.entity;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import javax.annotation.Nullable;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+
+import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.common.util.FakePlayerFactory;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.event.server.ServerAboutToStartEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.items.wrapper.SidedInvWrapper;
+
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.block.ModBlocks;
+import de.markusbordihn.easymobfarm.config.CommonConfig;
+import de.markusbordihn.easymobfarm.item.CapturedMobItem;
+import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
+
+@Mod.EventBusSubscriber
+public class MobFarmBlockEntity extends MobFarmBlockEntityData implements WorldlyContainer {
+
+  private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+
+  private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
+  private static boolean informOwnerAboutFullStorage = COMMON.informOwnerAboutFullStorage.get();
+  private static boolean logFullStorage = COMMON.logFullStorage.get();
+
+  public MobFarmBlockEntity(BlockPos blockPos, BlockState blockState) {
+    super(ModBlocks.MOB_FARM_ENTITY.get(), blockPos, blockState);
+  }
+
+  public MobFarmBlockEntity(BlockEntityType<?> blockEntity, BlockPos blockPos,
+      BlockState blockState) {
+    super(blockEntity, blockPos, blockState);
+  }
+
+  @SubscribeEvent
+  public static void onServerAboutToStartEvent(ServerAboutToStartEvent event) {
+    informOwnerAboutFullStorage = COMMON.informOwnerAboutFullStorage.get();
+    logFullStorage = COMMON.logFullStorage.get();
+  }
+
+  public void updateLevel(Level level) {
+    if (this.level == null && this.level != level && !level.isClientSide()) {
+      this.level = level;
+    }
+  }
+
+  public void removeMob() {
+    this.setItem(MobFarmMenu.CAPTURED_MOB_SLOT, ItemStack.EMPTY);
+    syncData();
+  }
+
+  public boolean hasMob() {
+    return !this.items.get(MobFarmMenu.CAPTURED_MOB_SLOT).isEmpty();
+  }
+
+  public void setMob(ItemStack itemStack) {
+    this.setItem(MobFarmMenu.CAPTURED_MOB_SLOT, itemStack);
+  }
+
+  public ItemStack getMob() {
+    return this.items.get(MobFarmMenu.CAPTURED_MOB_SLOT);
+  }
+
+  public int getFarmProcessingTime() {
+    return 0;
+  }
+
+  public List<ItemStack> getLootDrops(ResourceLocation lootTableLocation, Level level) {
+    if (lootTableLocation == null || level == null || level.getServer() == null) {
+      log.error("Unable to get loot drops for {} and {}", lootTableLocation, level);
+      return new ArrayList<>();
+    }
+    ServerLevel serverLevel = (ServerLevel) level;
+    FakePlayer fakePlayer = FakePlayerFactory.getMinecraft(serverLevel);
+    LootContext.Builder builder = new LootContext.Builder(serverLevel)
+        .withParameter(LootContextParams.ORIGIN, fakePlayer.position());
+    builder.withLuck(fakePlayer.getLuck()).withParameter(LootContextParams.THIS_ENTITY, fakePlayer)
+        .withParameter(LootContextParams.DAMAGE_SOURCE, DamageSource.GENERIC);
+    LootTable lootTable = level.getServer().getLootTables().get(lootTableLocation);
+    return lootTable.getRandomItems(builder.create(LootContextParamSets.ENTITY));
+  }
+
+  public boolean allowLootDropItem(ItemStack itemStack) {
+    return true;
+  }
+
+  public void givePlayerItem(int index, Player player, InteractionHand hand, BlockPos blockPos) {
+    ItemStack itemStack = takeItem(index);
+    if (itemStack.isEmpty() || itemStack.getDamageValue() >= itemStack.getMaxDamage()) {
+      return;
+    }
+    ItemStack handItemStack = player.getItemInHand(hand);
+    if (handItemStack.isEmpty()) {
+      player.setItemInHand(hand, itemStack);
+    } else if (!player.getInventory().add(itemStack)) {
+      level.addFreshEntity(new ItemEntity(level, blockPos.getX() + 0.5D, blockPos.getY() + 0.5D,
+          blockPos.getZ() + 0.5D, itemStack));
+    }
+    syncData();
+  }
+
+  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState,
+      MobFarmBlockEntity blockEntity) {
+
+    // Check if there is something to progress...
+    ItemStack capturedMob = blockEntity.items.get(MobFarmMenu.CAPTURED_MOB_SLOT);
+    if (capturedMob.isEmpty() || !blockEntity.hasMob()) {
+      blockEntity.farmProgress = 0;
+      blockEntity.farmStatus = FARM_STATUS_WAITING;
+      return;
+    }
+
+    // Make sure we have space to store the result items.
+    ItemStack resultItem1 = blockEntity.items.get(MobFarmMenu.RESULT_1_SLOT);
+    ItemStack resultItem2 = blockEntity.items.get(MobFarmMenu.RESULT_2_SLOT);
+    ItemStack resultItem3 = blockEntity.items.get(MobFarmMenu.RESULT_3_SLOT);
+    ItemStack resultItem4 = blockEntity.items.get(MobFarmMenu.RESULT_4_SLOT);
+    ItemStack resultItem5 = blockEntity.items.get(MobFarmMenu.RESULT_5_SLOT);
+    if (resultItem1.getCount() >= resultItem1.getMaxStackSize()
+        && resultItem2.getCount() >= resultItem2.getMaxStackSize()
+        && resultItem3.getCount() >= resultItem3.getMaxStackSize()
+        && resultItem4.getCount() >= resultItem4.getMaxStackSize()
+        && resultItem5.getCount() >= resultItem5.getMaxStackSize()) {
+      blockEntity.farmStatus = FARM_STATUS_FULL;
+      return;
+    }
+
+    // Processing mob farm
+    if (blockEntity.farmProgress == blockEntity.farmTotalTime) {
+      blockEntity.processResult(capturedMob, blockEntity);
+      blockEntity.processAdditionalEffects(level, blockPos, blockEntity, capturedMob);
+      blockEntity.farmProgress = 0;
+      blockEntity.farmStatus = FARM_STATUS_DONE;
+    } else {
+      blockEntity.farmProgress++;
+      blockEntity.farmStatus = FARM_STATUS_WORKING;
+    }
+  }
+
+  private void processResult(ItemStack capturedMob, MobFarmBlockEntity blockEntity) {
+    ResourceLocation lootTable = null;
+    if (capturedMob.getItem() instanceof CapturedMobItem capturedMobItem) {
+      String lootTableLocation = capturedMobItem.getLootTable(capturedMob);
+      if (!lootTableLocation.isEmpty()) {
+        lootTable = new ResourceLocation(lootTableLocation);
+      }
+    }
+    List<ItemStack> lootDrops = getLootDrops(lootTable, blockEntity.getLevel());
+    List<ItemStack> unstoredLootDrops = new ArrayList<>();
+
+    log.debug("Processing result with {}", lootDrops);
+    for (ItemStack lootDrop : lootDrops) {
+      // Ignore empty stack with air and blacklisted items if needed.
+      if (lootDrop.isEmpty() || !allowLootDropItem(lootDrop)) {
+        continue;
+      }
+
+      // Stack existing items and place new items in empty slots, if any.
+      ItemStack resultItem1 = blockEntity.items.get(MobFarmMenu.RESULT_1_SLOT);
+      if (!resultItem1.isEmpty() && resultItem1.is(lootDrop.getItem())
+          && resultItem1.getCount() + lootDrop.getCount() <= resultItem1.getMaxStackSize()) {
+        resultItem1.grow(lootDrop.getCount());
+        continue;
+      }
+
+      ItemStack resultItem2 = blockEntity.items.get(MobFarmMenu.RESULT_2_SLOT);
+      if (!resultItem2.isEmpty() && resultItem2.is(lootDrop.getItem())
+          && resultItem2.getCount() + lootDrop.getCount() <= resultItem2.getMaxStackSize()) {
+        resultItem2.grow(lootDrop.getCount());
+        continue;
+      }
+
+      ItemStack resultItem3 = blockEntity.items.get(MobFarmMenu.RESULT_3_SLOT);
+      if (!resultItem3.isEmpty() && resultItem3.is(lootDrop.getItem())
+          && resultItem3.getCount() + lootDrop.getCount() <= resultItem3.getMaxStackSize()) {
+        resultItem3.grow(lootDrop.getCount());
+        continue;
+      }
+
+      ItemStack resultItem4 = blockEntity.items.get(MobFarmMenu.RESULT_4_SLOT);
+      if (!resultItem4.isEmpty() && resultItem4.is(lootDrop.getItem())
+          && resultItem4.getCount() + lootDrop.getCount() <= resultItem4.getMaxStackSize()) {
+        resultItem4.grow(lootDrop.getCount());
+        continue;
+      }
+
+      ItemStack resultItem5 = blockEntity.items.get(MobFarmMenu.RESULT_5_SLOT);
+      if (!resultItem5.isEmpty() && resultItem5.is(lootDrop.getItem())
+          && resultItem5.getCount() + lootDrop.getCount() <= resultItem5.getMaxStackSize()) {
+        resultItem5.grow(lootDrop.getCount());
+        continue;
+      }
+
+      if (resultItem1.isEmpty()) {
+        blockEntity.setItem(MobFarmMenu.RESULT_1_SLOT, lootDrop);
+      } else if (resultItem2.isEmpty()) {
+        blockEntity.setItem(MobFarmMenu.RESULT_2_SLOT, lootDrop);
+      } else if (resultItem3.isEmpty()) {
+        blockEntity.setItem(MobFarmMenu.RESULT_3_SLOT, lootDrop);
+      } else if (resultItem4.isEmpty()) {
+        blockEntity.setItem(MobFarmMenu.RESULT_4_SLOT, lootDrop);
+      } else if (resultItem5.isEmpty()) {
+        blockEntity.setItem(MobFarmMenu.RESULT_5_SLOT, lootDrop);
+      } else {
+        unstoredLootDrops.add(lootDrop);
+      }
+    }
+    // Checked the combined unstored loot drops to avoid spamming!
+    if (!unstoredLootDrops.isEmpty()) {
+      processFullStorage(blockEntity, unstoredLootDrops);
+    }
+    syncData();
+  }
+
+  public void processAdditionalEffects(Level level, BlockPos blockPos, MobFarmBlockEntity blockEntity, ItemStack capturedMob) {
+
+  }
+
+  public void processFullStorage(MobFarmBlockEntity blockEntity, List<ItemStack> lootDrop) {
+    if (!informOwnerAboutFullStorage && !logFullStorage) {
+      return;
+    }
+    UUID ownerUUID = blockEntity.getOwner();
+    BlockPos blockPos = blockEntity.getBlockPos();
+
+    if (logFullStorage) {
+      log.warn("Unable to store loot drop {} for mob farm {} at {} for owner {}!", lootDrop,
+          this.farmMobName, blockPos, ownerUUID);
+    }
+    if (informOwnerAboutFullStorage && ownerUUID != null) {
+      Player owner = blockEntity.level.getPlayerByUUID(ownerUUID);
+      if (owner != null && owner.isAlive()) {
+        MutableComponent message =
+            new TranslatableComponent(Constants.MESSAGE_PREFIX + "warning_full", this.farmMobName,
+                blockPos, lootDrop).withStyle(ChatFormatting.YELLOW);
+        owner.sendMessage(message, null);
+      }
+    }
+  }
+
+  @Override
+  public void setItem(int index, ItemStack itemStack) {
+    super.setItem(index, itemStack);
+    if (index == MobFarmMenu.CAPTURED_MOB_SLOT
+        && itemStack.getItem() instanceof CapturedMobItem capturedMobItem) {
+
+      // Get processing time, the farm processing time always overwrite the mob processing time.
+      if (getFarmProcessingTime() > 0) {
+        this.farmTotalTime = getFarmProcessingTime();
+        log.debug("Farm Processing time {}", this.farmTotalTime);
+      } else {
+        this.farmTotalTime = capturedMobItem.getFarmProcessingTime(itemStack);
+        log.debug("Mob Processing time {}", this.farmTotalTime);
+      }
+
+      // Get possible loot table, could be overwritten.
+      String lootTable = capturedMobItem.getLootTable(itemStack);
+      if (!lootTable.isEmpty()) {
+        log.debug("Found Loot Table {}", lootTable);
+      }
+
+      // Get Mob Name
+      this.farmMobName = capturedMobItem.getCapturedMob(itemStack);
+      syncData();
+    }
+  }
+
+  @Override
+  public ItemStack removeItem(int index, int count) {
+    ItemStack itemStack = super.removeItem(index, count);
+    if (index == MobFarmMenu.CAPTURED_MOB_SLOT) {
+      syncData();
+    }
+    return itemStack;
+  }
+
+  @Override
+  public int[] getSlotsForFace(Direction direction) {
+    if (direction == Direction.DOWN) {
+      return new int[] {MobFarmMenu.RESULT_1_SLOT, MobFarmMenu.RESULT_2_SLOT,
+          MobFarmMenu.RESULT_3_SLOT, MobFarmMenu.RESULT_4_SLOT, MobFarmMenu.RESULT_5_SLOT};
+    }
+    return new int[] {};
+  }
+
+  @Override
+  public boolean canPlaceItemThroughFace(int slotIndex, ItemStack itemStack,
+      @Nullable Direction direction) {
+    return false;
+  }
+
+  @Override
+  public boolean canTakeItemThroughFace(int slotIndex, ItemStack itemStack, Direction direction) {
+    // Only allow the down direction and only for the result slot.
+    return (direction == Direction.DOWN && (slotIndex == MobFarmMenu.RESULT_1_SLOT
+        || slotIndex == MobFarmMenu.RESULT_2_SLOT || slotIndex == MobFarmMenu.RESULT_3_SLOT
+        || slotIndex == MobFarmMenu.RESULT_4_SLOT || slotIndex == MobFarmMenu.RESULT_5_SLOT));
+  }
+
+  LazyOptional<? extends net.minecraftforge.items.IItemHandler>[] handlers =
+      SidedInvWrapper.create(this, Direction.DOWN);
+
+  @Override
+  public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(
+      net.minecraftforge.common.capabilities.Capability<T> capability, @Nullable Direction facing) {
+    if (!this.remove && facing != null
+        && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+      return handlers[0].cast();
+    }
+    return super.getCapability(capability, facing);
+  }
+
+}

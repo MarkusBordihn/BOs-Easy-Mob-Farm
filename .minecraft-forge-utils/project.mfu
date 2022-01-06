@@ -1,0 +1,45 @@
+{
+  "author": "Markus Bordihn",
+  "bedrock": {
+    "behaviorPack": {
+      "description": "Behavior Pack for New cool items"
+    },
+    "resourcePack": {
+      "description": "Resource Pack for New cool items"
+    },
+    "skinPack": {
+      "description": "Skin Pack for New cool skins"
+    },
+    "folderName": "New_cool_items"
+  },
+  "component": "project",
+  "configVersion": "0.0.1",
+  "forge": {
+    "assetsPath": "src\\main\\resources\\assets\\easy_mob_farm",
+    "className": "EasyMobFarm",
+    "classPath": "src\\main\\java\\de\\markusbordihn\\easymobfarm",
+    "dataPath": "src\\main\\resources\\data",
+    "description": "Single-block mob farms that make mob farming easier and server friendly.",
+    "namespace": "de.markusbordihn.easymobfarm",
+    "templatePath": "node_modules\\minecraft-forge-utils\\third_party\\minecraft-forge-template-1.18.1",
+    "templatesPath": "node_modules\\minecraft-forge-utils\\third_party\\minecraft-forge-template-1.18.1\\templates",
+    "vendorName": "markusbordihn"
+  },
+  "gameType": "forge",
+  "id": "easy_mob_farm",
+  "license": "MIT",
+  "minEngineVersion": "1.18.1",
+  "misc": {},
+  "name": "Bo's Easy Mob Farm",
+  "placeholder": {
+    "Author": "Markus Bordihn",
+    "ModId": "easy_mob_farm",
+    "ModName": "Bo's Easy Mob Farm",
+    "assetsPath": "src\\main\\resources\\assets\\easy_mob_farm",
+    "classPath": "src\\main\\java\\de\\markusbordihn\\easymobfarm",
+    "dataPath": "src\\main\\resources\\data",
+    "packageNamespace": "de.markusbordihn.easymobfarm"
+  },
+  "type": "unknown",
+  "version": "0.0.0"
+}

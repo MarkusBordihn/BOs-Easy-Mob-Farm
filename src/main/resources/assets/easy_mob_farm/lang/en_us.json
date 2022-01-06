@@ -1,0 +1,20 @@
+{
+  "text.easy_mob_farm.capture": "Right click to capture",
+  "text.easy_mob_farm.release": "Left click to release %1$s",
+  "text.easy_mob_farm.health": "Health: %d",
+
+  "text.easy_mob_farm.next_drop_secs": "Next drop in %ds",
+  "text.easy_mob_farm.warning_full": "Output slots are full!",
+
+  "message.easy_mob_farm.warning_full": "Your Easy Mob Farm (%1$s) at %2$s is full and unable to store: %3$s!",
+
+  "block.placeholder.text": "Template placeholder do not remove!",
+
+  "block.easy_mob_farm.chicken_mob_farm": "Chicken Mob Farm",
+
+  "container.easy_mob_farm.chicken_mob_farm": "Chicken Mob Farm",
+
+  "item.placeholder.text": "Template placeholder do not remove!",
+
+  "itemGroup.easy_mob_farm": "Easy Mob Farm"
+}

@@ -1,0 +1,14 @@
+{
+    "recommendations": [
+        "bungcip.better-toml",
+        "davidanson.vscode-markdownlint",
+        "dotjoshjohnson.xml",
+        "esbenp.prettier-vscode",
+        "naco-siren.gradle-language",
+        "shd101wyy.markdown-preview-enhanced",
+        "sonarsource.sonarlint-vscode",
+        "streetsidesoftware.code-spell-checker",
+        "vscjava.vscode-gradle",
+        "vscjava.vscode-java-pack"
+    ]
+}
