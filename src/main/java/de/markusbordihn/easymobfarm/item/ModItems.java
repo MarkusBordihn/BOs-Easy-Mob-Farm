@@ -30,6 +30,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ChickenMobFarm;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
+import de.markusbordihn.easymobfarm.block.SkeletonMobFarm;
 import de.markusbordihn.easymobfarm.tabs.EasyMobFarmTab;
 import de.markusbordihn.easymobfarm.Annotations.TemplateEntryPoint;
 
@@ -48,8 +49,12 @@ public class ModItems {
           new Item.Properties().stacksTo(1).durability(10).tab(CreativeModeTab.TAB_COMBAT)));
 
   @TemplateEntryPoint("Register Block Items")
+
   public static final RegistryObject<Item> CHICKEN_MOB_FARM =
       ITEMS.register(ChickenMobFarm.NAME, () -> new BlockItem(ModBlocks.CHICKEN_MOB_FARM.get(),
+          new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
+  public static final RegistryObject<Item> CSKELETON_MOB_FARM =
+      ITEMS.register(SkeletonMobFarm.NAME, () -> new BlockItem(ModBlocks.SKELETON_MOB_FARM.get(),
           new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
 
   String test = "";

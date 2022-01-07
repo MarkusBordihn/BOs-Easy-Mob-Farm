@@ -125,7 +125,11 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
     builder.withLuck(fakePlayer.getLuck()).withParameter(LootContextParams.THIS_ENTITY, fakePlayer)
         .withParameter(LootContextParams.DAMAGE_SOURCE, DamageSource.GENERIC);
     LootTable lootTable = level.getServer().getLootTables().get(lootTableLocation);
-    return lootTable.getRandomItems(builder.create(LootContextParamSets.ENTITY));
+    List<ItemStack> lootDrops = lootTable.getRandomItems(builder.create(LootContextParamSets.ENTITY));
+    if (lootDrops.isEmpty()) {
+      log.warn("Loot drop for loot table {} was empty!", lootTableLocation);
+    }
+    return lootDrops;
   }
 
   public boolean allowLootDropItem(ItemStack itemStack) {

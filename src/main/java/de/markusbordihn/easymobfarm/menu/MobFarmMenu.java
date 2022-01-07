@@ -155,8 +155,9 @@ public class MobFarmMenu extends AbstractContainerMenu {
     this.mobFarmTotalTimeText = this.mobFarmTotalTime / 20 + "s";
     this.mobFarmStatus = this.data.get(MobFarmBlockEntityData.FARM_STATUS_DATA);
     if (!this.mobFarmCapturedMob.isEmpty()) {
+      int adaptiveTotalPixelHeight = this.mobFarmTotalTime > 200 ? 15 : 16;
       this.mobFarmProgressImage = this.mobFarmTotalTime != 0 && this.mobFarmProgress != 0
-          ? this.mobFarmProgress * 16 / this.mobFarmTotalTime
+          ? this.mobFarmProgress * adaptiveTotalPixelHeight / this.mobFarmTotalTime
           : 0;
       this.mobFarmRemainingTime = (this.mobFarmTotalTime - this.mobFarmProgress) / 20;
     }

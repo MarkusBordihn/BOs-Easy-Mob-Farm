@@ -40,6 +40,11 @@ public class ClientRenderer {
   public static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
     log.info("{} Block Entity Renderers ...", Constants.LOG_REGISTER_PREFIX);
 
+    // @TemplateEntryPoint("Register Entity Renderer")
+
+    event.registerBlockEntityRenderer(ModBlocks.SKELETON_MOB_FARM_ENTITY.get(),
+        SkeletonMobFarmRenderer::new);
+
     event.registerBlockEntityRenderer(ModBlocks.CHICKEN_MOB_FARM_ENTITY.get(),
         ChickenMobFarmRenderer::new);
   }
@@ -52,6 +57,11 @@ public class ClientRenderer {
     log.info("{} Render Layers ...", Constants.LOG_REGISTER_PREFIX);
 
     event.enqueueWork(() -> {
+      // @TemplateEntryPoint("Register Render Layers")
+
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.SKELETON_MOB_FARM.get(),
+          RenderType.cutoutMipped());
+
       ItemBlockRenderTypes.setRenderLayer(ModBlocks.CHICKEN_MOB_FARM.get(),
           RenderType.cutoutMipped());
     });

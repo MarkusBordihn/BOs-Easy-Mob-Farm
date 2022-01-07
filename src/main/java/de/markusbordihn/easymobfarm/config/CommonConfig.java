@@ -62,6 +62,8 @@ public class CommonConfig {
     public final ForgeConfigSpec.BooleanValue chickenFarmDropEggs;
     public final ForgeConfigSpec.BooleanValue chickenFarmDropRawChicken;
 
+    public final ForgeConfigSpec.IntValue skeletonFarmProcessTimeProcessTime;
+
     Config(ForgeConfigSpec.Builder builder) {
       builder.comment(Constants.MOD_NAME);
 
@@ -69,9 +71,9 @@ public class CommonConfig {
       informOwnerAboutFullStorage = builder
           .comment("Enable/Disable owner messages about full storage to avoid lagging systems.")
           .define("informOwnerAboutFullStorage", true);
-      logFullStorage = builder
-          .comment("Enable/Disable full storage log messages for the server logs.")
-          .define("logFullStorage", true);
+      logFullStorage =
+          builder.comment("Enable/Disable full storage log messages for the server logs.")
+              .define("logFullStorage", true);
       builder.pop();
 
       builder.push("Mob Catching");
@@ -86,9 +88,16 @@ public class CommonConfig {
               .defineInRange("chickenFarmProcessTime", 300, 10, 3600);
       chickenFarmDropEggs =
           builder.comment("Enable/Disable egg drops.").define("chickenFarmDropEggs", true);
-      chickenFarmDropRawChicken =
-          builder.comment("Enable/Disable raw chicken drops.").define("chickenFarmDropRawChicken", false);
+      chickenFarmDropRawChicken = builder.comment("Enable/Disable raw chicken drops.")
+          .define("chickenFarmDropRawChicken", false);
       builder.pop();
+
+      builder.push("Skeleton Farm");
+      skeletonFarmProcessTimeProcessTime =
+          builder.comment("Defines after how many seconds a drop is performed.")
+              .defineInRange("skeletonFarmProcessTimeProcessTime", 300, 10, 3600);
+      builder.pop();
+      // @TemplateEntryPoint("Register Forge Config Spec")
     }
   }
 }

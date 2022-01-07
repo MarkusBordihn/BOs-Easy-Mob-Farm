@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values":  [
-    "easy_mob_farm:chicken_mob_farm"
+    "easy_mob_farm:chicken_mob_farm",
+    "easy_mob_farm:skeleton_mob_farm"
   ]
 }

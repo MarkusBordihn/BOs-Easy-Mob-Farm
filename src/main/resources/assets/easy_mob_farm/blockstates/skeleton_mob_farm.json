@@ -1,0 +1,21 @@
+
+{
+  "variants": {
+    "facing=north": {
+      "model": "easy_mob_farm:block/skeleton_mob_farm",
+      "y": 0
+    },
+    "facing=east": {
+      "model": "easy_mob_farm:block/skeleton_mob_farm",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "easy_mob_farm:block/skeleton_mob_farm",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "easy_mob_farm:block/skeleton_mob_farm",
+      "y": 270
+    }
+  }
+}

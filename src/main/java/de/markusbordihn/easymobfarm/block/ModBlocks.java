@@ -32,6 +32,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.Annotations.TemplateEntryPoint;
 import de.markusbordihn.easymobfarm.block.entity.ChickenMobFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
+import de.markusbordihn.easymobfarm.block.entity.SkeletonMobFarmEntity;
 
 public class ModBlocks {
 
@@ -48,10 +49,15 @@ public class ModBlocks {
   @TemplateEntryPoint("Register Blocks")
 
   // Mob Farms
-  public static final RegistryObject<Block> CHICKEN_MOB_FARM =
-      BLOCKS.register(ChickenMobFarm.NAME, () -> new ChickenMobFarm(BlockBehaviour.Properties
-          .of(Material.STONE).requiresCorrectToolForDrops().strength(2.0F, 2.0F)
-          .lightLevel(blockState -> 1).noOcclusion()));
+  public static final RegistryObject<Block> CHICKEN_MOB_FARM = BLOCKS.register(ChickenMobFarm.NAME,
+      () -> new ChickenMobFarm(
+          BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops()
+              .strength(2.0F, 2.0F).lightLevel(blockState -> 1).noOcclusion()));
+  public static final RegistryObject<Block> SKELETON_MOB_FARM =
+      BLOCKS.register(SkeletonMobFarm.NAME,
+          () -> new SkeletonMobFarm(
+              BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops()
+                  .strength(2.0F, 2.0F).lightLevel(blockState -> 1).noOcclusion()));
   public static final RegistryObject<Block> MOB_FARM =
       BLOCKS.register(MobFarmBlock.NAME, () -> new MobFarmBlock(BlockBehaviour.Properties
           .of(Material.STONE).requiresCorrectToolForDrops().strength(2.0F, 2.0F)));
@@ -62,6 +68,9 @@ public class ModBlocks {
   public static final RegistryObject<BlockEntityType<ChickenMobFarmEntity>> CHICKEN_MOB_FARM_ENTITY =
       ENTITIES.register(ChickenMobFarm.NAME, () -> BlockEntityType.Builder
           .of(ChickenMobFarmEntity::new, CHICKEN_MOB_FARM.get()).build(null));
+  public static final RegistryObject<BlockEntityType<SkeletonMobFarmEntity>> SKELETON_MOB_FARM_ENTITY =
+      ENTITIES.register(SkeletonMobFarm.NAME, () -> BlockEntityType.Builder
+          .of(SkeletonMobFarmEntity::new, SKELETON_MOB_FARM.get()).build(null));
   public static final RegistryObject<BlockEntityType<MobFarmBlockEntity>> MOB_FARM_ENTITY =
       ENTITIES.register(MobFarmBlock.NAME,
           () -> BlockEntityType.Builder.of(MobFarmBlockEntity::new, MOB_FARM.get()).build(null));

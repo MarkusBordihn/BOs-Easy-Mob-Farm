@@ -260,7 +260,7 @@
 			"from": [0, 15, 15],
 			"to": [16, 16, 16],
 			"faces": {
-				"north": {"uv": [1, 0, 2, 15], "rotation": 90, "texture": "#edge", "cullface": "south"},
+				"north": {"uv": [1, 0, 2, 15], "rotation": 90, "texture": "#edge"},
 				"east": {"uv": [0, 0, 1, 1], "texture": "#edge", "cullface": "east"},
 				"south": {"uv": [1, 0, 2, 15], "rotation": 90, "texture": "#edge", "cullface": "south"},
 				"west": {"uv": [0, 0, 1, 1], "texture": "#edge", "cullface": "west"},

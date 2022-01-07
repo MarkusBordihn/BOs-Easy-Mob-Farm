@@ -30,9 +30,11 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.ChickenRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.renderer.entity.SkeletonRenderer;
 import net.minecraft.client.renderer.entity.ZombieRenderer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Chicken;
+import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.level.Level;
 
@@ -46,6 +48,9 @@ public class MobFarmRendererBase<T extends MobFarmBlockEntity> implements BlockE
 
   private Chicken chicken = null;
   private ChickenRenderer chickenRenderer = null;
+
+  private Skeleton skeleton = null;
+  private SkeletonRenderer skeletonRenderer = null;
 
   private Zombie zombie = null;
   private ZombieRenderer zombieRenderer = null;
@@ -104,11 +109,23 @@ public class MobFarmRendererBase<T extends MobFarmBlockEntity> implements BlockE
     getChickenRenderer().render(getChicken(), 0F, headRotation, poseStack, buffer, combinedLight);
   }
 
-  public ZombieRenderer getZombieRenderer() {
-    if (this.zombieRenderer == null) {
-      this.zombieRenderer = new ZombieRenderer(getEntityRenderer());
+  public Skeleton getSkeleton() {
+    if (this.skeleton == null) {
+      this.skeleton = new Skeleton(EntityType.SKELETON, getLevel());
     }
-    return this.zombieRenderer;
+    return this.skeleton;
+  }
+
+  public SkeletonRenderer getSkeletonRenderer() {
+    if (this.skeletonRenderer == null) {
+      this.skeletonRenderer = new SkeletonRenderer(getEntityRenderer());
+    }
+    return this.skeletonRenderer;
+  }
+
+  public void renderSkeleton(float headRotation, PoseStack poseStack, MultiBufferSource buffer,
+      int combinedLight) {
+    getSkeletonRenderer().render(getSkeleton(), 0F, headRotation, poseStack, buffer, combinedLight);
   }
 
   public Zombie getZombie() {
@@ -116,6 +133,13 @@ public class MobFarmRendererBase<T extends MobFarmBlockEntity> implements BlockE
       this.zombie = new Zombie(getLevel());
     }
     return this.zombie;
+  }
+
+  public ZombieRenderer getZombieRenderer() {
+    if (this.zombieRenderer == null) {
+      this.zombieRenderer = new ZombieRenderer(getEntityRenderer());
+    }
+    return this.zombieRenderer;
   }
 
 }
