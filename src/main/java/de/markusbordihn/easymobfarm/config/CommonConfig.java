@@ -67,6 +67,8 @@ public class CommonConfig {
     public final ForgeConfigSpec.BooleanValue chickenDropEggs;
     public final ForgeConfigSpec.BooleanValue chickenDropRawChicken;
 
+
+public final ForgeConfigSpec.IntValue monsterPlainsCaveFarmProcessTime;
     Config(ForgeConfigSpec.Builder builder) {
       builder.comment(Constants.MOD_NAME);
 
@@ -95,6 +97,12 @@ public class CommonConfig {
       skeletonFarmProcessTimeProcessTime =
           builder.comment("Defines after how many seconds a drop is performed.")
               .defineInRange("skeletonFarmProcessTimeProcessTime", 300, 10, 3600);
+      builder.pop();
+
+      builder.push("MonsterPlainsCaveFarm");
+      monsterPlainsCaveFarmProcessTime =
+          builder.comment("Defines after how many seconds a drop is performed.")
+              .defineInRange("monsterPlainsCaveFarmProcessTime", 300, 10, 3600);
       builder.pop();
       // @TemplateEntryPoint("Register Forge Config Spec")
 

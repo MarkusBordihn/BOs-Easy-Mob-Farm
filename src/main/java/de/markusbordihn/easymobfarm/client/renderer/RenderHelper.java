@@ -32,6 +32,7 @@ public class RenderHelper {
 
   // Random head position
   private float headRotation = random.nextFloat(-12.0F, 12.0F);
+  private float bodyRotation = random.nextFloat(-12.0F, 12.0F);
 
   // Internal Cache
   private Quaternion blockRotation;
@@ -47,8 +48,9 @@ public class RenderHelper {
 
   public Quaternion getBlockRotation() {
     if (this.blockRotation == null) {
-      this.blockRotation = Vector3f.YP.rotationDegrees(
-          -this.blockEntity.getBlockState().getValue(MobFarmBlock.FACING).toYRot());
+      this.blockRotation = Vector3f.YP
+          .rotationDegrees(-this.blockEntity.getBlockState().getValue(MobFarmBlock.FACING).toYRot()
+              + this.bodyRotation);
     }
     return this.blockRotation;
   }
@@ -74,15 +76,19 @@ public class RenderHelper {
     return this.renderModels.getCustomEntityScale();
   }
 
-  public void renderSheep(PoseStack poseStack, MultiBufferSource buffer, int combinedLight) {
-    Sheep sheep = this.renderModels.getSheep(getEntityColor());
-    this.renderModels.getSheepRenderer().render(sheep, 0F, this.headRotation, poseStack, buffer,
-        combinedLight);
+  public void renderCaveSpider(PoseStack poseStack, MultiBufferSource buffer, int combinedLight) {
+    this.renderModels.getCaveSpiderRenderer().render(this.renderModels.getCaveSpider(), 0F,
+        this.headRotation, poseStack, buffer, combinedLight);
   }
 
   public void renderCow(PoseStack poseStack, MultiBufferSource buffer, int combinedLight) {
     this.renderModels.getCowRenderer().render(this.renderModels.getCow(), 0F, this.headRotation,
         poseStack, buffer, combinedLight);
+  }
+
+  public void renderCreeper(PoseStack poseStack, MultiBufferSource buffer, int combinedLight) {
+    this.renderModels.getCreeperRenderer().render(this.renderModels.getCreeper(), 0F,
+        this.headRotation, poseStack, buffer, combinedLight);
   }
 
   public void renderChicken(PoseStack poseStack, MultiBufferSource buffer, int combinedLight) {
@@ -91,12 +97,23 @@ public class RenderHelper {
   }
 
   public void renderPig(PoseStack poseStack, MultiBufferSource buffer, int combinedLight) {
-    this.renderModels.getPigRenderer().render(this.renderModels.getPig(), 0F,
-        this.headRotation, poseStack, buffer, combinedLight);
+    this.renderModels.getPigRenderer().render(this.renderModels.getPig(), 0F, this.headRotation,
+        poseStack, buffer, combinedLight);
+  }
+
+  public void renderSheep(PoseStack poseStack, MultiBufferSource buffer, int combinedLight) {
+    Sheep sheep = this.renderModels.getSheep(getEntityColor());
+    this.renderModels.getSheepRenderer().render(sheep, 0F, this.headRotation, poseStack, buffer,
+        combinedLight);
   }
 
   public void renderSkeleton(PoseStack poseStack, MultiBufferSource buffer, int combinedLight) {
     this.renderModels.getSkeletonRenderer().render(this.renderModels.getSkeleton(), 0F,
+        this.headRotation, poseStack, buffer, combinedLight);
+  }
+
+  public void renderZombie(PoseStack poseStack, MultiBufferSource buffer, int combinedLight) {
+    this.renderModels.getZombieRenderer().render(this.renderModels.getZombie(), 0F,
         this.headRotation, poseStack, buffer, combinedLight);
   }
 

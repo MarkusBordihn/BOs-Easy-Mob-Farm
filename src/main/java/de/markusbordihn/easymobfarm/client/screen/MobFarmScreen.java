@@ -90,7 +90,12 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
     }
     this.renderBackground(poseStack);
     super.render(poseStack, x, y, partialTicks);
-    this.renderSnap(poseStack);
+
+    // Render Mob Farm Snap
+    String mobFarmType = this.mobFarmMenu.getMobFarmType();
+    if (!mobFarmType.isBlank()) {
+      this.renderSnap(poseStack, mobFarmType);
+    }
     this.renderTooltip(poseStack, x, y);
   }
 
@@ -132,7 +137,7 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
     }
   }
 
-  protected void renderSnap(PoseStack poseStack) {
+  protected void renderSnap(PoseStack poseStack, String mobFarmType) {
 
   }
 

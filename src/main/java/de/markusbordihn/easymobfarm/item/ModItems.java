@@ -29,7 +29,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.AnimalPlainsFarm;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
-import de.markusbordihn.easymobfarm.block.SkeletonMobFarm;
+import de.markusbordihn.easymobfarm.block.MonsterPlainsCaveFarm;
 import de.markusbordihn.easymobfarm.item.capture.CollarSmallItem;
 import de.markusbordihn.easymobfarm.tabs.EasyMobFarmTab;
 import de.markusbordihn.easymobfarm.Annotations.TemplateEntryPoint;
@@ -59,8 +59,8 @@ public class ModItems {
   public static final RegistryObject<Item> ANIMAL_PLAINS_FARM =
       ITEMS.register(AnimalPlainsFarm.NAME, () -> new BlockItem(ModBlocks.ANIMAL_PLAINS_FARM.get(),
           new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
-  public static final RegistryObject<Item> SKELETON_MOB_FARM =
-      ITEMS.register(SkeletonMobFarm.NAME, () -> new BlockItem(ModBlocks.SKELETON_MOB_FARM.get(),
+  public static final RegistryObject<Item> MONSTER_PLAINS_CAVE_FARM = ITEMS.register(
+      MonsterPlainsCaveFarm.NAME, () -> new BlockItem(ModBlocks.MONSTER_PLAINS_CAVE_FARM.get(),
           new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
 
   String test = "";

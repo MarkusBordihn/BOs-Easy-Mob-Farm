@@ -10,15 +10,17 @@
 
   "message.easy_mob_farm.warning_full": "Your Easy Mob Farm (%1$s) at %2$s is full and unable to store: %3$s!",
 
+  "block.easy_mob_farm.monster_plains_cave_farm": "MonsterPlainsCaveFarm",
   "block.placeholder.text": "Template placeholder do not remove!",
 
   "block.easy_mob_farm.animal_plains_farm": "Animal Plains Farm",
   "block.easy_mob_farm.skeleton_mob_farm": "Skeleton Mob Farm",
 
   "container.easy_mob_farm.animal_plains_farm": "Animal Plains Farm",
-  "container.easy_mob_farm.skeleton_mob_farm": "Skeleton Mob Farm",
+  "container.easy_mob_farm.monster_plains_cave_farm": "Monster Plains Cave Farm",
 
   "item.placeholder.text": "Template placeholder do not remove!",
+  "item.easy_mob_farm.collar": "Collar (small)",
 
   "itemGroup.easy_mob_farm": "Easy Mob Farm",
 

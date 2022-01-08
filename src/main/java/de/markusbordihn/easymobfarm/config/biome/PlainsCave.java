@@ -15,7 +15,6 @@ public class PlainsCave {
     HostileMonster.CAVE_SPIDER,
     HostileMonster.CREEPER,
     HostileMonster.SKELETON,
-    HostileMonster.SLIME,
     HostileMonster.ZOMBIE
     // @formatter:on
   ));

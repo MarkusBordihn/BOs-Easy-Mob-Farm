@@ -4,8 +4,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.CaveSpiderRenderer;
 import net.minecraft.client.renderer.entity.ChickenRenderer;
 import net.minecraft.client.renderer.entity.CowRenderer;
+import net.minecraft.client.renderer.entity.CreeperRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
@@ -20,6 +22,8 @@ import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.animal.Sheep;
+import net.minecraft.world.entity.monster.CaveSpider;
+import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.DyeColor;
@@ -34,14 +38,19 @@ public class RenderModels {
 
   protected Minecraft minecraft;
   protected Level level = null;
-  private static final boolean SHOW_DEBUG = true;
 
   private Entity customEntity = null;
   private float customEntityScale = 0F;
   private EntityRenderDispatcher entityRenderDispatcher = null;
 
+  private CaveSpider caveSpider = null;
+  private CaveSpiderRenderer caveSpiderRenderer = null;
+
   private Chicken chicken = null;
   private ChickenRenderer chickenRenderer = null;
+
+  private Creeper creeper = null;
+  private CreeperRenderer creeperRenderer = null;
 
   private Cow cow = null;
   private CowRenderer cowRenderer = null;
@@ -92,7 +101,7 @@ public class RenderModels {
       if (this.customEntity != null) {
         this.customEntityScale = getEntityScale(this.customEntity);
       } else {
-        return 0.5F;
+        return 0.3F;
       }
     }
     return this.customEntityScale;
@@ -109,6 +118,20 @@ public class RenderModels {
     return minecraft.getItemRenderer();
   }
 
+  public CaveSpider getCaveSpider() {
+    if (this.caveSpider == null) {
+      this.caveSpider = new CaveSpider(EntityType.CAVE_SPIDER, getLevel());
+    }
+    return this.caveSpider;
+  }
+
+  public CaveSpiderRenderer getCaveSpiderRenderer() {
+    if (this.caveSpiderRenderer == null) {
+      this.caveSpiderRenderer = new CaveSpiderRenderer(getEntityRendererContext());
+    }
+    return this.caveSpiderRenderer;
+  }
+
   public Chicken getChicken() {
     if (this.chicken == null) {
       this.chicken = new Chicken(EntityType.CHICKEN, getLevel());
@@ -121,6 +144,20 @@ public class RenderModels {
       this.chickenRenderer = new ChickenRenderer(getEntityRendererContext());
     }
     return this.chickenRenderer;
+  }
+
+  public Creeper getCreeper() {
+    if (this.creeper == null) {
+      this.creeper = new Creeper(EntityType.CREEPER, getLevel());
+    }
+    return this.creeper;
+  }
+
+  public CreeperRenderer getCreeperRenderer() {
+    if (this.creeperRenderer == null) {
+      this.creeperRenderer = new CreeperRenderer(getEntityRendererContext());
+    }
+    return this.creeperRenderer;
   }
 
   public Cow getCow() {

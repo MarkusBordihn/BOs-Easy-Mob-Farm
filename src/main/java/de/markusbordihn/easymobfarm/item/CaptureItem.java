@@ -163,7 +163,6 @@ public class CaptureItem extends CapturedMobItem {
     return InteractionResult.PASS;
   }
 
-
   @Override
   public void appendHoverText(ItemStack itemStack, @Nullable Level level,
       List<Component> tooltipList, TooltipFlag tooltipFlag) {
@@ -179,7 +178,7 @@ public class CaptureItem extends CapturedMobItem {
 
       // Display possible loot
       List<String> possibleLoot = getPossibleLoot(itemStack);
-      if (possibleLoot.size() > 0) {
+      if (!possibleLoot.isEmpty()) {
         TranslatableComponent possibleLootOverview =
             (TranslatableComponent) new TranslatableComponent(
                 Constants.TEXT_PREFIX + "possible_loot").append(" ")

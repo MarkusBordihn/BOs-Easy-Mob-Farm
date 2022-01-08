@@ -1,4 +1,5 @@
-package de.markusbordihn.easymobfarm.client.screen;
+
+package de.markusbordihn.easymobfarm.client.screen.farm;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -11,18 +12,19 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.menu.AnimalPlainsFarmMenu;
+import de.markusbordihn.easymobfarm.client.screen.MobFarmScreen;
+import de.markusbordihn.easymobfarm.menu.farm.MonsterPlainsCaveFarmMenu;
 
-public class AnimalPlainsFarmScreen extends MobFarmScreen<AnimalPlainsFarmMenu> {
+public class MonsterPlainsCaveFarmScreen extends MobFarmScreen<MonsterPlainsCaveFarmMenu> {
 
   public static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   private static final ResourceLocation TEXTURE =
-      new ResourceLocation(Constants.MOD_ID, "textures/container/animal_plans_farm_gui.png");
+      new ResourceLocation(Constants.MOD_ID, "textures/container/monster_plains_cave_farm_gui.png");
   private static final ResourceLocation SNAP =
       new ResourceLocation(Constants.MOD_ID, "textures/container/snaps/pig_snap.png");
 
-  public AnimalPlainsFarmScreen(AnimalPlainsFarmMenu menu, Inventory inventory,
+  public MonsterPlainsCaveFarmScreen(MonsterPlainsCaveFarmMenu menu, Inventory inventory,
       Component component) {
     super(menu, inventory, component);
   }
@@ -34,7 +36,7 @@ public class AnimalPlainsFarmScreen extends MobFarmScreen<AnimalPlainsFarmMenu> 
   }
 
   @Override
-  protected void renderSnap(PoseStack poseStack) {
+  protected void renderSnap(PoseStack poseStack, String mobFarmType) {
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
     RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     RenderSystem.setShaderTexture(0, SNAP);

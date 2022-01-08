@@ -17,7 +17,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.block.entity;
+package de.markusbordihn.easymobfarm.block.entity.farm;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,8 +40,9 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
+import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.config.CommonConfig;
-import de.markusbordihn.easymobfarm.menu.AnimalPlainsFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.AnimalPlainsFarmMenu;
 
 @EventBusSubscriber
 public class AnimalPlainsFarmEntity extends MobFarmBlockEntity {

@@ -1,37 +1,20 @@
-/**
- * Copyright 2021 Markus Bordihn
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
- * associated documentation files (the "Software"), to deal in the Software without restriction,
- * including without limitation the rights to use, copy, modify, merge, publish, distribute,
- * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all copies or
- * substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
- * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
- * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
 
 package de.markusbordihn.easymobfarm.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.entity.EntityType;
 
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
-import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
+import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
-public class AnimalFarmRenderer extends MobFarmRendererBase<MobFarmBlockEntity> {
+public class MonsterFarmRenderer extends MobFarmRendererBase<MobFarmBlockEntity> {
 
-  public AnimalFarmRenderer(BlockEntityRendererProvider.Context context) {
+  public MonsterFarmRenderer(BlockEntityRendererProvider.Context context) {
     super(context);
   }
 
@@ -55,47 +38,51 @@ public class AnimalFarmRenderer extends MobFarmRendererBase<MobFarmBlockEntity> 
     // Render individual mob types, if possible, because custom entity renderer is not optimized.
     // This makes a huge different with up to 20% more fps with a larger farm.
 
-    // Render Chicken
-    if (farmMobType.equals(PassiveAnimal.CHICKEN)) {
+    // Render Cave Spider
+    if (farmMobType.equals(HostileMonster.CAVE_SPIDER)) {
       poseStack.pushPose();
-      poseStack.translate(0.5D, 1D / 16D, 0.5D);
+      poseStack.translate(0.5D, 15.5D / 16D, 0.5D);
       poseStack.mulPose(renderHelper.getBlockRotation());
-      poseStack.translate(0D, 0D, -1D / 16D);
-      poseStack.scale(0.7F, 0.7F, 0.7F);
-      renderHelper.renderChicken(poseStack, buffer, combinedLight);
-      poseStack.popPose();
-    }
-
-    // Render Cow
-    else if (farmMobType.equals(PassiveAnimal.COW)) {
-      poseStack.pushPose();
-      poseStack.translate(0.5D, 1D / 16D, 0.5D);
-      poseStack.mulPose(renderHelper.getBlockRotation());
-      poseStack.translate(0D, 0D, -1D / 16D);
+      poseStack.translate(0D, 0D, 0D);
+      poseStack.mulPose(Vector3f.XP.rotationDegrees(-180));
+      poseStack.mulPose(Vector3f.YP.rotationDegrees(-180));
       poseStack.scale(0.35F, 0.35F, 0.35F);
-      renderHelper.renderCow(poseStack, buffer, combinedLight);
+      renderHelper.renderCaveSpider(poseStack, buffer, combinedLight);
       poseStack.popPose();
     }
 
-    // Render Pig
-    else if (farmMobType.equals(PassiveAnimal.PIG)) {
+    // Render Creeper
+    else if (farmMobType.equals(HostileMonster.CREEPER)) {
       poseStack.pushPose();
       poseStack.translate(0.5D, 1D / 16D, 0.5D);
       poseStack.mulPose(renderHelper.getBlockRotation());
-      poseStack.translate(0D, 0D, -1D / 16D);
-      poseStack.scale(0.38F, 0.38F, 0.38F);
-      renderHelper.renderPig(poseStack, buffer, combinedLight);
+      poseStack.translate(0D, 0D, 2D / 16D);
+      poseStack.scale(0.25F, 0.25F, 0.25F);
+      renderHelper.renderCreeper(poseStack, buffer, combinedLight);
       poseStack.popPose();
     }
 
-    // Render Sheep
-    else if (farmMobType.equals(PassiveAnimal.SHEEP)) {
+    // Render Skeleton
+    else if (farmMobType.equals(HostileMonster.SKELETON)) {
       poseStack.pushPose();
       poseStack.translate(0.5D, 1D / 16D, 0.5D);
       poseStack.mulPose(renderHelper.getBlockRotation());
-      poseStack.translate(0D, 0D, -1D / 16D);
-      poseStack.scale(0.38F, 0.38F, 0.38F);
-      renderHelper.renderSheep(poseStack, buffer, combinedLight);
+      poseStack.translate(0D, 0D, 2D / 16D);
+      poseStack.mulPose(Vector3f.YP.rotationDegrees(-20));
+      poseStack.scale(0.25F, 0.25F, 0.25F);
+      renderHelper.renderSkeleton(poseStack, buffer, combinedLight);
+      poseStack.popPose();
+    }
+
+    // Render Zombie
+    else if (farmMobType.equals(HostileMonster.ZOMBIE)) {
+      poseStack.pushPose();
+      poseStack.translate(0.5D, 1D / 16D, 0.5D);
+      poseStack.mulPose(renderHelper.getBlockRotation());
+      poseStack.translate(0D, 0D, 2D / 16D);
+      poseStack.mulPose(Vector3f.YP.rotationDegrees(-20));
+      poseStack.scale(0.25F, 0.25F, 0.25F);
+      renderHelper.renderZombie(poseStack, buffer, combinedLight);
       poseStack.popPose();
     }
 
@@ -106,7 +93,7 @@ public class AnimalFarmRenderer extends MobFarmRendererBase<MobFarmBlockEntity> 
       poseStack.pushPose();
       poseStack.translate(0.5D, 1D / 16D, 0.5D);
       poseStack.mulPose(renderHelper.getBlockRotation());
-      poseStack.translate(0D, 0D, 2D / 16D);
+      poseStack.translate(0D, 0D, -1D / 16D);
       poseStack.scale(customEntityScale, customEntityScale, customEntityScale);
       renderHelper.renderCustomEntity(entityType, poseStack, buffer, combinedLight);
       poseStack.popPose();

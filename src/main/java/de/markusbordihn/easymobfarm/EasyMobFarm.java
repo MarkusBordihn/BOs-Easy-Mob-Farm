@@ -25,7 +25,6 @@ import org.apache.logging.log4j.Logger;
 import net.minecraft.world.inventory.MenuType;
 
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
@@ -35,18 +34,17 @@ import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.client.renderer.ClientRenderer;
 import de.markusbordihn.easymobfarm.client.screen.ClientScreens;
 import de.markusbordihn.easymobfarm.item.ModItems;
-import de.markusbordihn.easymobfarm.menu.AnimalPlainsFarmMenu;
-import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
+import de.markusbordihn.easymobfarm.menu.ContainerMenu;
 
 @Mod(Constants.MOD_ID)
 public class EasyMobFarm {
 
-  public static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+  private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   public EasyMobFarm() {
     final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-    modEventBus.addGenericListener(MenuType.class, this::registerContainers);
+    modEventBus.addGenericListener(MenuType.class, ContainerMenu::registerContainerMenu);
 
     log.info("{} Items ...", Constants.LOG_REGISTER_PREFIX);
     ModItems.ITEMS.register(modEventBus);
@@ -65,11 +63,4 @@ public class EasyMobFarm {
     });
   }
 
-  private void registerContainers(RegistryEvent.Register<MenuType<?>> event) {
-    log.info("{} Container ...", Constants.LOG_REGISTER_PREFIX);
-    event.getRegistry().registerAll(
-        new MenuType<>(AnimalPlainsFarmMenu::new).setRegistryName(Constants.ANIMAL_PLAINS_FARM));
-    event.getRegistry()
-        .registerAll(new MenuType<>(MobFarmMenu::new).setRegistryName(Constants.MOB_FARM));
-  }
 }

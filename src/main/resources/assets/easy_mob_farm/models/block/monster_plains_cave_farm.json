@@ -1,6 +1,7 @@
 {
 	"credit": "Made with Blockbench by Markus Bordihn",
 	"textures": {
+		"10": "block/glow_lichen",
 		"particle": "block/stone",
 		"floor_back": "block/stone",
 		"edge": "block/end_rod",
@@ -95,6 +96,36 @@
 			"faces": {
 				"north": {"uv": [0, 0, 16, 16], "texture": "#cobweb"},
 				"south": {"uv": [0, 0, 16, 16], "texture": "#cobweb"}
+			}
+		},
+		{
+			"name": "lichen",
+			"from": [12, 12, 14.75],
+			"to": [15, 15, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2.5, 14.25, 13.625]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#10"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#10"}
+			}
+		},
+		{
+			"name": "lichen",
+			"from": [12, 9, 14.75],
+			"to": [15, 12, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2.5, 14.25, 13.625]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#10"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#10"}
+			}
+		},
+		{
+			"name": "lichen",
+			"from": [9, 12, 14.75],
+			"to": [12, 15, 15],
+			"rotation": {"angle": 0, "axis": "y", "origin": [2.5, 14.25, 13.625]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#10"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#10"}
 			}
 		},
 		{
@@ -279,10 +310,11 @@
 		},
 		{
 			"name": "background",
-			"from": [1, 1, 14.9],
-			"to": [15, 15, 15],
+			"from": [1, 1, 14.998],
+			"to": [15, 15, 15.098],
 			"faces": {
-				"north": {"uv": [0, 0, 16, 16], "texture": "#floor_back"}
+				"north": {"uv": [0, 0, 16, 16], "texture": "#floor_back"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#floor_back"}
 			}
 		},
 		{
@@ -370,25 +402,25 @@
 			"name": "deco",
 			"origin": [0, 0, 0],
 			"color": 0,
-			"children": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+			"children": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 		},
 		{
 			"name": "edge",
 			"origin": [0, 0, 0],
 			"color": 0,
-			"children": [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22]
+			"children": [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]
 		},
 		{
 			"name": "floor",
 			"origin": [8, 8, 8],
 			"color": 0,
-			"children": [23]
+			"children": [26]
 		},
 		{
 			"name": "wall",
 			"origin": [8, 8, 8],
 			"color": 0,
-			"children": [24, 25, 26, 27, 28, 29]
+			"children": [27, 28, 29, 30, 31, 32]
 		}
 	]
 }

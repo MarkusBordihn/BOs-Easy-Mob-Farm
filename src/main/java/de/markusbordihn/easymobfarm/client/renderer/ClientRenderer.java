@@ -30,6 +30,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
+import de.markusbordihn.easymobfarm.client.renderer.farm.AnimalPlainsFarmRenderer;
+import de.markusbordihn.easymobfarm.client.renderer.farm.MonsterPlainsCaveFarmRenderer;
 
 public class ClientRenderer {
 
@@ -41,10 +43,10 @@ public class ClientRenderer {
     log.info("{} Block Entity Renderers ...", Constants.LOG_REGISTER_PREFIX);
 
     // @TemplateEntryPoint("Register Entity Renderer")
+    event.registerBlockEntityRenderer(ModBlocks.MONSTER_PLAINS_CAVE_FARM_ENTITY.get(),
+        MonsterPlainsCaveFarmRenderer::new);
     event.registerBlockEntityRenderer(ModBlocks.ANIMAL_PLAINS_FARM_ENTITY.get(),
         AnimalPlainsFarmRenderer::new);
-    event.registerBlockEntityRenderer(ModBlocks.SKELETON_MOB_FARM_ENTITY.get(),
-        SkeletonMobFarmRenderer::new);
   }
 
   public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
@@ -56,9 +58,9 @@ public class ClientRenderer {
 
     event.enqueueWork(() -> {
       // @TemplateEntryPoint("Register Render Layers")
-      ItemBlockRenderTypes.setRenderLayer(ModBlocks.ANIMAL_PLAINS_FARM.get(),
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.MONSTER_PLAINS_CAVE_FARM.get(),
           RenderType.cutoutMipped());
-      ItemBlockRenderTypes.setRenderLayer(ModBlocks.SKELETON_MOB_FARM.get(),
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.ANIMAL_PLAINS_FARM.get(),
           RenderType.cutoutMipped());
     });
   }

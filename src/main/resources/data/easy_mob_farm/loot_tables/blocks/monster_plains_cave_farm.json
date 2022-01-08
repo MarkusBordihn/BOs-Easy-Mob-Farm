@@ -1,3 +1,4 @@
+
 {
   "type": "minecraft:block",
   "pools": [
@@ -13,7 +14,7 @@
               "source": "block_entity"
             }
           ],
-          "name": "easy_mob_farm:skeleton_mob_farm"
+          "name": "easy_mob_farm:monster_plains_cave_farm"
         }
       ],
       "conditions": [

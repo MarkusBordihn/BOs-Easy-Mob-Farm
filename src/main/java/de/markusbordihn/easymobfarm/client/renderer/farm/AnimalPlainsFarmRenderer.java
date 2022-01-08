@@ -17,8 +17,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.client.renderer;
+package de.markusbordihn.easymobfarm.client.renderer.farm;
 
+import de.markusbordihn.easymobfarm.client.renderer.AnimalFarmRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
 public class AnimalPlainsFarmRenderer extends AnimalFarmRenderer {
