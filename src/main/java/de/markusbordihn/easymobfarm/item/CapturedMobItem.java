@@ -22,8 +22,10 @@ package de.markusbordihn.easymobfarm.item;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -107,6 +109,17 @@ public class CapturedMobItem extends Item {
     return "";
   }
 
+  public EntityType<?> getCapturedMobEntityType(ItemStack itemStack) {
+    CompoundTag compoundTag = itemStack.getOrCreateTag();
+    if (compoundTag.contains(ENTITY_TYPE_TAG)) {
+      String entityTypeName = compoundTag.getString(ENTITY_TYPE_TAG);
+      ResourceLocation resourceLocation = new ResourceLocation(entityTypeName);
+      EntityType<?> entityType = Registry.ENTITY_TYPE.get(resourceLocation);
+      return entityType;
+    }
+    return null;
+  }
+
   public DyeColor getCapturedMobColor(ItemStack itemStack) {
     CompoundTag compoundTag = itemStack.getOrCreateTag();
     if (compoundTag.contains(ENTITY_COLOR_TAG)) {
@@ -179,15 +192,20 @@ public class CapturedMobItem extends Item {
 
   public Entity getCapturedMobEntity(ItemStack itemStack, Level level) {
     CompoundTag compoundTag = itemStack.getOrCreateTag();
-    String entityTypeName = compoundTag.getString(ENTITY_TYPE_TAG);
-    ResourceLocation resourceLocation = new ResourceLocation(entityTypeName);
 
     // Recreated captured mob
-    log.debug("Recreate captured mob {} with {}", entityTypeName, compoundTag);
-    EntityType<?> entityType = Registry.ENTITY_TYPE.get(resourceLocation);
+    EntityType<?> entityType = getCapturedMobEntityType(itemStack);
     Entity entity = entityType.create(level);
 
     if (entity != null) {
+      // Remove custom compoundTag data from mob entity
+      compoundTag.remove(ENTITY_ID_TAG);
+      compoundTag.remove(ENTITY_LOOT_TABLE_TAG);
+      compoundTag.remove(ENTITY_NAME_TAG);
+      compoundTag.remove(ENTITY_POSSIBLE_LOOT_TAG);
+      compoundTag.remove(ENTITY_PROCESSING_TIME_TAG);
+      compoundTag.remove(ENTITY_TYPE_TAG);
+      compoundTag.remove(ENTITY_COLOR_TAG);
       entity.load(compoundTag);
 
       // Remove compoundTag data from item.

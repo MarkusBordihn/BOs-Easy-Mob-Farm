@@ -3,6 +3,7 @@
   "text.easy_mob_farm.release": "► Left click to release %1$s",
   "text.easy_mob_farm.health": "Health: %d",
   "text.easy_mob_farm.possible_loot": "Possible Loot:",
+  "text.easy_mob_farm.supported_mobs": "The mob farm is able to process the following type of mobs:",
 
   "text.easy_mob_farm.next_drop_secs": "Next drop in %ds",
   "text.easy_mob_farm.warning_full": "Output slots are full!",

@@ -62,6 +62,8 @@ public class CommonConfig {
 
     public final ForgeConfigSpec.IntValue skeletonFarmProcessTimeProcessTime;
 
+    public final ForgeConfigSpec.BooleanValue blazeDropBlazeRod;
+
     public final ForgeConfigSpec.BooleanValue chickenDropEggs;
     public final ForgeConfigSpec.BooleanValue chickenDropRawChicken;
 
@@ -98,9 +100,14 @@ public class CommonConfig {
 
       builder.push("Chicken Settings");
             chickenDropEggs =
-          builder.comment("Enable/Disable egg drops.").define("animalPlainsFarmDropEggs", true);
+          builder.comment("Enable/Disable egg drops.").define("chickenDropEggs", true);
       chickenDropRawChicken = builder.comment("Enable/Disable raw chicken drops.")
-          .define("animalPlainsFarmDropRawChicken", false);
+          .define("chickenDropRawChicken", true);
+      builder.pop();
+
+      builder.push("Blaze Settings");
+      blazeDropBlazeRod =
+          builder.comment("Enable/Disable blaze rod drops.").define("blazeDropBlazeRod", true);
       builder.pop();
     }
   }

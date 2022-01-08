@@ -44,9 +44,13 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
 
   private static final ResourceLocation TEXTURE =
       new ResourceLocation(Constants.MOD_ID, "textures/container/mob_farm_gui.png");
+
   private static final int FONT_COLOR_BLACK = DyeColor.BLACK.getTextColor();
   private static final int FONT_COLOR_GRAY = DyeColor.GRAY.getTextColor();
   private static final int FONT_COLOR_WARNING = DyeColor.RED.getTextColor();
+
+  public static final int SNAP_WITH = 34;
+  public static final int SNAP_HEIGHT = 53;
 
   private int ticker = 0;
   private int totalTimeLabelX;
@@ -60,7 +64,6 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
   public MobFarmScreen(T menu, Inventory inventory, Component component) {
     super(menu, inventory, component);
     this.mobFarmMenu = (MobFarmMenu) menu;
-    log.info("Open Mob Farm Screen");
   }
 
   @Override
@@ -87,6 +90,7 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
     }
     this.renderBackground(poseStack);
     super.render(poseStack, x, y, partialTicks);
+    this.renderSnap(poseStack);
     this.renderTooltip(poseStack, x, y);
   }
 
@@ -98,10 +102,13 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
     // Show Mob Details
     if (mobFarmStatus != MobFarmBlockEntityData.FARM_STATUS_WAITING) {
       matrixStack.pushPose();
-      font.draw(matrixStack, "Mob:", 65, 22, FONT_COLOR_BLACK);
-      font.draw(matrixStack, this.mobFarmMenu.getMobFarmName(), 88, 22, FONT_COLOR_GRAY);
-      font.draw(matrixStack, "Drop Time:", 65, 32, FONT_COLOR_BLACK);
-      font.draw(matrixStack, this.mobFarmMenu.getMobFarmTotalTimeText(), 118, 32, FONT_COLOR_GRAY);
+      matrixStack.scale(0.98f, 0.98f, 0.98f);
+      font.draw(matrixStack, "Mob:", 65, 25, FONT_COLOR_BLACK);
+      font.draw(matrixStack, this.mobFarmMenu.getMobFarmName(), 88, 25, FONT_COLOR_GRAY);
+      font.draw(matrixStack, "Type:", 65, 35, FONT_COLOR_BLACK);
+      font.draw(matrixStack, this.mobFarmMenu.getMobFarmType(), 93, 35, FONT_COLOR_GRAY);
+      font.draw(matrixStack, "Drop Time:", 65, 45, FONT_COLOR_BLACK);
+      font.draw(matrixStack, this.mobFarmMenu.getMobFarmTotalTimeText(), 118, 45, FONT_COLOR_GRAY);
       matrixStack.popPose();
     }
 
@@ -123,6 +130,10 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
             FONT_COLOR_WARNING);
         break;
     }
+  }
+
+  protected void renderSnap(PoseStack poseStack) {
+
   }
 
   @Override

@@ -9,6 +9,7 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.registries.ObjectHolder;
 
 import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.block.AnimalPlainsFarm;
 
 public class AnimalPlainsFarmMenu extends MobFarmMenu {
 
@@ -24,6 +25,11 @@ public class AnimalPlainsFarmMenu extends MobFarmMenu {
   public AnimalPlainsFarmMenu(final int windowId, final Inventory playerInventory, final Container container,
       final ContainerData containerData) {
     super(windowId, playerInventory, container, containerData, TYPE);
+  }
+
+  @Override
+  public boolean mayPlaceCapturedMobType(String mobType) {
+    return AnimalPlainsFarm.isAcceptedCapturedMobType(mobType);
   }
 
 }

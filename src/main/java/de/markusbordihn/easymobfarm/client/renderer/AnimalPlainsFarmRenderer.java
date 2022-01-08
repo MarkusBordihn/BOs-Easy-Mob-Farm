@@ -19,65 +19,12 @@
 
 package de.markusbordihn.easymobfarm.client.renderer;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
-import de.markusbordihn.easymobfarm.block.entity.AnimalPlainsFarmEntity;
-import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
-
-public class AnimalPlainsFarmRenderer extends MobFarmRendererBase<AnimalPlainsFarmEntity> {
+public class AnimalPlainsFarmRenderer extends AnimalFarmRenderer {
 
   public AnimalPlainsFarmRenderer(BlockEntityRendererProvider.Context context) {
     super(context);
-  }
-
-  @Override
-  public void render(AnimalPlainsFarmEntity blockEntity, float partialTicks, PoseStack poseStack,
-      MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
-    super.render(blockEntity, partialTicks, poseStack, buffer, combinedLight, combinedOverlay);
-
-    log.info("{} {}", blockEntity.getFarmId(), blockEntity.getFarmMobColor());
-    if (!blockEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
-      return;
-    }
-
-    String farmMobType = blockEntity.getFarmMobType();
-
-    // Render Chicken
-    if (farmMobType.equals("minecraft:chicken")) {
-      poseStack.pushPose();
-      poseStack.translate(0.5D, 1D / 16D, 0.5D);
-      poseStack.mulPose(getBlockRotation(blockEntity));
-      poseStack.translate(0D, 0D, -1D / 16D);
-      poseStack.scale(0.6F, 0.6F, 0.6F);
-      renderChicken(poseStack, buffer, combinedLight);
-      poseStack.popPose();
-    }
-
-    // Render Cow
-    else if (farmMobType.equals("minecraft:cow")) {
-      poseStack.pushPose();
-      poseStack.translate(0.5D, 1D / 16D, 0.5D);
-      poseStack.mulPose(getBlockRotation(blockEntity));
-      poseStack.translate(0D, 0D, -1D / 16D);
-      poseStack.scale(0.5F, 0.5F, 0.5F);
-      renderCow(poseStack, buffer, combinedLight);
-      poseStack.popPose();
-    }
-
-    // Render Sheep
-    else if (farmMobType.equals("minecraft:sheep")) {
-      poseStack.pushPose();
-      poseStack.translate(0.5D, 1D / 16D, 0.5D);
-      poseStack.mulPose(getBlockRotation(blockEntity));
-      poseStack.translate(0D, 0D, -1D / 16D);
-      poseStack.scale(0.5F, 0.5F, 0.5F);
-      renderSheep(poseStack, buffer, combinedLight, blockEntity.getFarmMobColor());
-      poseStack.popPose();
-    }
-
   }
 
 }

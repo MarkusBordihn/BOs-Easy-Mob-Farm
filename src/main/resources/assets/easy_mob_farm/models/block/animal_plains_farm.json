@@ -7,27 +7,36 @@
 		"particle": "block/moss_block",
 		"floor": "block/moss_block",
 		"egg": "item/egg",
-		"wheat": "item/wheat_seeds",
-		"feather": "item/feather"
+		"wheat_seed": "item/wheat_seeds",
+		"feather": "item/feather",
+		"tulip": "block/white_tulip",
+		"wheat": "block/wheat_stage5"
 	},
 	"elements": [
 		{
-			"name": "egg",
-			"from": [11, 0.875, 7.625],
-			"to": [14, 3.875, 7.875],
+			"name": "tulip",
+			"from": [9, 0.875, 4.625],
+			"to": [15, 6.875, 4.875],
 			"rotation": {"angle": 0, "axis": "y", "origin": [4.5, 2.875, 6.5]},
 			"faces": {
-				"north": {"uv": [3, 3, 13, 14], "texture": "#egg"},
-				"east": {"uv": [3, 3, 4, 14], "texture": "#egg"},
-				"south": {"uv": [3, 3, 13, 14], "texture": "#egg"},
-				"west": {"uv": [12, 3, 13, 14], "texture": "#egg"},
-				"up": {"uv": [3, 3, 13, 4], "rotation": 180, "texture": "#egg"}
+				"north": {"uv": [0, 0, 16, 16], "texture": "#tulip"},
+				"south": {"uv": [16, 0, 0, 16], "texture": "#tulip"}
+			}
+		},
+		{
+			"name": "tulip",
+			"from": [11.875, 0.875, 1.75],
+			"to": [12.125, 6.875, 7.75],
+			"rotation": {"angle": 0, "axis": "y", "origin": [12, 3.875, 4.75]},
+			"faces": {
+				"east": {"uv": [16, 0, 0, 16], "texture": "#tulip"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#tulip"}
 			}
 		},
 		{
 			"name": "egg",
-			"from": [3, 0.875, 2.875],
-			"to": [6, 3.875, 3.125],
+			"from": [10, 0.875, 12.875],
+			"to": [13, 3.875, 13.125],
 			"rotation": {"angle": 0, "axis": "y", "origin": [4.5, 2.875, 6.5]},
 			"faces": {
 				"north": {"uv": [3, 3, 13, 14], "texture": "#egg"},
@@ -42,21 +51,37 @@
 			"from": [6, 1, 2],
 			"to": [12, 1.25, 7],
 			"faces": {
-				"up": {"uv": [3, 4, 14, 13], "texture": "#wheat"}
+				"up": {"uv": [3, 4, 14, 13], "texture": "#wheat_seed"}
 			}
 		},
 		{
 			"name": "feather",
-			"from": [2.5, 1.05, 5.5],
-			"to": [6.5, 1.3, 10.5],
+			"from": [0.5, 1.05, 3.5],
+			"to": [4.5, 1.3, 8.5],
 			"rotation": {"angle": -22.5, "axis": "y", "origin": [3.5, 1.175, 10]},
 			"faces": {
-				"north": {"uv": [3, 15, 2, 2], "rotation": 90, "texture": "#feather"},
-				"east": {"uv": [15, 3, 2, 2], "texture": "#feather"},
-				"south": {"uv": [14, 2, 15, 15], "rotation": 90, "texture": "#feather"},
-				"west": {"uv": [2, 14, 15, 15], "texture": "#feather"},
-				"up": {"uv": [2, 2, 15, 15], "rotation": 90, "texture": "#feather"},
-				"down": {"uv": [2, 15, 15, 2], "rotation": 270, "texture": "#feather"}
+				"up": {"uv": [0, 0, 16, 16], "rotation": 90, "texture": "#feather"},
+				"down": {"uv": [0, 16, 16, 0], "rotation": 270, "texture": "#feather"}
+			}
+		},
+		{
+			"name": "wheat",
+			"from": [1, 0.875, 10.625],
+			"to": [7, 6.875, 10.875],
+			"rotation": {"angle": 0, "axis": "y", "origin": [4.5, 2.875, 6.5]},
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#wheat"},
+				"south": {"uv": [16, 0, 0, 16], "texture": "#wheat"}
+			}
+		},
+		{
+			"name": "wheat",
+			"from": [3.875, 0.875, 7.75],
+			"to": [4.125, 6.875, 13.75],
+			"rotation": {"angle": 0, "axis": "y", "origin": [4, 3.875, 4.75]},
+			"faces": {
+				"east": {"uv": [16, 0, 0, 16], "texture": "#wheat"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#wheat"}
 			}
 		},
 		{
@@ -303,25 +328,25 @@
 			"name": "deco",
 			"origin": [0, 0, 0],
 			"color": 0,
-			"children": [0, 1, 2, 3]
+			"children": [0, 1, 2, 3, 4, 5, 6]
 		},
 		{
 			"name": "edge",
 			"origin": [0, 0, 0],
 			"color": 0,
-			"children": [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+			"children": [7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
 		},
 		{
 			"name": "floor",
 			"origin": [8, 8, 8],
 			"color": 0,
-			"children": [16]
+			"children": [19]
 		},
 		{
 			"name": "wall",
 			"origin": [8, 8, 8],
 			"color": 0,
-			"children": [17, 18, 19, 20, 21, 22]
+			"children": [20, 21, 22, 23, 24, 25]
 		}
 	]
 }

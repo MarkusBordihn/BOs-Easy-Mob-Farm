@@ -20,8 +20,10 @@
 package de.markusbordihn.easymobfarm.block;
 
 import java.util.List;
+import java.util.Set;
 import javax.annotation.Nullable;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -87,6 +89,10 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
     return Boolean.TRUE.equals(blockState.getValue(MobFarmBlock.WORKING)) ? 10 : 1;
   }
 
+  public Set<String> getAcceptedMobTypes() {
+    return null;
+  }
+
   public boolean isAcceptedMobType(String mobType) {
     return true;
   }
@@ -137,8 +143,7 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
     }
 
     // Remove existing mob if player is sneaking.
-    if (player.isShiftKeyDown()
-        && blockEntity instanceof MobFarmBlockEntity mobFarmBlockEntity
+    if (player.isShiftKeyDown() && blockEntity instanceof MobFarmBlockEntity mobFarmBlockEntity
         && mobFarmBlockEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
       mobFarmBlockEntity.givePlayerItem(MobFarmMenu.CAPTURED_MOB_SLOT, player, hand, blockPos);
       return InteractionResult.CONSUME;
@@ -204,7 +209,20 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
   public void appendHoverText(ItemStack itemStack, @Nullable BlockGetter blockGetter,
       List<Component> tooltipList, TooltipFlag tooltipFlag) {
     super.appendHoverText(itemStack, blockGetter, tooltipList, tooltipFlag);
-    tooltipList.add(new TranslatableComponent(Constants.TEXT_PREFIX + "release", "test"));
+    Set<String> acceptedMobTypes = getAcceptedMobTypes();
+    if (acceptedMobTypes != null && !acceptedMobTypes.isEmpty()) {
+      TranslatableComponent supportedMobsOveriew =
+          (TranslatableComponent) new TranslatableComponent(Constants.TEXT_PREFIX
+              + "supported_mobs").append(" ")
+                  .withStyle(ChatFormatting.GREEN);
+      for (String acceptedMob : acceptedMobTypes) {
+        // Format accepted mob to entity.x.y format for automatic translations.
+        supportedMobsOveriew
+            .append(new TranslatableComponent("entity." + acceptedMob.replace(':', '.'))
+                .append(", ").withStyle(ChatFormatting.DARK_GREEN));
+      }
+      tooltipList.add(supportedMobsOveriew.append("..."));
+    }
   }
 
   @OnlyIn(Dist.CLIENT)

@@ -19,8 +19,6 @@
 
 package de.markusbordihn.easymobfarm.block;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Set;
 import javax.annotation.Nullable;
 
@@ -29,8 +27,6 @@ import org.apache.logging.log4j.Logger;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.animal.Chicken;
-import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
@@ -43,6 +39,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.AnimalPlainsFarmEntity;
+import de.markusbordihn.easymobfarm.config.biome.Plains;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
 public class AnimalPlainsFarm extends MobFarmBlock {
@@ -51,16 +48,19 @@ public class AnimalPlainsFarm extends MobFarmBlock {
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  private static final Set<String> acceptedMobTypes = new HashSet<>(Arrays.asList(
-  // @formatter:off
-    "minecraft:chicken",
-    "minecraft:sheep",
-    "minecraft:cow"
-  // @formatter:on
-  ));
+  private static final Set<String> acceptedMobTypes = Plains.Passive;
 
   public AnimalPlainsFarm(BlockBehaviour.Properties properties) {
     super(properties);
+  }
+
+  public static boolean isAcceptedCapturedMobType(String mobType) {
+    return acceptedMobTypes.contains(mobType);
+  }
+
+  @Override
+  public Set<String> getAcceptedMobTypes() {
+    return acceptedMobTypes;
   }
 
   @Override
@@ -75,7 +75,6 @@ public class AnimalPlainsFarm extends MobFarmBlock {
 
   @Override
   protected void openContainer(Level level, BlockPos blockPos, Player player) {
-    log.info("Open animal plains farm container ...");
     if (level.getBlockEntity(blockPos) instanceof AnimalPlainsFarmEntity animalPlainsFarmEntity) {
       player.openMenu(animalPlainsFarmEntity);
     }

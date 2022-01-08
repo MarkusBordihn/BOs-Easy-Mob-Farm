@@ -37,7 +37,6 @@ import net.minecraft.world.WorldlyContainer;
 
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -89,22 +88,6 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
 
   public boolean hasItem(int index) {
     return !this.items.get(index).isEmpty();
-  }
-
-  public int getFarmId() {
-    return this.farmId;
-  }
-
-  public String getFarmMobType() {
-    return this.farmMobType;
-  }
-
-  public DyeColor getFarmMobColor() {
-    return this.farmMobColor;
-  }
-
-  public int getFarmProcessingTime() {
-    return 0;
   }
 
   public boolean allowLootDropItem(ItemStack itemStack) {
@@ -282,10 +265,12 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
         this.farmMobName = capturedMobItem.getCapturedMob(itemStack);
         this.farmMobType = capturedMobItem.getCapturedMobType(itemStack);
         this.farmMobColor = capturedMobItem.getCapturedMobColor(itemStack);
+        this.farmMobEntityType = capturedMobItem.getCapturedMobEntityType(itemStack);
       } else {
         this.farmMobName = "";
         this.farmMobType = "";
         this.farmMobColor = null;
+        this.farmMobEntityType = null;
       }
 
       // Update Block state

@@ -82,6 +82,8 @@ public class MobFarmMenu extends AbstractContainerMenu {
   private int mobFarmRemainingTime;
   private String mobFarmTotalTimeText = "";
   private String mobFarmName = "- unknown -";
+  private String mobFarmType = "- unknown -";
+
 
   // Misc
   protected final Level level;
@@ -147,9 +149,11 @@ public class MobFarmMenu extends AbstractContainerMenu {
     ItemStack currentItemStack = this.container.getItem(CAPTURED_MOB_SLOT);
     if (!this.mobFarmCapturedMob.is(currentItemStack.getItem())) {
       if (currentItemStack.isEmpty()) {
-        this.mobFarmName = "- Unknown -";
+        this.mobFarmName = "- unknown -";
+        this.mobFarmType = "- unknown -";
       } else if (currentItemStack.getItem() instanceof CapturedMobItem capturedMobItem) {
         this.mobFarmName = capturedMobItem.getCapturedMob(currentItemStack);
+        this.mobFarmType = capturedMobItem.getCapturedMobType(currentItemStack);
       }
       this.mobFarmCapturedMob = currentItemStack;
     }
@@ -194,6 +198,10 @@ public class MobFarmMenu extends AbstractContainerMenu {
 
   public String getMobFarmName() {
     return this.mobFarmName;
+  }
+
+  public String getMobFarmType() {
+    return this.mobFarmType;
   }
 
   public boolean stillValid(Player player) {

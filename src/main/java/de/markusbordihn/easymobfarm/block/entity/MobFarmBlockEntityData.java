@@ -34,6 +34,7 @@ import net.minecraft.server.level.ServerChunkCache;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -73,17 +74,20 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
   public static final int FARM_STATUS_WAITING = 2;
   public static final int FARM_STATUS_WORKING = 3;
 
-  // Internal data states
-  public int farmId;
+  // Internal data states shared
   public UUID farmOwner;
   public int farmDuration;
   public int farmProgress;
   public int farmStatus;
   public int farmTime = -1;
   public int farmTotalTime;
+
+  // Internal data states (cache)
+  public int farmId;
   public String farmMobName = "";
   public String farmMobType = "";
   public DyeColor farmMobColor = null;
+  public EntityType<?> farmMobEntityType = null;
 
   // Item Storage
   public NonNullList<ItemStack> items = NonNullList.withSize(6, ItemStack.EMPTY);
@@ -148,6 +152,26 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
 
   public UUID getOwner() {
     return this.farmOwner;
+  }
+
+  public int getFarmId() {
+    return this.farmId;
+  }
+
+  public String getFarmMobType() {
+    return this.farmMobType;
+  }
+
+  public DyeColor getFarmMobColor() {
+    return this.farmMobColor;
+  }
+
+  public EntityType<?> getFarmMobEntityType() {
+    return this.farmMobEntityType;
+  }
+
+  public int getFarmProcessingTime() {
+    return 0;
   }
 
   public ItemStack takeItem(int index) {
@@ -270,6 +294,7 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
       this.farmMobName = capturedMobItem.getCapturedMob(capturedMob);
       this.farmMobType = capturedMobItem.getCapturedMobType(capturedMob);
       this.farmMobColor = capturedMobItem.getCapturedMobColor(capturedMob);
+      this.farmMobEntityType = capturedMobItem.getCapturedMobEntityType(capturedMob);
     }
   }
 

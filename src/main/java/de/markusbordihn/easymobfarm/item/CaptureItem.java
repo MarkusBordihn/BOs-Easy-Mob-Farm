@@ -22,6 +22,9 @@ package de.markusbordihn.easymobfarm.item;
 import java.util.List;
 import javax.annotation.Nullable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -40,7 +43,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.Tags.Items;
+
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -51,6 +54,8 @@ import de.markusbordihn.easymobfarm.config.CommonConfig;
 
 @EventBusSubscriber
 public class CaptureItem extends CapturedMobItem {
+
+  private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
 
@@ -193,5 +198,11 @@ public class CaptureItem extends CapturedMobItem {
   @Override
   public boolean isFoil(ItemStack itemStack) {
     return hasCapturedMob(itemStack);
+  }
+
+  @Override
+  public boolean canAttackBlock(BlockState blockState, Level level, BlockPos blockPos,
+      Player player) {
+    return false;
   }
 }
