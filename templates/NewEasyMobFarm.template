@@ -151,7 +151,7 @@ public class [[ --BlockClassName-- ]] extends MobFarmBlock {
   public static final RegistryObject<Block> [[ --BLOCK_NAME-- ]] =
       BLOCKS.register([[ --BlockClassName-- ]].NAME, () -> new [[ --BlockClassName-- ]](BlockBehaviour.Properties
           .of(Material.STONE).requiresCorrectToolForDrops().strength(2.0F, 2.0F)
-          .lightLevel(blockState -> 1).noOcclusion()));
+          .lightLevel([[ --BlockClassName-- ]]::getLightLevel).noOcclusion()));
 
 +++ block/ModBlocks.java
 @@@ after:@TemplateEntryPoint("Register Entity") @@@

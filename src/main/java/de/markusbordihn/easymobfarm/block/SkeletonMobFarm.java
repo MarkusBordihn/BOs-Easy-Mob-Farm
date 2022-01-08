@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import de.markusbordihn.easymobfarm.block.entity.SkeletonMobFarmEntity;
 import de.markusbordihn.easymobfarm.item.CapturedMobItem;
+import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
 public class SkeletonMobFarm extends MobFarmBlock {
 
@@ -49,8 +50,8 @@ public class SkeletonMobFarm extends MobFarmBlock {
       BlockEntity blockEntity, ItemStack itemStack, UseOnContext context) {
     SkeletonMobFarmEntity skeletonMobFarmEntity = (SkeletonMobFarmEntity) blockEntity;
     skeletonMobFarmEntity.updateLevel(level);
-    if (!skeletonMobFarmEntity.hasMob()) {
-      skeletonMobFarmEntity.setMob(itemStack);
+    if (!skeletonMobFarmEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
+      skeletonMobFarmEntity.setItem(MobFarmMenu.CAPTURED_MOB_SLOT, itemStack);
       context.getPlayer().setItemInHand(context.getHand(), ItemStack.EMPTY);
       return InteractionResult.CONSUME;
     }

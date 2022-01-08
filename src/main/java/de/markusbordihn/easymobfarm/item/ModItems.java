@@ -20,7 +20,6 @@
 package de.markusbordihn.easymobfarm.item;
 
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 
 import net.minecraftforge.registries.RegistryObject;
@@ -28,9 +27,10 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.ChickenMobFarm;
+import de.markusbordihn.easymobfarm.block.AnimalPlainsFarm;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.block.SkeletonMobFarm;
+import de.markusbordihn.easymobfarm.item.capture.CollarSmallItem;
 import de.markusbordihn.easymobfarm.tabs.EasyMobFarmTab;
 import de.markusbordihn.easymobfarm.Annotations.TemplateEntryPoint;
 
@@ -46,14 +46,20 @@ public class ModItems {
   @TemplateEntryPoint("Register Items")
   public static final RegistryObject<Item> CAPTURE_NET =
       ITEMS.register("capture_net", () -> new CaptureNetItem(
-          new Item.Properties().stacksTo(1).durability(10).tab(CreativeModeTab.TAB_COMBAT)));
+          new Item.Properties().stacksTo(1).durability(10).tab(EasyMobFarmTab.TOOLS)));
+
+  // Collars Items
+  public static final RegistryObject<Item> COLLAR_SMALL =
+      ITEMS.register("collar_small", () -> new CollarSmallItem(
+          new Item.Properties().stacksTo(1).durability(10).tab(EasyMobFarmTab.TOOLS)));
 
   @TemplateEntryPoint("Register Block Items")
 
-  public static final RegistryObject<Item> CHICKEN_MOB_FARM =
-      ITEMS.register(ChickenMobFarm.NAME, () -> new BlockItem(ModBlocks.CHICKEN_MOB_FARM.get(),
+  // Mob Farms
+  public static final RegistryObject<Item> ANIMAL_PLAINS_FARM =
+      ITEMS.register(AnimalPlainsFarm.NAME, () -> new BlockItem(ModBlocks.ANIMAL_PLAINS_FARM.get(),
           new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
-  public static final RegistryObject<Item> CSKELETON_MOB_FARM =
+  public static final RegistryObject<Item> SKELETON_MOB_FARM =
       ITEMS.register(SkeletonMobFarm.NAME, () -> new BlockItem(ModBlocks.SKELETON_MOB_FARM.get(),
           new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
 

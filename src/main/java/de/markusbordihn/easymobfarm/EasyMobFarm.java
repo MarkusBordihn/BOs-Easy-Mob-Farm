@@ -35,6 +35,7 @@ import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.client.renderer.ClientRenderer;
 import de.markusbordihn.easymobfarm.client.screen.ClientScreens;
 import de.markusbordihn.easymobfarm.item.ModItems;
+import de.markusbordihn.easymobfarm.menu.AnimalPlainsFarmMenu;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
 @Mod(Constants.MOD_ID)
@@ -66,6 +67,8 @@ public class EasyMobFarm {
 
   private void registerContainers(RegistryEvent.Register<MenuType<?>> event) {
     log.info("{} Container ...", Constants.LOG_REGISTER_PREFIX);
+    event.getRegistry().registerAll(
+        new MenuType<>(AnimalPlainsFarmMenu::new).setRegistryName(Constants.ANIMAL_PLAINS_FARM));
     event.getRegistry()
         .registerAll(new MenuType<>(MobFarmMenu::new).setRegistryName(Constants.MOB_FARM));
   }

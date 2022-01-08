@@ -19,19 +19,17 @@
 
 package de.markusbordihn.easymobfarm.block.entity;
 
-import java.util.List;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -43,58 +41,43 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.config.CommonConfig;
+import de.markusbordihn.easymobfarm.menu.AnimalPlainsFarmMenu;
 
 @EventBusSubscriber
-public class ChickenMobFarmEntity extends MobFarmBlockEntity {
+public class AnimalPlainsFarmEntity extends MobFarmBlockEntity {
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
 
   // Config settings
-  private static int chickenFarmProcessTime = COMMON.chickenFarmProcessTime.get();
-  private static boolean chickenFarmDropEggs = COMMON.chickenFarmDropEggs.get();
-  private static boolean chickenFarmDropRawChicken = COMMON.chickenFarmDropRawChicken.get();
+  private static int animalPlainsFarmProcessTime = COMMON.animalPlainsFarmProcessTime.get();
   private static int farmProcessingTime = 0;
 
-  public ChickenMobFarmEntity(BlockPos blockPos, BlockState blockState) {
-    super(ModBlocks.CHICKEN_MOB_FARM_ENTITY.get(), blockPos, blockState);
+  public AnimalPlainsFarmEntity(BlockPos blockPos, BlockState blockState) {
+    super(ModBlocks.ANIMAL_PLAINS_FARM_ENTITY.get(), blockPos, blockState);
   }
 
-  public ChickenMobFarmEntity(BlockEntityType<?> blockEntity, BlockPos blockPos,
+  public AnimalPlainsFarmEntity(BlockEntityType<?> blockEntity, BlockPos blockPos,
       BlockState blockState) {
     super(blockEntity, blockPos, blockState);
   }
 
-  @Override
-  protected Component getDefaultName() {
-    return new TranslatableComponent("container.easy_mob_farm.chicken_mob_farm");
-  }
-
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    chickenFarmProcessTime = COMMON.chickenFarmProcessTime.get();
-    chickenFarmDropEggs = COMMON.chickenFarmDropEggs.get();
-    chickenFarmDropRawChicken = COMMON.chickenFarmDropRawChicken.get();
-    farmProcessingTime = chickenFarmProcessTime * 20;
-    log.info("{}: Chicken Farm with drops every {}s (eggs:{}, raw chicken: {})",
-        Constants.LOG_MOB_FARM_PREFIX, chickenFarmProcessTime,
-        chickenFarmDropEggs, chickenFarmDropRawChicken);
+    animalPlainsFarmProcessTime = COMMON.animalPlainsFarmProcessTime.get();
+    farmProcessingTime = animalPlainsFarmProcessTime * 20;
+    log.info("{}: Animal Plains Farm Entity with drops every {}s", Constants.LOG_MOB_FARM_PREFIX,
+        animalPlainsFarmProcessTime);
   }
 
   @Override
-  public List<ItemStack> getLootDrops(ResourceLocation lootTableLocation, Level level) {
-    List<ItemStack> lootDrops = super.getLootDrops(lootTableLocation, level);
-
-    // Add eggs to loot drops if enabled.
-    if (chickenFarmDropEggs) {
-      lootDrops.add(new ItemStack(Items.EGG));
-    }
-    return lootDrops;
+  protected Component getDefaultName() {
+    return new TranslatableComponent("container.easy_mob_farm.animal_plains_farm");
   }
 
   @Override
-  public boolean allowLootDropItem(ItemStack itemStack) {
-    return !chickenFarmDropRawChicken && !itemStack.is(Items.CHICKEN);
+  protected AbstractContainerMenu createMenu(int windowId, Inventory inventory) {
+    return new AnimalPlainsFarmMenu(windowId, inventory, this, this.dataAccess);
   }
 
   @Override

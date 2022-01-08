@@ -19,10 +19,18 @@
 
 package de.markusbordihn.easymobfarm.block;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import javax.annotation.Nullable;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.animal.Chicken;
+import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
@@ -33,41 +41,53 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 
-import de.markusbordihn.easymobfarm.block.entity.ChickenMobFarmEntity;
-import de.markusbordihn.easymobfarm.item.CapturedMobItem;
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.block.entity.AnimalPlainsFarmEntity;
+import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
-public class ChickenMobFarm extends MobFarmBlock {
+public class AnimalPlainsFarm extends MobFarmBlock {
 
-  public static final String NAME = "chicken_mob_farm";
+  public static final String NAME = "animal_plains_farm";
 
-  public ChickenMobFarm(BlockBehaviour.Properties properties) {
+  private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+
+  private static final Set<String> acceptedMobTypes = new HashSet<>(Arrays.asList(
+  // @formatter:off
+    "minecraft:chicken",
+    "minecraft:sheep",
+    "minecraft:cow"
+  // @formatter:on
+  ));
+
+  public AnimalPlainsFarm(BlockBehaviour.Properties properties) {
     super(properties);
   }
 
   @Override
-  public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-    return new ChickenMobFarmEntity(ModBlocks.CHICKEN_MOB_FARM_ENTITY.get(), blockPos, blockState);
+  public boolean isAcceptedMobType(String mobType) {
+    return acceptedMobTypes.contains(mobType);
   }
 
   @Override
-  public boolean canConsumeCapturedMob(Level level, BlockPos blockPos, BlockState blockState,
-      BlockEntity blockEntity, Player player, ItemStack itemStack) {
-    if (itemStack.getItem() instanceof CapturedMobItem capturedMobItem) {
-      String capturedMobType = capturedMobItem.getCapturedMobType(itemStack);
-      if (capturedMobType.equals("minecraft:chicken")) {
-        return true;
-      }
+  public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+    return new AnimalPlainsFarmEntity(ModBlocks.ANIMAL_PLAINS_FARM_ENTITY.get(), blockPos, blockState);
+  }
+
+  @Override
+  protected void openContainer(Level level, BlockPos blockPos, Player player) {
+    log.info("Open animal plains farm container ...");
+    if (level.getBlockEntity(blockPos) instanceof AnimalPlainsFarmEntity animalPlainsFarmEntity) {
+      player.openMenu(animalPlainsFarmEntity);
     }
-    return false;
   }
 
   @Override
   public InteractionResult consumeCapturedMob(Level level, BlockPos blockPos, BlockState blockState,
       BlockEntity blockEntity, ItemStack itemStack, UseOnContext context) {
-    ChickenMobFarmEntity chickenMobFarmEntity = (ChickenMobFarmEntity) blockEntity;
+    AnimalPlainsFarmEntity chickenMobFarmEntity = (AnimalPlainsFarmEntity) blockEntity;
     chickenMobFarmEntity.updateLevel(level);
-    if (!chickenMobFarmEntity.hasMob()) {
-      chickenMobFarmEntity.setMob(itemStack);
+    if (!chickenMobFarmEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
+      chickenMobFarmEntity.setItem(MobFarmMenu.CAPTURED_MOB_SLOT,itemStack);
       context.getPlayer().setItemInHand(context.getHand(), ItemStack.EMPTY);
       return InteractionResult.CONSUME;
     }
@@ -79,8 +99,8 @@ public class ChickenMobFarm extends MobFarmBlock {
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState,
       BlockEntityType<T> blockEntityType) {
     return level.isClientSide ? null
-        : createTickerHelper(blockEntityType, ModBlocks.CHICKEN_MOB_FARM_ENTITY.get(),
-            ChickenMobFarmEntity::serverTick);
+        : createTickerHelper(blockEntityType, ModBlocks.ANIMAL_PLAINS_FARM_ENTITY.get(),
+            AnimalPlainsFarmEntity::serverTick);
   }
 
 }

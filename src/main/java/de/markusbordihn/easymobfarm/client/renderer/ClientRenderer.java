@@ -45,8 +45,8 @@ public class ClientRenderer {
     event.registerBlockEntityRenderer(ModBlocks.SKELETON_MOB_FARM_ENTITY.get(),
         SkeletonMobFarmRenderer::new);
 
-    event.registerBlockEntityRenderer(ModBlocks.CHICKEN_MOB_FARM_ENTITY.get(),
-        ChickenMobFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.ANIMAL_PLAINS_FARM_ENTITY.get(),
+        AnimalPlainsFarmRenderer::new);
   }
 
   public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
@@ -62,7 +62,7 @@ public class ClientRenderer {
       ItemBlockRenderTypes.setRenderLayer(ModBlocks.SKELETON_MOB_FARM.get(),
           RenderType.cutoutMipped());
 
-      ItemBlockRenderTypes.setRenderLayer(ModBlocks.CHICKEN_MOB_FARM.get(),
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.ANIMAL_PLAINS_FARM.get(),
           RenderType.cutoutMipped());
     });
   }

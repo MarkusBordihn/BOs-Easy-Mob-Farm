@@ -1,7 +1,8 @@
 {
-  "text.easy_mob_farm.capture": "Right click to capture",
-  "text.easy_mob_farm.release": "Left click to release %1$s",
+  "text.easy_mob_farm.capture": "► Right click to capture",
+  "text.easy_mob_farm.release": "► Left click to release %1$s",
   "text.easy_mob_farm.health": "Health: %d",
+  "text.easy_mob_farm.possible_loot": "Possible Loot:",
 
   "text.easy_mob_farm.next_drop_secs": "Next drop in %ds",
   "text.easy_mob_farm.warning_full": "Output slots are full!",
@@ -10,13 +11,15 @@
 
   "block.placeholder.text": "Template placeholder do not remove!",
 
-  "block.easy_mob_farm.chicken_mob_farm": "Chicken Mob Farm",
+  "block.easy_mob_farm.animal_plains_farm": "Animal Plains Farm",
   "block.easy_mob_farm.skeleton_mob_farm": "Skeleton Mob Farm",
 
-  "container.easy_mob_farm.chicken_mob_farm": "Chicken Mob Farm",
+  "container.easy_mob_farm.animal_plains_farm": "Animal Plains Farm",
   "container.easy_mob_farm.skeleton_mob_farm": "Skeleton Mob Farm",
 
   "item.placeholder.text": "Template placeholder do not remove!",
 
-  "itemGroup.easy_mob_farm": "Easy Mob Farm"
+  "itemGroup.easy_mob_farm": "Easy Mob Farm",
+
+  "itemGroup.easy_mob_farm_tools": "Easy Mob Farm: Tools"
 }

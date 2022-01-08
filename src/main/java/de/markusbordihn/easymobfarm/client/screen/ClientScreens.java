@@ -27,6 +27,7 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.menu.AnimalPlainsFarmMenu;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
 public class ClientScreens {
@@ -40,6 +41,7 @@ public class ClientScreens {
 
     event.enqueueWork(() -> {
       // Mob Farm UI screen
+      MenuScreens.register(AnimalPlainsFarmMenu.TYPE, AnimalPlainsFarmScreen::new);
       MenuScreens.register(MobFarmMenu.TYPE, MobFarmScreen::new);
     });
   }

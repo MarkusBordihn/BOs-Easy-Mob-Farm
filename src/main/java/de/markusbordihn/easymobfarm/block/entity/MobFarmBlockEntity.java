@@ -32,24 +32,17 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.WorldlyContainer;
-import net.minecraft.world.damagesource.DamageSource;
+
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.loot.LootContext;
-import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -57,9 +50,11 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
 import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.block.MobFarmBlock;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.config.CommonConfig;
 import de.markusbordihn.easymobfarm.item.CapturedMobItem;
+import de.markusbordihn.easymobfarm.loot.LootManager;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
 @Mod.EventBusSubscriber
@@ -92,44 +87,24 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
     }
   }
 
-  public void removeMob() {
-    this.setItem(MobFarmMenu.CAPTURED_MOB_SLOT, ItemStack.EMPTY);
-    syncData();
+  public boolean hasItem(int index) {
+    return !this.items.get(index).isEmpty();
   }
 
-  public boolean hasMob() {
-    return !this.items.get(MobFarmMenu.CAPTURED_MOB_SLOT).isEmpty();
+  public int getFarmId() {
+    return this.farmId;
   }
 
-  public void setMob(ItemStack itemStack) {
-    this.setItem(MobFarmMenu.CAPTURED_MOB_SLOT, itemStack);
+  public String getFarmMobType() {
+    return this.farmMobType;
   }
 
-  public ItemStack getMob() {
-    return this.items.get(MobFarmMenu.CAPTURED_MOB_SLOT);
+  public DyeColor getFarmMobColor() {
+    return this.farmMobColor;
   }
 
   public int getFarmProcessingTime() {
     return 0;
-  }
-
-  public List<ItemStack> getLootDrops(ResourceLocation lootTableLocation, Level level) {
-    if (lootTableLocation == null || level == null || level.getServer() == null) {
-      log.error("Unable to get loot drops for {} and {}", lootTableLocation, level);
-      return new ArrayList<>();
-    }
-    ServerLevel serverLevel = (ServerLevel) level;
-    FakePlayer fakePlayer = FakePlayerFactory.getMinecraft(serverLevel);
-    LootContext.Builder builder = new LootContext.Builder(serverLevel)
-        .withParameter(LootContextParams.ORIGIN, fakePlayer.position());
-    builder.withLuck(fakePlayer.getLuck()).withParameter(LootContextParams.THIS_ENTITY, fakePlayer)
-        .withParameter(LootContextParams.DAMAGE_SOURCE, DamageSource.GENERIC);
-    LootTable lootTable = level.getServer().getLootTables().get(lootTableLocation);
-    List<ItemStack> lootDrops = lootTable.getRandomItems(builder.create(LootContextParamSets.ENTITY));
-    if (lootDrops.isEmpty()) {
-      log.warn("Loot drop for loot table {} was empty!", lootTableLocation);
-    }
-    return lootDrops;
   }
 
   public boolean allowLootDropItem(ItemStack itemStack) {
@@ -156,7 +131,7 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
 
     // Check if there is something to progress...
     ItemStack capturedMob = blockEntity.items.get(MobFarmMenu.CAPTURED_MOB_SLOT);
-    if (capturedMob.isEmpty() || !blockEntity.hasMob()) {
+    if (capturedMob.isEmpty() || !blockEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
       blockEntity.farmProgress = 0;
       blockEntity.farmStatus = FARM_STATUS_WAITING;
       return;
@@ -179,8 +154,10 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
 
     // Processing mob farm
     if (blockEntity.farmProgress == blockEntity.farmTotalTime) {
-      blockEntity.processResult(capturedMob, blockEntity);
-      blockEntity.processAdditionalEffects(level, blockPos, blockEntity, capturedMob);
+      if (capturedMob.getItem() instanceof CapturedMobItem) {
+        blockEntity.processResult(capturedMob, blockEntity);
+        blockEntity.processAdditionalEffects(level, blockPos, blockEntity, capturedMob);
+      }
       blockEntity.farmProgress = 0;
       blockEntity.farmStatus = FARM_STATUS_DONE;
     } else {
@@ -190,14 +167,8 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
   }
 
   private void processResult(ItemStack capturedMob, MobFarmBlockEntity blockEntity) {
-    ResourceLocation lootTable = null;
-    if (capturedMob.getItem() instanceof CapturedMobItem capturedMobItem) {
-      String lootTableLocation = capturedMobItem.getLootTable(capturedMob);
-      if (!lootTableLocation.isEmpty()) {
-        lootTable = new ResourceLocation(lootTableLocation);
-      }
-    }
-    List<ItemStack> lootDrops = getLootDrops(lootTable, blockEntity.getLevel());
+    List<ItemStack> lootDrops =
+        LootManager.getFilteredRandomLootDrop(capturedMob, blockEntity.getLevel());
     List<ItemStack> unstoredLootDrops = new ArrayList<>();
 
     log.debug("Processing result with {}", lootDrops);
@@ -264,8 +235,9 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
     syncData();
   }
 
-  public void processAdditionalEffects(Level level, BlockPos blockPos, MobFarmBlockEntity blockEntity, ItemStack capturedMob) {
-
+  public void processAdditionalEffects(Level level, BlockPos blockPos,
+      MobFarmBlockEntity blockEntity, ItemStack capturedMob) {
+    // Placeholder for additional effects like sound or particles.
   }
 
   public void processFullStorage(MobFarmBlockEntity blockEntity, List<ItemStack> lootDrop) {
@@ -293,26 +265,38 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
   @Override
   public void setItem(int index, ItemStack itemStack) {
     super.setItem(index, itemStack);
-    if (index == MobFarmMenu.CAPTURED_MOB_SLOT
-        && itemStack.getItem() instanceof CapturedMobItem capturedMobItem) {
+    if (index == MobFarmMenu.CAPTURED_MOB_SLOT) {
 
-      // Get processing time, the farm processing time always overwrite the mob processing time.
-      if (getFarmProcessingTime() > 0) {
-        this.farmTotalTime = getFarmProcessingTime();
-        log.debug("Farm Processing time {}", this.farmTotalTime);
+      // Update and cache data based on captured mob
+      if (itemStack.getItem() instanceof CapturedMobItem capturedMobItem) {
+        // Get processing time, the farm processing time always overwrite the mob processing time.
+        if (getFarmProcessingTime() > 0) {
+          this.farmTotalTime = getFarmProcessingTime();
+          log.debug("Farm Processing time {}", this.farmTotalTime);
+        } else {
+          this.farmTotalTime = capturedMobItem.getFarmProcessingTime(itemStack);
+          log.debug("Mob Processing time {}", this.farmTotalTime);
+        }
+
+        // Get Mob Name
+        this.farmMobName = capturedMobItem.getCapturedMob(itemStack);
+        this.farmMobType = capturedMobItem.getCapturedMobType(itemStack);
+        this.farmMobColor = capturedMobItem.getCapturedMobColor(itemStack);
       } else {
-        this.farmTotalTime = capturedMobItem.getFarmProcessingTime(itemStack);
-        log.debug("Mob Processing time {}", this.farmTotalTime);
+        this.farmMobName = "";
+        this.farmMobType = "";
+        this.farmMobColor = null;
       }
 
-      // Get possible loot table, could be overwritten.
-      String lootTable = capturedMobItem.getLootTable(itemStack);
-      if (!lootTable.isEmpty()) {
-        log.debug("Found Loot Table {}", lootTable);
+      // Update Block state
+      BlockState blockState = getBlockState();
+      BlockPos blockPos = getBlockPos();
+      if (blockState != null && blockPos != null) {
+        BlockState newBlockState = blockState.setValue(MobFarmBlock.WORKING, !itemStack.isEmpty());
+        level.setBlock(blockPos, newBlockState, 3);
+        setChanged(level, blockPos, newBlockState);
       }
 
-      // Get Mob Name
-      this.farmMobName = capturedMobItem.getCapturedMob(itemStack);
       syncData();
     }
   }

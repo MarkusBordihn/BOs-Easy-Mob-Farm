@@ -58,11 +58,12 @@ public class CommonConfig {
 
     public final ForgeConfigSpec.IntValue mobCatchingLuck;
 
-    public final ForgeConfigSpec.IntValue chickenFarmProcessTime;
-    public final ForgeConfigSpec.BooleanValue chickenFarmDropEggs;
-    public final ForgeConfigSpec.BooleanValue chickenFarmDropRawChicken;
+    public final ForgeConfigSpec.IntValue animalPlainsFarmProcessTime;
 
     public final ForgeConfigSpec.IntValue skeletonFarmProcessTimeProcessTime;
+
+    public final ForgeConfigSpec.BooleanValue chickenDropEggs;
+    public final ForgeConfigSpec.BooleanValue chickenDropRawChicken;
 
     Config(ForgeConfigSpec.Builder builder) {
       builder.comment(Constants.MOD_NAME);
@@ -82,14 +83,10 @@ public class CommonConfig {
           .defineInRange("mobCatchingLuck", 3, 0, 100);
       builder.pop();
 
-      builder.push("Chicken Farm");
-      chickenFarmProcessTime =
+      builder.push("Animal Plains Farms");
+      animalPlainsFarmProcessTime =
           builder.comment("Defines after how many seconds a drop is performed.")
-              .defineInRange("chickenFarmProcessTime", 300, 10, 3600);
-      chickenFarmDropEggs =
-          builder.comment("Enable/Disable egg drops.").define("chickenFarmDropEggs", true);
-      chickenFarmDropRawChicken = builder.comment("Enable/Disable raw chicken drops.")
-          .define("chickenFarmDropRawChicken", false);
+              .defineInRange("animalPlainsFarmProcessTime", 300, 10, 3600);
       builder.pop();
 
       builder.push("Skeleton Farm");
@@ -98,6 +95,13 @@ public class CommonConfig {
               .defineInRange("skeletonFarmProcessTimeProcessTime", 300, 10, 3600);
       builder.pop();
       // @TemplateEntryPoint("Register Forge Config Spec")
+
+      builder.push("Chicken Settings");
+            chickenDropEggs =
+          builder.comment("Enable/Disable egg drops.").define("animalPlainsFarmDropEggs", true);
+      chickenDropRawChicken = builder.comment("Enable/Disable raw chicken drops.")
+          .define("animalPlainsFarmDropRawChicken", false);
+      builder.pop();
     }
   }
 }

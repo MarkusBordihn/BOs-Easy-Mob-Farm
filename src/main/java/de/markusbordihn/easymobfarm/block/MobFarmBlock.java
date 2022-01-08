@@ -48,6 +48,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -66,18 +67,28 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
   public static final String NAME = "mob_farm";
 
   public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+  public static final BooleanProperty WORKING = BooleanProperty.create("working");
 
   protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 
   public MobFarmBlock(BlockBehaviour.Properties properties) {
     super(properties);
-    this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+    this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH)
+        .setValue(WORKING, Boolean.valueOf(false)));
   }
 
   protected void openContainer(Level level, BlockPos blockPos, Player player) {
     if (level.getBlockEntity(blockPos) instanceof MobFarmBlockEntity mobFarm) {
       player.openMenu(mobFarm);
     }
+  }
+
+  public static int getLightLevel(BlockState blockState) {
+    return Boolean.TRUE.equals(blockState.getValue(MobFarmBlock.WORKING)) ? 10 : 1;
+  }
+
+  public boolean isAcceptedMobType(String mobType) {
+    return true;
   }
 
   @Override
@@ -93,7 +104,7 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
 
   @Override
   protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> blockState) {
-    blockState.add(FACING);
+    blockState.add(FACING, WORKING);
   }
 
   @Override
@@ -117,20 +128,20 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
     // Ignore event, if the stored mob could be consumed.
     if (itemStack.getItem() instanceof CapturedMobItem
         && blockEntity instanceof MobFarmBlockEntity mobFarmBlockEntity
-        && !mobFarmBlockEntity.hasMob()) {
+        && !mobFarmBlockEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
       return InteractionResult.PASS;
-    }
-
-    // Remove existing mob if player is sneaking.
-    if (player.isShiftKeyDown() && blockEntity instanceof MobFarmBlockEntity mobFarmBlockEntity
-        && mobFarmBlockEntity.hasMob()) {
-      mobFarmBlockEntity.givePlayerItem(MobFarmMenu.CAPTURED_MOB_SLOT, player, hand,
-          blockPos);
-      return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
     if (level.isClientSide) {
       return InteractionResult.SUCCESS;
+    }
+
+    // Remove existing mob if player is sneaking.
+    if (player.isShiftKeyDown()
+        && blockEntity instanceof MobFarmBlockEntity mobFarmBlockEntity
+        && mobFarmBlockEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
+      mobFarmBlockEntity.givePlayerItem(MobFarmMenu.CAPTURED_MOB_SLOT, player, hand, blockPos);
+      return InteractionResult.CONSUME;
     }
 
     // Open Container
@@ -171,6 +182,16 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
     return level.isClientSide ? null
         : createTickerHelper(blockEntityType, ModBlocks.MOB_FARM_ENTITY.get(),
             MobFarmBlockEntity::serverTick);
+  }
+
+  @Override
+  public boolean canConsumeCapturedMob(Level level, BlockPos blockPos, BlockState blockState,
+      BlockEntity blockEntity, Player player, ItemStack itemStack) {
+    if (itemStack.getItem() instanceof CapturedMobItem capturedMobItem) {
+      String capturedMobType = capturedMobItem.getCapturedMobType(itemStack);
+      return isAcceptedMobType(capturedMobType);
+    }
+    return false;
   }
 
   @Override

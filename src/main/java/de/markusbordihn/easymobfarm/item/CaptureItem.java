@@ -40,6 +40,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.Tags.Items;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -62,6 +63,10 @@ public class CaptureItem extends CapturedMobItem {
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
     mobCatchingLuck = COMMON.mobCatchingLuck.get();
+  }
+
+  public boolean canCatchMob(LivingEntity livingEntity) {
+    return true;
   }
 
   @Override
@@ -114,6 +119,8 @@ public class CaptureItem extends CapturedMobItem {
     }
     Level level = livingEntity.getLevel();
 
+    // Try to check if we could catching the targeted mob.
+
     if (!hasCapturedMob(itemStack)) {
       // Handle sounds and empty hand, if item will break.
       if (willItemBreak(itemStack, 1)) {
@@ -149,7 +156,6 @@ public class CaptureItem extends CapturedMobItem {
     }
 
     return InteractionResult.PASS;
-
   }
 
 
@@ -161,8 +167,25 @@ public class CaptureItem extends CapturedMobItem {
       tooltipList.add(new TranslatableComponent(Constants.TEXT_PREFIX + "capture"));
     } else {
       Float entityHealth = getCapturedMobHealth(itemStack);
+      tooltipList.add(new TranslatableComponent(""));
       tooltipList.add(new TranslatableComponent(Constants.TEXT_PREFIX + "release", entityName)
           .withStyle(ChatFormatting.YELLOW));
+      tooltipList.add(new TranslatableComponent(""));
+
+      // Display possible loot
+      List<String> possibleLoot = getPossibleLoot(itemStack);
+      if (possibleLoot.size() > 0) {
+        TranslatableComponent possibleLootOverview =
+            (TranslatableComponent) new TranslatableComponent(
+                Constants.TEXT_PREFIX + "possible_loot").append(" ")
+                    .withStyle(ChatFormatting.GREEN);
+        for (String drop : possibleLoot) {
+          possibleLootOverview.append(
+              new TranslatableComponent(drop).append(", ").withStyle(ChatFormatting.DARK_GREEN));
+        }
+        tooltipList.add(possibleLootOverview.append("..."));
+      }
+
       tooltipList.add(new TranslatableComponent(Constants.TEXT_PREFIX + "health", entityHealth));
     }
   }

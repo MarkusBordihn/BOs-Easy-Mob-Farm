@@ -20,35 +20,61 @@
 package de.markusbordihn.easymobfarm.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
 
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.core.Direction;
 
-import de.markusbordihn.easymobfarm.block.MobFarmBlock;
-import de.markusbordihn.easymobfarm.block.entity.ChickenMobFarmEntity;
+import de.markusbordihn.easymobfarm.block.entity.AnimalPlainsFarmEntity;
+import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
-public class ChickenMobFarmRenderer extends MobFarmRendererBase<ChickenMobFarmEntity> {
+public class AnimalPlainsFarmRenderer extends MobFarmRendererBase<AnimalPlainsFarmEntity> {
 
-  public ChickenMobFarmRenderer(BlockEntityRendererProvider.Context context) {
+  public AnimalPlainsFarmRenderer(BlockEntityRendererProvider.Context context) {
     super(context);
   }
 
   @Override
-  public void render(ChickenMobFarmEntity blockEntity, float partialTicks, PoseStack poseStack,
+  public void render(AnimalPlainsFarmEntity blockEntity, float partialTicks, PoseStack poseStack,
       MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+    super.render(blockEntity, partialTicks, poseStack, buffer, combinedLight, combinedOverlay);
 
-    Direction direction = blockEntity.getBlockState().getValue(MobFarmBlock.FACING);
+    log.info("{} {}", blockEntity.getFarmId(), blockEntity.getFarmMobColor());
+    if (!blockEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
+      return;
+    }
+
+    String farmMobType = blockEntity.getFarmMobType();
 
     // Render Chicken
-    if (blockEntity.hasMob()) {
+    if (farmMobType.equals("minecraft:chicken")) {
       poseStack.pushPose();
       poseStack.translate(0.5D, 1D / 16D, 0.5D);
-      poseStack.mulPose(Vector3f.YP.rotationDegrees(-direction.toYRot()));
+      poseStack.mulPose(getBlockRotation(blockEntity));
       poseStack.translate(0D, 0D, -1D / 16D);
       poseStack.scale(0.6F, 0.6F, 0.6F);
-      renderChicken(0F, poseStack, buffer, combinedLight);
+      renderChicken(poseStack, buffer, combinedLight);
+      poseStack.popPose();
+    }
+
+    // Render Cow
+    else if (farmMobType.equals("minecraft:cow")) {
+      poseStack.pushPose();
+      poseStack.translate(0.5D, 1D / 16D, 0.5D);
+      poseStack.mulPose(getBlockRotation(blockEntity));
+      poseStack.translate(0D, 0D, -1D / 16D);
+      poseStack.scale(0.5F, 0.5F, 0.5F);
+      renderCow(poseStack, buffer, combinedLight);
+      poseStack.popPose();
+    }
+
+    // Render Sheep
+    else if (farmMobType.equals("minecraft:sheep")) {
+      poseStack.pushPose();
+      poseStack.translate(0.5D, 1D / 16D, 0.5D);
+      poseStack.mulPose(getBlockRotation(blockEntity));
+      poseStack.translate(0D, 0D, -1D / 16D);
+      poseStack.scale(0.5F, 0.5F, 0.5F);
+      renderSheep(poseStack, buffer, combinedLight, blockEntity.getFarmMobColor());
       poseStack.popPose();
     }
 

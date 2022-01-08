@@ -27,13 +27,22 @@ import de.markusbordihn.easymobfarm.item.CapturedMobItem;
 
 public class CapturedMobSlot extends Slot {
 
-  public CapturedMobSlot(Container container, int index, int x, int y) {
+  private MobFarmMenu menu;
+
+  public CapturedMobSlot(Container container, int index, int x, int y, MobFarmMenu menu) {
     super(container, index, x, y);
+    this.menu = menu;
   }
 
   @Override
   public boolean mayPlace(ItemStack itemStack) {
-    return itemStack.getItem() instanceof CapturedMobItem;
+    if (!this.menu.mayPlaceCapturedMob(itemStack)) {
+      return false;
+    }
+    if (itemStack.getItem() instanceof CapturedMobItem capturedMobItem) {
+      return this.menu.mayPlaceCapturedMobType(capturedMobItem.getCapturedMobType(itemStack));
+    }
+    return false;
   }
 
 }

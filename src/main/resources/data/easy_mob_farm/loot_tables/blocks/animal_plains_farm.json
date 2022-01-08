@@ -13,7 +13,7 @@
               "source": "block_entity"
             }
           ],
-          "name": "easy_mob_farm:chicken_mob_farm"
+          "name": "easy_mob_farm:animal_plains_farm"
         }
       ],
       "conditions": [

@@ -20,8 +20,6 @@
 package de.markusbordihn.easymobfarm.block.entity;
 
 import java.util.UUID;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
@@ -41,19 +39,17 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 
-import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.item.CapturedMobItem;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
 public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
-
-  private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   // Data Access Names
   public static final int FARM_TIME_DATA = 0;
@@ -78,6 +74,7 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
   public static final int FARM_STATUS_WORKING = 3;
 
   // Internal data states
+  public int farmId;
   public UUID farmOwner;
   public int farmDuration;
   public int farmProgress;
@@ -85,6 +82,8 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
   public int farmTime = -1;
   public int farmTotalTime;
   public String farmMobName = "";
+  public String farmMobType = "";
+  public DyeColor farmMobColor = null;
 
   // Item Storage
   public NonNullList<ItemStack> items = NonNullList.withSize(6, ItemStack.EMPTY);
@@ -139,6 +138,7 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
   public MobFarmBlockEntityData(BlockEntityType<?> blockEntity, BlockPos blockPos,
       BlockState blockState) {
     super(blockEntity, blockPos, blockState);
+    this.farmId = blockPos.hashCode();
   }
 
   public void setOwner(LivingEntity livingEntity) {
@@ -151,7 +151,12 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
   }
 
   public ItemStack takeItem(int index) {
-    return ContainerHelper.takeItem(this.items, index);
+    if (index < 0 || index >= this.items.size()) {
+      return ItemStack.EMPTY;
+    }
+    ItemStack itemStack = getItem(index);
+    setItem(index, ItemStack.EMPTY);
+    return itemStack;
   }
 
   public void syncData() {
@@ -263,6 +268,8 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
     ItemStack capturedMob = this.items.get(MobFarmMenu.CAPTURED_MOB_SLOT);
     if (!capturedMob.isEmpty() && capturedMob.getItem() instanceof CapturedMobItem capturedMobItem) {
       this.farmMobName = capturedMobItem.getCapturedMob(capturedMob);
+      this.farmMobType = capturedMobItem.getCapturedMobType(capturedMob);
+      this.farmMobColor = capturedMobItem.getCapturedMobColor(capturedMob);
     }
   }
 

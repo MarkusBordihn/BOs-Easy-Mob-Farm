@@ -6,10 +6,9 @@ import com.mojang.math.Vector3f;
 
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.core.Direction;
 
-import de.markusbordihn.easymobfarm.block.MobFarmBlock;
 import de.markusbordihn.easymobfarm.block.entity.SkeletonMobFarmEntity;
+import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
 public class SkeletonMobFarmRenderer extends MobFarmRendererBase<SkeletonMobFarmEntity> {
 
@@ -20,18 +19,17 @@ public class SkeletonMobFarmRenderer extends MobFarmRendererBase<SkeletonMobFarm
   @Override
   public void render(SkeletonMobFarmEntity blockEntity, float partialTicks, PoseStack poseStack,
       MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
-
-    Direction direction = blockEntity.getBlockState().getValue(MobFarmBlock.FACING);
+    super.render(blockEntity, partialTicks, poseStack, buffer, combinedLight, combinedOverlay);
 
     // Render Chicken
-    if (blockEntity.hasMob()) {
+    if (blockEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
       poseStack.pushPose();
       poseStack.translate(0.5D, 1D / 16D, 0.5D);
-      poseStack.mulPose(Vector3f.YP.rotationDegrees(-direction.toYRot()));
+      poseStack.mulPose(getBlockRotation(blockEntity));
       poseStack.translate(0D, 0D, 2D / 16D);
       poseStack.mulPose(Vector3f.YP.rotationDegrees(-20));
       poseStack.scale(0.3F, 0.3F, 0.3F);
-      renderSkeleton(0F, poseStack, buffer, combinedLight);
+      renderSkeleton(poseStack, buffer, combinedLight);
       poseStack.popPose();
     }
 

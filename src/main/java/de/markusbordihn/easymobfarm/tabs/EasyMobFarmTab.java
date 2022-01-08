@@ -29,7 +29,13 @@ public class EasyMobFarmTab {
 
   public static final CreativeModeTab MOB_FARM = new CreativeModeTab("easy_mob_farm") {
     public ItemStack makeIcon() {
-      return new ItemStack(ModItems.CHICKEN_MOB_FARM.get());
+      return new ItemStack(ModItems.ANIMAL_PLAINS_FARM.get());
+    }
+  };
+
+  public static final CreativeModeTab TOOLS = new CreativeModeTab("easy_mob_farm_tools") {
+    public ItemStack makeIcon() {
+      return new ItemStack(ModItems.COLLAR_SMALL.get());
     }
   };
 }

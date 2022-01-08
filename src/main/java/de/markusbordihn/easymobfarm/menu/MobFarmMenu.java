@@ -88,12 +88,17 @@ public class MobFarmMenu extends AbstractContainerMenu {
 
   public MobFarmMenu(int windowIdIn, Inventory inventory) {
     this(windowIdIn, inventory, new SimpleContainer(containerSize),
-        new SimpleContainerData(MobFarmBlockEntityData.DATA_SIZE));
+        new SimpleContainerData(MobFarmBlockEntityData.DATA_SIZE), TYPE);
   }
 
   public MobFarmMenu(final int windowId, final Inventory playerInventory, final Container container,
       final ContainerData containerData) {
-    super(TYPE, windowId);
+    this(windowId, playerInventory, container, containerData, TYPE);
+  }
+
+  public MobFarmMenu(final int windowId, final Inventory playerInventory, final Container container,
+      final ContainerData containerData, MenuType<?> menuType) {
+    super(menuType, windowId);
 
     // Make sure the passed container matched the expected sizes
     checkContainerSize(container, containerSize);
@@ -104,7 +109,7 @@ public class MobFarmMenu extends AbstractContainerMenu {
 
     // Define slots and position on UI (note: order sensitive)
     this.addSlot(new CapturedMobSlot(container, CAPTURED_MOB_SLOT, CAPTURED_MOB_SLOT_LEFT,
-        CAPTURED_MOB_SLOT_TOP));
+        CAPTURED_MOB_SLOT_TOP, this));
     this.addSlot(
         new LockedResultSlot(container, RESULT_1_SLOT, RESULT_SLOTS_LEFT, RESULT_SLOTS_TOP));
     this.addSlot(new LockedResultSlot(container, RESULT_2_SLOT, RESULT_SLOTS_LEFT + 1 * 18,
@@ -195,12 +200,12 @@ public class MobFarmMenu extends AbstractContainerMenu {
     return this.container.stillValid(player);
   }
 
+  public boolean mayPlaceCapturedMob(ItemStack itemStack) {
+    return itemStack.getItem() instanceof CapturedMobItem;
+  }
 
-
-  @Override
-  public void slotsChanged(Container container) {
-    super.slotsChanged(container);
-    log.info("Slot was changed ...");
+  public boolean mayPlaceCapturedMobType(String mobType) {
+    return !mobType.isBlank();
   }
 
   @Override

@@ -31,15 +31,16 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.DyeColor;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
-public class MobFarmScreen extends AbstractContainerScreen<MobFarmMenu> {
+public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> {
 
-  public static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+  private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   private static final ResourceLocation TEXTURE =
       new ResourceLocation(Constants.MOD_ID, "textures/container/mob_farm_gui.png");
@@ -52,9 +53,14 @@ public class MobFarmScreen extends AbstractContainerScreen<MobFarmMenu> {
   private int totalTimeLabelY;
   private float totalTimeLabelScale = 0.75F;
   private TranslatableComponent warningFullText;
+  private MobFarmMenu mobFarmMenu;
 
-  public MobFarmScreen(MobFarmMenu mobFarmMenu, Inventory inventory, Component component) {
-    super(mobFarmMenu, inventory, component);
+  public ResourceLocation backgroundTexture = TEXTURE;
+
+  public MobFarmScreen(T menu, Inventory inventory, Component component) {
+    super(menu, inventory, component);
+    this.mobFarmMenu = (MobFarmMenu) menu;
+    log.info("Open Mob Farm Screen");
   }
 
   @Override
@@ -73,8 +79,8 @@ public class MobFarmScreen extends AbstractContainerScreen<MobFarmMenu> {
   @Override
   public void render(PoseStack poseStack, int x, int y, float partialTicks) {
     // Update data cache only every 40 ticks to avoid expensive operations on hight fps.
-    if ((this.ticker++ & (40-1)) == 0) {
-      this.menu.updateMobFarmDataCache();
+    if ((this.ticker++ & (40 - 1)) == 0) {
+      this.mobFarmMenu.updateMobFarmDataCache();
       if (ticker >= 40) {
         this.ticker = 0;
       }
@@ -87,15 +93,15 @@ public class MobFarmScreen extends AbstractContainerScreen<MobFarmMenu> {
   @Override
   protected void renderLabels(PoseStack matrixStack, int x, int y) {
     super.renderLabels(matrixStack, x, y);
-    int mobFarmStatus = this.menu.getMobFarmStatus();
+    int mobFarmStatus = this.mobFarmMenu.getMobFarmStatus();
 
     // Show Mob Details
     if (mobFarmStatus != MobFarmBlockEntityData.FARM_STATUS_WAITING) {
       matrixStack.pushPose();
       font.draw(matrixStack, "Mob:", 65, 22, FONT_COLOR_BLACK);
-      font.draw(matrixStack, this.menu.getMobFarmName(), 88, 22, FONT_COLOR_GRAY);
+      font.draw(matrixStack, this.mobFarmMenu.getMobFarmName(), 88, 22, FONT_COLOR_GRAY);
       font.draw(matrixStack, "Drop Time:", 65, 32, FONT_COLOR_BLACK);
-      font.draw(matrixStack, this.menu.getMobFarmTotalTimeText(), 118, 32, FONT_COLOR_GRAY);
+      font.draw(matrixStack, this.mobFarmMenu.getMobFarmTotalTimeText(), 118, 32, FONT_COLOR_GRAY);
       matrixStack.popPose();
     }
 
@@ -107,7 +113,7 @@ public class MobFarmScreen extends AbstractContainerScreen<MobFarmMenu> {
         matrixStack.scale(totalTimeLabelScale, totalTimeLabelScale, totalTimeLabelScale);
         font.draw(matrixStack,
             new TranslatableComponent(Constants.TEXT_PREFIX + "next_drop_secs",
-                this.menu.getMobFarmRemainingTime()),
+                this.mobFarmMenu.getMobFarmRemainingTime()),
             totalTimeLabelX, totalTimeLabelY, FONT_COLOR_GRAY);
         matrixStack.popPose();
         break;
@@ -123,17 +129,17 @@ public class MobFarmScreen extends AbstractContainerScreen<MobFarmMenu> {
   protected void renderBg(PoseStack poseStack, float partialTicks, int mouseX, int mouseY) {
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
     RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-    RenderSystem.setShaderTexture(0, TEXTURE);
+    RenderSystem.setShaderTexture(0, this.backgroundTexture);
 
     // Cut main screen
     this.blit(poseStack, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight);
 
-    int mobFarmStatus = this.menu.getMobFarmStatus();
+    int mobFarmStatus = this.mobFarmMenu.getMobFarmStatus();
 
     switch (mobFarmStatus) {
       case MobFarmBlockEntityData.FARM_STATUS_DONE:
       case MobFarmBlockEntityData.FARM_STATUS_WORKING:
-        int mobFarmProgress = this.menu.getMobFarmProgressImage();
+        int mobFarmProgress = this.mobFarmMenu.getMobFarmProgressImage();
         int mobFarmProgressLeftPos = leftPos + 43;
         int mobFarmProgressTopPos = topPos + 41;
         this.blit(poseStack, mobFarmProgressLeftPos, mobFarmProgressTopPos, 194, 14, 18,
