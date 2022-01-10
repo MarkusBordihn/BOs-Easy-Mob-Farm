@@ -47,6 +47,7 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
 
   private static final int FONT_COLOR_BLACK = DyeColor.BLACK.getTextColor();
   private static final int FONT_COLOR_GRAY = DyeColor.GRAY.getTextColor();
+  private static final int FONT_COLOR_GREEN = DyeColor.GREEN.getTextColor();
   private static final int FONT_COLOR_WARNING = DyeColor.RED.getTextColor();
 
   public static final int SNAP_WITH = 34;
@@ -107,13 +108,15 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
     // Show Mob Details
     if (mobFarmStatus != MobFarmBlockEntityData.FARM_STATUS_WAITING) {
       matrixStack.pushPose();
-      matrixStack.scale(0.98f, 0.98f, 0.98f);
       font.draw(matrixStack, "Mob:", 65, 25, FONT_COLOR_BLACK);
-      font.draw(matrixStack, this.mobFarmMenu.getMobFarmName(), 88, 25, FONT_COLOR_GRAY);
-      font.draw(matrixStack, "Type:", 65, 35, FONT_COLOR_BLACK);
-      font.draw(matrixStack, this.mobFarmMenu.getMobFarmType(), 93, 35, FONT_COLOR_GRAY);
+      font.draw(matrixStack, this.mobFarmMenu.getMobFarmName(), 88, 25, FONT_COLOR_GREEN);
       font.draw(matrixStack, "Drop Time:", 65, 45, FONT_COLOR_BLACK);
       font.draw(matrixStack, this.mobFarmMenu.getMobFarmTotalTimeText(), 118, 45, FONT_COLOR_GRAY);
+      matrixStack.popPose();
+
+      matrixStack.pushPose();
+      matrixStack.scale(0.65f, 0.65f, 0.65f);
+      font.draw(matrixStack, this.mobFarmMenu.getMobFarmType(), 100, 52, FONT_COLOR_GRAY);
       matrixStack.popPose();
     }
 

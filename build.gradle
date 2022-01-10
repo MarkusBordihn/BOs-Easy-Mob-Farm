@@ -129,6 +129,10 @@ dependencies {
   // The userdev artifact is a special name and will get all sorts of transformations applied to it.
   minecraft 'net.minecraftforge:forge:1.18.1-39.0.14'
 
+  // Required: Bo's Material Elements (dev dependency)
+  compileOnly fg.deobf("curse.maven:material_elements-541620:3584897")
+  runtimeOnly fg.deobf("curse.maven:material_elements-541620:3584897")
+
   // Additional helpful Mods for development (dev depenedency)
   runtimeOnly fg.deobf("curse.maven:spark-361579:3591172")
   runtimeOnly fg.deobf("curse.maven:item-zoom-261725:3574021")
@@ -178,5 +182,10 @@ curseforge {
     releaseType = 'release'
     addGameVersion("1.18.1")
     addGameVersion("Forge")
+    mainArtifact(jar) {
+      relations {
+        requiredDependency 'material-elements'
+      }
+    }
   }
 }

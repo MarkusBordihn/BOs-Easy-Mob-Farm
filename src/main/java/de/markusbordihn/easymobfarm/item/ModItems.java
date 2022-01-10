@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.item;
 
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 
 import net.minecraftforge.registries.RegistryObject;
@@ -28,6 +29,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.AnimalPlainsFarm;
+import de.markusbordihn.easymobfarm.block.CreativeMobFarm;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.block.MonsterPlainsCaveFarm;
 import de.markusbordihn.easymobfarm.item.capture.CollarSmallItem;
@@ -55,6 +57,13 @@ public class ModItems {
 
   @TemplateEntryPoint("Register Block Items")
 
+  public static final RegistryObject<Item> CREATIVE_MOB_FARM =
+      ITEMS.register(CreativeMobFarm.NAME, () -> new BlockItem(ModBlocks.CREATIVE_MOB_FARM.get(),
+          new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
+  public static final RegistryObject<Item> EMPTY_MOB_FARM =
+      ITEMS.register("empty_mob_farm", () -> new BlockItem(ModBlocks.EMPTY_MOB_FARM.get(),
+          new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
+
   // Mob Farms
   public static final RegistryObject<Item> ANIMAL_PLAINS_FARM =
       ITEMS.register(AnimalPlainsFarm.NAME, () -> new BlockItem(ModBlocks.ANIMAL_PLAINS_FARM.get(),
@@ -62,6 +71,4 @@ public class ModItems {
   public static final RegistryObject<Item> MONSTER_PLAINS_CAVE_FARM = ITEMS.register(
       MonsterPlainsCaveFarm.NAME, () -> new BlockItem(ModBlocks.MONSTER_PLAINS_CAVE_FARM.get(),
           new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
-
-  String test = "";
 }

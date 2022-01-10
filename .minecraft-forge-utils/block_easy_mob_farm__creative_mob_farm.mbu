@@ -1,0 +1,35 @@
+{
+  "attributes": {
+    "soundType": "SoundType.METAL"
+  },
+  "bedrock": {
+    "formatVersion": "1.16.1"
+  },
+  "blockName": "creative_mob_farm",
+  "component": "block",
+  "configVersion": "1.0.0",
+  "description": "",
+  "events": {},
+  "forge": {
+    "className": "CreativeMobFarm"
+  },
+  "icon": "creative_mob_farm",
+  "id": "easy_mob_farm:creative_mob_farm",
+  "misc": {},
+  "name": "Creative Mob Farm",
+  "namespace": "easy_mob_farm",
+  "placeholder": {
+    "BlockClassName": "CreativeMobFarm",
+    "BLOCKNAME": "CREATIVEMOBFARM",
+    "BLOCK_NAME": "CREATIVE_MOB_FARM",
+    "BlockName": "CreativeMobFarm",
+    "blockName": "creativeMobFarm",
+    "block_name": "creative_mob_farm",
+    "blockname": "creativemobfarm",
+    "CreativeTab": "TAB_MISC",
+    "SoundType": "SoundType.METAL"
+  },
+  "template": ".\\\\templates\\\\NewEasyMobFarm.template",
+  "type": "template",
+  "variation": ""
+}

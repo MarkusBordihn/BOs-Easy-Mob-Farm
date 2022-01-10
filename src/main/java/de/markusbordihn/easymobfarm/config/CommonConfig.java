@@ -60,15 +60,15 @@ public class CommonConfig {
 
     public final ForgeConfigSpec.IntValue animalPlainsFarmProcessTime;
 
-    public final ForgeConfigSpec.IntValue skeletonFarmProcessTimeProcessTime;
+    public final ForgeConfigSpec.IntValue creativeMobFarmProcessTime;
+
+    public final ForgeConfigSpec.IntValue monsterPlainsCaveFarmProcessTime;
 
     public final ForgeConfigSpec.BooleanValue blazeDropBlazeRod;
 
     public final ForgeConfigSpec.BooleanValue chickenDropEggs;
     public final ForgeConfigSpec.BooleanValue chickenDropRawChicken;
 
-
-public final ForgeConfigSpec.IntValue monsterPlainsCaveFarmProcessTime;
     Config(ForgeConfigSpec.Builder builder) {
       builder.comment(Constants.MOD_NAME);
 
@@ -93,10 +93,10 @@ public final ForgeConfigSpec.IntValue monsterPlainsCaveFarmProcessTime;
               .defineInRange("animalPlainsFarmProcessTime", 300, 10, 3600);
       builder.pop();
 
-      builder.push("Skeleton Farm");
-      skeletonFarmProcessTimeProcessTime =
+      builder.push("CreativeMobFarm");
+      creativeMobFarmProcessTime =
           builder.comment("Defines after how many seconds a drop is performed.")
-              .defineInRange("skeletonFarmProcessTimeProcessTime", 300, 10, 3600);
+              .defineInRange("creativeMobFarmProcessTime", 60, 10, 3600);
       builder.pop();
 
       builder.push("MonsterPlainsCaveFarm");
@@ -104,10 +104,11 @@ public final ForgeConfigSpec.IntValue monsterPlainsCaveFarmProcessTime;
           builder.comment("Defines after how many seconds a drop is performed.")
               .defineInRange("monsterPlainsCaveFarmProcessTime", 300, 10, 3600);
       builder.pop();
+
       // @TemplateEntryPoint("Register Forge Config Spec")
 
       builder.push("Chicken Settings");
-            chickenDropEggs =
+      chickenDropEggs =
           builder.comment("Enable/Disable egg drops.").define("chickenDropEggs", true);
       chickenDropRawChicken = builder.comment("Enable/Disable raw chicken drops.")
           .define("chickenDropRawChicken", true);

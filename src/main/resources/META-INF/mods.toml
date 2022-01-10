@@ -50,3 +50,11 @@ license="MIT"
     versionRange="[1.18.1,1.19)"
     ordering="NONE"
     side="BOTH"
+
+[[dependencies.steel_armor_tools_weapons]]
+    modId="material_elements"
+    mandatory=true
+    # This version range declares a minimum of the material elements version up to but not including the next major version
+    versionRange="[1.4.0,)"
+    ordering="NONE"
+    side="BOTH"
