@@ -75,8 +75,8 @@ The urn is used to catch the standard monsters from a plains cave biome.
 
 The creative mob catching item could catch all kind of living entities.
 
-[logo]: https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/raw/src/main/resources/logo.png
-[animal_plains_farm]: https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/raw/assets/animal_plains_farm.png
-[item_overview]: https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/raw/assets/item_overview.png
-[mob_menu]: https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/raw/assets/mob_menu.png
-[monster_plains_cave_farm]: https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/raw/assets/monster_plains_cave_farm.png
+[logo]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/src/main/resources/logo.png
+[animal_plains_farm]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/animal_plains_farm.png
+[item_overview]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/item_overview.png
+[mob_menu]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/mainassets/mob_menu.png
+[monster_plains_cave_farm]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/monster_plains_cave_farm.png

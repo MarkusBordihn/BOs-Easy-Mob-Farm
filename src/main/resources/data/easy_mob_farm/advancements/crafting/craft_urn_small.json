@@ -1,5 +1,5 @@
 {
-  "parent": "easy_mob_farm:crafting/craft_animal_plains_farm",
+  "parent": "easy_mob_farm:crafting/craft_monster_plains_cave_farm",
   "display": {
     "icon": {
       "item": "easy_mob_farm:urn_small"
