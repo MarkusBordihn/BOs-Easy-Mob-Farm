@@ -50,9 +50,8 @@ import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.MobFarmBlock;
-import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.config.CommonConfig;
-import de.markusbordihn.easymobfarm.item.CapturedMobItem;
+import de.markusbordihn.easymobfarm.item.CapturedMob;
 import de.markusbordihn.easymobfarm.loot.LootManager;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
@@ -66,7 +65,7 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
   private static boolean logFullStorage = COMMON.logFullStorage.get();
 
   public MobFarmBlockEntity(BlockPos blockPos, BlockState blockState) {
-    super(ModBlocks.MOB_FARM_ENTITY.get(), blockPos, blockState);
+    super(null, blockPos, blockState);
   }
 
   public MobFarmBlockEntity(BlockEntityType<?> blockEntity, BlockPos blockPos,
@@ -137,7 +136,7 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
 
     // Processing mob farm
     if (blockEntity.farmProgress == blockEntity.farmTotalTime) {
-      if (capturedMob.getItem() instanceof CapturedMobItem) {
+      if (capturedMob.getItem() instanceof CapturedMob) {
         blockEntity.processResult(capturedMob, blockEntity);
         blockEntity.processAdditionalEffects(level, blockPos, blockEntity, capturedMob);
       }
@@ -251,7 +250,7 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
     if (index == MobFarmMenu.CAPTURED_MOB_SLOT) {
 
       // Update and cache data based on captured mob
-      if (itemStack.getItem() instanceof CapturedMobItem capturedMobItem) {
+      if (itemStack.getItem() instanceof CapturedMob capturedMobItem) {
         // Get processing time, the farm processing time always overwrite the mob processing time.
         if (getFarmProcessingTime() > 0) {
           this.farmTotalTime = getFarmProcessingTime();

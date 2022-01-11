@@ -19,7 +19,9 @@
 
 package de.markusbordihn.easymobfarm.item;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import javax.annotation.Nullable;
 
 import org.apache.logging.log4j.LogManager;
@@ -53,15 +55,16 @@ import de.markusbordihn.easymobfarm.block.CapturedMobCompatible;
 import de.markusbordihn.easymobfarm.config.CommonConfig;
 
 @EventBusSubscriber
-public class CaptureItem extends CapturedMobItem {
+public class MobCatcherItem extends CapturedMob {
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
-
   private static int mobCatchingLuck = COMMON.mobCatchingLuck.get();
 
-  public CaptureItem(Item.Properties properties) {
+  public static final Set<String> ACCEPTED_MOB_TYPES = Collections.emptySet();
+
+  public MobCatcherItem(Item.Properties properties) {
     super(properties);
   }
 
@@ -70,8 +73,20 @@ public class CaptureItem extends CapturedMobItem {
     mobCatchingLuck = COMMON.mobCatchingLuck.get();
   }
 
+  public Set<String> getAcceptedMobTypes() {
+    return ACCEPTED_MOB_TYPES;
+  }
+
   public boolean canCatchMob(LivingEntity livingEntity) {
-    return true;
+    return livingEntity instanceof LivingEntity;
+  }
+
+  public boolean canCatchMobType(String mobType) {
+    return !mobType.isEmpty();
+  }
+
+  public int getMobCatchingLuck() {
+    return mobCatchingLuck > 0 ? this.random.nextInt(mobCatchingLuck) : 0;
   }
 
   @Override
@@ -144,8 +159,14 @@ public class CaptureItem extends CapturedMobItem {
         return InteractionResult.SUCCESS;
       }
 
-      // Handle mob catching luck.
-      if (mobCatchingLuck > 0 && this.random.nextInt(mobCatchingLuck) != 0) {
+      // Check if we could catch the mob Type
+      String mobType = livingEntity.getType().getRegistryName().toString();
+      if (!canCatchMob(livingEntity) || !canCatchMobType(mobType)) {
+        return InteractionResult.FAIL;
+      }
+
+      // Handle mob catching luck and failed actions.
+      if (getMobCatchingLuck() != 0) {
         livingEntity.playSound(SoundEvents.DISPENSER_FAIL, 1.0F, 0F);
         damageItem(itemStack, 1);
         player.setItemInHand(hand, itemStack);
@@ -169,14 +190,30 @@ public class CaptureItem extends CapturedMobItem {
     String entityName = getCapturedMob(itemStack);
     if (entityName.isEmpty()) {
       tooltipList.add(new TranslatableComponent(Constants.TEXT_PREFIX + "capture"));
+
+      // Display possible catchable mobs.
+      Set<String> acceptedMobTypes = getAcceptedMobTypes();
+      if (!acceptedMobTypes.isEmpty()) {
+        TranslatableComponent acceptedMobsOverview =
+            (TranslatableComponent) new TranslatableComponent(
+                Constants.TEXT_PREFIX + "catchable_mobs").append(" ")
+                    .withStyle(ChatFormatting.GREEN);
+
+        for (String acceptedMob : acceptedMobTypes) {
+          // Format accepted mob to entity.x.y format for automatic translations.
+          acceptedMobsOverview
+              .append(new TranslatableComponent("entity." + acceptedMob.replace(':', '.'))
+                  .append(", ").withStyle(ChatFormatting.DARK_GREEN));
+        }
+        tooltipList.add(acceptedMobsOverview.append("..."));
+      }
+
     } else {
       Float entityHealth = getCapturedMobHealth(itemStack);
-      tooltipList.add(new TranslatableComponent(""));
       tooltipList.add(new TranslatableComponent(Constants.TEXT_PREFIX + "release", entityName)
           .withStyle(ChatFormatting.YELLOW));
-      tooltipList.add(new TranslatableComponent(""));
 
-      // Display possible loot
+      // Display possible loot of catched mob.
       List<String> possibleLoot = getPossibleLoot(itemStack);
       if (!possibleLoot.isEmpty()) {
         TranslatableComponent possibleLootOverview =
@@ -189,7 +226,6 @@ public class CaptureItem extends CapturedMobItem {
         }
         tooltipList.add(possibleLootOverview.append("..."));
       }
-
       tooltipList.add(new TranslatableComponent(Constants.TEXT_PREFIX + "health", entityHealth));
     }
   }

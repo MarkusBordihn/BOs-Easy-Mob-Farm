@@ -127,11 +127,15 @@ dependencies {
   // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
   // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
   // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-  minecraft 'net.minecraftforge:forge:1.18.1-39.0.14'
+  minecraft 'net.minecraftforge:forge:1.18.1-39.0.18'
 
   // Required: Bo's Material Elements (dev dependency)
-  compileOnly fg.deobf("curse.maven:material_elements-541620:3584897")
-  runtimeOnly fg.deobf("curse.maven:material_elements-541620:3584897")
+  compileOnly fg.deobf("curse.maven:material_elements-541620:3601425")
+  runtimeOnly fg.deobf("curse.maven:material_elements-541620:3601425")
+
+  // Alex Mob's (Testing)
+  // runtimeOnly fg.deobf("curse.maven:citadel-331936:3584733:deobf")
+  // runtimeOnly fg.deobf("curse.maven:alex_mobs-426558:3575698")
 
   // Additional helpful Mods for development (dev depenedency)
   runtimeOnly fg.deobf("curse.maven:spark-361579:3591172")

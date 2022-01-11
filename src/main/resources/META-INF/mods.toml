@@ -20,7 +20,7 @@ license="MIT"
 [[mods]] #mandatory
     modId="easy_mob_farm"
     version="${file.jarVersion}"
-    displayName="Bo's Easy Mob Farm"
+    displayName="Easy Mob Farm"
     # A URL to query for updates for this mod. See the JSON update specification https://mcforge.readthedocs.io/en/latest/gettingstarted/autoupdate/
     #updateJSONURL="https://change.me.example.invalid/updates.json" #optional
     # A URL for the "homepage" for this mod, displayed in the mod UI
@@ -51,10 +51,10 @@ license="MIT"
     ordering="NONE"
     side="BOTH"
 
-[[dependencies.steel_armor_tools_weapons]]
+[[dependencies.easy_mob_farm]]
     modId="material_elements"
     mandatory=true
     # This version range declares a minimum of the material elements version up to but not including the next major version
-    versionRange="[1.4.0,)"
+    versionRange="[2.1.0,)"
     ordering="NONE"
     side="BOTH"

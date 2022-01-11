@@ -1,0 +1,7 @@
+{
+  "parent": "easy_mob_farm:block/template/mob_farm_template",
+  "textures": {
+    "particle": "material_elements:block/iron_rod",
+    "texture": "material_elements:block/iron_rod"
+  }
+}

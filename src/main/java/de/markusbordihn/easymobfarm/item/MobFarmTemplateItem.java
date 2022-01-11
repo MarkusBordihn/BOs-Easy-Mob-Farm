@@ -19,12 +19,31 @@
 
 package de.markusbordihn.easymobfarm.item;
 
-import net.minecraft.world.item.Item;
+import java.util.List;
+import javax.annotation.Nullable;
 
-public class CaptureNetItem extends CaptureItem {
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 
-  public CaptureNetItem(Item.Properties properties) {
-    super(properties);
+import de.markusbordihn.easymobfarm.Constants;
+
+public class MobFarmTemplateItem extends BlockItem {
+
+  public MobFarmTemplateItem(Block block, Properties properties) {
+    super(block, properties);
+  }
+
+  @Override
+  public void appendHoverText(ItemStack itemStack, @Nullable Level level,
+      List<Component> tooltipList, TooltipFlag tooltipFlag) {
+    tooltipList.add(new TranslatableComponent(Constants.TEXT_PREFIX + "mob_farm_template")
+        .withStyle(ChatFormatting.YELLOW));
   }
 
 }

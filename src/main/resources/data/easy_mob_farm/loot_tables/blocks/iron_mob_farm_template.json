@@ -13,7 +13,7 @@
               "source": "block_entity"
             }
           ],
-          "name": "easy_mob_farm:empty_mob_farm"
+          "name": "easy_mob_farm:iron_mob_farm_template"
         }
       ],
       "conditions": [

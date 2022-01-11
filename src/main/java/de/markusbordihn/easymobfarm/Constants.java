@@ -19,6 +19,8 @@
 
 package de.markusbordihn.easymobfarm;
 
+import net.minecraft.ChatFormatting;
+
 public final class Constants {
 
   protected Constants() {
@@ -41,4 +43,12 @@ public final class Constants {
   public static final String ANIMAL_PLAINS_FARM = "animal_plains_farm";
   public static final String CREATIVE_MOB_FARM = "creative_mob_farm";
   public static final String MONSTER_PLAINS_CAVE_FARM = "monster_plains_cave_farm";
+
+  // Colors
+  public static final int FONT_COLOR_BLACK = ChatFormatting.BLACK.getColor();
+  public static final int FONT_COLOR_DARK_GREEN = ChatFormatting.DARK_GREEN.getColor();
+  public static final int FONT_COLOR_GRAY = ChatFormatting.GRAY.getColor();
+  public static final int FONT_COLOR_GREEN = ChatFormatting.GREEN.getColor();
+  public static final int FONT_COLOR_WARNING = ChatFormatting.RED.getColor();
+  public static final int FONT_COLOR_YELLOW = ChatFormatting.YELLOW.getColor();
 }

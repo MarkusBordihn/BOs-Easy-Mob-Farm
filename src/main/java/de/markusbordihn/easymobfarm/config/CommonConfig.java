@@ -55,6 +55,7 @@ public class CommonConfig {
 
     public final ForgeConfigSpec.BooleanValue informOwnerAboutFullStorage;
     public final ForgeConfigSpec.BooleanValue logFullStorage;
+    public final ForgeConfigSpec.IntValue lootPreviewRolls;
 
     public final ForgeConfigSpec.IntValue mobCatchingLuck;
 
@@ -79,6 +80,9 @@ public class CommonConfig {
       logFullStorage =
           builder.comment("Enable/Disable full storage log messages for the server logs.")
               .define("logFullStorage", true);
+      lootPreviewRolls = builder.comment(
+          "Number of roll's to get the loot preview for a captured mob. Higher numbers require more server load, but giving a more completed overview.")
+          .defineInRange("lootPreviewRolls", 2, 1, 5);
       builder.pop();
 
       builder.push("Mob Catching");

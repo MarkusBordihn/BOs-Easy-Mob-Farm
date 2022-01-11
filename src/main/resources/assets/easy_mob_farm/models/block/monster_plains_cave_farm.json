@@ -1,16 +1,16 @@
 {
 	"credit": "Made with Blockbench by Markus Bordihn",
 	"textures": {
-		"10": "block/glow_lichen",
-		"particle": "block/stone",
-		"floor_back": "block/stone",
-		"edge": "block/end_rod",
-		"glass": "block/glass",
-		"gold_ore": "block/gold_ore",
+		"bone": "item/bone",
 		"clay": "block/clay",
 		"cobweb": "block/cobweb",
-		"pickaxe": "item/iron_pickaxe",
-		"bone": "item/bone"
+		"edge": "block/end_rod",
+		"floor_back": "block/stone",
+		"glass": "block/glass",
+		"gold_ore": "block/gold_ore",
+		"lichen": "block/glow_lichen",
+		"particle": "block/stone",
+		"pickaxe": "item/iron_pickaxe"
 	},
 	"elements": [
 		{
@@ -104,8 +104,8 @@
 			"to": [15, 15, 15],
 			"rotation": {"angle": 0, "axis": "y", "origin": [2.5, 14.25, 13.625]},
 			"faces": {
-				"north": {"uv": [0, 0, 16, 16], "texture": "#10"},
-				"south": {"uv": [0, 0, 16, 16], "texture": "#10"}
+				"north": {"uv": [0, 0, 16, 16], "texture": "#lichen"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#lichen"}
 			}
 		},
 		{
@@ -114,8 +114,8 @@
 			"to": [15, 12, 15],
 			"rotation": {"angle": 0, "axis": "y", "origin": [2.5, 14.25, 13.625]},
 			"faces": {
-				"north": {"uv": [0, 0, 16, 16], "texture": "#10"},
-				"south": {"uv": [0, 0, 16, 16], "texture": "#10"}
+				"north": {"uv": [0, 0, 16, 16], "texture": "#lichen"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#lichen"}
 			}
 		},
 		{
@@ -124,8 +124,8 @@
 			"to": [12, 15, 15],
 			"rotation": {"angle": 0, "axis": "y", "origin": [2.5, 14.25, 13.625]},
 			"faces": {
-				"north": {"uv": [0, 0, 16, 16], "texture": "#10"},
-				"south": {"uv": [0, 0, 16, 16], "texture": "#10"}
+				"north": {"uv": [0, 0, 16, 16], "texture": "#lichen"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#lichen"}
 			}
 		},
 		{

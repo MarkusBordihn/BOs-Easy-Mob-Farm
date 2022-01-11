@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["S#S", "#O#", "S#T"],
+  "key": {
+    "#": {
+      "item": "material_elements:leather_strip_red"
+    },
+    "T": {
+      "item": "minecraft:tripwire_hook"
+    },
+    "S": {
+      "item": "minecraft:string"
+    },
+    "O": {
+      "item": "minecraft:slime_ball"
+    }
+  },
+  "result": {
+    "item": "easy_mob_farm:collar_small"
+  }
+}

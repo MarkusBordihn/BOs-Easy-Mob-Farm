@@ -19,6 +19,7 @@
 
 package de.markusbordihn.easymobfarm.block;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import javax.annotation.Nullable;
@@ -61,15 +62,17 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
-import de.markusbordihn.easymobfarm.item.CapturedMobItem;
+import de.markusbordihn.easymobfarm.item.CapturedMob;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
 public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatible {
 
   public static final String NAME = "mob_farm";
 
-  public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
   public static final BooleanProperty WORKING = BooleanProperty.create("working");
+  public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+
+  public static final Set<String> ACCEPTED_MOB_TYPES = Collections.emptySet();
 
   protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 
@@ -90,11 +93,15 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
   }
 
   public Set<String> getAcceptedMobTypes() {
-    return null;
+    return ACCEPTED_MOB_TYPES;
   }
 
   public boolean isAcceptedMobType(String mobType) {
     return true;
+  }
+
+  public String getFarmDescriptionId() {
+    return "supported_mobs";
   }
 
   @Override
@@ -122,7 +129,7 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
 
   @Override
   public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-    return new MobFarmBlockEntity(ModBlocks.MOB_FARM_ENTITY.get(), blockPos, blockState);
+    return null;
   }
 
   @Override
@@ -132,7 +139,7 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
     BlockEntity blockEntity = level.getBlockEntity(blockPos);
 
     // Ignore event, if the stored mob could be consumed.
-    if (itemStack.getItem() instanceof CapturedMobItem
+    if (itemStack.getItem() instanceof CapturedMob
         && blockEntity instanceof MobFarmBlockEntity mobFarmBlockEntity
         && !mobFarmBlockEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
       return InteractionResult.PASS;
@@ -184,15 +191,13 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
   @Nullable
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState,
       BlockEntityType<T> blockEntityType) {
-    return level.isClientSide ? null
-        : createTickerHelper(blockEntityType, ModBlocks.MOB_FARM_ENTITY.get(),
-            MobFarmBlockEntity::serverTick);
+    return null;
   }
 
   @Override
   public boolean canConsumeCapturedMob(Level level, BlockPos blockPos, BlockState blockState,
       BlockEntity blockEntity, Player player, ItemStack itemStack) {
-    if (itemStack.getItem() instanceof CapturedMobItem capturedMobItem) {
+    if (itemStack.getItem() instanceof CapturedMob capturedMobItem) {
       String capturedMobType = capturedMobItem.getCapturedMobType(itemStack);
       return isAcceptedMobType(capturedMobType);
     }
@@ -212,8 +217,8 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
     Set<String> acceptedMobTypes = getAcceptedMobTypes();
     if (acceptedMobTypes != null && !acceptedMobTypes.isEmpty()) {
       TranslatableComponent supportedMobsOveriew =
-          (TranslatableComponent) new TranslatableComponent(Constants.TEXT_PREFIX
-              + "supported_mobs").append(" ")
+          (TranslatableComponent) new TranslatableComponent(
+              Constants.TEXT_PREFIX + getFarmDescriptionId()).append(" ")
                   .withStyle(ChatFormatting.GREEN);
       for (String acceptedMob : acceptedMobTypes) {
         // Format accepted mob to entity.x.y format for automatic translations.

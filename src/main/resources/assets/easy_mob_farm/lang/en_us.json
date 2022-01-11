@@ -1,29 +1,37 @@
 {
-  "text.easy_mob_farm.capture": "► Right click to capture",
-  "text.easy_mob_farm.release": "► Left click to release %1$s",
+  "text.easy_mob_farm.capture": "► Target mob and right click to capture",
+  "text.easy_mob_farm.catchable_mobs": "Catchable Mobs:",
   "text.easy_mob_farm.health": "Health: %d",
   "text.easy_mob_farm.possible_loot": "Possible Loot:",
+  "text.easy_mob_farm.release": "► Left click on empty place to release %1$s",
   "text.easy_mob_farm.supported_mobs": "The mob farm is able to process the following type of mobs:",
+  "text.easy_mob_farm.supported_creative": "The mob farm is able to process all types of mobs",
+  "text.easy_mob_farm.supported_animals": "The animal farm is able to process the following type of animals:",
+  "text.easy_mob_farm.supported_monster": "The monster farm is able to process the following type of monster:",
+  "text.easy_mob_farm.mob_farm_template": "This mob farm template is used to build the different kind of mob farms. It will not work on his own.",
 
   "text.easy_mob_farm.next_drop_secs": "Next drop in %ds",
   "text.easy_mob_farm.warning_full": "Output slots are full!",
 
   "message.easy_mob_farm.warning_full": "Your Easy Mob Farm (%1$s) at %2$s is full and unable to store: %3$s!",
 
-  "block.easy_mob_farm.empty_mob_farm": "Empty Mob Farm",
+  "block.easy_mob_farm.iron_mob_farm_template": "Iron Mob Farm Template",
 
   "block.placeholder.text": "Template placeholder do not remove!",
 
   "block.easy_mob_farm.animal_plains_farm": "Animal Plains Farm",
-  "block.easy_mob_farm.creative_mob_farm": "CreativeMobFarm",
+  "block.easy_mob_farm.creative_mob_farm": "Creative Mob Farm",
   "block.easy_mob_farm.monster_plains_cave_farm": "Monster Plains Cave Farm",
 
   "container.easy_mob_farm.animal_plains_farm": "Animal Plains Farm",
   "container.easy_mob_farm.creative_mob_farm": "Creative Mob Farm",
   "container.easy_mob_farm.monster_plains_cave_farm": "Monster Plains Cave Farm",
 
-  "item.placeholder.text": "Template placeholder do not remove!",
+  "item.easy_mob_farm.creative_mob_catcher": "Creative Mob Catcher",
+  "item.easy_mob_farm.urn_small": "Urn Small (small)",
   "item.easy_mob_farm.collar": "Collar (small)",
+
+  "item.placeholder.text": "Template placeholder do not remove!",
 
   "itemGroup.easy_mob_farm": "Easy Mob Farm",
 

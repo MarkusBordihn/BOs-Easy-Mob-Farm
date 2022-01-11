@@ -32,7 +32,6 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.DyeColor;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
@@ -44,11 +43,6 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
 
   private static final ResourceLocation TEXTURE =
       new ResourceLocation(Constants.MOD_ID, "textures/container/mob_farm_gui.png");
-
-  private static final int FONT_COLOR_BLACK = DyeColor.BLACK.getTextColor();
-  private static final int FONT_COLOR_GRAY = DyeColor.GRAY.getTextColor();
-  private static final int FONT_COLOR_GREEN = DyeColor.GREEN.getTextColor();
-  private static final int FONT_COLOR_WARNING = DyeColor.RED.getTextColor();
 
   public static final int SNAP_WITH = 34;
   public static final int SNAP_HEIGHT = 53;
@@ -65,6 +59,16 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
   public MobFarmScreen(T menu, Inventory inventory, Component component) {
     super(menu, inventory, component);
     this.mobFarmMenu = (MobFarmMenu) menu;
+  }
+
+  protected void renderSnapshot(PoseStack poseStack, String mobFarmType,
+      ResourceLocation mobFarmTypeSnapshot) {
+    RenderSystem.setShader(GameRenderer::getPositionTexShader);
+    RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+    RenderSystem.setShaderTexture(0, mobFarmTypeSnapshot);
+
+    // Scale snap image (34x53)
+    blit(poseStack, leftPos + 6, topPos + 22, 0, 0, SNAP_WITH, SNAP_HEIGHT, SNAP_WITH, SNAP_HEIGHT);
   }
 
   @Override
@@ -92,10 +96,13 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
     this.renderBackground(poseStack);
     super.render(poseStack, x, y, partialTicks);
 
-    // Render Mob Farm Snap
+    // Render Mob Farm Snapshot, if available.
     String mobFarmType = this.mobFarmMenu.getMobFarmType();
     if (!mobFarmType.isBlank()) {
-      this.renderSnap(poseStack, mobFarmType);
+      ResourceLocation mobFarmTypeSnapshot = Snapshots.getSnapshot(mobFarmType);
+      if (mobFarmTypeSnapshot != null) {
+        this.renderSnapshot(poseStack, mobFarmType, mobFarmTypeSnapshot);
+      }
     }
     this.renderTooltip(poseStack, x, y);
   }
@@ -108,15 +115,17 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
     // Show Mob Details
     if (mobFarmStatus != MobFarmBlockEntityData.FARM_STATUS_WAITING) {
       matrixStack.pushPose();
-      font.draw(matrixStack, "Mob:", 65, 25, FONT_COLOR_BLACK);
-      font.draw(matrixStack, this.mobFarmMenu.getMobFarmName(), 88, 25, FONT_COLOR_GREEN);
-      font.draw(matrixStack, "Drop Time:", 65, 45, FONT_COLOR_BLACK);
-      font.draw(matrixStack, this.mobFarmMenu.getMobFarmTotalTimeText(), 118, 45, FONT_COLOR_GRAY);
+      font.draw(matrixStack, "Mob:", 65, 25, Constants.FONT_COLOR_BLACK);
+      font.draw(matrixStack, this.mobFarmMenu.getMobFarmName(), 86, 25,
+          Constants.FONT_COLOR_DARK_GREEN);
+      font.draw(matrixStack, "Drop Time:", 65, 45, Constants.FONT_COLOR_BLACK);
+      font.draw(matrixStack, this.mobFarmMenu.getMobFarmTotalTimeText(), 118, 45,
+          Constants.FONT_COLOR_GRAY);
       matrixStack.popPose();
 
       matrixStack.pushPose();
       matrixStack.scale(0.65f, 0.65f, 0.65f);
-      font.draw(matrixStack, this.mobFarmMenu.getMobFarmType(), 100, 52, FONT_COLOR_GRAY);
+      font.draw(matrixStack, this.mobFarmMenu.getMobFarmType(), 100, 52, Constants.FONT_COLOR_GRAY);
       matrixStack.popPose();
     }
 
@@ -129,19 +138,15 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
         font.draw(matrixStack,
             new TranslatableComponent(Constants.TEXT_PREFIX + "next_drop_secs",
                 this.mobFarmMenu.getMobFarmRemainingTime()),
-            totalTimeLabelX, totalTimeLabelY, FONT_COLOR_GRAY);
+            totalTimeLabelX, totalTimeLabelY, Constants.FONT_COLOR_GRAY);
         matrixStack.popPose();
         break;
       case MobFarmBlockEntityData.FARM_STATUS_FULL:
         matrixStack.scale(totalTimeLabelScale, totalTimeLabelScale, totalTimeLabelScale);
         font.draw(matrixStack, this.warningFullText, totalTimeLabelX, totalTimeLabelY,
-            FONT_COLOR_WARNING);
+            Constants.FONT_COLOR_WARNING);
         break;
     }
-  }
-
-  protected void renderSnap(PoseStack poseStack, String mobFarmType) {
-
   }
 
   @Override

@@ -32,7 +32,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.Annotations.TemplateEntryPoint;
 import de.markusbordihn.easymobfarm.block.entity.farm.CreativeMobFarmEntity;
-import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.AnimalPlainsFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.MonsterPlainsCaveFarmEntity;
 
@@ -48,9 +47,11 @@ public class ModBlocks {
 
   @TemplateEntryPoint("Register Blocks")
 
-  public static final RegistryObject<Block> EMPTY_MOB_FARM = BLOCKS.register("empty_mob_farm",
-      () -> new Block(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops()
-          .strength(3.0F, 6.0F).sound(SoundType.METAL).noOcclusion()));
+  // Mob Farm Templates
+  public static final RegistryObject<Block> IRON_MOB_FARM_TEMPLATE =
+      BLOCKS.register("iron_mob_farm_template",
+          () -> new Block(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops()
+              .strength(3.0F, 6.0F).sound(SoundType.METAL).noOcclusion()));
 
   // Mob Farms
   public static final RegistryObject<Block> ANIMAL_PLAINS_FARM =
@@ -69,24 +70,17 @@ public class ModBlocks {
       () -> new MonsterPlainsCaveFarm(BlockBehaviour.Properties.of(Material.STONE)
           .requiresCorrectToolForDrops().strength(2.0F, 2.0F)
           .lightLevel(MonsterPlainsCaveFarm::getLightLevel).sound(SoundType.METAL).noOcclusion()));
-  public static final RegistryObject<Block> MOB_FARM =
-      BLOCKS.register(MobFarmBlock.NAME, () -> new MobFarmBlock(BlockBehaviour.Properties
-          .of(Material.STONE).requiresCorrectToolForDrops().strength(2.0F, 2.0F)));
 
   @TemplateEntryPoint("Register Entity")
-
-  public static final RegistryObject<BlockEntityType<CreativeMobFarmEntity>> CREATIVE_MOB_FARM_ENTITY =
-      ENTITIES.register(CreativeMobFarm.NAME, () -> BlockEntityType.Builder
-          .of(CreativeMobFarmEntity::new, CREATIVE_MOB_FARM.get()).build(null));
 
   // Mob Farms Block Entity
   public static final RegistryObject<BlockEntityType<AnimalPlainsFarmEntity>> ANIMAL_PLAINS_FARM_ENTITY =
       ENTITIES.register(AnimalPlainsFarm.NAME, () -> BlockEntityType.Builder
           .of(AnimalPlainsFarmEntity::new, ANIMAL_PLAINS_FARM.get()).build(null));
+  public static final RegistryObject<BlockEntityType<CreativeMobFarmEntity>> CREATIVE_MOB_FARM_ENTITY =
+      ENTITIES.register(CreativeMobFarm.NAME, () -> BlockEntityType.Builder
+          .of(CreativeMobFarmEntity::new, CREATIVE_MOB_FARM.get()).build(null));
   public static final RegistryObject<BlockEntityType<MonsterPlainsCaveFarmEntity>> MONSTER_PLAINS_CAVE_FARM_ENTITY =
       ENTITIES.register(MonsterPlainsCaveFarm.NAME, () -> BlockEntityType.Builder
           .of(MonsterPlainsCaveFarmEntity::new, MONSTER_PLAINS_CAVE_FARM.get()).build(null));
-  public static final RegistryObject<BlockEntityType<MobFarmBlockEntity>> MOB_FARM_ENTITY =
-      ENTITIES.register(MobFarmBlock.NAME,
-          () -> BlockEntityType.Builder.of(MobFarmBlockEntity::new, MOB_FARM.get()).build(null));
 }

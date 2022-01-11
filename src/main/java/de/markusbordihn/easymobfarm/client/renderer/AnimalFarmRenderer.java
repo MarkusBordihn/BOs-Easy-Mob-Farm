@@ -26,7 +26,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.entity.EntityType;
 
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
-import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
+import de.markusbordihn.easymobfarm.client.renderer.helper.RenderHelper;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
 public class AnimalFarmRenderer extends MobFarmRendererBase<MobFarmBlockEntity> {
@@ -52,66 +52,14 @@ public class AnimalFarmRenderer extends MobFarmRendererBase<MobFarmBlockEntity> 
     RenderHelper renderHelper = getRenderHelper(farmId, blockEntity);
     String farmMobType = blockEntity.getFarmMobType();
 
-    // Render individual mob types, if possible, because custom entity renderer is not optimized.
+    // Render individual mob types if possible, because custom entity renderer is not optimized.
     // This makes a huge different with up to 20% more fps with a larger farm.
-
-    // Render Chicken
-    if (farmMobType.equals(PassiveAnimal.CHICKEN)) {
-      poseStack.pushPose();
-      poseStack.translate(0.5D, 1D / 16D, 0.5D);
-      poseStack.mulPose(renderHelper.getBlockRotation());
-      poseStack.translate(0D, 0D, -1D / 16D);
-      poseStack.scale(0.7F, 0.7F, 0.7F);
-      renderHelper.renderChicken(poseStack, buffer, combinedLight);
-      poseStack.popPose();
-    }
-
-    // Render Cow
-    else if (farmMobType.equals(PassiveAnimal.COW)) {
-      poseStack.pushPose();
-      poseStack.translate(0.5D, 1D / 16D, 0.5D);
-      poseStack.mulPose(renderHelper.getBlockRotation());
-      poseStack.translate(0D, 0D, -1D / 16D);
-      poseStack.scale(0.35F, 0.35F, 0.35F);
-      renderHelper.renderCow(poseStack, buffer, combinedLight);
-      poseStack.popPose();
-    }
-
-    // Render Pig
-    else if (farmMobType.equals(PassiveAnimal.PIG)) {
-      poseStack.pushPose();
-      poseStack.translate(0.5D, 1D / 16D, 0.5D);
-      poseStack.mulPose(renderHelper.getBlockRotation());
-      poseStack.translate(0D, 0D, -1D / 16D);
-      poseStack.scale(0.38F, 0.38F, 0.38F);
-      renderHelper.renderPig(poseStack, buffer, combinedLight);
-      poseStack.popPose();
-    }
-
-    // Render Sheep
-    else if (farmMobType.equals(PassiveAnimal.SHEEP)) {
-      poseStack.pushPose();
-      poseStack.translate(0.5D, 1D / 16D, 0.5D);
-      poseStack.mulPose(renderHelper.getBlockRotation());
-      poseStack.translate(0D, 0D, -1D / 16D);
-      poseStack.scale(0.38F, 0.38F, 0.38F);
-      renderHelper.renderSheep(poseStack, buffer, combinedLight);
-      poseStack.popPose();
-    }
-
-    // Unknown entity (needs more performance)
-    else if (blockEntity.getFarmMobEntityType() != null) {
+    boolean renderedAnimal =
+        renderHelper.renderAnimal(poseStack, buffer, combinedLight, farmMobType);
+    if (!renderedAnimal && blockEntity.getFarmMobEntityType() != null) {
       EntityType<?> entityType = blockEntity.getFarmMobEntityType();
-      float customEntityScale = renderHelper.getCustomEntityScale();
-      poseStack.pushPose();
-      poseStack.translate(0.5D, 1D / 16D, 0.5D);
-      poseStack.mulPose(renderHelper.getBlockRotation());
-      poseStack.translate(0D, 0D, 2D / 16D);
-      poseStack.scale(customEntityScale, customEntityScale, customEntityScale);
-      renderHelper.renderCustomEntity(entityType, poseStack, buffer, combinedLight);
-      poseStack.popPose();
+      renderHelper.renderLivingEntity(poseStack, buffer, combinedLight, entityType);
     }
-
   }
 
 }

@@ -61,9 +61,13 @@ public class ClientRenderer {
 
     event.enqueueWork(() -> {
       // @TemplateEntryPoint("Register Render Layers")
-      ItemBlockRenderTypes.setRenderLayer(ModBlocks.CREATIVE_MOB_FARM.get(),
+
+      // Mob Farm Templates
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.IRON_MOB_FARM_TEMPLATE.get(),
           RenderType.cutoutMipped());
-      ItemBlockRenderTypes.setRenderLayer(ModBlocks.EMPTY_MOB_FARM.get(),
+
+      // Mobs Farms
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.CREATIVE_MOB_FARM.get(),
           RenderType.cutoutMipped());
       ItemBlockRenderTypes.setRenderLayer(ModBlocks.MONSTER_PLAINS_CAVE_FARM.get(),
           RenderType.cutoutMipped());

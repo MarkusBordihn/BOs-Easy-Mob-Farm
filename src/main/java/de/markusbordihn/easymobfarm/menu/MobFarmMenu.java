@@ -38,7 +38,9 @@ import net.minecraftforge.registries.ObjectHolder;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
-import de.markusbordihn.easymobfarm.item.CapturedMobItem;
+import de.markusbordihn.easymobfarm.item.CapturedMob;
+import de.markusbordihn.easymobfarm.menu.slots.CapturedMobSlot;
+import de.markusbordihn.easymobfarm.menu.slots.LockedResultSlot;
 
 public class MobFarmMenu extends AbstractContainerMenu {
 
@@ -150,7 +152,7 @@ public class MobFarmMenu extends AbstractContainerMenu {
       if (currentItemStack.isEmpty()) {
         this.mobFarmName = "- unknown -";
         this.mobFarmType = "";
-      } else if (currentItemStack.getItem() instanceof CapturedMobItem capturedMobItem) {
+      } else if (currentItemStack.getItem() instanceof CapturedMob capturedMobItem) {
         this.mobFarmName = capturedMobItem.getCapturedMob(currentItemStack);
         this.mobFarmType = capturedMobItem.getCapturedMobType(currentItemStack);
       }
@@ -208,7 +210,8 @@ public class MobFarmMenu extends AbstractContainerMenu {
   }
 
   public boolean mayPlaceCapturedMob(ItemStack itemStack) {
-    return itemStack.getItem() instanceof CapturedMobItem;
+    return itemStack.getItem() instanceof CapturedMob capturedMob
+        && capturedMob.hasCapturedMob(itemStack);
   }
 
   public boolean mayPlaceCapturedMobType(String mobType) {
@@ -224,7 +227,7 @@ public class MobFarmMenu extends AbstractContainerMenu {
 
     // There is only one slot which we are supporting to moving items in.
     ItemStack itemStack = slot.getItem();
-    if (itemStack.getItem() instanceof CapturedMobItem) {
+    if (itemStack.getItem() instanceof CapturedMob) {
       if (slotIndex == CAPTURED_MOB_SLOT) {
         this.moveItemStackTo(itemStack, CAPTURED_MOB_SLOT, 40, false);
       } else {

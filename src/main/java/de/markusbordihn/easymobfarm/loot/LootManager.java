@@ -21,7 +21,6 @@ package de.markusbordihn.easymobfarm.loot;
 
 import java.util.List;
 import java.util.UUID;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -49,7 +48,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.config.CommonConfig;
 import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
 import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
-import de.markusbordihn.easymobfarm.item.CapturedMobItem;
+import de.markusbordihn.easymobfarm.item.CapturedMob;
 
 @EventBusSubscriber
 public class LootManager {
@@ -60,6 +59,7 @@ public class LootManager {
   private static boolean blazeDropBlazeRod = COMMON.blazeDropBlazeRod.get();
   private static boolean chickenDropEggs = COMMON.chickenDropEggs.get();
   private static boolean chickenDropRawChicken = COMMON.chickenDropRawChicken.get();
+  private static int lootPreviewRolls = COMMON.lootPreviewRolls.get();
 
   private static FakePlayer fakePlayer;
   private static final GameProfile GAME_PROFILE =
@@ -72,6 +72,7 @@ public class LootManager {
     blazeDropBlazeRod = COMMON.blazeDropBlazeRod.get();
     chickenDropEggs = COMMON.chickenDropEggs.get();
     chickenDropRawChicken = COMMON.chickenDropRawChicken.get();
+    lootPreviewRolls = COMMON.lootPreviewRolls.get();
   }
 
   public static FakePlayer getPlayer(ServerLevel level) {
@@ -84,15 +85,16 @@ public class LootManager {
   public static List<String> getRandomLootDropOverview(ResourceLocation lootTableLocation,
       Level level, String mobType) {
     List<String> lootDropList = Lists.newArrayList();
-    List<ItemStack> lootDrops = getFilteredRandomLootDrop(lootTableLocation, level, mobType);
-    // Try a second time to get the loot drop overview.
-    if (lootDrops.isEmpty()) {
-      lootDrops = getFilteredRandomLootDrop(lootTableLocation, level, mobType);
+
+    // Roll's the loot a specific time (default: 2) to get accurate results.
+    for (int i = 0; i < lootPreviewRolls; i++) {
+      List<ItemStack> lootDrops = getFilteredRandomLootDrop(lootTableLocation, level, mobType);
+      log.debug("Loot for {} with {} roll {} result: {}", mobType, lootTableLocation, i, lootDrops);
+      for (ItemStack lootDrop : lootDrops) {
+        lootDropList.add(lootDrop.getItem().getDescriptionId());
+      }
     }
-    for (ItemStack lootDrop : lootDrops) {
-      lootDropList.add(lootDrop.getItem().getDescriptionId());
-    }
-    return lootDropList;
+    return lootDropList.stream().distinct().toList();
   }
 
   public static List<ItemStack> getRandomLootDrops(ResourceLocation lootTableLocation,
@@ -126,7 +128,7 @@ public class LootManager {
     }
 
     // Process captured mob item.
-    if (itemStack.getItem() instanceof CapturedMobItem capturedMobItem) {
+    if (itemStack.getItem() instanceof CapturedMob capturedMobItem) {
       String lootTableLocation = capturedMobItem.getLootTable(itemStack);
       if (!lootTableLocation.isEmpty()) {
         lootTable = new ResourceLocation(lootTableLocation);

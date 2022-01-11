@@ -47,7 +47,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 
-import de.markusbordihn.easymobfarm.item.CapturedMobItem;
+import de.markusbordihn.easymobfarm.item.CapturedMob;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
 public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
@@ -290,7 +290,7 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
 
     // Restore additional data
     ItemStack capturedMob = this.items.get(MobFarmMenu.CAPTURED_MOB_SLOT);
-    if (!capturedMob.isEmpty() && capturedMob.getItem() instanceof CapturedMobItem capturedMobItem) {
+    if (!capturedMob.isEmpty() && capturedMob.getItem() instanceof CapturedMob capturedMobItem) {
       this.farmMobName = capturedMobItem.getCapturedMob(capturedMob);
       this.farmMobType = capturedMobItem.getCapturedMobType(capturedMob);
       this.farmMobColor = capturedMobItem.getCapturedMobColor(capturedMob);

@@ -17,32 +17,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.menu;
+package de.markusbordihn.easymobfarm.item.mobcatcher;
 
-import net.minecraft.world.Container;
-import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Item;
 
-import de.markusbordihn.easymobfarm.item.CapturedMobItem;
+import de.markusbordihn.easymobfarm.item.MobCatcherItem;
 
-public class CapturedMobSlot extends Slot {
+public class Net extends MobCatcherItem {
 
-  private MobFarmMenu menu;
-
-  public CapturedMobSlot(Container container, int index, int x, int y, MobFarmMenu menu) {
-    super(container, index, x, y);
-    this.menu = menu;
-  }
-
-  @Override
-  public boolean mayPlace(ItemStack itemStack) {
-    if (!this.menu.mayPlaceCapturedMob(itemStack)) {
-      return false;
-    }
-    if (itemStack.getItem() instanceof CapturedMobItem capturedMobItem) {
-      return this.menu.mayPlaceCapturedMobType(capturedMobItem.getCapturedMobType(itemStack));
-    }
-    return false;
+  public Net(Item.Properties properties) {
+    super(properties);
   }
 
 }

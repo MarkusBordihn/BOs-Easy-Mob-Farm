@@ -37,6 +37,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
+import de.markusbordihn.easymobfarm.client.renderer.helper.RenderHelper;
 
 public class MobFarmRendererBase<T extends MobFarmBlockEntity> implements BlockEntityRenderer<T> {
 

@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "easy_mob_farm:block/iron_mob_farm_template" }
+  }
+}

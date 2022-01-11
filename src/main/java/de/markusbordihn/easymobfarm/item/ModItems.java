@@ -32,7 +32,10 @@ import de.markusbordihn.easymobfarm.block.AnimalPlainsFarm;
 import de.markusbordihn.easymobfarm.block.CreativeMobFarm;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.block.MonsterPlainsCaveFarm;
-import de.markusbordihn.easymobfarm.item.capture.CollarSmallItem;
+import de.markusbordihn.easymobfarm.item.mobcatcher.CollarSmall;
+import de.markusbordihn.easymobfarm.item.mobcatcher.CreativeMobCatcher;
+import de.markusbordihn.easymobfarm.item.mobcatcher.Net;
+import de.markusbordihn.easymobfarm.item.mobcatcher.UrnSmall;
 import de.markusbordihn.easymobfarm.tabs.EasyMobFarmTab;
 import de.markusbordihn.easymobfarm.Annotations.TemplateEntryPoint;
 
@@ -46,25 +49,32 @@ public class ModItems {
       DeferredRegister.create(ForgeRegistries.ITEMS, Constants.MOD_ID);
 
   @TemplateEntryPoint("Register Items")
-  public static final RegistryObject<Item> CAPTURE_NET =
-      ITEMS.register("capture_net", () -> new CaptureNetItem(
-          new Item.Properties().stacksTo(1).durability(10).tab(EasyMobFarmTab.TOOLS)));
 
-  // Collars Items
+  // Mob Capture Items
+  public static final RegistryObject<Item> CREATIVE_MOB_CATCHER =
+      ITEMS.register("creative_mob_catcher", () -> new CreativeMobCatcher(
+          new Item.Properties().stacksTo(1).durability(1000).tab(EasyMobFarmTab.TOOLS)));
+  public static final RegistryObject<Item> CAPTURE_NET = ITEMS.register("capture_net",
+      () -> new Net(new Item.Properties().stacksTo(1).durability(10).tab(EasyMobFarmTab.TOOLS)));
   public static final RegistryObject<Item> COLLAR_SMALL =
-      ITEMS.register("collar_small", () -> new CollarSmallItem(
+      ITEMS.register("collar_small", () -> new CollarSmall(
+          new Item.Properties().stacksTo(1).durability(10).tab(EasyMobFarmTab.TOOLS)));
+  public static final RegistryObject<Item> URN_SMALL =
+      ITEMS.register("urn_small", () -> new UrnSmall(
           new Item.Properties().stacksTo(1).durability(10).tab(EasyMobFarmTab.TOOLS)));
 
   @TemplateEntryPoint("Register Block Items")
 
+  // Mob Farm Templates
+  public static final RegistryObject<Item> IRON_MOB_FARM_TEMPLATE =
+      ITEMS.register("iron_mob_farm_template",
+          () -> new MobFarmTemplateItem(ModBlocks.IRON_MOB_FARM_TEMPLATE.get(),
+              new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
+
+  // Mob Farms
   public static final RegistryObject<Item> CREATIVE_MOB_FARM =
       ITEMS.register(CreativeMobFarm.NAME, () -> new BlockItem(ModBlocks.CREATIVE_MOB_FARM.get(),
           new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
-  public static final RegistryObject<Item> EMPTY_MOB_FARM =
-      ITEMS.register("empty_mob_farm", () -> new BlockItem(ModBlocks.EMPTY_MOB_FARM.get(),
-          new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
-
-  // Mob Farms
   public static final RegistryObject<Item> ANIMAL_PLAINS_FARM =
       ITEMS.register(AnimalPlainsFarm.NAME, () -> new BlockItem(ModBlocks.ANIMAL_PLAINS_FARM.get(),
           new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));

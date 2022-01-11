@@ -42,11 +42,13 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.loot.LootManager;
 
-public class CapturedMobItem extends Item {
+public class CapturedMob extends Item {
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
@@ -64,7 +66,7 @@ public class CapturedMobItem extends Item {
 
   protected final Random random = new Random();
 
-  public CapturedMobItem(Item.Properties properties) {
+  public CapturedMob(Item.Properties properties) {
     super(properties);
   }
 
@@ -78,8 +80,7 @@ public class CapturedMobItem extends Item {
     if (compoundTag.contains(ENTITY_POSSIBLE_LOOT_TAG)) {
       String possibleLootString = compoundTag.getString(ENTITY_POSSIBLE_LOOT_TAG);
       if (!possibleLootString.isBlank()) {
-        List<String> possibleLoot = gson.fromJson(possibleLootString, ArrayList.class);
-        return possibleLoot;
+        return gson.fromJson(possibleLootString, ArrayList.class);
       }
     }
     return Lists.newArrayList();
@@ -114,8 +115,7 @@ public class CapturedMobItem extends Item {
     if (compoundTag.contains(ENTITY_TYPE_TAG)) {
       String entityTypeName = compoundTag.getString(ENTITY_TYPE_TAG);
       ResourceLocation resourceLocation = new ResourceLocation(entityTypeName);
-      EntityType<?> entityType = Registry.ENTITY_TYPE.get(resourceLocation);
-      return entityType;
+      return Registry.ENTITY_TYPE.get(resourceLocation);
     }
     return null;
   }
@@ -180,12 +180,24 @@ public class CapturedMobItem extends Item {
   public boolean releaseCapturedMob(ItemStack itemStack, BlockPos blockPos, Level level) {
     Entity entity = getCapturedMobEntity(itemStack, level);
     if (entity != null) {
-      // Adjust entity position to spawn position.
-      entity.setPosRaw(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+      // Make sure we have an empty Block to spawn the entity, otherwise try above block.
+      BlockState blockState = level.getBlockState(blockPos);
+      if (!blockState.isAir() && !blockState.is(Blocks.WATER) && !blockState.is(Blocks.GRASS)
+          && !blockState.is(Blocks.SEAGRASS)) {
+        blockPos = blockPos.above();
+        blockState = level.getBlockState(blockPos);
+      }
 
-      // Add entity to the world.
-      log.debug("Release captured mob {} with {}", entity);
-      return level.addFreshEntity(entity);
+      // Only spawn on empty blocks like air,water, grass, sea grass.
+      if (blockState.is(Blocks.AIR) || blockState.is(Blocks.WATER) || blockState.is(Blocks.GRASS)
+          || blockState.is(Blocks.SEAGRASS)) {
+        // Adjust entity position to spawn position.
+        entity.setPosRaw(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+
+        // Add entity to the world.
+        log.debug("Release captured mob {} with {}", entity);
+        return level.addFreshEntity(entity);
+      }
     }
     return false;
   }

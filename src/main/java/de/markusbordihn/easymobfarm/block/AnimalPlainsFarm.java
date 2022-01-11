@@ -69,6 +69,11 @@ public class AnimalPlainsFarm extends MobFarmBlock {
   }
 
   @Override
+  public String getFarmDescriptionId() {
+    return "supported_animals";
+  }
+
+  @Override
   public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
     return new AnimalPlainsFarmEntity(ModBlocks.ANIMAL_PLAINS_FARM_ENTITY.get(), blockPos, blockState);
   }

@@ -28,7 +28,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-import de.markusbordihn.easymobfarm.item.CapturedMobItem;
+import de.markusbordihn.easymobfarm.item.CapturedMob;
 
 /**
  * This interface is used to interact with easy mob farm mobs.
@@ -48,7 +48,7 @@ public interface CapturedMobCompatible {
    */
   default boolean canConsumeCapturedMob(Level level, BlockPos blockPos, BlockState blockState,
       BlockEntity blockEntity, Player player, ItemStack itemStack) {
-    return itemStack.getItem() instanceof CapturedMobItem;
+    return itemStack.getItem() instanceof CapturedMob;
   }
 
 }

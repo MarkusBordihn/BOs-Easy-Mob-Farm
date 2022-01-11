@@ -17,21 +17,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.menu;
+package de.markusbordihn.easymobfarm.item.mobcatcher;
 
-import net.minecraft.world.Container;
-import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ItemStack;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
-public class LockedResultSlot extends Slot {
+import net.minecraft.world.item.Item;
 
-  public LockedResultSlot(Container container, int index, int x, int y) {
-    super(container, index, x, y);
+import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
+import de.markusbordihn.easymobfarm.item.MobCatcherItem;
+
+public class UrnSmall extends MobCatcherItem {
+
+  private static final Set<String> acceptedMobTypes = new HashSet<>(Arrays.asList(
+    // @formatter:off
+    HostileMonster.CAVE_SPIDER,
+    HostileMonster.CREEPER,
+    HostileMonster.SKELETON,
+    HostileMonster.ZOMBIE
+    // @formatter:on
+  ));
+
+  public UrnSmall(Item.Properties properties) {
+    super(properties);
   }
 
   @Override
-  public boolean mayPlace(ItemStack stack) {
-    return false;
+  public Set<String> getAcceptedMobTypes() {
+    return acceptedMobTypes;
+  }
+
+  @Override
+  public boolean canCatchMobType(String mobType) {
+    return acceptedMobTypes.contains(mobType);
   }
 
 }

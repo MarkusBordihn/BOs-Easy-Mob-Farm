@@ -1,0 +1,35 @@
+{
+  "attributes": {
+    "soundType": "SoundType.METAL"
+  },
+  "bedrock": {
+    "formatVersion": "1.16.1"
+  },
+  "blockName": "urn_small",
+  "component": "block",
+  "configVersion": "1.0.0",
+  "description": "",
+  "events": {},
+  "forge": {
+    "className": "UrnSmall"
+  },
+  "icon": "urn_small",
+  "id": "easy_mob_farm:urn_small",
+  "misc": {},
+  "name": "Urn Small",
+  "namespace": "easy_mob_farm",
+  "placeholder": {
+    "BlockClassName": "UrnSmall",
+    "BLOCKNAME": "URNSMALL",
+    "BLOCK_NAME": "URN_SMALL",
+    "BlockName": "UrnSmall",
+    "blockName": "urnSmall",
+    "block_name": "urn_small",
+    "blockname": "urnsmall",
+    "CreativeTab": "TAB_MISC",
+    "SoundType": "SoundType.METAL"
+  },
+  "template": ".\\\\templates\\\\NewMobCatcher.template",
+  "type": "template",
+  "variation": ""
+}
