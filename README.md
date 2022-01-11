@@ -78,5 +78,5 @@ The creative mob catching item could catch all kind of living entities.
 [logo]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/src/main/resources/logo.png
 [animal_plains_farm]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/animal_plains_farm.png
 [item_overview]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/item_overview.png
-[mob_menu]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/mainassets/mob_menu.png
+[mob_menu]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/mob_menu.png
 [monster_plains_cave_farm]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/monster_plains_cave_farm.png
