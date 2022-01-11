@@ -55,13 +55,13 @@ public class ModItems {
       ITEMS.register("creative_mob_catcher", () -> new CreativeMobCatcher(
           new Item.Properties().stacksTo(1).durability(1000).tab(EasyMobFarmTab.TOOLS)));
   public static final RegistryObject<Item> CAPTURE_NET = ITEMS.register("capture_net",
-      () -> new Net(new Item.Properties().stacksTo(1).durability(10).tab(EasyMobFarmTab.TOOLS)));
+      () -> new Net(new Item.Properties().stacksTo(1).durability(11).tab(EasyMobFarmTab.TOOLS)));
   public static final RegistryObject<Item> COLLAR_SMALL =
       ITEMS.register("collar_small", () -> new CollarSmall(
-          new Item.Properties().stacksTo(1).durability(10).tab(EasyMobFarmTab.TOOLS)));
+          new Item.Properties().stacksTo(1).durability(11).tab(EasyMobFarmTab.TOOLS)));
   public static final RegistryObject<Item> URN_SMALL =
       ITEMS.register("urn_small", () -> new UrnSmall(
-          new Item.Properties().stacksTo(1).durability(10).tab(EasyMobFarmTab.TOOLS)));
+          new Item.Properties().stacksTo(1).durability(11).tab(EasyMobFarmTab.TOOLS)));
 
   @TemplateEntryPoint("Register Block Items")
 

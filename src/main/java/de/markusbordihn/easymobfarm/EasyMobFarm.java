@@ -31,6 +31,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import de.markusbordihn.easymobfarm.block.ModBlocks;
+import de.markusbordihn.easymobfarm.client.item.ModItemProperties;
 import de.markusbordihn.easymobfarm.client.renderer.ClientRenderer;
 import de.markusbordihn.easymobfarm.client.screen.ClientScreens;
 import de.markusbordihn.easymobfarm.item.ModItems;
@@ -60,6 +61,7 @@ public class EasyMobFarm {
       modEventBus.addListener(ClientRenderer::registerEntityRenderers);
       modEventBus.addListener(ClientRenderer::registerRenderLayers);
       modEventBus.addListener(ClientScreens::registerScreens);
+      modEventBus.addListener(ModItemProperties::registerItemProperties);
     });
   }
 

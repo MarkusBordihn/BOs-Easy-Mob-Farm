@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": ["EGW", "T# ", "S-F"],
+  "pattern": ["EGW", "T#G", "S-F"],
   "key": {
     "#": {
       "item": "easy_mob_farm:iron_mob_farm_template"

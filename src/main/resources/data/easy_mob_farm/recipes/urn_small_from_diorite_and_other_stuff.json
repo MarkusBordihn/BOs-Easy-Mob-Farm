@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#G#",
+    "#O#",
+    "###"],
+  "key": {
+    "#": {
+      "item": "minecraft:polished_diorite"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "O": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "result": {
+    "item": "easy_mob_farm:urn_small"
+  }
+}

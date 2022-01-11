@@ -1,9 +1,12 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": ["S#S", "#O#", "S#T"],
+  "pattern": ["S#L", "#O#", "S#T"],
   "key": {
     "#": {
       "item": "material_elements:leather_strip_red"
+    },
+    "L": {
+      "item": "minecraft:lead"
     },
     "T": {
       "item": "minecraft:tripwire_hook"

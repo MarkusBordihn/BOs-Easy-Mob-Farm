@@ -130,8 +130,8 @@ dependencies {
   minecraft 'net.minecraftforge:forge:1.18.1-39.0.18'
 
   // Required: Bo's Material Elements (dev dependency)
-  compileOnly fg.deobf("curse.maven:material_elements-541620:3601425")
-  runtimeOnly fg.deobf("curse.maven:material_elements-541620:3601425")
+  compileOnly fg.deobf("curse.maven:material_elements-541620:3602348")
+  runtimeOnly fg.deobf("curse.maven:material_elements-541620:3602348")
 
   // Alex Mob's (Testing)
   // runtimeOnly fg.deobf("curse.maven:citadel-331936:3584733:deobf")
@@ -182,8 +182,8 @@ curseforge {
   apiKey = "${credentials.curseforge_api_token}"
   project {
     id = "${curseforge_project_id}"
-    changelog = '[[ --Change Log-- ]]'
-    releaseType = 'release'
+    changelog = 'https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/commits/main'
+    releaseType = 'beta'
     addGameVersion("1.18.1")
     addGameVersion("Forge")
     mainArtifact(jar) {

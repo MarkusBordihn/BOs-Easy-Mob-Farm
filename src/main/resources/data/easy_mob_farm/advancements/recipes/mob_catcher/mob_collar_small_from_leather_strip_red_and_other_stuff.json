@@ -2,16 +2,16 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "material_elements:iron_mob_farm_template_from_iron_rod_and_glass_pane"
+      "easy_mob_farm:mob_collar_small_from_leather_strip_red_and_other_stuff"
     ]
   },
   "criteria": {
-    "has_iron_rod": {
+    "has_slime_ball": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "items": ["material_elements:iron_rod"]
+            "items": ["minecraft:slime_ball"]
           }
         ]
       }
@@ -19,9 +19,9 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "iron_mob_farm_template_from_iron_rods_and_glass_pane"
+        "recipe": "easy_mob_farm:mob_collar_small_from_leather_strip_red_and_other_stuff"
       }
     }
   },
-  "requirements": [["has_iron_rod", "has_the_recipe"]]
+  "requirements": [["has_slime_ball", "has_the_recipe"]]
 }

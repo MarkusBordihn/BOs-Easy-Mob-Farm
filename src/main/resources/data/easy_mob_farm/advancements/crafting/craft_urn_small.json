@@ -1,0 +1,31 @@
+{
+  "parent": "easy_mob_farm:crafting/craft_animal_plains_farm",
+  "display": {
+    "icon": {
+      "item": "easy_mob_farm:urn_small"
+    },
+    "title": {
+      "translate": "advancements.easy_mob_farm.crafting.craft_urn_small.title"
+    },
+    "description": {
+      "translate": "advancements.easy_mob_farm.crafting.craft_urn_small.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "get_urn_small": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["easy_mob_farm:urn_small"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [["get_urn_small"]]
+}

@@ -1,0 +1,25 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": ["easy_mob_farm:monster_plains_cave_farm_from_iron_mob_farm_template"]
+  },
+  "criteria": {
+    "has_glow_lichen": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:glow_lichen"]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "easy_mob_farm:monster_plains_cave_farm_from_iron_mob_farm_template"
+      }
+    }
+  },
+  "requirements": [["has_glow_lichen", "has_the_recipe"]]
+}

@@ -1,0 +1,27 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "easy_mob_farm:iron_mob_farm_template_from_iron_cube_glass_frame_and_hopper"
+    ]
+  },
+  "criteria": {
+    "has_iron_cube_glass_frame": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["material_elements:iron_cube_glass_frame"]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "easy_mob_farm:iron_mob_farm_template_from_iron_cube_glass_frame_and_hopper"
+      }
+    }
+  },
+  "requirements": [["iron_iron_cube_glass_frame", "has_the_recipe"]]
+}

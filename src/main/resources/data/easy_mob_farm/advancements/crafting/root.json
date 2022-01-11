@@ -1,0 +1,31 @@
+{
+  "display": {
+    "icon": {
+      "item": "easy_mob_farm:creative_mob_farm"
+    },
+    "title": {
+      "translate": "advancements.easy_mob_farm.crafting.root.title"
+    },
+    "description": {
+      "translate": "advancements.easy_mob_farm.crafting.root.description"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false,
+    "background": "easy_mob_farm:textures/gui/advancements/backgrounds/adventure.png"
+  },
+  "criteria": {
+    "crafting_table": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:crafting_table"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [["crafting_table"]]
+}

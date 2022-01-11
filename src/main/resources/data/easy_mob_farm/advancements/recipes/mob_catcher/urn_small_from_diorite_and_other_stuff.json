@@ -1,0 +1,25 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": ["easy_mob_farm:urn_small_from_diorite_and_other_stuff"]
+  },
+  "criteria": {
+    "has_ender_eye": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:ender_eye"]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "easy_mob_farm:urn_small_from_diorite_and_other_stuff"
+      }
+    }
+  },
+  "requirements": [["has_ender_eye", "has_the_recipe"]]
+}
