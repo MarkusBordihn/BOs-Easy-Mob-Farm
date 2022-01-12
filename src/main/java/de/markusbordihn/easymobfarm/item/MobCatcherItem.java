@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Markus Bordihn
+ * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -153,16 +153,16 @@ public class MobCatcherItem extends CapturedMob {
         return InteractionResult.FAIL;
       }
 
-      // Play capture sound.
-      if (level.isClientSide) {
-        player.playSound(SoundEvents.EGG_THROW, 1.0F, 0F);
-        return InteractionResult.SUCCESS;
-      }
-
       // Check if we could catch the mob Type
       String mobType = livingEntity.getType().getRegistryName().toString();
       if (!canCatchMob(livingEntity) || !canCatchMobType(mobType)) {
         return InteractionResult.FAIL;
+      }
+
+      // Play capture sound.
+      if (level.isClientSide) {
+        player.playSound(SoundEvents.EGG_THROW, 1.0F, 0F);
+        return InteractionResult.SUCCESS;
       }
 
       // Handle mob catching luck and failed actions.

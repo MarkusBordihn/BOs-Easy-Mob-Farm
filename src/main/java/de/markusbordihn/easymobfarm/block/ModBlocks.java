@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Markus Bordihn
+ * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -34,6 +34,7 @@ import de.markusbordihn.easymobfarm.Annotations.TemplateEntryPoint;
 import de.markusbordihn.easymobfarm.block.entity.farm.CreativeMobFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.AnimalPlainsFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.MonsterPlainsCaveFarmEntity;
+import de.markusbordihn.easymobfarm.block.entity.farm.OceanFarmEntity;
 
 public class ModBlocks {
 
@@ -46,6 +47,11 @@ public class ModBlocks {
       DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, Constants.MOD_ID);
 
   @TemplateEntryPoint("Register Blocks")
+
+  public static final RegistryObject<Block> OCEAN_FARM =
+      BLOCKS.register(OceanFarm.NAME, () -> new OceanFarm(BlockBehaviour.Properties
+          .of(Material.STONE).requiresCorrectToolForDrops().strength(2.0F, 2.0F)
+          .lightLevel(OceanFarm::getLightLevel).noOcclusion()));
 
   // Mob Farm Templates
   public static final RegistryObject<Block> IRON_MOB_FARM_TEMPLATE =
@@ -72,6 +78,10 @@ public class ModBlocks {
           .lightLevel(MonsterPlainsCaveFarm::getLightLevel).sound(SoundType.METAL).noOcclusion()));
 
   @TemplateEntryPoint("Register Entity")
+
+  public static final RegistryObject<BlockEntityType<OceanFarmEntity>> OCEAN_FARM_ENTITY =
+      ENTITIES.register(OceanFarm.NAME, () -> BlockEntityType.Builder
+          .of(OceanFarmEntity::new, OCEAN_FARM.get()).build(null));
 
   // Mob Farms Block Entity
   public static final RegistryObject<BlockEntityType<AnimalPlainsFarmEntity>> ANIMAL_PLAINS_FARM_ENTITY =

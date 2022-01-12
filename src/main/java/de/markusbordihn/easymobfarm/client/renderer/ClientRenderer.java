@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Markus Bordihn
+ * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -33,6 +33,7 @@ import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.client.renderer.farm.AnimalPlainsFarmRenderer;
 import de.markusbordihn.easymobfarm.client.renderer.farm.CreativeMobFarmRenderer;
 import de.markusbordihn.easymobfarm.client.renderer.farm.MonsterPlainsCaveFarmRenderer;
+import de.markusbordihn.easymobfarm.client.renderer.farm.OceanFarmRenderer;
 
 public class ClientRenderer {
 
@@ -44,6 +45,7 @@ public class ClientRenderer {
     log.info("{} Block Entity Renderers ...", Constants.LOG_REGISTER_PREFIX);
 
     // @TemplateEntryPoint("Register Entity Renderer")
+    event.registerBlockEntityRenderer(ModBlocks.OCEAN_FARM_ENTITY.get(), OceanFarmRenderer::new);
     event.registerBlockEntityRenderer(ModBlocks.ANIMAL_PLAINS_FARM_ENTITY.get(),
         AnimalPlainsFarmRenderer::new);
     event.registerBlockEntityRenderer(ModBlocks.CREATIVE_MOB_FARM_ENTITY.get(),
@@ -67,12 +69,13 @@ public class ClientRenderer {
           RenderType.cutoutMipped());
 
       // Mobs Farms
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.ANIMAL_PLAINS_FARM.get(),
+          RenderType.cutoutMipped());
       ItemBlockRenderTypes.setRenderLayer(ModBlocks.CREATIVE_MOB_FARM.get(),
           RenderType.cutoutMipped());
       ItemBlockRenderTypes.setRenderLayer(ModBlocks.MONSTER_PLAINS_CAVE_FARM.get(),
           RenderType.cutoutMipped());
-      ItemBlockRenderTypes.setRenderLayer(ModBlocks.ANIMAL_PLAINS_FARM.get(),
-          RenderType.cutoutMipped());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.OCEAN_FARM.get(), RenderType.translucent());
     });
   }
 

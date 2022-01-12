@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Markus Bordihn
+ * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -20,7 +20,9 @@
 package de.markusbordihn.easymobfarm.loot;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -65,6 +67,9 @@ public class LootManager {
   private static final GameProfile GAME_PROFILE =
       new GameProfile(UUID.randomUUID(), "[BOs_Easy_Mob_Farm]");
 
+  private static Map<ResourceLocation, List<String>> lootTableDropListCache =
+      new ConcurrentHashMap<>();
+
   protected LootManager() {}
 
   @SubscribeEvent
@@ -73,6 +78,7 @@ public class LootManager {
     chickenDropEggs = COMMON.chickenDropEggs.get();
     chickenDropRawChicken = COMMON.chickenDropRawChicken.get();
     lootPreviewRolls = COMMON.lootPreviewRolls.get();
+    lootTableDropListCache = new ConcurrentHashMap<>();
   }
 
   public static FakePlayer getPlayer(ServerLevel level) {
@@ -84,9 +90,15 @@ public class LootManager {
 
   public static List<String> getRandomLootDropOverview(ResourceLocation lootTableLocation,
       Level level, String mobType) {
-    List<String> lootDropList = Lists.newArrayList();
 
-    // Roll's the loot a specific time (default: 2) to get accurate results.
+    // Use a internal cache to improve loot prediction over time.
+    List<String> lootDropList = Lists.newArrayList();
+    List<String> lootDropListCache = lootTableDropListCache.getOrDefault(lootTableLocation, null);
+    if (lootDropListCache != null) {
+      lootDropList.addAll(lootDropListCache);
+    }
+
+    // Roll's the loot a specific time (default: 2) to get more accurate results.
     for (int i = 0; i < lootPreviewRolls; i++) {
       List<ItemStack> lootDrops = getFilteredRandomLootDrop(lootTableLocation, level, mobType);
       log.debug("Loot for {} with {} roll {} result: {}", mobType, lootTableLocation, i, lootDrops);
@@ -94,7 +106,8 @@ public class LootManager {
         lootDropList.add(lootDrop.getItem().getDescriptionId());
       }
     }
-    return lootDropList.stream().distinct().toList();
+
+    return lootTableDropListCache.put(lootTableLocation, lootDropList.stream().distinct().toList());
   }
 
   public static List<ItemStack> getRandomLootDrops(ResourceLocation lootTableLocation,

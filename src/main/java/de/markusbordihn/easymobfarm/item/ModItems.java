@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Markus Bordihn
+ * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -32,6 +32,7 @@ import de.markusbordihn.easymobfarm.block.AnimalPlainsFarm;
 import de.markusbordihn.easymobfarm.block.CreativeMobFarm;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.block.MonsterPlainsCaveFarm;
+import de.markusbordihn.easymobfarm.block.OceanFarm;
 import de.markusbordihn.easymobfarm.item.mobcatcher.CollarSmall;
 import de.markusbordihn.easymobfarm.item.mobcatcher.CreativeMobCatcher;
 import de.markusbordihn.easymobfarm.item.mobcatcher.Net;
@@ -64,6 +65,10 @@ public class ModItems {
           new Item.Properties().stacksTo(1).durability(11).tab(EasyMobFarmTab.TOOLS)));
 
   @TemplateEntryPoint("Register Block Items")
+
+  public static final RegistryObject<Item> OCEAN_FARM =
+      ITEMS.register(OceanFarm.NAME, () -> new BlockItem(ModBlocks.OCEAN_FARM.get(),
+          new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
 
   // Mob Farm Templates
   public static final RegistryObject<Item> IRON_MOB_FARM_TEMPLATE =

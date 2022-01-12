@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Markus Bordihn
+ * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -29,6 +29,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.menu.farm.AnimalPlainsFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.CreativeMobFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.MonsterPlainsCaveFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.OceanFarmMenu;
 
 public class ContainerMenu {
 
@@ -40,12 +41,14 @@ public class ContainerMenu {
     log.info("{} Container Menu ...", Constants.LOG_REGISTER_PREFIX);
 
     // Mob Farm Container Menu
+    event.getRegistry()
+        .registerAll(new MenuType<>(OceanFarmMenu::new).setRegistryName(Constants.OCEAN_FARM));
     event.getRegistry().registerAll(
         new MenuType<>(AnimalPlainsFarmMenu::new).setRegistryName(Constants.ANIMAL_PLAINS_FARM));
     event.getRegistry().registerAll(
         new MenuType<>(CreativeMobFarmMenu::new).setRegistryName(Constants.CREATIVE_MOB_FARM));
-    event.getRegistry().registerAll(
-        new MenuType<>(MonsterPlainsCaveFarmMenu::new).setRegistryName(Constants.MONSTER_PLAINS_CAVE_FARM));
+    event.getRegistry().registerAll(new MenuType<>(MonsterPlainsCaveFarmMenu::new)
+        .setRegistryName(Constants.MONSTER_PLAINS_CAVE_FARM));
     event.getRegistry()
         .registerAll(new MenuType<>(MobFarmMenu::new).setRegistryName(Constants.MOB_FARM));
   }

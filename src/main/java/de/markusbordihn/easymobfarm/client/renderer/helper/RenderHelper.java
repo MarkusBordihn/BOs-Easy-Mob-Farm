@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Markus Bordihn
+ * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -30,6 +30,7 @@ import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -40,8 +41,11 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.MobFarmBlock;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
+import de.markusbordihn.easymobfarm.config.mobs.AmbientWaterAnimal;
 import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
+import de.markusbordihn.easymobfarm.config.mobs.HostileWaterMonster;
 import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
+import de.markusbordihn.easymobfarm.config.mobs.PassiveWaterAnimal;
 
 public class RenderHelper {
 
@@ -113,6 +117,12 @@ public class RenderHelper {
         this.renderModels.getCaveSpiderRenderer(), this.renderModels.getCaveSpider());
   }
 
+  public void renderCod(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
+      double y, double z, int combinedLight) {
+    renderModel(poseStack, buffer, scale, -90, -90, x, y, z, combinedLight,
+        this.renderModels.getCodRenderer(), this.renderModels.getCod());
+  }
+
   public void renderCow(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
       double y, double z, int combinedLight) {
     renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
@@ -131,6 +141,12 @@ public class RenderHelper {
         this.renderModels.getChickenRenderer(), this.renderModels.getChicken());
   }
 
+  public void renderDrowned(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
+      double y, double z, int combinedLight) {
+    renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
+        this.renderModels.getDrownedRenderer(), this.renderModels.getDrowned());
+  }
+
   public void renderPig(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
       double y, double z, int combinedLight) {
     renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
@@ -147,6 +163,12 @@ public class RenderHelper {
       double y, double z, int combinedLight) {
     renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
         this.renderModels.getSkeletonRenderer(), this.renderModels.getSkeleton());
+  }
+
+  public void renderSquid(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
+      double y, double z, int combinedLight) {
+    renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
+        this.renderModels.getSquidRenderer(), this.renderModels.getSquid());
   }
 
   public void renderZombie(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
@@ -193,6 +215,25 @@ public class RenderHelper {
         break;
       case HostileMonster.ZOMBIE:
         renderZombie(poseStack, buffer, 0.25F, 0D, 0D, 2D / 16D, combinedLight);
+        break;
+      default:
+        return false;
+    }
+    return true;
+  }
+
+  public boolean renderWaterEntity(PoseStack poseStack, MultiBufferSource buffer, int combinedLight,
+      String farmMobType) {
+    // Render Water using their specific Renderer and predefined scaling and position.
+    switch (farmMobType) {
+      case AmbientWaterAnimal.COD:
+        renderCod(poseStack, buffer, 0.3F, 0D, 5D / 16D, 2D / 16D, combinedLight);
+        break;
+      case PassiveWaterAnimal.SQUID:
+        renderSquid(poseStack, buffer, 0.3F, 0D, 7D / 16D, 2D / 16D, combinedLight);
+        break;
+      case HostileWaterMonster.DROWNED:
+        renderDrowned(poseStack, buffer, 0.25F, 0D, 0D, 2D / 16D, combinedLight);
         break;
       default:
         return false;

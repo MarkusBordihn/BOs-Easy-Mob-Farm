@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Markus Bordihn
+ * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -26,6 +26,8 @@ import java.util.Set;
 import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
 
 public class Plains {
+
+  // Reference: https://minecraft.fandom.com/wiki/Plains
 
   protected Plains() {}
 

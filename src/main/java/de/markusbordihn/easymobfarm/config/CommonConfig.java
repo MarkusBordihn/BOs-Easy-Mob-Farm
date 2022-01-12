@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Markus Bordihn
+ * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -70,6 +70,8 @@ public class CommonConfig {
     public final ForgeConfigSpec.BooleanValue chickenDropEggs;
     public final ForgeConfigSpec.BooleanValue chickenDropRawChicken;
 
+
+public final ForgeConfigSpec.IntValue oceanFarmProcessTime;
     Config(ForgeConfigSpec.Builder builder) {
       builder.comment(Constants.MOD_NAME);
 
@@ -109,6 +111,12 @@ public class CommonConfig {
               .defineInRange("monsterPlainsCaveFarmProcessTime", 300, 10, 3600);
       builder.pop();
 
+
+      builder.push("OceanFarm");
+      oceanFarmProcessTime =
+          builder.comment("Defines after how many seconds a drop is performed.")
+              .defineInRange("oceanFarmProcessTime", 300, 10, 3600);
+      builder.pop();
       // @TemplateEntryPoint("Register Forge Config Spec")
 
       builder.push("Chicken Settings");

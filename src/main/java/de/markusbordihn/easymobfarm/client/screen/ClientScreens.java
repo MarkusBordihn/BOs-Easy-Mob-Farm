@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Markus Bordihn
+ * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -30,9 +30,11 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.client.screen.farm.AnimalPlainsFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.CreativeMobFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.MonsterPlainsCaveFarmScreen;
+import de.markusbordihn.easymobfarm.client.screen.farm.OceanFarmScreen;
 import de.markusbordihn.easymobfarm.menu.farm.AnimalPlainsFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.CreativeMobFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.MonsterPlainsCaveFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.OceanFarmMenu;
 
 public class ClientScreens {
 
@@ -45,6 +47,7 @@ public class ClientScreens {
 
     event.enqueueWork(() -> {
       // Mob Farm UI screen
+      MenuScreens.register(OceanFarmMenu.TYPE, OceanFarmScreen::new);
       MenuScreens.register(AnimalPlainsFarmMenu.TYPE, AnimalPlainsFarmScreen::new);
       MenuScreens.register(CreativeMobFarmMenu.TYPE, CreativeMobFarmScreen::new);
       MenuScreens.register(MonsterPlainsCaveFarmMenu.TYPE, MonsterPlainsCaveFarmScreen::new);

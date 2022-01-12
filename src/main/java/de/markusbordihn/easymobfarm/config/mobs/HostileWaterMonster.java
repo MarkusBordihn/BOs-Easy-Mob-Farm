@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Markus Bordihn
+ * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -19,6 +19,9 @@
 
 package de.markusbordihn.easymobfarm.config.mobs;
 
-public class AmbietAnimal {
+public class HostileWaterMonster {
 
+  protected HostileWaterMonster() {}
+
+  public static final String DROWNED = "minecraft:drowned";
 }

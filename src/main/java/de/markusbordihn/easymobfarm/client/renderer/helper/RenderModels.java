@@ -1,5 +1,5 @@
 /**
- * Copyright 2021 Markus Bordihn
+ * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -23,26 +23,34 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.SquidModel;
+import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.CaveSpiderRenderer;
 import net.minecraft.client.renderer.entity.ChickenRenderer;
+import net.minecraft.client.renderer.entity.CodRenderer;
 import net.minecraft.client.renderer.entity.CowRenderer;
 import net.minecraft.client.renderer.entity.CreeperRenderer;
+import net.minecraft.client.renderer.entity.DrownedRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.PigRenderer;
 import net.minecraft.client.renderer.entity.SheepRenderer;
 import net.minecraft.client.renderer.entity.SkeletonRenderer;
+import net.minecraft.client.renderer.entity.SquidRenderer;
 import net.minecraft.client.renderer.entity.ZombieRenderer;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Chicken;
+import net.minecraft.world.entity.animal.Cod;
 import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.animal.Sheep;
+import net.minecraft.world.entity.animal.Squid;
 import net.minecraft.world.entity.monster.CaveSpider;
 import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.monster.Drowned;
 import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.DyeColor;
@@ -65,6 +73,9 @@ public class RenderModels {
   private CaveSpider caveSpider = null;
   private CaveSpiderRenderer caveSpiderRenderer = null;
 
+  private Cod cod = null;
+  private CodRenderer codRenderer = null;
+
   private Chicken chicken = null;
   private ChickenRenderer chickenRenderer = null;
 
@@ -74,6 +85,9 @@ public class RenderModels {
   private Cow cow = null;
   private CowRenderer cowRenderer = null;
 
+  private Drowned drowned = null;
+  private DrownedRenderer drownedRenderer = null;
+
   private Sheep sheep = null;
   private SheepRenderer sheepRenderer = null;
 
@@ -82,6 +96,9 @@ public class RenderModels {
 
   private Skeleton skeleton = null;
   private SkeletonRenderer skeletonRenderer = null;
+
+  private Squid squid = null;
+  private SquidRenderer<?> squidRenderer = null;
 
   private Zombie zombie = null;
   private ZombieRenderer zombieRenderer = null;
@@ -151,6 +168,20 @@ public class RenderModels {
     return this.caveSpiderRenderer;
   }
 
+  public Cod getCod() {
+    if (this.cod == null) {
+      this.cod = new Cod(EntityType.COD, getLevel());
+    }
+    return this.cod;
+  }
+
+  public CodRenderer getCodRenderer() {
+    if (this.codRenderer == null) {
+      this.codRenderer = new CodRenderer(getEntityRendererContext());
+    }
+    return this.codRenderer;
+  }
+
   public Chicken getChicken() {
     if (this.chicken == null) {
       this.chicken = new Chicken(EntityType.CHICKEN, getLevel());
@@ -163,6 +194,20 @@ public class RenderModels {
       this.chickenRenderer = new ChickenRenderer(getEntityRendererContext());
     }
     return this.chickenRenderer;
+  }
+
+  public Drowned getDrowned() {
+    if (this.drowned == null) {
+      this.drowned = new Drowned(EntityType.DROWNED, getLevel());
+    }
+    return this.drowned;
+  }
+
+  public DrownedRenderer getDrownedRenderer() {
+    if (this.drownedRenderer == null) {
+      this.drownedRenderer = new DrownedRenderer(getEntityRendererContext());
+    }
+    return this.drownedRenderer;
   }
 
   public Creeper getCreeper() {
@@ -243,6 +288,22 @@ public class RenderModels {
       this.skeletonRenderer = new SkeletonRenderer(getEntityRendererContext());
     }
     return this.skeletonRenderer;
+  }
+
+  public Squid getSquid() {
+    if (this.skeleton == null) {
+      this.squid = new Squid(EntityType.SQUID, getLevel());
+    }
+    return this.squid;
+  }
+
+  public SquidRenderer getSquidRenderer() {
+    if (this.squidRenderer == null) {
+      this.squidRenderer = new SquidRenderer<>(getEntityRendererContext(),
+          new SquidModel<>(getEntityRendererContext().bakeLayer(ModelLayers.SQUID))
+      );
+    }
+    return this.squidRenderer;
   }
 
   public Zombie getZombie() {
