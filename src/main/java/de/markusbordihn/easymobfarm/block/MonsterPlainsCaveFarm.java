@@ -46,7 +46,7 @@ public class MonsterPlainsCaveFarm extends MobFarmBlock {
 
   public static final String NAME = "monster_plains_cave_farm";
 
-  private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   private static final Set<String> acceptedMobTypes = PlainsCave.Hostile;
 

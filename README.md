@@ -56,6 +56,16 @@ List of monster farms which are will be released over time.
 
 #### Monster Ocean Farm (WIP)
 
+### Special Farms
+
+#### 🌊 Ocean Farm
+
+![][ocean_farm]
+
+#### Iron Farm (WIP)
+
+#### Wither Farm (WIP)
+
 ### 🪄 Creative Mob Farm
 
 The creative mob farm has not restriction and is mostly for testing.
@@ -63,13 +73,21 @@ It could theoretical process all kind of living entities, but not all of them ar
 
 ## Type of Mob Catching Items
 
-### 🪢Collar small
+### 🪢Collar (small)
 
 The collar is used to catch the standard animals from a plains biome.
 
-### ⚱️ Urn small
+### ⚱️ Urn (small)
 
 The urn is used to catch the standard monsters from a plains cave biome.
+
+### 🐟 Fishing Bowl
+
+The fishing bowl is only able to catch standard fish.
+
+### 🎣 Fishing Net (small)
+
+The fishing net is able to capture standard ocean animals and monsters from the ocean.
 
 ### 🪄 Creative Mob Catching Item
 
@@ -80,3 +98,4 @@ The creative mob catching item could catch all kind of living entities.
 [item_overview]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/item_overview.png
 [mob_menu]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/mob_menu.png
 [monster_plains_cave_farm]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/monster_plains_cave_farm.png
+[ocean_farm]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/ocean_farm.png

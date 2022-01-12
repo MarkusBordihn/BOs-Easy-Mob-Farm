@@ -171,6 +171,12 @@ public class RenderHelper {
         this.renderModels.getSquidRenderer(), this.renderModels.getSquid());
   }
 
+  public void renderGlowSquid(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
+      double y, double z, int combinedLight) {
+    renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
+        this.renderModels.getGlowSquidRenderer(), this.renderModels.getGlowSquid());
+  }
+
   public void renderZombie(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
       double y, double z, int combinedLight) {
     renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
@@ -231,6 +237,9 @@ public class RenderHelper {
         break;
       case PassiveWaterAnimal.SQUID:
         renderSquid(poseStack, buffer, 0.3F, 0D, 7D / 16D, 2D / 16D, combinedLight);
+        break;
+      case PassiveWaterAnimal.GLOW_SQUID:
+        renderGlowSquid(poseStack, buffer, 0.3F, 0D, 7D / 16D, 2D / 16D, combinedLight);
         break;
       case HostileWaterMonster.DROWNED:
         renderDrowned(poseStack, buffer, 0.25F, 0D, 0D, 2D / 16D, combinedLight);

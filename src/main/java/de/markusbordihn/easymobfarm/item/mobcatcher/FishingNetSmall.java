@@ -19,29 +19,29 @@
 
 package de.markusbordihn.easymobfarm.item.mobcatcher;
 
+import net.minecraft.world.item.Item;
+
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.minecraft.world.item.Item;
-
-import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
+import de.markusbordihn.easymobfarm.config.mobs.AmbientWaterAnimal;
+import de.markusbordihn.easymobfarm.config.mobs.HostileWaterMonster;
+import de.markusbordihn.easymobfarm.config.mobs.PassiveWaterAnimal;
 import de.markusbordihn.easymobfarm.item.MobCatcherItem;
 
-public class CollarSmall extends MobCatcherItem {
+public class FishingNetSmall extends MobCatcherItem {
 
   private static final Set<String> acceptedMobTypes = new HashSet<>(Arrays.asList(
   // @formatter:off
-    PassiveAnimal.CHICKEN,
-    PassiveAnimal.COW,
-    PassiveAnimal.DONKEY,
-    PassiveAnimal.HORSE,
-    PassiveAnimal.PIG,
-    PassiveAnimal.SHEEP
+    AmbientWaterAnimal.COD,
+    PassiveWaterAnimal.SQUID,
+    PassiveWaterAnimal.GLOW_SQUID,
+    HostileWaterMonster.DROWNED
   // @formatter:on
   ));
 
-  public CollarSmall(Item.Properties properties) {
+  public FishingNetSmall(Item.Properties properties) {
     super(properties);
   }
 

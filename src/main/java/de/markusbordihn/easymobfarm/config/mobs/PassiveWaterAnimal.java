@@ -24,4 +24,5 @@ public final class PassiveWaterAnimal {
   protected PassiveWaterAnimal() {}
 
   public static final String SQUID = "minecraft:squid";
+  public static final String GLOW_SQUID = "minecraft:glow_squid";
 }

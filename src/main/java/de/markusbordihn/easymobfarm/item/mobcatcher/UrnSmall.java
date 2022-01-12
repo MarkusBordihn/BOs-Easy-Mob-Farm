@@ -31,12 +31,12 @@ import de.markusbordihn.easymobfarm.item.MobCatcherItem;
 public class UrnSmall extends MobCatcherItem {
 
   private static final Set<String> acceptedMobTypes = new HashSet<>(Arrays.asList(
-    // @formatter:off
+  // @formatter:off
     HostileMonster.CAVE_SPIDER,
     HostileMonster.CREEPER,
     HostileMonster.SKELETON,
     HostileMonster.ZOMBIE
-    // @formatter:on
+  // @formatter:on
   ));
 
   public UrnSmall(Item.Properties properties) {

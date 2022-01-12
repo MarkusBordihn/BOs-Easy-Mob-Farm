@@ -64,6 +64,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.item.CapturedMob;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
+import de.markusbordihn.easymobfarm.text.TranslatableText;
 
 public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatible {
 
@@ -216,17 +217,24 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
     super.appendHoverText(itemStack, blockGetter, tooltipList, tooltipFlag);
     Set<String> acceptedMobTypes = getAcceptedMobTypes();
     if (acceptedMobTypes != null && !acceptedMobTypes.isEmpty()) {
-      TranslatableComponent supportedMobsOveriew =
-          (TranslatableComponent) new TranslatableComponent(
-              Constants.TEXT_PREFIX + getFarmDescriptionId()).append(" ")
-                  .withStyle(ChatFormatting.GREEN);
+      // List each single possible mob types (incl. modded mobs types).
+      TranslatableComponent mobTypeOverview = (TranslatableComponent) new TranslatableComponent("")
+          .withStyle(ChatFormatting.DARK_GREEN);
       for (String acceptedMob : acceptedMobTypes) {
-        // Format accepted mob to entity.x.y format for automatic translations.
-        supportedMobsOveriew
-            .append(new TranslatableComponent("entity." + acceptedMob.replace(':', '.'))
-                .append(", ").withStyle(ChatFormatting.DARK_GREEN));
+        TranslatableComponent acceptedMobName = TranslatableText.getEntityName(acceptedMob);
+        if (!acceptedMobName.getString().isBlank()) {
+          mobTypeOverview.append(acceptedMobName).append(", ")
+              .withStyle(ChatFormatting.DARK_GREEN);
+        }
       }
-      tooltipList.add(supportedMobsOveriew.append("..."));
+      if (!mobTypeOverview.getString().isBlank()) {
+        TranslatableComponent supportedMobsOveriew =
+            (TranslatableComponent) new TranslatableComponent(
+                Constants.TEXT_PREFIX + getFarmDescriptionId()).append(" ")
+                    .withStyle(ChatFormatting.GREEN);
+        supportedMobsOveriew.append(mobTypeOverview).append("...");
+        tooltipList.add(supportedMobsOveriew);
+      }
     }
   }
 

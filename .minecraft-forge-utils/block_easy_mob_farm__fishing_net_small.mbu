@@ -1,0 +1,35 @@
+{
+  "attributes": {
+    "soundType": "SoundType.METAL"
+  },
+  "bedrock": {
+    "formatVersion": "1.16.1"
+  },
+  "blockName": "fishing_net_small",
+  "component": "block",
+  "configVersion": "1.0.0",
+  "description": "",
+  "events": {},
+  "forge": {
+    "className": "FishingNetSmall"
+  },
+  "icon": "fishing_net_small",
+  "id": "easy_mob_farm:fishing_net_small",
+  "misc": {},
+  "name": "Fishing Net Small",
+  "namespace": "easy_mob_farm",
+  "placeholder": {
+    "BlockClassName": "FishingNetSmall",
+    "BLOCKNAME": "FISHINGNETSMALL",
+    "BLOCK_NAME": "FISHING_NET_SMALL",
+    "BlockName": "FishingNetSmall",
+    "blockName": "fishingNetSmall",
+    "block_name": "fishing_net_small",
+    "blockname": "fishingnetsmall",
+    "CreativeTab": "TAB_MISC",
+    "SoundType": "SoundType.METAL"
+  },
+  "template": ".\\\\templates\\\\NewMobCatcher.template",
+  "type": "template",
+  "variation": ""
+}

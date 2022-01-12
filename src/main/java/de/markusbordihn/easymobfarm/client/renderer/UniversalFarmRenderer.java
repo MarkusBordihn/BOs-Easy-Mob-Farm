@@ -57,7 +57,12 @@ public class UniversalFarmRenderer extends MobFarmRendererBase<MobFarmBlockEntit
         renderHelper.renderAnimal(poseStack, buffer, combinedLight, farmMobType);
     boolean renderedMonster =
         renderHelper.renderMonster(poseStack, buffer, combinedLight, farmMobType);
-    if (!renderedAnimal && !renderedMonster && blockEntity.getFarmMobEntityType() != null) {
+    boolean renderedWaterEntity =
+        renderHelper.renderWaterEntity(poseStack, buffer, combinedLight, farmMobType);
+
+    // Only render custom model if we are not able to render the model otherwise.
+    if (!renderedAnimal && !renderedMonster && !renderedWaterEntity
+        && blockEntity.getFarmMobEntityType() != null) {
       EntityType<?> entityType = blockEntity.getFarmMobEntityType();
       renderHelper.renderLivingEntity(poseStack, buffer, combinedLight, entityType);
     }

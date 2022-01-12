@@ -33,7 +33,9 @@ import net.minecraft.client.renderer.entity.CreeperRenderer;
 import net.minecraft.client.renderer.entity.DrownedRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.GlowSquidRenderer;
 import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.PigRenderer;
 import net.minecraft.client.renderer.entity.SheepRenderer;
 import net.minecraft.client.renderer.entity.SkeletonRenderer;
@@ -42,6 +44,7 @@ import net.minecraft.client.renderer.entity.ZombieRenderer;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.GlowSquid;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.Cod;
 import net.minecraft.world.entity.animal.Cow;
@@ -99,6 +102,9 @@ public class RenderModels {
 
   private Squid squid = null;
   private SquidRenderer<?> squidRenderer = null;
+
+  private GlowSquid glowSquid = null;
+  private GlowSquidRenderer glowSquidRenderer = null;
 
   private Zombie zombie = null;
   private ZombieRenderer zombieRenderer = null;
@@ -291,7 +297,7 @@ public class RenderModels {
   }
 
   public Squid getSquid() {
-    if (this.skeleton == null) {
+    if (this.squid == null) {
       this.squid = new Squid(EntityType.SQUID, getLevel());
     }
     return this.squid;
@@ -304,6 +310,21 @@ public class RenderModels {
       );
     }
     return this.squidRenderer;
+  }
+
+  public GlowSquid getGlowSquid() {
+    if (this.glowSquid == null) {
+      this.glowSquid = new GlowSquid(EntityType.GLOW_SQUID, getLevel());
+    }
+    return this.glowSquid;
+  }
+
+  public GlowSquidRenderer getGlowSquidRenderer() {
+    if (this.glowSquidRenderer == null) {
+      this.glowSquidRenderer = new GlowSquidRenderer(getEntityRendererContext(),
+          new SquidModel<>(getEntityRendererContext().bakeLayer(ModelLayers.GLOW_SQUID)));
+    }
+    return this.glowSquidRenderer;
   }
 
   public Zombie getZombie() {

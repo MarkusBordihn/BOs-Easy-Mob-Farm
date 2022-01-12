@@ -24,4 +24,5 @@ public class AmbientWaterAnimal {
   protected AmbientWaterAnimal() {}
 
   public static final String COD = "minecraft:cod";
+  public static final String ATLANTIC_COD = "aquaculture:atlantic_cod";
 }

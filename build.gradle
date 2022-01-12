@@ -2,7 +2,6 @@ buildscript {
   repositories {
     maven { url = 'https://maven.minecraftforge.net' }
     mavenCentral()
-    jcenter()
   }
   dependencies {
     classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
@@ -127,7 +126,7 @@ dependencies {
   // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
   // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
   // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-  minecraft 'net.minecraftforge:forge:1.18.1-39.0.18'
+  minecraft 'net.minecraftforge:forge:1.18.1-39.0.19'
 
   // Required: Bo's Material Elements (dev dependency)
   compileOnly fg.deobf("curse.maven:material_elements-541620:3602348")
@@ -136,6 +135,9 @@ dependencies {
   // Alex Mob's (Testing)
   // runtimeOnly fg.deobf("curse.maven:citadel-331936:3584733:deobf")
   // runtimeOnly fg.deobf("curse.maven:alex_mobs-426558:3575698")
+
+  // Aquaculture 2 (Testing)
+  // runtimeOnly fg.deobf("curse.maven:aquaculture-60028:3583038")
 
   // Additional helpful Mods for development (dev depenedency)
   runtimeOnly fg.deobf("curse.maven:spark-361579:3591172")

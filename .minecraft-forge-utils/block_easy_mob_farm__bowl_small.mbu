@@ -1,0 +1,35 @@
+{
+  "attributes": {
+    "soundType": "SoundType.METAL"
+  },
+  "bedrock": {
+    "formatVersion": "1.16.1"
+  },
+  "blockName": "bowl_small",
+  "component": "block",
+  "configVersion": "1.0.0",
+  "description": "",
+  "events": {},
+  "forge": {
+    "className": "BowlSmall"
+  },
+  "icon": "bowl_small",
+  "id": "easy_mob_farm:bowl_small",
+  "misc": {},
+  "name": "Bowl Small",
+  "namespace": "easy_mob_farm",
+  "placeholder": {
+    "BlockClassName": "BowlSmall",
+    "BLOCKNAME": "BOWLSMALL",
+    "BLOCK_NAME": "BOWL_SMALL",
+    "BlockName": "BowlSmall",
+    "blockName": "bowlSmall",
+    "block_name": "bowl_small",
+    "blockname": "bowlsmall",
+    "CreativeTab": "TAB_MISC",
+    "SoundType": "SoundType.METAL"
+  },
+  "template": ".\\\\templates\\\\NewMobCatcher.template",
+  "type": "template",
+  "variation": ""
+}

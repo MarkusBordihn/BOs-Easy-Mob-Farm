@@ -46,7 +46,7 @@ public class CreativeMobFarm extends MobFarmBlock {
 
   public static final String NAME = "creative_mob_farm";
 
-  private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   private static final Set<String> acceptedMobTypes = Plains.Passive;
 

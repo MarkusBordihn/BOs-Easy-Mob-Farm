@@ -46,7 +46,7 @@ public class OceanFarm extends MobFarmBlock {
 
   public static final String NAME = "ocean_farm";
 
-  private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   private static final Set<String> acceptedMobTypes = Ocean.All;
 

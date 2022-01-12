@@ -50,7 +50,7 @@ import de.markusbordihn.easymobfarm.loot.LootManager;
 
 public class CapturedMob extends Item {
 
-  private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   private static final String ENTITY_ID_TAG = "EntityId";
   private static final String ENTITY_LOOT_TABLE_TAG = "EntityLootTable";

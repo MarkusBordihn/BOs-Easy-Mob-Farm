@@ -40,7 +40,7 @@ import de.markusbordihn.easymobfarm.menu.ContainerMenu;
 @Mod(Constants.MOD_ID)
 public class EasyMobFarm {
 
-  private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   public EasyMobFarm() {
     final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();

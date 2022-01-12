@@ -33,7 +33,7 @@ import de.markusbordihn.easymobfarm.menu.farm.OceanFarmMenu;
 
 public class ContainerMenu {
 
-  private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   protected ContainerMenu() {}
 

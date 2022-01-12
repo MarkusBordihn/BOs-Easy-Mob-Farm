@@ -55,7 +55,7 @@ import de.markusbordihn.easymobfarm.item.CapturedMob;
 @EventBusSubscriber
 public class LootManager {
 
-  private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
 
   private static boolean blazeDropBlazeRod = COMMON.blazeDropBlazeRod.get();
@@ -90,24 +90,17 @@ public class LootManager {
 
   public static List<String> getRandomLootDropOverview(ResourceLocation lootTableLocation,
       Level level, String mobType) {
-
-    // Use a internal cache to improve loot prediction over time.
-    List<String> lootDropList = Lists.newArrayList();
-    List<String> lootDropListCache = lootTableDropListCache.getOrDefault(lootTableLocation, null);
-    if (lootDropListCache != null) {
-      lootDropList.addAll(lootDropListCache);
-    }
-
     // Roll's the loot a specific time (default: 2) to get more accurate results.
+    List<String> lootDropList = Lists.newArrayList();
     for (int i = 0; i < lootPreviewRolls; i++) {
       List<ItemStack> lootDrops = getFilteredRandomLootDrop(lootTableLocation, level, mobType);
-      log.debug("Loot for {} with {} roll {} result: {}", mobType, lootTableLocation, i, lootDrops);
-      for (ItemStack lootDrop : lootDrops) {
-        lootDropList.add(lootDrop.getItem().getDescriptionId());
-      }
-    }
 
-    return lootTableDropListCache.put(lootTableLocation, lootDropList.stream().distinct().toList());
+      // Use a internal cache to improve loot prediction over time.
+      lootDropList = cacheLootDrops(lootTableLocation, lootDrops);
+    }
+    log.info("Loot for {} with {} roll {} result: {}", mobType, lootTableLocation, lootPreviewRolls,
+        lootDropList);
+    return lootDropList;
   }
 
   public static List<ItemStack> getRandomLootDrops(ResourceLocation lootTableLocation,
@@ -157,7 +150,12 @@ public class LootManager {
   public static List<ItemStack> getFilteredRandomLootDrop(ResourceLocation lootTableLocation,
       Level level, String mobType) {
     List<ItemStack> lootDrops = getRandomLootDrops(lootTableLocation, level);
-    return getFilteredLootDrop(lootDrops, mobType);
+    List<ItemStack> filteredLootDrops = getFilteredLootDrop(lootDrops, mobType);
+
+    // Cache each loot drop for more accurate loot preview
+    cacheLootDrops(lootTableLocation, filteredLootDrops);
+
+    return filteredLootDrops;
   }
 
   public static List<ItemStack> getFilteredLootDrop(List<ItemStack> lootDrops, String mobType) {
@@ -195,6 +193,19 @@ public class LootManager {
       return false;
     }
     return mobType.equals(blockedMobType) && lootDrop.is(blockedLootDrop);
+  }
+
+  private static List<String> cacheLootDrops(ResourceLocation lootTableLocation,
+      List<ItemStack> lootDrops) {
+    List<String> lootDropList = Lists.newArrayList();
+    List<String> lootDropListCache = lootTableDropListCache.getOrDefault(lootTableLocation, null);
+    if (lootDropListCache != null) {
+      lootDropList.addAll(lootDropListCache);
+    }
+    for (ItemStack lootDrop : lootDrops) {
+      lootDropList.add(lootDrop.getItem().getDescriptionId());
+    }
+    return lootTableDropListCache.put(lootTableLocation, lootDropList.stream().distinct().toList());
   }
 
 }

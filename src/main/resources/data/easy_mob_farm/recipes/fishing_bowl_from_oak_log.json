@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "OOO",
+    "O#O",
+    "OOO"],
+  "key": {
+    "#": {
+      "item": "minecraft:water_bucket"
+    },
+    "O": {
+      "item": "minecraft:oak_log"
+    }
+  },
+  "result": {
+    "item": "easy_mob_farm:fishing_bowl"
+  }
+}

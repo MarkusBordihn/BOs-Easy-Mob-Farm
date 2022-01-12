@@ -46,7 +46,7 @@ public class AnimalPlainsFarm extends MobFarmBlock {
 
   public static final String NAME = "animal_plains_farm";
 
-  private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   private static final Set<String> acceptedMobTypes = Plains.Passive;
 

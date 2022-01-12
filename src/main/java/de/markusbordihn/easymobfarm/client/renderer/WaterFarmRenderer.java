@@ -56,6 +56,8 @@ public class WaterFarmRenderer extends MobFarmRendererBase<MobFarmBlockEntity> {
     // This makes a huge different with up to 20% more fps with a larger farm.
     boolean renderedWaterEntity =
         renderHelper.renderWaterEntity(poseStack, buffer, combinedLight, farmMobType);
+
+    // Only render custom model if we are not able to render the model otherwise.
     if (!renderedWaterEntity && blockEntity.getFarmMobEntityType() != null) {
       EntityType<?> entityType = blockEntity.getFarmMobEntityType();
       renderHelper.renderLivingEntity(poseStack, buffer, combinedLight, entityType);

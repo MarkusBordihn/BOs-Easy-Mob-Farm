@@ -47,7 +47,7 @@ import de.markusbordihn.easymobfarm.menu.farm.MonsterPlainsCaveFarmMenu;
 @EventBusSubscriber
 public class MonsterPlainsCaveFarmEntity extends MobFarmBlockEntity {
 
-  private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
 
   // Config settings

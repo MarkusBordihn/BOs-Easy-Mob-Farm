@@ -26,7 +26,9 @@ import net.minecraft.resources.ResourceLocation;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
+import de.markusbordihn.easymobfarm.config.mobs.HostileWaterMonster;
 import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
+import de.markusbordihn.easymobfarm.config.mobs.PassiveWaterAnimal;
 
 public class Snapshots {
 
@@ -51,6 +53,12 @@ public class Snapshots {
         new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_cow.png"));
     hashMap.put(PassiveAnimal.PIG,
         new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_pig.png"));
+    hashMap.put(PassiveAnimal.SHEEP,
+        new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_sheep.png"));
+    hashMap.put(PassiveWaterAnimal.SQUID,
+        new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_squid.png"));
+    hashMap.put(HostileWaterMonster.DROWNED,
+        new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_drowned.png"));
     return hashMap;
   }
 

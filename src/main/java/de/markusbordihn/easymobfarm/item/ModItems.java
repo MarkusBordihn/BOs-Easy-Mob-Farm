@@ -33,8 +33,10 @@ import de.markusbordihn.easymobfarm.block.CreativeMobFarm;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.block.MonsterPlainsCaveFarm;
 import de.markusbordihn.easymobfarm.block.OceanFarm;
+import de.markusbordihn.easymobfarm.item.mobcatcher.FishingBowl;
 import de.markusbordihn.easymobfarm.item.mobcatcher.CollarSmall;
 import de.markusbordihn.easymobfarm.item.mobcatcher.CreativeMobCatcher;
+import de.markusbordihn.easymobfarm.item.mobcatcher.FishingNetSmall;
 import de.markusbordihn.easymobfarm.item.mobcatcher.Net;
 import de.markusbordihn.easymobfarm.item.mobcatcher.UrnSmall;
 import de.markusbordihn.easymobfarm.tabs.EasyMobFarmTab;
@@ -55,6 +57,12 @@ public class ModItems {
   public static final RegistryObject<Item> CREATIVE_MOB_CATCHER =
       ITEMS.register("creative_mob_catcher", () -> new CreativeMobCatcher(
           new Item.Properties().stacksTo(1).durability(1000).tab(EasyMobFarmTab.TOOLS)));
+  public static final RegistryObject<Item> FISHING_NET_SMALL =
+      ITEMS.register("fishing_net_small", () -> new FishingNetSmall(
+          new Item.Properties().stacksTo(1).durability(10).tab(EasyMobFarmTab.TOOLS)));
+  public static final RegistryObject<Item> BOWL_SMALL =
+      ITEMS.register("fishing_bowl", () -> new FishingBowl(
+          new Item.Properties().stacksTo(1).durability(10).tab(EasyMobFarmTab.TOOLS)));
   public static final RegistryObject<Item> CAPTURE_NET = ITEMS.register("capture_net",
       () -> new Net(new Item.Properties().stacksTo(1).durability(11).tab(EasyMobFarmTab.TOOLS)));
   public static final RegistryObject<Item> COLLAR_SMALL =

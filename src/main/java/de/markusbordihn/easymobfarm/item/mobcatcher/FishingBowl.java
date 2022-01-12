@@ -25,23 +25,19 @@ import java.util.Set;
 
 import net.minecraft.world.item.Item;
 
-import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
+import de.markusbordihn.easymobfarm.config.mobs.AmbientWaterAnimal;
 import de.markusbordihn.easymobfarm.item.MobCatcherItem;
 
-public class CollarSmall extends MobCatcherItem {
+public class FishingBowl extends MobCatcherItem {
 
   private static final Set<String> acceptedMobTypes = new HashSet<>(Arrays.asList(
   // @formatter:off
-    PassiveAnimal.CHICKEN,
-    PassiveAnimal.COW,
-    PassiveAnimal.DONKEY,
-    PassiveAnimal.HORSE,
-    PassiveAnimal.PIG,
-    PassiveAnimal.SHEEP
+    AmbientWaterAnimal.COD,
+    AmbientWaterAnimal.ATLANTIC_COD
   // @formatter:on
   ));
 
-  public CollarSmall(Item.Properties properties) {
+  public FishingBowl(Item.Properties properties) {
     super(properties);
   }
 

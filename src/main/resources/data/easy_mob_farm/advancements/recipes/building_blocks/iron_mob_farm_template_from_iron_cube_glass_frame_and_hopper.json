@@ -23,5 +23,5 @@
       }
     }
   },
-  "requirements": [["iron_iron_cube_glass_frame", "has_the_recipe"]]
+  "requirements": [["has_iron_cube_glass_frame", "has_the_recipe"]]
 }
