@@ -2,6 +2,7 @@ buildscript {
   repositories {
     maven { url = 'https://maven.minecraftforge.net' }
     mavenCentral()
+    jcenter()
   }
   dependencies {
     classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
@@ -35,6 +36,7 @@ minecraft {
   mappings channel: 'official', version: '1.18.1'
   // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
+  // Enable access transformer
   // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
   // Default run configurations.
@@ -126,7 +128,7 @@ dependencies {
   // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
   // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
   // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-  minecraft 'net.minecraftforge:forge:1.18.1-39.0.19'
+  minecraft 'net.minecraftforge:forge:1.18.1-39.0.44'
 
   // Required: Bo's Material Elements (dev dependency)
   compileOnly fg.deobf("curse.maven:material_elements-541620:3602348")
@@ -185,7 +187,7 @@ curseforge {
   project {
     id = "${curseforge_project_id}"
     changelog = 'https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/commits/main'
-    releaseType = 'beta'
+    releaseType = 'release'
     addGameVersion("1.18.1")
     addGameVersion("Forge")
     mainArtifact(jar) {

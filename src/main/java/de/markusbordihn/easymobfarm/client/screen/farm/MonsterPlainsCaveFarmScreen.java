@@ -23,7 +23,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 import de.markusbordihn.easymobfarm.Constants;
@@ -34,9 +33,6 @@ public class MonsterPlainsCaveFarmScreen extends MobFarmScreen<MonsterPlainsCave
 
   public static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  private static final ResourceLocation TEXTURE =
-      new ResourceLocation(Constants.MOD_ID, "textures/container/monster_plains_cave_farm_gui.png");
-
   public MonsterPlainsCaveFarmScreen(MonsterPlainsCaveFarmMenu menu, Inventory inventory,
       Component component) {
     super(menu, inventory, component);
@@ -45,6 +41,5 @@ public class MonsterPlainsCaveFarmScreen extends MobFarmScreen<MonsterPlainsCave
   @Override
   public void init() {
     super.init();
-    this.backgroundTexture = TEXTURE;
   }
 }

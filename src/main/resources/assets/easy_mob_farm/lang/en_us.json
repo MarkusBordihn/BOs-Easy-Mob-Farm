@@ -6,6 +6,8 @@
   "advancements.easy_mob_farm.crafting.craft_animal_plains_farm.title": "Create s sweat home for plains animals.",
   "advancements.easy_mob_farm.crafting.craft_collar_small.description": "For catching basic animals we need a small collar.",
   "advancements.easy_mob_farm.crafting.craft_collar_small.title": "How to catch animal?",
+  "advancements.easy_mob_farm.crafting.craft_desert_farm.description": "For catching desert creatues you need a desert farm.",
+  "advancements.easy_mob_farm.crafting.craft_desert_farm.title": "Whats is a Husk?",
   "advancements.easy_mob_farm.crafting.craft_fishing_bowl.description": "The fishing bowl allows you to capture smaller fish.",
   "advancements.easy_mob_farm.crafting.craft_fishing_bowl.title": "Let's start with a small fish?",
   "advancements.easy_mob_farm.crafting.craft_fishing_net_small.description": "With the small fishing net you can catch nornal ocean creatues like squids.",
@@ -40,15 +42,17 @@
 
   "block.placeholder.text": "Template placeholder do not remove!",
 
-  "block.easy_mob_farm.ocean_farm": "Ocean Farm",
   "block.easy_mob_farm.animal_plains_farm": "Animal Plains Farm",
   "block.easy_mob_farm.creative_mob_farm": "Creative Mob Farm",
+  "block.easy_mob_farm.desert_farm": "Desert Farm",
   "block.easy_mob_farm.monster_plains_cave_farm": "Monster Plains Cave Farm",
+  "block.easy_mob_farm.ocean_farm": "Ocean Farm",
 
-  "container.easy_mob_farm.ocean_farm": "Ocean Farm",
   "container.easy_mob_farm.animal_plains_farm": "Animal Plains Farm",
   "container.easy_mob_farm.creative_mob_farm": "Creative Mob Farm",
+  "container.easy_mob_farm.desert_farm": "Desert Farm",
   "container.easy_mob_farm.monster_plains_cave_farm": "Monster Plains Cave Farm",
+  "container.easy_mob_farm.ocean_farm": "Ocean Farm",
 
   "item.easy_mob_farm.collar_small": "Collar (small)",
   "item.easy_mob_farm.creative_mob_catcher": "Creative Mob Catcher",

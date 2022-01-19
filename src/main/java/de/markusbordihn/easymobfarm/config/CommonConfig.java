@@ -39,6 +39,9 @@ public class CommonConfig {
   public static final ForgeConfigSpec commonSpec;
   public static final Config COMMON;
 
+  private static final String PROCESS_TIME_TEXT =
+      "Defines after how many seconds a loot drop is performed.";
+
   protected CommonConfig() {}
 
   static {
@@ -60,18 +63,17 @@ public class CommonConfig {
     public final ForgeConfigSpec.IntValue mobCatchingLuck;
 
     public final ForgeConfigSpec.IntValue animalPlainsFarmProcessTime;
-
     public final ForgeConfigSpec.IntValue creativeMobFarmProcessTime;
-
+    public final ForgeConfigSpec.IntValue desertFarmProcessTime;
     public final ForgeConfigSpec.IntValue monsterPlainsCaveFarmProcessTime;
+    public final ForgeConfigSpec.IntValue oceanFarmProcessTime;
 
     public final ForgeConfigSpec.BooleanValue blazeDropBlazeRod;
-
+    public final ForgeConfigSpec.BooleanValue cowDropRawBeef;
     public final ForgeConfigSpec.BooleanValue chickenDropEggs;
     public final ForgeConfigSpec.BooleanValue chickenDropRawChicken;
+    public final ForgeConfigSpec.BooleanValue sheepDropRawMutton;
 
-
-public final ForgeConfigSpec.IntValue oceanFarmProcessTime;
     Config(ForgeConfigSpec.Builder builder) {
       builder.comment(Constants.MOD_NAME);
 
@@ -94,41 +96,52 @@ public final ForgeConfigSpec.IntValue oceanFarmProcessTime;
       builder.pop();
 
       builder.push("Animal Plains Farms");
-      animalPlainsFarmProcessTime =
-          builder.comment("Defines after how many seconds a drop is performed.")
-              .defineInRange("animalPlainsFarmProcessTime", 300, 10, 3600);
+      animalPlainsFarmProcessTime = builder.comment(PROCESS_TIME_TEXT)
+          .defineInRange("animalPlainsFarmProcessTime", 300, 10, 3600);
       builder.pop();
 
       builder.push("CreativeMobFarm");
-      creativeMobFarmProcessTime =
-          builder.comment("Defines after how many seconds a drop is performed.")
-              .defineInRange("creativeMobFarmProcessTime", 60, 10, 3600);
+      creativeMobFarmProcessTime = builder.comment(PROCESS_TIME_TEXT)
+          .defineInRange("creativeMobFarmProcessTime", 60, 10, 3600);
+      builder.pop();
+
+      builder.push("DesertFarm");
+      desertFarmProcessTime = builder.comment("Defines after how many seconds a drop is performed.")
+          .defineInRange("desertFarmProcessTime", 300, 10, 3600);
       builder.pop();
 
       builder.push("MonsterPlainsCaveFarm");
-      monsterPlainsCaveFarmProcessTime =
-          builder.comment("Defines after how many seconds a drop is performed.")
-              .defineInRange("monsterPlainsCaveFarmProcessTime", 300, 10, 3600);
+      monsterPlainsCaveFarmProcessTime = builder.comment(PROCESS_TIME_TEXT)
+          .defineInRange("monsterPlainsCaveFarmProcessTime", 300, 10, 3600);
       builder.pop();
-
 
       builder.push("OceanFarm");
       oceanFarmProcessTime =
-          builder.comment("Defines after how many seconds a drop is performed.")
-              .defineInRange("oceanFarmProcessTime", 300, 10, 3600);
+          builder.comment(PROCESS_TIME_TEXT).defineInRange("oceanFarmProcessTime", 300, 10, 3600);
       builder.pop();
-      // @TemplateEntryPoint("Register Forge Config Spec")
 
-      builder.push("Chicken Settings");
-      chickenDropEggs =
-          builder.comment("Enable/Disable egg drops.").define("chickenDropEggs", true);
-      chickenDropRawChicken = builder.comment("Enable/Disable raw chicken drops.")
-          .define("chickenDropRawChicken", true);
-      builder.pop();
+      // @TemplateEntryPoint("Register Forge Config Spec")
 
       builder.push("Blaze Settings");
       blazeDropBlazeRod =
           builder.comment("Enable/Disable blaze rod drops.").define("blazeDropBlazeRod", true);
+      builder.pop();
+
+      builder.push("Cow Settings");
+      cowDropRawBeef =
+          builder.comment("Enable/Disable cow raw beef drops.").define("cowDropRawBeef", true);
+      builder.pop();
+
+      builder.push("Chicken Settings");
+      chickenDropEggs =
+          builder.comment("Enable/Disable chicken egg drops.").define("chickenDropEggs", true);
+      chickenDropRawChicken = builder.comment("Enable/Disable raw chicken drops.")
+          .define("chickenDropRawChicken", true);
+      builder.pop();
+
+      builder.push("Sheep Settings");
+      sheepDropRawMutton = builder.comment("Enable/Disable sheep raw mutton drops.")
+          .define("sheepDropRawMutton", true);
       builder.pop();
     }
   }

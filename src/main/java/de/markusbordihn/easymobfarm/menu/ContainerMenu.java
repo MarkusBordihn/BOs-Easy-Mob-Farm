@@ -28,6 +28,7 @@ import net.minecraftforge.event.RegistryEvent;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.menu.farm.AnimalPlainsFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.CreativeMobFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.DesertFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.MonsterPlainsCaveFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.OceanFarmMenu;
 
@@ -41,6 +42,9 @@ public class ContainerMenu {
     log.info("{} Container Menu ...", Constants.LOG_REGISTER_PREFIX);
 
     // Mob Farm Container Menu
+
+    event.getRegistry().registerAll(
+        new MenuType<>(DesertFarmMenu::new).setRegistryName(Constants.DESERT_FARM));
     event.getRegistry()
         .registerAll(new MenuType<>(OceanFarmMenu::new).setRegistryName(Constants.OCEAN_FARM));
     event.getRegistry().registerAll(

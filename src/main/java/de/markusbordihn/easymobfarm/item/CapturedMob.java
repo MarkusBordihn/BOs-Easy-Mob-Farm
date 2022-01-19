@@ -162,6 +162,7 @@ public class CapturedMob extends Item {
       compoundTag.putString(ENTITY_LOOT_TABLE_TAG, lootTable.toString());
     }
 
+    // Store additional data like name, type, ids, colors
     compoundTag.putString(ENTITY_NAME_TAG, name);
     compoundTag.putString(ENTITY_TYPE_TAG, type);
     compoundTag.putString(ENTITY_ID_TAG, livingEntity.getEncodeId());

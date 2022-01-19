@@ -59,8 +59,10 @@ public class LootManager {
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
 
   private static boolean blazeDropBlazeRod = COMMON.blazeDropBlazeRod.get();
+  private static boolean cowDropRawBeef = COMMON.cowDropRawBeef.get();
   private static boolean chickenDropEggs = COMMON.chickenDropEggs.get();
   private static boolean chickenDropRawChicken = COMMON.chickenDropRawChicken.get();
+  private static boolean sheepDropRawMutton = COMMON.sheepDropRawMutton.get();
   private static int lootPreviewRolls = COMMON.lootPreviewRolls.get();
 
   private static FakePlayer fakePlayer;
@@ -75,8 +77,10 @@ public class LootManager {
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
     blazeDropBlazeRod = COMMON.blazeDropBlazeRod.get();
+    cowDropRawBeef = COMMON.cowDropRawBeef.get();
     chickenDropEggs = COMMON.chickenDropEggs.get();
     chickenDropRawChicken = COMMON.chickenDropRawChicken.get();
+    sheepDropRawMutton = COMMON.sheepDropRawMutton.get();
     lootPreviewRolls = COMMON.lootPreviewRolls.get();
     lootTableDropListCache = new ConcurrentHashMap<>();
   }
@@ -171,25 +175,24 @@ public class LootManager {
 
     // Check each single loot drop.
     for (ItemStack lootDrop : lootDrops) {
-      if (lootDrop.isEmpty()) {
+      // Ignore empty stacks and filter loot drop, if specific drop is disabled.
+      if (lootDrop.isEmpty()
+          || filter(chickenDropRawChicken, PassiveAnimal.CHICKEN, Items.CHICKEN, mobType, lootDrop)
+          || filter(cowDropRawBeef, PassiveAnimal.COW, Items.BEEF, mobType, lootDrop)
+          || filter(sheepDropRawMutton, PassiveAnimal.SHEEP, Items.MUTTON, mobType, lootDrop)
+        ) {
         continue;
       }
-
-      // Filter Loot Drop, if drop is disabled.
-      if (filterLootDrop(chickenDropRawChicken, PassiveAnimal.CHICKEN, Items.CHICKEN, mobType,
-          lootDrop)) {
-        continue;
-      }
-
       filteredLootDrops.add(lootDrop);
     }
 
     return filteredLootDrops;
   }
 
-  public static boolean filterLootDrop(boolean status, String blockedMobType, Item blockedLootDrop,
+  public static boolean filter(boolean status, String blockedMobType, Item blockedLootDrop,
       String mobType, ItemStack lootDrop) {
-    if (!status) {
+    // Filter only if loot drop is disabled = false.
+    if (status) {
       return false;
     }
     return mobType.equals(blockedMobType) && lootDrop.is(blockedLootDrop);

@@ -40,6 +40,8 @@ public final class Constants {
 
   // Functional Blocks
 
+public static final String DESERT_FARM = "desert_farm";
+
 public static final String OCEAN_FARM = "ocean_farm";
   public static final String MOB_FARM = "mob_farm";
   public static final String ANIMAL_PLAINS_FARM = "animal_plains_farm";

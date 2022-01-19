@@ -288,7 +288,7 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
       this.farmOwner = compoundTag.getUUID(FARM_OWNER_TAG);
     }
 
-    // Restore additional data
+    // Restore additional meta data
     ItemStack capturedMob = this.items.get(MobFarmMenu.CAPTURED_MOB_SLOT);
     if (!capturedMob.isEmpty() && capturedMob.getItem() instanceof CapturedMob capturedMobItem) {
       this.farmMobName = capturedMobItem.getCapturedMob(capturedMob);

@@ -32,6 +32,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.client.renderer.farm.AnimalPlainsFarmRenderer;
 import de.markusbordihn.easymobfarm.client.renderer.farm.CreativeMobFarmRenderer;
+import de.markusbordihn.easymobfarm.client.renderer.farm.DesertFarmRenderer;
 import de.markusbordihn.easymobfarm.client.renderer.farm.MonsterPlainsCaveFarmRenderer;
 import de.markusbordihn.easymobfarm.client.renderer.farm.OceanFarmRenderer;
 
@@ -45,6 +46,8 @@ public class ClientRenderer {
     log.info("{} Block Entity Renderers ...", Constants.LOG_REGISTER_PREFIX);
 
     // @TemplateEntryPoint("Register Entity Renderer")
+    event.registerBlockEntityRenderer(ModBlocks.DESERT_FARM_ENTITY.get(),
+        DesertFarmRenderer::new);
     event.registerBlockEntityRenderer(ModBlocks.OCEAN_FARM_ENTITY.get(), OceanFarmRenderer::new);
     event.registerBlockEntityRenderer(ModBlocks.ANIMAL_PLAINS_FARM_ENTITY.get(),
         AnimalPlainsFarmRenderer::new);
@@ -63,6 +66,8 @@ public class ClientRenderer {
 
     event.enqueueWork(() -> {
       // @TemplateEntryPoint("Register Render Layers")
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.DESERT_FARM.get(),
+          RenderType.cutoutMipped());
 
       // Mob Farm Templates
       ItemBlockRenderTypes.setRenderLayer(ModBlocks.IRON_MOB_FARM_TEMPLATE.get(),

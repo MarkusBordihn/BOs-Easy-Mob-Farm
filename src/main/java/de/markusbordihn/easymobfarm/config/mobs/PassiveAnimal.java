@@ -29,5 +29,6 @@ public final class PassiveAnimal {
   public static final String HORSE = "minecraft:horse";
   public static final String LAMA = "minecraft:lama";
   public static final String PIG = "minecraft:pig";
+  public static final String RABBIT = "minecraft:rabbit";
   public static final String SHEEP = "minecraft:sheep";
 }

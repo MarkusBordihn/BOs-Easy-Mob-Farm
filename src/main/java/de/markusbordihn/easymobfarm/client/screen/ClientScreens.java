@@ -29,10 +29,12 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.client.screen.farm.AnimalPlainsFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.CreativeMobFarmScreen;
+import de.markusbordihn.easymobfarm.client.screen.farm.DesertFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.MonsterPlainsCaveFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.OceanFarmScreen;
 import de.markusbordihn.easymobfarm.menu.farm.AnimalPlainsFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.CreativeMobFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.DesertFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.MonsterPlainsCaveFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.OceanFarmMenu;
 
@@ -47,6 +49,8 @@ public class ClientScreens {
 
     event.enqueueWork(() -> {
       // Mob Farm UI screen
+
+MenuScreens.register(DesertFarmMenu.TYPE, DesertFarmScreen::new);
       MenuScreens.register(OceanFarmMenu.TYPE, OceanFarmScreen::new);
       MenuScreens.register(AnimalPlainsFarmMenu.TYPE, AnimalPlainsFarmScreen::new);
       MenuScreens.register(CreativeMobFarmMenu.TYPE, CreativeMobFarmScreen::new);

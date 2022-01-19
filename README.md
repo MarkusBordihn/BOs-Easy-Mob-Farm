@@ -58,6 +58,10 @@ List of monster farms which are will be released over time.
 
 ### Special Farms
 
+#### 🏜️ Desert Farm
+
+![][desert_farm]
+
 #### 🌊 Ocean Farm
 
 ![][ocean_farm]
@@ -94,7 +98,9 @@ The fishing net is able to capture standard ocean animals and monsters from the 
 The creative mob catching item could catch all kind of living entities.
 
 [logo]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/src/main/resources/logo.png
+
 [animal_plains_farm]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/animal_plains_farm.png
+[desert_farm]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/desert_farm.png
 [item_overview]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/item_overview.png
 [mob_menu]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/mob_menu.png
 [monster_plains_cave_farm]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/monster_plains_cave_farm.png
