@@ -97,6 +97,18 @@ The fishing net is able to capture standard ocean animals and monsters from the 
 
 The creative mob catching item could catch all kind of living entities.
 
+## Custom Loot tables
+
+The mod is using the provided loot tables from the mods.
+This means if you adjust the loot tables for data files these changes are automatically considered by this mod as well.
+
+## Support for additional mods / mobs
+
+If you want support for additional mods / mobs, please fill out the [Mob Support Form][mod_support]. Thanks.
+
+Most of the mobs should already work with the creative farm, so you can use the creative farm for testing.
+
+
 [logo]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/src/main/resources/logo.png
 
 [animal_plains_farm]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/animal_plains_farm.png
@@ -105,3 +117,4 @@ The creative mob catching item could catch all kind of living entities.
 [mob_menu]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/mob_menu.png
 [monster_plains_cave_farm]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/monster_plains_cave_farm.png
 [ocean_farm]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/ocean_farm.png
+[mod_support]: https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/issues/new?labels=enhancement%2C+mod+support&template=mod_support.md&title=%5BMod+Support%5D+Name+of+the+Mod+...
