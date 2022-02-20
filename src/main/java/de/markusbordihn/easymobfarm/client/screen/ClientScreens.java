@@ -49,8 +49,7 @@ public class ClientScreens {
 
     event.enqueueWork(() -> {
       // Mob Farm UI screen
-
-MenuScreens.register(DesertFarmMenu.TYPE, DesertFarmScreen::new);
+      MenuScreens.register(DesertFarmMenu.TYPE, DesertFarmScreen::new);
       MenuScreens.register(OceanFarmMenu.TYPE, OceanFarmScreen::new);
       MenuScreens.register(AnimalPlainsFarmMenu.TYPE, AnimalPlainsFarmScreen::new);
       MenuScreens.register(CreativeMobFarmMenu.TYPE, CreativeMobFarmScreen::new);

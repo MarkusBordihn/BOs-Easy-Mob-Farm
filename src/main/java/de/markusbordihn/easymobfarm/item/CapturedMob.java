@@ -193,7 +193,7 @@ public class CapturedMob extends Item {
       if (blockState.is(Blocks.AIR) || blockState.is(Blocks.WATER) || blockState.is(Blocks.GRASS)
           || blockState.is(Blocks.SEAGRASS)) {
         // Adjust entity position to spawn position.
-        entity.setPosRaw(blockPos.getX(), blockPos.getY(), blockPos.getZ());
+        entity.setPosRaw(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
 
         // Add entity to the world.
         log.debug("Release captured mob {} with {}", entity);

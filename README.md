@@ -20,11 +20,11 @@ But there is also a creative version which is able to handle custom animals and 
 
 ### Mob Farm Menu
 
-![][mob_menu]
+![Example of mob farm menu][mob_menu]
 
 ### Item Overview
 
-![][item_overview]
+![Example of item overview][item_overview]
 
 ## Type of Mob Farms
 
@@ -34,7 +34,7 @@ List of animals farms which are will be released over time.
 
 #### 🌿 Animal Plains Farm
 
-![][animal_plains_farm]
+![Example of animal plains farm][animal_plains_farm]
 
 #### Animal Jungle Farm (WIP)
 
@@ -48,7 +48,7 @@ List of monster farms which are will be released over time.
 
 #### 🪨 Monster Plains Cave Farm
 
-![][monster_plains_cave_farm]
+![Example monster plains cave farm][monster_plains_cave_farm]
 
 #### Monster Nether Wastes Farm (WIP)
 
@@ -60,11 +60,11 @@ List of monster farms which are will be released over time.
 
 #### 🏜️ Desert Farm
 
-![][desert_farm]
+![Example desert farm][desert_farm]
 
 #### 🌊 Ocean Farm
 
-![][ocean_farm]
+![Example ocean farm][ocean_farm]
 
 #### Iron Farm (WIP)
 
