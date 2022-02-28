@@ -190,7 +190,7 @@ public class CapturedMob extends Item {
       }
 
       // Only spawn on empty blocks like air,water, grass, sea grass.
-      if (blockState.is(Blocks.AIR) || blockState.is(Blocks.WATER) || blockState.is(Blocks.GRASS)
+      if (blockState.isAir() || blockState.is(Blocks.WATER) || blockState.is(Blocks.GRASS)
           || blockState.is(Blocks.SEAGRASS)) {
         // Adjust entity position to spawn position.
         entity.setPosRaw(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);

@@ -126,7 +126,7 @@ public class MobCatcherItem extends CapturedMob {
       // Check if we can release the captured mob above.
       BlockPos blockPosAbove = blockPos.above();
       BlockState blockStateBlockAbove = level.getBlockState(blockPosAbove);
-      if ((blockStateBlockAbove.is(Blocks.AIR) || blockStateBlockAbove.is(Blocks.WATER))
+      if ((blockStateBlockAbove.isAir() || blockStateBlockAbove.is(Blocks.WATER))
           && releaseCapturedMob(itemStack, blockPosAbove, level)) {
         return InteractionResult.CONSUME;
       }
