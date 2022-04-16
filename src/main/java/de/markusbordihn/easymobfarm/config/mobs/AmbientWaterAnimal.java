@@ -24,5 +24,13 @@ public class AmbientWaterAnimal {
   protected AmbientWaterAnimal() {}
 
   public static final String COD = "minecraft:cod";
+
   public static final String ATLANTIC_COD = "aquaculture:atlantic_cod";
+  public static final String ATLANTIC_HALIBUT = "aquaculture:atlantic_halibut";
+  public static final String ATLANTIC_HERRING = "aquaculture:atlantic_herring";
+  public static final String BLACKFISH = "aquaculture:blackfish";
+  public static final String PACIFIC_HALIBUT = "aquaculture:pacific_halibut";
+  public static final String PINK_SALMON = "aquaculture:pink_salmon";
+  public static final String POLLOCK = "aquaculture:pollock";
+  public static final String RAINBOW_TROUT = "aquaculture:rainbow_trout";
 }

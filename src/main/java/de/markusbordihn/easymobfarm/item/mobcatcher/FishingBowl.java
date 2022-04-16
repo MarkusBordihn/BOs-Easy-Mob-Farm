@@ -33,7 +33,15 @@ public class FishingBowl extends MobCatcherItem {
   private static final Set<String> acceptedMobTypes = new HashSet<>(Arrays.asList(
   // @formatter:off
     AmbientWaterAnimal.COD,
-    AmbientWaterAnimal.ATLANTIC_COD
+    AmbientWaterAnimal.ATLANTIC_COD,
+    AmbientWaterAnimal.ATLANTIC_HALIBUT,
+    AmbientWaterAnimal.ATLANTIC_HERRING,
+    AmbientWaterAnimal.BLACKFISH,
+    AmbientWaterAnimal.COD,
+    AmbientWaterAnimal.PACIFIC_HALIBUT,
+    AmbientWaterAnimal.PINK_SALMON,
+    AmbientWaterAnimal.POLLOCK,
+    AmbientWaterAnimal.RAINBOW_TROUT
   // @formatter:on
   ));
 

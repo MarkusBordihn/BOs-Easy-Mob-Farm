@@ -60,6 +60,7 @@ public class MobCatcherItem extends CapturedMob {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
+  private static final String DEFAULT_DESCRIPTION_ID = "supported_mobs";
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
   private static int mobCatchingLuck = COMMON.mobCatchingLuck.get();
 
@@ -87,7 +88,7 @@ public class MobCatcherItem extends CapturedMob {
   }
 
   public String getCatchingItemDescriptionId() {
-    return "supported_mobs";
+    return DEFAULT_DESCRIPTION_ID;
   }
 
   public int getMobCatchingLuck() {

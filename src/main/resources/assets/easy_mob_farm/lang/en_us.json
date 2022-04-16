@@ -1,6 +1,6 @@
 {
-  "advancements.material_elements.crafting.root.description": "Build your mob farm to easily farm the resources you need.",
-  "advancements.material_elements.crafting.root.title": "Easy Mob Farm",
+  "advancements.easy_mob_farm.crafting.root.description": "Build your mob farm to easily farm the resources you need.",
+  "advancements.easy_mob_farm.crafting.root.title": "Easy Mob Farm",
 
   "advancements.easy_mob_farm.crafting.craft_animal_plains_farm.description": "To make sure the animals feels comfortable we need to gather some material from the plains.",
   "advancements.easy_mob_farm.crafting.craft_animal_plains_farm.title": "Create s sweat home for plains animals.",
@@ -54,6 +54,7 @@
   "container.easy_mob_farm.monster_plains_cave_farm": "Monster Plains Cave Farm",
   "container.easy_mob_farm.ocean_farm": "Ocean Farm",
 
+  "item.easy_mob_farm.capture_net": "Creative Capture Net",
   "item.easy_mob_farm.collar_small": "Collar (small)",
   "item.easy_mob_farm.creative_mob_catcher": "Creative Mob Catcher",
   "item.easy_mob_farm.fishing_bowl": "Fishing Bowl",

@@ -17,7 +17,7 @@ license="MIT"
 #issueTrackerURL="https://change.me.to.your.issue.tracker.example.invalid/" #optional
 
 # A list of mods - how many allowed here is determined by the individual mod loader
-[[mods]] #mandatory
+[[mods]]
   modId="easy_mob_farm"
   version="${file.jarVersion}"
   displayName="Easy Mob Farm"
@@ -29,22 +29,16 @@ license="MIT"
   authors="Markus Bordihn"
   description='''Single-block mob farms that make mob farming easier and server friendly.'''
 
-[[dependencies.easy_mob_farm]] #optional
-  # the modid of the dependency
-  modId="forge" #mandatory
-  # Does this dependency have to exist - if not, ordering below must be specified
-  mandatory=true #mandatory
-  # The version range of the dependency
-  versionRange="[39,)" #mandatory
-  # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
+[[dependencies.easy_mob_farm]]
+  modId="forge"
+  mandatory=true
+  versionRange="[39,)"
   ordering="NONE"
-  # Side this dependency is applied on - BOTH, CLIENT or SERVER
   side="BOTH"
 
 [[dependencies.easy_mob_farm]]
   modId="minecraft"
   mandatory=true
-  # This version range declares a minimum of the current minecraft version up to but not including the next major version
   versionRange="[1.18.1,1.19)"
   ordering="NONE"
   side="BOTH"
@@ -52,7 +46,6 @@ license="MIT"
 [[dependencies.easy_mob_farm]]
   modId="material_elements"
   mandatory=true
-  # This version range declares a minimum of the material elements version up to but not including the next major version
-  versionRange="[2.2.0,)"
+  versionRange="[3.1.0,)"
   ordering="NONE"
   side="BOTH"

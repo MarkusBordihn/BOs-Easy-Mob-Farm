@@ -39,14 +39,11 @@ public class ModItemProperties {
   public static void registerItemProperties(final FMLClientSetupEvent event) {
     log.info("{} Client setup ...", Constants.LOG_REGISTER_PREFIX);
 
-    event.enqueueWork(() -> {
-      ItemProperties.register(ModItems.URN_SMALL.get(),
-          new ResourceLocation(Constants.MOD_ID, "open"),
-          (itemStack, clientLevel, livingEntity, id) -> {
-            return (livingEntity == null || !itemStack.is(ModItems.URN_SMALL.get())
+    event.enqueueWork(() -> ItemProperties.register(ModItems.URN_SMALL.get(),
+        new ResourceLocation(Constants.MOD_ID, "open"),
+        (itemStack, clientLevel, livingEntity,
+            id) -> (livingEntity == null || !itemStack.is(ModItems.URN_SMALL.get())
                 || livingEntity.getMainHandItem().isEmpty()
-                || itemStack != livingEntity.getMainHandItem()) ? 0.0F : 1.0F;
-          });
-    });
+                || itemStack != livingEntity.getMainHandItem()) ? 0.0F : 1.0F));
   }
 }
