@@ -65,7 +65,7 @@ public class ModItems {
       ITEMS.register("fishing_bowl", () -> new FishingBowl(
           new Item.Properties().stacksTo(1).durability(10).tab(EasyMobFarmTab.TOOLS)));
   public static final RegistryObject<Item> CAPTURE_NET = ITEMS.register("capture_net",
-      () -> new Net(new Item.Properties().stacksTo(1).durability(11).tab(EasyMobFarmTab.TOOLS)));
+      () -> new Net(new Item.Properties().stacksTo(1).durability(1000).tab(EasyMobFarmTab.TOOLS)));
   public static final RegistryObject<Item> COLLAR_SMALL =
       ITEMS.register("collar_small", () -> new CollarSmall(
           new Item.Properties().stacksTo(1).durability(11).tab(EasyMobFarmTab.TOOLS)));

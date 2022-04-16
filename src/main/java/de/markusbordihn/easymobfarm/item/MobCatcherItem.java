@@ -63,6 +63,8 @@ public class MobCatcherItem extends CapturedMob {
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
   private static int mobCatchingLuck = COMMON.mobCatchingLuck.get();
 
+  private static final String DEFAULT_DESCRIPTION_ID = "supported_mobs";
+
   public static final Set<String> ACCEPTED_MOB_TYPES = Collections.emptySet();
 
   public MobCatcherItem(Item.Properties properties) {
@@ -87,7 +89,7 @@ public class MobCatcherItem extends CapturedMob {
   }
 
   public String getCatchingItemDescriptionId() {
-    return "supported_mobs";
+    return DEFAULT_DESCRIPTION_ID;
   }
 
   public int getMobCatchingLuck() {

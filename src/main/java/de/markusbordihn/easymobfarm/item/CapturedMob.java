@@ -32,6 +32,8 @@ import org.apache.logging.log4j.Logger;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.DoubleTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -59,6 +61,11 @@ public class CapturedMob extends Item {
   private static final String ENTITY_PROCESSING_TIME_TAG = "EntityProcessingTime";
   private static final String ENTITY_TYPE_TAG = "EntityType";
   private static final String ENTITY_COLOR_TAG = "EntityColor";
+
+  private static final String FALL_DISTANCE_TAG = "FallDistance";
+  private static final String FIRE_TAG = "Fire";
+  private static final String MOTION_TAG = "Motion";
+  private static final String ON_GROUND_TAG = "OnGround";
 
   private static final int DEFAULT_FARM_PROCESSING_TIME = 6000;
 
@@ -151,7 +158,7 @@ public class CapturedMob extends Item {
     String name = livingEntity.getName().getString();
     String type = livingEntity.getType().getRegistryName().toString();
 
-    // Handle possible loot for tool tips
+    // Handle possible loot for tool tips.
     ResourceLocation lootTable = livingEntity.getLootTable();
     if (lootTable != null) {
       List<String> possibleLoot =
@@ -162,7 +169,21 @@ public class CapturedMob extends Item {
       compoundTag.putString(ENTITY_LOOT_TABLE_TAG, lootTable.toString());
     }
 
-    // Store additional data like name, type, ids, colors
+    // Remove negative effects, which could cause side effects.
+    if (entityData.contains(FIRE_TAG) && entityData.getShort(FIRE_TAG) > 0) {
+      entityData.putShort(FIRE_TAG, (short) 0);
+    }
+    if (entityData.contains(FALL_DISTANCE_TAG) && entityData.getFloat(FALL_DISTANCE_TAG) > 0) {
+      entityData.putFloat(FALL_DISTANCE_TAG, 0);
+    }
+    if (entityData.contains(MOTION_TAG)) {
+      entityData.put(MOTION_TAG, this.newDoubleList(0, 0, 0));
+    }
+    if (entityData.contains(ON_GROUND_TAG) && !entityData.getBoolean(ON_GROUND_TAG)) {
+      entityData.putBoolean(ON_GROUND_TAG, true);
+    }
+
+    // Store additional data like name, type, ids, colors.
     compoundTag.putString(ENTITY_NAME_TAG, name);
     compoundTag.putString(ENTITY_TYPE_TAG, type);
     compoundTag.putString(ENTITY_ID_TAG, livingEntity.getEncodeId());
@@ -172,7 +193,7 @@ public class CapturedMob extends Item {
     compoundTag.merge(entityData);
     itemStack.save(compoundTag);
 
-    // Discarded Entity from the world
+    // Discarded Entity from the world.
     livingEntity.setRemoved(RemovalReason.DISCARDED);
 
     return itemStack;
@@ -192,8 +213,9 @@ public class CapturedMob extends Item {
       // Only spawn on empty blocks like air,water, grass, sea grass.
       if (blockState.isAir() || blockState.is(Blocks.WATER) || blockState.is(Blocks.GRASS)
           || blockState.is(Blocks.SEAGRASS)) {
+
         // Adjust entity position to spawn position.
-        entity.setPosRaw(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
+        entity.setPos(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5);
 
         // Add entity to the world.
         log.debug("Release captured mob {} with {}", entity);
@@ -240,6 +262,14 @@ public class CapturedMob extends Item {
     } else {
       itemStack.setDamageValue(itemStackDamage + damage);
     }
+  }
+
+  protected ListTag newDoubleList(double... values) {
+    ListTag listTag = new ListTag();
+    for (double value : values) {
+      listTag.add(DoubleTag.valueOf(value));
+    }
+    return listTag;
   }
 
 }

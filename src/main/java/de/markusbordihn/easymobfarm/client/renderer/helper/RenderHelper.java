@@ -287,6 +287,22 @@ public class RenderHelper {
   }
 
   public void renderCustomModel(PoseStack poseStack, MultiBufferSource buffer, float scale,
+      float rotationX, float rotationY, double x, double y, double z, int combinedLight,
+      EntityType<?> entityType) {
+    if (entityType != null) {
+      poseStack.pushPose();
+      poseStack.translate(0.5D, 1D / 16D, 0.5D);
+      poseStack.mulPose(getBlockRotation());
+      poseStack.translate(x, y, z);
+      poseStack.mulPose(Vector3f.XP.rotationDegrees(rotationX));
+      poseStack.mulPose(Vector3f.YP.rotationDegrees(rotationY));
+      poseStack.scale(scale, scale, scale);
+      renderCustomEntity(entityType, poseStack, buffer, combinedLight);
+      poseStack.popPose();
+    }
+  }
+
+  public void renderCustomModel(PoseStack poseStack, MultiBufferSource buffer, float scale,
       double x, double y, double z, int combinedLight, EntityType<?> entityType) {
     if (entityType != null) {
       poseStack.pushPose();

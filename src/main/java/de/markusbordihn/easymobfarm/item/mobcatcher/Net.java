@@ -25,6 +25,11 @@ import de.markusbordihn.easymobfarm.item.MobCatcherItem;
 
 public class Net extends MobCatcherItem {
 
+  @Override
+  public int getMobCatchingLuck() {
+    return 0;
+  }
+
   public Net(Item.Properties properties) {
     super(properties);
   }
