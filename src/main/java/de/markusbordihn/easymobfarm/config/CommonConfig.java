@@ -19,6 +19,8 @@
 
 package de.markusbordihn.easymobfarm.config;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
 
 import org.apache.logging.log4j.LogManager;
@@ -30,6 +32,11 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.config.ModConfig;
 
 import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.config.biome.Desert;
+import de.markusbordihn.easymobfarm.config.biome.Ocean;
+import de.markusbordihn.easymobfarm.config.biome.Plains;
+import de.markusbordihn.easymobfarm.config.biome.PlainsCave;
+import de.markusbordihn.easymobfarm.config.biome.Swamp;
 
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
 public class CommonConfig {
@@ -63,10 +70,21 @@ public class CommonConfig {
     public final ForgeConfigSpec.IntValue mobCatchingLuck;
 
     public final ForgeConfigSpec.IntValue animalPlainsFarmProcessTime;
+    public final ForgeConfigSpec.ConfigValue<List<String>> animalPlainsFarmMobs;
+
     public final ForgeConfigSpec.IntValue creativeMobFarmProcessTime;
+
     public final ForgeConfigSpec.IntValue desertFarmProcessTime;
+    public final ForgeConfigSpec.ConfigValue<List<String>> desertFarmMobs;
+
     public final ForgeConfigSpec.IntValue monsterPlainsCaveFarmProcessTime;
+    public final ForgeConfigSpec.ConfigValue<List<String>> monsterPlainsCaveFarmMobs;
+
     public final ForgeConfigSpec.IntValue oceanFarmProcessTime;
+    public final ForgeConfigSpec.ConfigValue<List<String>> oceanFarmMobs;
+
+    public final ForgeConfigSpec.IntValue swampFarmProcessTime;
+    public final ForgeConfigSpec.ConfigValue<List<String>> swampFarmMobs;
 
     public final ForgeConfigSpec.BooleanValue blazeDropBlazeRod;
     public final ForgeConfigSpec.BooleanValue cowDropRawBeef;
@@ -98,6 +116,8 @@ public class CommonConfig {
       builder.push("Animal Plains Farms");
       animalPlainsFarmProcessTime = builder.comment(PROCESS_TIME_TEXT)
           .defineInRange("animalPlainsFarmProcessTime", 300, 10, 3600);
+      animalPlainsFarmMobs = builder.comment("Supported Mobs for the animal plains farm.")
+          .define("animalPlainsFarmMobs", new ArrayList<String>(Plains.Passive));
       builder.pop();
 
       builder.push("CreativeMobFarm");
@@ -108,16 +128,30 @@ public class CommonConfig {
       builder.push("DesertFarm");
       desertFarmProcessTime = builder.comment("Defines after how many seconds a drop is performed.")
           .defineInRange("desertFarmProcessTime", 300, 10, 3600);
+      desertFarmMobs = builder.comment("Supported Mobs for the dessert farm.")
+          .define("desertFarmMobs", new ArrayList<String>(Desert.All));
       builder.pop();
 
       builder.push("MonsterPlainsCaveFarm");
       monsterPlainsCaveFarmProcessTime = builder.comment(PROCESS_TIME_TEXT)
           .defineInRange("monsterPlainsCaveFarmProcessTime", 300, 10, 3600);
+      monsterPlainsCaveFarmMobs =
+          builder.comment("Supported Mobs for the monster plains cave farm.")
+              .define("monsterPlainsCaveFarmMobs", new ArrayList<String>(PlainsCave.Hostile));
       builder.pop();
 
       builder.push("OceanFarm");
       oceanFarmProcessTime =
           builder.comment(PROCESS_TIME_TEXT).defineInRange("oceanFarmProcessTime", 300, 10, 3600);
+      oceanFarmMobs = builder.comment("Supported Mobs for the ocean farm.").define("oceanFarmMobs",
+          new ArrayList<String>(Ocean.All));
+      builder.pop();
+
+      builder.push("SwampFarm");
+      swampFarmProcessTime =
+          builder.comment(PROCESS_TIME_TEXT).defineInRange("swampFarmProcessTime", 300, 10, 3600);
+      swampFarmMobs = builder.comment("Supported Mobs for the swamp farm.").define("swampFarmMobs",
+          new ArrayList<String>(Swamp.All));
       builder.pop();
 
       // @TemplateEntryPoint("Register Forge Config Spec")

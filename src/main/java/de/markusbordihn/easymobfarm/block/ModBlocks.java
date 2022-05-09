@@ -36,6 +36,7 @@ import de.markusbordihn.easymobfarm.block.entity.farm.DesertFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.AnimalPlainsFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.MonsterPlainsCaveFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.OceanFarmEntity;
+import de.markusbordihn.easymobfarm.block.entity.farm.SwampFarmEntity;
 
 public class ModBlocks {
 
@@ -79,6 +80,10 @@ public class ModBlocks {
   public static final RegistryObject<Block> OCEAN_FARM = BLOCKS.register(OceanFarm.NAME,
       () -> new OceanFarm(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops()
           .strength(2.0F, 2.0F).lightLevel(OceanFarm::getLightLevel).noOcclusion()));
+  public static final RegistryObject<Block> SWAMP_FARM = BLOCKS.register(SwampFarm.NAME,
+      () -> new SwampFarm(
+          BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops()
+              .strength(2.0F, 2.0F).lightLevel(SwampFarm::getLightLevel).noOcclusion()));
 
   @TemplateEntryPoint("Register Entity")
 
@@ -98,4 +103,7 @@ public class ModBlocks {
   public static final RegistryObject<BlockEntityType<OceanFarmEntity>> OCEAN_FARM_ENTITY =
       ENTITIES.register(OceanFarm.NAME,
           () -> BlockEntityType.Builder.of(OceanFarmEntity::new, OCEAN_FARM.get()).build(null));
+  public static final RegistryObject<BlockEntityType<SwampFarmEntity>> SWAMP_FARM_ENTITY =
+      ENTITIES.register(SwampFarm.NAME,
+          () -> BlockEntityType.Builder.of(SwampFarmEntity::new, OCEAN_FARM.get()).build(null));
 }

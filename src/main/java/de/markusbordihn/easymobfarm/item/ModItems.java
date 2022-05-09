@@ -34,6 +34,7 @@ import de.markusbordihn.easymobfarm.block.DesertFarm;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.block.MonsterPlainsCaveFarm;
 import de.markusbordihn.easymobfarm.block.OceanFarm;
+import de.markusbordihn.easymobfarm.block.SwampFarm;
 import de.markusbordihn.easymobfarm.item.mobcatcher.FishingBowl;
 import de.markusbordihn.easymobfarm.item.mobcatcher.CollarSmall;
 import de.markusbordihn.easymobfarm.item.mobcatcher.CreativeMobCatcher;
@@ -82,19 +83,22 @@ public class ModItems {
               new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
 
   // Mob Farms
+  public static final RegistryObject<Item> ANIMAL_PLAINS_FARM =
+      ITEMS.register(AnimalPlainsFarm.NAME, () -> new BlockItem(ModBlocks.ANIMAL_PLAINS_FARM.get(),
+          new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
   public static final RegistryObject<Item> CREATIVE_MOB_FARM =
       ITEMS.register(CreativeMobFarm.NAME, () -> new BlockItem(ModBlocks.CREATIVE_MOB_FARM.get(),
           new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
   public static final RegistryObject<Item> DESERT_FARM =
       ITEMS.register(DesertFarm.NAME, () -> new BlockItem(ModBlocks.DESERT_FARM.get(),
           new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
-  public static final RegistryObject<Item> ANIMAL_PLAINS_FARM =
-      ITEMS.register(AnimalPlainsFarm.NAME, () -> new BlockItem(ModBlocks.ANIMAL_PLAINS_FARM.get(),
-          new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
   public static final RegistryObject<Item> MONSTER_PLAINS_CAVE_FARM = ITEMS.register(
       MonsterPlainsCaveFarm.NAME, () -> new BlockItem(ModBlocks.MONSTER_PLAINS_CAVE_FARM.get(),
           new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
   public static final RegistryObject<Item> OCEAN_FARM =
       ITEMS.register(OceanFarm.NAME, () -> new BlockItem(ModBlocks.OCEAN_FARM.get(),
+          new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
+  public static final RegistryObject<Item> SWAMP_FARM =
+      ITEMS.register(SwampFarm.NAME, () -> new BlockItem(ModBlocks.SWAMP_FARM.get(),
           new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
 }

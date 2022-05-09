@@ -33,4 +33,5 @@ public class HostileMonster {
   public static final String SPIDER = "minecraft:spider";
   public static final String WITCH = "minecraft:witch";
   public static final String ZOMBIE = "minecraft:zombie";
+  public static final String ZOMBIE_VILLAGER = "minecraft:zombie_villager";
 }

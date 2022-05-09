@@ -19,6 +19,7 @@
 
 package de.markusbordihn.easymobfarm.block;
 
+import java.util.HashSet;
 import java.util.Set;
 import javax.annotation.Nullable;
 
@@ -37,21 +38,34 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 
+import net.minecraftforge.event.server.ServerAboutToStartEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.farm.MonsterPlainsCaveFarmEntity;
-import de.markusbordihn.easymobfarm.config.biome.PlainsCave;
+import de.markusbordihn.easymobfarm.config.CommonConfig;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
+@EventBusSubscriber
 public class MonsterPlainsCaveFarm extends MobFarmBlock {
 
   public static final String NAME = "monster_plains_cave_farm";
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  private static final Set<String> acceptedMobTypes = PlainsCave.Hostile;
+  protected static final CommonConfig.Config COMMON = CommonConfig.COMMON;
+  private static Set<String> acceptedMobTypes =
+      new HashSet<>(COMMON.monsterPlainsCaveFarmMobs.get());
 
   public MonsterPlainsCaveFarm(BlockBehaviour.Properties properties) {
     super(properties);
+  }
+
+  @SubscribeEvent
+  public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
+    acceptedMobTypes = new HashSet<>(COMMON.monsterPlainsCaveFarmMobs.get());
+    log.info("The {} will accept the following list of mobs: {}", NAME, acceptedMobTypes);
   }
 
   public static boolean isAcceptedCapturedMobType(String mobType) {
@@ -75,12 +89,14 @@ public class MonsterPlainsCaveFarm extends MobFarmBlock {
 
   @Override
   public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-    return new MonsterPlainsCaveFarmEntity(ModBlocks.MONSTER_PLAINS_CAVE_FARM_ENTITY.get(), blockPos, blockState);
+    return new MonsterPlainsCaveFarmEntity(ModBlocks.MONSTER_PLAINS_CAVE_FARM_ENTITY.get(),
+        blockPos, blockState);
   }
 
   @Override
   protected void openContainer(Level level, BlockPos blockPos, Player player) {
-    if (level.getBlockEntity(blockPos) instanceof MonsterPlainsCaveFarmEntity monsterPlainsCaveFarmEntity) {
+    if (level.getBlockEntity(
+        blockPos) instanceof MonsterPlainsCaveFarmEntity monsterPlainsCaveFarmEntity) {
       player.openMenu(monsterPlainsCaveFarmEntity);
     }
   }
@@ -91,7 +107,7 @@ public class MonsterPlainsCaveFarm extends MobFarmBlock {
     MonsterPlainsCaveFarmEntity chickenMobFarmEntity = (MonsterPlainsCaveFarmEntity) blockEntity;
     chickenMobFarmEntity.updateLevel(level);
     if (!chickenMobFarmEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
-      chickenMobFarmEntity.setItem(MobFarmMenu.CAPTURED_MOB_SLOT,itemStack);
+      chickenMobFarmEntity.setItem(MobFarmMenu.CAPTURED_MOB_SLOT, itemStack);
       context.getPlayer().setItemInHand(context.getHand(), ItemStack.EMPTY);
       return InteractionResult.CONSUME;
     }

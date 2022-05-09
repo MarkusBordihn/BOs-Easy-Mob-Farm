@@ -17,28 +17,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.client.screen.farm;
+package de.markusbordihn.easymobfarm.config.biome;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.player.Inventory;
+import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
+import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
 
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.client.screen.MobFarmScreen;
-import de.markusbordihn.easymobfarm.menu.farm.DesertFarmMenu;
+public class Swamp {
 
-public class DesertFarmScreen extends MobFarmScreen<DesertFarmMenu> {
+  // Ref: https://minecraft.fandom.com/wiki/Swamp
+  protected Swamp() {}
 
-  public static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+  public static final Set<String> All = new HashSet<>(Arrays.asList(
+  // @formatter:off
+    PassiveAnimal.SHEEP,
+    PassiveAnimal.PIG,
+    PassiveAnimal.CHICKEN,
+    PassiveAnimal.COW,
+    HostileMonster.SLIME,
+    HostileMonster.WITCH,
+    HostileMonster.ZOMBIE,
+    HostileMonster.ZOMBIE_VILLAGER
+    // @formatter:on
+  ));
 
-  public DesertFarmScreen(DesertFarmMenu menu, Inventory inventory, Component component) {
-    super(menu, inventory, component);
-  }
-
-  @Override
-  public void init() {
-    super.init();
-  }
 }

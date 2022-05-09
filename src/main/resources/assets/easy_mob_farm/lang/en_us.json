@@ -47,12 +47,14 @@
   "block.easy_mob_farm.desert_farm": "Desert Farm",
   "block.easy_mob_farm.monster_plains_cave_farm": "Monster Plains Cave Farm",
   "block.easy_mob_farm.ocean_farm": "Ocean Farm",
+  "block.easy_mob_farm.swamp_farm": "Swamp Farm",
 
   "container.easy_mob_farm.animal_plains_farm": "Animal Plains Farm",
   "container.easy_mob_farm.creative_mob_farm": "Creative Mob Farm",
   "container.easy_mob_farm.desert_farm": "Desert Farm",
   "container.easy_mob_farm.monster_plains_cave_farm": "Monster Plains Cave Farm",
   "container.easy_mob_farm.ocean_farm": "Ocean Farm",
+  "container.easy_mob_farm.swamp_farm": "Swamp Farm",
 
   "item.easy_mob_farm.capture_net": "Creative Capture Net",
   "item.easy_mob_farm.collar_small": "Collar (small)",

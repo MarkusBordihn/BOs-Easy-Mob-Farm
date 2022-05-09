@@ -15,6 +15,7 @@ But there is also a creative version which is able to handle custom animals and 
 - Possibility to enable / disable specific drops from mobs like egg drops from chicken.
 - Automatic informs owner about full farms to make sure that there is no hopper lag or so.
 - Easy catching and releasing of mobs.
+- Configurable list of supported mobs per farm and mob catching item.
 
 ## User Interface
 

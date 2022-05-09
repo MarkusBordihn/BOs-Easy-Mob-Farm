@@ -18,7 +18,6 @@ apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
-compileJava {options.encoding = "UTF-8"}
 
 version = "${version_major}.${version_minor}.${version_patch}"
 archivesBaseName = "${mod_id}_${mc_version}"
@@ -128,14 +127,15 @@ dependencies {
   // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
   // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
   // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-  minecraft 'net.minecraftforge:forge:1.18.2-40.0.52'
+  minecraft 'net.minecraftforge:forge:1.18.2-40.1.19'
 
   // Required: Bo's Material Elements (dev dependency)
-  compileOnly fg.deobf("curse.maven:material_elements-541620:3749593")
-  runtimeOnly fg.deobf("curse.maven:material_elements-541620:3749593")
+  compileOnly fg.deobf("curse.maven:material_elements-541620:3758178")
+  runtimeOnly fg.deobf("curse.maven:material_elements-541620:3758178")
 
   // Jade Integration
-  // implementation fg.deobf("curse.maven:jade-324717:3614180")
+  compileOnly fg.deobf("curse.maven:jade-324717:3761542")
+  runtimeOnly fg.deobf("curse.maven:jade-324717:3761542")
 
   // Alex Mob's (Testing)
   // runtimeOnly fg.deobf("curse.maven:citadel-331936:3584733:deobf")
@@ -147,7 +147,7 @@ dependencies {
   // Additional helpful Mods for development (dev depenedency)
   // runtimeOnly fg.deobf("curse.maven:spark-361579:3591172")
   // runtimeOnly fg.deobf("curse.maven:item-zoom-261725:3574021")
-  runtimeOnly fg.deobf("curse.maven:jei-238222:3670018")
+  runtimeOnly fg.deobf("curse.maven:jei-238222:3723913")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
@@ -198,4 +198,8 @@ curseforge {
       }
     }
   }
+}
+
+tasks.withType(JavaCompile).configureEach {
+  options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 }

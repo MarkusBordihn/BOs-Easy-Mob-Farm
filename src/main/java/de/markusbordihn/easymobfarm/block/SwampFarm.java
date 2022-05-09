@@ -21,6 +21,7 @@ package de.markusbordihn.easymobfarm.block;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.annotation.Nullable;
 
 import org.apache.logging.log4j.LogManager;
@@ -43,27 +44,27 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.entity.farm.OceanFarmEntity;
+import de.markusbordihn.easymobfarm.block.entity.farm.SwampFarmEntity;
 import de.markusbordihn.easymobfarm.config.CommonConfig;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
 @EventBusSubscriber
-public class OceanFarm extends MobFarmBlock {
+public class SwampFarm extends MobFarmBlock {
 
-  public static final String NAME = "ocean_farm";
+  public static final String NAME = "swamp_farm";
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   protected static final CommonConfig.Config COMMON = CommonConfig.COMMON;
-  private static Set<String> acceptedMobTypes = new HashSet<>(COMMON.oceanFarmMobs.get());
+  private static Set<String> acceptedMobTypes = new HashSet<>(COMMON.swampFarmMobs.get());
 
-  public OceanFarm(BlockBehaviour.Properties properties) {
+  public SwampFarm(BlockBehaviour.Properties properties) {
     super(properties);
   }
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    acceptedMobTypes = new HashSet<>(COMMON.oceanFarmMobs.get());
+    acceptedMobTypes = new HashSet<>(COMMON.swampFarmMobs.get());
     log.info("The {} will accept the following list of mobs: {}", NAME, acceptedMobTypes);
   }
 
@@ -83,20 +84,20 @@ public class OceanFarm extends MobFarmBlock {
 
   @Override
   public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-    return new OceanFarmEntity(ModBlocks.OCEAN_FARM_ENTITY.get(), blockPos, blockState);
+    return new SwampFarmEntity(ModBlocks.DESERT_FARM_ENTITY.get(), blockPos, blockState);
   }
 
   @Override
   protected void openContainer(Level level, BlockPos blockPos, Player player) {
-    if (level.getBlockEntity(blockPos) instanceof OceanFarmEntity oceanFarmEntity) {
-      player.openMenu(oceanFarmEntity);
+    if (level.getBlockEntity(blockPos) instanceof SwampFarmEntity swampFarmEntity) {
+      player.openMenu(swampFarmEntity);
     }
   }
 
   @Override
   public InteractionResult consumeCapturedMob(Level level, BlockPos blockPos, BlockState blockState,
       BlockEntity blockEntity, ItemStack itemStack, UseOnContext context) {
-    OceanFarmEntity chickenMobFarmEntity = (OceanFarmEntity) blockEntity;
+    SwampFarmEntity chickenMobFarmEntity = (SwampFarmEntity) blockEntity;
     chickenMobFarmEntity.updateLevel(level);
     if (!chickenMobFarmEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
       chickenMobFarmEntity.setItem(MobFarmMenu.CAPTURED_MOB_SLOT, itemStack);
@@ -111,8 +112,8 @@ public class OceanFarm extends MobFarmBlock {
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState,
       BlockEntityType<T> blockEntityType) {
     return level.isClientSide ? null
-        : createTickerHelper(blockEntityType, ModBlocks.OCEAN_FARM_ENTITY.get(),
-            OceanFarmEntity::serverTick);
+        : createTickerHelper(blockEntityType, ModBlocks.DESERT_FARM_ENTITY.get(),
+            SwampFarmEntity::serverTick);
   }
 
 }

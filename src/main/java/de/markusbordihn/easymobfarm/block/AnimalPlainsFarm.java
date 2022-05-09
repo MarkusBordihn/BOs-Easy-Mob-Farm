@@ -19,7 +19,9 @@
 
 package de.markusbordihn.easymobfarm.block;
 
+import java.util.HashSet;
 import java.util.Set;
+
 import javax.annotation.Nullable;
 
 import org.apache.logging.log4j.LogManager;
@@ -37,21 +39,33 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 
+import net.minecraftforge.event.server.ServerAboutToStartEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.farm.AnimalPlainsFarmEntity;
-import de.markusbordihn.easymobfarm.config.biome.Plains;
+import de.markusbordihn.easymobfarm.config.CommonConfig;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
+@EventBusSubscriber
 public class AnimalPlainsFarm extends MobFarmBlock {
 
   public static final String NAME = "animal_plains_farm";
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  private static final Set<String> acceptedMobTypes = Plains.Passive;
+  protected static final CommonConfig.Config COMMON = CommonConfig.COMMON;
+  private static Set<String> acceptedMobTypes = new HashSet<>(COMMON.animalPlainsFarmMobs.get());
 
   public AnimalPlainsFarm(BlockBehaviour.Properties properties) {
     super(properties);
+  }
+
+  @SubscribeEvent
+  public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
+    acceptedMobTypes = new HashSet<>(COMMON.animalPlainsFarmMobs.get());
+    log.info("The {} will accept the following list of mobs: {}", NAME, acceptedMobTypes);
   }
 
   public static boolean isAcceptedCapturedMobType(String mobType) {
@@ -75,7 +89,8 @@ public class AnimalPlainsFarm extends MobFarmBlock {
 
   @Override
   public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-    return new AnimalPlainsFarmEntity(ModBlocks.ANIMAL_PLAINS_FARM_ENTITY.get(), blockPos, blockState);
+    return new AnimalPlainsFarmEntity(ModBlocks.ANIMAL_PLAINS_FARM_ENTITY.get(), blockPos,
+        blockState);
   }
 
   @Override
@@ -91,7 +106,7 @@ public class AnimalPlainsFarm extends MobFarmBlock {
     AnimalPlainsFarmEntity chickenMobFarmEntity = (AnimalPlainsFarmEntity) blockEntity;
     chickenMobFarmEntity.updateLevel(level);
     if (!chickenMobFarmEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
-      chickenMobFarmEntity.setItem(MobFarmMenu.CAPTURED_MOB_SLOT,itemStack);
+      chickenMobFarmEntity.setItem(MobFarmMenu.CAPTURED_MOB_SLOT, itemStack);
       context.getPlayer().setItemInHand(context.getHand(), ItemStack.EMPTY);
       return InteractionResult.CONSUME;
     }

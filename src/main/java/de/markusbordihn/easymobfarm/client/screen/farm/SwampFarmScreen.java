@@ -27,13 +27,13 @@ import net.minecraft.world.entity.player.Inventory;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.client.screen.MobFarmScreen;
-import de.markusbordihn.easymobfarm.menu.farm.DesertFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.SwampFarmMenu;
 
-public class DesertFarmScreen extends MobFarmScreen<DesertFarmMenu> {
+public class SwampFarmScreen extends MobFarmScreen<SwampFarmMenu> {
 
   public static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  public DesertFarmScreen(DesertFarmMenu menu, Inventory inventory, Component component) {
+  public SwampFarmScreen(SwampFarmMenu menu, Inventory inventory, Component component) {
     super(menu, inventory, component);
   }
 
