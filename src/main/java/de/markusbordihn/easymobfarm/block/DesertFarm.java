@@ -65,7 +65,7 @@ public class DesertFarm extends MobFarmBlock {
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
     acceptedMobTypes = new HashSet<>(COMMON.desertFarmMobs.get());
-    log.info("The {} will accept the following list of mobs: {}", NAME, acceptedMobTypes);
+    log.info("The {} will accept the following mobs: {}", NAME, acceptedMobTypes);
   }
 
   public static boolean isAcceptedCapturedMobType(String mobType) {
@@ -97,10 +97,10 @@ public class DesertFarm extends MobFarmBlock {
   @Override
   public InteractionResult consumeCapturedMob(Level level, BlockPos blockPos, BlockState blockState,
       BlockEntity blockEntity, ItemStack itemStack, UseOnContext context) {
-    DesertFarmEntity chickenMobFarmEntity = (DesertFarmEntity) blockEntity;
-    chickenMobFarmEntity.updateLevel(level);
-    if (!chickenMobFarmEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
-      chickenMobFarmEntity.setItem(MobFarmMenu.CAPTURED_MOB_SLOT, itemStack);
+    DesertFarmEntity desertMobFarmEntity = (DesertFarmEntity) blockEntity;
+    desertMobFarmEntity.updateLevel(level);
+    if (!desertMobFarmEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
+      desertMobFarmEntity.setItem(MobFarmMenu.CAPTURED_MOB_SLOT, itemStack);
       context.getPlayer().setItemInHand(context.getHand(), ItemStack.EMPTY);
       return InteractionResult.CONSUME;
     }

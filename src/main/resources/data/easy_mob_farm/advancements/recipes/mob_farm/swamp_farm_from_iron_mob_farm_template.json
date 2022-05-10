@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": ["easy_mob_farm:swamp_farm_from_iron_mob_farm_template"]
+  },
+  "criteria": {
+    "has_blue_orchid": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:blue_orchid"]
+          }
+        ]
+      }
+    },
+    "has_brown_mushroom": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:brown_mushroom"]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "easy_mob_farm:swamp_farm_from_iron_mob_farm_template"
+      }
+    }
+  },
+  "requirements": [["has_blue_orchid", "has_brown_mushroom", "has_the_recipe"]]
+}

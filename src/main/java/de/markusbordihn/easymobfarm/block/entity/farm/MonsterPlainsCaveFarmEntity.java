@@ -52,7 +52,7 @@ public class MonsterPlainsCaveFarmEntity extends MobFarmBlockEntity {
 
   // Config settings
   private static int monsterPlainsCaveFarmProcessTime = COMMON.monsterPlainsCaveFarmProcessTime.get();
-  private static int farmProcessingTime = 0;
+  private static int farmProcessingTime = monsterPlainsCaveFarmProcessTime * 20;
 
   public MonsterPlainsCaveFarmEntity(BlockPos blockPos, BlockState blockState) {
     super(ModBlocks.MONSTER_PLAINS_CAVE_FARM_ENTITY.get(), blockPos, blockState);

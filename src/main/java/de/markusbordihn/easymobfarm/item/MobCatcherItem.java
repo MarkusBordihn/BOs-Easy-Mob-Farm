@@ -46,34 +46,22 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-import net.minecraftforge.event.server.ServerAboutToStartEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.CapturedMobCompatible;
-import de.markusbordihn.easymobfarm.config.CommonConfig;
 import de.markusbordihn.easymobfarm.text.TranslatableText;
 
-@EventBusSubscriber
 public class MobCatcherItem extends CapturedMob {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
-
-  private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
-  private static int mobCatchingLuck = COMMON.mobCatchingLuck.get();
 
   private static final String DEFAULT_DESCRIPTION_ID = "supported_mobs";
 
   public static final Set<String> ACCEPTED_MOB_TYPES = Collections.emptySet();
 
+  private static int mobCatchingLuck = 3;
+
   public MobCatcherItem(Item.Properties properties) {
     super(properties);
-  }
-
-  @SubscribeEvent
-  public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    mobCatchingLuck = COMMON.mobCatchingLuck.get();
   }
 
   public Set<String> getAcceptedMobTypes() {
@@ -93,7 +81,7 @@ public class MobCatcherItem extends CapturedMob {
   }
 
   public int getMobCatchingLuck() {
-    return mobCatchingLuck > 0 ? this.random.nextInt(mobCatchingLuck) : 0;
+    return mobCatchingLuck;
   }
 
   @Override

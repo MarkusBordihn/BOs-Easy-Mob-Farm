@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["   ", "FGF", "###"],
+  "key": {
+    "G": {
+      "item": "minecraft:glass_bottle"
+    },
+    "#": {
+      "tag": "minecraft:soul_fire_base_blocks"
+    },
+    "F": {
+      "item": "minecraft:flint"
+    }
+  },
+  "result": {
+    "item": "easy_mob_farm:witch_bottle"
+  }
+}

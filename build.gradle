@@ -147,7 +147,7 @@ dependencies {
   // Additional helpful Mods for development (dev depenedency)
   // runtimeOnly fg.deobf("curse.maven:spark-361579:3591172")
   // runtimeOnly fg.deobf("curse.maven:item-zoom-261725:3574021")
-  runtimeOnly fg.deobf("curse.maven:jei-238222:3723913")
+  runtimeOnly fg.deobf("curse.maven:jei-238222:3773518")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

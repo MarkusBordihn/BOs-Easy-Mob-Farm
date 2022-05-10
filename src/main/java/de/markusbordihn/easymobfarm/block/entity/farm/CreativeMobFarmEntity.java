@@ -52,7 +52,7 @@ public class CreativeMobFarmEntity extends MobFarmBlockEntity {
 
   // Config settings
   private static int creativeMobFarmProcessTime = COMMON.creativeMobFarmProcessTime.get();
-  private static int farmProcessingTime = 0;
+  private static int farmProcessingTime = creativeMobFarmProcessTime * 20;
 
   public CreativeMobFarmEntity(BlockPos blockPos, BlockState blockState) {
     super(ModBlocks.CREATIVE_MOB_FARM_ENTITY.get(), blockPos, blockState);

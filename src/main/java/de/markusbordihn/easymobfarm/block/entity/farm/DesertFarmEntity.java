@@ -52,7 +52,7 @@ public class DesertFarmEntity extends MobFarmBlockEntity {
 
   // Config settings
   private static int desertFarmProcessTime = COMMON.desertFarmProcessTime.get();
-  private static int farmProcessingTime = 0;
+  private static int farmProcessingTime = desertFarmProcessTime * 20;
 
   public DesertFarmEntity(BlockPos blockPos, BlockState blockState) {
     super(ModBlocks.DESERT_FARM_ENTITY.get(), blockPos, blockState);

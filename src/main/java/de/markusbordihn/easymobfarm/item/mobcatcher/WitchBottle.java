@@ -32,21 +32,21 @@ import de.markusbordihn.easymobfarm.config.CommonConfig;
 import de.markusbordihn.easymobfarm.item.MobCatcherItem;
 
 @EventBusSubscriber
-public class UrnSmall extends MobCatcherItem {
+public class WitchBottle extends MobCatcherItem {
 
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
-  private static int mobCatchingLuck = COMMON.urnSmallMobCatchingLuck.get();
-  private static Set<String> acceptedMobTypes = new HashSet<>(COMMON.urnSmallMobs.get());
+  private static int mobCatchingLuck = COMMON.witchBottleMobCatchingLuck.get();
+  private static Set<String> acceptedMobTypes = new HashSet<>(COMMON.witchBottleMobs.get());
 
-  public UrnSmall(Item.Properties properties) {
+  public WitchBottle(Item.Properties properties) {
     super(properties);
   }
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    mobCatchingLuck = COMMON.urnSmallMobCatchingLuck.get();
-    acceptedMobTypes = new HashSet<>(COMMON.urnSmallMobs.get());
-    log.info("The urn small require {} luck and is able to catch the following mobs: {}",
+    mobCatchingLuck = COMMON.witchBottleMobCatchingLuck.get();
+    acceptedMobTypes = new HashSet<>(COMMON.witchBottleMobs.get());
+    log.info("The witch bottle require {} luck and is able to catch the following mobs: {}",
         mobCatchingLuck, acceptedMobTypes);
   }
 

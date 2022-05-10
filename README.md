@@ -51,9 +51,9 @@ List of monster farms which are will be released over time.
 
 ![Example monster plains cave farm][monster_plains_cave_farm]
 
-#### Monster Nether Wastes Farm (WIP)
+#### Monster Swamp Farm
 
-#### Monster Swamp Farm (WIP)
+#### Monster Nether Wastes Farm (WIP)
 
 #### Monster Ocean Farm (WIP)
 
@@ -109,6 +109,10 @@ If you want support for additional mods / mobs, please fill out the [Mob Support
 
 Most of the mobs should already work with the creative farm, so you can use the creative farm for testing.
 
+## Requires
+
+- [Bo's Material and Elements][material-elements]
+
 ## Version Status Overview 🛠️
 
 | Version        | Status                |
@@ -126,12 +130,13 @@ Please only download the mod from the official CurseForge page or with the offic
 
 If you are downloading this mod from other sources we could not make sure that it works as expected or does not includes any unwanted modification (e.g. adware, malware, ...).
 
-[logo]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/src/main/resources/logo.png
 [animal_plains_farm]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/animal_plains_farm.png
 [desert_farm]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/desert_farm.png
 [item_overview]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/item_overview.png
+[logo]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/src/main/resources/logo.png
+[material-elements]: https://www.curseforge.com/minecraft/mc-mods/material-elements
 [mob_menu]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/mob_menu.png
-[monster_plains_cave_farm]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/monster_plains_cave_farm.png
-[ocean_farm]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/ocean_farm.png
 [mod_page]: https://www.curseforge.com/minecraft/mc-mods/easy-mob-farm
 [mod_support]: https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/issues/new?labels=enhancement%2C+mod+support&template=mod_support.md&title=%5BMod+Support%5D+Name+of+the+Mod+...
+[monster_plains_cave_farm]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/monster_plains_cave_farm.png
+[ocean_farm]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/ocean_farm.png

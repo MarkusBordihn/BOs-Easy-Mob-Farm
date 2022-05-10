@@ -92,10 +92,10 @@ public class CreativeMobFarm extends MobFarmBlock {
   @Override
   public InteractionResult consumeCapturedMob(Level level, BlockPos blockPos, BlockState blockState,
       BlockEntity blockEntity, ItemStack itemStack, UseOnContext context) {
-    CreativeMobFarmEntity chickenMobFarmEntity = (CreativeMobFarmEntity) blockEntity;
-    chickenMobFarmEntity.updateLevel(level);
-    if (!chickenMobFarmEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
-      chickenMobFarmEntity.setItem(MobFarmMenu.CAPTURED_MOB_SLOT,itemStack);
+    CreativeMobFarmEntity creativeMobFarmEntity = (CreativeMobFarmEntity) blockEntity;
+    creativeMobFarmEntity.updateLevel(level);
+    if (!creativeMobFarmEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
+      creativeMobFarmEntity.setItem(MobFarmMenu.CAPTURED_MOB_SLOT,itemStack);
       context.getPlayer().setItemInHand(context.getHand(), ItemStack.EMPTY);
       return InteractionResult.CONSUME;
     }

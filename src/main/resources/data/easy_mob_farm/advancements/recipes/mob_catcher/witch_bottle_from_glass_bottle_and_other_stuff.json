@@ -1,0 +1,25 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": ["easy_mob_farm:witch_bottle_from_glass_bottle_and_other_stuff"]
+  },
+  "criteria": {
+    "has_glass_bottle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:glass_bottle"]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "easy_mob_farm:witch_bottle_from_glass_bottle_and_other_stuff"
+      }
+    }
+  },
+  "requirements": [["has_glass_bottle", "has_the_recipe"]]
+}

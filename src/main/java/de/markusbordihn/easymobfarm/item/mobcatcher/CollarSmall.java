@@ -19,30 +19,35 @@
 
 package de.markusbordihn.easymobfarm.item.mobcatcher;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
 import net.minecraft.world.item.Item;
 
-import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
+import net.minecraftforge.event.server.ServerAboutToStartEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+
+import de.markusbordihn.easymobfarm.config.CommonConfig;
 import de.markusbordihn.easymobfarm.item.MobCatcherItem;
 
+@EventBusSubscriber
 public class CollarSmall extends MobCatcherItem {
 
-  private static final Set<String> acceptedMobTypes = new HashSet<>(Arrays.asList(
-  // @formatter:off
-    PassiveAnimal.CHICKEN,
-    PassiveAnimal.COW,
-    PassiveAnimal.DONKEY,
-    PassiveAnimal.HORSE,
-    PassiveAnimal.PIG,
-    PassiveAnimal.SHEEP
-  // @formatter:on
-  ));
+  private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
+  private static int mobCatchingLuck = COMMON.collarSmallMobCatchingLuck.get();
+  private static Set<String> acceptedMobTypes = new HashSet<>(COMMON.collarSmallMobs.get());
 
   public CollarSmall(Item.Properties properties) {
     super(properties);
+  }
+
+  @SubscribeEvent
+  public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
+    mobCatchingLuck = COMMON.collarSmallMobCatchingLuck.get();
+    acceptedMobTypes = new HashSet<>(COMMON.collarSmallMobs.get());
+    log.info("The collar small require {} luck and is able to catch the following mobs: {}",
+        mobCatchingLuck, acceptedMobTypes);
   }
 
   @Override
@@ -53,6 +58,11 @@ public class CollarSmall extends MobCatcherItem {
   @Override
   public boolean canCatchMobType(String mobType) {
     return acceptedMobTypes.contains(mobType);
+  }
+
+  @Override
+  public int getMobCatchingLuck() {
+    return mobCatchingLuck > 0 ? this.random.nextInt(mobCatchingLuck) : 0;
   }
 
 }

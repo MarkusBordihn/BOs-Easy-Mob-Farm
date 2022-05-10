@@ -52,7 +52,7 @@ public class AnimalPlainsFarmEntity extends MobFarmBlockEntity {
 
   // Config settings
   private static int animalPlainsFarmProcessTime = COMMON.animalPlainsFarmProcessTime.get();
-  private static int farmProcessingTime = 0;
+  private static int farmProcessingTime = animalPlainsFarmProcessTime * 20;
 
   public AnimalPlainsFarmEntity(BlockPos blockPos, BlockState blockState) {
     super(ModBlocks.ANIMAL_PLAINS_FARM_ENTITY.get(), blockPos, blockState);

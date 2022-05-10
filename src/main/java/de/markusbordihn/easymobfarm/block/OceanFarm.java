@@ -64,7 +64,7 @@ public class OceanFarm extends MobFarmBlock {
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
     acceptedMobTypes = new HashSet<>(COMMON.oceanFarmMobs.get());
-    log.info("The {} will accept the following list of mobs: {}", NAME, acceptedMobTypes);
+    log.info("The {} will accept the following mobs: {}", NAME, acceptedMobTypes);
   }
 
   public static boolean isAcceptedCapturedMobType(String mobType) {
@@ -96,10 +96,10 @@ public class OceanFarm extends MobFarmBlock {
   @Override
   public InteractionResult consumeCapturedMob(Level level, BlockPos blockPos, BlockState blockState,
       BlockEntity blockEntity, ItemStack itemStack, UseOnContext context) {
-    OceanFarmEntity chickenMobFarmEntity = (OceanFarmEntity) blockEntity;
-    chickenMobFarmEntity.updateLevel(level);
-    if (!chickenMobFarmEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
-      chickenMobFarmEntity.setItem(MobFarmMenu.CAPTURED_MOB_SLOT, itemStack);
+    OceanFarmEntity oceanMobFarmEntity = (OceanFarmEntity) blockEntity;
+    oceanMobFarmEntity.updateLevel(level);
+    if (!oceanMobFarmEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
+      oceanMobFarmEntity.setItem(MobFarmMenu.CAPTURED_MOB_SLOT, itemStack);
       context.getPlayer().setItemInHand(context.getHand(), ItemStack.EMPTY);
       return InteractionResult.CONSUME;
     }

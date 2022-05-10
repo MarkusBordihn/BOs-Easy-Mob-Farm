@@ -41,6 +41,7 @@ import de.markusbordihn.easymobfarm.item.mobcatcher.CreativeMobCatcher;
 import de.markusbordihn.easymobfarm.item.mobcatcher.FishingNetSmall;
 import de.markusbordihn.easymobfarm.item.mobcatcher.Net;
 import de.markusbordihn.easymobfarm.item.mobcatcher.UrnSmall;
+import de.markusbordihn.easymobfarm.item.mobcatcher.WitchBottle;
 import de.markusbordihn.easymobfarm.tabs.EasyMobFarmTab;
 import de.markusbordihn.easymobfarm.Annotations.TemplateEntryPoint;
 
@@ -56,6 +57,10 @@ public class ModItems {
   @TemplateEntryPoint("Register Items")
 
   // Mob Capture Items
+
+  public static final RegistryObject<Item> WITCH_BOTTLE =
+      ITEMS.register("witch_bottle", () -> new WitchBottle(
+          new Item.Properties().stacksTo(1).durability(10).tab(EasyMobFarmTab.TOOLS)));
   public static final RegistryObject<Item> CREATIVE_MOB_CATCHER =
       ITEMS.register("creative_mob_catcher", () -> new CreativeMobCatcher(
           new Item.Properties().stacksTo(1).durability(1000).tab(EasyMobFarmTab.TOOLS)));

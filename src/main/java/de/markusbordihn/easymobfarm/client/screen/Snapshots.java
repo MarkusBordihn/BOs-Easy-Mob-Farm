@@ -41,14 +41,20 @@ public class Snapshots {
   // This way allows a cpu and memory optimized may to create a static map.
   private static Map<String, ResourceLocation> createSnapshotMap() {
     Map<String, ResourceLocation> hashMap = new HashMap<>();
-    hashMap.put(HostileMonster.ZOMBIE,
-        new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_zombie.png"));
-    hashMap.put(HostileMonster.SKELETON,
-        new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_skeleton.png"));
-    hashMap.put(HostileMonster.CREEPER,
-        new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_creeper.png"));
     hashMap.put(HostileMonster.CAVE_SPIDER,
         new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_cave_spider.png"));
+    hashMap.put(HostileMonster.CREEPER,
+        new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_creeper.png"));
+    hashMap.put(HostileMonster.SKELETON,
+        new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_skeleton.png"));
+    hashMap.put(HostileMonster.SLIME,
+        new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_slime.png"));
+    hashMap.put(HostileMonster.WITCH,
+        new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_witch.png"));
+    hashMap.put(HostileMonster.ZOMBIE,
+        new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_zombie.png"));
+    hashMap.put(HostileWaterMonster.DROWNED,
+        new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_drowned.png"));
     hashMap.put(PassiveAnimal.COW,
         new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_cow.png"));
     hashMap.put(PassiveAnimal.PIG,
@@ -57,8 +63,6 @@ public class Snapshots {
         new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_sheep.png"));
     hashMap.put(PassiveWaterAnimal.SQUID,
         new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_squid.png"));
-    hashMap.put(HostileWaterMonster.DROWNED,
-        new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_drowned.png"));
     return hashMap;
   }
 

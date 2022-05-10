@@ -29,11 +29,11 @@ import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.Annotations.TemplateEntryPoint;
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.block.entity.farm.AnimalPlainsFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.CreativeMobFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.DesertFarmEntity;
-import de.markusbordihn.easymobfarm.block.entity.farm.AnimalPlainsFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.MonsterPlainsCaveFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.OceanFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.SwampFarmEntity;
@@ -81,9 +81,8 @@ public class ModBlocks {
       () -> new OceanFarm(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops()
           .strength(2.0F, 2.0F).lightLevel(OceanFarm::getLightLevel).noOcclusion()));
   public static final RegistryObject<Block> SWAMP_FARM = BLOCKS.register(SwampFarm.NAME,
-      () -> new SwampFarm(
-          BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops()
-              .strength(2.0F, 2.0F).lightLevel(SwampFarm::getLightLevel).noOcclusion()));
+      () -> new SwampFarm(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops()
+          .strength(2.0F, 2.0F).lightLevel(SwampFarm::getLightLevel).noOcclusion()));
 
   @TemplateEntryPoint("Register Entity")
 
@@ -105,5 +104,5 @@ public class ModBlocks {
           () -> BlockEntityType.Builder.of(OceanFarmEntity::new, OCEAN_FARM.get()).build(null));
   public static final RegistryObject<BlockEntityType<SwampFarmEntity>> SWAMP_FARM_ENTITY =
       ENTITIES.register(SwampFarm.NAME,
-          () -> BlockEntityType.Builder.of(SwampFarmEntity::new, OCEAN_FARM.get()).build(null));
+          () -> BlockEntityType.Builder.of(SwampFarmEntity::new, SWAMP_FARM.get()).build(null));
 }

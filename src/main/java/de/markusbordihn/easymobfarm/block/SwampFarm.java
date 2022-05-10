@@ -65,7 +65,7 @@ public class SwampFarm extends MobFarmBlock {
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
     acceptedMobTypes = new HashSet<>(COMMON.swampFarmMobs.get());
-    log.info("The {} will accept the following list of mobs: {}", NAME, acceptedMobTypes);
+    log.info("The {} will accept the following mobs: {}", NAME, acceptedMobTypes);
   }
 
   public static boolean isAcceptedCapturedMobType(String mobType) {
@@ -84,7 +84,7 @@ public class SwampFarm extends MobFarmBlock {
 
   @Override
   public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-    return new SwampFarmEntity(ModBlocks.DESERT_FARM_ENTITY.get(), blockPos, blockState);
+    return new SwampFarmEntity(ModBlocks.SWAMP_FARM_ENTITY.get(), blockPos, blockState);
   }
 
   @Override
@@ -97,10 +97,10 @@ public class SwampFarm extends MobFarmBlock {
   @Override
   public InteractionResult consumeCapturedMob(Level level, BlockPos blockPos, BlockState blockState,
       BlockEntity blockEntity, ItemStack itemStack, UseOnContext context) {
-    SwampFarmEntity chickenMobFarmEntity = (SwampFarmEntity) blockEntity;
-    chickenMobFarmEntity.updateLevel(level);
-    if (!chickenMobFarmEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
-      chickenMobFarmEntity.setItem(MobFarmMenu.CAPTURED_MOB_SLOT, itemStack);
+    SwampFarmEntity swampMobFarmEntity = (SwampFarmEntity) blockEntity;
+    swampMobFarmEntity.updateLevel(level);
+    if (!swampMobFarmEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
+      swampMobFarmEntity.setItem(MobFarmMenu.CAPTURED_MOB_SLOT, itemStack);
       context.getPlayer().setItemInHand(context.getHand(), ItemStack.EMPTY);
       return InteractionResult.CONSUME;
     }
@@ -112,7 +112,7 @@ public class SwampFarm extends MobFarmBlock {
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState,
       BlockEntityType<T> blockEntityType) {
     return level.isClientSide ? null
-        : createTickerHelper(blockEntityType, ModBlocks.DESERT_FARM_ENTITY.get(),
+        : createTickerHelper(blockEntityType, ModBlocks.SWAMP_FARM_ENTITY.get(),
             SwampFarmEntity::serverTick);
   }
 

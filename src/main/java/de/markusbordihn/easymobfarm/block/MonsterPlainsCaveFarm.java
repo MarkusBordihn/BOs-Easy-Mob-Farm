@@ -65,7 +65,7 @@ public class MonsterPlainsCaveFarm extends MobFarmBlock {
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
     acceptedMobTypes = new HashSet<>(COMMON.monsterPlainsCaveFarmMobs.get());
-    log.info("The {} will accept the following list of mobs: {}", NAME, acceptedMobTypes);
+    log.info("The {} will accept the following mobs: {}", NAME, acceptedMobTypes);
   }
 
   public static boolean isAcceptedCapturedMobType(String mobType) {
@@ -104,10 +104,10 @@ public class MonsterPlainsCaveFarm extends MobFarmBlock {
   @Override
   public InteractionResult consumeCapturedMob(Level level, BlockPos blockPos, BlockState blockState,
       BlockEntity blockEntity, ItemStack itemStack, UseOnContext context) {
-    MonsterPlainsCaveFarmEntity chickenMobFarmEntity = (MonsterPlainsCaveFarmEntity) blockEntity;
-    chickenMobFarmEntity.updateLevel(level);
-    if (!chickenMobFarmEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
-      chickenMobFarmEntity.setItem(MobFarmMenu.CAPTURED_MOB_SLOT, itemStack);
+    MonsterPlainsCaveFarmEntity monsterPlainsCaveMobFarmEntity = (MonsterPlainsCaveFarmEntity) blockEntity;
+    monsterPlainsCaveMobFarmEntity.updateLevel(level);
+    if (!monsterPlainsCaveMobFarmEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
+      monsterPlainsCaveMobFarmEntity.setItem(MobFarmMenu.CAPTURED_MOB_SLOT, itemStack);
       context.getPlayer().setItemInHand(context.getHand(), ItemStack.EMPTY);
       return InteractionResult.CONSUME;
     }

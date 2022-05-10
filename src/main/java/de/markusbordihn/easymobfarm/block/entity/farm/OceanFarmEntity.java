@@ -52,7 +52,7 @@ public class OceanFarmEntity extends MobFarmBlockEntity {
 
   // Config settings
   private static int oceanFarmProcessTime = COMMON.oceanFarmProcessTime.get();
-  private static int farmProcessingTime = 0;
+  private static int farmProcessingTime = oceanFarmProcessTime * 20;
 
   public OceanFarmEntity(BlockPos blockPos, BlockState blockState) {
     super(ModBlocks.OCEAN_FARM_ENTITY.get(), blockPos, blockState);

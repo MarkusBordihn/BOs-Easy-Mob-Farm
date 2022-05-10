@@ -52,10 +52,10 @@ public class SwampFarmEntity extends MobFarmBlockEntity {
 
   // Config settings
   private static int swampFarmProcessTime = COMMON.swampFarmProcessTime.get();
-  private static int farmProcessingTime = 0;
+  private static int farmProcessingTime = swampFarmProcessTime * 20;
 
   public SwampFarmEntity(BlockPos blockPos, BlockState blockState) {
-    super(ModBlocks.DESERT_FARM_ENTITY.get(), blockPos, blockState);
+    super(ModBlocks.SWAMP_FARM_ENTITY.get(), blockPos, blockState);
   }
 
   public SwampFarmEntity(BlockEntityType<?> blockEntity, BlockPos blockPos,
