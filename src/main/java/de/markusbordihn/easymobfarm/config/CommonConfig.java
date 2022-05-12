@@ -172,9 +172,11 @@ public class CommonConfig {
       builder.push("Collar small (Mob Catching Item)");
       collarSmallMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
           .defineInRange("collarSmallMobCatchingLuck", 3, 0, 100);
-      collarSmallMobs = builder.comment("Catchable mobs with the collar small.")
-          .define("collarSmallMobs", Arrays.asList(PassiveAnimal.CHICKEN, PassiveAnimal.COW,
-              PassiveAnimal.DONKEY, PassiveAnimal.HORSE, PassiveAnimal.PIG, PassiveAnimal.SHEEP));
+      collarSmallMobs =
+          builder.comment("Catchable mobs with the collar small.").define("collarSmallMobs",
+              new ArrayList<String>(
+                  Arrays.asList(PassiveAnimal.CHICKEN, PassiveAnimal.COW, PassiveAnimal.DONKEY,
+                      PassiveAnimal.HORSE, PassiveAnimal.PIG, PassiveAnimal.SHEEP)));
       builder.pop();
 
       builder.push("Fishing bowl (Mob Catching Item)");
@@ -182,34 +184,37 @@ public class CommonConfig {
           .defineInRange("fishingBowlMobCatchingLuck", 3, 0, 100);
       fishingBowlMobs =
           builder.comment("Catchable mobs with the fishing bowl.").define("fishingBowlMobs",
-              Arrays.asList(AmbientWaterAnimal.COD, AmbientWaterAnimal.ATLANTIC_COD,
-                  AmbientWaterAnimal.ATLANTIC_HALIBUT, AmbientWaterAnimal.ATLANTIC_HERRING,
-                  AmbientWaterAnimal.BLACKFISH, AmbientWaterAnimal.COD,
-                  AmbientWaterAnimal.PACIFIC_HALIBUT, AmbientWaterAnimal.PINK_SALMON,
-                  AmbientWaterAnimal.POLLOCK, AmbientWaterAnimal.RAINBOW_TROUT));
+              new ArrayList<String>(
+                  Arrays.asList(AmbientWaterAnimal.COD, AmbientWaterAnimal.ATLANTIC_COD,
+                      AmbientWaterAnimal.ATLANTIC_HALIBUT, AmbientWaterAnimal.ATLANTIC_HERRING,
+                      AmbientWaterAnimal.BLACKFISH, AmbientWaterAnimal.COD,
+                      AmbientWaterAnimal.PACIFIC_HALIBUT, AmbientWaterAnimal.PINK_SALMON,
+                      AmbientWaterAnimal.POLLOCK, AmbientWaterAnimal.RAINBOW_TROUT)));
       builder.pop();
 
       builder.push("Fishing net small (Mob Catching Item)");
       fishingNetSmallMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
           .defineInRange("fishingNetSmallMobCatchingLuck", 3, 0, 100);
       fishingNetSmallMobs = builder.comment("Catchable mobs with the fishing net small.").define(
-          "fishingNetSmallMobs", Arrays.asList(AmbientWaterAnimal.COD, PassiveWaterAnimal.SQUID,
-              PassiveWaterAnimal.GLOW_SQUID, HostileWaterMonster.DROWNED));
+          "fishingNetSmallMobs",
+          new ArrayList<String>(Arrays.asList(AmbientWaterAnimal.COD, PassiveWaterAnimal.SQUID,
+              PassiveWaterAnimal.GLOW_SQUID, HostileWaterMonster.DROWNED)));
       builder.pop();
 
       builder.push("Urn small (Mob Catching Item)");
       urnSmallMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
           .defineInRange("urnSmallMobCatchingLuck", 3, 0, 100);
       urnSmallMobs = builder.comment("Catchable mobs with the urn small.").define("urnSmallMobs",
-          Arrays.asList(HostileMonster.CAVE_SPIDER, HostileMonster.CREEPER, HostileMonster.SKELETON,
-              HostileMonster.ZOMBIE));
+          new ArrayList<String>(Arrays.asList(HostileMonster.CAVE_SPIDER, HostileMonster.CREEPER,
+              HostileMonster.SKELETON, HostileMonster.ZOMBIE)));
       builder.pop();
 
       builder.push("Witch Bottle (Mob Catching Item)");
       witchBottleMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
           .defineInRange("witchBottleMobCatchingLuck", 10, 0, 100);
-      witchBottleMobs = builder.comment("Catchable mobs with the witch bottle.")
-          .define("witchBottleMobs", Arrays.asList(HostileMonster.WITCH, HostileMonster.SLIME));
+      witchBottleMobs =
+          builder.comment("Catchable mobs with the witch bottle.").define("witchBottleMobs",
+              new ArrayList<String>(Arrays.asList(HostileMonster.WITCH, HostileMonster.SLIME)));
       builder.pop();
 
       // @TemplateEntryPoint("Register Forge Config Spec")
