@@ -45,6 +45,8 @@ public class Snapshots {
         new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_cave_spider.png"));
     hashMap.put(HostileMonster.CREEPER,
         new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_creeper.png"));
+    hashMap.put(HostileMonster.ENDERMAN,
+        new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_enderman.png"));
     hashMap.put(HostileMonster.SKELETON,
         new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_skeleton.png"));
     hashMap.put(HostileMonster.SLIME,
@@ -55,6 +57,8 @@ public class Snapshots {
         new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_zombie.png"));
     hashMap.put(HostileWaterMonster.DROWNED,
         new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_drowned.png"));
+    hashMap.put(PassiveAnimal.CHICKEN,
+        new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_chicken.png"));
     hashMap.put(PassiveAnimal.COW,
         new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_cow.png"));
     hashMap.put(PassiveAnimal.PIG,

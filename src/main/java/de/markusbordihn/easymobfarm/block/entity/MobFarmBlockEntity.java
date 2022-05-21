@@ -60,6 +60,8 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
+  private static final int DEFAULT_FARM_PROCESSING_TIME = 6000;
+
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
   private static boolean informOwnerAboutFullStorage = COMMON.informOwnerAboutFullStorage.get();
   private static boolean logFullStorage = COMMON.logFullStorage.get();
@@ -90,7 +92,7 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
   }
 
   public boolean allowLootDropItem(ItemStack itemStack) {
-    return true;
+    return itemStack != null && !itemStack.isEmpty();
   }
 
   public void givePlayerItem(int index, Player player, InteractionHand hand, BlockPos blockPos) {
@@ -135,7 +137,7 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
     }
 
     // Processing mob farm
-    if (blockEntity.farmProgress == blockEntity.farmTotalTime) {
+    if (blockEntity.farmProgress >= blockEntity.farmTotalTime) {
       if (capturedMob.getItem() instanceof CapturedMob) {
         blockEntity.processResult(capturedMob, blockEntity);
         blockEntity.processAdditionalEffects(level, blockPos, blockEntity, capturedMob);
@@ -251,14 +253,13 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
 
       // Update and cache data based on captured mob
       if (itemStack.getItem() instanceof CapturedMob capturedMobItem) {
-        // Get processing time, the farm processing time always overwrite the mob processing time.
+        // Get farm processing time or use default.
         if (getFarmProcessingTime() > 0) {
           this.farmTotalTime = getFarmProcessingTime();
-          log.debug("Farm Processing time {}", this.farmTotalTime);
         } else {
-          this.farmTotalTime = capturedMobItem.getFarmProcessingTime(itemStack);
-          log.debug("Mob Processing time {}", this.farmTotalTime);
+          this.farmTotalTime = DEFAULT_FARM_PROCESSING_TIME;
         }
+        log.debug("Farm Processing time {}", this.farmTotalTime);
 
         // Get Mob Name
         this.farmMobName = capturedMobItem.getCapturedMob(itemStack);

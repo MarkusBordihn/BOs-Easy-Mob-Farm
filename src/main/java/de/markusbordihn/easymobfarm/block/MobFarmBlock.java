@@ -69,6 +69,7 @@ import de.markusbordihn.easymobfarm.text.TranslatableText;
 public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatible {
 
   public static final String NAME = "mob_farm";
+  public static final String SUPPORTED_MOBS_TEXT = "supported_mobs";
 
   public static final BooleanProperty WORKING = BooleanProperty.create("working");
   public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
@@ -98,11 +99,11 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
   }
 
   public boolean isAcceptedMobType(String mobType) {
-    return true;
+    return mobType != null && !mobType.isBlank();
   }
 
   public String getFarmDescriptionId() {
-    return "supported_mobs";
+    return SUPPORTED_MOBS_TEXT;
   }
 
   @Override
@@ -228,12 +229,12 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
         }
       }
       if (!mobTypeOverview.getString().isBlank()) {
-        TranslatableComponent supportedMobsOveriew =
+        TranslatableComponent supportedMobsOverview =
             (TranslatableComponent) new TranslatableComponent(
                 Constants.TEXT_PREFIX + getFarmDescriptionId()).append(" ")
                     .withStyle(ChatFormatting.GREEN);
-        supportedMobsOveriew.append(mobTypeOverview).append("...");
-        tooltipList.add(supportedMobsOveriew);
+        supportedMobsOverview.append(mobTypeOverview).append("...");
+        tooltipList.add(supportedMobsOverview);
       }
     }
   }

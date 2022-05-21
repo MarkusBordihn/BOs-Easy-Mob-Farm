@@ -284,6 +284,15 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
     this.farmTime = compoundTag.getInt(FARM_TIME_TAG);
     this.farmProgress = compoundTag.getInt(FARM_PROGRESS_TAG);
     this.farmTotalTime = compoundTag.getInt(FARM_TIME_TOTAL_TAG);
+
+    // Overwrites farmTotalTime, if process time was adjusted.
+    if (this.getFarmProcessingTime() > 0 && this.farmTotalTime > 0 && this.getFarmProcessingTime() != this.farmTotalTime) {
+      this.farmTotalTime = this.getFarmProcessingTime();
+      if (this.farmProgress > this.farmTotalTime) {
+        this.farmProgress = this.farmTotalTime;
+      }
+    }
+
     if (compoundTag.hasUUID(FARM_OWNER_TAG)) {
       this.farmOwner = compoundTag.getUUID(FARM_OWNER_TAG);
     }

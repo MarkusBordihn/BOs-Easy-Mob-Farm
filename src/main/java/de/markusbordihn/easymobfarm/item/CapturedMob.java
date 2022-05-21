@@ -58,7 +58,6 @@ public class CapturedMob extends Item {
   private static final String ENTITY_LOOT_TABLE_TAG = "EntityLootTable";
   private static final String ENTITY_NAME_TAG = "EntityName";
   private static final String ENTITY_POSSIBLE_LOOT_TAG = "EntityPossibleLoot";
-  private static final String ENTITY_PROCESSING_TIME_TAG = "EntityProcessingTime";
   private static final String ENTITY_TYPE_TAG = "EntityType";
   private static final String ENTITY_COLOR_TAG = "EntityColor";
 
@@ -66,8 +65,6 @@ public class CapturedMob extends Item {
   private static final String FIRE_TAG = "Fire";
   private static final String MOTION_TAG = "Motion";
   private static final String ON_GROUND_TAG = "OnGround";
-
-  private static final int DEFAULT_FARM_PROCESSING_TIME = 6000;
 
   private Gson gson = new Gson();
 
@@ -133,14 +130,6 @@ public class CapturedMob extends Item {
       return DyeColor.byId(compoundTag.getInt(ENTITY_COLOR_TAG));
     }
     return null;
-  }
-
-  public int getFarmProcessingTime(ItemStack itemStack) {
-    CompoundTag compoundTag = itemStack.getOrCreateTag();
-    if (compoundTag.contains(ENTITY_PROCESSING_TIME_TAG)) {
-      return compoundTag.getInt(ENTITY_PROCESSING_TIME_TAG);
-    }
-    return DEFAULT_FARM_PROCESSING_TIME;
   }
 
   public String getLootTable(ItemStack itemStack) {
@@ -238,7 +227,6 @@ public class CapturedMob extends Item {
       compoundTag.remove(ENTITY_LOOT_TABLE_TAG);
       compoundTag.remove(ENTITY_NAME_TAG);
       compoundTag.remove(ENTITY_POSSIBLE_LOOT_TAG);
-      compoundTag.remove(ENTITY_PROCESSING_TIME_TAG);
       compoundTag.remove(ENTITY_TYPE_TAG);
       compoundTag.remove(ENTITY_COLOR_TAG);
       entity.load(compoundTag);

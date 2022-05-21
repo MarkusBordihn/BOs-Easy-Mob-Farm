@@ -61,8 +61,7 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
     this.mobFarmMenu = (MobFarmMenu) menu;
   }
 
-  protected void renderSnapshot(PoseStack poseStack, String mobFarmType,
-      ResourceLocation mobFarmTypeSnapshot) {
+  protected void renderSnapshot(PoseStack poseStack, ResourceLocation mobFarmTypeSnapshot) {
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
     RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     RenderSystem.setShaderTexture(0, mobFarmTypeSnapshot);
@@ -98,10 +97,11 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
 
     // Render Mob Farm Snapshot, if available.
     String mobFarmType = this.mobFarmMenu.getMobFarmType();
-    if (!mobFarmType.isBlank()) {
+    if (!mobFarmType.isBlank()
+        && this.mobFarmMenu.getMobFarmStatus() != MobFarmBlockEntityData.FARM_STATUS_WAITING) {
       ResourceLocation mobFarmTypeSnapshot = Snapshots.getSnapshot(mobFarmType);
       if (mobFarmTypeSnapshot != null) {
-        this.renderSnapshot(poseStack, mobFarmType, mobFarmTypeSnapshot);
+        this.renderSnapshot(poseStack, mobFarmTypeSnapshot);
       }
     }
     this.renderTooltip(poseStack, x, y);
@@ -112,15 +112,19 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
     super.renderLabels(poseStack, x, y);
     int mobFarmStatus = this.mobFarmMenu.getMobFarmStatus();
 
-    // Show Mob Details
+    // Show Farm Details
+    poseStack.pushPose();
+    font.draw(poseStack, "Drop Time:", 65, 45, Constants.FONT_COLOR_BLACK);
+    font.draw(poseStack, this.mobFarmMenu.getMobFarmTotalTimeText(), 118, 45,
+        Constants.FONT_COLOR_GRAY);
+    poseStack.popPose();
+
+    // Show Mob Details, if available.
     if (mobFarmStatus != MobFarmBlockEntityData.FARM_STATUS_WAITING) {
       poseStack.pushPose();
       font.draw(poseStack, "Mob:", 65, 25, Constants.FONT_COLOR_BLACK);
       font.draw(poseStack, this.mobFarmMenu.getMobFarmName(), 86, 25,
           Constants.FONT_COLOR_DARK_GREEN);
-      font.draw(poseStack, "Drop Time:", 65, 45, Constants.FONT_COLOR_BLACK);
-      font.draw(poseStack, this.mobFarmMenu.getMobFarmTotalTimeText(), 118, 45,
-          Constants.FONT_COLOR_GRAY);
       poseStack.popPose();
 
       poseStack.pushPose();
@@ -148,6 +152,7 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
             Constants.FONT_COLOR_WARNING);
         poseStack.popPose();
         break;
+      default:
     }
   }
 
@@ -160,9 +165,7 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
     // Cut main screen
     this.blit(poseStack, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight);
 
-    int mobFarmStatus = this.mobFarmMenu.getMobFarmStatus();
-
-    switch (mobFarmStatus) {
+    switch (this.mobFarmMenu.getMobFarmStatus()) {
       case MobFarmBlockEntityData.FARM_STATUS_DONE:
       case MobFarmBlockEntityData.FARM_STATUS_WORKING:
         int mobFarmProgress = this.mobFarmMenu.getMobFarmProgressImage();
@@ -176,6 +179,12 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
         int mobFarmFullTopPos = topPos + 41;
         this.blit(poseStack, mobFarmFullLeftPos, mobFarmFullTopPos, 176, 14, 18, 15);
         break;
+      case MobFarmBlockEntityData.FARM_STATUS_WAITING:
+        int mobFarmHintLeftPos = leftPos + 65;
+        int mobFarmHintTopPos = topPos + 21;
+        this.blit(poseStack, mobFarmHintLeftPos, mobFarmHintTopPos, 220, 14, 20, 15);
+        break;
+      default:
     }
   }
 
