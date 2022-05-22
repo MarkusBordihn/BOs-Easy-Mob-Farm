@@ -153,6 +153,12 @@ public class RenderHelper {
         this.renderModels.getPigRenderer(), this.renderModels.getPig());
   }
 
+  public void renderSalmon(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
+      double y, double z, int combinedLight) {
+    renderModel(poseStack, buffer, scale, -90, -90, x, y, z, combinedLight,
+        this.renderModels.getSalmonRenderer(), this.renderModels.getSalmon());
+  }
+
   public void renderSheep(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
       double y, double z, int combinedLight) {
     renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
@@ -201,7 +207,6 @@ public class RenderHelper {
         break;
       default:
         return false;
-
     }
     return true;
   }
@@ -234,6 +239,9 @@ public class RenderHelper {
     switch (farmMobType) {
       case AmbientWaterAnimal.COD:
         renderCod(poseStack, buffer, 0.3F, 0D, 5D / 16D, 2D / 16D, combinedLight);
+        break;
+      case AmbientWaterAnimal.SALMON:
+        renderSalmon(poseStack, buffer, 0.3F, 0D, 5D / 16D, 2D / 16D, combinedLight);
         break;
       case PassiveWaterAnimal.SQUID:
         renderSquid(poseStack, buffer, 0.3F, 0D, 7D / 16D, 2D / 16D, combinedLight);

@@ -184,12 +184,11 @@ public class CommonConfig {
           .defineInRange("fishingBowlMobCatchingLuck", 3, 0, 100);
       fishingBowlMobs =
           builder.comment("Catchable mobs with the fishing bowl.").define("fishingBowlMobs",
-              new ArrayList<String>(
-                  Arrays.asList(AmbientWaterAnimal.COD, AmbientWaterAnimal.ATLANTIC_COD,
-                      AmbientWaterAnimal.ATLANTIC_HALIBUT, AmbientWaterAnimal.ATLANTIC_HERRING,
-                      AmbientWaterAnimal.BLACKFISH, AmbientWaterAnimal.COD,
-                      AmbientWaterAnimal.PACIFIC_HALIBUT, AmbientWaterAnimal.PINK_SALMON,
-                      AmbientWaterAnimal.POLLOCK, AmbientWaterAnimal.RAINBOW_TROUT)));
+              new ArrayList<String>(Arrays.asList(AmbientWaterAnimal.COD, AmbientWaterAnimal.SALMON,
+                  AmbientWaterAnimal.ATLANTIC_COD, AmbientWaterAnimal.ATLANTIC_HALIBUT,
+                  AmbientWaterAnimal.ATLANTIC_HERRING, AmbientWaterAnimal.BLACKFISH,
+                  AmbientWaterAnimal.PACIFIC_HALIBUT, AmbientWaterAnimal.PINK_SALMON,
+                  AmbientWaterAnimal.POLLOCK, AmbientWaterAnimal.RAINBOW_TROUT)));
       builder.pop();
 
       builder.push("Fishing net small (Mob Catching Item)");
@@ -197,8 +196,9 @@ public class CommonConfig {
           .defineInRange("fishingNetSmallMobCatchingLuck", 3, 0, 100);
       fishingNetSmallMobs = builder.comment("Catchable mobs with the fishing net small.").define(
           "fishingNetSmallMobs",
-          new ArrayList<String>(Arrays.asList(AmbientWaterAnimal.COD, PassiveWaterAnimal.SQUID,
-              PassiveWaterAnimal.GLOW_SQUID, HostileWaterMonster.DROWNED)));
+          new ArrayList<String>(Arrays.asList(AmbientWaterAnimal.COD, AmbientWaterAnimal.SALMON,
+              PassiveWaterAnimal.SQUID, PassiveWaterAnimal.GLOW_SQUID,
+              HostileWaterMonster.DROWNED)));
       builder.pop();
 
       builder.push("Urn small (Mob Catching Item)");

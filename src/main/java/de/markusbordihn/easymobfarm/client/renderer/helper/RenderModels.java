@@ -36,6 +36,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.GlowSquidRenderer;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.entity.PigRenderer;
+import net.minecraft.client.renderer.entity.SalmonRenderer;
 import net.minecraft.client.renderer.entity.SheepRenderer;
 import net.minecraft.client.renderer.entity.SkeletonRenderer;
 import net.minecraft.client.renderer.entity.SquidRenderer;
@@ -48,6 +49,7 @@ import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.Cod;
 import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.entity.animal.Pig;
+import net.minecraft.world.entity.animal.Salmon;
 import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.animal.Squid;
 import net.minecraft.world.entity.monster.CaveSpider;
@@ -95,6 +97,9 @@ public class RenderModels {
 
   private Pig pig = null;
   private PigRenderer pigRenderer = null;
+
+  private Salmon salmon = null;
+  private SalmonRenderer salmonRenderer = null;
 
   private Skeleton skeleton = null;
   private SkeletonRenderer skeletonRenderer = null;
@@ -201,20 +206,6 @@ public class RenderModels {
     return this.chickenRenderer;
   }
 
-  public Drowned getDrowned() {
-    if (this.drowned == null) {
-      this.drowned = new Drowned(EntityType.DROWNED, getLevel());
-    }
-    return this.drowned;
-  }
-
-  public DrownedRenderer getDrownedRenderer() {
-    if (this.drownedRenderer == null) {
-      this.drownedRenderer = new DrownedRenderer(getEntityRendererContext());
-    }
-    return this.drownedRenderer;
-  }
-
   public Creeper getCreeper() {
     if (this.creeper == null) {
       this.creeper = new Creeper(EntityType.CREEPER, getLevel());
@@ -241,6 +232,34 @@ public class RenderModels {
       this.cowRenderer = new CowRenderer(getEntityRendererContext());
     }
     return this.cowRenderer;
+  }
+
+  public Drowned getDrowned() {
+    if (this.drowned == null) {
+      this.drowned = new Drowned(EntityType.DROWNED, getLevel());
+    }
+    return this.drowned;
+  }
+
+  public DrownedRenderer getDrownedRenderer() {
+    if (this.drownedRenderer == null) {
+      this.drownedRenderer = new DrownedRenderer(getEntityRendererContext());
+    }
+    return this.drownedRenderer;
+  }
+
+  public Salmon getSalmon() {
+    if (this.salmon == null) {
+      this.salmon = new Salmon(EntityType.SALMON, getLevel());
+    }
+    return this.salmon;
+  }
+
+  public SalmonRenderer getSalmonRenderer() {
+    if (this.salmonRenderer == null) {
+      this.salmonRenderer = new SalmonRenderer(getEntityRendererContext());
+    }
+    return this.salmonRenderer;
   }
 
   public Sheep getSheep(DyeColor color) {
@@ -305,8 +324,7 @@ public class RenderModels {
   public SquidRenderer getSquidRenderer() {
     if (this.squidRenderer == null) {
       this.squidRenderer = new SquidRenderer<>(getEntityRendererContext(),
-          new SquidModel<>(getEntityRendererContext().bakeLayer(ModelLayers.SQUID))
-      );
+          new SquidModel<>(getEntityRendererContext().bakeLayer(ModelLayers.SQUID)));
     }
     return this.squidRenderer;
   }

@@ -56,11 +56,12 @@ public class MobFarmMenu extends AbstractContainerMenu {
   public static final int RESULT_3_SLOT = 3;
   public static final int RESULT_4_SLOT = 4;
   public static final int RESULT_5_SLOT = 5;
-  public static final int ADDITIONAL_ITEM_SLOT = 6;
+
+  public static final int PLAYER_SLOT_START = 9;
+  public static final int PLAYER_INVENTORY_SLOT_START = PLAYER_SLOT_START;
+  public static final int PLAYER_SLOT_STOP = 3 * 9 + PLAYER_INVENTORY_SLOT_START + 8;
 
   // Storing slot position statically to able to access them from other UI parts.
-  public static final int ADDITIONAL_ITEM_SLOT_LEFT = 62;
-  public static final int ADDITIONAL_ITEM_SLOT_TOP = 41;
   public static final int CAPTURED_MOB_SLOT_LEFT = 44;
   public static final int CAPTURED_MOB_SLOT_TOP = 22;
   public static final int RESULT_SLOTS_LEFT = 44;
@@ -128,7 +129,8 @@ public class MobFarmMenu extends AbstractContainerMenu {
     int playerInventoryStartPositionY = 99;
     for (int inventoryRow = 0; inventoryRow < 3; ++inventoryRow) {
       for (int inventoryColumn = 0; inventoryColumn < 9; ++inventoryColumn) {
-        this.addSlot(new Slot(playerInventory, inventoryColumn + inventoryRow * 9 + 9,
+        this.addSlot(new Slot(playerInventory,
+            inventoryColumn + inventoryRow * 9 + PLAYER_INVENTORY_SLOT_START,
             slotSpacing + inventoryColumn * slotSize,
             playerInventoryStartPositionY + inventoryRow * slotSize));
       }
@@ -225,27 +227,26 @@ public class MobFarmMenu extends AbstractContainerMenu {
       return ItemStack.EMPTY;
     }
 
-    // There is only one slot which we are supporting to moving items in.
+    // Get itemStack we need to handle.
     ItemStack itemStack = slot.getItem();
+
+    // Handle CaptureMob items for moving in and out.
     if (itemStack.getItem() instanceof CapturedMob) {
       if (slotIndex == CAPTURED_MOB_SLOT) {
-        this.moveItemStackTo(itemStack, CAPTURED_MOB_SLOT, 40, false);
-      } else {
-        this.moveItemStackTo(itemStack, CAPTURED_MOB_SLOT, 6, false);
+        if (!this.moveItemStackTo(itemStack, 6, 42, false)) {
+          return ItemStack.EMPTY;
+        }
+      } else if (slotIndex >= 6 && !this.moveItemStackTo(itemStack, 0, 1, false)) {
+        return ItemStack.EMPTY;
       }
     }
 
-    // Move items to the player inventory.
-    if (slotIndex == RESULT_1_SLOT) {
-      this.moveItemStackTo(itemStack, RESULT_1_SLOT, 40, false);
-    } else if (slotIndex == RESULT_2_SLOT) {
-      this.moveItemStackTo(itemStack, RESULT_2_SLOT, 40, false);
-    } else if (slotIndex == RESULT_3_SLOT) {
-      this.moveItemStackTo(itemStack, RESULT_3_SLOT, 40, false);
-    } else if (slotIndex == RESULT_4_SLOT) {
-      this.moveItemStackTo(itemStack, RESULT_4_SLOT, 40, false);
-    } else if (slotIndex == RESULT_5_SLOT) {
-      this.moveItemStackTo(itemStack, RESULT_5_SLOT, 40, false);
+    // Move result items to the player inventory.
+    else if (slotIndex == RESULT_1_SLOT || slotIndex == RESULT_2_SLOT || slotIndex == RESULT_3_SLOT
+        || slotIndex == RESULT_4_SLOT || slotIndex == RESULT_5_SLOT) {
+      if (this.moveItemStackTo(itemStack, 6, 42, false)) {
+        return ItemStack.EMPTY;
+      }
     }
 
     // Store changes if itemStack is not empty.

@@ -36,6 +36,7 @@ public class Ocean {
   public static final Set<String> All = new HashSet<>(Arrays.asList(
     // @formatter:off
     AmbientWaterAnimal.COD,
+    AmbientWaterAnimal.SALMON,
     AmbientWaterAnimal.ATLANTIC_COD,
     AmbientWaterAnimal.ATLANTIC_HALIBUT,
     AmbientWaterAnimal.ATLANTIC_HERRING,
@@ -47,12 +48,14 @@ public class Ocean {
 
     HostileWaterMonster.DROWNED,
 
+    PassiveWaterAnimal.GLOW_SQUID,
     PassiveWaterAnimal.SQUID
     // @formatter:on
   ));
 
   public static final Set<String> Passive = new HashSet<>(Arrays.asList(
     // @formatter:off
+    PassiveWaterAnimal.GLOW_SQUID,
     PassiveWaterAnimal.SQUID
     // @formatter:on
   ));
@@ -66,6 +69,7 @@ public class Ocean {
   public static final Set<String> Ambient = new HashSet<>(Arrays.asList(
     // @formatter:off
     AmbientWaterAnimal.COD,
+    AmbientWaterAnimal.SALMON,
     AmbientWaterAnimal.ATLANTIC_COD,
     AmbientWaterAnimal.ATLANTIC_HALIBUT,
     AmbientWaterAnimal.ATLANTIC_HERRING,
