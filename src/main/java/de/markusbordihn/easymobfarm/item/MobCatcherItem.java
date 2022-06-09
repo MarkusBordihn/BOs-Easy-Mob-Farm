@@ -30,10 +30,11 @@ import org.apache.logging.log4j.Logger;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -149,7 +150,7 @@ public class MobCatcherItem extends CapturedMob {
       }
 
       // Check if we could catch the mob Type
-      String mobType = livingEntity.getType().getRegistryName().toString();
+      String mobType = EntityType.getKey(livingEntity.getType()).toString();
       if (!canCatchMob(livingEntity) || !canCatchMobType(mobType)) {
         return InteractionResult.FAIL;
       }
@@ -186,27 +187,25 @@ public class MobCatcherItem extends CapturedMob {
     if (entityName.isEmpty()) {
 
       // Display capture note.
-      tooltipList.add(new TranslatableComponent(Constants.TEXT_PREFIX + "capture"));
+      tooltipList.add(Component.translatable(Constants.TEXT_PREFIX + "capture"));
 
       // Display possible catchable mobs.
       Set<String> acceptedMobTypes = getAcceptedMobTypes();
       if (!acceptedMobTypes.isEmpty()) {
         // List each single possible mob types (incl. modded mobs types).
-        TranslatableComponent mobTypeOverview =
-            (TranslatableComponent) new TranslatableComponent("")
-                .withStyle(ChatFormatting.DARK_GREEN);
+        MutableComponent mobTypeOverview =
+            Component.literal("").withStyle(ChatFormatting.DARK_GREEN);
         for (String acceptedMob : acceptedMobTypes) {
-          TranslatableComponent acceptedMobName = TranslatableText.getEntityName(acceptedMob);
+          Component acceptedMobName = TranslatableText.getEntityName(acceptedMob);
           if (!acceptedMobName.getString().isBlank()) {
             mobTypeOverview.append(acceptedMobName).append(", ")
                 .withStyle(ChatFormatting.DARK_GREEN);
           }
         }
         if (!mobTypeOverview.getString().isBlank()) {
-          TranslatableComponent acceptedMobsOverview =
-              (TranslatableComponent) new TranslatableComponent(
-                  Constants.TEXT_PREFIX + "catchable_mobs").append(" ")
-                      .withStyle(ChatFormatting.GREEN);
+          MutableComponent acceptedMobsOverview =
+              Component.translatable(Constants.TEXT_PREFIX + "catchable_mobs").append(" ")
+                  .withStyle(ChatFormatting.GREEN);
           acceptedMobsOverview.append(mobTypeOverview).append("...");
           tooltipList.add(acceptedMobsOverview);
         }
@@ -216,35 +215,33 @@ public class MobCatcherItem extends CapturedMob {
       Float entityHealth = getCapturedMobHealth(itemStack);
 
       // Display release note.
-      tooltipList.add(new TranslatableComponent(Constants.TEXT_PREFIX + "release", entityName)
+      tooltipList.add(Component.translatable(Constants.TEXT_PREFIX + "release", entityName)
           .withStyle(ChatFormatting.YELLOW));
 
       // Display catched mob.
-      tooltipList.add(new TranslatableComponent(Constants.TEXT_PREFIX + "catched_mob", entityName)
+      tooltipList.add(Component.translatable(Constants.TEXT_PREFIX + "catched_mob", entityName)
           .withStyle(ChatFormatting.GOLD));
 
       // Display possible loot of catched mob.
       List<String> possibleLoot = getPossibleLoot(itemStack);
       if (!possibleLoot.isEmpty()) {
         // List each single possible loot item (incl. modded items).
-        TranslatableComponent lootOverview = (TranslatableComponent) new TranslatableComponent("")
-            .withStyle(ChatFormatting.DARK_GREEN);
+        MutableComponent lootOverview = Component.literal("").withStyle(ChatFormatting.DARK_GREEN);
         for (String drop : possibleLoot) {
-          TranslatableComponent itemName = TranslatableText.getItemName(drop);
+          Component itemName = TranslatableText.getItemName(drop);
           if (!itemName.getString().isBlank()) {
             lootOverview.append(itemName).append(", ");
           }
         }
         if (!lootOverview.getString().isBlank()) {
-          TranslatableComponent possibleLootOverview =
-              (TranslatableComponent) new TranslatableComponent(
-                  Constants.TEXT_PREFIX + "possible_loot").append(" ")
-                      .withStyle(ChatFormatting.GREEN);
+          MutableComponent possibleLootOverview =
+              Component.translatable(Constants.TEXT_PREFIX + "possible_loot").append(" ")
+                  .withStyle(ChatFormatting.GREEN);
           possibleLootOverview.append(lootOverview).append("...");
           tooltipList.add(possibleLootOverview);
         }
       }
-      tooltipList.add(new TranslatableComponent(Constants.TEXT_PREFIX + "health", entityHealth));
+      tooltipList.add(Component.translatable(Constants.TEXT_PREFIX + "health", entityHealth));
     }
   }
 

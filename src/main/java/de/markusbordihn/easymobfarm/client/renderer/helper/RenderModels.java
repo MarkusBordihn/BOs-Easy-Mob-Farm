@@ -360,7 +360,10 @@ public class RenderModels {
 
   public EntityRendererProvider.Context getEntityRendererContext() {
     return new EntityRendererProvider.Context(minecraft.getEntityRenderDispatcher(),
-        minecraft.getItemRenderer(), minecraft.getResourceManager(), minecraft.getEntityModels(),
+        minecraft.getItemRenderer(),
+        minecraft.getBlockRenderer(),
+        null, // minecraft.getItemInHandRenderer()
+        minecraft.getResourceManager(), minecraft.getEntityModels(),
         minecraft.font);
   }
 

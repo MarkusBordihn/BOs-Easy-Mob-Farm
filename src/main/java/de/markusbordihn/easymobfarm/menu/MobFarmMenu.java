@@ -34,8 +34,6 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-import net.minecraftforge.registries.ObjectHolder;
-
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
 import de.markusbordihn.easymobfarm.item.CapturedMob;
@@ -45,9 +43,6 @@ import de.markusbordihn.easymobfarm.menu.slots.LockedResultSlot;
 public class MobFarmMenu extends AbstractContainerMenu {
 
   public static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
-
-  @ObjectHolder("easy_mob_farm:mob_farm")
-  public static MenuType<MobFarmMenu> TYPE;
 
   // Define Slot index for easier access
   public static final int CAPTURED_MOB_SLOT = 0;
@@ -92,12 +87,13 @@ public class MobFarmMenu extends AbstractContainerMenu {
 
   public MobFarmMenu(int windowIdIn, Inventory inventory) {
     this(windowIdIn, inventory, new SimpleContainer(containerSize),
-        new SimpleContainerData(MobFarmBlockEntityData.DATA_SIZE), TYPE);
+        new SimpleContainerData(MobFarmBlockEntityData.DATA_SIZE),
+        ModMenuTypes.MOB_FARM_MENU.get());
   }
 
   public MobFarmMenu(final int windowId, final Inventory playerInventory, final Container container,
       final ContainerData containerData) {
-    this(windowId, playerInventory, container, containerData, TYPE);
+    this(windowId, playerInventory, container, containerData, ModMenuTypes.MOB_FARM_MENU.get());
   }
 
   public MobFarmMenu(final int windowId, final Inventory playerInventory, final Container container,
@@ -242,11 +238,10 @@ public class MobFarmMenu extends AbstractContainerMenu {
     }
 
     // Move result items to the player inventory.
-    else if (slotIndex == RESULT_1_SLOT || slotIndex == RESULT_2_SLOT || slotIndex == RESULT_3_SLOT
-        || slotIndex == RESULT_4_SLOT || slotIndex == RESULT_5_SLOT) {
-      if (this.moveItemStackTo(itemStack, 6, 42, false)) {
-        return ItemStack.EMPTY;
-      }
+    else if ((slotIndex == RESULT_1_SLOT || slotIndex == RESULT_2_SLOT || slotIndex == RESULT_3_SLOT
+        || slotIndex == RESULT_4_SLOT || slotIndex == RESULT_5_SLOT)
+        && this.moveItemStackTo(itemStack, 6, 42, false)) {
+      return ItemStack.EMPTY;
     }
 
     // Store changes if itemStack is not empty.

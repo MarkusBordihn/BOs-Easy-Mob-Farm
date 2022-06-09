@@ -7,7 +7,7 @@
 modLoader="javafml" #mandatory
 
 # A version range to match for said mod loader - for regular FML @Mod it will be the forge version
-loaderVersion="[40,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
+loaderVersion="[41,)" #mandatory This is typically bumped every Minecraft version by Forge. See our download page for lists of versions.
 
 # The license for you mod. This is mandatory metadata and allows for easier comprehension of your redistributive properties.
 # Review your options at https://choosealicense.com/. All rights reserved is the default copyright stance, and is thus the default here.
@@ -32,20 +32,20 @@ license="MIT"
 [[dependencies.easy_mob_farm]]
   modId="forge"
   mandatory=true
-  versionRange="[40,)"
+  versionRange="[41,)"
   ordering="NONE"
   side="BOTH"
 
 [[dependencies.easy_mob_farm]]
   modId="minecraft"
   mandatory=true
-  versionRange="[1.18.2,1.19)"
+  versionRange="[1.19,1.20)"
   ordering="NONE"
   side="BOTH"
 
 [[dependencies.easy_mob_farm]]
   modId="material_elements"
   mandatory=true
-  versionRange="[3.2.0,)"
+  versionRange="[4.0.0,5.0.0)"
   ordering="NONE"
   side="BOTH"

@@ -25,27 +25,24 @@ import org.apache.logging.log4j.Logger;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.inventory.MenuType;
-import net.minecraftforge.registries.ObjectHolder;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.MonsterPlainsCaveFarm;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
+import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
 
 public class MonsterPlainsCaveFarmMenu extends MobFarmMenu {
 
   public static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  @ObjectHolder("easy_mob_farm:monster_plains_cave_farm")
-  public static MenuType<MonsterPlainsCaveFarmMenu> TYPE;
-
   public MonsterPlainsCaveFarmMenu(int windowIdIn, Inventory inventory) {
     super(windowIdIn, inventory);
   }
 
-  public MonsterPlainsCaveFarmMenu(final int windowId, final Inventory playerInventory, final Container container,
-      final ContainerData containerData) {
-    super(windowId, playerInventory, container, containerData, TYPE);
+  public MonsterPlainsCaveFarmMenu(final int windowId, final Inventory playerInventory,
+      final Container container, final ContainerData containerData) {
+    super(windowId, playerInventory, container, containerData,
+        ModMenuTypes.MONSTER_PLAINS_CAVE_FARM_MENU.get());
   }
 
   @Override

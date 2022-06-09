@@ -37,15 +37,6 @@ public final class Constants {
   public static final String TEXT_PREFIX = "text.easy_mob_farm.";
   public static final String MESSAGE_PREFIX = "message.easy_mob_farm.";
 
-  // Functional Blocks
-  public static final String ANIMAL_PLAINS_FARM = "animal_plains_farm";
-  public static final String CREATIVE_MOB_FARM = "creative_mob_farm";
-  public static final String DESERT_FARM = "desert_farm";
-  public static final String MOB_FARM = "mob_farm";
-  public static final String MONSTER_PLAINS_CAVE_FARM = "monster_plains_cave_farm";
-  public static final String OCEAN_FARM = "ocean_farm";
-  public static final String SWAMP_FARM = "swamp_farm";
-
   // Colors
   public static final int FONT_COLOR_BLACK = ChatFormatting.BLACK.getColor();
   public static final int FONT_COLOR_DARK_GREEN = ChatFormatting.DARK_GREEN.getColor();

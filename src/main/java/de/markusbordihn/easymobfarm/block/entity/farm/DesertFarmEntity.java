@@ -24,7 +24,6 @@ import org.apache.logging.log4j.Logger;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Inventory;
@@ -73,7 +72,7 @@ public class DesertFarmEntity extends MobFarmBlockEntity {
 
   @Override
   protected Component getDefaultName() {
-    return new TranslatableComponent("container.easy_mob_farm.desert_farm");
+    return Component.translatable("container.easy_mob_farm.desert_farm");
   }
 
   @Override

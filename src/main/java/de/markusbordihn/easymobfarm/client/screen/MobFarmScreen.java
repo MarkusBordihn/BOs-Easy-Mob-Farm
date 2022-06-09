@@ -28,7 +28,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -51,7 +50,7 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
   private int totalTimeLabelX;
   private int totalTimeLabelY;
   private float totalTimeLabelScale = 0.75F;
-  private TranslatableComponent warningFullText;
+  private Component warningFullText;
   private MobFarmMenu mobFarmMenu;
 
   public ResourceLocation backgroundTexture = TEXTURE;
@@ -80,7 +79,7 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
     this.inventoryLabelY = this.imageHeight - 93;
     this.totalTimeLabelX = Math.round(45 / totalTimeLabelScale);
     this.totalTimeLabelY = Math.round(78 / totalTimeLabelScale);
-    this.warningFullText = new TranslatableComponent(Constants.TEXT_PREFIX + "warning_full");
+    this.warningFullText = Component.translatable(Constants.TEXT_PREFIX + "warning_full");
   }
 
   @Override
@@ -140,7 +139,7 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
         poseStack.pushPose();
         poseStack.scale(totalTimeLabelScale, totalTimeLabelScale, totalTimeLabelScale);
         font.draw(poseStack,
-            new TranslatableComponent(Constants.TEXT_PREFIX + "next_drop_secs",
+            Component.translatable(Constants.TEXT_PREFIX + "next_drop_secs",
                 this.mobFarmMenu.getMobFarmRemainingTime()),
             totalTimeLabelX, totalTimeLabelY, Constants.FONT_COLOR_GRAY);
         poseStack.popPose();

@@ -145,7 +145,7 @@ public class CapturedMob extends Item {
     CompoundTag entityData = livingEntity.serializeNBT();
     CompoundTag compoundTag = itemStack.getOrCreateTag();
     String name = livingEntity.getName().getString();
-    String type = livingEntity.getType().getRegistryName().toString();
+    String type = EntityType.getKey(livingEntity.getType()).toString();
 
     // Handle possible loot for tool tips.
     ResourceLocation lootTable = livingEntity.getLootTable();

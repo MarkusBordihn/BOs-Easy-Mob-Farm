@@ -33,12 +33,7 @@ import de.markusbordihn.easymobfarm.client.screen.farm.DesertFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.MonsterPlainsCaveFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.OceanFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.SwampFarmScreen;
-import de.markusbordihn.easymobfarm.menu.farm.AnimalPlainsFarmMenu;
-import de.markusbordihn.easymobfarm.menu.farm.CreativeMobFarmMenu;
-import de.markusbordihn.easymobfarm.menu.farm.DesertFarmMenu;
-import de.markusbordihn.easymobfarm.menu.farm.MonsterPlainsCaveFarmMenu;
-import de.markusbordihn.easymobfarm.menu.farm.OceanFarmMenu;
-import de.markusbordihn.easymobfarm.menu.farm.SwampFarmMenu;
+import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
 
 public class ClientScreens {
 
@@ -51,12 +46,13 @@ public class ClientScreens {
 
     event.enqueueWork(() -> {
       // Mob Farm UI screen
-      MenuScreens.register(AnimalPlainsFarmMenu.TYPE, AnimalPlainsFarmScreen::new);
-      MenuScreens.register(CreativeMobFarmMenu.TYPE, CreativeMobFarmScreen::new);
-      MenuScreens.register(DesertFarmMenu.TYPE, DesertFarmScreen::new);
-      MenuScreens.register(MonsterPlainsCaveFarmMenu.TYPE, MonsterPlainsCaveFarmScreen::new);
-      MenuScreens.register(OceanFarmMenu.TYPE, OceanFarmScreen::new);
-      MenuScreens.register(SwampFarmMenu.TYPE, SwampFarmScreen::new);
+      MenuScreens.register(ModMenuTypes.ANIMAL_PLAINS_FARM_MENU.get(), AnimalPlainsFarmScreen::new);
+      MenuScreens.register(ModMenuTypes.CREATIVE_MOB_FARM_MENU.get(), CreativeMobFarmScreen::new);
+      MenuScreens.register(ModMenuTypes.DESERT_FARM_MENU.get(), DesertFarmScreen::new);
+      MenuScreens.register(ModMenuTypes.MONSTER_PLAINS_CAVE_FARM_MENU.get(),
+          MonsterPlainsCaveFarmScreen::new);
+      MenuScreens.register(ModMenuTypes.OCEAN_FARM_MENU.get(), OceanFarmScreen::new);
+      MenuScreens.register(ModMenuTypes.SWAMP_FARM_MENU.get(), SwampFarmScreen::new);
     });
   }
 }

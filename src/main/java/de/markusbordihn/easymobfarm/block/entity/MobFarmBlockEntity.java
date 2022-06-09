@@ -30,8 +30,8 @@ import org.apache.logging.log4j.Logger;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.WorldlyContainer;
 
@@ -238,10 +238,9 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
     if (informOwnerAboutFullStorage && ownerUUID != null) {
       Player owner = blockEntity.level.getPlayerByUUID(ownerUUID);
       if (owner != null && owner.isAlive()) {
-        MutableComponent message =
-            new TranslatableComponent(Constants.MESSAGE_PREFIX + "warning_full", this.farmMobName,
-                blockPos, lootDrop).withStyle(ChatFormatting.YELLOW);
-        owner.sendMessage(message, null);
+        MutableComponent message = Component.translatable(Constants.MESSAGE_PREFIX + "warning_full",
+            this.farmMobName, blockPos, lootDrop).withStyle(ChatFormatting.YELLOW);
+        owner.sendSystemMessage(message);
       }
     }
   }

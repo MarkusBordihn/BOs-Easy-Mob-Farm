@@ -22,8 +22,6 @@ package de.markusbordihn.easymobfarm;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.minecraft.world.inventory.MenuType;
-
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
@@ -35,7 +33,7 @@ import de.markusbordihn.easymobfarm.client.item.ModItemProperties;
 import de.markusbordihn.easymobfarm.client.renderer.ClientRenderer;
 import de.markusbordihn.easymobfarm.client.screen.ClientScreens;
 import de.markusbordihn.easymobfarm.item.ModItems;
-import de.markusbordihn.easymobfarm.menu.ContainerMenu;
+import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
 
 @Mod(Constants.MOD_ID)
 public class EasyMobFarm {
@@ -45,8 +43,6 @@ public class EasyMobFarm {
   public EasyMobFarm() {
     final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-    modEventBus.addGenericListener(MenuType.class, ContainerMenu::registerContainerMenu);
-
     log.info("{} Items ...", Constants.LOG_REGISTER_PREFIX);
     ModItems.ITEMS.register(modEventBus);
 
@@ -55,6 +51,9 @@ public class EasyMobFarm {
 
     log.info("{} Block Entities ...", Constants.LOG_REGISTER_PREFIX);
     ModBlocks.ENTITIES.register(modEventBus);
+
+    log.info("{} Menu Types ...", Constants.LOG_REGISTER_PREFIX);
+    ModMenuTypes.MENU_TYPES.register(modEventBus);
 
     DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
       modEventBus.addListener(ClientRenderer::registerBlockEntityRenderers);

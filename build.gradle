@@ -32,7 +32,7 @@ minecraft {
   // stable_#            Stables are built at the discretion of the MCP team.
   // Use non-default mappings at your own risk. they may not always work.
   // Simply re-run your setup task after changing the mappings to update your workspace.
-  mappings channel: 'official', version: '1.18.2'
+  mappings channel: 'official', version: '1.19'
   // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
   // Enable access transformer
@@ -127,15 +127,15 @@ dependencies {
   // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
   // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
   // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-  minecraft 'net.minecraftforge:forge:1.18.2-40.1.22'
+  minecraft 'net.minecraftforge:forge:1.19-41.0.16'
 
   // Required: Bo's Material Elements (dev dependency)
-  compileOnly fg.deobf("curse.maven:material_elements-541620:3758178")
-  runtimeOnly fg.deobf("curse.maven:material_elements-541620:3758178")
+  compileOnly fg.deobf("curse.maven:material_elements-541620:3823591")
+  runtimeOnly fg.deobf("curse.maven:material_elements-541620:3823591")
 
   // Jade Integration
-  compileOnly fg.deobf("curse.maven:jade-324717:3761542")
-  runtimeOnly fg.deobf("curse.maven:jade-324717:3761542")
+  compileOnly fg.deobf("curse.maven:jade-324717:3823077")
+  runtimeOnly fg.deobf("curse.maven:jade-324717:3823077")
 
   // Alex Mob's (Testing)
   // runtimeOnly fg.deobf("curse.maven:citadel-331936:3584733:deobf")
@@ -145,9 +145,8 @@ dependencies {
   // runtimeOnly fg.deobf("curse.maven:aquaculture-60028:3750710")
 
   // Additional helpful Mods for development (dev depenedency)
-  // runtimeOnly fg.deobf("curse.maven:spark-361579:3591172")
   // runtimeOnly fg.deobf("curse.maven:item-zoom-261725:3574021")
-  runtimeOnly fg.deobf("curse.maven:jei-238222:3773518")
+  // runtimeOnly fg.deobf("curse.maven:jei-238222:3773518")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
@@ -190,7 +189,7 @@ curseforge {
     id = "${curseforge_project_id}"
     changelog = 'https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/commits/main'
     releaseType = 'release'
-    addGameVersion("1.18.2")
+    addGameVersion("1.19")
     addGameVersion("Forge")
     mainArtifact(jar) {
       relations {

@@ -108,10 +108,11 @@ public class CommonConfig {
     public final ForgeConfigSpec.ConfigValue<List<String>> witchBottleMobs;
 
     public final ForgeConfigSpec.BooleanValue blazeDropBlazeRod;
-    public final ForgeConfigSpec.BooleanValue cowDropRawBeef;
     public final ForgeConfigSpec.BooleanValue chickenDropEggs;
     public final ForgeConfigSpec.BooleanValue chickenDropRawChicken;
+    public final ForgeConfigSpec.BooleanValue cowDropRawBeef;
     public final ForgeConfigSpec.BooleanValue sheepDropRawMutton;
+    public final ForgeConfigSpec.BooleanValue slimeDropSlime;
 
     Config(ForgeConfigSpec.Builder builder) {
       builder.comment(Constants.MOD_NAME);
@@ -224,11 +225,6 @@ public class CommonConfig {
           builder.comment("Enable/Disable blaze rod drops.").define("blazeDropBlazeRod", true);
       builder.pop();
 
-      builder.push("Cow Settings");
-      cowDropRawBeef =
-          builder.comment("Enable/Disable cow raw beef drops.").define("cowDropRawBeef", true);
-      builder.pop();
-
       builder.push("Chicken Settings");
       chickenDropEggs =
           builder.comment("Enable/Disable chicken egg drops.").define("chickenDropEggs", true);
@@ -236,9 +232,19 @@ public class CommonConfig {
           .define("chickenDropRawChicken", true);
       builder.pop();
 
+      builder.push("Cow Settings");
+      cowDropRawBeef =
+          builder.comment("Enable/Disable cow raw beef drops.").define("cowDropRawBeef", true);
+      builder.pop();
+
       builder.push("Sheep Settings");
       sheepDropRawMutton = builder.comment("Enable/Disable sheep raw mutton drops.")
           .define("sheepDropRawMutton", true);
+      builder.pop();
+
+      builder.push("Slime Settings");
+      slimeDropSlime = builder.comment("Enable/Disable slime drops regardless of size.")
+          .define("slimeDropSlime", true);
       builder.pop();
     }
   }

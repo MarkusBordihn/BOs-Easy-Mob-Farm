@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -59,10 +60,11 @@ public class LootManager {
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
 
   private static boolean blazeDropBlazeRod = COMMON.blazeDropBlazeRod.get();
-  private static boolean cowDropRawBeef = COMMON.cowDropRawBeef.get();
   private static boolean chickenDropEggs = COMMON.chickenDropEggs.get();
   private static boolean chickenDropRawChicken = COMMON.chickenDropRawChicken.get();
+  private static boolean cowDropRawBeef = COMMON.cowDropRawBeef.get();
   private static boolean sheepDropRawMutton = COMMON.sheepDropRawMutton.get();
+  private static boolean slimeDropSlime = COMMON.slimeDropSlime.get();
   private static int lootPreviewRolls = COMMON.lootPreviewRolls.get();
 
   private static FakePlayer fakePlayer;
@@ -76,13 +78,14 @@ public class LootManager {
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
+    lootTableDropListCache = new ConcurrentHashMap<>();
     blazeDropBlazeRod = COMMON.blazeDropBlazeRod.get();
-    cowDropRawBeef = COMMON.cowDropRawBeef.get();
     chickenDropEggs = COMMON.chickenDropEggs.get();
     chickenDropRawChicken = COMMON.chickenDropRawChicken.get();
-    sheepDropRawMutton = COMMON.sheepDropRawMutton.get();
+    cowDropRawBeef = COMMON.cowDropRawBeef.get();
     lootPreviewRolls = COMMON.lootPreviewRolls.get();
-    lootTableDropListCache = new ConcurrentHashMap<>();
+    sheepDropRawMutton = COMMON.sheepDropRawMutton.get();
+    slimeDropSlime = COMMON.slimeDropSlime.get();
   }
 
   public static FakePlayer getPlayer(ServerLevel level) {
@@ -179,11 +182,15 @@ public class LootManager {
       if (lootDrop.isEmpty()
           || filter(chickenDropRawChicken, PassiveAnimal.CHICKEN, Items.CHICKEN, mobType, lootDrop)
           || filter(cowDropRawBeef, PassiveAnimal.COW, Items.BEEF, mobType, lootDrop)
-          || filter(sheepDropRawMutton, PassiveAnimal.SHEEP, Items.MUTTON, mobType, lootDrop)
-        ) {
+          || filter(sheepDropRawMutton, PassiveAnimal.SHEEP, Items.MUTTON, mobType, lootDrop)) {
         continue;
       }
       filteredLootDrops.add(lootDrop);
+    }
+
+    // Add additional loot drops, if loot drops are empty.
+    if (filteredLootDrops.isEmpty() && slimeDropSlime && mobType.equals(HostileMonster.SLIME)) {
+      filteredLootDrops.add(new ItemStack(Items.SLIME_BALL));
     }
 
     return filteredLootDrops;

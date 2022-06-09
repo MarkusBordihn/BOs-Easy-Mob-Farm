@@ -28,7 +28,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -219,20 +219,17 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
     Set<String> acceptedMobTypes = getAcceptedMobTypes();
     if (acceptedMobTypes != null && !acceptedMobTypes.isEmpty()) {
       // List each single possible mob types (incl. modded mobs types).
-      TranslatableComponent mobTypeOverview = (TranslatableComponent) new TranslatableComponent("")
-          .withStyle(ChatFormatting.DARK_GREEN);
+      MutableComponent mobTypeOverview = Component.literal("").withStyle(ChatFormatting.DARK_GREEN);
       for (String acceptedMob : acceptedMobTypes) {
-        TranslatableComponent acceptedMobName = TranslatableText.getEntityName(acceptedMob);
+        Component acceptedMobName = TranslatableText.getEntityName(acceptedMob);
         if (!acceptedMobName.getString().isBlank()) {
-          mobTypeOverview.append(acceptedMobName).append(", ")
-              .withStyle(ChatFormatting.DARK_GREEN);
+          mobTypeOverview.append(acceptedMobName).append(", ").withStyle(ChatFormatting.DARK_GREEN);
         }
       }
       if (!mobTypeOverview.getString().isBlank()) {
-        TranslatableComponent supportedMobsOverview =
-            (TranslatableComponent) new TranslatableComponent(
-                Constants.TEXT_PREFIX + getFarmDescriptionId()).append(" ")
-                    .withStyle(ChatFormatting.GREEN);
+        MutableComponent supportedMobsOverview =
+            Component.translatable(Constants.TEXT_PREFIX + getFarmDescriptionId()).append(" ")
+                .withStyle(ChatFormatting.GREEN);
         supportedMobsOverview.append(mobTypeOverview).append("...");
         tooltipList.add(supportedMobsOverview);
       }

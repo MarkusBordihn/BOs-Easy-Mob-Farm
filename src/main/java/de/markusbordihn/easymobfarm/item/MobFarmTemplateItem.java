@@ -24,7 +24,6 @@ import javax.annotation.Nullable;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -42,7 +41,7 @@ public class MobFarmTemplateItem extends BlockItem {
   @Override
   public void appendHoverText(ItemStack itemStack, @Nullable Level level,
       List<Component> tooltipList, TooltipFlag tooltipFlag) {
-    tooltipList.add(new TranslatableComponent(Constants.TEXT_PREFIX + "mob_farm_template")
+    tooltipList.add(Component.translatable(Constants.TEXT_PREFIX + "mob_farm_template")
         .withStyle(ChatFormatting.YELLOW));
   }
 
