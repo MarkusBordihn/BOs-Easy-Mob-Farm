@@ -47,11 +47,10 @@ import de.markusbordihn.easymobfarm.menu.farm.OceanFarmMenu;
 public class OceanFarmEntity extends MobFarmBlockEntity {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
 
-  // Config settings
-  private static int oceanFarmProcessTime = COMMON.oceanFarmProcessTime.get();
-  private static int farmProcessingTime = oceanFarmProcessTime * 20;
+  private static int farmProcessingTime = 60 * 20;
 
   public OceanFarmEntity(BlockPos blockPos, BlockState blockState) {
     super(ModBlocks.OCEAN_FARM_ENTITY.get(), blockPos, blockState);
@@ -64,10 +63,9 @@ public class OceanFarmEntity extends MobFarmBlockEntity {
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    oceanFarmProcessTime = COMMON.oceanFarmProcessTime.get();
-    farmProcessingTime = oceanFarmProcessTime * 20;
+    farmProcessingTime = COMMON.oceanFarmProcessTime.get() * 20;
     log.info("{}: OceanFarm Entity with drops every {}s", Constants.LOG_MOB_FARM_PREFIX,
-        oceanFarmProcessTime);
+        COMMON.oceanFarmProcessTime.get());
   }
 
   @Override

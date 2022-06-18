@@ -35,8 +35,8 @@ import de.markusbordihn.easymobfarm.item.MobCatcherItem;
 public class WitchBottle extends MobCatcherItem {
 
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
-  private static int mobCatchingLuck = COMMON.witchBottleMobCatchingLuck.get();
-  private static Set<String> acceptedMobTypes = new HashSet<>(COMMON.witchBottleMobs.get());
+
+  private static Set<String> acceptedMobTypes = new HashSet<>();
 
   public WitchBottle(Item.Properties properties) {
     super(properties);
@@ -44,10 +44,9 @@ public class WitchBottle extends MobCatcherItem {
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    mobCatchingLuck = COMMON.witchBottleMobCatchingLuck.get();
     acceptedMobTypes = new HashSet<>(COMMON.witchBottleMobs.get());
     log.info("The witch bottle require {} luck and is able to catch the following mobs: {}",
-        mobCatchingLuck, acceptedMobTypes);
+        COMMON.witchBottleMobCatchingLuck.get(), acceptedMobTypes);
   }
 
   @Override
@@ -62,7 +61,9 @@ public class WitchBottle extends MobCatcherItem {
 
   @Override
   public int getMobCatchingLuck() {
-    return mobCatchingLuck > 0 ? this.random.nextInt(mobCatchingLuck) : 0;
+    return COMMON.witchBottleMobCatchingLuck.get() > 0
+        ? this.random.nextInt(COMMON.witchBottleMobCatchingLuck.get())
+        : 0;
   }
 
 }

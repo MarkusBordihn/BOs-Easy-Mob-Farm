@@ -59,14 +59,6 @@ public class LootManager {
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
 
-  private static boolean blazeDropBlazeRod = COMMON.blazeDropBlazeRod.get();
-  private static boolean chickenDropEggs = COMMON.chickenDropEggs.get();
-  private static boolean chickenDropRawChicken = COMMON.chickenDropRawChicken.get();
-  private static boolean cowDropRawBeef = COMMON.cowDropRawBeef.get();
-  private static boolean sheepDropRawMutton = COMMON.sheepDropRawMutton.get();
-  private static boolean slimeDropSlime = COMMON.slimeDropSlime.get();
-  private static int lootPreviewRolls = COMMON.lootPreviewRolls.get();
-
   private static FakePlayer fakePlayer;
   private static final GameProfile GAME_PROFILE =
       new GameProfile(UUID.randomUUID(), "[BOs_Easy_Mob_Farm]");
@@ -79,13 +71,6 @@ public class LootManager {
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
     lootTableDropListCache = new ConcurrentHashMap<>();
-    blazeDropBlazeRod = COMMON.blazeDropBlazeRod.get();
-    chickenDropEggs = COMMON.chickenDropEggs.get();
-    chickenDropRawChicken = COMMON.chickenDropRawChicken.get();
-    cowDropRawBeef = COMMON.cowDropRawBeef.get();
-    lootPreviewRolls = COMMON.lootPreviewRolls.get();
-    sheepDropRawMutton = COMMON.sheepDropRawMutton.get();
-    slimeDropSlime = COMMON.slimeDropSlime.get();
   }
 
   public static FakePlayer getPlayer(ServerLevel level) {
@@ -99,14 +84,14 @@ public class LootManager {
       Level level, String mobType) {
     // Roll's the loot a specific time (default: 2) to get more accurate results.
     List<String> lootDropList = Lists.newArrayList();
-    for (int i = 0; i < lootPreviewRolls; i++) {
+    for (int i = 0; i < COMMON.lootPreviewRolls.get(); i++) {
       List<ItemStack> lootDrops = getFilteredRandomLootDrop(lootTableLocation, level, mobType);
 
       // Use a internal cache to improve loot prediction over time.
       lootDropList = cacheLootDrops(lootTableLocation, lootDrops);
     }
-    log.info("Loot for {} with {} roll {} result: {}", mobType, lootTableLocation, lootPreviewRolls,
-        lootDropList);
+    log.info("Loot for {} with {} roll {} result: {}", mobType, lootTableLocation,
+        COMMON.lootPreviewRolls.get(), lootDropList);
     return lootDropList;
   }
 
@@ -169,10 +154,10 @@ public class LootManager {
     List<ItemStack> filteredLootDrops = Lists.newArrayList();
 
     // Adding additional drops for specific cases.
-    if (blazeDropBlazeRod && mobType.equals(HostileMonster.BLAZE)) {
+    if (Boolean.TRUE.equals(COMMON.blazeDropBlazeRod.get()) && mobType.equals(HostileMonster.BLAZE)) {
       lootDrops.add(new ItemStack(Items.BLAZE_ROD));
     }
-    if (chickenDropEggs && mobType.equals(PassiveAnimal.CHICKEN)) {
+    if (Boolean.TRUE.equals(COMMON.chickenDropEggs.get()) && mobType.equals(PassiveAnimal.CHICKEN)) {
       lootDrops.add(new ItemStack(Items.EGG));
     }
 
@@ -180,16 +165,19 @@ public class LootManager {
     for (ItemStack lootDrop : lootDrops) {
       // Ignore empty stacks and filter loot drop, if specific drop is disabled.
       if (lootDrop.isEmpty()
-          || filter(chickenDropRawChicken, PassiveAnimal.CHICKEN, Items.CHICKEN, mobType, lootDrop)
-          || filter(cowDropRawBeef, PassiveAnimal.COW, Items.BEEF, mobType, lootDrop)
-          || filter(sheepDropRawMutton, PassiveAnimal.SHEEP, Items.MUTTON, mobType, lootDrop)) {
+          || filter(COMMON.chickenDropRawChicken.get(), PassiveAnimal.CHICKEN, Items.CHICKEN,
+              mobType, lootDrop)
+          || filter(COMMON.cowDropRawBeef.get(), PassiveAnimal.COW, Items.BEEF, mobType, lootDrop)
+          || filter(COMMON.sheepDropRawMutton.get(), PassiveAnimal.SHEEP, Items.MUTTON, mobType,
+              lootDrop)) {
         continue;
       }
       filteredLootDrops.add(lootDrop);
     }
 
     // Add additional loot drops, if loot drops are empty.
-    if (filteredLootDrops.isEmpty() && slimeDropSlime && mobType.equals(HostileMonster.SLIME)) {
+    if (Boolean.TRUE.equals(filteredLootDrops.isEmpty() && COMMON.slimeDropSlime.get())
+        && mobType.equals(HostileMonster.SLIME)) {
       filteredLootDrops.add(new ItemStack(Items.SLIME_BALL));
     }
 

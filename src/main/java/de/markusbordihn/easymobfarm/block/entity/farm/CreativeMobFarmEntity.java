@@ -47,11 +47,10 @@ import de.markusbordihn.easymobfarm.menu.farm.CreativeMobFarmMenu;
 public class CreativeMobFarmEntity extends MobFarmBlockEntity {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
 
-  // Config settings
-  private static int creativeMobFarmProcessTime = COMMON.creativeMobFarmProcessTime.get();
-  private static int farmProcessingTime = creativeMobFarmProcessTime * 20;
+  private static int farmProcessingTime = 60 * 20;
 
   public CreativeMobFarmEntity(BlockPos blockPos, BlockState blockState) {
     super(ModBlocks.CREATIVE_MOB_FARM_ENTITY.get(), blockPos, blockState);
@@ -64,10 +63,9 @@ public class CreativeMobFarmEntity extends MobFarmBlockEntity {
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    creativeMobFarmProcessTime = COMMON.creativeMobFarmProcessTime.get();
-    farmProcessingTime = creativeMobFarmProcessTime * 20;
+    farmProcessingTime = COMMON.creativeMobFarmProcessTime.get() * 20;
     log.info("{}: CreativeMobFarm Entity with drops every {}s", Constants.LOG_MOB_FARM_PREFIX,
-        creativeMobFarmProcessTime);
+        COMMON.creativeMobFarmProcessTime.get());
   }
 
   @Override

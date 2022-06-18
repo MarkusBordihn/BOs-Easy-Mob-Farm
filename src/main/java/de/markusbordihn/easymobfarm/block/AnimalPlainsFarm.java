@@ -56,7 +56,8 @@ public class AnimalPlainsFarm extends MobFarmBlock {
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   protected static final CommonConfig.Config COMMON = CommonConfig.COMMON;
-  private static Set<String> acceptedMobTypes = new HashSet<>(COMMON.animalPlainsFarmMobs.get());
+
+  private static Set<String> acceptedMobTypes = new HashSet<>();
 
   public AnimalPlainsFarm(BlockBehaviour.Properties properties) {
     super(properties);

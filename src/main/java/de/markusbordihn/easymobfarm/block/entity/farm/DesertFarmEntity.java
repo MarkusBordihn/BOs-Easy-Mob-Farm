@@ -47,11 +47,10 @@ import de.markusbordihn.easymobfarm.menu.farm.DesertFarmMenu;
 public class DesertFarmEntity extends MobFarmBlockEntity {
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
 
-  // Config settings
-  private static int desertFarmProcessTime = COMMON.desertFarmProcessTime.get();
-  private static int farmProcessingTime = desertFarmProcessTime * 20;
+  private static int farmProcessingTime = 60 * 20;
 
   public DesertFarmEntity(BlockPos blockPos, BlockState blockState) {
     super(ModBlocks.DESERT_FARM_ENTITY.get(), blockPos, blockState);
@@ -64,10 +63,9 @@ public class DesertFarmEntity extends MobFarmBlockEntity {
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    desertFarmProcessTime = COMMON.desertFarmProcessTime.get();
-    farmProcessingTime = desertFarmProcessTime * 20;
+    farmProcessingTime = COMMON.desertFarmProcessTime.get() * 20;
     log.info("{}: DesertFarm Entity with drops every {}s", Constants.LOG_MOB_FARM_PREFIX,
-        desertFarmProcessTime);
+        COMMON.desertFarmProcessTime.get());
   }
 
   @Override

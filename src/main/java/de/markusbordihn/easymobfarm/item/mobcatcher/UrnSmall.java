@@ -35,8 +35,8 @@ import de.markusbordihn.easymobfarm.item.MobCatcherItem;
 public class UrnSmall extends MobCatcherItem {
 
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
-  private static int mobCatchingLuck = COMMON.urnSmallMobCatchingLuck.get();
-  private static Set<String> acceptedMobTypes = new HashSet<>(COMMON.urnSmallMobs.get());
+
+  private static Set<String> acceptedMobTypes = new HashSet<>();
 
   public UrnSmall(Item.Properties properties) {
     super(properties);
@@ -44,10 +44,9 @@ public class UrnSmall extends MobCatcherItem {
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    mobCatchingLuck = COMMON.urnSmallMobCatchingLuck.get();
     acceptedMobTypes = new HashSet<>(COMMON.urnSmallMobs.get());
     log.info("The urn small require {} luck and is able to catch the following mobs: {}",
-        mobCatchingLuck, acceptedMobTypes);
+        COMMON.urnSmallMobCatchingLuck.get(), acceptedMobTypes);
   }
 
   @Override
@@ -62,7 +61,9 @@ public class UrnSmall extends MobCatcherItem {
 
   @Override
   public int getMobCatchingLuck() {
-    return mobCatchingLuck > 0 ? this.random.nextInt(mobCatchingLuck) : 0;
+    return COMMON.urnSmallMobCatchingLuck.get() > 0
+        ? this.random.nextInt(COMMON.urnSmallMobCatchingLuck.get())
+        : 0;
   }
 
 }

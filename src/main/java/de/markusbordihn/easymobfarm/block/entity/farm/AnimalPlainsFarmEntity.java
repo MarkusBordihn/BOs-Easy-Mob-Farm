@@ -47,11 +47,10 @@ import de.markusbordihn.easymobfarm.menu.farm.AnimalPlainsFarmMenu;
 public class AnimalPlainsFarmEntity extends MobFarmBlockEntity {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
 
-  // Config settings
-  private static int animalPlainsFarmProcessTime = COMMON.animalPlainsFarmProcessTime.get();
-  private static int farmProcessingTime = animalPlainsFarmProcessTime * 20;
+  private static int farmProcessingTime = 60 * 20;
 
   public AnimalPlainsFarmEntity(BlockPos blockPos, BlockState blockState) {
     super(ModBlocks.ANIMAL_PLAINS_FARM_ENTITY.get(), blockPos, blockState);
@@ -64,10 +63,9 @@ public class AnimalPlainsFarmEntity extends MobFarmBlockEntity {
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    animalPlainsFarmProcessTime = COMMON.animalPlainsFarmProcessTime.get();
-    farmProcessingTime = animalPlainsFarmProcessTime * 20;
+    farmProcessingTime = COMMON.animalPlainsFarmProcessTime.get() * 20;
     log.info("{}: Animal Plains Farm Entity with drops every {}s", Constants.LOG_MOB_FARM_PREFIX,
-        animalPlainsFarmProcessTime);
+        COMMON.animalPlainsFarmProcessTime.get());
   }
 
   @Override

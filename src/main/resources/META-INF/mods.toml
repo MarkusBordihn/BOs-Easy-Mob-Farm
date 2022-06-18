@@ -32,7 +32,7 @@ license="MIT"
 [[dependencies.easy_mob_farm]]
   modId="forge"
   mandatory=true
-  versionRange="[41,)"
+  versionRange="[41.0.38,)"
   ordering="NONE"
   side="BOTH"
 

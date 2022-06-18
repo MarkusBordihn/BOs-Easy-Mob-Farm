@@ -56,7 +56,8 @@ public class SwampFarm extends MobFarmBlock {
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   protected static final CommonConfig.Config COMMON = CommonConfig.COMMON;
-  private static Set<String> acceptedMobTypes = new HashSet<>(COMMON.swampFarmMobs.get());
+
+  private static Set<String> acceptedMobTypes = new HashSet<>();
 
   public SwampFarm(BlockBehaviour.Properties properties) {
     super(properties);

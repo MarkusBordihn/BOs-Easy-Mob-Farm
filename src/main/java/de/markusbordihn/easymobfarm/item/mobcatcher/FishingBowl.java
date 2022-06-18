@@ -35,8 +35,8 @@ import de.markusbordihn.easymobfarm.item.MobCatcherItem;
 public class FishingBowl extends MobCatcherItem {
 
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
-  private static int mobCatchingLuck = COMMON.fishingBowlMobCatchingLuck.get();
-  private static Set<String> acceptedMobTypes = new HashSet<>(COMMON.fishingBowlMobs.get());
+
+  private static Set<String> acceptedMobTypes = new HashSet<>();
 
   public FishingBowl(Item.Properties properties) {
     super(properties);
@@ -44,10 +44,9 @@ public class FishingBowl extends MobCatcherItem {
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    mobCatchingLuck = COMMON.fishingBowlMobCatchingLuck.get();
     acceptedMobTypes = new HashSet<>(COMMON.fishingBowlMobs.get());
     log.info("The fishing bowl require {} luck and is able to catch the following mobs: {}",
-        mobCatchingLuck, acceptedMobTypes);
+        COMMON.fishingBowlMobCatchingLuck.get(), acceptedMobTypes);
   }
 
   @Override
@@ -62,7 +61,9 @@ public class FishingBowl extends MobCatcherItem {
 
   @Override
   public int getMobCatchingLuck() {
-    return mobCatchingLuck > 0 ? this.random.nextInt(mobCatchingLuck) : 0;
+    return COMMON.fishingBowlMobCatchingLuck.get() > 0
+        ? this.random.nextInt(COMMON.fishingBowlMobCatchingLuck.get())
+        : 0;
   }
 
 }

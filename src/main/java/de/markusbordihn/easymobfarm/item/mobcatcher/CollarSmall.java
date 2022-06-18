@@ -35,8 +35,8 @@ import de.markusbordihn.easymobfarm.item.MobCatcherItem;
 public class CollarSmall extends MobCatcherItem {
 
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
-  private static int mobCatchingLuck = COMMON.collarSmallMobCatchingLuck.get();
-  private static Set<String> acceptedMobTypes = new HashSet<>(COMMON.collarSmallMobs.get());
+
+  private static Set<String> acceptedMobTypes = new HashSet<>();
 
   public CollarSmall(Item.Properties properties) {
     super(properties);
@@ -44,10 +44,9 @@ public class CollarSmall extends MobCatcherItem {
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    mobCatchingLuck = COMMON.collarSmallMobCatchingLuck.get();
     acceptedMobTypes = new HashSet<>(COMMON.collarSmallMobs.get());
     log.info("The collar small require {} luck and is able to catch the following mobs: {}",
-        mobCatchingLuck, acceptedMobTypes);
+        COMMON.collarSmallMobCatchingLuck.get(), acceptedMobTypes);
   }
 
   @Override
@@ -62,7 +61,9 @@ public class CollarSmall extends MobCatcherItem {
 
   @Override
   public int getMobCatchingLuck() {
-    return mobCatchingLuck > 0 ? this.random.nextInt(mobCatchingLuck) : 0;
+    return COMMON.collarSmallMobCatchingLuck.get() > 0
+        ? this.random.nextInt(COMMON.collarSmallMobCatchingLuck.get())
+        : 0;
   }
 
 }

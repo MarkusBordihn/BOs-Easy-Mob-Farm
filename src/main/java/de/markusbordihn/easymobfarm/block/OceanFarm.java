@@ -55,7 +55,8 @@ public class OceanFarm extends MobFarmBlock {
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   protected static final CommonConfig.Config COMMON = CommonConfig.COMMON;
-  private static Set<String> acceptedMobTypes = new HashSet<>(COMMON.oceanFarmMobs.get());
+
+  private static Set<String> acceptedMobTypes = new HashSet<>();
 
   public OceanFarm(BlockBehaviour.Properties properties) {
     super(properties);

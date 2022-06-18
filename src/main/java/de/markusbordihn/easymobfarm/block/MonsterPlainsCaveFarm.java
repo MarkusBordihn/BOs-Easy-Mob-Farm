@@ -55,8 +55,8 @@ public class MonsterPlainsCaveFarm extends MobFarmBlock {
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   protected static final CommonConfig.Config COMMON = CommonConfig.COMMON;
-  private static Set<String> acceptedMobTypes =
-      new HashSet<>(COMMON.monsterPlainsCaveFarmMobs.get());
+
+  private static Set<String> acceptedMobTypes = new HashSet<>();
 
   public MonsterPlainsCaveFarm(BlockBehaviour.Properties properties) {
     super(properties);

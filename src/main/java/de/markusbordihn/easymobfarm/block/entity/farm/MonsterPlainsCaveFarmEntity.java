@@ -47,11 +47,10 @@ import de.markusbordihn.easymobfarm.menu.farm.MonsterPlainsCaveFarmMenu;
 public class MonsterPlainsCaveFarmEntity extends MobFarmBlockEntity {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
 
-  // Config settings
-  private static int monsterPlainsCaveFarmProcessTime = COMMON.monsterPlainsCaveFarmProcessTime.get();
-  private static int farmProcessingTime = monsterPlainsCaveFarmProcessTime * 20;
+  private static int farmProcessingTime = 60 * 20;
 
   public MonsterPlainsCaveFarmEntity(BlockPos blockPos, BlockState blockState) {
     super(ModBlocks.MONSTER_PLAINS_CAVE_FARM_ENTITY.get(), blockPos, blockState);
@@ -64,10 +63,9 @@ public class MonsterPlainsCaveFarmEntity extends MobFarmBlockEntity {
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    monsterPlainsCaveFarmProcessTime = COMMON.monsterPlainsCaveFarmProcessTime.get();
-    farmProcessingTime = monsterPlainsCaveFarmProcessTime * 20;
+    farmProcessingTime = COMMON.monsterPlainsCaveFarmProcessTime.get() * 20;
     log.info("{}: MonsterPlainsCaveFarm Entity with drops every {}s", Constants.LOG_MOB_FARM_PREFIX,
-        monsterPlainsCaveFarmProcessTime);
+        COMMON.monsterPlainsCaveFarmProcessTime.get());
   }
 
   @Override

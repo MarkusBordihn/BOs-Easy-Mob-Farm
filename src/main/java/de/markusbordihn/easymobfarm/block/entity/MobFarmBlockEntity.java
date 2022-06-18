@@ -63,8 +63,6 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
   private static final int DEFAULT_FARM_PROCESSING_TIME = 6000;
 
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
-  private static boolean informOwnerAboutFullStorage = COMMON.informOwnerAboutFullStorage.get();
-  private static boolean logFullStorage = COMMON.logFullStorage.get();
 
   public MobFarmBlockEntity(BlockPos blockPos, BlockState blockState) {
     super(null, blockPos, blockState);
@@ -77,8 +75,12 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
 
   @SubscribeEvent
   public static void onServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    informOwnerAboutFullStorage = COMMON.informOwnerAboutFullStorage.get();
-    logFullStorage = COMMON.logFullStorage.get();
+    if (Boolean.TRUE.equals(COMMON.informOwnerAboutFullStorage.get())) {
+      log.info("Will inform owner about full storage!");
+    }
+    if (Boolean.TRUE.equals(COMMON.logFullStorage.get())) {
+      log.info("Log full storage in the logfile.");
+    }
   }
 
   public void updateLevel(Level level) {
@@ -225,17 +227,17 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
   }
 
   public void processFullStorage(MobFarmBlockEntity blockEntity, List<ItemStack> lootDrop) {
-    if (!informOwnerAboutFullStorage && !logFullStorage) {
+    if (!COMMON.informOwnerAboutFullStorage.get() && !COMMON.logFullStorage.get()) {
       return;
     }
     UUID ownerUUID = blockEntity.getOwner();
     BlockPos blockPos = blockEntity.getBlockPos();
 
-    if (logFullStorage) {
+    if (COMMON.logFullStorage.get()) {
       log.warn("Unable to store loot drop {} for mob farm {} at {} for owner {}!", lootDrop,
           this.farmMobName, blockPos, ownerUUID);
     }
-    if (informOwnerAboutFullStorage && ownerUUID != null) {
+    if (COMMON.informOwnerAboutFullStorage.get() && ownerUUID != null) {
       Player owner = blockEntity.level.getPlayerByUUID(ownerUUID);
       if (owner != null && owner.isAlive()) {
         MutableComponent message = Component.translatable(Constants.MESSAGE_PREFIX + "warning_full",

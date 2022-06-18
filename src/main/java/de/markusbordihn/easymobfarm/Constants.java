@@ -32,6 +32,7 @@ public final class Constants {
   public static final String MOD_COMMAND = "easy_mob_farm";
   public static final String MOD_ID = "easy_mob_farm";
   public static final String MOD_NAME = "Bo's Easy Mob Farm";
+  public static final String MOD_URL = "https://www.curseforge.com/minecraft/mc-mods/easy-mob-farm";
 
   // Prefixes
   public static final String TEXT_PREFIX = "text.easy_mob_farm.";
@@ -44,4 +45,5 @@ public final class Constants {
   public static final int FONT_COLOR_GREEN = ChatFormatting.GREEN.getColor();
   public static final int FONT_COLOR_WARNING = ChatFormatting.RED.getColor();
   public static final int FONT_COLOR_YELLOW = ChatFormatting.YELLOW.getColor();
+
 }

@@ -47,11 +47,10 @@ import de.markusbordihn.easymobfarm.menu.farm.SwampFarmMenu;
 public class SwampFarmEntity extends MobFarmBlockEntity {
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
 
-  // Config settings
-  private static int swampFarmProcessTime = COMMON.swampFarmProcessTime.get();
-  private static int farmProcessingTime = swampFarmProcessTime * 20;
+  private static int farmProcessingTime = 60 * 20;
 
   public SwampFarmEntity(BlockPos blockPos, BlockState blockState) {
     super(ModBlocks.SWAMP_FARM_ENTITY.get(), blockPos, blockState);
@@ -64,10 +63,9 @@ public class SwampFarmEntity extends MobFarmBlockEntity {
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    swampFarmProcessTime = COMMON.swampFarmProcessTime.get();
-    farmProcessingTime = swampFarmProcessTime * 20;
+    farmProcessingTime = COMMON.swampFarmProcessTime.get() * 20;
     log.info("{}: SwampFarm Entity with drops every {}s", Constants.LOG_MOB_FARM_PREFIX,
-        swampFarmProcessTime);
+        COMMON.swampFarmProcessTime.get());
   }
 
   @Override

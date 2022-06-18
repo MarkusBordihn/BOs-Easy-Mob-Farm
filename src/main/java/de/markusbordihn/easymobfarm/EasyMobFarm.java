@@ -34,6 +34,7 @@ import de.markusbordihn.easymobfarm.client.renderer.ClientRenderer;
 import de.markusbordihn.easymobfarm.client.screen.ClientScreens;
 import de.markusbordihn.easymobfarm.item.ModItems;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
+import de.markusbordihn.easymobfarm.utils.StopModReposts;
 
 @Mod(Constants.MOD_ID)
 public class EasyMobFarm {
@@ -42,6 +43,8 @@ public class EasyMobFarm {
 
   public EasyMobFarm() {
     final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+    StopModReposts.checkStopModReposts();
 
     log.info("{} Items ...", Constants.LOG_REGISTER_PREFIX);
     ModItems.ITEMS.register(modEventBus);
