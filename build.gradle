@@ -127,11 +127,11 @@ dependencies {
   // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
   // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
   // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-  minecraft 'net.minecraftforge:forge:1.19-41.0.38'
+  minecraft 'net.minecraftforge:forge:1.19-41.0.64'
 
   // Required: Bo's Material Elements (dev dependency)
-  compileOnly fg.deobf("curse.maven:material_elements-541620:3823591")
-  runtimeOnly fg.deobf("curse.maven:material_elements-541620:3823591")
+  compileOnly fg.deobf("curse.maven:material_elements-541620:3865335")
+  runtimeOnly fg.deobf("curse.maven:material_elements-541620:3865335")
 
   // Jade Integration
   compileOnly fg.deobf("curse.maven:jade-324717:3823077")

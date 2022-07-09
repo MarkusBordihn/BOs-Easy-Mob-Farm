@@ -1,5 +1,6 @@
 {
 	"credit": "Made with Blockbench by Markus Bordihn",
+  "render_type": "cutout_mipped",
 	"textures": {
 		"glass": "block/glass",
 		"hopper_inside": "block/hopper_inside",

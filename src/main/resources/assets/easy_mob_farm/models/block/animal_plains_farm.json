@@ -1,5 +1,6 @@
 {
 	"credit": "Made with Blockbench by Markus Bordihn",
+  "render_type": "cutout_mipped",
 	"textures": {
 		"edge": "block/end_rod",
 		"glass": "block/glass",

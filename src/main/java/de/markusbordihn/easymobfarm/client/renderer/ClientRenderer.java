@@ -22,11 +22,7 @@ package de.markusbordihn.easymobfarm.client.renderer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
-
 import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
@@ -56,33 +52,6 @@ public class ClientRenderer {
     event.registerBlockEntityRenderer(ModBlocks.MONSTER_PLAINS_CAVE_FARM_ENTITY.get(),
         MonsterPlainsCaveFarmRenderer::new);
     event.registerBlockEntityRenderer(ModBlocks.SWAMP_FARM_ENTITY.get(), SwampFarmRenderer::new);
-  }
-
-  public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-    log.info("{} Entity Renders ...", Constants.LOG_REGISTER_PREFIX);
-  }
-
-  public static void registerRenderLayers(final FMLClientSetupEvent event) {
-    log.info("{} Render Layers ...", Constants.LOG_REGISTER_PREFIX);
-
-    event.enqueueWork(() -> {
-      // @TemplateEntryPoint("Register Render Layers")
-
-      // Mob Farm Templates
-      ItemBlockRenderTypes.setRenderLayer(ModBlocks.IRON_MOB_FARM_TEMPLATE.get(),
-          RenderType.cutoutMipped());
-
-      // Mobs Farms
-      ItemBlockRenderTypes.setRenderLayer(ModBlocks.ANIMAL_PLAINS_FARM.get(),
-          RenderType.cutoutMipped());
-      ItemBlockRenderTypes.setRenderLayer(ModBlocks.CREATIVE_MOB_FARM.get(),
-          RenderType.cutoutMipped());
-      ItemBlockRenderTypes.setRenderLayer(ModBlocks.DESERT_FARM.get(), RenderType.cutoutMipped());
-      ItemBlockRenderTypes.setRenderLayer(ModBlocks.MONSTER_PLAINS_CAVE_FARM.get(),
-          RenderType.cutoutMipped());
-      ItemBlockRenderTypes.setRenderLayer(ModBlocks.OCEAN_FARM.get(), RenderType.translucent());
-      ItemBlockRenderTypes.setRenderLayer(ModBlocks.SWAMP_FARM.get(), RenderType.cutoutMipped());
-    });
   }
 
 }

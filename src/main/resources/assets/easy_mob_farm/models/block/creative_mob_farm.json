@@ -1,5 +1,6 @@
 {
 	"credit": "Made with Blockbench by Markus Bordihn",
+  "render_type": "cutout_mipped",
 	"textures": {
 		"particle": "block/nether_portal",
 		"floor_back": "block/nether_portal",
