@@ -52,8 +52,8 @@ public class EasyMobFarm {
     log.info("{} Blocks ...", Constants.LOG_REGISTER_PREFIX);
     ModBlocks.BLOCKS.register(modEventBus);
 
-    log.info("{} Block Entities ...", Constants.LOG_REGISTER_PREFIX);
-    ModBlocks.ENTITIES.register(modEventBus);
+    log.info("{} Block Entities Types...", Constants.LOG_REGISTER_PREFIX);
+    ModBlocks.BLOCK_ENTITY_TYPES.register(modEventBus);
 
     log.info("{} Menu Types ...", Constants.LOG_REGISTER_PREFIX);
     ModMenuTypes.MENU_TYPES.register(modEventBus);

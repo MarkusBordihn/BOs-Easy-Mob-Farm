@@ -32,7 +32,7 @@ license="MIT"
 [[dependencies.easy_mob_farm]]
   modId="forge"
   mandatory=true
-  versionRange="[41.0.64,)"
+  versionRange="[41.0.96,)"
   ordering="NONE"
   side="BOTH"
 
@@ -46,6 +46,6 @@ license="MIT"
 [[dependencies.easy_mob_farm]]
   modId="material_elements"
   mandatory=true
-  versionRange="[4.2.0,5.0.0)"
+  versionRange="[4.3.0,5.0.0)"
   ordering="NONE"
   side="BOTH"

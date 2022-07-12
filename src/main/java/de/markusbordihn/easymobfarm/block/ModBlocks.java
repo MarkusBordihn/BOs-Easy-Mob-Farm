@@ -45,8 +45,8 @@ public class ModBlocks {
   public static final DeferredRegister<Block> BLOCKS =
       DeferredRegister.create(ForgeRegistries.BLOCKS, Constants.MOD_ID);
 
-  public static final DeferredRegister<BlockEntityType<?>> ENTITIES =
-      DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, Constants.MOD_ID);
+  public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES =
+      DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, Constants.MOD_ID);
 
   @TemplateEntryPoint("Register Blocks")
 
@@ -88,21 +88,21 @@ public class ModBlocks {
 
   // Mob Farms Block Entity
   public static final RegistryObject<BlockEntityType<AnimalPlainsFarmEntity>> ANIMAL_PLAINS_FARM_ENTITY =
-      ENTITIES.register(AnimalPlainsFarm.NAME, () -> BlockEntityType.Builder
+      BLOCK_ENTITY_TYPES.register(AnimalPlainsFarm.NAME, () -> BlockEntityType.Builder
           .of(AnimalPlainsFarmEntity::new, ANIMAL_PLAINS_FARM.get()).build(null));
   public static final RegistryObject<BlockEntityType<CreativeMobFarmEntity>> CREATIVE_MOB_FARM_ENTITY =
-      ENTITIES.register(CreativeMobFarm.NAME, () -> BlockEntityType.Builder
+      BLOCK_ENTITY_TYPES.register(CreativeMobFarm.NAME, () -> BlockEntityType.Builder
           .of(CreativeMobFarmEntity::new, CREATIVE_MOB_FARM.get()).build(null));
   public static final RegistryObject<BlockEntityType<DesertFarmEntity>> DESERT_FARM_ENTITY =
-      ENTITIES.register(DesertFarm.NAME,
+      BLOCK_ENTITY_TYPES.register(DesertFarm.NAME,
           () -> BlockEntityType.Builder.of(DesertFarmEntity::new, DESERT_FARM.get()).build(null));
   public static final RegistryObject<BlockEntityType<MonsterPlainsCaveFarmEntity>> MONSTER_PLAINS_CAVE_FARM_ENTITY =
-      ENTITIES.register(MonsterPlainsCaveFarm.NAME, () -> BlockEntityType.Builder
+      BLOCK_ENTITY_TYPES.register(MonsterPlainsCaveFarm.NAME, () -> BlockEntityType.Builder
           .of(MonsterPlainsCaveFarmEntity::new, MONSTER_PLAINS_CAVE_FARM.get()).build(null));
   public static final RegistryObject<BlockEntityType<OceanFarmEntity>> OCEAN_FARM_ENTITY =
-      ENTITIES.register(OceanFarm.NAME,
+      BLOCK_ENTITY_TYPES.register(OceanFarm.NAME,
           () -> BlockEntityType.Builder.of(OceanFarmEntity::new, OCEAN_FARM.get()).build(null));
   public static final RegistryObject<BlockEntityType<SwampFarmEntity>> SWAMP_FARM_ENTITY =
-      ENTITIES.register(SwampFarm.NAME,
+      BLOCK_ENTITY_TYPES.register(SwampFarm.NAME,
           () -> BlockEntityType.Builder.of(SwampFarmEntity::new, SWAMP_FARM.get()).build(null));
 }
