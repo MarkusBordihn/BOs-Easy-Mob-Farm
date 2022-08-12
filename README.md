@@ -1,4 +1,4 @@
-# 🪤 Easy Mob Farm
+# 🪤 Easy Mob Farm (1.19.2)
 
 The easy mob farm is a server friendly way to capture different kind of animals and mobs to gather their loot.
 This mod provides serval catching items and mob farms to make it more entertaining.
@@ -120,9 +120,15 @@ Most of the mobs should already work with the creative farm, so you can use the 
 | Fabric Version | ❌ Not planned        |
 | Forge 1.16.5   | ❌ Not planned        |
 | Forge 1.17.1   | ❌ Not planned        |
-| Forge 1.18.1   | ⚠️ Maintenance only   |
+| Forge 1.18.1   | ⚠️ Deprecated         |
 | Forge 1.18.2   | ⚠️ Maintenance only   |
-| Forge 1.19     | ✔️ Active development |
+| Forge 1.19     | ⚠️ Deprecated         |
+| Forge 1.19.1   | ⚠️ Deprecated         |
+| Forge 1.19.2   | ✔️ Active development |
+
+## License
+
+The MIT [LICENSE.md](LICENSE.md) applies only to the code in this repository. Images, models and other assets are explicitly excluded.
 
 ## Note
 
