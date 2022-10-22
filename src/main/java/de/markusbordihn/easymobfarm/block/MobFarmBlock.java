@@ -199,8 +199,8 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
   @Override
   public boolean canConsumeCapturedMob(Level level, BlockPos blockPos, BlockState blockState,
       BlockEntity blockEntity, Player player, ItemStack itemStack) {
-    if (itemStack.getItem() instanceof CapturedMob capturedMobItem) {
-      String capturedMobType = capturedMobItem.getCapturedMobType(itemStack);
+    if (itemStack.getItem() instanceof CapturedMob) {
+      String capturedMobType = CapturedMob.getCapturedMobType(itemStack);
       return isAcceptedMobType(capturedMobType);
     }
     return false;

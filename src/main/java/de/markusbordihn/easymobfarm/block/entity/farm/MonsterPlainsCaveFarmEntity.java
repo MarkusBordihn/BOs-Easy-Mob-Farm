@@ -51,7 +51,8 @@ public class MonsterPlainsCaveFarmEntity extends MobFarmBlockEntity {
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
 
   // Config settings
-  private static int monsterPlainsCaveFarmProcessTime = COMMON.monsterPlainsCaveFarmProcessTime.get();
+  private static int monsterPlainsCaveFarmProcessTime =
+      COMMON.monsterPlainsCaveFarmProcessTime.get();
   private static int farmProcessingTime = monsterPlainsCaveFarmProcessTime * 20;
 
   public MonsterPlainsCaveFarmEntity(BlockPos blockPos, BlockState blockState) {

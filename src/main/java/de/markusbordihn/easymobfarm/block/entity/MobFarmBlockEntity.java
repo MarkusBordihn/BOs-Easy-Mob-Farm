@@ -252,7 +252,7 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
     if (index == MobFarmMenu.CAPTURED_MOB_SLOT) {
 
       // Update and cache data based on captured mob
-      if (itemStack.getItem() instanceof CapturedMob capturedMobItem) {
+      if (itemStack.getItem() instanceof CapturedMob) {
         // Get farm processing time or use default.
         if (getFarmProcessingTime() > 0) {
           this.farmTotalTime = getFarmProcessingTime();
@@ -262,10 +262,10 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
         log.debug("Farm Processing time {}", this.farmTotalTime);
 
         // Get Mob Name
-        this.farmMobName = capturedMobItem.getCapturedMob(itemStack);
-        this.farmMobType = capturedMobItem.getCapturedMobType(itemStack);
-        this.farmMobColor = capturedMobItem.getCapturedMobColor(itemStack);
-        this.farmMobEntityType = capturedMobItem.getCapturedMobEntityType(itemStack);
+        this.farmMobName = CapturedMob.getCapturedMob(itemStack);
+        this.farmMobType = CapturedMob.getCapturedMobType(itemStack);
+        this.farmMobColor = CapturedMob.getCapturedMobColor(itemStack);
+        this.farmMobEntityType = CapturedMob.getCapturedMobEntityType(itemStack);
       } else {
         this.farmMobName = "";
         this.farmMobType = "";

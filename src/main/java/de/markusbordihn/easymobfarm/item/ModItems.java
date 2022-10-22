@@ -31,11 +31,14 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.AnimalPlainsFarm;
 import de.markusbordihn.easymobfarm.block.CreativeMobFarm;
 import de.markusbordihn.easymobfarm.block.DesertFarm;
+import de.markusbordihn.easymobfarm.block.JungleFarm;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.block.MonsterPlainsCaveFarm;
 import de.markusbordihn.easymobfarm.block.OceanFarm;
 import de.markusbordihn.easymobfarm.block.SwampFarm;
 import de.markusbordihn.easymobfarm.item.mobcatcher.FishingBowl;
+import de.markusbordihn.easymobfarm.item.mobcatcher.CatchCage;
+import de.markusbordihn.easymobfarm.item.mobcatcher.CatchCageSmall;
 import de.markusbordihn.easymobfarm.item.mobcatcher.CollarSmall;
 import de.markusbordihn.easymobfarm.item.mobcatcher.CreativeMobCatcher;
 import de.markusbordihn.easymobfarm.item.mobcatcher.FishingNetSmall;
@@ -57,27 +60,32 @@ public class ModItems {
   @TemplateEntryPoint("Register Items")
 
   // Mob Capture Items
-
-  public static final RegistryObject<Item> WITCH_BOTTLE =
-      ITEMS.register("witch_bottle", () -> new WitchBottle(
-          new Item.Properties().stacksTo(1).durability(10).tab(EasyMobFarmTab.TOOLS)));
-  public static final RegistryObject<Item> CREATIVE_MOB_CATCHER =
-      ITEMS.register("creative_mob_catcher", () -> new CreativeMobCatcher(
-          new Item.Properties().stacksTo(1).durability(1000).tab(EasyMobFarmTab.TOOLS)));
-  public static final RegistryObject<Item> FISHING_NET_SMALL =
-      ITEMS.register("fishing_net_small", () -> new FishingNetSmall(
-          new Item.Properties().stacksTo(1).durability(10).tab(EasyMobFarmTab.TOOLS)));
-  public static final RegistryObject<Item> BOWL_SMALL =
-      ITEMS.register("fishing_bowl", () -> new FishingBowl(
-          new Item.Properties().stacksTo(1).durability(10).tab(EasyMobFarmTab.TOOLS)));
   public static final RegistryObject<Item> CAPTURE_NET = ITEMS.register("capture_net",
       () -> new Net(new Item.Properties().stacksTo(1).durability(1000).tab(EasyMobFarmTab.TOOLS)));
+  public static final RegistryObject<Item> CATCH_CAGE =
+      ITEMS.register("catch_cage", () -> new CatchCage(
+          new Item.Properties().stacksTo(1).durability(11).tab(EasyMobFarmTab.TOOLS)));
+  public static final RegistryObject<Item> CATCH_CAGE_SMALL =
+      ITEMS.register("catch_cage_small", () -> new CatchCageSmall(
+          new Item.Properties().stacksTo(1).durability(11).tab(EasyMobFarmTab.TOOLS)));
   public static final RegistryObject<Item> COLLAR_SMALL =
       ITEMS.register("collar_small", () -> new CollarSmall(
           new Item.Properties().stacksTo(1).durability(11).tab(EasyMobFarmTab.TOOLS)));
+  public static final RegistryObject<Item> CREATIVE_MOB_CATCHER =
+      ITEMS.register("creative_mob_catcher", () -> new CreativeMobCatcher(
+          new Item.Properties().stacksTo(1).durability(1000).tab(EasyMobFarmTab.TOOLS)));
+  public static final RegistryObject<Item> BOWL_SMALL =
+      ITEMS.register("fishing_bowl", () -> new FishingBowl(
+          new Item.Properties().stacksTo(1).durability(10).tab(EasyMobFarmTab.TOOLS)));
+  public static final RegistryObject<Item> FISHING_NET_SMALL =
+      ITEMS.register("fishing_net_small", () -> new FishingNetSmall(
+          new Item.Properties().stacksTo(1).durability(10).tab(EasyMobFarmTab.TOOLS)));
   public static final RegistryObject<Item> URN_SMALL =
       ITEMS.register("urn_small", () -> new UrnSmall(
           new Item.Properties().stacksTo(1).durability(11).tab(EasyMobFarmTab.TOOLS)));
+  public static final RegistryObject<Item> WITCH_BOTTLE =
+      ITEMS.register("witch_bottle", () -> new WitchBottle(
+          new Item.Properties().stacksTo(1).durability(10).tab(EasyMobFarmTab.TOOLS)));
 
   @TemplateEntryPoint("Register Block Items")
 
@@ -96,6 +104,9 @@ public class ModItems {
           new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
   public static final RegistryObject<Item> DESERT_FARM =
       ITEMS.register(DesertFarm.NAME, () -> new BlockItem(ModBlocks.DESERT_FARM.get(),
+          new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
+  public static final RegistryObject<Item> JUNGLE_FARM =
+      ITEMS.register(JungleFarm.NAME, () -> new BlockItem(ModBlocks.JUNGLE_FARM.get(),
           new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
   public static final RegistryObject<Item> MONSTER_PLAINS_CAVE_FARM = ITEMS.register(
       MonsterPlainsCaveFarm.NAME, () -> new BlockItem(ModBlocks.MONSTER_PLAINS_CAVE_FARM.get(),

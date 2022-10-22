@@ -54,7 +54,8 @@ public class MonsterFarmRenderer extends MobFarmRendererBase<MobFarmBlockEntity>
 
     // Render individual mob types if possible, because custom entity renderer is not optimized.
     // This makes a huge different with up to 20% more fps with a larger farm.
-    boolean renderedMonster = renderHelper.renderMonster(poseStack, buffer, combinedLight, farmMobType);
+    boolean renderedMonster =
+        renderHelper.renderMonster(poseStack, buffer, combinedLight, farmMobType);
 
     // Only render custom model if we are not able to render the model otherwise.
     if (!renderedMonster && blockEntity.getFarmMobEntityType() != null) {

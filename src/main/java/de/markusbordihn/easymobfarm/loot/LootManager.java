@@ -138,12 +138,12 @@ public class LootManager {
     }
 
     // Process captured mob item.
-    if (itemStack.getItem() instanceof CapturedMob capturedMobItem) {
-      String lootTableLocation = capturedMobItem.getLootTable(itemStack);
+    if (itemStack.getItem() instanceof CapturedMob) {
+      String lootTableLocation = CapturedMob.getLootTable(itemStack);
       if (!lootTableLocation.isEmpty()) {
         lootTable = new ResourceLocation(lootTableLocation);
       }
-      mobType = capturedMobItem.getCapturedMobType(itemStack);
+      mobType = CapturedMob.getCapturedMobType(itemStack);
     } else {
       log.error("Unable to process loot drop for {} in {}", itemStack, level);
       return Lists.newArrayList();

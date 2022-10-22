@@ -29,6 +29,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.menu.farm.AnimalPlainsFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.CreativeMobFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.DesertFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.JungleFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.MonsterPlainsCaveFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.OceanFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.SwampFarmMenu;
@@ -51,6 +52,8 @@ public class ContainerMenu {
         new MenuType<>(CreativeMobFarmMenu::new).setRegistryName(Constants.CREATIVE_MOB_FARM));
     event.getRegistry()
         .registerAll(new MenuType<>(DesertFarmMenu::new).setRegistryName(Constants.DESERT_FARM));
+    event.getRegistry()
+        .registerAll(new MenuType<>(JungleFarmMenu::new).setRegistryName(Constants.JUNGLE_FARM));
     event.getRegistry().registerAll(new MenuType<>(MonsterPlainsCaveFarmMenu::new)
         .setRegistryName(Constants.MONSTER_PLAINS_CAVE_FARM));
     event.getRegistry()

@@ -1,0 +1,11 @@
+{
+  "parent": "easy_mob_farm:item/catch_cage_closed",
+  "overrides": [
+    {
+      "predicate": {
+        "easy_mob_farm:open": 1
+      },
+      "model": "easy_mob_farm:item/catch_cage_open"
+    }
+  ]
+}

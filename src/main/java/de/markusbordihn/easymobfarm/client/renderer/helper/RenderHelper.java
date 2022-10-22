@@ -147,10 +147,28 @@ public class RenderHelper {
         this.renderModels.getDrownedRenderer(), this.renderModels.getDrowned());
   }
 
+  public void renderEnderman(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
+      double y, double z, int combinedLight) {
+    renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
+        this.renderModels.getEndermanRenderer(), this.renderModels.getEnderman());
+  }
+
+  public void renderPanda(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
+      double y, double z, int combinedLight) {
+    renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
+        this.renderModels.getPandaRenderer(), this.renderModels.getPanda());
+  }
+
   public void renderPig(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
       double y, double z, int combinedLight) {
     renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
         this.renderModels.getPigRenderer(), this.renderModels.getPig());
+  }
+
+  public void renderRabbit(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
+      double y, double z, int combinedLight) {
+    renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
+        this.renderModels.getRabbitRenderer(), this.renderModels.getRabbit());
   }
 
   public void renderSalmon(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
@@ -169,6 +187,12 @@ public class RenderHelper {
       double y, double z, int combinedLight) {
     renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
         this.renderModels.getSkeletonRenderer(), this.renderModels.getSkeleton());
+  }
+
+  public void renderSpider(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
+      double y, double z, int combinedLight) {
+    renderModel(poseStack, buffer, scale, -180, -180, x, y, z, combinedLight,
+        this.renderModels.getSpiderRenderer(), this.renderModels.getSpider());
   }
 
   public void renderSquid(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
@@ -194,7 +218,7 @@ public class RenderHelper {
     // Render Animals using their specific Renderer and predefined scaling and position.
     switch (farmMobType) {
       case PassiveAnimal.CHICKEN:
-        renderChicken(poseStack, buffer, 0.6F, 0D, 0D, 2D / 16D, combinedLight);
+        renderChicken(poseStack, buffer, 0.5F, 0D, 0D, 2D / 16D, combinedLight);
         break;
       case PassiveAnimal.COW:
         renderCow(poseStack, buffer, 0.35F, 0D, 0D, 2D / 16D, combinedLight);
@@ -202,8 +226,14 @@ public class RenderHelper {
       case PassiveAnimal.PIG:
         renderPig(poseStack, buffer, 0.38F, 0D, 0D, 2D / 16D, combinedLight);
         break;
+      case PassiveAnimal.RABBIT:
+        renderRabbit(poseStack, buffer, 0.45F, 0D, 0D, 2D / 16D, combinedLight);
+        break;
       case PassiveAnimal.SHEEP:
         renderSheep(poseStack, buffer, 0.38F, 0D, 0D, 2D / 16D, combinedLight);
+        break;
+      case PassiveAnimal.PANDA:
+        renderPanda(poseStack, buffer, 0.35F, 0D, 0D, -1.5D / 16D, combinedLight);
         break;
       default:
         return false;
@@ -221,8 +251,14 @@ public class RenderHelper {
       case HostileMonster.CREEPER:
         renderCreeper(poseStack, buffer, 0.25F, 0D, 0D, 2D / 16D, combinedLight);
         break;
+      case HostileMonster.ENDERMAN:
+        renderEnderman(poseStack, buffer, 0.25F, 0D, 0D, 2D / 16D, combinedLight);
+        break;
       case HostileMonster.SKELETON:
         renderSkeleton(poseStack, buffer, 0.25F, 0D, 0D, 2D / 16D, combinedLight);
+        break;
+      case HostileMonster.SPIDER:
+        renderSpider(poseStack, buffer, 0.35F, 0D, 15D / 16D, 2D / 16D, combinedLight);
         break;
       case HostileMonster.ZOMBIE:
         renderZombie(poseStack, buffer, 0.25F, 0D, 0D, 2D / 16D, combinedLight);

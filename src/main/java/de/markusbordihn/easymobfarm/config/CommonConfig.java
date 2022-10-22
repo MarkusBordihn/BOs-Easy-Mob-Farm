@@ -34,6 +34,7 @@ import net.minecraftforge.fml.config.ModConfig;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.config.biome.Desert;
+import de.markusbordihn.easymobfarm.config.biome.Jungle;
 import de.markusbordihn.easymobfarm.config.biome.Ocean;
 import de.markusbordihn.easymobfarm.config.biome.Plains;
 import de.markusbordihn.easymobfarm.config.biome.PlainsCave;
@@ -41,6 +42,7 @@ import de.markusbordihn.easymobfarm.config.biome.Swamp;
 import de.markusbordihn.easymobfarm.config.mobs.AmbientWaterAnimal;
 import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
 import de.markusbordihn.easymobfarm.config.mobs.HostileWaterMonster;
+import de.markusbordihn.easymobfarm.config.mobs.NeutralAnimal;
 import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
 import de.markusbordihn.easymobfarm.config.mobs.PassiveWaterAnimal;
 
@@ -83,6 +85,9 @@ public class CommonConfig {
     public final ForgeConfigSpec.IntValue desertFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<List<String>> desertFarmMobs;
 
+    public final ForgeConfigSpec.IntValue jungleFarmProcessTime;
+    public final ForgeConfigSpec.ConfigValue<List<String>> jungleFarmMobs;
+
     public final ForgeConfigSpec.IntValue monsterPlainsCaveFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<List<String>> monsterPlainsCaveFarmMobs;
 
@@ -91,6 +96,12 @@ public class CommonConfig {
 
     public final ForgeConfigSpec.IntValue swampFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<List<String>> swampFarmMobs;
+
+    public final ForgeConfigSpec.IntValue catchCageMobCatchingLuck;
+    public final ForgeConfigSpec.ConfigValue<List<String>> catchCageMobs;
+
+    public final ForgeConfigSpec.IntValue catchCageSmallMobCatchingLuck;
+    public final ForgeConfigSpec.ConfigValue<List<String>> catchCageSmallMobs;
 
     public final ForgeConfigSpec.IntValue collarSmallMobCatchingLuck;
     public final ForgeConfigSpec.ConfigValue<List<String>> collarSmallMobs;
@@ -147,6 +158,13 @@ public class CommonConfig {
           .define("desertFarmMobs", new ArrayList<String>(Desert.All));
       builder.pop();
 
+      builder.push("Jungle Farm");
+      jungleFarmProcessTime = builder.comment("Defines after how many seconds a drop is performed.")
+          .defineInRange("jungleFarmProcessTime", 300, 10, 3600);
+      jungleFarmMobs = builder.comment("Supported Mobs for the dessert farm.")
+          .define("jungleFarmMobs", new ArrayList<String>(Jungle.All));
+      builder.pop();
+
       builder.push("Monster Plains Cave Farm");
       monsterPlainsCaveFarmProcessTime = builder.comment(PROCESS_TIME_TEXT)
           .defineInRange("monsterPlainsCaveFarmProcessTime", 300, 10, 3600);
@@ -167,6 +185,21 @@ public class CommonConfig {
           builder.comment(PROCESS_TIME_TEXT).defineInRange("swampFarmProcessTime", 300, 10, 3600);
       swampFarmMobs = builder.comment("Supported Mobs for the swamp farm.").define("swampFarmMobs",
           new ArrayList<String>(Swamp.All));
+      builder.pop();
+
+      builder.push("Catch Cage (Mob Catching Item)");
+      catchCageMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
+          .defineInRange("catchCageMobCatchingLuck", 6, 0, 100);
+      catchCageMobs = builder.comment("Catchable mobs with the catch cage.").define("catchCageMobs",
+          new ArrayList<String>(Arrays.asList(PassiveAnimal.PANDA, NeutralAnimal.POLAR_BEAR)));
+      builder.pop();
+
+      builder.push("Catch Cage small (Mob Catching Item)");
+      catchCageSmallMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
+          .defineInRange("catchCageSmallMobCatchingLuck", 3, 0, 100);
+      catchCageSmallMobs = builder.comment("Catchable mobs with the catch cage small.")
+          .define("catchCageSmallMobs", new ArrayList<String>(
+              Arrays.asList(PassiveAnimal.CHICKEN, PassiveAnimal.RABBIT, PassiveAnimal.PARROT)));
       builder.pop();
 
       builder.push("Collar small (Mob Catching Item)");
@@ -206,15 +239,16 @@ public class CommonConfig {
           .defineInRange("urnSmallMobCatchingLuck", 3, 0, 100);
       urnSmallMobs = builder.comment("Catchable mobs with the urn small.").define("urnSmallMobs",
           new ArrayList<String>(Arrays.asList(HostileMonster.CAVE_SPIDER, HostileMonster.CREEPER,
-              HostileMonster.SKELETON, HostileMonster.ZOMBIE)));
+              HostileMonster.SPIDER, HostileMonster.SKELETON, HostileMonster.HUSK,
+              HostileMonster.ZOMBIE, HostileMonster.ZOMBIE_VILLAGER)));
       builder.pop();
 
       builder.push("Witch Bottle (Mob Catching Item)");
       witchBottleMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
           .defineInRange("witchBottleMobCatchingLuck", 10, 0, 100);
-      witchBottleMobs =
-          builder.comment("Catchable mobs with the witch bottle.").define("witchBottleMobs",
-              new ArrayList<String>(Arrays.asList(HostileMonster.WITCH, HostileMonster.SLIME)));
+      witchBottleMobs = builder.comment("Catchable mobs with the witch bottle.")
+          .define("witchBottleMobs", new ArrayList<String>(
+              Arrays.asList(HostileMonster.ENDERMAN, HostileMonster.SLIME, HostileMonster.WITCH)));
       builder.pop();
 
       // @TemplateEntryPoint("Register Forge Config Spec")

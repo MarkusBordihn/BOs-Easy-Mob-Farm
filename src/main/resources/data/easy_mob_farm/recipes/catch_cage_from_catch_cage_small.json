@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["###", "###", "###"],
+  "key": {
+    "#": {
+      "item": "easy_mob_farm:catch_cage_small"
+    }
+  },
+  "result": {
+    "item": "easy_mob_farm:catch_cage"
+  }
+}

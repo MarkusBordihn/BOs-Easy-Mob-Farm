@@ -25,10 +25,11 @@ import org.apache.logging.log4j.Logger;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.item.ModItems;
-
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.item.CapturedMob;
+import de.markusbordihn.easymobfarm.item.ModItems;
 
 public class ModItemProperties {
 
@@ -39,11 +40,28 @@ public class ModItemProperties {
   public static void registerItemProperties(final FMLClientSetupEvent event) {
     log.info("{} Client setup ...", Constants.LOG_REGISTER_PREFIX);
 
-    event.enqueueWork(() -> ItemProperties.register(ModItems.URN_SMALL.get(),
-        new ResourceLocation(Constants.MOD_ID, "open"),
-        (itemStack, clientLevel, livingEntity,
-            id) -> (livingEntity == null || !itemStack.is(ModItems.URN_SMALL.get())
-                || livingEntity.getMainHandItem().isEmpty()
-                || itemStack != livingEntity.getMainHandItem()) ? 0.0F : 1.0F));
+    event.enqueueWork(() -> {
+      ItemProperties.register(ModItems.CATCH_CAGE.get(),
+          new ResourceLocation(Constants.MOD_ID, "open"),
+          (itemStack, clientLevel, livingEntity,
+              id) -> (livingEntity == null || !itemStack.is(ModItems.CATCH_CAGE.get())
+                  || livingEntity.getMainHandItem().isEmpty()
+                  || itemStack != livingEntity.getMainHandItem()
+                  || CapturedMob.hasCapturedMob(itemStack)) ? 0.0F : 1.0F);
+      ItemProperties.register(ModItems.CATCH_CAGE_SMALL.get(),
+          new ResourceLocation(Constants.MOD_ID, "open"),
+          (itemStack, clientLevel, livingEntity,
+              id) -> (livingEntity == null || !itemStack.is(ModItems.CATCH_CAGE_SMALL.get())
+                  || livingEntity.getMainHandItem().isEmpty()
+                  || itemStack != livingEntity.getMainHandItem()
+                  || CapturedMob.hasCapturedMob(itemStack)) ? 0.0F : 1.0F);
+      ItemProperties.register(ModItems.URN_SMALL.get(),
+          new ResourceLocation(Constants.MOD_ID, "open"),
+          (itemStack, clientLevel, livingEntity,
+              id) -> (livingEntity == null || !itemStack.is(ModItems.URN_SMALL.get())
+                  || livingEntity.getMainHandItem().isEmpty()
+                  || itemStack != livingEntity.getMainHandItem()
+                  || CapturedMob.hasCapturedMob(itemStack)) ? 0.0F : 1.0F);
+    });
   }
 }

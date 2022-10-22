@@ -101,7 +101,10 @@ public class SwampFarm extends MobFarmBlock {
     swampMobFarmEntity.updateLevel(level);
     if (!swampMobFarmEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
       swampMobFarmEntity.setItem(MobFarmMenu.CAPTURED_MOB_SLOT, itemStack);
-      context.getPlayer().setItemInHand(context.getHand(), ItemStack.EMPTY);
+      Player player = context.getPlayer();
+      if (player != null) {
+        player.setItemInHand(context.getHand(), ItemStack.EMPTY);
+      }
       return InteractionResult.CONSUME;
     }
     return InteractionResult.PASS;

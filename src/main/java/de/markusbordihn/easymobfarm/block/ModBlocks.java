@@ -34,6 +34,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.farm.AnimalPlainsFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.CreativeMobFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.DesertFarmEntity;
+import de.markusbordihn.easymobfarm.block.entity.farm.JungleFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.MonsterPlainsCaveFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.OceanFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.SwampFarmEntity;
@@ -72,6 +73,10 @@ public class ModBlocks {
       () -> new DesertFarm(
           BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops()
               .strength(2.0F, 2.0F).lightLevel(DesertFarm::getLightLevel).noOcclusion()));
+  public static final RegistryObject<Block> JUNGLE_FARM = BLOCKS.register(JungleFarm.NAME,
+      () -> new JungleFarm(
+          BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops()
+              .strength(2.0F, 2.0F).lightLevel(DesertFarm::getLightLevel).noOcclusion()));
   public static final RegistryObject<Block> MONSTER_PLAINS_CAVE_FARM = BLOCKS.register(
       MonsterPlainsCaveFarm.NAME,
       () -> new MonsterPlainsCaveFarm(BlockBehaviour.Properties.of(Material.STONE)
@@ -96,6 +101,9 @@ public class ModBlocks {
   public static final RegistryObject<BlockEntityType<DesertFarmEntity>> DESERT_FARM_ENTITY =
       ENTITIES.register(DesertFarm.NAME,
           () -> BlockEntityType.Builder.of(DesertFarmEntity::new, DESERT_FARM.get()).build(null));
+  public static final RegistryObject<BlockEntityType<JungleFarmEntity>> JUNGLE_FARM_ENTITY =
+      ENTITIES.register(JungleFarm.NAME,
+          () -> BlockEntityType.Builder.of(JungleFarmEntity::new, JUNGLE_FARM.get()).build(null));
   public static final RegistryObject<BlockEntityType<MonsterPlainsCaveFarmEntity>> MONSTER_PLAINS_CAVE_FARM_ENTITY =
       ENTITIES.register(MonsterPlainsCaveFarm.NAME, () -> BlockEntityType.Builder
           .of(MonsterPlainsCaveFarmEntity::new, MONSTER_PLAINS_CAVE_FARM.get()).build(null));

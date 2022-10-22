@@ -100,7 +100,10 @@ public class OceanFarm extends MobFarmBlock {
     oceanMobFarmEntity.updateLevel(level);
     if (!oceanMobFarmEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
       oceanMobFarmEntity.setItem(MobFarmMenu.CAPTURED_MOB_SLOT, itemStack);
-      context.getPlayer().setItemInHand(context.getHand(), ItemStack.EMPTY);
+      Player player = context.getPlayer();
+      if (player != null) {
+        player.setItemInHand(context.getHand(), ItemStack.EMPTY);
+      }
       return InteractionResult.CONSUME;
     }
     return InteractionResult.PASS;

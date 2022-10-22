@@ -31,14 +31,18 @@ import net.minecraft.client.renderer.entity.CodRenderer;
 import net.minecraft.client.renderer.entity.CowRenderer;
 import net.minecraft.client.renderer.entity.CreeperRenderer;
 import net.minecraft.client.renderer.entity.DrownedRenderer;
+import net.minecraft.client.renderer.entity.EndermanRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.GlowSquidRenderer;
 import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.renderer.entity.PandaRenderer;
 import net.minecraft.client.renderer.entity.PigRenderer;
+import net.minecraft.client.renderer.entity.RabbitRenderer;
 import net.minecraft.client.renderer.entity.SalmonRenderer;
 import net.minecraft.client.renderer.entity.SheepRenderer;
 import net.minecraft.client.renderer.entity.SkeletonRenderer;
+import net.minecraft.client.renderer.entity.SpiderRenderer;
 import net.minecraft.client.renderer.entity.SquidRenderer;
 import net.minecraft.client.renderer.entity.ZombieRenderer;
 
@@ -48,14 +52,18 @@ import net.minecraft.world.entity.GlowSquid;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.Cod;
 import net.minecraft.world.entity.animal.Cow;
+import net.minecraft.world.entity.animal.Panda;
 import net.minecraft.world.entity.animal.Pig;
+import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.animal.Salmon;
 import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.animal.Squid;
 import net.minecraft.world.entity.monster.CaveSpider;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Drowned;
+import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.monster.Skeleton;
+import net.minecraft.world.entity.monster.Spider;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
@@ -92,17 +100,29 @@ public class RenderModels {
   private Drowned drowned = null;
   private DrownedRenderer drownedRenderer = null;
 
+  private EnderMan enderman = null;
+  private EndermanRenderer endermanRenderer = null;
+
   private Sheep sheep = null;
   private SheepRenderer sheepRenderer = null;
 
+  private Panda panda = null;
+  private PandaRenderer pandaRenderer = null;
+
   private Pig pig = null;
   private PigRenderer pigRenderer = null;
+
+  private Rabbit rabbit = null;
+  private RabbitRenderer rabbitRenderer = null;
 
   private Salmon salmon = null;
   private SalmonRenderer salmonRenderer = null;
 
   private Skeleton skeleton = null;
   private SkeletonRenderer skeletonRenderer = null;
+
+  private Spider spider = null;
+  private SpiderRenderer<?> spiderRenderer = null;
 
   private Squid squid = null;
   private SquidRenderer<?> squidRenderer = null;
@@ -248,6 +268,20 @@ public class RenderModels {
     return this.drownedRenderer;
   }
 
+  public EnderMan getEnderman() {
+    if (this.enderman == null) {
+      this.enderman = new EnderMan(EntityType.ENDERMAN, getLevel());
+    }
+    return this.enderman;
+  }
+
+  public EndermanRenderer getEndermanRenderer() {
+    if (this.endermanRenderer == null) {
+      this.endermanRenderer = new EndermanRenderer(getEntityRendererContext());
+    }
+    return this.endermanRenderer;
+  }
+
   public Salmon getSalmon() {
     if (this.salmon == null) {
       this.salmon = new Salmon(EntityType.SALMON, getLevel());
@@ -286,6 +320,20 @@ public class RenderModels {
     return this.sheepRenderer;
   }
 
+  public Panda getPanda() {
+    if (this.panda == null) {
+      this.panda = new Panda(EntityType.PANDA, getLevel());
+    }
+    return this.panda;
+  }
+
+  public PandaRenderer getPandaRenderer() {
+    if (this.pandaRenderer == null) {
+      this.pandaRenderer = new PandaRenderer(getEntityRendererContext());
+    }
+    return this.pandaRenderer;
+  }
+
   public Pig getPig() {
     if (this.pig == null) {
       this.pig = new Pig(EntityType.PIG, getLevel());
@@ -300,6 +348,20 @@ public class RenderModels {
     return this.pigRenderer;
   }
 
+  public Rabbit getRabbit() {
+    if (this.rabbit == null) {
+      this.rabbit = new Rabbit(EntityType.RABBIT, getLevel());
+    }
+    return this.rabbit;
+  }
+
+  public RabbitRenderer getRabbitRenderer() {
+    if (this.rabbitRenderer == null) {
+      this.rabbitRenderer = new RabbitRenderer(getEntityRendererContext());
+    }
+    return this.rabbitRenderer;
+  }
+
   public Skeleton getSkeleton() {
     if (this.skeleton == null) {
       this.skeleton = new Skeleton(EntityType.SKELETON, getLevel());
@@ -312,6 +374,20 @@ public class RenderModels {
       this.skeletonRenderer = new SkeletonRenderer(getEntityRendererContext());
     }
     return this.skeletonRenderer;
+  }
+
+  public Spider getSpider() {
+    if (this.spider == null) {
+      this.spider = new Spider(EntityType.SPIDER, getLevel());
+    }
+    return this.spider;
+  }
+
+  public SpiderRenderer getSpiderRenderer() {
+    if (this.spiderRenderer == null) {
+      this.spiderRenderer = new SpiderRenderer<>(getEntityRendererContext());
+    }
+    return this.spiderRenderer;
   }
 
   public Squid getSquid() {
