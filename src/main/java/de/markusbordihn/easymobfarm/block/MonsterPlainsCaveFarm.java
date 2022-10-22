@@ -38,6 +38,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 
+import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -66,6 +67,13 @@ public class MonsterPlainsCaveFarm extends MobFarmBlock {
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
     acceptedMobTypes = new HashSet<>(COMMON.monsterPlainsCaveFarmMobs.get());
     log.info("The {} will accept the following mobs: {}", NAME, acceptedMobTypes);
+  }
+
+  @SubscribeEvent
+  public static void handleWorldEventLoad(LevelEvent.Load event) {
+    if (event.getLevel().isClientSide() && acceptedMobTypes.isEmpty()) {
+      acceptedMobTypes = new HashSet<>(COMMON.monsterPlainsCaveFarmMobs.get());
+    }
   }
 
   public static boolean isAcceptedCapturedMobType(String mobType) {
@@ -104,11 +112,15 @@ public class MonsterPlainsCaveFarm extends MobFarmBlock {
   @Override
   public InteractionResult consumeCapturedMob(Level level, BlockPos blockPos, BlockState blockState,
       BlockEntity blockEntity, ItemStack itemStack, UseOnContext context) {
-    MonsterPlainsCaveFarmEntity monsterPlainsCaveMobFarmEntity = (MonsterPlainsCaveFarmEntity) blockEntity;
+    MonsterPlainsCaveFarmEntity monsterPlainsCaveMobFarmEntity =
+        (MonsterPlainsCaveFarmEntity) blockEntity;
     monsterPlainsCaveMobFarmEntity.updateLevel(level);
     if (!monsterPlainsCaveMobFarmEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
       monsterPlainsCaveMobFarmEntity.setItem(MobFarmMenu.CAPTURED_MOB_SLOT, itemStack);
-      context.getPlayer().setItemInHand(context.getHand(), ItemStack.EMPTY);
+      Player player = context.getPlayer();
+      if (player != null) {
+        player.setItemInHand(context.getHand(), ItemStack.EMPTY);
+      }
       return InteractionResult.CONSUME;
     }
     return InteractionResult.PASS;

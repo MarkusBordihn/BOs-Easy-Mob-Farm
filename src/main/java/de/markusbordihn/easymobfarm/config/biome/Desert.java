@@ -22,6 +22,8 @@ package de.markusbordihn.easymobfarm.config.biome;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
 import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
@@ -31,35 +33,26 @@ public class Desert {
   // Ref: https://minecraft.fandom.com/wiki/Desert
   protected Desert() {}
 
-  public static final Set<String> All = new HashSet<>(Arrays.asList(
-  // @formatter:off
-    PassiveAnimal.RABBIT,
-    HostileMonster.SPIDER,
-    HostileMonster.CREEPER,
-    HostileMonster.SKELETON,
-    HostileMonster.ZOMBIE,
-    HostileMonster.ENDERMAN,
-    HostileMonster.HUSK,
-    HostileMonster.WITCH
-    // @formatter:on
-  ));
-
   public static final Set<String> Passive = new HashSet<>(Arrays.asList(
   // @formatter:off
     PassiveAnimal.RABBIT
-    // @formatter:on
+  // @formatter:on
   ));
 
   public static final Set<String> Hostile = new HashSet<>(Arrays.asList(
   // @formatter:off
-    HostileMonster.SPIDER,
     HostileMonster.CREEPER,
-    HostileMonster.SKELETON,
-    HostileMonster.ZOMBIE,
     HostileMonster.ENDERMAN,
     HostileMonster.HUSK,
-    HostileMonster.WITCH
-    // @formatter:on
+    HostileMonster.SKELETON,
+    HostileMonster.SPIDER,
+    HostileMonster.WITCH,
+    HostileMonster.ZOMBIE,
+    HostileMonster.ZOMBIE_VILLAGER
+  // @formatter:on
   ));
+
+  public static final Set<String> All =
+      Stream.concat(Passive.stream(), Hostile.stream()).collect(Collectors.toSet());
 
 }

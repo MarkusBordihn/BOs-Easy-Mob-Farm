@@ -126,12 +126,12 @@ public class LootManager {
     }
 
     // Process captured mob item.
-    if (itemStack.getItem() instanceof CapturedMob capturedMobItem) {
-      String lootTableLocation = capturedMobItem.getLootTable(itemStack);
+    if (itemStack.getItem() instanceof CapturedMob) {
+      String lootTableLocation = CapturedMob.getLootTable(itemStack);
       if (!lootTableLocation.isEmpty()) {
         lootTable = new ResourceLocation(lootTableLocation);
       }
-      mobType = capturedMobItem.getCapturedMobType(itemStack);
+      mobType = CapturedMob.getCapturedMobType(itemStack);
     } else {
       log.error("Unable to process loot drop for {} in {}", itemStack, level);
       return Lists.newArrayList();
@@ -154,10 +154,12 @@ public class LootManager {
     List<ItemStack> filteredLootDrops = Lists.newArrayList();
 
     // Adding additional drops for specific cases.
-    if (Boolean.TRUE.equals(COMMON.blazeDropBlazeRod.get()) && mobType.equals(HostileMonster.BLAZE)) {
+    if (Boolean.TRUE.equals(COMMON.blazeDropBlazeRod.get())
+        && mobType.equals(HostileMonster.BLAZE)) {
       lootDrops.add(new ItemStack(Items.BLAZE_ROD));
     }
-    if (Boolean.TRUE.equals(COMMON.chickenDropEggs.get()) && mobType.equals(PassiveAnimal.CHICKEN)) {
+    if (Boolean.TRUE.equals(COMMON.chickenDropEggs.get())
+        && mobType.equals(PassiveAnimal.CHICKEN)) {
       lootDrops.add(new ItemStack(Items.EGG));
     }
 

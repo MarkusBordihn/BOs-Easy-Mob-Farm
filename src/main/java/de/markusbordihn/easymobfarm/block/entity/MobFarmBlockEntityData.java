@@ -298,11 +298,11 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
 
     // Restore additional meta data
     ItemStack capturedMob = this.items.get(MobFarmMenu.CAPTURED_MOB_SLOT);
-    if (!capturedMob.isEmpty() && capturedMob.getItem() instanceof CapturedMob capturedMobItem) {
-      this.farmMobName = capturedMobItem.getCapturedMob(capturedMob);
-      this.farmMobType = capturedMobItem.getCapturedMobType(capturedMob);
-      this.farmMobColor = capturedMobItem.getCapturedMobColor(capturedMob);
-      this.farmMobEntityType = capturedMobItem.getCapturedMobEntityType(capturedMob);
+    if (!capturedMob.isEmpty() && capturedMob.getItem() instanceof CapturedMob) {
+      this.farmMobName = CapturedMob.getCapturedMob(capturedMob);
+      this.farmMobType = CapturedMob.getCapturedMobType(capturedMob);
+      this.farmMobColor = CapturedMob.getCapturedMobColor(capturedMob);
+      this.farmMobEntityType = CapturedMob.getCapturedMobEntityType(capturedMob);
     }
   }
 

@@ -24,6 +24,7 @@ import java.util.Set;
 
 import net.minecraft.world.item.Item;
 
+import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -47,6 +48,13 @@ public class UrnSmall extends MobCatcherItem {
     acceptedMobTypes = new HashSet<>(COMMON.urnSmallMobs.get());
     log.info("The urn small require {} luck and is able to catch the following mobs: {}",
         COMMON.urnSmallMobCatchingLuck.get(), acceptedMobTypes);
+  }
+
+  @SubscribeEvent
+  public static void handleWorldEventLoad(LevelEvent.Load event) {
+    if (event.getLevel().isClientSide() && acceptedMobTypes.isEmpty()) {
+      acceptedMobTypes = new HashSet<>(COMMON.urnSmallMobs.get());
+    }
   }
 
   @Override

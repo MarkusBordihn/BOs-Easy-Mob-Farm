@@ -39,6 +39,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 
+import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -67,6 +68,13 @@ public class AnimalPlainsFarm extends MobFarmBlock {
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
     acceptedMobTypes = new HashSet<>(COMMON.animalPlainsFarmMobs.get());
     log.info("The {} will accept the following mobs: {}", NAME, acceptedMobTypes);
+  }
+
+  @SubscribeEvent
+  public static void handleWorldEventLoad(LevelEvent.Load event) {
+    if (event.getLevel().isClientSide() && acceptedMobTypes.isEmpty()) {
+      acceptedMobTypes = new HashSet<>(COMMON.animalPlainsFarmMobs.get());
+    }
   }
 
   public static boolean isAcceptedCapturedMobType(String mobType) {
@@ -108,7 +116,10 @@ public class AnimalPlainsFarm extends MobFarmBlock {
     animalPlainsMobFarmEntity.updateLevel(level);
     if (!animalPlainsMobFarmEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
       animalPlainsMobFarmEntity.setItem(MobFarmMenu.CAPTURED_MOB_SLOT, itemStack);
-      context.getPlayer().setItemInHand(context.getHand(), ItemStack.EMPTY);
+      Player player = context.getPlayer();
+      if (player != null) {
+        player.setItemInHand(context.getHand(), ItemStack.EMPTY);
+      }
       return InteractionResult.CONSUME;
     }
     return InteractionResult.PASS;

@@ -40,8 +40,8 @@ public class CapturedMobSlot extends Slot {
     if (!this.menu.mayPlaceCapturedMob(itemStack)) {
       return false;
     }
-    if (itemStack.getItem() instanceof CapturedMob capturedMobItem) {
-      return this.menu.mayPlaceCapturedMobType(capturedMobItem.getCapturedMobType(itemStack));
+    if (itemStack.getItem() instanceof CapturedMob) {
+      return this.menu.mayPlaceCapturedMobType(CapturedMob.getCapturedMobType(itemStack));
     }
     return false;
   }

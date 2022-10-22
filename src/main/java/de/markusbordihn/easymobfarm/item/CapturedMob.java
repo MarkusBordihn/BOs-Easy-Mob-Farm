@@ -66,7 +66,7 @@ public class CapturedMob extends Item {
   private static final String MOTION_TAG = "Motion";
   private static final String ON_GROUND_TAG = "OnGround";
 
-  private Gson gson = new Gson();
+  private static Gson gson = new Gson();
 
   protected final Random random = new Random();
 
@@ -74,12 +74,12 @@ public class CapturedMob extends Item {
     super(properties);
   }
 
-  public boolean hasCapturedMob(ItemStack itemStack) {
+  public static boolean hasCapturedMob(ItemStack itemStack) {
     CompoundTag compoundTag = itemStack.getOrCreateTag();
     return compoundTag.contains(ENTITY_NAME_TAG);
   }
 
-  public List<String> getPossibleLoot(ItemStack itemStack) {
+  public static List<String> getPossibleLoot(ItemStack itemStack) {
     CompoundTag compoundTag = itemStack.getOrCreateTag();
     if (compoundTag.contains(ENTITY_POSSIBLE_LOOT_TAG)) {
       String possibleLootString = compoundTag.getString(ENTITY_POSSIBLE_LOOT_TAG);
@@ -90,7 +90,7 @@ public class CapturedMob extends Item {
     return Lists.newArrayList();
   }
 
-  public String getCapturedMob(ItemStack itemStack) {
+  public static String getCapturedMob(ItemStack itemStack) {
     CompoundTag compoundTag = itemStack.getOrCreateTag();
     if (compoundTag.contains(ENTITY_NAME_TAG)) {
       return compoundTag.getString(ENTITY_NAME_TAG);
@@ -98,7 +98,7 @@ public class CapturedMob extends Item {
     return "";
   }
 
-  public Float getCapturedMobHealth(ItemStack itemStack) {
+  public static Float getCapturedMobHealth(ItemStack itemStack) {
     CompoundTag compoundTag = itemStack.getOrCreateTag();
     if (compoundTag.contains("Health")) {
       return compoundTag.getFloat("Health");
@@ -106,7 +106,7 @@ public class CapturedMob extends Item {
     return 5.0f;
   }
 
-  public String getCapturedMobType(ItemStack itemStack) {
+  public static String getCapturedMobType(ItemStack itemStack) {
     CompoundTag compoundTag = itemStack.getOrCreateTag();
     if (compoundTag.contains(ENTITY_TYPE_TAG)) {
       return compoundTag.getString(ENTITY_TYPE_TAG);
@@ -114,7 +114,7 @@ public class CapturedMob extends Item {
     return "";
   }
 
-  public EntityType<?> getCapturedMobEntityType(ItemStack itemStack) {
+  public static EntityType<?> getCapturedMobEntityType(ItemStack itemStack) {
     CompoundTag compoundTag = itemStack.getOrCreateTag();
     if (compoundTag.contains(ENTITY_TYPE_TAG)) {
       String entityTypeName = compoundTag.getString(ENTITY_TYPE_TAG);
@@ -124,7 +124,7 @@ public class CapturedMob extends Item {
     return null;
   }
 
-  public DyeColor getCapturedMobColor(ItemStack itemStack) {
+  public static DyeColor getCapturedMobColor(ItemStack itemStack) {
     CompoundTag compoundTag = itemStack.getOrCreateTag();
     if (compoundTag.contains(ENTITY_COLOR_TAG)) {
       return DyeColor.byId(compoundTag.getInt(ENTITY_COLOR_TAG));
@@ -132,7 +132,7 @@ public class CapturedMob extends Item {
     return null;
   }
 
-  public String getLootTable(ItemStack itemStack) {
+  public static String getLootTable(ItemStack itemStack) {
     CompoundTag compoundTag = itemStack.getOrCreateTag();
     if (compoundTag.contains(ENTITY_LOOT_TABLE_TAG)) {
       return compoundTag.getString(ENTITY_LOOT_TABLE_TAG);
@@ -140,7 +140,7 @@ public class CapturedMob extends Item {
     return "";
   }
 
-  public ItemStack setCapturedMob(LivingEntity livingEntity, ItemStack itemStack) {
+  public static ItemStack setCapturedMob(LivingEntity livingEntity, ItemStack itemStack) {
     log.debug("Capturing mob {} ...", livingEntity.getName());
     CompoundTag entityData = livingEntity.serializeNBT();
     CompoundTag compoundTag = itemStack.getOrCreateTag();
@@ -166,7 +166,7 @@ public class CapturedMob extends Item {
       entityData.putFloat(FALL_DISTANCE_TAG, 0);
     }
     if (entityData.contains(MOTION_TAG)) {
-      entityData.put(MOTION_TAG, this.newDoubleList(0, 0, 0));
+      entityData.put(MOTION_TAG, newDoubleList(0, 0, 0));
     }
     if (entityData.contains(ON_GROUND_TAG) && !entityData.getBoolean(ON_GROUND_TAG)) {
       entityData.putBoolean(ON_GROUND_TAG, true);
@@ -188,7 +188,7 @@ public class CapturedMob extends Item {
     return itemStack;
   }
 
-  public boolean releaseCapturedMob(ItemStack itemStack, BlockPos blockPos, Level level) {
+  public static boolean releaseCapturedMob(ItemStack itemStack, BlockPos blockPos, Level level) {
     Entity entity = getCapturedMobEntity(itemStack, level);
     if (entity != null) {
       // Make sure we have an empty Block to spawn the entity, otherwise try above block.
@@ -214,7 +214,7 @@ public class CapturedMob extends Item {
     return false;
   }
 
-  public Entity getCapturedMobEntity(ItemStack itemStack, Level level) {
+  public static Entity getCapturedMobEntity(ItemStack itemStack, Level level) {
     CompoundTag compoundTag = itemStack.getOrCreateTag();
 
     // Recreated captured mob
@@ -239,11 +239,11 @@ public class CapturedMob extends Item {
     return entity;
   }
 
-  public boolean willItemBreak(ItemStack itemStack, int damage) {
+  public static boolean willItemBreak(ItemStack itemStack, int damage) {
     return itemStack.getDamageValue() + damage >= itemStack.getMaxDamage();
   }
 
-  public void damageItem(ItemStack itemStack, int damage) {
+  public static void damageItem(ItemStack itemStack, int damage) {
     int itemStackDamage = itemStack.getDamageValue();
     if (itemStackDamage + damage >= itemStack.getMaxDamage()) {
       itemStack.shrink(1);
@@ -252,7 +252,7 @@ public class CapturedMob extends Item {
     }
   }
 
-  protected ListTag newDoubleList(double... values) {
+  protected static ListTag newDoubleList(double... values) {
     ListTag listTag = new ListTag();
     for (double value : values) {
       listTag.add(DoubleTag.valueOf(value));

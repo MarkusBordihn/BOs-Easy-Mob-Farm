@@ -31,13 +31,15 @@ public class Plains {
   protected Plains() {}
 
   public static final Set<String> Passive = new HashSet<>(Arrays.asList(
-    // @formatter:off
+  // @formatter:off
     PassiveAnimal.CHICKEN,
     PassiveAnimal.COW,
     PassiveAnimal.DONKEY,
     PassiveAnimal.HORSE,
     PassiveAnimal.PIG,
     PassiveAnimal.SHEEP
-    // @formatter:on
+  // @formatter:on
   ));
+
+  public static final Set<String> All = Passive;
 }

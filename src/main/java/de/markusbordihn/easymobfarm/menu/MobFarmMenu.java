@@ -150,9 +150,9 @@ public class MobFarmMenu extends AbstractContainerMenu {
       if (currentItemStack.isEmpty()) {
         this.mobFarmName = "- unknown -";
         this.mobFarmType = "";
-      } else if (currentItemStack.getItem() instanceof CapturedMob capturedMobItem) {
-        this.mobFarmName = capturedMobItem.getCapturedMob(currentItemStack);
-        this.mobFarmType = capturedMobItem.getCapturedMobType(currentItemStack);
+      } else if (currentItemStack.getItem() instanceof CapturedMob) {
+        this.mobFarmName = CapturedMob.getCapturedMob(currentItemStack);
+        this.mobFarmType = CapturedMob.getCapturedMobType(currentItemStack);
       }
       this.mobFarmCapturedMob = currentItemStack;
     }
@@ -208,8 +208,7 @@ public class MobFarmMenu extends AbstractContainerMenu {
   }
 
   public boolean mayPlaceCapturedMob(ItemStack itemStack) {
-    return itemStack.getItem() instanceof CapturedMob capturedMob
-        && capturedMob.hasCapturedMob(itemStack);
+    return itemStack.getItem() instanceof CapturedMob && CapturedMob.hasCapturedMob(itemStack);
   }
 
   public boolean mayPlaceCapturedMobType(String mobType) {

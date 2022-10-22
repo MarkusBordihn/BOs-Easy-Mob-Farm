@@ -264,25 +264,5 @@
 			"translation": [0, 0, -4],
 			"scale": [1, 1, 0.5]
 		}
-	},
-	"groups": [
-		{
-			"name": "edge",
-			"origin": [0, 0, 0],
-			"color": 0,
-			"children": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-		},
-		{
-			"name": "wall",
-			"origin": [8, 8, 8],
-			"color": 0,
-			"children": [12, 13, 14, 15, 16]
-		},
-		{
-			"name": "floor",
-			"origin": [8, 8, 8],
-			"color": 0,
-			"children": [17]
-		}
-	]
+	}
 }

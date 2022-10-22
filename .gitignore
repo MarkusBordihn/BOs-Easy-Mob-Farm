@@ -36,7 +36,8 @@ put_your_*_here
 # Other
 .DS_Store
 generated
-*.clip
-*.stackdump
-*.log
 *.bak
+*.clip
+*.log
+*.patch.txt
+*.stackdump

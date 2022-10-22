@@ -24,6 +24,7 @@ import java.util.Set;
 
 import net.minecraft.world.item.Item;
 
+import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -47,6 +48,13 @@ public class FishingNetSmall extends MobCatcherItem {
     acceptedMobTypes = new HashSet<>(COMMON.fishingNetSmallMobs.get());
     log.info("The fishing net small require {} luck and is able to catch the following mobs: {}",
         COMMON.fishingNetSmallMobCatchingLuck.get(), acceptedMobTypes);
+  }
+
+  @SubscribeEvent
+  public static void handleWorldEventLoad(LevelEvent.Load event) {
+    if (event.getLevel().isClientSide() && acceptedMobTypes.isEmpty()) {
+      acceptedMobTypes = new HashSet<>(COMMON.fishingNetSmallMobs.get());
+    }
   }
 
   @Override

@@ -30,6 +30,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.client.screen.farm.AnimalPlainsFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.CreativeMobFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.DesertFarmScreen;
+import de.markusbordihn.easymobfarm.client.screen.farm.JungleFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.MonsterPlainsCaveFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.OceanFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.SwampFarmScreen;
@@ -49,6 +50,7 @@ public class ClientScreens {
       MenuScreens.register(ModMenuTypes.ANIMAL_PLAINS_FARM_MENU.get(), AnimalPlainsFarmScreen::new);
       MenuScreens.register(ModMenuTypes.CREATIVE_MOB_FARM_MENU.get(), CreativeMobFarmScreen::new);
       MenuScreens.register(ModMenuTypes.DESERT_FARM_MENU.get(), DesertFarmScreen::new);
+      MenuScreens.register(ModMenuTypes.JUNGLE_FARM_MENU.get(), JungleFarmScreen::new);
       MenuScreens.register(ModMenuTypes.MONSTER_PLAINS_CAVE_FARM_MENU.get(),
           MonsterPlainsCaveFarmScreen::new);
       MenuScreens.register(ModMenuTypes.OCEAN_FARM_MENU.get(), OceanFarmScreen::new);

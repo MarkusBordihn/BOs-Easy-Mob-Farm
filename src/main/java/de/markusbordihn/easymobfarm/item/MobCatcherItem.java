@@ -136,7 +136,6 @@ public class MobCatcherItem extends CapturedMob {
     Level level = livingEntity.getLevel();
 
     // Try to check if we could catching the targeted mob.
-
     if (!hasCapturedMob(itemStack)) {
       // Handle sounds and empty hand, if item will break.
       if (willItemBreak(itemStack, 1)) {

@@ -26,6 +26,8 @@ import java.util.Set;
 import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
 
 public class SavannaPlateau {
+
+  // Ref: https://minecraft.fandom.com/wiki/Savanna#Savanna_Plateau
   protected SavannaPlateau() {}
 
   public static final Set<String> Passive = new HashSet<>(Arrays.asList(
@@ -33,9 +35,12 @@ public class SavannaPlateau {
     PassiveAnimal.COW,
     PassiveAnimal.DONKEY,
     PassiveAnimal.HORSE,
+    PassiveAnimal.CHICKEN,
     PassiveAnimal.LAMA,
     PassiveAnimal.PIG,
     PassiveAnimal.SHEEP
-    // @formatter:on
+  // @formatter:on
   ));
+
+  public static final Set<String> All = Passive;
 }

@@ -1,0 +1,31 @@
+{
+  "parent": "easy_mob_farm:crafting/craft_jungle_farm",
+  "display": {
+    "icon": {
+      "item": "easy_mob_farm:catch_cage"
+    },
+    "title": {
+      "translate": "advancements.easy_mob_farm.crafting.craft_catch_cage.title"
+    },
+    "description": {
+      "translate": "advancements.easy_mob_farm.crafting.craft_catch_cage.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "get_catch_cage": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["easy_mob_farm:catch_cage"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [["get_catch_cage"]]
+}

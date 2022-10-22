@@ -33,9 +33,15 @@ public class PlainsCave {
   // @formatter:off
     HostileMonster.CAVE_SPIDER,
     HostileMonster.CREEPER,
+    HostileMonster.ENDERMAN,
     HostileMonster.SKELETON,
-    HostileMonster.ZOMBIE
-    // @formatter:on
+    HostileMonster.SLIME,
+    HostileMonster.WITCH,
+    HostileMonster.ZOMBIE,
+    HostileMonster.ZOMBIE_VILLAGER
+  // @formatter:on
   ));
+
+  public static final Set<String> All = Hostile;
 
 }

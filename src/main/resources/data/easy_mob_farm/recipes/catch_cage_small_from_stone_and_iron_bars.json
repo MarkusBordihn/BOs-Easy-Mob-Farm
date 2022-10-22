@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [" - ", "###", "___"],
+  "key": {
+    "#": {
+      "item": "minecraft:iron_bars"
+    },
+    "_": {
+      "item": "minecraft:stone_slab"
+    },
+    "-": {
+      "item": "minecraft:stone_button"
+    }
+  },
+  "result": {
+    "item": "easy_mob_farm:catch_cage_small"
+  }
+}

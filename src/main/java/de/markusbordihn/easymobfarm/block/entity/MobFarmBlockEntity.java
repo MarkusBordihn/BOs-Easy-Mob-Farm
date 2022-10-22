@@ -43,9 +43,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.event.server.ServerAboutToStartEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
 import de.markusbordihn.easymobfarm.Constants;
@@ -55,7 +52,6 @@ import de.markusbordihn.easymobfarm.item.CapturedMob;
 import de.markusbordihn.easymobfarm.loot.LootManager;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
-@Mod.EventBusSubscriber
 public class MobFarmBlockEntity extends MobFarmBlockEntityData implements WorldlyContainer {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
@@ -71,16 +67,6 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
   public MobFarmBlockEntity(BlockEntityType<?> blockEntity, BlockPos blockPos,
       BlockState blockState) {
     super(blockEntity, blockPos, blockState);
-  }
-
-  @SubscribeEvent
-  public static void onServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    if (Boolean.TRUE.equals(COMMON.informOwnerAboutFullStorage.get())) {
-      log.info("Will inform owner about full storage!");
-    }
-    if (Boolean.TRUE.equals(COMMON.logFullStorage.get())) {
-      log.info("Log full storage in the logfile.");
-    }
   }
 
   public void updateLevel(Level level) {
@@ -227,17 +213,18 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
   }
 
   public void processFullStorage(MobFarmBlockEntity blockEntity, List<ItemStack> lootDrop) {
-    if (!COMMON.informOwnerAboutFullStorage.get() && !COMMON.logFullStorage.get()) {
+    if (Boolean.TRUE.equals(!COMMON.informOwnerAboutFullStorage.get())
+        && Boolean.TRUE.equals(!COMMON.logFullStorage.get())) {
       return;
     }
     UUID ownerUUID = blockEntity.getOwner();
     BlockPos blockPos = blockEntity.getBlockPos();
 
-    if (COMMON.logFullStorage.get()) {
+    if (Boolean.TRUE.equals(COMMON.logFullStorage.get())) {
       log.warn("Unable to store loot drop {} for mob farm {} at {} for owner {}!", lootDrop,
           this.farmMobName, blockPos, ownerUUID);
     }
-    if (COMMON.informOwnerAboutFullStorage.get() && ownerUUID != null) {
+    if (Boolean.TRUE.equals(COMMON.informOwnerAboutFullStorage.get()) && ownerUUID != null) {
       Player owner = blockEntity.level.getPlayerByUUID(ownerUUID);
       if (owner != null && owner.isAlive()) {
         MutableComponent message = Component.translatable(Constants.MESSAGE_PREFIX + "warning_full",
@@ -253,7 +240,7 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
     if (index == MobFarmMenu.CAPTURED_MOB_SLOT) {
 
       // Update and cache data based on captured mob
-      if (itemStack.getItem() instanceof CapturedMob capturedMobItem) {
+      if (itemStack.getItem() instanceof CapturedMob) {
         // Get farm processing time or use default.
         if (getFarmProcessingTime() > 0) {
           this.farmTotalTime = getFarmProcessingTime();
@@ -263,10 +250,10 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
         log.debug("Farm Processing time {}", this.farmTotalTime);
 
         // Get Mob Name
-        this.farmMobName = capturedMobItem.getCapturedMob(itemStack);
-        this.farmMobType = capturedMobItem.getCapturedMobType(itemStack);
-        this.farmMobColor = capturedMobItem.getCapturedMobColor(itemStack);
-        this.farmMobEntityType = capturedMobItem.getCapturedMobEntityType(itemStack);
+        this.farmMobName = CapturedMob.getCapturedMob(itemStack);
+        this.farmMobType = CapturedMob.getCapturedMobType(itemStack);
+        this.farmMobColor = CapturedMob.getCapturedMobColor(itemStack);
+        this.farmMobEntityType = CapturedMob.getCapturedMobEntityType(itemStack);
       } else {
         this.farmMobName = "";
         this.farmMobType = "";

@@ -1,6 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": ["ODD", "B#M", "GWG"],
+  "pattern": ["ODD", "B#M", "-W-"],
   "key": {
     "#": {
       "item": "easy_mob_farm:iron_mob_farm_template"
@@ -8,8 +8,8 @@
     "W": {
       "item": "minecraft:water_bucket"
     },
-    "G": {
-      "item": "minecraft:grass_block"
+    "-": {
+      "item": "minecraft:dirt"
     },
     "D": {
       "item": "minecraft:dead_bush"

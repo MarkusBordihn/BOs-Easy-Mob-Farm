@@ -22,6 +22,8 @@ package de.markusbordihn.easymobfarm.config.biome;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import de.markusbordihn.easymobfarm.config.mobs.AmbientWaterAnimal;
 import de.markusbordihn.easymobfarm.config.mobs.HostileWaterMonster;
@@ -33,41 +35,21 @@ public class Ocean {
 
   protected Ocean() {}
 
-  public static final Set<String> All = new HashSet<>(Arrays.asList(
-    // @formatter:off
-    AmbientWaterAnimal.COD,
-    AmbientWaterAnimal.SALMON,
-    AmbientWaterAnimal.ATLANTIC_COD,
-    AmbientWaterAnimal.ATLANTIC_HALIBUT,
-    AmbientWaterAnimal.ATLANTIC_HERRING,
-    AmbientWaterAnimal.BLACKFISH,
-    AmbientWaterAnimal.PACIFIC_HALIBUT,
-    AmbientWaterAnimal.PINK_SALMON,
-    AmbientWaterAnimal.POLLOCK,
-    AmbientWaterAnimal.RAINBOW_TROUT,
-
-    HostileWaterMonster.DROWNED,
-
-    PassiveWaterAnimal.GLOW_SQUID,
-    PassiveWaterAnimal.SQUID
-    // @formatter:on
-  ));
-
   public static final Set<String> Passive = new HashSet<>(Arrays.asList(
-    // @formatter:off
+  // @formatter:off
     PassiveWaterAnimal.GLOW_SQUID,
     PassiveWaterAnimal.SQUID
-    // @formatter:on
+  // @formatter:on
   ));
 
   public static final Set<String> Hostile = new HashSet<>(Arrays.asList(
-    // @formatter:off
+  // @formatter:off
     HostileWaterMonster.DROWNED
-    // @formatter:on
+  // @formatter:on
   ));
 
   public static final Set<String> Ambient = new HashSet<>(Arrays.asList(
-    // @formatter:off
+  // @formatter:off
     AmbientWaterAnimal.COD,
     AmbientWaterAnimal.SALMON,
     AmbientWaterAnimal.ATLANTIC_COD,
@@ -78,6 +60,10 @@ public class Ocean {
     AmbientWaterAnimal.PINK_SALMON,
     AmbientWaterAnimal.POLLOCK,
     AmbientWaterAnimal.RAINBOW_TROUT
-    // @formatter:on
+  // @formatter:on
   ));
+
+  public static final Set<String> All = Stream.concat(
+      Stream.concat(Passive.stream(), Hostile.stream()).collect(Collectors.toSet()).stream(),
+      Ambient.stream()).collect(Collectors.toSet());
 }
