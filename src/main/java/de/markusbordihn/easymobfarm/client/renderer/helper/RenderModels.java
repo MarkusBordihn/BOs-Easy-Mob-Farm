@@ -25,6 +25,7 @@ import org.apache.logging.log4j.Logger;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.SquidModel;
 import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.entity.BlazeRenderer;
 import net.minecraft.client.renderer.entity.CaveSpiderRenderer;
 import net.minecraft.client.renderer.entity.ChickenRenderer;
 import net.minecraft.client.renderer.entity.CodRenderer;
@@ -49,6 +50,7 @@ import net.minecraft.client.renderer.entity.ZombieRenderer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.GlowSquid;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.Cod;
 import net.minecraft.world.entity.animal.Cow;
@@ -58,6 +60,7 @@ import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.animal.Salmon;
 import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.animal.Squid;
+import net.minecraft.world.entity.monster.Blaze;
 import net.minecraft.world.entity.monster.CaveSpider;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Drowned;
@@ -70,6 +73,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 
 import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.config.mobs.HostileNetherMonster;
+import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
 
 public class RenderModels {
 
@@ -96,6 +101,9 @@ public class RenderModels {
 
   private Cow cow = null;
   private CowRenderer cowRenderer = null;
+
+  private Blaze blaze = null;
+  private BlazeRenderer blazeRenderer = null;
 
   private Drowned drowned = null;
   private DrownedRenderer drownedRenderer = null;
@@ -182,6 +190,33 @@ public class RenderModels {
 
   public ItemRenderer getItemRenderer() {
     return minecraft.getItemRenderer();
+  }
+
+  public LivingEntity getEntityTypeModel(String entityType) {
+    switch (entityType) {
+      case HostileNetherMonster.BLAZE:
+        return getBlaze();
+      case PassiveAnimal.RABBIT:
+        return getRabbit();
+      case PassiveAnimal.PANDA:
+        return getPanda();
+      default:
+        return null;
+    }
+  }
+
+  public Blaze getBlaze() {
+    if (this.blaze == null) {
+      this.blaze = new Blaze(EntityType.BLAZE, getLevel());
+    }
+    return this.blaze;
+  }
+
+  public BlazeRenderer getBlazeRenderer() {
+    if (this.blazeRenderer == null) {
+      this.blazeRenderer = new BlazeRenderer(getEntityRendererContext());
+    }
+    return this.blazeRenderer;
   }
 
   public CaveSpider getCaveSpider() {

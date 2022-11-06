@@ -36,9 +36,4 @@ public class OceanFarmScreen extends MobFarmScreen<OceanFarmMenu> {
   public OceanFarmScreen(OceanFarmMenu menu, Inventory inventory, Component component) {
     super(menu, inventory, component);
   }
-
-  @Override
-  public void init() {
-    super.init();
-  }
 }

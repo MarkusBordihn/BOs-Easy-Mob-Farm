@@ -21,6 +21,8 @@ package de.markusbordihn.easymobfarm;
 
 import net.minecraft.ChatFormatting;
 
+import net.minecraftforge.fml.ModList;
+
 public final class Constants {
 
   protected Constants() {}
@@ -36,6 +38,7 @@ public final class Constants {
   // Prefixes
   public static final String TEXT_PREFIX = "text.easy_mob_farm.";
   public static final String MESSAGE_PREFIX = "message.easy_mob_farm.";
+  public static final String LOOT_MANAGER_PREFIX = "[Loot Manager] ";
 
   // Functional Blocks
   public static final String ANIMAL_PLAINS_FARM = "animal_plains_farm";
@@ -44,6 +47,7 @@ public final class Constants {
   public static final String JUNGLE_FARM = "jungle_farm";
   public static final String MOB_FARM = "mob_farm";
   public static final String MONSTER_PLAINS_CAVE_FARM = "monster_plains_cave_farm";
+  public static final String NETHER_FORTRESS_FARM = "nether_fortress_farm";
   public static final String OCEAN_FARM = "ocean_farm";
   public static final String SWAMP_FARM = "swamp_farm";
 
@@ -54,4 +58,10 @@ public final class Constants {
   public static final int FONT_COLOR_GREEN = ChatFormatting.GREEN.getColor();
   public static final int FONT_COLOR_WARNING = ChatFormatting.RED.getColor();
   public static final int FONT_COLOR_YELLOW = ChatFormatting.YELLOW.getColor();
+
+  // Supported Mods
+  public static final boolean CREATE_LOADED = ModList.get().isLoaded("create");
+  public static final boolean MOB_CAPTURING_TOOL_LOADED =
+      ModList.get().isLoaded("mobcapturingtool");
+  public static final boolean MOB_CATCHER_LOADED = ModList.get().isLoaded("mob_catcher");
 }

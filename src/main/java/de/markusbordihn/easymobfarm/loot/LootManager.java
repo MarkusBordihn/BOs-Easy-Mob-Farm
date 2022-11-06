@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -48,9 +49,10 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.config.CommonConfig;
-import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
+import de.markusbordihn.easymobfarm.config.mobs.HostileNetherMonster;
 import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
 import de.markusbordihn.easymobfarm.item.CapturedMob;
+import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
 
 @EventBusSubscriber
 public class LootManager {
@@ -102,15 +104,16 @@ public class LootManager {
       // Use a internal cache to improve loot prediction over time.
       lootDropList = cacheLootDrops(lootTableLocation, lootDrops);
     }
-    log.info("Loot for {} with {} roll {} result: {}", mobType, lootTableLocation, lootPreviewRolls,
-        lootDropList);
+    log.info(Constants.LOOT_MANAGER_PREFIX + "Loot for {} with {} roll {} result: {}", mobType,
+        lootTableLocation, lootPreviewRolls, lootDropList);
     return lootDropList;
   }
 
   public static List<ItemStack> getRandomLootDrops(ResourceLocation lootTableLocation,
       Level level) {
     if (lootTableLocation == null || level == null || level.getServer() == null) {
-      log.error("Unable to get loot drops for {} and {}", lootTableLocation, level);
+      log.error(Constants.LOOT_MANAGER_PREFIX + "Unable to get loot drops for loot table {} in {}",
+          lootTableLocation, level);
       return Lists.newArrayList();
     }
     ServerLevel serverLevel = (ServerLevel) level;
@@ -123,7 +126,8 @@ public class LootManager {
     List<ItemStack> lootDrops =
         lootTable.getRandomItems(builder.create(LootContextParamSets.ENTITY));
     if (lootDrops.isEmpty()) {
-      log.warn("Loot drop for {} with loot table {} was empty!", player, lootTableLocation);
+      log.warn(Constants.LOOT_MANAGER_PREFIX + "Loot drop for {} with loot table {} was empty!",
+          player, lootTableLocation);
     }
     return lootDrops;
   }
@@ -144,8 +148,15 @@ public class LootManager {
         lootTable = new ResourceLocation(lootTableLocation);
       }
       mobType = CapturedMob.getCapturedMobType(itemStack);
+    } else if (CapturedMobVirtual.isSupported(itemStack)) {
+      String lootTableLocation = CapturedMobVirtual.getLootTable(itemStack);
+      if (!lootTableLocation.isEmpty()) {
+        lootTable = new ResourceLocation(lootTableLocation);
+      }
+      mobType = CapturedMobVirtual.getCapturedMobType(itemStack);
     } else {
-      log.error("Unable to process loot drop for {} in {}", itemStack, level);
+      log.error(Constants.LOOT_MANAGER_PREFIX + "Unable to process loot drop for {} in {}",
+          itemStack, level);
       return Lists.newArrayList();
     }
     return getFilteredRandomLootDrop(lootTable, level, mobType);
@@ -153,6 +164,7 @@ public class LootManager {
 
   public static List<ItemStack> getFilteredRandomLootDrop(ResourceLocation lootTableLocation,
       Level level, String mobType) {
+
     List<ItemStack> lootDrops = getRandomLootDrops(lootTableLocation, level);
     List<ItemStack> filteredLootDrops = getFilteredLootDrop(lootDrops, mobType);
 
@@ -166,10 +178,9 @@ public class LootManager {
     List<ItemStack> filteredLootDrops = Lists.newArrayList();
 
     // Adding additional drops for specific cases.
-    if (blazeDropBlazeRod && mobType.equals(HostileMonster.BLAZE)) {
+    if (blazeDropBlazeRod && mobType.equals(HostileNetherMonster.BLAZE)) {
       lootDrops.add(new ItemStack(Items.BLAZE_ROD));
-    }
-    if (chickenDropEggs && mobType.equals(PassiveAnimal.CHICKEN)) {
+    } else if (chickenDropEggs && mobType.equals(PassiveAnimal.CHICKEN)) {
       lootDrops.add(new ItemStack(Items.EGG));
     }
 
@@ -179,8 +190,7 @@ public class LootManager {
       if (lootDrop.isEmpty()
           || filter(chickenDropRawChicken, PassiveAnimal.CHICKEN, Items.CHICKEN, mobType, lootDrop)
           || filter(cowDropRawBeef, PassiveAnimal.COW, Items.BEEF, mobType, lootDrop)
-          || filter(sheepDropRawMutton, PassiveAnimal.SHEEP, Items.MUTTON, mobType, lootDrop)
-        ) {
+          || filter(sheepDropRawMutton, PassiveAnimal.SHEEP, Items.MUTTON, mobType, lootDrop)) {
         continue;
       }
       filteredLootDrops.add(lootDrop);
@@ -201,6 +211,9 @@ public class LootManager {
   private static List<String> cacheLootDrops(ResourceLocation lootTableLocation,
       List<ItemStack> lootDrops) {
     List<String> lootDropList = Lists.newArrayList();
+    if (lootTableLocation == null) {
+      return lootDropList;
+    }
     List<String> lootDropListCache = lootTableDropListCache.getOrDefault(lootTableLocation, null);
     if (lootDropListCache != null) {
       lootDropList.addAll(lootDropListCache);

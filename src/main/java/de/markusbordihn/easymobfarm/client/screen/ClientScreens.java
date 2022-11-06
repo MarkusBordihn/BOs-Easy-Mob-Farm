@@ -32,6 +32,7 @@ import de.markusbordihn.easymobfarm.client.screen.farm.CreativeMobFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.DesertFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.JungleFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.MonsterPlainsCaveFarmScreen;
+import de.markusbordihn.easymobfarm.client.screen.farm.NetherFortressFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.OceanFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.SwampFarmScreen;
 import de.markusbordihn.easymobfarm.menu.farm.AnimalPlainsFarmMenu;
@@ -39,6 +40,7 @@ import de.markusbordihn.easymobfarm.menu.farm.CreativeMobFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.DesertFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.JungleFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.MonsterPlainsCaveFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.NetherFortressFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.OceanFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.SwampFarmMenu;
 
@@ -58,6 +60,7 @@ public class ClientScreens {
       MenuScreens.register(DesertFarmMenu.TYPE, DesertFarmScreen::new);
       MenuScreens.register(JungleFarmMenu.TYPE, JungleFarmScreen::new);
       MenuScreens.register(MonsterPlainsCaveFarmMenu.TYPE, MonsterPlainsCaveFarmScreen::new);
+      MenuScreens.register(NetherFortressFarmMenu.TYPE, NetherFortressFarmScreen::new);
       MenuScreens.register(OceanFarmMenu.TYPE, OceanFarmScreen::new);
       MenuScreens.register(SwampFarmMenu.TYPE, SwampFarmScreen::new);
     });

@@ -52,6 +52,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.MobFarmBlock;
 import de.markusbordihn.easymobfarm.config.CommonConfig;
 import de.markusbordihn.easymobfarm.item.CapturedMob;
+import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
 import de.markusbordihn.easymobfarm.loot.LootManager;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
@@ -103,7 +104,7 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
     ItemStack handItemStack = player.getItemInHand(hand);
     if (handItemStack.isEmpty()) {
       player.setItemInHand(hand, itemStack);
-    } else if (!player.getInventory().add(itemStack)) {
+    } else if (!player.getInventory().add(itemStack) && level != null) {
       level.addFreshEntity(new ItemEntity(level, blockPos.getX() + 0.5D, blockPos.getY() + 0.5D,
           blockPos.getZ() + 0.5D, itemStack));
     }
@@ -132,13 +133,16 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
         && resultItem3.getCount() >= resultItem3.getMaxStackSize()
         && resultItem4.getCount() >= resultItem4.getMaxStackSize()
         && resultItem5.getCount() >= resultItem5.getMaxStackSize()) {
-      blockEntity.farmStatus = FARM_STATUS_FULL;
+      if (blockEntity.farmStatus != FARM_STATUS_FULL) {
+        blockEntity.farmStatus = FARM_STATUS_FULL;
+      }
       return;
     }
 
     // Processing mob farm
     if (blockEntity.farmProgress >= blockEntity.farmTotalTime) {
-      if (capturedMob.getItem() instanceof CapturedMob) {
+      if (capturedMob.getItem() instanceof CapturedMob
+          || CapturedMobVirtual.isSupported(capturedMob)) {
         blockEntity.processResult(capturedMob, blockEntity);
         blockEntity.processAdditionalEffects(level, blockPos, blockEntity, capturedMob);
       }
@@ -235,7 +239,7 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
       log.warn("Unable to store loot drop {} for mob farm {} at {} for owner {}!", lootDrop,
           this.farmMobName, blockPos, ownerUUID);
     }
-    if (informOwnerAboutFullStorage && ownerUUID != null) {
+    if (informOwnerAboutFullStorage && ownerUUID != null && blockEntity.level != null) {
       Player owner = blockEntity.level.getPlayerByUUID(ownerUUID);
       if (owner != null && owner.isAlive()) {
         MutableComponent message =
@@ -253,24 +257,30 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
 
       // Update and cache data based on captured mob
       if (itemStack.getItem() instanceof CapturedMob) {
-        // Get farm processing time or use default.
+        this.farmMobName = CapturedMob.getCapturedMob(itemStack);
+        this.farmMobType = CapturedMob.getCapturedMobType(itemStack);
+        this.farmMobColor = CapturedMob.getCapturedMobColor(itemStack);
+        this.farmMobEntityType = CapturedMob.getCapturedMobEntityType(itemStack);
+      } else if (CapturedMobVirtual.isSupported(itemStack)) {
+        this.farmMobName = CapturedMobVirtual.getCapturedMob(itemStack);
+        this.farmMobType = CapturedMobVirtual.getCapturedMobType(itemStack);
+        this.farmMobColor = CapturedMobVirtual.getCapturedMobColor(itemStack);
+        this.farmMobEntityType = CapturedMobVirtual.getCapturedMobEntityType(itemStack);
+      } else {
+        this.farmMobName = "";
+        this.farmMobType = "";
+        this.farmMobColor = null;
+        this.farmMobEntityType = null;
+      }
+
+      // Set Farm processing time, if there is any mob type.
+      if (this.farmMobType != null && !this.farmMobType.isBlank()) {
         if (getFarmProcessingTime() > 0) {
           this.farmTotalTime = getFarmProcessingTime();
         } else {
           this.farmTotalTime = DEFAULT_FARM_PROCESSING_TIME;
         }
         log.debug("Farm Processing time {}", this.farmTotalTime);
-
-        // Get Mob Name
-        this.farmMobName = CapturedMob.getCapturedMob(itemStack);
-        this.farmMobType = CapturedMob.getCapturedMobType(itemStack);
-        this.farmMobColor = CapturedMob.getCapturedMobColor(itemStack);
-        this.farmMobEntityType = CapturedMob.getCapturedMobEntityType(itemStack);
-      } else {
-        this.farmMobName = "";
-        this.farmMobType = "";
-        this.farmMobColor = null;
-        this.farmMobEntityType = null;
       }
 
       // Update Block state

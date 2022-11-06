@@ -49,6 +49,8 @@ public class Snapshots {
         new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_enderman.png"));
     hashMap.put(HostileMonster.SKELETON,
         new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_skeleton.png"));
+    hashMap.put(HostileMonster.SPIDER,
+        new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_spider.png"));
     hashMap.put(HostileMonster.SLIME,
         new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_slime.png"));
     hashMap.put(HostileMonster.WITCH,

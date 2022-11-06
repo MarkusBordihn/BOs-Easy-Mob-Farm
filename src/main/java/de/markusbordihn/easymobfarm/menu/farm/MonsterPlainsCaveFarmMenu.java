@@ -26,6 +26,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.MenuType;
+
 import net.minecraftforge.registries.ObjectHolder;
 
 import de.markusbordihn.easymobfarm.Constants;

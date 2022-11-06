@@ -36,9 +36,4 @@ public class SwampFarmScreen extends MobFarmScreen<SwampFarmMenu> {
   public SwampFarmScreen(SwampFarmMenu menu, Inventory inventory, Component component) {
     super(menu, inventory, component);
   }
-
-  @Override
-  public void init() {
-    super.init();
-  }
 }

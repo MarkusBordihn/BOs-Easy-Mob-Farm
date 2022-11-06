@@ -43,6 +43,7 @@ import de.markusbordihn.easymobfarm.block.MobFarmBlock;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.config.mobs.AmbientWaterAnimal;
 import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
+import de.markusbordihn.easymobfarm.config.mobs.HostileNetherMonster;
 import de.markusbordihn.easymobfarm.config.mobs.HostileWaterMonster;
 import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
 import de.markusbordihn.easymobfarm.config.mobs.PassiveWaterAnimal;
@@ -109,6 +110,12 @@ public class RenderHelper {
 
   public float getCustomEntityScale() {
     return this.renderModels.getCustomEntityScale();
+  }
+
+  public void renderBlaze(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
+      double y, double z, int combinedLight) {
+    renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
+        this.renderModels.getBlazeRenderer(), this.renderModels.getBlaze());
   }
 
   public void renderCaveSpider(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
@@ -245,6 +252,9 @@ public class RenderHelper {
       String farmMobType) {
     // Render Monster using their specific Renderer and predefined scaling and position.
     switch (farmMobType) {
+      case HostileNetherMonster.BLAZE:
+        renderBlaze(poseStack, buffer, 0.35F, 0D, 0D, 2D / 16D, combinedLight);
+        break;
       case HostileMonster.CAVE_SPIDER:
         renderCaveSpider(poseStack, buffer, 0.35F, 0D, 15D / 16D, 2D / 16D, combinedLight);
         break;

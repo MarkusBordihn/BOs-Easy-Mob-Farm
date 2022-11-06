@@ -59,6 +59,10 @@ minecraft {
             source sourceSets.main
         }
       }
+
+      // Required: Create Mixin Support
+      property 'mixin.env.remapRefMap', 'true'
+      property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
     }
 
     server {
@@ -79,6 +83,10 @@ minecraft {
             source sourceSets.main
         }
       }
+
+      // Required: Create Mixin Support
+      property 'mixin.env.remapRefMap', 'true'
+      property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
     }
 
     data {
@@ -133,9 +141,22 @@ dependencies {
   compileOnly fg.deobf("curse.maven:material_elements-541620:3835039")
   runtimeOnly fg.deobf("curse.maven:material_elements-541620:3835039")
 
-  // Jade Integration
+  // Jade: Integration
   compileOnly fg.deobf("curse.maven:jade-324717:3761542")
   runtimeOnly fg.deobf("curse.maven:jade-324717:3761542")
+
+  // Mob Catcher: Integration
+  compileOnly fg.deobf("curse.maven:mob-catcher-498389:4026567")
+  runtimeOnly fg.deobf("curse.maven:mob-catcher-498389:4026567")
+
+  // Create: Integration
+  compileOnly fg.deobf("curse.maven:create-328085:4007544")
+  runtimeOnly fg.deobf("curse.maven:flywheel-486392:3934664")
+  runtimeOnly fg.deobf("curse.maven:create-328085:4007544")
+
+  // Create: Mob Capturing Tool
+  compileOnly fg.deobf("curse.maven:mob-capturing-tool-630272:3834440")
+  runtimeOnly fg.deobf("curse.maven:mob-capturing-tool-630272:3834440")
 
   // Alex Mob's (Testing)
   // runtimeOnly fg.deobf("curse.maven:citadel-331936:3584733:deobf")
@@ -188,13 +209,16 @@ curseforge {
   apiKey = "${credentials.curseforge_api_token}"
   project {
     id = "${curseforge_project_id}"
-    changelog = 'https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/commits/main'
+    changelog = file("CHANGELOG.md")
     releaseType = 'release'
     addGameVersion("1.18.2")
     addGameVersion("Forge")
     mainArtifact(jar) {
       relations {
         requiredDependency 'material-elements'
+        optionalDependency 'create'
+        optionalDependency 'mob-catcher-fabric'
+        optionalDependency 'mob-capturing-tool'
       }
     }
   }

@@ -35,6 +35,7 @@ import de.markusbordihn.easymobfarm.client.renderer.farm.CreativeMobFarmRenderer
 import de.markusbordihn.easymobfarm.client.renderer.farm.DesertFarmRenderer;
 import de.markusbordihn.easymobfarm.client.renderer.farm.JungleFarmRenderer;
 import de.markusbordihn.easymobfarm.client.renderer.farm.MonsterPlainsCaveFarmRenderer;
+import de.markusbordihn.easymobfarm.client.renderer.farm.NetherFortressFarmRenderer;
 import de.markusbordihn.easymobfarm.client.renderer.farm.OceanFarmRenderer;
 import de.markusbordihn.easymobfarm.client.renderer.farm.SwampFarmRenderer;
 
@@ -56,6 +57,8 @@ public class ClientRenderer {
     event.registerBlockEntityRenderer(ModBlocks.JUNGLE_FARM_ENTITY.get(), JungleFarmRenderer::new);
     event.registerBlockEntityRenderer(ModBlocks.MONSTER_PLAINS_CAVE_FARM_ENTITY.get(),
         MonsterPlainsCaveFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.NETHER_FORTRESS_FARM_ENTITY.get(),
+        NetherFortressFarmRenderer::new);
     event.registerBlockEntityRenderer(ModBlocks.OCEAN_FARM_ENTITY.get(), OceanFarmRenderer::new);
     event.registerBlockEntityRenderer(ModBlocks.SWAMP_FARM_ENTITY.get(), SwampFarmRenderer::new);
   }
@@ -83,6 +86,8 @@ public class ClientRenderer {
       ItemBlockRenderTypes.setRenderLayer(ModBlocks.JUNGLE_FARM.get(), RenderType.cutoutMipped());
       ItemBlockRenderTypes.setRenderLayer(ModBlocks.MONSTER_PLAINS_CAVE_FARM.get(),
           RenderType.cutoutMipped());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.NETHER_FORTRESS_FARM.get(),
+          RenderType.translucent());
       ItemBlockRenderTypes.setRenderLayer(ModBlocks.OCEAN_FARM.get(), RenderType.translucent());
       ItemBlockRenderTypes.setRenderLayer(ModBlocks.SWAMP_FARM.get(), RenderType.cutoutMipped());
     });

@@ -48,6 +48,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 
 import de.markusbordihn.easymobfarm.item.CapturedMob;
+import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
 public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
@@ -286,7 +287,8 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
     this.farmTotalTime = compoundTag.getInt(FARM_TIME_TOTAL_TAG);
 
     // Overwrites farmTotalTime, if process time was adjusted.
-    if (this.getFarmProcessingTime() > 0 && this.farmTotalTime > 0 && this.getFarmProcessingTime() != this.farmTotalTime) {
+    if (this.getFarmProcessingTime() > 0 && this.farmTotalTime > 0
+        && this.getFarmProcessingTime() != this.farmTotalTime) {
       this.farmTotalTime = this.getFarmProcessingTime();
       if (this.farmProgress > this.farmTotalTime) {
         this.farmProgress = this.farmTotalTime;
@@ -299,11 +301,18 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
 
     // Restore additional meta data
     ItemStack capturedMob = this.items.get(MobFarmMenu.CAPTURED_MOB_SLOT);
-    if (!capturedMob.isEmpty() && capturedMob.getItem() instanceof CapturedMob) {
-      this.farmMobName = CapturedMob.getCapturedMob(capturedMob);
-      this.farmMobType = CapturedMob.getCapturedMobType(capturedMob);
-      this.farmMobColor = CapturedMob.getCapturedMobColor(capturedMob);
-      this.farmMobEntityType = CapturedMob.getCapturedMobEntityType(capturedMob);
+    if (!capturedMob.isEmpty()) {
+      if (capturedMob.getItem() instanceof CapturedMob) {
+        this.farmMobName = CapturedMob.getCapturedMob(capturedMob);
+        this.farmMobType = CapturedMob.getCapturedMobType(capturedMob);
+        this.farmMobColor = CapturedMob.getCapturedMobColor(capturedMob);
+        this.farmMobEntityType = CapturedMob.getCapturedMobEntityType(capturedMob);
+      } else if (CapturedMobVirtual.isSupported(capturedMob)) {
+        this.farmMobName = CapturedMobVirtual.getCapturedMob(capturedMob);
+        this.farmMobType = CapturedMobVirtual.getCapturedMobType(capturedMob);
+        this.farmMobColor = CapturedMobVirtual.getCapturedMobColor(capturedMob);
+        this.farmMobEntityType = CapturedMobVirtual.getCapturedMobEntityType(capturedMob);
+      }
     }
   }
 

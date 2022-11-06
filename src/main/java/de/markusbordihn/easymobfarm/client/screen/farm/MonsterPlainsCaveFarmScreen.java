@@ -37,9 +37,4 @@ public class MonsterPlainsCaveFarmScreen extends MobFarmScreen<MonsterPlainsCave
       Component component) {
     super(menu, inventory, component);
   }
-
-  @Override
-  public void init() {
-    super.init();
-  }
 }
