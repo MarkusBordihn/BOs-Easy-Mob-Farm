@@ -7,7 +7,9 @@
     "easy_mob_farm:iron_mob_farm_template",
     "easy_mob_farm:jungle_farm",
     "easy_mob_farm:monster_plains_cave_farm",
+    "easy_mob_farm:nether_fortress_farm",
     "easy_mob_farm:ocean_farm",
+    "easy_mob_farm:steel_mob_farm_template",
     "easy_mob_farm:swamp_farm"
   ]
 }

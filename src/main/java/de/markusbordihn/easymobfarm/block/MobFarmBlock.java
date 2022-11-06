@@ -63,6 +63,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.item.CapturedMob;
+import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import de.markusbordihn.easymobfarm.text.TranslatableText;
 
@@ -201,6 +202,9 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
       BlockEntity blockEntity, Player player, ItemStack itemStack) {
     if (itemStack.getItem() instanceof CapturedMob) {
       String capturedMobType = CapturedMob.getCapturedMobType(itemStack);
+      return isAcceptedMobType(capturedMobType);
+    } else if (CapturedMobVirtual.isSupported(itemStack)) {
+      String capturedMobType = CapturedMobVirtual.getCapturedMobType(itemStack);
       return isAcceptedMobType(capturedMobType);
     }
     return false;

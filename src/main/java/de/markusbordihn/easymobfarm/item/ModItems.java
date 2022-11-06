@@ -34,6 +34,7 @@ import de.markusbordihn.easymobfarm.block.DesertFarm;
 import de.markusbordihn.easymobfarm.block.JungleFarm;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.block.MonsterPlainsCaveFarm;
+import de.markusbordihn.easymobfarm.block.NetherFortressFarm;
 import de.markusbordihn.easymobfarm.block.OceanFarm;
 import de.markusbordihn.easymobfarm.block.SwampFarm;
 import de.markusbordihn.easymobfarm.item.mobcatcher.FishingBowl;
@@ -94,6 +95,10 @@ public class ModItems {
       ITEMS.register("iron_mob_farm_template",
           () -> new MobFarmTemplateItem(ModBlocks.IRON_MOB_FARM_TEMPLATE.get(),
               new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
+  public static final RegistryObject<Item> STEEL_MOB_FARM_TEMPLATE =
+      ITEMS.register("steel_mob_farm_template",
+          () -> new MobFarmTemplateItem(ModBlocks.STEEL_MOB_FARM_TEMPLATE.get(),
+              new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
 
   // Mob Farms
   public static final RegistryObject<Item> ANIMAL_PLAINS_FARM =
@@ -110,6 +115,9 @@ public class ModItems {
           new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
   public static final RegistryObject<Item> MONSTER_PLAINS_CAVE_FARM = ITEMS.register(
       MonsterPlainsCaveFarm.NAME, () -> new BlockItem(ModBlocks.MONSTER_PLAINS_CAVE_FARM.get(),
+          new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
+  public static final RegistryObject<Item> NETHER_FORTRESS_FARM = ITEMS
+      .register(NetherFortressFarm.NAME, () -> new BlockItem(ModBlocks.NETHER_FORTRESS_FARM.get(),
           new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
   public static final RegistryObject<Item> OCEAN_FARM =
       ITEMS.register(OceanFarm.NAME, () -> new BlockItem(ModBlocks.OCEAN_FARM.get(),

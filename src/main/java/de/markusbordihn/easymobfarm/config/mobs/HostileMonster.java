@@ -23,7 +23,6 @@ public class HostileMonster {
 
   protected HostileMonster() {}
 
-  public static final String BLAZE = "minecraft:blaze";
   public static final String CAVE_SPIDER = "minecraft:cave_spider";
   public static final String CREEPER = "minecraft:creeper";
   public static final String ENDERMAN = "minecraft:enderman";

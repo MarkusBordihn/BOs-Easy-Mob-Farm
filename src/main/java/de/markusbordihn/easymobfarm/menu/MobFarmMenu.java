@@ -24,6 +24,8 @@ import org.apache.logging.log4j.Logger;
 
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -37,6 +39,7 @@ import net.minecraft.world.level.Level;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
 import de.markusbordihn.easymobfarm.item.CapturedMob;
+import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
 import de.markusbordihn.easymobfarm.menu.slots.CapturedMobSlot;
 import de.markusbordihn.easymobfarm.menu.slots.LockedResultSlot;
 
@@ -73,14 +76,14 @@ public class MobFarmMenu extends AbstractContainerMenu {
 
   // Define cache
   private ItemStack mobFarmCapturedMob = ItemStack.EMPTY;
+  private String mobFarmName = "- unknown -";
+  private String mobFarmTotalTimeText = "";
+  private String mobFarmType = "";
   private int mobFarmProgress;
-  private int mobFarmTotalTime;
-  private int mobFarmStatus;
   private int mobFarmProgressImage;
   private int mobFarmRemainingTime;
-  private String mobFarmTotalTimeText = "";
-  private String mobFarmName = "- unknown -";
-  private String mobFarmType = "";
+  private int mobFarmStatus;
+  private int mobFarmTotalTime;
 
   // Misc
   protected final Level level;
@@ -153,6 +156,9 @@ public class MobFarmMenu extends AbstractContainerMenu {
       } else if (currentItemStack.getItem() instanceof CapturedMob) {
         this.mobFarmName = CapturedMob.getCapturedMob(currentItemStack);
         this.mobFarmType = CapturedMob.getCapturedMobType(currentItemStack);
+      } else if (CapturedMobVirtual.isSupported(currentItemStack)) {
+        this.mobFarmName = CapturedMobVirtual.getCapturedMob(currentItemStack);
+        this.mobFarmType = CapturedMobVirtual.getCapturedMobType(currentItemStack);
       }
       this.mobFarmCapturedMob = currentItemStack;
     }
@@ -208,7 +214,12 @@ public class MobFarmMenu extends AbstractContainerMenu {
   }
 
   public boolean mayPlaceCapturedMob(ItemStack itemStack) {
-    return itemStack.getItem() instanceof CapturedMob && CapturedMob.hasCapturedMob(itemStack);
+    if (itemStack.getItem() instanceof CapturedMob) {
+      return CapturedMob.hasCapturedMob(itemStack);
+    } else if (CapturedMobVirtual.isSupported(itemStack)) {
+      return CapturedMobVirtual.hasCapturedMob(itemStack);
+    }
+    return false;
   }
 
   public boolean mayPlaceCapturedMobType(String mobType) {

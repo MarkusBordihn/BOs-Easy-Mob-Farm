@@ -24,6 +24,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 
 import de.markusbordihn.easymobfarm.item.CapturedMob;
+import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
 public class CapturedMobSlot extends Slot {
@@ -42,6 +43,8 @@ public class CapturedMobSlot extends Slot {
     }
     if (itemStack.getItem() instanceof CapturedMob) {
       return this.menu.mayPlaceCapturedMobType(CapturedMob.getCapturedMobType(itemStack));
+    } else if (CapturedMobVirtual.isSupported(itemStack)) {
+      return this.menu.mayPlaceCapturedMobType(CapturedMobVirtual.getCapturedMobType(itemStack));
     }
     return false;
   }

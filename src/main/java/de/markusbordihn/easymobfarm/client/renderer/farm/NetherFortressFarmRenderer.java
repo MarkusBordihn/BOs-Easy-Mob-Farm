@@ -17,23 +17,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.client.screen.farm;
+package de.markusbordihn.easymobfarm.client.renderer.farm;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import de.markusbordihn.easymobfarm.client.renderer.UniversalFarmRenderer;
 
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.client.screen.MobFarmScreen;
-import de.markusbordihn.easymobfarm.menu.farm.SwampFarmMenu;
+public class NetherFortressFarmRenderer extends UniversalFarmRenderer {
 
-public class SwampFarmScreen extends MobFarmScreen<SwampFarmMenu> {
-
-  public static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
-
-  public SwampFarmScreen(SwampFarmMenu menu, Inventory inventory, Component component) {
-    super(menu, inventory, component);
+  public NetherFortressFarmRenderer(BlockEntityRendererProvider.Context context) {
+    super(context);
   }
+
 }

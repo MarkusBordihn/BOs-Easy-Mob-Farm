@@ -22,8 +22,8 @@ package de.markusbordihn.easymobfarm.config;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.apache.commons.lang3.tuple.Pair;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -45,6 +45,7 @@ import de.markusbordihn.easymobfarm.config.mobs.HostileWaterMonster;
 import de.markusbordihn.easymobfarm.config.mobs.NeutralAnimal;
 import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
 import de.markusbordihn.easymobfarm.config.mobs.PassiveWaterAnimal;
+import de.markusbordihn.easymobfarm.config.structure.NetherFortress;
 
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
 public class CommonConfig {
@@ -90,6 +91,9 @@ public class CommonConfig {
 
     public final ForgeConfigSpec.IntValue monsterPlainsCaveFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<List<String>> monsterPlainsCaveFarmMobs;
+
+    public final ForgeConfigSpec.IntValue netherFortressFarmProcessTime;
+    public final ForgeConfigSpec.ConfigValue<List<String>> netherFortressFarmMobs;
 
     public final ForgeConfigSpec.IntValue oceanFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<List<String>> oceanFarmMobs;
@@ -172,6 +176,13 @@ public class CommonConfig {
       monsterPlainsCaveFarmMobs =
           builder.comment("Supported Mobs for the monster plains cave farm.")
               .define("monsterPlainsCaveFarmMobs", new ArrayList<String>(PlainsCave.Hostile));
+      builder.pop();
+
+      builder.push("Nether Fortress Farm");
+      netherFortressFarmProcessTime =
+          builder.comment(PROCESS_TIME_TEXT).defineInRange("netherFortressFarmProcessTime", 300, 10, 3600);
+      netherFortressFarmMobs = builder.comment("Supported Mobs for the nether fortress farm.").define("netherFortressFarmMobs",
+          new ArrayList<String>(NetherFortress.All));
       builder.pop();
 
       builder.push("Ocean Farm");

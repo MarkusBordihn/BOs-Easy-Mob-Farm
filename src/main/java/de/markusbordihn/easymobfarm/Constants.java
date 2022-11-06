@@ -21,6 +21,8 @@ package de.markusbordihn.easymobfarm;
 
 import net.minecraft.ChatFormatting;
 
+import net.minecraftforge.fml.ModList;
+
 public final class Constants {
 
   protected Constants() {}
@@ -37,6 +39,7 @@ public final class Constants {
   // Prefixes
   public static final String TEXT_PREFIX = "text.easy_mob_farm.";
   public static final String MESSAGE_PREFIX = "message.easy_mob_farm.";
+  public static final String LOOT_MANAGER_PREFIX = "[Loot Manager] ";
 
   // Colors
   public static final int FONT_COLOR_BLACK = ChatFormatting.BLACK.getColor();
@@ -45,5 +48,11 @@ public final class Constants {
   public static final int FONT_COLOR_GREEN = ChatFormatting.GREEN.getColor();
   public static final int FONT_COLOR_WARNING = ChatFormatting.RED.getColor();
   public static final int FONT_COLOR_YELLOW = ChatFormatting.YELLOW.getColor();
+
+  // Supported Mods
+  public static final boolean CREATE_LOADED = ModList.get().isLoaded("create");
+  public static final boolean MOB_CAPTURING_TOOL_LOADED =
+      ModList.get().isLoaded("mobcapturingtool");
+  public static final boolean MOB_CATCHER_LOADED = ModList.get().isLoaded("mob_catcher");
 
 }

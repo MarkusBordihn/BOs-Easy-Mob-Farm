@@ -36,9 +36,4 @@ public class DesertFarmScreen extends MobFarmScreen<DesertFarmMenu> {
   public DesertFarmScreen(DesertFarmMenu menu, Inventory inventory, Component component) {
     super(menu, inventory, component);
   }
-
-  @Override
-  public void init() {
-    super.init();
-  }
 }

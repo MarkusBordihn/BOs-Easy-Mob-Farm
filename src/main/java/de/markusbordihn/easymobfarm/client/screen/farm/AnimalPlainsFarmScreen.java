@@ -37,9 +37,4 @@ public class AnimalPlainsFarmScreen extends MobFarmScreen<AnimalPlainsFarmMenu> 
       Component component) {
     super(menu, inventory, component);
   }
-
-  @Override
-  public void init() {
-    super.init();
-  }
 }

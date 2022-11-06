@@ -36,9 +36,4 @@ public class JungleFarmScreen extends MobFarmScreen<JungleFarmMenu> {
   public JungleFarmScreen(JungleFarmMenu menu, Inventory inventory, Component component) {
     super(menu, inventory, component);
   }
-
-  @Override
-  public void init() {
-    super.init();
-  }
 }

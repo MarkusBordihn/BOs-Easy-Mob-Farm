@@ -1,0 +1,27 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "easy_mob_farm:nether_fortress_farm_from_steel_mob_farm_template"
+    ]
+  },
+  "criteria": {
+    "has_nether_brick": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:nether_bricks"]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "easy_mob_farm:nether_fortress_farm_from_steel_mob_farm_template"
+      }
+    }
+  },
+  "requirements": [["has_nether_bricks", "has_the_recipe"]]
+}

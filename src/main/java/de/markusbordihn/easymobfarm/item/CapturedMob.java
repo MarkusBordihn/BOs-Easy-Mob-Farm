@@ -54,17 +54,17 @@ public class CapturedMob extends Item {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  private static final String ENTITY_ID_TAG = "EntityId";
-  private static final String ENTITY_LOOT_TABLE_TAG = "EntityLootTable";
-  private static final String ENTITY_NAME_TAG = "EntityName";
-  private static final String ENTITY_POSSIBLE_LOOT_TAG = "EntityPossibleLoot";
-  private static final String ENTITY_TYPE_TAG = "EntityType";
-  private static final String ENTITY_COLOR_TAG = "EntityColor";
+  protected static final String ENTITY_ID_TAG = "EntityId";
+  protected static final String ENTITY_LOOT_TABLE_TAG = "EntityLootTable";
+  protected static final String ENTITY_NAME_TAG = "EntityName";
+  protected static final String ENTITY_POSSIBLE_LOOT_TAG = "EntityPossibleLoot";
+  protected static final String ENTITY_TYPE_TAG = "EntityType";
+  protected static final String ENTITY_COLOR_TAG = "EntityColor";
 
-  private static final String FALL_DISTANCE_TAG = "FallDistance";
-  private static final String FIRE_TAG = "Fire";
-  private static final String MOTION_TAG = "Motion";
-  private static final String ON_GROUND_TAG = "OnGround";
+  protected static final String FALL_DISTANCE_TAG = "FallDistance";
+  protected static final String FIRE_TAG = "Fire";
+  protected static final String MOTION_TAG = "Motion";
+  protected static final String ON_GROUND_TAG = "OnGround";
 
   private static Gson gson = new Gson();
 
@@ -219,6 +219,10 @@ public class CapturedMob extends Item {
 
     // Recreated captured mob
     EntityType<?> entityType = getCapturedMobEntityType(itemStack);
+    if (entityType == null) {
+      return null;
+    }
+
     Entity entity = entityType.create(level);
 
     if (entity != null) {

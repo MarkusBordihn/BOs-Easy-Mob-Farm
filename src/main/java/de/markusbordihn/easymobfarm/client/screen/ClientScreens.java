@@ -32,6 +32,7 @@ import de.markusbordihn.easymobfarm.client.screen.farm.CreativeMobFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.DesertFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.JungleFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.MonsterPlainsCaveFarmScreen;
+import de.markusbordihn.easymobfarm.client.screen.farm.NetherFortressFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.OceanFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.SwampFarmScreen;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
@@ -53,6 +54,8 @@ public class ClientScreens {
       MenuScreens.register(ModMenuTypes.JUNGLE_FARM_MENU.get(), JungleFarmScreen::new);
       MenuScreens.register(ModMenuTypes.MONSTER_PLAINS_CAVE_FARM_MENU.get(),
           MonsterPlainsCaveFarmScreen::new);
+      MenuScreens.register(ModMenuTypes.NETHER_FORTRESS_FARM_MENU.get(),
+          NetherFortressFarmScreen::new);
       MenuScreens.register(ModMenuTypes.OCEAN_FARM_MENU.get(), OceanFarmScreen::new);
       MenuScreens.register(ModMenuTypes.SWAMP_FARM_MENU.get(), SwampFarmScreen::new);
     });

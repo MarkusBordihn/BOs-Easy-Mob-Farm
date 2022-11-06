@@ -17,23 +17,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.client.screen.farm;
+package de.markusbordihn.easymobfarm.config.structure;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.player.Inventory;
+import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
+import de.markusbordihn.easymobfarm.config.mobs.HostileNetherMonster;
 
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.client.screen.MobFarmScreen;
-import de.markusbordihn.easymobfarm.menu.farm.SwampFarmMenu;
+public class NetherFortress {
 
-public class SwampFarmScreen extends MobFarmScreen<SwampFarmMenu> {
+  // Ref: https://minecraft.fandom.com/wiki/Nether_Fortress
+  protected NetherFortress() {}
 
-  public static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+  public static final Set<String> Hostile = new HashSet<>(Arrays.asList(
+  // @formatter:off
+    HostileNetherMonster.BLAZE,
+    HostileNetherMonster.MAGMA_CUBE,
+    HostileMonster.SKELETON,
+    HostileNetherMonster.WITHER_SKELETON,
+    HostileNetherMonster.ZOMBIFIED_PIGLIN
+  // @formatter:on
+  ));
 
-  public SwampFarmScreen(SwampFarmMenu menu, Inventory inventory, Component component) {
-    super(menu, inventory, component);
-  }
+  public static final Set<String> All = Hostile;
 }

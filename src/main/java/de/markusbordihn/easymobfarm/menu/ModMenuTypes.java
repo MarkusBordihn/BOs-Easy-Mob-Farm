@@ -32,6 +32,7 @@ import de.markusbordihn.easymobfarm.menu.farm.CreativeMobFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.DesertFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.JungleFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.MonsterPlainsCaveFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.NetherFortressFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.OceanFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.SwampFarmMenu;
 
@@ -62,6 +63,9 @@ public class ModMenuTypes {
   public static final RegistryObject<MenuType<MonsterPlainsCaveFarmMenu>> MONSTER_PLAINS_CAVE_FARM_MENU =
       MENU_TYPES.register("monster_plains_cave_farm", () -> IForgeMenuType.create(
           (windowIdIn, inventory, data) -> new MonsterPlainsCaveFarmMenu(windowIdIn, inventory)));
+  public static final RegistryObject<MenuType<NetherFortressFarmMenu>> NETHER_FORTRESS_FARM_MENU =
+      MENU_TYPES.register("nether_fortress_farm", () -> IForgeMenuType.create(
+          (windowIdIn, inventory, data) -> new NetherFortressFarmMenu(windowIdIn, inventory)));
   public static final RegistryObject<MenuType<OceanFarmMenu>> OCEAN_FARM_MENU =
       MENU_TYPES.register("ocean_farm", () -> IForgeMenuType
           .create((windowIdIn, inventory, data) -> new OceanFarmMenu(windowIdIn, inventory)));

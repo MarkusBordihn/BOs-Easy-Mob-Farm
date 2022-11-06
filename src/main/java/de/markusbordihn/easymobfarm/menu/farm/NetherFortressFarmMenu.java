@@ -17,23 +17,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.client.screen.farm;
+package de.markusbordihn.easymobfarm.menu.farm;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.minecraft.network.chat.Component;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.ContainerData;
 
 import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.client.screen.MobFarmScreen;
-import de.markusbordihn.easymobfarm.menu.farm.SwampFarmMenu;
+import de.markusbordihn.easymobfarm.block.NetherFortressFarm;
+import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
+import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
 
-public class SwampFarmScreen extends MobFarmScreen<SwampFarmMenu> {
+public class NetherFortressFarmMenu extends MobFarmMenu {
 
   public static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  public SwampFarmScreen(SwampFarmMenu menu, Inventory inventory, Component component) {
-    super(menu, inventory, component);
+  public NetherFortressFarmMenu(int windowIdIn, Inventory inventory) {
+    super(windowIdIn, inventory);
   }
+
+  public NetherFortressFarmMenu(final int windowId, final Inventory playerInventory,
+      final Container container, final ContainerData containerData) {
+    super(windowId, playerInventory, container, containerData,
+        ModMenuTypes.NETHER_FORTRESS_FARM_MENU.get());
+  }
+
+  @Override
+  public boolean mayPlaceCapturedMobType(String mobType) {
+    return NetherFortressFarm.isAcceptedCapturedMobType(mobType);
+  }
+
 }

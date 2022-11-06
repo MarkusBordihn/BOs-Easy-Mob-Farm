@@ -36,6 +36,7 @@ import de.markusbordihn.easymobfarm.block.entity.farm.CreativeMobFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.DesertFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.JungleFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.MonsterPlainsCaveFarmEntity;
+import de.markusbordihn.easymobfarm.block.entity.farm.NetherFortressFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.OceanFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.SwampFarmEntity;
 
@@ -54,6 +55,10 @@ public class ModBlocks {
   // Mob Farm Templates
   public static final RegistryObject<Block> IRON_MOB_FARM_TEMPLATE =
       BLOCKS.register("iron_mob_farm_template",
+          () -> new Block(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops()
+              .strength(3.0F, 6.0F).sound(SoundType.METAL).noOcclusion()));
+  public static final RegistryObject<Block> STEEL_MOB_FARM_TEMPLATE =
+      BLOCKS.register("steel_mob_farm_template",
           () -> new Block(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops()
               .strength(3.0F, 6.0F).sound(SoundType.METAL).noOcclusion()));
 
@@ -82,6 +87,11 @@ public class ModBlocks {
       () -> new MonsterPlainsCaveFarm(BlockBehaviour.Properties.of(Material.STONE)
           .requiresCorrectToolForDrops().strength(2.0F, 2.0F)
           .lightLevel(MonsterPlainsCaveFarm::getLightLevel).sound(SoundType.METAL).noOcclusion()));
+  public static final RegistryObject<Block> NETHER_FORTRESS_FARM =
+      BLOCKS.register(NetherFortressFarm.NAME,
+          () -> new NetherFortressFarm(BlockBehaviour.Properties.of(Material.STONE)
+              .requiresCorrectToolForDrops().strength(2.0F, 2.0F)
+              .lightLevel(NetherFortressFarm::getLightLevel).noOcclusion()));
   public static final RegistryObject<Block> OCEAN_FARM = BLOCKS.register(OceanFarm.NAME,
       () -> new OceanFarm(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops()
           .strength(2.0F, 2.0F).lightLevel(OceanFarm::getLightLevel).noOcclusion()));
@@ -107,6 +117,9 @@ public class ModBlocks {
   public static final RegistryObject<BlockEntityType<MonsterPlainsCaveFarmEntity>> MONSTER_PLAINS_CAVE_FARM_ENTITY =
       BLOCK_ENTITY_TYPES.register(MonsterPlainsCaveFarm.NAME, () -> BlockEntityType.Builder
           .of(MonsterPlainsCaveFarmEntity::new, MONSTER_PLAINS_CAVE_FARM.get()).build(null));
+  public static final RegistryObject<BlockEntityType<NetherFortressFarmEntity>> NETHER_FORTRESS_FARM_ENTITY =
+      BLOCK_ENTITY_TYPES.register(NetherFortressFarm.NAME, () -> BlockEntityType.Builder
+          .of(NetherFortressFarmEntity::new, NETHER_FORTRESS_FARM.get()).build(null));
   public static final RegistryObject<BlockEntityType<OceanFarmEntity>> OCEAN_FARM_ENTITY =
       BLOCK_ENTITY_TYPES.register(OceanFarm.NAME,
           () -> BlockEntityType.Builder.of(OceanFarmEntity::new, OCEAN_FARM.get()).build(null));

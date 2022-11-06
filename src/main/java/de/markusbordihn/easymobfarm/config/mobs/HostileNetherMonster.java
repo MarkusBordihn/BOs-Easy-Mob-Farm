@@ -17,23 +17,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.client.screen.farm;
+package de.markusbordihn.easymobfarm.config.mobs;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+public class HostileNetherMonster {
 
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.player.Inventory;
+  protected HostileNetherMonster() {}
 
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.client.screen.MobFarmScreen;
-import de.markusbordihn.easymobfarm.menu.farm.SwampFarmMenu;
-
-public class SwampFarmScreen extends MobFarmScreen<SwampFarmMenu> {
-
-  public static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
-
-  public SwampFarmScreen(SwampFarmMenu menu, Inventory inventory, Component component) {
-    super(menu, inventory, component);
-  }
+  public static final String BLAZE = "minecraft:blaze";
+  public static final String MAGMA_CUBE = "minecraft:magma_cube";
+  public static final String WITHER_SKELETON = "minecraft:wither_skeleton";
+  public static final String ZOMBIFIED_PIGLIN = "minecraft:zombified_piglin";
 }
