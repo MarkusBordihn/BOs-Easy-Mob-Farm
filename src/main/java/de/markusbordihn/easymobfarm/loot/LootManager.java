@@ -31,6 +31,7 @@ import com.google.common.collect.Lists;
 import com.mojang.authlib.GameProfile;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.item.Item;
@@ -104,20 +105,24 @@ public class LootManager {
           lootTableLocation, level);
       return Lists.newArrayList();
     }
-    ServerLevel serverLevel = (ServerLevel) level;
-    FakePlayer player = getPlayer(serverLevel);
-    LootContext.Builder builder = new LootContext.Builder(serverLevel)
-        .withParameter(LootContextParams.ORIGIN, player.position());
-    builder.withLuck(0.5F).withParameter(LootContextParams.THIS_ENTITY, player)
-        .withParameter(LootContextParams.DAMAGE_SOURCE, DamageSource.playerAttack(player));
-    LootTable lootTable = level.getServer().getLootTables().get(lootTableLocation);
-    List<ItemStack> lootDrops =
-        lootTable.getRandomItems(builder.create(LootContextParamSets.ENTITY));
-    if (lootDrops.isEmpty()) {
-      log.warn(Constants.LOOT_MANAGER_PREFIX + "Loot drop for {} with loot table {} was empty!",
-          player, lootTableLocation);
+    MinecraftServer server = level.getServer();
+    if (server != null) {
+      ServerLevel serverLevel = (ServerLevel) level;
+      FakePlayer player = getPlayer(serverLevel);
+      LootContext.Builder builder = new LootContext.Builder(serverLevel)
+          .withParameter(LootContextParams.ORIGIN, player.position());
+      builder.withLuck(0.5F).withParameter(LootContextParams.THIS_ENTITY, player)
+          .withParameter(LootContextParams.DAMAGE_SOURCE, DamageSource.playerAttack(player));
+      LootTable lootTable = server.getLootTables().get(lootTableLocation);
+      List<ItemStack> lootDrops =
+          lootTable.getRandomItems(builder.create(LootContextParamSets.ENTITY));
+      if (lootDrops.isEmpty()) {
+        log.warn(Constants.LOOT_MANAGER_PREFIX + "Loot drop for {} with loot table {} was empty!",
+            player, lootTableLocation);
+      }
+      return lootDrops;
     }
-    return lootDrops;
+    return Lists.newArrayList();
   }
 
   public static List<ItemStack> getFilteredRandomLootDrop(ItemStack itemStack, Level level) {

@@ -26,13 +26,13 @@ import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.AirItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.SpawnEggItem;
 
 import com.kwpugh.mob_catcher.ItemMobCatcher;
 import com.kwpugh.mob_catcher.ItemMobCatcherHostile;
@@ -47,9 +47,12 @@ public class CapturedMobVirtual {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
+  private static final String BLOCK_ENTITY_TAG = "BlockEntityTag";
+  private static final String ENTITY_TAG = "entity";
   private static final String ID_TAG = "id";
   private static final String MOD_DATA_TAG = "mob_data";
   private static final String NAME_TAG = "name";
+  private static final String SPAWN_DATA_TAG = "SpawnData";
 
   protected CapturedMobVirtual() {}
 
@@ -69,6 +72,19 @@ public class CapturedMobVirtual {
       return blazeBurnerBlockItem.hasCapturedBlaze();
     } else if (Constants.MOB_CAPTURING_TOOL_LOADED && item instanceof CapturingToolItem) {
       return CapturingToolItem.getEntityType(itemStack) != null;
+    } else if (item instanceof SpawnEggItem) {
+      return true;
+    } else if (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER)) {
+      CompoundTag compoundTag = itemStack.getOrCreateTag();
+      if (compoundTag.contains(BLOCK_ENTITY_TAG)
+          && compoundTag.getCompound(BLOCK_ENTITY_TAG).contains(SPAWN_DATA_TAG)
+          && compoundTag.getCompound(BLOCK_ENTITY_TAG).getCompound(SPAWN_DATA_TAG)
+              .contains(ENTITY_TAG)
+          && compoundTag.getCompound(BLOCK_ENTITY_TAG).getCompound(SPAWN_DATA_TAG)
+              .getCompound(ENTITY_TAG).contains(ID_TAG)) {
+        return !compoundTag.getCompound(BLOCK_ENTITY_TAG).getCompound(SPAWN_DATA_TAG)
+            .getCompound(ENTITY_TAG).getString(ID_TAG).isEmpty();
+      }
     } else if (!(item instanceof AirItem)) {
       log.debug("Unsupported mob catching Item {}", item);
     }
@@ -90,6 +106,10 @@ public class CapturedMobVirtual {
       return blazeBurnerBlockItem.hasCapturedBlaze();
     } else if (Constants.MOB_CAPTURING_TOOL_LOADED && item instanceof CapturingToolItem) {
       return CapturingToolItem.getEntityType(itemStack) != null;
+    } else if (item instanceof SpawnEggItem) {
+      return true;
+    } else if (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER)) {
+      return !getCapturedMobType(itemStack).isBlank() && !getCapturedMobType(itemStack).isEmpty();
     }
     return false;
   }
@@ -107,11 +127,12 @@ public class CapturedMobVirtual {
       return compoundTag.getString(NAME_TAG);
     } else if (Constants.CREATE_LOADED && item instanceof BlazeBurnerBlockItem) {
       return "Blaze";
-    } else if (Constants.MOB_CAPTURING_TOOL_LOADED && item instanceof CapturingToolItem) {
+    } else if ((Constants.MOB_CAPTURING_TOOL_LOADED && item instanceof CapturingToolItem)
+        || (item instanceof SpawnEggItem)
+        || (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER))) {
       EntityType<?> entityType = getCapturedMobEntityType(itemStack);
       String descriptionId = entityType != null ? entityType.getDescriptionId() : "";
-      return !descriptionId.isBlank() ? Component
-          .translatable(descriptionId).getString()
+      return !descriptionId.isBlank() ? Component.translatable(descriptionId).getString()
           : descriptionId;
     }
     return "";
@@ -128,34 +149,6 @@ public class CapturedMobVirtual {
     return null;
   }
 
-  public static Entity getCapturedMobEntity(ItemStack itemStack, Level level) {
-    CompoundTag compoundTag = itemStack.getOrCreateTag();
-
-    // Recreated captured mob
-    EntityType<?> entityType = getCapturedMobEntityType(itemStack);
-    if (entityType == null) {
-      return null;
-    }
-
-    Entity entity = entityType.create(level);
-    if (entity != null) {
-      // Remove custom compoundTag data from mob entity
-      compoundTag.remove(CapturedMob.ENTITY_ID_TAG);
-      compoundTag.remove(CapturedMob.ENTITY_LOOT_TABLE_TAG);
-      compoundTag.remove(CapturedMob.ENTITY_NAME_TAG);
-      compoundTag.remove(CapturedMob.ENTITY_POSSIBLE_LOOT_TAG);
-      compoundTag.remove(CapturedMob.ENTITY_TYPE_TAG);
-      compoundTag.remove(CapturedMob.ENTITY_COLOR_TAG);
-      entity.load(compoundTag);
-
-      // Remove compoundTag data from item.
-      int damagedValue = itemStack.getDamageValue();
-      itemStack.setTag(new CompoundTag());
-      itemStack.setDamageValue(damagedValue);
-    }
-    return entity;
-  }
-
   public static EntityType<?> getCapturedMobEntityType(ItemStack itemStack) {
     if (!isSupported(itemStack)) {
       return null;
@@ -165,13 +158,19 @@ public class CapturedMobVirtual {
       return CapturedMob.getCapturedMobEntityType(itemStack);
     } else if ((Constants.MOB_CATCHER_LOADED
         && (item instanceof ItemMobCatcher || item instanceof ItemMobCatcherHostile))
-        || (Constants.CREATE_LOADED && item instanceof BlazeBurnerBlockItem)) {
-      String[] mobTypeParts = getCapturedMobType(itemStack).split(":");
-      String entityTypeName = "entity." + mobTypeParts[0] + "." + mobTypeParts[1];
-      ResourceLocation resourceLocation = new ResourceLocation(entityTypeName);
-      return Registry.ENTITY_TYPE.get(resourceLocation);
+        || (Constants.CREATE_LOADED && item instanceof BlazeBurnerBlockItem)
+        || (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER))) {
+      String capturedMobType = getCapturedMobType(itemStack);
+      if (capturedMobType.contains(":")) {
+        ResourceLocation resourceLocation = new ResourceLocation(capturedMobType);
+        return Registry.ENTITY_TYPE.get(resourceLocation);
+      } else {
+        log.info("Unable to get capture mob entity type for {}", capturedMobType);
+      }
     } else if (Constants.MOB_CAPTURING_TOOL_LOADED && item instanceof CapturingToolItem) {
       return CapturingToolItem.getEntityType(itemStack);
+    } else if (item instanceof SpawnEggItem spawnEggItem) {
+      return spawnEggItem.getType(itemStack.getOrCreateTag());
     }
     return null;
   }
@@ -189,7 +188,8 @@ public class CapturedMobVirtual {
       return compoundTag.getCompound(MOD_DATA_TAG).getString(ID_TAG);
     } else if (Constants.CREATE_LOADED && item instanceof BlazeBurnerBlockItem) {
       return "minecraft:blaze";
-    } else if (Constants.MOB_CAPTURING_TOOL_LOADED && item instanceof CapturingToolItem) {
+    } else if ((Constants.MOB_CAPTURING_TOOL_LOADED && item instanceof CapturingToolItem)
+        || (item instanceof SpawnEggItem)) {
       EntityType<?> entityType = getCapturedMobEntityType(itemStack);
       String descriptionId = entityType != null ? entityType.getDescriptionId() : "";
       if (descriptionId != null && descriptionId.contains("entity.")) {
@@ -198,6 +198,10 @@ public class CapturedMobVirtual {
           return descriptionIdParts[1] + ":" + descriptionIdParts[2];
         }
       }
+    } else if (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER)) {
+      CompoundTag compoundTag = itemStack.getOrCreateTag();
+      return compoundTag.getCompound(BLOCK_ENTITY_TAG).getCompound(SPAWN_DATA_TAG)
+          .getCompound(ENTITY_TAG).getString(ID_TAG);
     }
     return "";
   }
@@ -212,10 +216,12 @@ public class CapturedMobVirtual {
     } else if ((Constants.MOB_CATCHER_LOADED
         && (item instanceof ItemMobCatcher || item instanceof ItemMobCatcherHostile))
         || (Constants.CREATE_LOADED && item instanceof BlazeBurnerBlockItem)
-        || (Constants.MOB_CAPTURING_TOOL_LOADED && item instanceof CapturingToolItem)) {
+        || (Constants.MOB_CAPTURING_TOOL_LOADED && item instanceof CapturingToolItem)
+        || (item instanceof SpawnEggItem)
+        || (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER))) {
       String capturedMobType = getCapturedMobType(itemStack);
       if (capturedMobType != null && capturedMobType.contains(":")) {
-        String[] mobTypeParts = capturedMobType.split(":");
+        String[] mobTypeParts = capturedMobType.split("\\:");
         return mobTypeParts[0] + ":entities/" + mobTypeParts[1];
       }
     }

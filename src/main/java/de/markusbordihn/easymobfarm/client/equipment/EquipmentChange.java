@@ -24,6 +24,7 @@ import org.apache.logging.log4j.Logger;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 
 import net.minecraftforge.api.distmarker.Dist;
@@ -47,12 +48,12 @@ public class EquipmentChange {
     if (minecraft == null || minecraft.player == null) {
       return;
     }
+    Player player = minecraft.player;
     ItemStack itemStackTo = event.getTo();
-
     // Plays sound for select the urn
-    if (itemStackTo.is(ModItems.URN_SMALL.get())) {
-      minecraft.player.playSound(SoundEvents.STONE_HIT, 0.25f, 1.0f);
-      minecraft.player.playSound(SoundEvents.PORTAL_AMBIENT, 0.75f, 1.0f);
+    if (player != null && itemStackTo.is(ModItems.URN_SMALL.get())) {
+      player.playSound(SoundEvents.STONE_HIT, 0.25f, 1.0f);
+      player.playSound(SoundEvents.PORTAL_AMBIENT, 0.75f, 1.0f);
     }
   }
 }

@@ -41,6 +41,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -204,7 +205,8 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
 
   @Override
   public boolean stillValid(Player player) {
-    return (this.level.getBlockEntity(this.worldPosition) == this)
+    Level level = this.level;
+    return (level != null && level.getBlockEntity(this.worldPosition) == this)
         && player.distanceToSqr(this.worldPosition.getX() + 0.5D, this.worldPosition.getY() + 0.5D,
             this.worldPosition.getZ() + 0.5D) <= 64.0D;
   }

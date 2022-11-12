@@ -19,9 +19,10 @@
 
 package de.markusbordihn.easymobfarm.tabs;
 
-import de.markusbordihn.easymobfarm.item.ModItems;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+
+import de.markusbordihn.easymobfarm.item.ModItems;
 
 public class EasyMobFarmTab {
 
