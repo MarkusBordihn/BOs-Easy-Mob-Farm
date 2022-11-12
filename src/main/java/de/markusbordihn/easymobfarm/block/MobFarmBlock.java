@@ -92,7 +92,7 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
   }
 
   public static int getLightLevel(BlockState blockState) {
-    return Boolean.TRUE.equals(blockState.getValue(MobFarmBlock.WORKING)) ? 10 : 1;
+    return Boolean.TRUE.equals(blockState.getValue(MobFarmBlock.WORKING)) ? 15 : 8;
   }
 
   public Set<String> getAcceptedMobTypes() {
@@ -108,12 +108,14 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
   }
 
   @Override
+  @SuppressWarnings("java:S1874")
   public VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos,
       CollisionContext collisionContext) {
     return SHAPE;
   }
 
   @Override
+  @SuppressWarnings("java:S1874")
   public RenderShape getRenderShape(BlockState blockState) {
     return RenderShape.MODEL;
   }
@@ -136,6 +138,7 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
   }
 
   @Override
+  @SuppressWarnings("java:S1874")
   public InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player,
       InteractionHand hand, BlockHitResult hitResult) {
     ItemStack itemStack = player.getItemInHand(hand);
@@ -155,7 +158,8 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
     // Remove existing mob if player is sneaking.
     if (player.isShiftKeyDown() && blockEntity instanceof MobFarmBlockEntity mobFarmBlockEntity
         && mobFarmBlockEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
-      mobFarmBlockEntity.givePlayerItem(MobFarmMenu.CAPTURED_MOB_SLOT, player, hand, blockPos);
+      mobFarmBlockEntity.givePlayerItem(MobFarmMenu.CAPTURED_MOB_SLOT, level, player, hand,
+          blockPos);
       return InteractionResult.CONSUME;
     }
 
@@ -228,8 +232,7 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
       for (String acceptedMob : acceptedMobTypes) {
         TranslatableComponent acceptedMobName = TranslatableText.getEntityName(acceptedMob);
         if (!acceptedMobName.getString().isBlank()) {
-          mobTypeOverview.append(acceptedMobName).append(", ")
-              .withStyle(ChatFormatting.DARK_GREEN);
+          mobTypeOverview.append(acceptedMobName).append(", ").withStyle(ChatFormatting.DARK_GREEN);
         }
       }
       if (!mobTypeOverview.getString().isBlank()) {
@@ -245,6 +248,7 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
 
   @OnlyIn(Dist.CLIENT)
   @Override
+  @SuppressWarnings("java:S1874")
   public float getShadeBrightness(BlockState state, BlockGetter worldIn, BlockPos pos) {
     return 1F;
   }

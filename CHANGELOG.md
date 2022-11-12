@@ -5,6 +5,13 @@
 This change log includes the summarized changes.
 For the full changelog, please go to the [Git Hub History][history] instead.
 
+### 2022.11.12
+
+- Optimized all mob farm models and fixed visual glitches for better performance.
+- Added experimental spawn egg support.
+- Added experimental support for [Corail Spawners](https://www.curseforge.com/minecraft/mc-mods/corail-spawners).
+- Fixed potential null pointer errors.
+
 ### 2022.11.06
 
 - Added nether fortress farm

@@ -110,13 +110,15 @@ Most of the mobs should already work out of the box with the creative farm, so y
 
 ## Mob Catching Item Support
 
-The mod has integrated support for mob catching items from other mods, to allow more ways of capturing and using them inside the easy mob farm.
+The mod has integrated support for mob catching items from other mods and items, to allow more ways of capturing and using them inside the easy mob farm.
 Please note that the support is limited and it could happen that not all mobs are rendered correctly inside the farm by using such items.
 Furthermore I'm not able to display the possible lot drop for catching items from other mods.
 
-- Create: Blaze Burner
-- Mob Catcher
-- Mob Capturing Tool
+- Spawn Eggs (variants from SpawnEggItem)
+- [Create](https://www.curseforge.com/minecraft/mc-mods/create): Blaze Burner
+- [Mob Catcher](https://www.curseforge.com/minecraft/mc-mods/mob-catcher-fabric)
+- [Mob Capturing Tool](https://www.curseforge.com/minecraft/mc-mods/mob-capturing-tool)
+- [Corail Spawners](https://www.curseforge.com/minecraft/mc-mods/corail-spawners)
 
 ## Type of Mob Farms
 

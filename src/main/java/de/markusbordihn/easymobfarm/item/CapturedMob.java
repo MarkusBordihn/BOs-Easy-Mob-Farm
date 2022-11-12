@@ -145,7 +145,12 @@ public class CapturedMob extends Item {
     CompoundTag entityData = livingEntity.serializeNBT();
     CompoundTag compoundTag = itemStack.getOrCreateTag();
     String name = livingEntity.getName().getString();
-    String type = livingEntity.getType().getRegistryName().toString();
+    ResourceLocation registryName = livingEntity.getType().getRegistryName();
+    if (registryName == null) {
+      log.error("Unable to set captured mob for {} with {}", livingEntity, registryName);
+      return itemStack;
+    }
+    String type = registryName.toString();
 
     // Handle possible loot for tool tips.
     ResourceLocation lootTable = livingEntity.getLootTable();

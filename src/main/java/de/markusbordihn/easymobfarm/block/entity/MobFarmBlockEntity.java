@@ -96,7 +96,7 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
     return itemStack != null && !itemStack.isEmpty();
   }
 
-  public void givePlayerItem(int index, Player player, InteractionHand hand, BlockPos blockPos) {
+  public void givePlayerItem(int index, Level level, Player player, InteractionHand hand, BlockPos blockPos) {
     ItemStack itemStack = takeItem(index);
     if (itemStack.isEmpty() || itemStack.getDamageValue() >= itemStack.getMaxDamage()) {
       return;
@@ -111,6 +111,7 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
     syncData();
   }
 
+  @SuppressWarnings("java:S1172")
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState,
       MobFarmBlockEntity blockEntity) {
 
@@ -154,12 +155,13 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
     }
   }
 
+  @SuppressWarnings("java:S135")
   private void processResult(ItemStack capturedMob, MobFarmBlockEntity blockEntity) {
     List<ItemStack> lootDrops =
         LootManager.getFilteredRandomLootDrop(capturedMob, blockEntity.getLevel());
     List<ItemStack> unstoredLootDrops = new ArrayList<>();
-
     log.debug("Processing result with {}", lootDrops);
+
     for (ItemStack lootDrop : lootDrops) {
       // Ignore empty stack with air and blacklisted items if needed.
       if (lootDrop.isEmpty() || !allowLootDropItem(lootDrop)) {
@@ -239,8 +241,9 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
       log.warn("Unable to store loot drop {} for mob farm {} at {} for owner {}!", lootDrop,
           this.farmMobName, blockPos, ownerUUID);
     }
-    if (informOwnerAboutFullStorage && ownerUUID != null && blockEntity.level != null) {
-      Player owner = blockEntity.level.getPlayerByUUID(ownerUUID);
+    Level level = blockEntity.level;
+    if (informOwnerAboutFullStorage && ownerUUID != null && level != null) {
+      Player owner = level.getPlayerByUUID(ownerUUID);
       if (owner != null && owner.isAlive()) {
         MutableComponent message =
             new TranslatableComponent(Constants.MESSAGE_PREFIX + "warning_full", this.farmMobName,
@@ -286,7 +289,8 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
       // Update Block state
       BlockState blockState = getBlockState();
       BlockPos blockPos = getBlockPos();
-      if (blockState != null && blockPos != null) {
+      Level level = this.level;
+      if (blockState != null && blockPos != null && level != null) {
         BlockState newBlockState = blockState.setValue(MobFarmBlock.WORKING, !itemStack.isEmpty());
         level.setBlock(blockPos, newBlockState, 3);
         setChanged(level, blockPos, newBlockState);

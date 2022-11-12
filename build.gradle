@@ -154,9 +154,13 @@ dependencies {
   runtimeOnly fg.deobf("curse.maven:flywheel-486392:3934664")
   runtimeOnly fg.deobf("curse.maven:create-328085:4007544")
 
-  // Create: Mob Capturing Tool
+  // Mob Capturing Tool: Integration
   compileOnly fg.deobf("curse.maven:mob-capturing-tool-630272:3834440")
   runtimeOnly fg.deobf("curse.maven:mob-capturing-tool-630272:3834440")
+
+  // Corail Spawners: Integration
+  compileOnly fg.deobf("curse.maven:corail-spawners-438467:4028300")
+  runtimeOnly fg.deobf("curse.maven:corail-spawners-438467:4028300")
 
   // Alex Mob's (Testing)
   // runtimeOnly fg.deobf("curse.maven:citadel-331936:3584733:deobf")

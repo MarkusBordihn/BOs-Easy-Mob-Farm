@@ -31,6 +31,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -148,8 +149,9 @@ public class MobCatcherItem extends CapturedMob {
       }
 
       // Check if we could catch the mob Type
-      String mobType = livingEntity.getType().getRegistryName().toString();
-      if (!canCatchMob(livingEntity) || !canCatchMobType(mobType)) {
+      ResourceLocation registryName = livingEntity.getType().getRegistryName();
+      String mobType = registryName != null ? registryName.toString() : null;
+      if (!canCatchMob(livingEntity) || (mobType != null && !canCatchMobType(mobType))) {
         return InteractionResult.FAIL;
       }
 

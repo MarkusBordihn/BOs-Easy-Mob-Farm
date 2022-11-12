@@ -314,6 +314,7 @@ public class RenderHelper {
     return true;
   }
 
+  @SuppressWarnings("java:S107")
   public <T extends LivingEntity, M extends EntityModel<T>> void renderModel(PoseStack poseStack,
       MultiBufferSource buffer, float scale, float rotationX, float rotationY, double x, double y,
       double z, int combinedLight, LivingEntityRenderer<T, M> renderer, T livingEntity) {
@@ -328,6 +329,7 @@ public class RenderHelper {
     poseStack.popPose();
   }
 
+  @SuppressWarnings("java:S107")
   public <T extends LivingEntity, M extends EntityModel<T>> void renderModel(PoseStack poseStack,
       MultiBufferSource buffer, float scale, double x, double y, double z, int combinedLight,
       LivingEntityRenderer<T, M> renderer, T livingEntity) {
@@ -340,6 +342,7 @@ public class RenderHelper {
     poseStack.popPose();
   }
 
+  @SuppressWarnings("java:S107")
   public void renderCustomModel(PoseStack poseStack, MultiBufferSource buffer, float scale,
       float rotationX, float rotationY, double x, double y, double z, int combinedLight,
       EntityType<?> entityType) {
@@ -356,6 +359,7 @@ public class RenderHelper {
     }
   }
 
+  @SuppressWarnings("java:S107")
   public void renderCustomModel(PoseStack poseStack, MultiBufferSource buffer, float scale,
       double x, double y, double z, int combinedLight, EntityType<?> entityType) {
     if (entityType != null) {
