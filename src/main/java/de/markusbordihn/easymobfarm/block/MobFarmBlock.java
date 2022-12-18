@@ -107,6 +107,29 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
     return SUPPORTED_MOBS_TEXT;
   }
 
+  public void appendHoverTextAcceptedMobs(List<Component> tooltipList) {
+    Set<String> acceptedMobTypes = getAcceptedMobTypes();
+    if (acceptedMobTypes != null && !acceptedMobTypes.isEmpty()) {
+      // List each single possible mob types (incl. modded mobs types).
+      TranslatableComponent mobTypeOverview = (TranslatableComponent) new TranslatableComponent("")
+          .withStyle(ChatFormatting.DARK_GREEN);
+      for (String acceptedMob : acceptedMobTypes) {
+        TranslatableComponent acceptedMobName = TranslatableText.getEntityName(acceptedMob);
+        if (!acceptedMobName.getString().isBlank()) {
+          mobTypeOverview.append(acceptedMobName).append(", ").withStyle(ChatFormatting.DARK_GREEN);
+        }
+      }
+      if (!mobTypeOverview.getString().isBlank()) {
+        TranslatableComponent supportedMobsOverview =
+            (TranslatableComponent) new TranslatableComponent(
+                Constants.TEXT_PREFIX + getFarmDescriptionId()).append(" ")
+                    .withStyle(ChatFormatting.GREEN);
+        supportedMobsOverview.append(mobTypeOverview).append("...");
+        tooltipList.add(supportedMobsOverview);
+      }
+    }
+  }
+
   @Override
   @SuppressWarnings("java:S1874")
   public VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos,
@@ -224,26 +247,9 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
   public void appendHoverText(ItemStack itemStack, @Nullable BlockGetter blockGetter,
       List<Component> tooltipList, TooltipFlag tooltipFlag) {
     super.appendHoverText(itemStack, blockGetter, tooltipList, tooltipFlag);
-    Set<String> acceptedMobTypes = getAcceptedMobTypes();
-    if (acceptedMobTypes != null && !acceptedMobTypes.isEmpty()) {
-      // List each single possible mob types (incl. modded mobs types).
-      TranslatableComponent mobTypeOverview = (TranslatableComponent) new TranslatableComponent("")
-          .withStyle(ChatFormatting.DARK_GREEN);
-      for (String acceptedMob : acceptedMobTypes) {
-        TranslatableComponent acceptedMobName = TranslatableText.getEntityName(acceptedMob);
-        if (!acceptedMobName.getString().isBlank()) {
-          mobTypeOverview.append(acceptedMobName).append(", ").withStyle(ChatFormatting.DARK_GREEN);
-        }
-      }
-      if (!mobTypeOverview.getString().isBlank()) {
-        TranslatableComponent supportedMobsOverview =
-            (TranslatableComponent) new TranslatableComponent(
-                Constants.TEXT_PREFIX + getFarmDescriptionId()).append(" ")
-                    .withStyle(ChatFormatting.GREEN);
-        supportedMobsOverview.append(mobTypeOverview).append("...");
-        tooltipList.add(supportedMobsOverview);
-      }
-    }
+
+    // Display possible accepted mobs.
+    appendHoverTextAcceptedMobs(tooltipList);
   }
 
   @OnlyIn(Dist.CLIENT)

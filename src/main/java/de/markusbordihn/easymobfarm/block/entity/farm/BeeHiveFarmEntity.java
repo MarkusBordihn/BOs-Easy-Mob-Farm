@@ -42,43 +42,43 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.config.CommonConfig;
-import de.markusbordihn.easymobfarm.menu.farm.DesertFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.BeeHiveFarmMenu;
 
 @EventBusSubscriber
-public class DesertFarmEntity extends MobFarmBlockEntity {
+public class BeeHiveFarmEntity extends MobFarmBlockEntity {
 
-  private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
 
   // Config settings
-  private static int desertFarmProcessTime = COMMON.desertFarmProcessTime.get();
-  private static int farmProcessingTime = desertFarmProcessTime * 20;
+  private static int beeHiveFarmProcessTime = COMMON.beeHiveFarmProcessTime.get();
+  private static int farmProcessingTime = beeHiveFarmProcessTime * 20;
 
-  public DesertFarmEntity(BlockPos blockPos, BlockState blockState) {
-    super(ModBlocks.DESERT_FARM_ENTITY.get(), blockPos, blockState);
+  public BeeHiveFarmEntity(BlockPos blockPos, BlockState blockState) {
+    super(ModBlocks.BEE_HIVE_FARM_ENTITY.get(), blockPos, blockState);
   }
 
-  public DesertFarmEntity(BlockEntityType<?> blockEntity, BlockPos blockPos,
+  public BeeHiveFarmEntity(BlockEntityType<?> blockEntity, BlockPos blockPos,
       BlockState blockState) {
     super(blockEntity, blockPos, blockState);
   }
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    desertFarmProcessTime = COMMON.desertFarmProcessTime.get();
-    farmProcessingTime = desertFarmProcessTime * 20;
-    log.info("{}: DesertFarm Entity with drops every {}s", Constants.LOG_MOB_FARM_PREFIX,
-        desertFarmProcessTime);
+    beeHiveFarmProcessTime = COMMON.beeHiveFarmProcessTime.get();
+    farmProcessingTime = beeHiveFarmProcessTime * 20;
+    log.info("{}: Bee Hive Farm Entity with drops every {}s", Constants.LOG_MOB_FARM_PREFIX,
+        beeHiveFarmProcessTime);
   }
 
   @Override
   protected Component getDefaultName() {
-    return new TranslatableComponent("container.easy_mob_farm.desert_farm");
+    return new TranslatableComponent("container.easy_mob_farm.bee_hive_farm");
   }
 
   @Override
   protected AbstractContainerMenu createMenu(int windowId, Inventory inventory) {
-    return new DesertFarmMenu(windowId, inventory, this, this.dataAccess);
+    return new BeeHiveFarmMenu(windowId, inventory, this, this.dataAccess);
   }
 
   @Override
@@ -90,7 +90,7 @@ public class DesertFarmEntity extends MobFarmBlockEntity {
   public void processAdditionalEffects(Level level, BlockPos blockPos,
       MobFarmBlockEntity blockEntity, ItemStack capturedMob) {
     super.processAdditionalEffects(level, blockPos, blockEntity, capturedMob);
-    level.playSound(null, blockPos, SoundEvents.SAND_HIT, SoundSource.BLOCKS, 1.0F, 1.0F);
+    level.playSound(null, blockPos, SoundEvents.BEEHIVE_DRIP, SoundSource.BLOCKS, 1.0F, 1.0F);
   }
 
 }

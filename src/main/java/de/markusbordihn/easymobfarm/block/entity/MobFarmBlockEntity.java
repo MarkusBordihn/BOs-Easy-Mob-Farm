@@ -96,7 +96,8 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
     return itemStack != null && !itemStack.isEmpty();
   }
 
-  public void givePlayerItem(int index, Level level, Player player, InteractionHand hand, BlockPos blockPos) {
+  public void givePlayerItem(int index, Level level, Player player, InteractionHand hand,
+      BlockPos blockPos) {
     ItemStack itemStack = takeItem(index);
     if (itemStack.isEmpty() || itemStack.getDamageValue() >= itemStack.getMaxDamage()) {
       return;

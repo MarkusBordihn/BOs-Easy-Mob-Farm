@@ -2,9 +2,11 @@
   "replace": false,
   "values":  [
     "easy_mob_farm:animal_plains_farm",
+    "easy_mob_farm:bee_hive_farm",
     "easy_mob_farm:creative_mob_farm",
     "easy_mob_farm:desert_farm",
     "easy_mob_farm:iron_mob_farm_template",
+    "easy_mob_farm:jungle_farm",
     "easy_mob_farm:monster_plains_cave_farm",
     "easy_mob_farm:ocean_farm",
     "easy_mob_farm:swamp_farm"

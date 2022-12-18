@@ -32,6 +32,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import de.markusbordihn.easymobfarm.Annotations.TemplateEntryPoint;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.farm.AnimalPlainsFarmEntity;
+import de.markusbordihn.easymobfarm.block.entity.farm.BeeHiveFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.CreativeMobFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.DesertFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.JungleFarmEntity;
@@ -68,6 +69,10 @@ public class ModBlocks {
           () -> new AnimalPlainsFarm(BlockBehaviour.Properties.of(Material.STONE)
               .requiresCorrectToolForDrops().strength(2.0F, 2.0F)
               .lightLevel(AnimalPlainsFarm::getLightLevel).sound(SoundType.METAL).noOcclusion()));
+  public static final RegistryObject<Block> BEE_HIVE_FARM = BLOCKS.register(BeeHiveFarm.NAME,
+      () -> new BeeHiveFarm(BlockBehaviour.Properties.of(Material.STONE)
+          .requiresCorrectToolForDrops().strength(2.0F, 2.0F).lightLevel(BeeHiveFarm::getLightLevel)
+          .sound(SoundType.METAL).noOcclusion()));
   public static final RegistryObject<Block> CREATIVE_MOB_FARM =
       BLOCKS
           .register(CreativeMobFarm.NAME,
@@ -105,6 +110,9 @@ public class ModBlocks {
   public static final RegistryObject<BlockEntityType<AnimalPlainsFarmEntity>> ANIMAL_PLAINS_FARM_ENTITY =
       ENTITIES.register(AnimalPlainsFarm.NAME, () -> BlockEntityType.Builder
           .of(AnimalPlainsFarmEntity::new, ANIMAL_PLAINS_FARM.get()).build(null));
+  public static final RegistryObject<BlockEntityType<BeeHiveFarmEntity>> BEE_HIVE_FARM_ENTITY =
+      ENTITIES.register(BeeHiveFarm.NAME, () -> BlockEntityType.Builder
+          .of(BeeHiveFarmEntity::new, BEE_HIVE_FARM.get()).build(null));
   public static final RegistryObject<BlockEntityType<CreativeMobFarmEntity>> CREATIVE_MOB_FARM_ENTITY =
       ENTITIES.register(CreativeMobFarm.NAME, () -> BlockEntityType.Builder
           .of(CreativeMobFarmEntity::new, CREATIVE_MOB_FARM.get()).build(null));

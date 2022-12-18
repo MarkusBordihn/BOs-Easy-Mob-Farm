@@ -85,6 +85,29 @@ public class MobCatcherItem extends CapturedMob {
     return mobCatchingLuck;
   }
 
+  public void appendHoverTextCatchableMobs(List<Component> tooltipList) {
+    Set<String> acceptedMobTypes = getAcceptedMobTypes();
+    if (!acceptedMobTypes.isEmpty()) {
+      // List each single possible mob types (incl. modded mobs types).
+      TranslatableComponent mobTypeOverview = (TranslatableComponent) new TranslatableComponent("")
+          .withStyle(ChatFormatting.DARK_GREEN);
+      for (String acceptedMob : acceptedMobTypes) {
+        TranslatableComponent acceptedMobName = TranslatableText.getEntityName(acceptedMob);
+        if (!acceptedMobName.getString().isBlank()) {
+          mobTypeOverview.append(acceptedMobName).append(", ").withStyle(ChatFormatting.DARK_GREEN);
+        }
+      }
+      if (!mobTypeOverview.getString().isBlank()) {
+        TranslatableComponent acceptedMobsOverview =
+            (TranslatableComponent) new TranslatableComponent(
+                Constants.TEXT_PREFIX + "catchable_mobs").append(" ")
+                    .withStyle(ChatFormatting.GREEN);
+        acceptedMobsOverview.append(mobTypeOverview).append("...");
+        tooltipList.add(acceptedMobsOverview);
+      }
+    }
+  }
+
   @Override
   public InteractionResult useOn(UseOnContext context) {
     Level level = context.getLevel();
@@ -152,6 +175,7 @@ public class MobCatcherItem extends CapturedMob {
       ResourceLocation registryName = livingEntity.getType().getRegistryName();
       String mobType = registryName != null ? registryName.toString() : null;
       if (!canCatchMob(livingEntity) || (mobType != null && !canCatchMobType(mobType))) {
+        log.debug("Unable to catch living entity {}!", registryName);
         return InteractionResult.FAIL;
       }
 
@@ -190,29 +214,7 @@ public class MobCatcherItem extends CapturedMob {
       tooltipList.add(new TranslatableComponent(Constants.TEXT_PREFIX + "capture"));
 
       // Display possible catchable mobs.
-      Set<String> acceptedMobTypes = getAcceptedMobTypes();
-      if (!acceptedMobTypes.isEmpty()) {
-        // List each single possible mob types (incl. modded mobs types).
-        TranslatableComponent mobTypeOverview =
-            (TranslatableComponent) new TranslatableComponent("")
-                .withStyle(ChatFormatting.DARK_GREEN);
-        for (String acceptedMob : acceptedMobTypes) {
-          TranslatableComponent acceptedMobName = TranslatableText.getEntityName(acceptedMob);
-          if (!acceptedMobName.getString().isBlank()) {
-            mobTypeOverview.append(acceptedMobName).append(", ")
-                .withStyle(ChatFormatting.DARK_GREEN);
-          }
-        }
-        if (!mobTypeOverview.getString().isBlank()) {
-          TranslatableComponent acceptedMobsOverview =
-              (TranslatableComponent) new TranslatableComponent(
-                  Constants.TEXT_PREFIX + "catchable_mobs").append(" ")
-                      .withStyle(ChatFormatting.GREEN);
-          acceptedMobsOverview.append(mobTypeOverview).append("...");
-          tooltipList.add(acceptedMobsOverview);
-        }
-      }
-
+      appendHoverTextCatchableMobs(tooltipList);
     } else {
       Float entityHealth = getCapturedMobHealth(itemStack);
 

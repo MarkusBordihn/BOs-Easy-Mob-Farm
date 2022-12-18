@@ -135,11 +135,15 @@ dependencies {
   // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
   // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
   // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-  minecraft 'net.minecraftforge:forge:1.18.2-40.1.84'
+  minecraft 'net.minecraftforge:forge:1.18.2-40.1.86'
 
   // Required: Bo's Material Elements (dev dependency)
   compileOnly fg.deobf("curse.maven:material_elements-541620:3835039")
   runtimeOnly fg.deobf("curse.maven:material_elements-541620:3835039")
+
+  // Productive Bees: Integration
+  compileOnly fg.deobf("curse.maven:productivebees-377897:4132653")
+  //runtimeOnly fg.deobf("curse.maven:productivebees-377897:4132653")
 
   // Jade: Integration
   compileOnly fg.deobf("curse.maven:jade-324717:3761542")
@@ -220,9 +224,10 @@ curseforge {
     mainArtifact(jar) {
       relations {
         requiredDependency 'material-elements'
+        optionalDependency 'corail-spawners'
         optionalDependency 'create'
-        optionalDependency 'mob-catcher-fabric'
         optionalDependency 'mob-capturing-tool'
+        optionalDependency 'mob-catcher-fabric'
       }
     }
   }

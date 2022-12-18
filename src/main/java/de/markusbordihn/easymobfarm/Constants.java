@@ -40,6 +40,7 @@ public final class Constants {
 
   // Functional Blocks
   public static final String ANIMAL_PLAINS_FARM = "animal_plains_farm";
+  public static final String BEE_HIVE_FARM = "bee_hive_farm";
   public static final String CREATIVE_MOB_FARM = "creative_mob_farm";
   public static final String DESERT_FARM = "desert_farm";
   public static final String JUNGLE_FARM = "jungle_farm";
@@ -57,11 +58,13 @@ public final class Constants {
   public static final int FONT_COLOR_RED = 16733525;
   public static final int FONT_COLOR_WARNING = FONT_COLOR_RED;
   public static final int FONT_COLOR_YELLOW = 16777045;
+  public static final int FONT_COLOR_WHITE = 16777215;
 
   // Supported Mods
+  public static final boolean PRODUCTIVE_BEES_LOADED = ModList.get().isLoaded("productivebees");
+  public static final boolean CORAIL_SPAWNERS_LOADED = ModList.get().isLoaded("corail_spawners");
   public static final boolean CREATE_LOADED = ModList.get().isLoaded("create");
   public static final boolean MOB_CAPTURING_TOOL_LOADED =
       ModList.get().isLoaded("mobcapturingtool");
   public static final boolean MOB_CATCHER_LOADED = ModList.get().isLoaded("mob_catcher");
-  public static final boolean CORAIL_SPAWNERS_LOADED = ModList.get().isLoaded("corail_spawners");
 }

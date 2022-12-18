@@ -31,6 +31,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.client.renderer.farm.AnimalPlainsFarmRenderer;
+import de.markusbordihn.easymobfarm.client.renderer.farm.BeeHiveFarmRenderer;
 import de.markusbordihn.easymobfarm.client.renderer.farm.CreativeMobFarmRenderer;
 import de.markusbordihn.easymobfarm.client.renderer.farm.DesertFarmRenderer;
 import de.markusbordihn.easymobfarm.client.renderer.farm.JungleFarmRenderer;
@@ -51,6 +52,8 @@ public class ClientRenderer {
     // @TemplateEntryPoint("Register Entity Renderer")
     event.registerBlockEntityRenderer(ModBlocks.ANIMAL_PLAINS_FARM_ENTITY.get(),
         AnimalPlainsFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.BEE_HIVE_FARM_ENTITY.get(),
+        BeeHiveFarmRenderer::new);
     event.registerBlockEntityRenderer(ModBlocks.CREATIVE_MOB_FARM_ENTITY.get(),
         CreativeMobFarmRenderer::new);
     event.registerBlockEntityRenderer(ModBlocks.DESERT_FARM_ENTITY.get(), DesertFarmRenderer::new);
@@ -61,10 +64,6 @@ public class ClientRenderer {
         NetherFortressFarmRenderer::new);
     event.registerBlockEntityRenderer(ModBlocks.OCEAN_FARM_ENTITY.get(), OceanFarmRenderer::new);
     event.registerBlockEntityRenderer(ModBlocks.SWAMP_FARM_ENTITY.get(), SwampFarmRenderer::new);
-  }
-
-  public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-    log.info("{} Entity Renders ...", Constants.LOG_REGISTER_PREFIX);
   }
 
   public static void registerRenderLayers(final FMLClientSetupEvent event) {
@@ -80,6 +79,7 @@ public class ClientRenderer {
       // Mobs Farms
       ItemBlockRenderTypes.setRenderLayer(ModBlocks.ANIMAL_PLAINS_FARM.get(),
           RenderType.cutoutMipped());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.BEE_HIVE_FARM.get(), RenderType.cutoutMipped());
       ItemBlockRenderTypes.setRenderLayer(ModBlocks.CREATIVE_MOB_FARM.get(),
           RenderType.cutoutMipped());
       ItemBlockRenderTypes.setRenderLayer(ModBlocks.DESERT_FARM.get(), RenderType.cutoutMipped());

@@ -58,7 +58,6 @@ public class EasyMobFarm {
 
     DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
       modEventBus.addListener(ClientRenderer::registerBlockEntityRenderers);
-      modEventBus.addListener(ClientRenderer::registerEntityRenderers);
       modEventBus.addListener(ClientRenderer::registerRenderLayers);
       modEventBus.addListener(ClientScreens::registerScreens);
       modEventBus.addListener(ModItemProperties::registerItemProperties);

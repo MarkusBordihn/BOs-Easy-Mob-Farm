@@ -27,6 +27,7 @@ import net.minecraftforge.event.RegistryEvent;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.menu.farm.AnimalPlainsFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.BeeHiveFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.CreativeMobFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.DesertFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.JungleFarmMenu;
@@ -45,10 +46,10 @@ public class ContainerMenu {
     log.info("{} Container Menu ...", Constants.LOG_REGISTER_PREFIX);
 
     // Mob Farm Container Menu
-    event.getRegistry()
-        .registerAll(new MenuType<>(OceanFarmMenu::new).setRegistryName(Constants.OCEAN_FARM));
     event.getRegistry().registerAll(
         new MenuType<>(AnimalPlainsFarmMenu::new).setRegistryName(Constants.ANIMAL_PLAINS_FARM));
+    event.getRegistry()
+        .registerAll(new MenuType<>(BeeHiveFarmMenu::new).setRegistryName(Constants.BEE_HIVE_FARM));
     event.getRegistry().registerAll(
         new MenuType<>(CreativeMobFarmMenu::new).setRegistryName(Constants.CREATIVE_MOB_FARM));
     event.getRegistry()
@@ -60,7 +61,10 @@ public class ContainerMenu {
     event.getRegistry().registerAll(new MenuType<>(NetherFortressFarmMenu::new)
         .setRegistryName(Constants.NETHER_FORTRESS_FARM));
     event.getRegistry()
+        .registerAll(new MenuType<>(OceanFarmMenu::new).setRegistryName(Constants.OCEAN_FARM));
+    event.getRegistry()
         .registerAll(new MenuType<>(SwampFarmMenu::new).setRegistryName(Constants.SWAMP_FARM));
+
     event.getRegistry()
         .registerAll(new MenuType<>(MobFarmMenu::new).setRegistryName(Constants.MOB_FARM));
   }

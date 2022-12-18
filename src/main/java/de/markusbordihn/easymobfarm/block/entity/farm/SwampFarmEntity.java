@@ -58,8 +58,7 @@ public class SwampFarmEntity extends MobFarmBlockEntity {
     super(ModBlocks.SWAMP_FARM_ENTITY.get(), blockPos, blockState);
   }
 
-  public SwampFarmEntity(BlockEntityType<?> blockEntity, BlockPos blockPos,
-      BlockState blockState) {
+  public SwampFarmEntity(BlockEntityType<?> blockEntity, BlockPos blockPos, BlockState blockState) {
     super(blockEntity, blockPos, blockState);
   }
 
@@ -90,7 +89,7 @@ public class SwampFarmEntity extends MobFarmBlockEntity {
   public void processAdditionalEffects(Level level, BlockPos blockPos,
       MobFarmBlockEntity blockEntity, ItemStack capturedMob) {
     super.processAdditionalEffects(level, blockPos, blockEntity, capturedMob);
-    level.playSound(null, blockPos, SoundEvents.CHICKEN_EGG, SoundSource.BLOCKS, 1.0F, 1.0F);
+    level.playSound(null, blockPos, SoundEvents.SLIME_SQUISH_SMALL, SoundSource.BLOCKS, 1.0F, 1.0F);
   }
 
 }

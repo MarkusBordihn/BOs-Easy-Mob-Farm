@@ -5,6 +5,12 @@
 This change log includes the summarized changes.
 For the full changelog, please go to the [Git Hub History][history] instead.
 
+### 2022.12.17
+
+- Added insect net capture item.
+- Added bee hive mob farm with experimental support for [Productive Bees](https://www.curseforge.com/minecraft/mc-mods/productivebees)
+- Improved existing items.
+
 ### 2022.11.12
 
 - Optimized all mob farm models and fixed visual glitches for better performance.

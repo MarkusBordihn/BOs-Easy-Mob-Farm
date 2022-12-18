@@ -42,6 +42,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.MobFarmBlock;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.config.mobs.AmbientWaterAnimal;
+import de.markusbordihn.easymobfarm.config.mobs.BeeAnimal;
 import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
 import de.markusbordihn.easymobfarm.config.mobs.HostileNetherMonster;
 import de.markusbordihn.easymobfarm.config.mobs.HostileWaterMonster;
@@ -110,6 +111,12 @@ public class RenderHelper {
 
   public float getCustomEntityScale() {
     return this.renderModels.getCustomEntityScale();
+  }
+
+  public void renderBee(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
+      double y, double z, int combinedLight) {
+    renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
+        this.renderModels.getBeeRenderer(), this.renderModels.getBee());
   }
 
   public void renderBlaze(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
@@ -224,6 +231,9 @@ public class RenderHelper {
       String farmMobType) {
     // Render Animals using their specific Renderer and predefined scaling and position.
     switch (farmMobType) {
+      case BeeAnimal.BEE:
+        renderBee(poseStack, buffer, 0.5F, 0D, 0.25D, 2D / 16D, combinedLight);
+        break;
       case PassiveAnimal.CHICKEN:
         renderChicken(poseStack, buffer, 0.5F, 0D, 0D, 2D / 16D, combinedLight);
         break;
@@ -308,6 +318,20 @@ public class RenderHelper {
       int combinedLight, EntityType<?> entityType) {
     if (entityType != null) {
       renderCustomModel(poseStack, buffer, 0D, 0D, 1D / 16D, combinedLight, entityType);
+    } else {
+      return false;
+    }
+    return true;
+  }
+
+  @SuppressWarnings("java:S107")
+  public boolean renderLivingEntity(PoseStack poseStack, MultiBufferSource buffer, float scale,
+      double x, double y, double z, int combinedLight, EntityType<?> entityType) {
+    if (entityType != null) {
+      poseStack.pushPose();
+      poseStack.scale(scale, scale, scale);
+      renderCustomModel(poseStack, buffer, x, y, z, combinedLight, entityType);
+      poseStack.popPose();
     } else {
       return false;
     }
