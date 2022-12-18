@@ -27,6 +27,7 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.client.renderer.farm.AnimalPlainsFarmRenderer;
+import de.markusbordihn.easymobfarm.client.renderer.farm.BeeHiveFarmRenderer;
 import de.markusbordihn.easymobfarm.client.renderer.farm.CreativeMobFarmRenderer;
 import de.markusbordihn.easymobfarm.client.renderer.farm.DesertFarmRenderer;
 import de.markusbordihn.easymobfarm.client.renderer.farm.JungleFarmRenderer;
@@ -47,6 +48,8 @@ public class ClientRenderer {
     // @TemplateEntryPoint("Register Entity Renderer")
     event.registerBlockEntityRenderer(ModBlocks.ANIMAL_PLAINS_FARM_ENTITY.get(),
         AnimalPlainsFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.BEE_HIVE_FARM_ENTITY.get(),
+        BeeHiveFarmRenderer::new);
     event.registerBlockEntityRenderer(ModBlocks.CREATIVE_MOB_FARM_ENTITY.get(),
         CreativeMobFarmRenderer::new);
     event.registerBlockEntityRenderer(ModBlocks.DESERT_FARM_ENTITY.get(), DesertFarmRenderer::new);

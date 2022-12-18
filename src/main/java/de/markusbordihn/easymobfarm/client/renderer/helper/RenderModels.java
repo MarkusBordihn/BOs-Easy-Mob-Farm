@@ -25,6 +25,7 @@ import org.apache.logging.log4j.Logger;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.SquidModel;
 import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.entity.BeeRenderer;
 import net.minecraft.client.renderer.entity.BlazeRenderer;
 import net.minecraft.client.renderer.entity.CaveSpiderRenderer;
 import net.minecraft.client.renderer.entity.ChickenRenderer;
@@ -51,6 +52,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.GlowSquid;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.Cod;
 import net.minecraft.world.entity.animal.Cow;
@@ -73,6 +75,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 
 import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.config.mobs.BeeAnimal;
 import de.markusbordihn.easymobfarm.config.mobs.HostileNetherMonster;
 import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
 
@@ -86,6 +89,9 @@ public class RenderModels {
   private Entity customEntity = null;
   private float customEntityScale = 0F;
   private EntityRenderDispatcher entityRenderDispatcher = null;
+
+  private Bee bee = null;
+  private BeeRenderer beeRenderer = null;
 
   private CaveSpider caveSpider = null;
   private CaveSpiderRenderer caveSpiderRenderer = null;
@@ -194,6 +200,8 @@ public class RenderModels {
 
   public LivingEntity getEntityTypeModel(String entityType) {
     switch (entityType) {
+      case BeeAnimal.BEE:
+        return getBee();
       case HostileNetherMonster.BLAZE:
         return getBlaze();
       case PassiveAnimal.RABBIT:
@@ -203,6 +211,20 @@ public class RenderModels {
       default:
         return null;
     }
+  }
+
+  public Bee getBee() {
+    if (this.bee == null) {
+      this.bee = new Bee(EntityType.BEE, getLevel());
+    }
+    return this.bee;
+  }
+
+  public BeeRenderer getBeeRenderer() {
+    if (this.beeRenderer == null) {
+      this.beeRenderer = new BeeRenderer(getEntityRendererContext());
+    }
+    return this.beeRenderer;
   }
 
   public Blaze getBlaze() {

@@ -1,0 +1,25 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": ["easy_mob_farm:bee_hive_farm_from_iron_mob_farm_template"]
+  },
+  "criteria": {
+    "has_beehive": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:beehive"]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "easy_mob_farm:bee_hive_farm_from_iron_mob_farm_template"
+      }
+    }
+  },
+  "requirements": [["has_beehive", "has_the_recipe"]]
+}

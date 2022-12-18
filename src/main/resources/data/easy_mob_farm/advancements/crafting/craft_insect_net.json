@@ -1,0 +1,31 @@
+{
+  "parent": "easy_mob_farm:crafting/craft_bee_hive_farm",
+  "display": {
+    "icon": {
+      "item": "easy_mob_farm:insect_net"
+    },
+    "title": {
+      "translate": "advancements.easy_mob_farm.crafting.craft_insect_net.title"
+    },
+    "description": {
+      "translate": "advancements.easy_mob_farm.crafting.craft_insect_net.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "get_insect_net": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["easy_mob_farm:insect_net"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [["get_insect_net"]]
+}

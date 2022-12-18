@@ -22,6 +22,7 @@ package de.markusbordihn.easymobfarm.block;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+
 import javax.annotation.Nullable;
 
 import net.minecraft.ChatFormatting;
@@ -105,6 +106,27 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
 
   public String getFarmDescriptionId() {
     return SUPPORTED_MOBS_TEXT;
+  }
+
+  public void appendHoverTextAcceptedMobs(List<Component> tooltipList) {
+    Set<String> acceptedMobTypes = getAcceptedMobTypes();
+    if (acceptedMobTypes != null && !acceptedMobTypes.isEmpty()) {
+      // List each single possible mob types (incl. modded mobs types).
+      MutableComponent mobTypeOverview = Component.literal("").withStyle(ChatFormatting.DARK_GREEN);
+      for (String acceptedMob : acceptedMobTypes) {
+        Component acceptedMobName = TranslatableText.getEntityName(acceptedMob);
+        if (!acceptedMobName.getString().isBlank()) {
+          mobTypeOverview.append(acceptedMobName).append(", ").withStyle(ChatFormatting.DARK_GREEN);
+        }
+      }
+      if (!mobTypeOverview.getString().isBlank()) {
+        MutableComponent supportedMobsOverview =
+            Component.translatable(Constants.TEXT_PREFIX + getFarmDescriptionId()).append(" ")
+                .withStyle(ChatFormatting.GREEN);
+        supportedMobsOverview.append(mobTypeOverview).append("...");
+        tooltipList.add(supportedMobsOverview);
+      }
+    }
   }
 
   @Override
@@ -224,24 +246,9 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
   public void appendHoverText(ItemStack itemStack, @Nullable BlockGetter blockGetter,
       List<Component> tooltipList, TooltipFlag tooltipFlag) {
     super.appendHoverText(itemStack, blockGetter, tooltipList, tooltipFlag);
-    Set<String> acceptedMobTypes = getAcceptedMobTypes();
-    if (acceptedMobTypes != null && !acceptedMobTypes.isEmpty()) {
-      // List each single possible mob types (incl. modded mobs types).
-      MutableComponent mobTypeOverview = Component.literal("").withStyle(ChatFormatting.DARK_GREEN);
-      for (String acceptedMob : acceptedMobTypes) {
-        Component acceptedMobName = TranslatableText.getEntityName(acceptedMob);
-        if (!acceptedMobName.getString().isBlank()) {
-          mobTypeOverview.append(acceptedMobName).append(", ").withStyle(ChatFormatting.DARK_GREEN);
-        }
-      }
-      if (!mobTypeOverview.getString().isBlank()) {
-        MutableComponent supportedMobsOverview =
-            Component.translatable(Constants.TEXT_PREFIX + getFarmDescriptionId()).append(" ")
-                .withStyle(ChatFormatting.GREEN);
-        supportedMobsOverview.append(mobTypeOverview).append("...");
-        tooltipList.add(supportedMobsOverview);
-      }
-    }
+
+    // Display possible accepted mobs.
+    appendHoverTextAcceptedMobs(tooltipList);
   }
 
   @OnlyIn(Dist.CLIENT)

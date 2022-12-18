@@ -3,7 +3,9 @@
   "advancements.easy_mob_farm.crafting.root.title": "Easy Mob Farm",
 
   "advancements.easy_mob_farm.crafting.craft_animal_plains_farm.description": "To make sure the animals feels comfortable we need to gather some material from the plains.",
-  "advancements.easy_mob_farm.crafting.craft_animal_plains_farm.title": "Create s sweat home for plains animals.",
+  "advancements.easy_mob_farm.crafting.craft_animal_plains_farm.title": "Create a sweat home for plains animals.",
+  "advancements.easy_mob_farm.crafting.craft_bee_hive_farm.description": "For farming honeycombs we need a bee hive farm.",
+  "advancements.easy_mob_farm.crafting.craft_bee_hive_farm.title": "Do you want some honeycombs?",
   "advancements.easy_mob_farm.crafting.craft_catch_cage.description": "For catching bigger animals we need a catch cage.",
   "advancements.easy_mob_farm.crafting.craft_catch_cage.title": "How to catch bigger animal?",
   "advancements.easy_mob_farm.crafting.craft_catch_cage_small.description": "For catching small animals we need a small catch cage.",
@@ -16,6 +18,8 @@
   "advancements.easy_mob_farm.crafting.craft_fishing_bowl.title": "Let's start with a small fish?",
   "advancements.easy_mob_farm.crafting.craft_fishing_net_small.description": "With the small fishing net you can catch nornal ocean creatues like squids.",
   "advancements.easy_mob_farm.crafting.craft_fishing_net_small.title": "Do you like tentacles?",
+  "advancements.easy_mob_farm.crafting.craft_insect_net.description": "For catching insects we need a insect net.",
+  "advancements.easy_mob_farm.crafting.craft_insect_net.title": "How to catch insects?",
   "advancements.easy_mob_farm.crafting.craft_iron_mob_farm_template.description": "First build a iron mob farm template from a iron frame with glass.",
   "advancements.easy_mob_farm.crafting.craft_iron_mob_farm_template.title": "Lets build our first easy mob farm.",
   "advancements.easy_mob_farm.crafting.craft_jungle_farm.description": "For farming jungle creatues you need a jungle farm.",
@@ -59,6 +63,7 @@
   "block.placeholder.text": "Template placeholder do not remove!",
 
   "block.easy_mob_farm.animal_plains_farm": "Animal Plains Farm",
+  "block.easy_mob_farm.bee_hive_farm": "Bee Hive Farm",
   "block.easy_mob_farm.creative_mob_farm": "Creative Mob Farm",
   "block.easy_mob_farm.desert_farm": "Desert Farm",
   "block.easy_mob_farm.jungle_farm": "Jungle Farm",
@@ -68,6 +73,7 @@
   "block.easy_mob_farm.swamp_farm": "Swamp Farm",
 
   "container.easy_mob_farm.animal_plains_farm": "Animal Plains Farm",
+  "container.easy_mob_farm.bee_hive_farm": "Bee Hive Farm",
   "container.easy_mob_farm.creative_mob_farm": "Creative Mob Farm",
   "container.easy_mob_farm.desert_farm": "Desert Farm",
   "container.easy_mob_farm.jungle_farm": "Jungle Farm",
@@ -83,6 +89,7 @@
   "item.easy_mob_farm.creative_mob_catcher": "Creative Mob Catcher",
   "item.easy_mob_farm.fishing_bowl": "Fishing Bowl",
   "item.easy_mob_farm.fishing_net_small": "Fishing Net (small)",
+  "item.easy_mob_farm.insect_net": "Insect Net",
   "item.easy_mob_farm.urn_small": "Urn Small (small)",
   "item.easy_mob_farm.witch_bottle": "Witch Bottle",
 

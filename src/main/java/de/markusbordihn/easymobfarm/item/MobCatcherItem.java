@@ -85,6 +85,27 @@ public class MobCatcherItem extends CapturedMob {
     return mobCatchingLuck;
   }
 
+  public void appendHoverTextCatchableMobs(List<Component> tooltipList) {
+    Set<String> acceptedMobTypes = getAcceptedMobTypes();
+    if (!acceptedMobTypes.isEmpty()) {
+      // List each single possible mob types (incl. modded mobs types).
+      MutableComponent mobTypeOverview = Component.literal("").withStyle(ChatFormatting.DARK_GREEN);
+      for (String acceptedMob : acceptedMobTypes) {
+        Component acceptedMobName = TranslatableText.getEntityName(acceptedMob);
+        if (!acceptedMobName.getString().isBlank()) {
+          mobTypeOverview.append(acceptedMobName).append(", ").withStyle(ChatFormatting.DARK_GREEN);
+        }
+      }
+      if (!mobTypeOverview.getString().isBlank()) {
+        MutableComponent acceptedMobsOverview =
+            Component.translatable(Constants.TEXT_PREFIX + "catchable_mobs").append(" ")
+                .withStyle(ChatFormatting.GREEN);
+        acceptedMobsOverview.append(mobTypeOverview).append("...");
+        tooltipList.add(acceptedMobsOverview);
+      }
+    }
+  }
+
   @Override
   public InteractionResult useOn(UseOnContext context) {
     Level level = context.getLevel();
@@ -189,27 +210,7 @@ public class MobCatcherItem extends CapturedMob {
       tooltipList.add(Component.translatable(Constants.TEXT_PREFIX + "capture"));
 
       // Display possible catchable mobs.
-      Set<String> acceptedMobTypes = getAcceptedMobTypes();
-      if (!acceptedMobTypes.isEmpty()) {
-        // List each single possible mob types (incl. modded mobs types).
-        MutableComponent mobTypeOverview =
-            Component.literal("").withStyle(ChatFormatting.DARK_GREEN);
-        for (String acceptedMob : acceptedMobTypes) {
-          Component acceptedMobName = TranslatableText.getEntityName(acceptedMob);
-          if (!acceptedMobName.getString().isBlank()) {
-            mobTypeOverview.append(acceptedMobName).append(", ")
-                .withStyle(ChatFormatting.DARK_GREEN);
-          }
-        }
-        if (!mobTypeOverview.getString().isBlank()) {
-          MutableComponent acceptedMobsOverview =
-              Component.translatable(Constants.TEXT_PREFIX + "catchable_mobs").append(" ")
-                  .withStyle(ChatFormatting.GREEN);
-          acceptedMobsOverview.append(mobTypeOverview).append("...");
-          tooltipList.add(acceptedMobsOverview);
-        }
-      }
-
+      appendHoverTextCatchableMobs(tooltipList);
     } else {
       Float entityHealth = getCapturedMobHealth(itemStack);
 

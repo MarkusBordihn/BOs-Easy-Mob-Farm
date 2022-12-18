@@ -21,6 +21,7 @@ package de.markusbordihn.easymobfarm.loot;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -48,8 +49,12 @@ import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
+import cy.jdkdigital.productivebees.init.ModItems;
+import cy.jdkdigital.productivebees.util.BeeCreator;
+
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.config.CommonConfig;
+import de.markusbordihn.easymobfarm.config.mobs.BeeAnimal;
 import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
 import de.markusbordihn.easymobfarm.config.mobs.HostileNetherMonster;
 import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
@@ -61,6 +66,8 @@ public class LootManager {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
+
+  private static final Random random = new Random();
 
   private static FakePlayer fakePlayer;
   private static final GameProfile GAME_PROFILE =
@@ -174,10 +181,30 @@ public class LootManager {
     if (Boolean.TRUE.equals(COMMON.blazeDropBlazeRod.get())
         && mobType.equals(HostileNetherMonster.BLAZE)) {
       lootDrops.add(new ItemStack(Items.BLAZE_ROD));
-    }
-    if (Boolean.TRUE.equals(COMMON.chickenDropEggs.get())
+    } else if (Boolean.TRUE.equals(COMMON.chickenDropEggs.get())
         && mobType.equals(PassiveAnimal.CHICKEN)) {
       lootDrops.add(new ItemStack(Items.EGG));
+    } else if (Boolean.TRUE.equals(COMMON.beeDropHoneycomb.get()) && mobType.equals(BeeAnimal.BEE)) {
+      if (random.nextInt(3) == 0) {
+        lootDrops.add(new ItemStack(Items.HONEYCOMB));
+      }
+    } else if (Boolean.TRUE.equals(COMMON.beeDropHoneycomb.get()) && Constants.PRODUCTIVE_BEES_LOADED
+        && BeeAnimal.ProductiveBees.contains(mobType)) {
+      if (random.nextInt(3) == 0) {
+        lootDrops.add(new ItemStack(Items.HONEYCOMB));
+      } else if (random.nextInt(3) == 1) {
+        if (mobType.equals(BeeAnimal.GHOSTLY_BEE)) {
+          lootDrops.add(new ItemStack(ModItems.HONEYCOMB_GHOSTLY.get()));
+        } else if (mobType.equals(BeeAnimal.RANCHER_BEE)) {
+          lootDrops.add(new ItemStack(ModItems.HONEYCOMB_MILKY.get()));
+        } else if (mobType.equals(BeeAnimal.CREEPER_BEE)) {
+          lootDrops.add(new ItemStack(ModItems.HONEYCOMB_POWDERY.get()));
+        } else {
+          ItemStack honeyComb = new ItemStack(ModItems.CONFIGURABLE_HONEYCOMB.get());
+          BeeCreator.setTag(mobType.replace("_bee", "").replace("_mining", ""), honeyComb);
+          lootDrops.add(honeyComb);
+        }
+      }
     }
 
     // Check each single loot drop.

@@ -28,6 +28,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.menu.farm.AnimalPlainsFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.BeeHiveFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.CreativeMobFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.DesertFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.JungleFarmMenu;
@@ -48,6 +49,9 @@ public class ModMenuTypes {
   public static final RegistryObject<MenuType<AnimalPlainsFarmMenu>> ANIMAL_PLAINS_FARM_MENU =
       MENU_TYPES.register("animal_plains_farm", () -> IForgeMenuType.create(
           (windowIdIn, inventory, data) -> new AnimalPlainsFarmMenu(windowIdIn, inventory)));
+  public static final RegistryObject<MenuType<BeeHiveFarmMenu>> BEE_HIVE_FARM_MENU =
+      MENU_TYPES.register("bee_hive_farm", () -> IForgeMenuType
+          .create((windowIdIn, inventory, data) -> new BeeHiveFarmMenu(windowIdIn, inventory)));
   public static final RegistryObject<MenuType<CreativeMobFarmMenu>> CREATIVE_MOB_FARM_MENU =
       MENU_TYPES.register("creative_mob_farm", () -> IForgeMenuType
           .create((windowIdIn, inventory, data) -> new CreativeMobFarmMenu(windowIdIn, inventory)));

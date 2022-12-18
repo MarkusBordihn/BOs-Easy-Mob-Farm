@@ -29,6 +29,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.AnimalPlainsFarm;
+import de.markusbordihn.easymobfarm.block.BeeHiveFarm;
 import de.markusbordihn.easymobfarm.block.CreativeMobFarm;
 import de.markusbordihn.easymobfarm.block.DesertFarm;
 import de.markusbordihn.easymobfarm.block.JungleFarm;
@@ -43,6 +44,7 @@ import de.markusbordihn.easymobfarm.item.mobcatcher.CatchCageSmall;
 import de.markusbordihn.easymobfarm.item.mobcatcher.CollarSmall;
 import de.markusbordihn.easymobfarm.item.mobcatcher.CreativeMobCatcher;
 import de.markusbordihn.easymobfarm.item.mobcatcher.FishingNetSmall;
+import de.markusbordihn.easymobfarm.item.mobcatcher.InsectNet;
 import de.markusbordihn.easymobfarm.item.mobcatcher.Net;
 import de.markusbordihn.easymobfarm.item.mobcatcher.UrnSmall;
 import de.markusbordihn.easymobfarm.item.mobcatcher.WitchBottle;
@@ -81,6 +83,9 @@ public class ModItems {
   public static final RegistryObject<Item> FISHING_NET_SMALL =
       ITEMS.register("fishing_net_small", () -> new FishingNetSmall(
           new Item.Properties().stacksTo(1).durability(10).tab(EasyMobFarmTab.TOOLS)));
+  public static final RegistryObject<Item> INSECT_NET =
+      ITEMS.register("insect_net", () -> new InsectNet(
+          new Item.Properties().stacksTo(1).durability(10).tab(EasyMobFarmTab.TOOLS)));
   public static final RegistryObject<Item> URN_SMALL =
       ITEMS.register("urn_small", () -> new UrnSmall(
           new Item.Properties().stacksTo(1).durability(11).tab(EasyMobFarmTab.TOOLS)));
@@ -103,6 +108,9 @@ public class ModItems {
   // Mob Farms
   public static final RegistryObject<Item> ANIMAL_PLAINS_FARM =
       ITEMS.register(AnimalPlainsFarm.NAME, () -> new BlockItem(ModBlocks.ANIMAL_PLAINS_FARM.get(),
+          new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
+  public static final RegistryObject<Item> BEE_HIVE_FARM =
+      ITEMS.register(BeeHiveFarm.NAME, () -> new BlockItem(ModBlocks.BEE_HIVE_FARM.get(),
           new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
   public static final RegistryObject<Item> CREATIVE_MOB_FARM =
       ITEMS.register(CreativeMobFarm.NAME, () -> new BlockItem(ModBlocks.CREATIVE_MOB_FARM.get(),

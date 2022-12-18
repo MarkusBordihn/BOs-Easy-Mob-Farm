@@ -41,40 +41,41 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.config.CommonConfig;
-import de.markusbordihn.easymobfarm.menu.farm.SwampFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.BeeHiveFarmMenu;
 
 @EventBusSubscriber
-public class SwampFarmEntity extends MobFarmBlockEntity {
+public class BeeHiveFarmEntity extends MobFarmBlockEntity {
 
-  private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
 
   private static int farmProcessingTime = 60 * 20;
 
-  public SwampFarmEntity(BlockPos blockPos, BlockState blockState) {
-    super(ModBlocks.SWAMP_FARM_ENTITY.get(), blockPos, blockState);
+  public BeeHiveFarmEntity(BlockPos blockPos, BlockState blockState) {
+    super(ModBlocks.BEE_HIVE_FARM_ENTITY.get(), blockPos, blockState);
   }
 
-  public SwampFarmEntity(BlockEntityType<?> blockEntity, BlockPos blockPos, BlockState blockState) {
+  public BeeHiveFarmEntity(BlockEntityType<?> blockEntity, BlockPos blockPos,
+      BlockState blockState) {
     super(blockEntity, blockPos, blockState);
   }
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    farmProcessingTime = COMMON.swampFarmProcessTime.get() * 20;
-    log.info("{}: SwampFarm Entity with drops every {}s", Constants.LOG_MOB_FARM_PREFIX,
-        COMMON.swampFarmProcessTime.get());
+    farmProcessingTime = COMMON.beeHiveFarmProcessTime.get() * 20;
+    log.info("{}: Bee Hive Farm Entity with drops every {}s", Constants.LOG_MOB_FARM_PREFIX,
+        COMMON.beeHiveFarmProcessTime.get());
   }
 
   @Override
   protected Component getDefaultName() {
-    return Component.translatable("container.easy_mob_farm.swamp_farm");
+    return Component.translatable("container.easy_mob_farm.bee_hive_farm");
   }
 
   @Override
   protected AbstractContainerMenu createMenu(int windowId, Inventory inventory) {
-    return new SwampFarmMenu(windowId, inventory, this, this.dataAccess);
+    return new BeeHiveFarmMenu(windowId, inventory, this, this.dataAccess);
   }
 
   @Override
@@ -86,7 +87,7 @@ public class SwampFarmEntity extends MobFarmBlockEntity {
   public void processAdditionalEffects(Level level, BlockPos blockPos,
       MobFarmBlockEntity blockEntity, ItemStack capturedMob) {
     super.processAdditionalEffects(level, blockPos, blockEntity, capturedMob);
-    level.playSound(null, blockPos, SoundEvents.SLIME_SQUISH_SMALL, SoundSource.BLOCKS, 1.0F, 1.0F);
+    level.playSound(null, blockPos, SoundEvents.BEEHIVE_DRIP, SoundSource.BLOCKS, 1.0F, 1.0F);
   }
 
 }

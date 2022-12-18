@@ -69,7 +69,7 @@ public class CreativeMobFarm extends MobFarmBlock {
 
   @Override
   public boolean isAcceptedMobType(String mobType) {
-    return true;
+    return mobType != null && !mobType.isBlank();
   }
 
   @Override

@@ -40,6 +40,7 @@ import de.markusbordihn.easymobfarm.config.biome.Plains;
 import de.markusbordihn.easymobfarm.config.biome.PlainsCave;
 import de.markusbordihn.easymobfarm.config.biome.Swamp;
 import de.markusbordihn.easymobfarm.config.mobs.AmbientWaterAnimal;
+import de.markusbordihn.easymobfarm.config.mobs.BeeAnimal;
 import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
 import de.markusbordihn.easymobfarm.config.mobs.HostileWaterMonster;
 import de.markusbordihn.easymobfarm.config.mobs.NeutralAnimal;
@@ -81,6 +82,9 @@ public class CommonConfig {
     public final ForgeConfigSpec.IntValue animalPlainsFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<List<String>> animalPlainsFarmMobs;
 
+    public final ForgeConfigSpec.IntValue beeHiveFarmProcessTime;
+    public final ForgeConfigSpec.ConfigValue<List<String>> beeHiveFarmMobs;
+
     public final ForgeConfigSpec.IntValue creativeMobFarmProcessTime;
 
     public final ForgeConfigSpec.IntValue desertFarmProcessTime;
@@ -116,12 +120,16 @@ public class CommonConfig {
     public final ForgeConfigSpec.IntValue fishingNetSmallMobCatchingLuck;
     public final ForgeConfigSpec.ConfigValue<List<String>> fishingNetSmallMobs;
 
+    public final ForgeConfigSpec.IntValue insectNetMobCatchingLuck;
+    public final ForgeConfigSpec.ConfigValue<List<String>> insectNetMobs;
+
     public final ForgeConfigSpec.IntValue urnSmallMobCatchingLuck;
     public final ForgeConfigSpec.ConfigValue<List<String>> urnSmallMobs;
 
     public final ForgeConfigSpec.IntValue witchBottleMobCatchingLuck;
     public final ForgeConfigSpec.ConfigValue<List<String>> witchBottleMobs;
 
+    public final ForgeConfigSpec.BooleanValue beeDropHoneycomb;
     public final ForgeConfigSpec.BooleanValue blazeDropBlazeRod;
     public final ForgeConfigSpec.BooleanValue chickenDropEggs;
     public final ForgeConfigSpec.BooleanValue chickenDropRawChicken;
@@ -149,6 +157,13 @@ public class CommonConfig {
           .defineInRange("animalPlainsFarmProcessTime", 300, 10, 3600);
       animalPlainsFarmMobs = builder.comment("Supported Mobs for the animal plains farm.")
           .define("animalPlainsFarmMobs", new ArrayList<String>(Plains.Passive));
+      builder.pop();
+
+      builder.push("Bee Hive Farms");
+      beeHiveFarmProcessTime =
+          builder.comment(PROCESS_TIME_TEXT).defineInRange("beeHiveFarmProcessTime", 300, 10, 3600);
+      beeHiveFarmMobs = builder.comment("Supported Mobs for the bee hive farm.")
+          .define("beeHiveFarmMobs", new ArrayList<String>(BeeAnimal.AllLootable));
       builder.pop();
 
       builder.push("Creative Mob Farm");
@@ -179,10 +194,10 @@ public class CommonConfig {
       builder.pop();
 
       builder.push("Nether Fortress Farm");
-      netherFortressFarmProcessTime =
-          builder.comment(PROCESS_TIME_TEXT).defineInRange("netherFortressFarmProcessTime", 300, 10, 3600);
-      netherFortressFarmMobs = builder.comment("Supported Mobs for the nether fortress farm.").define("netherFortressFarmMobs",
-          new ArrayList<String>(NetherFortress.All));
+      netherFortressFarmProcessTime = builder.comment(PROCESS_TIME_TEXT)
+          .defineInRange("netherFortressFarmProcessTime", 300, 10, 3600);
+      netherFortressFarmMobs = builder.comment("Supported Mobs for the nether fortress farm.")
+          .define("netherFortressFarmMobs", new ArrayList<String>(NetherFortress.All));
       builder.pop();
 
       builder.push("Ocean Farm");
@@ -246,6 +261,13 @@ public class CommonConfig {
               HostileWaterMonster.DROWNED)));
       builder.pop();
 
+      builder.push("Insect net (Mob Catching Item)");
+      insectNetMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
+          .defineInRange("insectNetMobCatchingLuck", 3, 0, 100);
+      insectNetMobs = builder.comment("Catchable mobs with the insect net.").define("insectNetMobs",
+          new ArrayList<String>(BeeAnimal.All));
+      builder.pop();
+
       builder.push("Urn small (Mob Catching Item)");
       urnSmallMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
           .defineInRange("urnSmallMobCatchingLuck", 3, 0, 100);
@@ -263,7 +285,10 @@ public class CommonConfig {
               Arrays.asList(HostileMonster.ENDERMAN, HostileMonster.SLIME, HostileMonster.WITCH)));
       builder.pop();
 
-      // @TemplateEntryPoint("Register Forge Config Spec")
+      builder.push("Bee Settings");
+      beeDropHoneycomb =
+          builder.comment("Enable/Disable honeycomb drops.").define("beeDropHoneycomb", true);
+      builder.pop();
 
       builder.push("Blaze Settings");
       blazeDropBlazeRod =
