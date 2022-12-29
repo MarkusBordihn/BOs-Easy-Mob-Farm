@@ -22,17 +22,11 @@ package de.markusbordihn.easymobfarm.client.screen;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -49,8 +43,6 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  private static final ResourceLocation TEXTURE =
-      new ResourceLocation(Constants.MOD_ID, "textures/container/mob_farm_gui.png");
   private static final ResourceLocation CUSTOM =
       new ResourceLocation(Constants.MOD_ID, "textures/container/custom.png");
   private static final ResourceLocation CUSTOM_SHADOW =
@@ -63,14 +55,13 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
   private RenderModels renderModels;
   private TranslatableComponent warningFullText;
   private float dropTimeLabelScale = 0.75F;
-  private float nextDropTimeLabelScale = 1.0F;
+  private float nextDropTimeLabelScale = 0.75F;
   private int dropTimeLabelX;
   private int dropTimeLabelY;
   private int nextDropTimeLabelX;
   private int nextDropTimeLabelY;
   private int ticker = 0;
-
-  public ResourceLocation backgroundTexture = TEXTURE;
+  private boolean experimental = false;
 
   public MobFarmScreen(T menu, Inventory inventory, Component component) {
     super(menu, inventory, component);
@@ -84,8 +75,7 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
       RenderSystem.setShaderTexture(0, mobFarmTypeSnapshot);
 
       // Scale snap image (34x53)
-      blit(poseStack, leftPos + 6, topPos + 22, 0, 0, SNAP_WITH, SNAP_HEIGHT, SNAP_WITH,
-          SNAP_HEIGHT);
+      blit(poseStack, leftPos + 7, topPos + 16, 0, 0, 49, 70, SNAP_WITH + 15, SNAP_HEIGHT + 17);
     }
   }
 
@@ -103,8 +93,8 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
         LivingEntity livingEntity = renderModels.getEntityTypeModel(mobFarmType);
         if (livingEntity != null) {
           this.renderSnapshot(poseStack, CUSTOM_SHADOW);
-          renderEntity(leftPos + 23, topPos + 67, leftPos + 23f - x, topPos + 67f - y,
-              livingEntity);
+          MobFarmScreenHelper.renderEntity(leftPos + 33, topPos + 65, leftPos + 33f - x,
+              topPos + 65f - y, livingEntity);
         } else {
           this.renderSnapshot(poseStack, CUSTOM);
         }
@@ -112,68 +102,19 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
     }
   }
 
-  private void renderEntity(int x, int y, float yRot, float xRot, LivingEntity livingEntity) {
-    float f = (float) Math.atan(yRot / 40.0F);
-    float f1 = (float) Math.atan(xRot / 40.0F);
-    int scale = 19;
-    PoseStack poseStack = RenderSystem.getModelViewStack();
-    poseStack.pushPose();
-    poseStack.translate(x, y, 1050.0D);
-    poseStack.scale(1.0F, 1.0F, -1.0F);
-    RenderSystem.applyModelViewMatrix();
-    PoseStack poseStack1 = new PoseStack();
-    poseStack1.translate(0.0D, 0.0D, 1000.0D);
-    poseStack1.scale(scale, scale, scale);
-    Quaternion quaternion = Vector3f.ZP.rotationDegrees(180.0F);
-    Quaternion quaternion1 = Vector3f.XP.rotationDegrees(f1 * 20.0F);
-    quaternion.mul(quaternion1);
-    poseStack1.mulPose(quaternion);
-    float entityYBodyRot = livingEntity.yBodyRot;
-    float entityYRot = livingEntity.getYRot();
-    float entityXRot = livingEntity.getXRot();
-    float entityYHeadRotO = livingEntity.yHeadRotO;
-    float entityYHeadRot = livingEntity.yHeadRot;
-    livingEntity.yBodyRot = 180.0F + f * 20.0F;
-    livingEntity.setYRot(180.0F + f * 40.0F);
-    livingEntity.setXRot(-f1 * 20.0F);
-    livingEntity.yHeadRot = livingEntity.getYRot();
-    Component customName = livingEntity.getCustomName();
-    livingEntity.setCustomName(null);
-    Lighting.setupForEntityInInventory();
-    EntityRenderDispatcher entityRenderDispatcher =
-        Minecraft.getInstance().getEntityRenderDispatcher();
-    quaternion1.conj();
-    entityRenderDispatcher.overrideCameraOrientation(quaternion1);
-    entityRenderDispatcher.setRenderShadow(false);
-    MultiBufferSource.BufferSource multiBuffer =
-        Minecraft.getInstance().renderBuffers().bufferSource();
-    entityRenderDispatcher.render(livingEntity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, poseStack1,
-        multiBuffer, 15728880);
-    multiBuffer.endBatch();
-    entityRenderDispatcher.setRenderShadow(true);
-    livingEntity.yBodyRot = entityYBodyRot;
-    livingEntity.setYRot(entityYRot);
-    livingEntity.setXRot(entityXRot);
-    livingEntity.yHeadRot = entityYHeadRot;
-    livingEntity.yHeadRotO = entityYHeadRotO;
-    livingEntity.setCustomName(customName);
-    poseStack.popPose();
-    RenderSystem.applyModelViewMatrix();
-    Lighting.setupFor3DItems();
-  }
-
   @Override
   public void init() {
     super.init();
     this.ticker = 0;
-    this.imageHeight = 180;
+    this.imageHeight = 221;
     this.titleLabelX = (this.imageWidth - this.font.width(this.title)) / 2;
+    this.titleLabelY = 5;
     this.topPos = (this.height - this.imageHeight) / 2;
-    this.inventoryLabelY = this.imageHeight - 93;
-    this.dropTimeLabelX = Math.round(45 / dropTimeLabelScale);
-    this.dropTimeLabelY = Math.round(78 / dropTimeLabelScale);
-    this.nextDropTimeLabelX = Math.round(65 / nextDropTimeLabelScale);
-    this.nextDropTimeLabelY = Math.round(45 / nextDropTimeLabelScale);
+    this.inventoryLabelY = this.imageHeight - 92;
+    this.dropTimeLabelX = Math.round(47 / dropTimeLabelScale);
+    this.dropTimeLabelY = Math.round(119 / dropTimeLabelScale);
+    this.nextDropTimeLabelX = Math.round(63 / nextDropTimeLabelScale);
+    this.nextDropTimeLabelY = Math.round(91 / nextDropTimeLabelScale);
     this.warningFullText = new TranslatableComponent(Constants.TEXT_PREFIX + "warning_full");
     this.renderModels = new RenderModels(this.minecraft);
   }
@@ -200,7 +141,7 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
     super.renderLabels(poseStack, x, y);
     int mobFarmStatus = this.mobFarmMenu.getMobFarmStatus();
 
-    // Show Farm Details
+    // Show Farm Details like drop time.
     if (mobFarmStatus != MobFarmBlockEntityData.FARM_STATUS_FULL) {
       poseStack.pushPose();
       poseStack.scale(dropTimeLabelScale, dropTimeLabelScale, dropTimeLabelScale);
@@ -211,16 +152,16 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
       poseStack.popPose();
     }
 
-    // Show Mob Details, if available.
+    // Show Mob Details like name and entity type, if available.
     if (mobFarmStatus != MobFarmBlockEntityData.FARM_STATUS_WAITING) {
       poseStack.pushPose();
-      font.draw(poseStack, this.mobFarmMenu.getMobFarmName(), 65, 23,
+      font.draw(poseStack, this.mobFarmMenu.getMobFarmName(), 61, 68,
           Constants.FONT_COLOR_DARK_GREEN);
       poseStack.popPose();
 
       poseStack.pushPose();
       poseStack.scale(0.65f, 0.65f, 0.65f);
-      font.draw(poseStack, this.mobFarmMenu.getMobFarmType(), 100, 50, Constants.FONT_COLOR_GRAY);
+      font.draw(poseStack, this.mobFarmMenu.getMobFarmType(), 61 / 0.65f, 78 / 0.65f, Constants.FONT_COLOR_GRAY);
       poseStack.popPose();
     }
 
@@ -249,32 +190,62 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
 
   @Override
   protected void renderBg(PoseStack poseStack, float partialTicks, int mouseX, int mouseY) {
+
+    // Container Screen with Player Inventory and Hotbar
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
     RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-    RenderSystem.setShaderTexture(0, this.backgroundTexture);
-
-    // Cut main screen
+    RenderSystem.setShaderTexture(0, Constants.TEXTURE_GENERIC_54);
     this.blit(poseStack, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight);
+    blit(poseStack, leftPos + 5, topPos + 5, 50, 50, 165, 100, 2000, 2000);
+
+    // Hopper Slots
+    RenderSystem.setShader(GameRenderer::getPositionTexShader);
+    RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+    RenderSystem.setShaderTexture(0, Constants.TEXTURE_HOPPER);
+    this.blit(poseStack, leftPos + 2, topPos + 85, 2, 5, 170, 40);
+    if (experimental) {
+      this.blit(poseStack, leftPos + 145, topPos + 99, 43, 19, 18, 18);
+    }
+
+    // Captured Mob Display and slots
+    RenderSystem.setShader(GameRenderer::getPositionTexShader);
+    RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+    RenderSystem.setShaderTexture(0, Constants.TEXTURE_INVENTORY);
+    this.blit(poseStack, leftPos + 6, topPos + 15, 25, 7, 51, 72);
+    this.blit(poseStack, leftPos + 80, topPos + 30, 76, 61, 18, 18);
+    if (experimental) {
+      this.blit(poseStack, leftPos + 130, topPos + 30, 76, 61, 18, 18);
+    }
+
+    // Captured Mob name and additional details
+    RenderSystem.setShader(GameRenderer::getPositionTexShader);
+    RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+    RenderSystem.setShaderTexture(0, Constants.TEXTURE_HORSE);
+    this.blit(poseStack, leftPos + 58, topPos + 72, 79, 56, 90, 15);
+    this.blit(poseStack, leftPos + 83, topPos + 72, 80, 56, 90, 15);
+    this.blit(poseStack, leftPos + 58, topPos + 65, 79, 17, 90, 15);
+    this.blit(poseStack, leftPos + 83, topPos + 65, 80, 17, 90, 15);
+
+    // Hopper State Icon
+    RenderSystem.setShader(GameRenderer::getPositionTexShader);
+    RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+    RenderSystem.setShaderTexture(0, Constants.TEXTURE_ICONS);
+    this.blit(poseStack, leftPos + 20, topPos + 100, 40, 7, 20, 16);
 
     // Render Mob Farm Status
     switch (this.mobFarmMenu.getMobFarmStatus()) {
       case MobFarmBlockEntityData.FARM_STATUS_DONE:
       case MobFarmBlockEntityData.FARM_STATUS_WORKING:
-        int mobFarmProgress = this.mobFarmMenu.getMobFarmProgressImage();
-        int mobFarmProgressLeftPos = leftPos + 43;
-        int mobFarmProgressTopPos = topPos + 41;
-        this.blit(poseStack, mobFarmProgressLeftPos, mobFarmProgressTopPos, 194, 14, 18,
-            mobFarmProgress);
+        // Hopper progress animation
+        this.blit(poseStack, leftPos + 21, topPos + 100, 194, 14, 18,
+            this.mobFarmMenu.getMobFarmProgressImage());
         break;
       case MobFarmBlockEntityData.FARM_STATUS_FULL:
-        int mobFarmFullLeftPos = leftPos + 43;
-        int mobFarmFullTopPos = topPos + 41;
-        this.blit(poseStack, mobFarmFullLeftPos, mobFarmFullTopPos, 176, 14, 18, 15);
+        this.blit(poseStack, leftPos + 23, topPos + 99, 65, 6, 18, 15);
         break;
       case MobFarmBlockEntityData.FARM_STATUS_WAITING:
-        int mobFarmHintLeftPos = leftPos + 65;
-        int mobFarmHintTopPos = topPos + 21;
-        this.blit(poseStack, mobFarmHintLeftPos, mobFarmHintTopPos, 220, 14, 20, 15);
+        this.blit(poseStack, leftPos + 12, topPos + 30, 1, 1, 40, 50);
+        this.blit(poseStack, leftPos + 100, topPos + 34, 62, 28, 20, 15);
         break;
       default:
     }
