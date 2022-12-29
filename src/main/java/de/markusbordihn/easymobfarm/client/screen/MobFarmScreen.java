@@ -237,7 +237,7 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
       case MobFarmBlockEntityData.FARM_STATUS_DONE:
       case MobFarmBlockEntityData.FARM_STATUS_WORKING:
         // Hopper progress animation
-        this.blit(poseStack, leftPos + 21, topPos + 100, 194, 14, 18,
+        this.blit(poseStack, leftPos + 21, topPos + 100, 41, 26, 18,
             this.mobFarmMenu.getMobFarmProgressImage());
         break;
       case MobFarmBlockEntityData.FARM_STATUS_FULL:
