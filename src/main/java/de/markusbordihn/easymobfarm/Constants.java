@@ -19,6 +19,7 @@
 
 package de.markusbordihn.easymobfarm;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.ModList;
 
 public final class Constants {
@@ -35,9 +36,10 @@ public final class Constants {
   public static final String MOD_URL = "https://www.curseforge.com/minecraft/mc-mods/easy-mob-farm";
 
   // Prefixes
-  public static final String TEXT_PREFIX = "text.easy_mob_farm.";
-  public static final String MESSAGE_PREFIX = "message.easy_mob_farm.";
   public static final String LOOT_MANAGER_PREFIX = "[Loot Manager] ";
+  public static final String MESSAGE_PREFIX = "message.easy_mob_farm.";
+  public static final String MINECRAFT_PREFIX = "minecraft";
+  public static final String TEXT_PREFIX = "text.easy_mob_farm.";
 
   // Colors
   public static final int FONT_COLOR_BLACK = 0;
@@ -49,10 +51,23 @@ public final class Constants {
   public static final int FONT_COLOR_YELLOW = 16777045;
   public static final int FONT_COLOR_WHITE = 16777215;
 
+  // Textures
+  public static final ResourceLocation TEXTURE_GENERIC_54 =
+      new ResourceLocation(MINECRAFT_PREFIX, "textures/gui/container/generic_54.png");
+  public static final ResourceLocation TEXTURE_HOPPER =
+      new ResourceLocation(MINECRAFT_PREFIX, "textures/gui/container/hopper.png");
+  public static final ResourceLocation TEXTURE_HORSE =
+      new ResourceLocation(MINECRAFT_PREFIX, "textures/gui/container/horse.png");
+  public static final ResourceLocation TEXTURE_ICONS =
+      new ResourceLocation(Constants.MOD_ID, "textures/container/icons.png");
+  public static final ResourceLocation TEXTURE_INVENTORY =
+      new ResourceLocation(MINECRAFT_PREFIX, "textures/gui/container/inventory.png");
+
   // Supported Mods
   public static final boolean CORAIL_SPAWNERS_LOADED = ModList.get().isLoaded("corail_spawners");
   public static final boolean CREATE_LOADED = ModList.get().isLoaded("create");
-  public static final boolean MOB_CAPTURING_TOOL_LOADED = ModList.get().isLoaded("mobcapturingtool");
+  public static final boolean MOB_CAPTURING_TOOL_LOADED =
+      ModList.get().isLoaded("mobcapturingtool");
   public static final boolean MOB_CATCHER_LOADED = ModList.get().isLoaded("mob_catcher");
   public static final boolean PRODUCTIVE_BEES_LOADED = ModList.get().isLoaded("productivebees");
 }

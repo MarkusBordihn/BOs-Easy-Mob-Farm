@@ -58,10 +58,10 @@ public class MobFarmMenu extends AbstractContainerMenu {
   public static final int PLAYER_SLOT_STOP = 3 * 9 + PLAYER_INVENTORY_SLOT_START + 8;
 
   // Storing slot position statically to able to access them from other UI parts.
-  public static final int CAPTURED_MOB_SLOT_LEFT = 44;
-  public static final int CAPTURED_MOB_SLOT_TOP = 22;
+  public static final int CAPTURED_MOB_SLOT_LEFT = 81;
+  public static final int CAPTURED_MOB_SLOT_TOP = 31;
   public static final int RESULT_SLOTS_LEFT = 44;
-  public static final int RESULT_SLOTS_TOP = 59;
+  public static final int RESULT_SLOTS_TOP = 100;
 
   // Defining basic layout options
   private static int containerSize = 6;
@@ -123,7 +123,7 @@ public class MobFarmMenu extends AbstractContainerMenu {
         RESULT_SLOTS_TOP));
 
     // Player Inventory Slots
-    int playerInventoryStartPositionY = 99;
+    int playerInventoryStartPositionY = 140;
     for (int inventoryRow = 0; inventoryRow < 3; ++inventoryRow) {
       for (int inventoryColumn = 0; inventoryColumn < 9; ++inventoryColumn) {
         this.addSlot(new Slot(playerInventory,
@@ -134,7 +134,7 @@ public class MobFarmMenu extends AbstractContainerMenu {
     }
 
     // Player Hotbar
-    int hotbarStartPositionY = 157;
+    int hotbarStartPositionY = 198;
     for (int playerInventorySlot = 0; playerInventorySlot < 9; ++playerInventorySlot) {
       this.addSlot(new Slot(playerInventory, playerInventorySlot,
           slotSpacing + playerInventorySlot * slotSize, hotbarStartPositionY));

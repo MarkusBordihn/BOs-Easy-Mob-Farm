@@ -5,6 +5,10 @@
 This change log includes the summarized changes.
 For the full changelog, please go to the [Git Hub History][history] instead.
 
+### 2022.12.29
+
+- Improved Mob Farm UI to allow better resource pack support and more space for next update.
+
 ### 2022.12.17
 
 - Added insect net capture item.
