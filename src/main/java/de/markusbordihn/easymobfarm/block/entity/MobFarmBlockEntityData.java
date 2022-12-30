@@ -92,7 +92,7 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
   public EntityType<?> farmMobEntityType = null;
 
   // Item Storage
-  public NonNullList<ItemStack> items = NonNullList.withSize(6, ItemStack.EMPTY);
+  public NonNullList<ItemStack> items = NonNullList.withSize(8, ItemStack.EMPTY);
 
   // Data container shared between all instances like GUI, Block, Entity.
   protected final ContainerData dataAccess = new ContainerData() {

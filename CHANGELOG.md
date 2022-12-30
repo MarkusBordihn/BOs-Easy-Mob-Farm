@@ -5,6 +5,12 @@
 This change log includes the summarized changes.
 For the full changelog, please go to the [Git Hub History][history] instead.
 
+### 2022.12.30
+
+- Added `killed_by_player` loot drop support with sword item.
+- Added possible to collect experience by placing a empty or experience bottle into the experience slot.
+- Added additional animations and hits for the new weapon and experience slot.
+
 ### 2022.12.29
 
 - Improved Mob Farm UI to allow better resource pack support and more space for next update.

@@ -131,7 +131,6 @@ public class CapturedMobVirtual {
         || (item instanceof SpawnEggItem)
         || (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER))) {
       EntityType<?> entityType = getCapturedMobEntityType(itemStack);
-      log.info("getCapturedMob: {}", entityType);
       String descriptionId = entityType != null ? entityType.getDescriptionId() : "";
       return !descriptionId.isBlank() ? new TranslatableComponent(descriptionId).getString()
           : descriptionId;

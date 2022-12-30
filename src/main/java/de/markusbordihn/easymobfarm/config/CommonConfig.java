@@ -291,7 +291,7 @@ public class CommonConfig {
 
       builder.push("Blaze Settings");
       blazeDropBlazeRod =
-          builder.comment("Enable/Disable blaze rod drops.").define("blazeDropBlazeRod", true);
+          builder.comment("Enable/Disable blaze rod drops.").define("blazeDropBlazeRod", false);
       builder.pop();
 
       builder.push("Cow Settings");

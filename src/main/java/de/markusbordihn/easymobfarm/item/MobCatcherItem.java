@@ -175,7 +175,7 @@ public class MobCatcherItem extends CapturedMob {
       ResourceLocation registryName = livingEntity.getType().getRegistryName();
       String mobType = registryName != null ? registryName.toString() : null;
       if (!canCatchMob(livingEntity) || (mobType != null && !canCatchMobType(mobType))) {
-        log.debug("Unable to catch living entity {}!", registryName);
+        log.debug("Unable to catch living entity {} with {}!", registryName, this);
         return InteractionResult.FAIL;
       }
 

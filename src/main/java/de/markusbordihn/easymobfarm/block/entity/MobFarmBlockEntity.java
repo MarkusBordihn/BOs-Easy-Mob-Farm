@@ -21,7 +21,9 @@ package de.markusbordihn.easymobfarm.block.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
+
 import javax.annotation.Nullable;
 
 import org.apache.logging.log4j.LogManager;
@@ -37,7 +39,9 @@ import net.minecraft.world.WorldlyContainer;
 
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ExperienceBottleItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -60,6 +64,8 @@ import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 public class MobFarmBlockEntity extends MobFarmBlockEntityData implements WorldlyContainer {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+
+  protected final Random random = new Random();
 
   private static final int DEFAULT_FARM_PROCESSING_TIME = 6000;
 
@@ -141,11 +147,15 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
       return;
     }
 
+    // Checking weapon and experience slot for any additional items.
+    ItemStack weaponItem = blockEntity.items.get(MobFarmMenu.WEAPON_SLOT);
+    ItemStack experienceItem = blockEntity.items.get(MobFarmMenu.EXPERIENCE_SLOT);
+
     // Processing mob farm
     if (blockEntity.farmProgress >= blockEntity.farmTotalTime) {
       if (capturedMob.getItem() instanceof CapturedMob
           || CapturedMobVirtual.isSupported(capturedMob)) {
-        blockEntity.processResult(capturedMob, blockEntity);
+        blockEntity.processResult(capturedMob, weaponItem, experienceItem, blockEntity);
         blockEntity.processAdditionalEffects(level, blockPos, blockEntity, capturedMob);
       }
       blockEntity.farmProgress = 0;
@@ -157,11 +167,37 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
   }
 
   @SuppressWarnings("java:S135")
-  private void processResult(ItemStack capturedMob, MobFarmBlockEntity blockEntity) {
+  private void processResult(ItemStack capturedMob, ItemStack weaponItem, ItemStack experienceItem,
+      MobFarmBlockEntity blockEntity) {
+
+    // Get corresponding loot drops.
     List<ItemStack> lootDrops =
-        LootManager.getFilteredRandomLootDrop(capturedMob, blockEntity.getLevel());
+        LootManager.getFilteredRandomLootDrop(capturedMob, weaponItem, blockEntity.getLevel());
     List<ItemStack> unstoredLootDrops = new ArrayList<>();
-    log.debug("Processing result with {}", lootDrops);
+
+    // Check if weapon should be damaged, if any.
+    boolean hasWeaponItem = weaponItem != null && !weaponItem.isEmpty();
+    if (hasWeaponItem && weaponItem != null && weaponItem.isDamageableItem()) {
+      int damageValue = this.random.nextInt(10);
+      if (weaponItem.getDamageValue() + damageValue < weaponItem.getMaxDamage()) {
+        weaponItem.setDamageValue(weaponItem.getDamageValue() + damageValue);
+      } else {
+        blockEntity.items.set(MobFarmMenu.WEAPON_SLOT, ItemStack.EMPTY);
+      }
+    }
+
+    // Check if we should store experience, drop change is increased with weapon.
+    int experienceDropChange = hasWeaponItem ? this.random.nextInt(5) : this.random.nextInt(10);
+    if (experienceItem != null && !experienceItem.isEmpty() && experienceDropChange == 0) {
+      // Convert glass bottle to experience bottles or just increase the stack size.
+      if (experienceItem.is(Items.GLASS_BOTTLE)) {
+        blockEntity.items.set(MobFarmMenu.EXPERIENCE_SLOT, new ItemStack(Items.EXPERIENCE_BOTTLE));
+      } else if (experienceItem.getItem() instanceof ExperienceBottleItem
+          && experienceItem.getCount() < experienceItem.getMaxStackSize()) {
+        experienceItem.setCount(experienceItem.getCount() + 1);
+        blockEntity.items.set(MobFarmMenu.EXPERIENCE_SLOT, experienceItem);
+      }
+    }
 
     for (ItemStack lootDrop : lootDrops) {
       // Ignore empty stack with air and blacklisted items if needed.

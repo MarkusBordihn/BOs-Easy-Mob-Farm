@@ -97,30 +97,53 @@ public class LootManager {
     lootTableDropListCache = new ConcurrentHashMap<>();
   }
 
-  public static FakePlayer getPlayer(ServerLevel level) {
-    if (fakePlayer == null) {
-      fakePlayer = new FakePlayer(level, GAME_PROFILE);
-    }
-    return fakePlayer;
-  }
-
   public static List<String> getRandomLootDropOverview(ResourceLocation lootTableLocation,
       Level level, String mobType) {
     // Roll's the loot a specific time (default: 2) to get more accurate results.
     List<String> lootDropList = Lists.newArrayList();
     for (int i = 0; i < lootPreviewRolls; i++) {
-      List<ItemStack> lootDrops = getFilteredRandomLootDrop(lootTableLocation, level, mobType);
+      List<ItemStack> lootDrops =
+          getFilteredRandomLootDrop(lootTableLocation, ItemStack.EMPTY, level, mobType);
 
       // Use a internal cache to improve loot prediction over time.
       lootDropList = cacheLootDrops(lootTableLocation, lootDrops);
     }
-    log.info(Constants.LOOT_MANAGER_PREFIX + "Loot for {} with {} roll {} result: {}", mobType,
+    log.debug(Constants.LOOT_MANAGER_PREFIX + "Loot for {} with {} roll {} result: {}", mobType,
         lootTableLocation, lootPreviewRolls, lootDropList);
     return lootDropList;
   }
 
+  public static List<ItemStack> getFilteredRandomLootDrop(ItemStack capturedMob,
+      ItemStack weaponItem, Level level) {
+    // Load corresponding loot table for captured mob.
+    ResourceLocation lootTable = getLootTable(capturedMob, level);
+    if (lootTable == null) {
+      return Lists.newArrayList();
+    } else {
+      String mobType = "";
+      if (capturedMob.getItem() instanceof CapturedMob) {
+        mobType = CapturedMob.getCapturedMobType(capturedMob);
+      } else if (CapturedMobVirtual.isSupported(capturedMob)) {
+        mobType = CapturedMobVirtual.getCapturedMobType(capturedMob);
+      }
+      return getFilteredRandomLootDrop(lootTable, weaponItem, level, mobType);
+    }
+  }
+
+  public static List<ItemStack> getFilteredRandomLootDrop(ResourceLocation lootTableLocation,
+      ItemStack weaponItem, Level level, String mobType) {
+
+    List<ItemStack> lootDrops = getRandomLootDrops(lootTableLocation, weaponItem, level);
+    List<ItemStack> filteredLootDrops = filterLootDrop(lootDrops, mobType);
+
+    // Cache each loot drop for more accurate loot preview
+    cacheLootDrops(lootTableLocation, filteredLootDrops);
+
+    return filteredLootDrops;
+  }
+
   public static List<ItemStack> getRandomLootDrops(ResourceLocation lootTableLocation,
-      Level level) {
+      ItemStack weaponItem, Level level) {
     if (lootTableLocation == null || level == null || level.getServer() == null) {
       log.error(Constants.LOOT_MANAGER_PREFIX + "Unable to get loot drops for loot table {} in {}",
           lootTableLocation, level);
@@ -130,15 +153,29 @@ public class LootManager {
     if (server != null) {
       ServerLevel serverLevel = (ServerLevel) level;
       FakePlayer player = getPlayer(serverLevel);
-      LootContext.Builder builder = new LootContext.Builder(serverLevel)
-          .withParameter(LootContextParams.ORIGIN, player.position());
-      builder.withLuck(0.5F).withParameter(LootContextParams.THIS_ENTITY, player)
-          .withParameter(LootContextParams.DAMAGE_SOURCE, DamageSource.playerAttack(player));
+
+      // Handles if loot should be "killed_by_player" or just normal loot.
+      LootContext.Builder lootBuilder = null;
+      if (weaponItem != null && !weaponItem.isEmpty()) {
+        // Kills with weapons has automatically a higher luck.
+        lootBuilder = new LootContext.Builder(serverLevel).withLuck(0.6F)
+            .withParameter(LootContextParams.DAMAGE_SOURCE, DamageSource.playerAttack(player))
+            .withParameter(LootContextParams.DIRECT_KILLER_ENTITY, player)
+            .withParameter(LootContextParams.KILLER_ENTITY, player)
+            .withParameter(LootContextParams.LAST_DAMAGE_PLAYER, player)
+            .withParameter(LootContextParams.ORIGIN, player.position())
+            .withParameter(LootContextParams.THIS_ENTITY, player);
+      } else {
+        lootBuilder = new LootContext.Builder(serverLevel).withLuck(0.5F)
+            .withParameter(LootContextParams.DAMAGE_SOURCE, DamageSource.playerAttack(player))
+            .withParameter(LootContextParams.ORIGIN, player.position())
+            .withParameter(LootContextParams.THIS_ENTITY, player);
+      }
       LootTable lootTable = server.getLootTables().get(lootTableLocation);
       List<ItemStack> lootDrops =
-          lootTable.getRandomItems(builder.create(LootContextParamSets.ENTITY));
+          lootTable.getRandomItems(lootBuilder.create(LootContextParamSets.ENTITY));
       if (lootDrops.isEmpty()) {
-        log.warn(Constants.LOOT_MANAGER_PREFIX + "Loot drop for {} with loot table {} was empty!",
+        log.debug(Constants.LOOT_MANAGER_PREFIX + "Loot drop for {} with loot table {} was empty!",
             player, lootTableLocation);
       }
       return lootDrops;
@@ -146,49 +183,7 @@ public class LootManager {
     return Lists.newArrayList();
   }
 
-  public static List<ItemStack> getFilteredRandomLootDrop(ItemStack itemStack, Level level) {
-    ResourceLocation lootTable = null;
-    String mobType = "";
-
-    // Ignore empty items and request is not from server.
-    if (itemStack.isEmpty() || !(level instanceof ServerLevel)) {
-      return Lists.newArrayList();
-    }
-
-    // Process captured mob item.
-    if (itemStack.getItem() instanceof CapturedMob) {
-      String lootTableLocation = CapturedMob.getLootTable(itemStack);
-      if (!lootTableLocation.isEmpty()) {
-        lootTable = new ResourceLocation(lootTableLocation);
-      }
-      mobType = CapturedMob.getCapturedMobType(itemStack);
-    } else if (CapturedMobVirtual.isSupported(itemStack)) {
-      String lootTableLocation = CapturedMobVirtual.getLootTable(itemStack);
-      if (!lootTableLocation.isEmpty()) {
-        lootTable = new ResourceLocation(lootTableLocation);
-      }
-      mobType = CapturedMobVirtual.getCapturedMobType(itemStack);
-    } else {
-      log.error(Constants.LOOT_MANAGER_PREFIX + "Unable to process loot drop for {} in {}",
-          itemStack, level);
-      return Lists.newArrayList();
-    }
-    return getFilteredRandomLootDrop(lootTable, level, mobType);
-  }
-
-  public static List<ItemStack> getFilteredRandomLootDrop(ResourceLocation lootTableLocation,
-      Level level, String mobType) {
-
-    List<ItemStack> lootDrops = getRandomLootDrops(lootTableLocation, level);
-    List<ItemStack> filteredLootDrops = getFilteredLootDrop(lootDrops, mobType);
-
-    // Cache each loot drop for more accurate loot preview
-    cacheLootDrops(lootTableLocation, filteredLootDrops);
-
-    return filteredLootDrops;
-  }
-
-  public static List<ItemStack> getFilteredLootDrop(List<ItemStack> lootDrops, String mobType) {
+  public static List<ItemStack> filterLootDrop(List<ItemStack> lootDrops, String mobType) {
     List<ItemStack> filteredLootDrops = Lists.newArrayList();
 
     // Adding additional drops for specific cases.
@@ -234,7 +229,38 @@ public class LootManager {
     return filteredLootDrops;
   }
 
-  public static boolean filter(boolean status, String blockedMobType, Item blockedLootDrop,
+  private static FakePlayer getPlayer(ServerLevel level) {
+    if (fakePlayer == null) {
+      fakePlayer = new FakePlayer(level, GAME_PROFILE);
+    }
+    return fakePlayer;
+  }
+
+  private static ResourceLocation getLootTable(ItemStack itemStack, Level level) {
+    // Ignore empty items and request is not from server.
+    if (itemStack.isEmpty() || !(level instanceof ServerLevel)) {
+      return null;
+    }
+
+    // Get loot table based on captured mob item.
+    if (itemStack.getItem() instanceof CapturedMob) {
+      String lootTableLocation = CapturedMob.getLootTable(itemStack);
+      if (!lootTableLocation.isEmpty()) {
+        return new ResourceLocation(lootTableLocation);
+      }
+    } else if (CapturedMobVirtual.isSupported(itemStack)) {
+      String lootTableLocation = CapturedMobVirtual.getLootTable(itemStack);
+      if (!lootTableLocation.isEmpty()) {
+        return new ResourceLocation(lootTableLocation);
+      }
+    } else {
+      log.error(Constants.LOOT_MANAGER_PREFIX + "Unable to get loot table for {} in {}", itemStack,
+          level);
+    }
+    return null;
+  }
+
+  private static boolean filter(boolean status, String blockedMobType, Item blockedLootDrop,
       String mobType, ItemStack lootDrop) {
     // Filter only if loot drop is disabled = false.
     if (status) {

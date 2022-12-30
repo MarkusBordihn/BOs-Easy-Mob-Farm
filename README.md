@@ -9,7 +9,8 @@ But there is also a creative version which is able to handle custom animals and 
 
 ## 🔮 Features
 
-- Server friendly and optimized for the best performance on the client and server side
+- Server friendly and optimized for the best performance on the client and server side.
+- Supporting `killed_by_player` loot drops with corresponding weapon (sword).
 - Displays possible loot from each catched mob.
 - Unique mob farms for the different kind of biomes and mobs.
 - Possibility to enable / disable specific drops from mobs like egg drops from chicken.
@@ -31,6 +32,16 @@ But there is also a creative version which is able to handle custom animals and 
 
 The mod is using the provided loot tables from the mods.
 This means if you adjust the loot tables for data files these changes are automatically considered by this mod as well.
+
+### 🤺 Killed by Player Loot Drops
+
+The `killed_by_player` loot drops will be only considered if an weapon (sword), is placed in the weapon slot.
+The item will be consumed by each drop, but it will also increase the loot luck by 20%.
+
+## Collect Experience
+
+Experience could be collected by placing a empty bottle or experience bottle into the experience slot.
+The experience will be generated randomly, so not on each drop.
 
 ## Supported Minecraft Mobs
 
@@ -156,33 +167,37 @@ Furthermore I'm not able to display the possible lot drop for catching items fro
 
 ## Type of Mob Farms
 
-### 🐄 Animal Farms
-
-List of animals farms which are will be released over time.
-
-#### 🌿 Animal Plains Farm
+### 🐄🌿 Animal Plains Farm
 
 ![Example of animal plains farm][animal_plains_farm]
 
-### ☠️ Monster Farm
+### Bee Hive Farm
 
-List of monster farms which are will be released over time.
+![Example of bee hive farm][bee_hive_farm]
 
-#### 🪨 Monster Plains Cave Farm
-
-![Example monster plains cave farm][monster_plains_cave_farm]
-
-#### Monster Swamp Farm
-
-### Special Farms
-
-#### 🏜️ Desert Farm
+### 🏜️ Desert Farm
 
 ![Example desert farm][desert_farm]
 
-#### 🌊 Ocean Farm
+### Jungle Farm
+
+![Example of jungle farm][jungle_farm]
+
+### ☠️🪨 Monster Plains Cave Farm
+
+![Example monster plains cave farm][monster_plains_cave_farm]
+
+### Nether Fortress Farm
+
+![Example of nether fortress farm][nether_fortress_farm]
+
+### 🌊 Ocean Farm
 
 ![Example ocean farm][ocean_farm]
+
+### ☠️ Swamp Farm
+
+![Example swamp farm][swamp_farm]
 
 ### 🪄 Creative Mob Farm
 
@@ -191,13 +206,17 @@ It could theoretical process all kind of living entities, but not all of them ar
 
 ## Type of Mob Catching Items
 
+### 🪤 Catch Cage
+
+The catch cage is used to catch the bigger wilder animals.
+
+### 🪤 Catch Cage (small)
+
+The catch cage small used is to catch the standard animals.
+
 ### 🪢Collar (small)
 
 The collar is used to catch the standard animals from a plains biome.
-
-### ⚱️ Urn (small)
-
-The urn is used to catch the standard monsters from a plains cave biome.
 
 ### 🐟 Fishing Bowl
 
@@ -206,6 +225,18 @@ The fishing bowl is only able to catch standard fish.
 ### 🎣 Fishing Net (small)
 
 The fishing net is able to capture standard ocean animals and monsters from the ocean.
+
+### 🕸️ Insect Net
+
+The insect net is used to capture smaller insects and bees.
+
+### ⚱️ Urn (small)
+
+The urn is used to catch the standard monsters from a plains cave biome.
+
+### 🍶 Witch Bottle
+
+The witch bottle is used to capture magical creatures and witches as well.
 
 ### 🪄 Creative Mob Catching Item
 
@@ -228,12 +259,16 @@ Please only download the mod from the official CurseForge page or with the offic
 
 If you are downloading this mod from other sources we could not make sure that it works as expected or does not includes any unwanted modification (e.g. adware, malware, ...).
 
-[animal_plains_farm]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/animal_plains_farm.png
-[desert_farm]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/desert_farm.png
-[item_overview]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/item_overview.png
-[logo]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/src/main/resources/logo.png
+[animal_plains_farm]: examples/farms/animal_plains_farm.png
+[bee_hive_farm]: examples/farms/bee_hive_farm.png
+[desert_farm]: examples/farms/desert_farm.png
+[item_overview]: examples/item_overview.png
+[jungle_farm]: examples/farms/jungle_farm.png
+[logo]: examples/logo.png
 [material-elements]: https://www.curseforge.com/minecraft/mc-mods/material-elements
-[mob_menu]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/mob_menu.png
+[mob_menu]: examples/mob_farm_menu.png
 [mod_page]: https://www.curseforge.com/minecraft/mc-mods/easy-mob-farm
-[monster_plains_cave_farm]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/monster_plains_cave_farm.png
-[ocean_farm]: https://raw.githubusercontent.com/MarkusBordihn/BOs-Easy-Mob-Farm/main/assets/ocean_farm.png
+[monster_plains_cave_farm]: examples/farms/monster_plains_cave_farm.png
+[nether_fortress_farm]: examples/farms/nether_fortress_farm.png
+[ocean_farm]: examples/farms/ocean_farm.png
+[swamp_farm]: examples/farms/swamp_farm.png

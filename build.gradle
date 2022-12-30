@@ -142,8 +142,8 @@ dependencies {
   runtimeOnly fg.deobf("curse.maven:material_elements-541620:3835039")
 
   // Productive Bees: Integration
-  compileOnly fg.deobf("curse.maven:productivebees-377897:4132653")
-  //runtimeOnly fg.deobf("curse.maven:productivebees-377897:4132653")
+  compileOnly fg.deobf("curse.maven:productivebees-377897:4257307")
+  runtimeOnly fg.deobf("curse.maven:productivebees-377897:4257307")
 
   // Jade: Integration
   compileOnly fg.deobf("curse.maven:jade-324717:3761542")

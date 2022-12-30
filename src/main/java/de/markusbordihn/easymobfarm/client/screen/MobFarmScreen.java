@@ -56,12 +56,12 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
   private TranslatableComponent warningFullText;
   private float dropTimeLabelScale = 0.75F;
   private float nextDropTimeLabelScale = 0.75F;
+  private int animationTicker = 0;
   private int dropTimeLabelX;
   private int dropTimeLabelY;
   private int nextDropTimeLabelX;
   private int nextDropTimeLabelY;
   private int ticker = 0;
-  private boolean experimental = false;
 
   public MobFarmScreen(T menu, Inventory inventory, Component component) {
     super(menu, inventory, component);
@@ -105,6 +105,7 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
   @Override
   public void init() {
     super.init();
+    this.animationTicker = 0;
     this.ticker = 0;
     this.imageHeight = 221;
     this.titleLabelX = (this.imageWidth - this.font.width(this.title)) / 2;
@@ -127,6 +128,11 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
       if (ticker >= 40) {
         this.ticker = 0;
       }
+    }
+
+    // Animation Ticker
+    if (this.animationTicker++ > 400) {
+      this.animationTicker = 0;
     }
 
     // Render screen in three parts.
@@ -155,13 +161,14 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
     // Show Mob Details like name and entity type, if available.
     if (mobFarmStatus != MobFarmBlockEntityData.FARM_STATUS_WAITING) {
       poseStack.pushPose();
-      font.draw(poseStack, this.mobFarmMenu.getMobFarmName(), 61, 68,
+      font.draw(poseStack, this.mobFarmMenu.getMobFarmName(), 61, 18,
           Constants.FONT_COLOR_DARK_GREEN);
       poseStack.popPose();
 
       poseStack.pushPose();
       poseStack.scale(0.65f, 0.65f, 0.65f);
-      font.draw(poseStack, this.mobFarmMenu.getMobFarmType(), 61 / 0.65f, 78 / 0.65f, Constants.FONT_COLOR_GRAY);
+      font.draw(poseStack, this.mobFarmMenu.getMobFarmType(), 61 / 0.65f, 28 / 0.65f,
+          Constants.FONT_COLOR_GRAY);
       poseStack.popPose();
     }
 
@@ -198,39 +205,49 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
     this.blit(poseStack, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight);
     blit(poseStack, leftPos + 5, topPos + 5, 50, 50, 165, 100, 2000, 2000);
 
-    // Hopper Slots
+    // Hopper slots and experience slot
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
     RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     RenderSystem.setShaderTexture(0, Constants.TEXTURE_HOPPER);
     this.blit(poseStack, leftPos + 2, topPos + 85, 2, 5, 170, 40);
-    if (experimental) {
-      this.blit(poseStack, leftPos + 145, topPos + 99, 43, 19, 18, 18);
-    }
+    this.blit(poseStack, leftPos + 151, topPos + 99, 43, 19, 18, 18);
 
-    // Captured Mob Display and slots
+    // Captured Mob Display, mob captured slot and weapon slot.
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
     RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     RenderSystem.setShaderTexture(0, Constants.TEXTURE_INVENTORY);
     this.blit(poseStack, leftPos + 6, topPos + 15, 25, 7, 51, 72);
-    this.blit(poseStack, leftPos + 80, topPos + 30, 76, 61, 18, 18);
-    if (experimental) {
-      this.blit(poseStack, leftPos + 130, topPos + 30, 76, 61, 18, 18);
-    }
+    this.blit(poseStack, leftPos + 80, topPos + 50, 76, 61, 18, 18);
+    this.blit(poseStack, leftPos + 130, topPos + 50, 76, 61, 18, 18);
 
     // Captured Mob name and additional details
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
     RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     RenderSystem.setShaderTexture(0, Constants.TEXTURE_HORSE);
-    this.blit(poseStack, leftPos + 58, topPos + 72, 79, 56, 90, 15);
-    this.blit(poseStack, leftPos + 83, topPos + 72, 80, 56, 90, 15);
-    this.blit(poseStack, leftPos + 58, topPos + 65, 79, 17, 90, 15);
-    this.blit(poseStack, leftPos + 83, topPos + 65, 80, 17, 90, 15);
+    int mobDetailsLeftPos = leftPos + 58;
+    int mobDetailsTopPos = topPos + 15;
+    this.blit(poseStack, mobDetailsLeftPos, mobDetailsTopPos + 7, 79, 56, 90, 15);
+    this.blit(poseStack, mobDetailsLeftPos + 22, mobDetailsTopPos + 7, 80, 56, 90, 15);
+    this.blit(poseStack, mobDetailsLeftPos, mobDetailsTopPos, 79, 17, 90, 15);
+    this.blit(poseStack, mobDetailsLeftPos + 22, mobDetailsTopPos, 80, 17, 90, 15);
 
     // Hopper State Icon
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
     RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     RenderSystem.setShaderTexture(0, Constants.TEXTURE_ICONS);
     this.blit(poseStack, leftPos + 20, topPos + 100, 40, 7, 20, 16);
+
+    // Guiding Images
+    if (!this.mobFarmMenu.hasMobFarmWeaponItem()) {
+      this.blit(poseStack, leftPos + 127, topPos + 60, 105, 3, 23, 54);
+    } else {
+      this.blit(poseStack, leftPos + 127, topPos + 60, 81, 3, 23, 54);
+    }
+    if (!this.mobFarmMenu.hasMobFarmCapturedMob()) {
+      // Rotate all 8 icons.
+      int capturedMobIconsLeft = this.animationTicker / 50 * 16;
+      this.blit(poseStack, leftPos + 81, topPos + 50, capturedMobIconsLeft, 60, 16, 16);
+    }
 
     // Render Mob Farm Status
     switch (this.mobFarmMenu.getMobFarmStatus()) {
@@ -241,11 +258,11 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
             this.mobFarmMenu.getMobFarmProgressImage());
         break;
       case MobFarmBlockEntityData.FARM_STATUS_FULL:
-        this.blit(poseStack, leftPos + 23, topPos + 99, 65, 6, 18, 15);
+        this.blit(poseStack, leftPos + 23, topPos + 99, 65, 6, 16, 14);
         break;
       case MobFarmBlockEntityData.FARM_STATUS_WAITING:
         this.blit(poseStack, leftPos + 12, topPos + 30, 1, 1, 40, 50);
-        this.blit(poseStack, leftPos + 100, topPos + 34, 62, 28, 20, 15);
+        this.blit(poseStack, leftPos + 100, topPos + 54, 62, 28, 20, 15);
         break;
       default:
     }
