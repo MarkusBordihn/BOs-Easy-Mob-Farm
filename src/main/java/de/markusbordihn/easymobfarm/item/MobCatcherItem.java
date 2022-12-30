@@ -22,6 +22,7 @@ package de.markusbordihn.easymobfarm.item;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+
 import javax.annotation.Nullable;
 
 import org.apache.logging.log4j.LogManager;
@@ -172,6 +173,7 @@ public class MobCatcherItem extends CapturedMob {
       // Check if we could catch the mob Type
       String mobType = EntityType.getKey(livingEntity.getType()).toString();
       if (!canCatchMob(livingEntity) || !canCatchMobType(mobType)) {
+        log.debug("Unable to catch living entity {} with {}!", mobType, this);
         return InteractionResult.FAIL;
       }
 

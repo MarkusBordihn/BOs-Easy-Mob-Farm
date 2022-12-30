@@ -39,7 +39,9 @@ import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
 import de.markusbordihn.easymobfarm.item.CapturedMob;
 import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
 import de.markusbordihn.easymobfarm.menu.slots.CapturedMobSlot;
+import de.markusbordihn.easymobfarm.menu.slots.ExperienceSlot;
 import de.markusbordihn.easymobfarm.menu.slots.LockedResultSlot;
+import de.markusbordihn.easymobfarm.menu.slots.WeaponSlot;
 
 public class MobFarmMenu extends AbstractContainerMenu {
 
@@ -52,6 +54,8 @@ public class MobFarmMenu extends AbstractContainerMenu {
   public static final int RESULT_3_SLOT = 3;
   public static final int RESULT_4_SLOT = 4;
   public static final int RESULT_5_SLOT = 5;
+  public static final int WEAPON_SLOT = 6;
+  public static final int EXPERIENCE_SLOT = 7;
 
   public static final int PLAYER_SLOT_START = 9;
   public static final int PLAYER_INVENTORY_SLOT_START = PLAYER_SLOT_START;
@@ -59,12 +63,16 @@ public class MobFarmMenu extends AbstractContainerMenu {
 
   // Storing slot position statically to able to access them from other UI parts.
   public static final int CAPTURED_MOB_SLOT_LEFT = 81;
-  public static final int CAPTURED_MOB_SLOT_TOP = 31;
+  public static final int CAPTURED_MOB_SLOT_TOP = 51;
   public static final int RESULT_SLOTS_LEFT = 44;
   public static final int RESULT_SLOTS_TOP = 100;
+  public static final int WEAPON_SLOT_LEFT = 131;
+  public static final int WEAPON_SLOT_TOP = 51;
+  public static final int EXPERIENCE_SLOT_LEFT = 152;
+  public static final int EXPERIENCE_SLOT_TOP = 100;
 
   // Defining basic layout options
-  private static int containerSize = 6;
+  private static int containerSize = 8;
   private static int slotSize = 18;
   private static int slotSpacing = 8;
 
@@ -74,6 +82,8 @@ public class MobFarmMenu extends AbstractContainerMenu {
 
   // Define cache
   private ItemStack mobFarmCapturedMob = ItemStack.EMPTY;
+  private ItemStack mobFarmExperienceItem = ItemStack.EMPTY;
+  private ItemStack mobFarmWeaponItem = ItemStack.EMPTY;
   private String mobFarmName = "- unknown -";
   private String mobFarmTotalTimeText = "";
   private String mobFarmType = "";
@@ -121,6 +131,9 @@ public class MobFarmMenu extends AbstractContainerMenu {
         RESULT_SLOTS_TOP));
     this.addSlot(new LockedResultSlot(container, RESULT_5_SLOT, RESULT_SLOTS_LEFT + 4 * 18,
         RESULT_SLOTS_TOP));
+    this.addSlot(new WeaponSlot(container, WEAPON_SLOT, WEAPON_SLOT_LEFT, WEAPON_SLOT_TOP));
+    this.addSlot(
+        new ExperienceSlot(container, EXPERIENCE_SLOT, EXPERIENCE_SLOT_LEFT, EXPERIENCE_SLOT_TOP));
 
     // Player Inventory Slots
     int playerInventoryStartPositionY = 140;
@@ -160,6 +173,10 @@ public class MobFarmMenu extends AbstractContainerMenu {
       }
       this.mobFarmCapturedMob = currentItemStack;
     }
+
+    // Check if there is an experience or weapon item.
+    this.mobFarmExperienceItem = this.container.getItem(EXPERIENCE_SLOT);
+    this.mobFarmWeaponItem = this.container.getItem(WEAPON_SLOT);
 
     // Process other data if there is an captured mob item.
     this.mobFarmProgress = this.data.get(MobFarmBlockEntityData.FARM_PROGRESS_DATA);
@@ -205,6 +222,18 @@ public class MobFarmMenu extends AbstractContainerMenu {
 
   public String getMobFarmType() {
     return this.mobFarmType;
+  }
+
+  public boolean hasMobFarmCapturedMob() {
+    return this.mobFarmCapturedMob != null && !this.mobFarmCapturedMob.isEmpty();
+  }
+
+  public boolean hasMobFarmExperienceItem() {
+    return this.mobFarmExperienceItem != null && !this.mobFarmExperienceItem.isEmpty();
+  }
+
+  public boolean hasMobFarmWeaponItem() {
+    return this.mobFarmWeaponItem != null && !this.mobFarmWeaponItem.isEmpty();
   }
 
   public boolean stillValid(Player player) {
