@@ -30,7 +30,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.DoubleTag;
 import net.minecraft.nbt.ListTag;
@@ -46,6 +45,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+
+import net.minecraftforge.registries.ForgeRegistries;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.loot.LootManager;
@@ -119,7 +120,7 @@ public class CapturedMob extends Item {
     if (compoundTag.contains(ENTITY_TYPE_TAG)) {
       String entityTypeName = compoundTag.getString(ENTITY_TYPE_TAG);
       ResourceLocation resourceLocation = new ResourceLocation(entityTypeName);
-      return Registry.ENTITY_TYPE.get(resourceLocation);
+      return ForgeRegistries.ENTITY_TYPES.getValue(resourceLocation);
     }
     return null;
   }

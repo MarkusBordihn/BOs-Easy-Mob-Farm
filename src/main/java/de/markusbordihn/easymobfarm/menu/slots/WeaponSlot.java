@@ -28,9 +28,12 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 
-import de.markusbordihn.easymobfarm.client.textures.ModTextures;
+import de.markusbordihn.easymobfarm.Constants;
 
 public class WeaponSlot extends Slot {
+
+  public static final ResourceLocation EMPTY_SWORD =
+      new ResourceLocation(Constants.MOD_ID, "item/empty_slot/empty_sword");
 
   public WeaponSlot(Container container, int index, int x, int y) {
     super(container, index, x, y);
@@ -43,7 +46,7 @@ public class WeaponSlot extends Slot {
 
   @Override
   public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
-    return Pair.of(InventoryMenu.BLOCK_ATLAS, ModTextures.EMPTY_SWORD);
+    return Pair.of(InventoryMenu.BLOCK_ATLAS, EMPTY_SWORD);
   }
 
 }

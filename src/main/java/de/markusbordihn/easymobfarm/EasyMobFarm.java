@@ -34,6 +34,7 @@ import de.markusbordihn.easymobfarm.client.renderer.ClientRenderer;
 import de.markusbordihn.easymobfarm.client.screen.ClientScreens;
 import de.markusbordihn.easymobfarm.item.ModItems;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
+import de.markusbordihn.easymobfarm.tabs.EasyMobFarmTab;
 import de.markusbordihn.easymobfarm.utils.StopModReposts;
 
 @Mod(Constants.MOD_ID)
@@ -61,6 +62,8 @@ public class EasyMobFarm {
     DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
       modEventBus.addListener(ClientRenderer::registerBlockEntityRenderers);
       modEventBus.addListener(ClientScreens::registerScreens);
+      modEventBus.addListener(EasyMobFarmTab::handleCreativeModeTab);
+      modEventBus.addListener(EasyMobFarmTab::handleCreativeModeTabRegister);
       modEventBus.addListener(ModItemProperties::registerItemProperties);
     });
   }

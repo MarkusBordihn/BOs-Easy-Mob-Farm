@@ -87,7 +87,8 @@ public class NetherFortressFarmEntity extends MobFarmBlockEntity {
   public void processAdditionalEffects(Level level, BlockPos blockPos,
       MobFarmBlockEntity blockEntity, ItemStack capturedMob) {
     super.processAdditionalEffects(level, blockPos, blockEntity, capturedMob);
-    level.playSound(null, blockPos, SoundEvents.AMBIENT_CRIMSON_FOREST_MOOD, SoundSource.BLOCKS, 1.0F, 1.0F);
+    level.playSound(null, blockPos, SoundEvents.AMBIENT_CRIMSON_FOREST_MOOD.get(),
+        SoundSource.BLOCKS, 1.0F, 1.0F);
   }
 
 }

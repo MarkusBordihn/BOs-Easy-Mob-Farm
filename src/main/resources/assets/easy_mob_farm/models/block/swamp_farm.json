@@ -7,7 +7,7 @@
 		"glass": "block/glass",
 		"edge": "material_elements:block/light_rod",
 		"dead_bush": "block/dead_bush",
-		"water_still": "easy_mob_farm:background/water_still",
+		"water_still": "easy_mob_farm:block/background/water_still",
 		"clay": "block/clay",
 		"blue_orchid": "block/blue_orchid",
 		"red_mushroom": "block/red_mushroom",

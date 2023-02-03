@@ -29,9 +29,12 @@ import net.minecraft.world.item.ExperienceBottleItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-import de.markusbordihn.easymobfarm.client.textures.ModTextures;
+import de.markusbordihn.easymobfarm.Constants;
 
 public class ExperienceSlot extends Slot {
+
+  public static final ResourceLocation EMPTY_EXPERIENCE_BOTTLE =
+      new ResourceLocation(Constants.MOD_ID, "item/empty_slot/empty_experience_bottle");
 
   public ExperienceSlot(Container container, int index, int x, int y) {
     super(container, index, x, y);
@@ -45,7 +48,7 @@ public class ExperienceSlot extends Slot {
 
   @Override
   public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
-    return Pair.of(InventoryMenu.BLOCK_ATLAS, ModTextures.EMPTY_EXPERIENCE_BOTTLE);
+    return Pair.of(InventoryMenu.BLOCK_ATLAS, EMPTY_EXPERIENCE_BOTTLE);
   }
 
 

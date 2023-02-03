@@ -133,44 +133,43 @@ dependencies {
   minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
   // Required: Bo's Material Elements (dev dependency)
-  compileOnly fg.deobf("curse.maven:material_elements-541620:4182622")
-  runtimeOnly fg.deobf("curse.maven:material_elements-541620:4182622")
+  compileOnly fg.deobf("curse.maven:material_elements-541620:4377715")
+  runtimeOnly fg.deobf("curse.maven:material_elements-541620:4377715")
 
   // Productive Bees: Integration
-  compileOnly fg.deobf("curse.maven:productivebees-377897:4257390")
-  runtimeOnly fg.deobf("curse.maven:productivebees-377897:4257390")
+  compileOnly fg.deobf("curse.maven:productivebees-377897:4366951")
+  // runtimeOnly fg.deobf("curse.maven:productivebees-377897:4366951")
 
   // Jade Integration
-  compileOnly fg.deobf("curse.maven:jade-324717:4054920")
-  runtimeOnly fg.deobf("curse.maven:jade-324717:4054920")
+  compileOnly fg.deobf("curse.maven:jade-324717:4330163")
+  runtimeOnly fg.deobf("curse.maven:jade-324717:4330163")
 
   // Mob Catcher: Integration
-  compileOnly fg.deobf("curse.maven:mob-catcher-498389:4062963")
-  runtimeOnly fg.deobf("curse.maven:mob-catcher-498389:4062963")
+  // compileOnly fg.deobf("curse.maven:mob-catcher-498389:4062963")
+  // runtimeOnly fg.deobf("curse.maven:mob-catcher-498389:4062963")
 
   // Create: Integration
-  compileOnly fg.deobf("curse.maven:create-328085:4174330")
+  // compileOnly fg.deobf("curse.maven:create-328085:4174330")
   // runtimeOnly fg.deobf("curse.maven:flywheel-486392:4174759")
-  runtimeOnly fg.deobf("curse.maven:create-328085:4174330")
+  // runtimeOnly fg.deobf("curse.maven:create-328085:4174330")
 
   // Mob Capturing Tool: Integration
-  compileOnly fg.deobf("curse.maven:mob-capturing-tool-630272:3902520")
-  runtimeOnly fg.deobf("curse.maven:mob-capturing-tool-630272:3902520")
+  // compileOnly fg.deobf("curse.maven:mob-capturing-tool-630272:4153912")
+  // runtimeOnly fg.deobf("curse.maven:mob-capturing-tool-630272:4153912")
 
   // Corail Spawners: Integration
-  compileOnly fg.deobf("curse.maven:corail-spawners-438467:4028301")
-  runtimeOnly fg.deobf("curse.maven:corail-spawners-438467:4028301")
+  // compileOnly fg.deobf("curse.maven:corail-spawners-438467:4028301")
+  // runtimeOnly fg.deobf("curse.maven:corail-spawners-438467:4028301")
 
   // Alex Mob's (Testing)
   // runtimeOnly fg.deobf("curse.maven:citadel-331936:3584733:deobf")
   // runtimeOnly fg.deobf("curse.maven:alex_mobs-426558:3575698")
 
   // Aquaculture 2 (Testing)
-  // runtimeOnly fg.deobf("curse.maven:aquaculture-60028:3750710")
+  runtimeOnly fg.deobf("curse.maven:aquaculture-60028:4307997")
 
   // Additional helpful Mods for development (dev depenedency)
-  // runtimeOnly fg.deobf("curse.maven:item-zoom-261725:3574021")
-  // runtimeOnly fg.deobf("curse.maven:jei-238222:3773518")
+  runtimeOnly fg.deobf("curse.maven:jei-238222:4371830")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

@@ -22,7 +22,6 @@ package de.markusbordihn.easymobfarm.item;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -34,12 +33,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SpawnEggItem;
 
-import com.kwpugh.mob_catcher.ItemMobCatcher;
-import com.kwpugh.mob_catcher.ItemMobCatcherHostile;
-
-import com.matyrobbrt.mobcapturingtool.item.CapturingToolItem;
-
-import com.simibubi.create.content.contraptions.processing.burner.BlazeBurnerBlockItem;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import de.markusbordihn.easymobfarm.Constants;
 
@@ -60,18 +54,6 @@ public class CapturedMobVirtual {
     Item item = itemStack.getItem();
     if (item instanceof CapturedMob) {
       return true;
-    } else if (Constants.MOB_CATCHER_LOADED
-        && (item instanceof ItemMobCatcher || item instanceof ItemMobCatcherHostile)) {
-      CompoundTag compoundTag = itemStack.getOrCreateTag();
-      if (compoundTag.contains(MOD_DATA_TAG)
-          && compoundTag.getCompound(MOD_DATA_TAG).contains(ID_TAG)) {
-        return !compoundTag.getCompound(MOD_DATA_TAG).getString(ID_TAG).isEmpty();
-      }
-    } else if (Constants.CREATE_LOADED
-        && item instanceof BlazeBurnerBlockItem blazeBurnerBlockItem) {
-      return blazeBurnerBlockItem.hasCapturedBlaze();
-    } else if (Constants.MOB_CAPTURING_TOOL_LOADED && item instanceof CapturingToolItem) {
-      return CapturingToolItem.getEntityType(itemStack) != null;
     } else if (item instanceof SpawnEggItem) {
       return true;
     } else if (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER)) {
@@ -98,14 +80,6 @@ public class CapturedMobVirtual {
     Item item = itemStack.getItem();
     if (item instanceof CapturedMob) {
       return CapturedMob.hasCapturedMob(itemStack);
-    } else if (Constants.MOB_CATCHER_LOADED
-        && (item instanceof ItemMobCatcher || item instanceof ItemMobCatcherHostile)) {
-      return !getCapturedMobType(itemStack).isBlank() && !getCapturedMobType(itemStack).isEmpty();
-    } else if (Constants.CREATE_LOADED
-        && item instanceof BlazeBurnerBlockItem blazeBurnerBlockItem) {
-      return blazeBurnerBlockItem.hasCapturedBlaze();
-    } else if (Constants.MOB_CAPTURING_TOOL_LOADED && item instanceof CapturingToolItem) {
-      return CapturingToolItem.getEntityType(itemStack) != null;
     } else if (item instanceof SpawnEggItem) {
       return true;
     } else if (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER)) {
@@ -121,14 +95,7 @@ public class CapturedMobVirtual {
     Item item = itemStack.getItem();
     if (item instanceof CapturedMob) {
       return CapturedMob.getCapturedMob(itemStack);
-    } else if (Constants.MOB_CATCHER_LOADED
-        && (item instanceof ItemMobCatcher || item instanceof ItemMobCatcherHostile)) {
-      CompoundTag compoundTag = itemStack.getOrCreateTag();
-      return compoundTag.getString(NAME_TAG);
-    } else if (Constants.CREATE_LOADED && item instanceof BlazeBurnerBlockItem) {
-      return "Blaze";
-    } else if ((Constants.MOB_CAPTURING_TOOL_LOADED && item instanceof CapturingToolItem)
-        || (item instanceof SpawnEggItem)
+    } else if ((item instanceof SpawnEggItem)
         || (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER))) {
       EntityType<?> entityType = getCapturedMobEntityType(itemStack);
       String descriptionId = entityType != null ? entityType.getDescriptionId() : "";
@@ -156,19 +123,14 @@ public class CapturedMobVirtual {
     Item item = itemStack.getItem();
     if (item instanceof CapturedMob) {
       return CapturedMob.getCapturedMobEntityType(itemStack);
-    } else if ((Constants.MOB_CATCHER_LOADED
-        && (item instanceof ItemMobCatcher || item instanceof ItemMobCatcherHostile))
-        || (Constants.CREATE_LOADED && item instanceof BlazeBurnerBlockItem)
-        || (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER))) {
+    } else if ((Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER))) {
       String capturedMobType = getCapturedMobType(itemStack);
       if (capturedMobType.contains(":")) {
         ResourceLocation resourceLocation = new ResourceLocation(capturedMobType);
-        return Registry.ENTITY_TYPE.get(resourceLocation);
+        return ForgeRegistries.ENTITY_TYPES.getValue(resourceLocation);
       } else {
         log.info("Unable to get capture mob entity type for {}", capturedMobType);
       }
-    } else if (Constants.MOB_CAPTURING_TOOL_LOADED && item instanceof CapturingToolItem) {
-      return CapturingToolItem.getEntityType(itemStack);
     } else if (item instanceof SpawnEggItem spawnEggItem) {
       return spawnEggItem.getType(itemStack.getOrCreateTag());
     }
@@ -182,14 +144,7 @@ public class CapturedMobVirtual {
     Item item = itemStack.getItem();
     if (item instanceof CapturedMob) {
       return CapturedMob.getCapturedMobType(itemStack);
-    } else if (Constants.MOB_CATCHER_LOADED
-        && (item instanceof ItemMobCatcher || item instanceof ItemMobCatcherHostile)) {
-      CompoundTag compoundTag = itemStack.getOrCreateTag();
-      return compoundTag.getCompound(MOD_DATA_TAG).getString(ID_TAG);
-    } else if (Constants.CREATE_LOADED && item instanceof BlazeBurnerBlockItem) {
-      return "minecraft:blaze";
-    } else if ((Constants.MOB_CAPTURING_TOOL_LOADED && item instanceof CapturingToolItem)
-        || (item instanceof SpawnEggItem)) {
+    } else if ((item instanceof SpawnEggItem)) {
       EntityType<?> entityType = getCapturedMobEntityType(itemStack);
       String descriptionId = entityType != null ? entityType.getDescriptionId() : "";
       if (descriptionId != null && descriptionId.contains("entity.")) {
@@ -213,11 +168,7 @@ public class CapturedMobVirtual {
     Item item = itemStack.getItem();
     if (item instanceof CapturedMob) {
       return CapturedMob.getLootTable(itemStack);
-    } else if ((Constants.MOB_CATCHER_LOADED
-        && (item instanceof ItemMobCatcher || item instanceof ItemMobCatcherHostile))
-        || (Constants.CREATE_LOADED && item instanceof BlazeBurnerBlockItem)
-        || (Constants.MOB_CAPTURING_TOOL_LOADED && item instanceof CapturingToolItem)
-        || (item instanceof SpawnEggItem)
+    } else if ((item instanceof SpawnEggItem)
         || (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER))) {
       String capturedMobType = getCapturedMobType(itemStack);
       if (capturedMobType != null && capturedMobType.contains(":")) {

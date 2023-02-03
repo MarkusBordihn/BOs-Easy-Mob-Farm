@@ -3,7 +3,7 @@
   "advancements.easy_mob_farm.crafting.root.title": "Easy Mob Farm",
 
   "advancements.easy_mob_farm.crafting.craft_animal_plains_farm.description": "To make sure the animals feels comfortable we need to gather some material from the plains.",
-  "advancements.easy_mob_farm.crafting.craft_animal_plains_farm.title": "Create a sweat home for plains animals.",
+  "advancements.easy_mob_farm.crafting.craft_animal_plains_farm.title": "Create a sweet home for plains animals.",
   "advancements.easy_mob_farm.crafting.craft_bee_hive_farm.description": "For farming honeycombs we need a bee hive farm.",
   "advancements.easy_mob_farm.crafting.craft_bee_hive_farm.title": "Do you want some honeycombs?",
   "advancements.easy_mob_farm.crafting.craft_catch_cage.description": "For catching bigger animals we need a catch cage.",
@@ -95,7 +95,6 @@
 
   "item.placeholder.text": "Template placeholder do not remove!",
 
-  "itemGroup.easy_mob_farm": "Easy Mob Farm",
-
-  "itemGroup.easy_mob_farm_tools": "Easy Mob Farm: Tools"
+  "itemGroup.easy_mob_farm.mob_farm": "Easy Mob Farm",
+  "itemGroup.easy_mob_farm.tools": "Easy Mob Farm: Tools"
 }

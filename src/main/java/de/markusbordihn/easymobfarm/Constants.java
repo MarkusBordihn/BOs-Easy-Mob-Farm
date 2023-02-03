@@ -70,4 +70,7 @@ public final class Constants {
       ModList.get().isLoaded("mobcapturingtool");
   public static final boolean MOB_CATCHER_LOADED = ModList.get().isLoaded("mob_catcher");
   public static final boolean PRODUCTIVE_BEES_LOADED = ModList.get().isLoaded("productivebees");
+
+  // Misc
+  public static final float PI_180DEG = (float) (Math.PI/180);
 }

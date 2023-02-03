@@ -6,7 +6,7 @@
 		"floor": "block/stone",
 		"glass": "block/glass",
 		"edge": "material_elements:block/light_rod",
-		"water": "easy_mob_farm:background/water_still",
+		"water": "easy_mob_farm:block/background/water_still",
 		"kelp": "block/kelp",
 		"kelp_plant": "block/kelp_plant",
 		"seagrass": "block/seagrass",

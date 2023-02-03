@@ -19,17 +19,19 @@
 
 package de.markusbordihn.easymobfarm.client.screen;
 
+import org.joml.Quaternionf;
+
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
+
+import de.markusbordihn.easymobfarm.Constants;
 
 public class MobFarmScreenHelper {
 
@@ -45,10 +47,10 @@ public class MobFarmScreenHelper {
     PoseStack poseStack1 = new PoseStack();
     poseStack1.translate(0.0D, 0.0D, 1000.0D);
     poseStack1.scale(scale, scale, scale);
-    Quaternion quaternion = Vector3f.ZP.rotationDegrees(180.0F);
-    Quaternion quaternion1 = Vector3f.XP.rotationDegrees(f1 * 20.0F);
-    quaternion.mul(quaternion1);
-    poseStack1.mulPose(quaternion);
+    Quaternionf quaternionf = (new Quaternionf()).rotateZ((float) Math.PI);
+    Quaternionf quaternionf1 = (new Quaternionf()).rotateX(f1 * 20.0F * Constants.PI_180DEG);
+    quaternionf.mul(quaternionf1);
+    poseStack1.mulPose(quaternionf);
     float entityYBodyRot = livingEntity.yBodyRot;
     float entityYRot = livingEntity.getYRot();
     float entityXRot = livingEntity.getXRot();
@@ -63,8 +65,8 @@ public class MobFarmScreenHelper {
     Lighting.setupForEntityInInventory();
     EntityRenderDispatcher entityRenderDispatcher =
         Minecraft.getInstance().getEntityRenderDispatcher();
-    quaternion1.conj();
-    entityRenderDispatcher.overrideCameraOrientation(quaternion1);
+    quaternionf1.conjugate();
+    entityRenderDispatcher.overrideCameraOrientation(quaternionf1);
     entityRenderDispatcher.setRenderShadow(false);
     MultiBufferSource.BufferSource multiBuffer =
         Minecraft.getInstance().renderBuffers().bufferSource();

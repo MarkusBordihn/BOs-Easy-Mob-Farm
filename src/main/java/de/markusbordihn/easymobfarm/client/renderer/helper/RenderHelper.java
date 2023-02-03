@@ -23,10 +23,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Random;
+import org.joml.Quaternionf;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
@@ -64,7 +63,7 @@ public class RenderHelper {
   private float bodyRotation = random.nextFloat(-12.0F, 12.0F);
 
   // Internal Cache
-  private Quaternion blockRotation;
+  private Quaternionf blockRotation;
   private RenderModels renderModels;
   private DyeColor entityColor;
 
@@ -75,11 +74,11 @@ public class RenderHelper {
     this.renderModels = new RenderModels(minecraft);
   }
 
-  public Quaternion getBlockRotation() {
+  public Quaternionf getBlockRotation() {
     if (this.blockRotation == null) {
-      this.blockRotation = Vector3f.YP
-          .rotationDegrees(-this.blockEntity.getBlockState().getValue(MobFarmBlock.FACING).toYRot()
-              + this.bodyRotation);
+      this.blockRotation = (new Quaternionf())
+          .rotateY((-this.blockEntity.getBlockState().getValue(MobFarmBlock.FACING).toYRot()
+              + this.bodyRotation) * Constants.PI_180DEG);
     }
     return this.blockRotation;
   }
@@ -346,8 +345,8 @@ public class RenderHelper {
     poseStack.translate(0.5D, 1D / 16D, 0.5D);
     poseStack.mulPose(getBlockRotation());
     poseStack.translate(x, y, z);
-    poseStack.mulPose(Vector3f.XP.rotationDegrees(rotationX));
-    poseStack.mulPose(Vector3f.YP.rotationDegrees(rotationY));
+    poseStack.mulPose((new Quaternionf()).rotateX(rotationX * Constants.PI_180DEG));
+    poseStack.mulPose((new Quaternionf()).rotateY(rotationY * Constants.PI_180DEG));
     poseStack.scale(scale, scale, scale);
     renderer.render(livingEntity, 0F, getRandomHeadRotation(), poseStack, buffer, combinedLight);
     poseStack.popPose();
@@ -375,8 +374,8 @@ public class RenderHelper {
       poseStack.translate(0.5D, 1D / 16D, 0.5D);
       poseStack.mulPose(getBlockRotation());
       poseStack.translate(x, y, z);
-      poseStack.mulPose(Vector3f.XP.rotationDegrees(rotationX));
-      poseStack.mulPose(Vector3f.YP.rotationDegrees(rotationY));
+      poseStack.mulPose((new Quaternionf()).rotateX(rotationX * Constants.PI_180DEG));
+      poseStack.mulPose((new Quaternionf()).rotateY(rotationY * Constants.PI_180DEG));
       poseStack.scale(scale, scale, scale);
       renderCustomEntity(entityType, poseStack, buffer, combinedLight);
       poseStack.popPose();

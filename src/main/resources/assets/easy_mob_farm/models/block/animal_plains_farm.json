@@ -4,7 +4,7 @@
 	"textures": {
 		"edge": "material_elements:block/light_rod",
 		"glass": "block/glass",
-		"background": "easy_mob_farm:background/grass",
+		"background": "easy_mob_farm:block/background/grass",
 		"particle": "block/moss_block",
 		"floor": "block/moss_block",
 		"egg": "item/egg",

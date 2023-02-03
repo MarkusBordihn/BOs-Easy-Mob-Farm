@@ -5,7 +5,7 @@
 		"particle": "block/sand",
 		"floor": "block/sand",
 		"glass": "block/glass",
-		"background": "easy_mob_farm:background/sand",
+		"background": "easy_mob_farm:block/background/sand",
 		"edge": "material_elements:block/light_rod",
 		"cactus_side": "block/cactus_side",
 		"cactus_top": "block/cactus_top",

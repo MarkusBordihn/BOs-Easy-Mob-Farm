@@ -5,6 +5,11 @@
 This change log includes the summarized changes.
 For the full changelog, please go to the [Git Hub History][history] instead.
 
+### 2023.02.04
+
+- Refactored code to 1.19.3-44.1.8
+- Added German translation.
+
 ### 2022.12.30
 
 - Added `killed_by_player` loot drop support with sword item.
