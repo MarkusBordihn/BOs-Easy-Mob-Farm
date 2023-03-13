@@ -25,18 +25,17 @@ import org.apache.logging.log4j.Logger;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
@@ -53,6 +52,7 @@ public class JungleFarmEntity extends MobFarmBlockEntity {
   // Config settings
   private static int jungleFarmProcessTime = COMMON.jungleFarmProcessTime.get();
   private static int farmProcessingTime = jungleFarmProcessTime * 20;
+  private static SoundEvent farmDropSound;
 
   public JungleFarmEntity(BlockPos blockPos, BlockState blockState) {
     super(ModBlocks.JUNGLE_FARM_ENTITY.get(), blockPos, blockState);
@@ -67,8 +67,17 @@ public class JungleFarmEntity extends MobFarmBlockEntity {
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
     jungleFarmProcessTime = COMMON.jungleFarmProcessTime.get();
     farmProcessingTime = jungleFarmProcessTime * 20;
-    log.info("{}: JungleFarm Entity with drops every {}s", Constants.LOG_MOB_FARM_PREFIX,
+    log.info("{}: Jungle Farm Entity with drops every {}s", Constants.LOG_MOB_FARM_PREFIX,
         jungleFarmProcessTime);
+    String farmDropSoundName = COMMON.jungleFarmDropSound.get();
+    if (playDropSound && farmDropSoundName != null && !farmDropSoundName.isEmpty()) {
+      farmDropSound =
+          ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(farmDropSoundName));
+      if (farmDropSound != null) {
+        log.info("{}: Jungle Farm Farm Entity will play drop sound: {}",
+            Constants.LOG_MOB_FARM_PREFIX, farmDropSound.getRegistryName());
+      }
+    }
   }
 
   @Override
@@ -87,10 +96,8 @@ public class JungleFarmEntity extends MobFarmBlockEntity {
   }
 
   @Override
-  public void processAdditionalEffects(Level level, BlockPos blockPos,
-      MobFarmBlockEntity blockEntity, ItemStack capturedMob) {
-    super.processAdditionalEffects(level, blockPos, blockEntity, capturedMob);
-    level.playSound(null, blockPos, SoundEvents.AZALEA_LEAVES_HIT, SoundSource.BLOCKS, 1.0F, 1.0F);
+  public SoundEvent getFarmDropSound() {
+    return farmDropSound;
   }
 
 }

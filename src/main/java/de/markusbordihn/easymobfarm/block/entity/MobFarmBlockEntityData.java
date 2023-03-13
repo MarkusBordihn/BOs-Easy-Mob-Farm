@@ -33,6 +33,7 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerChunkCache;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -174,6 +175,10 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
 
   public int getFarmProcessingTime() {
     return 0;
+  }
+
+  public SoundEvent getFarmDropSound() {
+    return null;
   }
 
   public ItemStack takeItem(int index) {

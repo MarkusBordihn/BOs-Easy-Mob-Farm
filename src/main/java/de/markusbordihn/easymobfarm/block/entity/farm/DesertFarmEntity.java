@@ -25,18 +25,17 @@ import org.apache.logging.log4j.Logger;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
@@ -53,6 +52,7 @@ public class DesertFarmEntity extends MobFarmBlockEntity {
   // Config settings
   private static int desertFarmProcessTime = COMMON.desertFarmProcessTime.get();
   private static int farmProcessingTime = desertFarmProcessTime * 20;
+  private static SoundEvent farmDropSound;
 
   public DesertFarmEntity(BlockPos blockPos, BlockState blockState) {
     super(ModBlocks.DESERT_FARM_ENTITY.get(), blockPos, blockState);
@@ -67,8 +67,17 @@ public class DesertFarmEntity extends MobFarmBlockEntity {
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
     desertFarmProcessTime = COMMON.desertFarmProcessTime.get();
     farmProcessingTime = desertFarmProcessTime * 20;
-    log.info("{}: DesertFarm Entity with drops every {}s", Constants.LOG_MOB_FARM_PREFIX,
+    log.info("{}: Desert Farm Entity with drops every {}s", Constants.LOG_MOB_FARM_PREFIX,
         desertFarmProcessTime);
+    String farmDropSoundName = COMMON.desertFarmDropSound.get();
+    if (playDropSound && farmDropSoundName != null && !farmDropSoundName.isEmpty()) {
+      farmDropSound =
+          ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(farmDropSoundName));
+      if (farmDropSound != null) {
+        log.info("{}: Desert Farm Entity will play drop sound: {}", Constants.LOG_MOB_FARM_PREFIX,
+            farmDropSound.getRegistryName());
+      }
+    }
   }
 
   @Override
@@ -87,10 +96,8 @@ public class DesertFarmEntity extends MobFarmBlockEntity {
   }
 
   @Override
-  public void processAdditionalEffects(Level level, BlockPos blockPos,
-      MobFarmBlockEntity blockEntity, ItemStack capturedMob) {
-    super.processAdditionalEffects(level, blockPos, blockEntity, capturedMob);
-    level.playSound(null, blockPos, SoundEvents.SAND_HIT, SoundSource.BLOCKS, 1.0F, 1.0F);
+  public SoundEvent getFarmDropSound() {
+    return farmDropSound;
   }
 
 }

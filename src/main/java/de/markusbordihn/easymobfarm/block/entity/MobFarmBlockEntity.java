@@ -34,6 +34,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.WorldlyContainer;
 
@@ -69,9 +71,11 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
 
   private static final int DEFAULT_FARM_PROCESSING_TIME = 6000;
 
+  // Config settings
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
   private static boolean informOwnerAboutFullStorage = COMMON.informOwnerAboutFullStorage.get();
   private static boolean logFullStorage = COMMON.logFullStorage.get();
+  protected static boolean playDropSound = COMMON.playDropSound.get();
 
   public MobFarmBlockEntity(BlockPos blockPos, BlockState blockState) {
     super(null, blockPos, blockState);
@@ -86,6 +90,10 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
   public static void onServerAboutToStartEvent(ServerAboutToStartEvent event) {
     informOwnerAboutFullStorage = COMMON.informOwnerAboutFullStorage.get();
     logFullStorage = COMMON.logFullStorage.get();
+    playDropSound = COMMON.playDropSound.get();
+    if (!playDropSound) {
+      log.info("Easy Mob Farm drop sounds are disabled!");
+    }
   }
 
   public void updateLevel(Level level) {
@@ -264,7 +272,11 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
 
   public void processAdditionalEffects(Level level, BlockPos blockPos,
       MobFarmBlockEntity blockEntity, ItemStack capturedMob) {
-    // Placeholder for additional effects like sound or particles.
+    // Additional effects like sound or particles on mob drop.
+    SoundEvent farmDropSound = getFarmDropSound();
+    if (playDropSound && farmDropSound != null) {
+      level.playSound(null, blockPos, farmDropSound, SoundSource.BLOCKS, 1.0F, 1.0F);
+    }
   }
 
   public void processFullStorage(MobFarmBlockEntity blockEntity, List<ItemStack> lootDrop) {

@@ -25,18 +25,17 @@ import org.apache.logging.log4j.Logger;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
@@ -49,6 +48,7 @@ public class NetherFortressFarmEntity extends MobFarmBlockEntity {
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
+  private static SoundEvent farmDropSound;
 
   // Config settings
   private static int netherFortressFarmProcessTime = COMMON.netherFortressFarmProcessTime.get();
@@ -67,8 +67,17 @@ public class NetherFortressFarmEntity extends MobFarmBlockEntity {
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
     netherFortressFarmProcessTime = COMMON.netherFortressFarmProcessTime.get();
     farmProcessingTime = netherFortressFarmProcessTime * 20;
-    log.info("{}: NetherFortressFarm Entity with drops every {}s", Constants.LOG_MOB_FARM_PREFIX,
+    log.info("{}: Nether Fortress Farm Entity with drops every {}s", Constants.LOG_MOB_FARM_PREFIX,
         netherFortressFarmProcessTime);
+    String farmDropSoundName = COMMON.netherFortressFarmDropSound.get();
+    if (playDropSound && farmDropSoundName != null && !farmDropSoundName.isEmpty()) {
+      farmDropSound =
+          ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(farmDropSoundName));
+      if (farmDropSound != null) {
+        log.info("{}:  Nether Fortress Farm Entity will play drop sound: {}",
+            Constants.LOG_MOB_FARM_PREFIX, farmDropSound.getRegistryName());
+      }
+    }
   }
 
   @Override
@@ -87,10 +96,8 @@ public class NetherFortressFarmEntity extends MobFarmBlockEntity {
   }
 
   @Override
-  public void processAdditionalEffects(Level level, BlockPos blockPos,
-      MobFarmBlockEntity blockEntity, ItemStack capturedMob) {
-    super.processAdditionalEffects(level, blockPos, blockEntity, capturedMob);
-    level.playSound(null, blockPos, SoundEvents.AMBIENT_CRIMSON_FOREST_MOOD, SoundSource.BLOCKS, 1.0F, 1.0F);
+  public SoundEvent getFarmDropSound() {
+    return farmDropSound;
   }
 
 }
