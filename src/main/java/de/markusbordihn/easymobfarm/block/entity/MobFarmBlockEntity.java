@@ -34,6 +34,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -252,7 +254,11 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
 
   public void processAdditionalEffects(Level level, BlockPos blockPos,
       MobFarmBlockEntity blockEntity, ItemStack capturedMob) {
-    // Placeholder for additional effects like sound or particles.
+    // Additional effects like sound or particles on mob drop.
+    SoundEvent farmDropSound = getFarmDropSound();
+    if (Boolean.TRUE.equals(COMMON.playDropSound.get()) && farmDropSound != null) {
+      level.playSound(null, blockPos, farmDropSound, SoundSource.BLOCKS, 1.0F, 1.0F);
+    }
   }
 
   public void processFullStorage(MobFarmBlockEntity blockEntity, List<ItemStack> lootDrop) {

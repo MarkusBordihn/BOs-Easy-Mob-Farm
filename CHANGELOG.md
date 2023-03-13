@@ -5,6 +5,11 @@
 This change log includes the summarized changes.
 For the full changelog, please go to the [Git Hub History][history] instead.
 
+### 2023.03.13
+
+- Added config options `playDropSound` to general disable mob drop sounds.
+- Added config options `...FarmDropSound` to define individual mob drop sound for each mob farm.
+
 ### 2023.02.04
 
 - Refactored code to 1.19.3-44.1.8
