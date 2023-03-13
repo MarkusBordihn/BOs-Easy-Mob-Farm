@@ -60,6 +60,8 @@ public class CommonConfig {
       "Defines the luck of capturing the mob e.g. luck of 3 means a change of 1 to 3 to capture a mob. Higher numbers requires more luck. 0 = disable luck.";
   private static final String PROCESS_TIME_TEXT =
       "Defines after how many seconds a loot drop is performed.";
+  private static final String DROP_SOUND_TEXT =
+      "Defines the sound which is played when a loot drop is performed.";
 
   protected CommonConfig() {}
 
@@ -78,31 +80,41 @@ public class CommonConfig {
     public final ForgeConfigSpec.BooleanValue informOwnerAboutFullStorage;
     public final ForgeConfigSpec.BooleanValue logFullStorage;
     public final ForgeConfigSpec.IntValue lootPreviewRolls;
+    public final ForgeConfigSpec.BooleanValue playDropSound;
 
     public final ForgeConfigSpec.IntValue animalPlainsFarmProcessTime;
+    public final ForgeConfigSpec.ConfigValue<String> animalPlainsFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> animalPlainsFarmMobs;
 
     public final ForgeConfigSpec.IntValue beeHiveFarmProcessTime;
+    public final ForgeConfigSpec.ConfigValue<String> beeHiveFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> beeHiveFarmMobs;
 
     public final ForgeConfigSpec.IntValue creativeMobFarmProcessTime;
+    public final ForgeConfigSpec.ConfigValue<String> creativeMobFarmDropSound;
 
     public final ForgeConfigSpec.IntValue desertFarmProcessTime;
+    public final ForgeConfigSpec.ConfigValue<String> desertFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> desertFarmMobs;
 
     public final ForgeConfigSpec.IntValue jungleFarmProcessTime;
+    public final ForgeConfigSpec.ConfigValue<String> jungleFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> jungleFarmMobs;
 
     public final ForgeConfigSpec.IntValue monsterPlainsCaveFarmProcessTime;
+    public final ForgeConfigSpec.ConfigValue<String> monsterPlainsCaveFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> monsterPlainsCaveFarmMobs;
 
     public final ForgeConfigSpec.IntValue netherFortressFarmProcessTime;
+    public final ForgeConfigSpec.ConfigValue<String> netherFortressFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> netherFortressFarmMobs;
 
     public final ForgeConfigSpec.IntValue oceanFarmProcessTime;
+    public final ForgeConfigSpec.ConfigValue<String> oceanFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> oceanFarmMobs;
 
     public final ForgeConfigSpec.IntValue swampFarmProcessTime;
+    public final ForgeConfigSpec.ConfigValue<String> swampFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> swampFarmMobs;
 
     public final ForgeConfigSpec.IntValue catchCageMobCatchingLuck;
@@ -150,11 +162,15 @@ public class CommonConfig {
       lootPreviewRolls = builder.comment(
           "Number of roll's to get the loot preview for a captured mob. Higher numbers require more server load, but giving a more completed overview.")
           .defineInRange("lootPreviewRolls", 2, 1, 5);
+      playDropSound = builder.comment("Enable/Disable the drop sound for the loot drops.")
+          .define("playDropSound", true);
       builder.pop();
 
       builder.push("Animal Plains Farms");
       animalPlainsFarmProcessTime = builder.comment(PROCESS_TIME_TEXT)
           .defineInRange("animalPlainsFarmProcessTime", 300, 10, 3600);
+      animalPlainsFarmDropSound = builder.comment(DROP_SOUND_TEXT)
+          .define("animalPlainsFarmDropSound", "minecraft:entity.chicken.egg");
       animalPlainsFarmMobs = builder.comment("Supported Mobs for the animal plains farm.")
           .define("animalPlainsFarmMobs", new ArrayList<String>(Plains.Passive));
       builder.pop();
@@ -162,6 +178,8 @@ public class CommonConfig {
       builder.push("Bee Hive Farms");
       beeHiveFarmProcessTime =
           builder.comment(PROCESS_TIME_TEXT).defineInRange("beeHiveFarmProcessTime", 300, 10, 3600);
+      beeHiveFarmDropSound = builder.comment(DROP_SOUND_TEXT).define("beeHiveFarmDropSound",
+          "minecraft:block.beehive.exit");
       beeHiveFarmMobs = builder.comment("Supported Mobs for the bee hive farm.")
           .define("beeHiveFarmMobs", new ArrayList<String>(BeeAnimal.AllLootable));
       builder.pop();
@@ -169,11 +187,15 @@ public class CommonConfig {
       builder.push("Creative Mob Farm");
       creativeMobFarmProcessTime = builder.comment(PROCESS_TIME_TEXT)
           .defineInRange("creativeMobFarmProcessTime", 60, 10, 3600);
+      creativeMobFarmDropSound = builder.comment(DROP_SOUND_TEXT).define("creativeMobFarmDropSound",
+          "minecraft:entity.chicken.egg");
       builder.pop();
 
       builder.push("Desert Farm");
       desertFarmProcessTime = builder.comment("Defines after how many seconds a drop is performed.")
           .defineInRange("desertFarmProcessTime", 300, 10, 3600);
+      desertFarmDropSound = builder.comment(DROP_SOUND_TEXT).define("desertFarmDropSound",
+          "minecraft:block.sand.hit");
       desertFarmMobs = builder.comment("Supported Mobs for the dessert farm.")
           .define("desertFarmMobs", new ArrayList<String>(Desert.All));
       builder.pop();
@@ -181,6 +203,8 @@ public class CommonConfig {
       builder.push("Jungle Farm");
       jungleFarmProcessTime = builder.comment("Defines after how many seconds a drop is performed.")
           .defineInRange("jungleFarmProcessTime", 300, 10, 3600);
+      jungleFarmDropSound = builder.comment(DROP_SOUND_TEXT).define("jungleFarmDropSound",
+          "minecraft:block.azalea.hit");
       jungleFarmMobs = builder.comment("Supported Mobs for the dessert farm.")
           .define("jungleFarmMobs", new ArrayList<String>(Jungle.All));
       builder.pop();
@@ -188,6 +212,8 @@ public class CommonConfig {
       builder.push("Monster Plains Cave Farm");
       monsterPlainsCaveFarmProcessTime = builder.comment(PROCESS_TIME_TEXT)
           .defineInRange("monsterPlainsCaveFarmProcessTime", 300, 10, 3600);
+      monsterPlainsCaveFarmDropSound = builder.comment(DROP_SOUND_TEXT)
+          .define("monsterPlainsCaveFarmDropSound", "minecraft:block.cave_vines.fall");
       monsterPlainsCaveFarmMobs =
           builder.comment("Supported Mobs for the monster plains cave farm.")
               .define("monsterPlainsCaveFarmMobs", new ArrayList<String>(PlainsCave.Hostile));
@@ -196,6 +222,8 @@ public class CommonConfig {
       builder.push("Nether Fortress Farm");
       netherFortressFarmProcessTime = builder.comment(PROCESS_TIME_TEXT)
           .defineInRange("netherFortressFarmProcessTime", 300, 10, 3600);
+      netherFortressFarmDropSound = builder.comment(DROP_SOUND_TEXT)
+          .define("netherFortressFarmDropSound", "minecraft:block.netherrack.fall");
       netherFortressFarmMobs = builder.comment("Supported Mobs for the nether fortress farm.")
           .define("netherFortressFarmMobs", new ArrayList<String>(NetherFortress.All));
       builder.pop();
@@ -203,6 +231,8 @@ public class CommonConfig {
       builder.push("Ocean Farm");
       oceanFarmProcessTime =
           builder.comment(PROCESS_TIME_TEXT).defineInRange("oceanFarmProcessTime", 300, 10, 3600);
+      oceanFarmDropSound = builder.comment(DROP_SOUND_TEXT).define("oceanFarmDropSound",
+          "minecraft:entity.fish.swim");
       oceanFarmMobs = builder.comment("Supported Mobs for the ocean farm.").define("oceanFarmMobs",
           new ArrayList<String>(Ocean.All));
       builder.pop();
@@ -210,6 +240,8 @@ public class CommonConfig {
       builder.push("Swamp Farm");
       swampFarmProcessTime =
           builder.comment(PROCESS_TIME_TEXT).defineInRange("swampFarmProcessTime", 300, 10, 3600);
+      swampFarmDropSound = builder.comment(DROP_SOUND_TEXT).define("swampFarmDropSound",
+          "minecraft:entity.slime.squish");
       swampFarmMobs = builder.comment("Supported Mobs for the swamp farm.").define("swampFarmMobs",
           new ArrayList<String>(Swamp.All));
       builder.pop();
