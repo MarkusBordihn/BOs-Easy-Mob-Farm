@@ -5,6 +5,13 @@
 This change log includes the summarized changes.
 For the full changelog, please go to the [Git Hub History][history] instead.
 
+### 2023.06.08
+
+- Replaced hard links to supported mods with custom links to allow better mod support.
+- Added support for MobCatcher.
+- Added support for sheared entities like sheep.
+- Fixed issue with broken weapons in weapon slot.
+
 ### 2023.03.13
 
 - Added config options `playDropSound` to general disable mob drop sounds.

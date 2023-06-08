@@ -49,7 +49,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 
-import de.markusbordihn.easymobfarm.item.CapturedMob;
 import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
@@ -91,6 +90,7 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
   public String farmMobType = "";
   public DyeColor farmMobColor = null;
   public EntityType<?> farmMobEntityType = null;
+  public boolean farmMobShearedStatus = false;
 
   // Item Storage
   public NonNullList<ItemStack> items = NonNullList.withSize(8, ItemStack.EMPTY);
@@ -171,6 +171,10 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
 
   public EntityType<?> getFarmMobEntityType() {
     return this.farmMobEntityType;
+  }
+
+  public boolean getFarmMobShearedStatus() {
+    return this.farmMobShearedStatus;
   }
 
   public int getFarmProcessingTime() {
@@ -308,18 +312,12 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
 
     // Restore additional meta data
     ItemStack capturedMob = this.items.get(MobFarmMenu.CAPTURED_MOB_SLOT);
-    if (!capturedMob.isEmpty()) {
-      if (capturedMob.getItem() instanceof CapturedMob) {
-        this.farmMobName = CapturedMob.getCapturedMob(capturedMob);
-        this.farmMobType = CapturedMob.getCapturedMobType(capturedMob);
-        this.farmMobColor = CapturedMob.getCapturedMobColor(capturedMob);
-        this.farmMobEntityType = CapturedMob.getCapturedMobEntityType(capturedMob);
-      } else if (CapturedMobVirtual.isSupported(capturedMob)) {
-        this.farmMobName = CapturedMobVirtual.getCapturedMob(capturedMob);
-        this.farmMobType = CapturedMobVirtual.getCapturedMobType(capturedMob);
-        this.farmMobColor = CapturedMobVirtual.getCapturedMobColor(capturedMob);
-        this.farmMobEntityType = CapturedMobVirtual.getCapturedMobEntityType(capturedMob);
-      }
+    if (CapturedMobVirtual.isSupported(capturedMob)) {
+      this.farmMobName = CapturedMobVirtual.getCapturedMob(capturedMob);
+      this.farmMobType = CapturedMobVirtual.getCapturedMobType(capturedMob);
+      this.farmMobColor = CapturedMobVirtual.getCapturedMobColor(capturedMob);
+      this.farmMobShearedStatus = CapturedMobVirtual.getCapturedMobShearedStatus(capturedMob);
+      this.farmMobEntityType = CapturedMobVirtual.getCapturedMobEntityType(capturedMob);
     }
   }
 

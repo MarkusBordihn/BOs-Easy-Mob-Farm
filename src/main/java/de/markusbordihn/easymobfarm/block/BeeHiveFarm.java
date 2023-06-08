@@ -27,6 +27,7 @@ import javax.annotation.Nullable;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -135,7 +136,7 @@ public class BeeHiveFarm extends MobFarmBlock {
       TranslatableComponent mobTypeOverview = (TranslatableComponent) new TranslatableComponent("")
           .withStyle(ChatFormatting.DARK_GREEN);
       for (String acceptedMob : acceptedMobTypes) {
-        // We will skip he entries in the following cases:
+        // We will skip the entries in the following cases:
         // 1.) Productive Bees is not loaded but entry starts with productive bees
         // 2.) Accepted Mob Types Size > 16 and Productive Bees is loaded and entry starts with
         // productive bees

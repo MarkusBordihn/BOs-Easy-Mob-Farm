@@ -354,10 +354,17 @@ public class RenderModels {
   }
 
   public Sheep getSheep(DyeColor color) {
+    return getSheep(color, false);
+  }
+
+  public Sheep getSheep(DyeColor color, boolean isSheared) {
     if (this.sheep == null) {
       this.sheep = new Sheep(EntityType.SHEEP, getLevel());
       if (color != null) {
         this.sheep.setColor(color);
+      }
+      if (isSheared) {
+        this.sheep.setSheared(isSheared);
       }
     }
     return this.sheep;

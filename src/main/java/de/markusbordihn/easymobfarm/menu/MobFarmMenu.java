@@ -32,7 +32,6 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 
 import net.minecraftforge.registries.ObjectHolder;
 
@@ -98,9 +97,6 @@ public class MobFarmMenu extends AbstractContainerMenu {
   private int mobFarmStatus;
   private int mobFarmTotalTime;
 
-  // Misc
-  protected final Level level;
-
   public MobFarmMenu(int windowIdIn, Inventory inventory) {
     this(windowIdIn, inventory, new SimpleContainer(containerSize),
         new SimpleContainerData(MobFarmBlockEntityData.DATA_SIZE), TYPE);
@@ -120,7 +116,6 @@ public class MobFarmMenu extends AbstractContainerMenu {
     checkContainerDataCount(containerData, MobFarmBlockEntityData.DATA_SIZE);
     this.container = container;
     this.data = containerData;
-    this.level = playerInventory.player.level;
 
     // Define slots and position on UI (note: order sensitive)
     this.addSlot(new CapturedMobSlot(container, CAPTURED_MOB_SLOT, CAPTURED_MOB_SLOT_LEFT,
@@ -280,10 +275,9 @@ public class MobFarmMenu extends AbstractContainerMenu {
 
     // Move result items to the player inventory.
     else if (slotIndex == RESULT_1_SLOT || slotIndex == RESULT_2_SLOT || slotIndex == RESULT_3_SLOT
-        || slotIndex == RESULT_4_SLOT || slotIndex == RESULT_5_SLOT) {
-      if (this.moveItemStackTo(itemStack, 6, 42, false)) {
-        return ItemStack.EMPTY;
-      }
+        || slotIndex == RESULT_4_SLOT
+        || slotIndex == RESULT_5_SLOT && (this.moveItemStackTo(itemStack, 6, 42, false))) {
+      return ItemStack.EMPTY;
     }
 
     // Store changes if itemStack is not empty.

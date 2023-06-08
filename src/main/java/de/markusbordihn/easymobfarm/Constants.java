@@ -81,4 +81,5 @@ public final class Constants {
   public static final boolean MOB_CAPTURING_TOOL_LOADED =
       ModList.get().isLoaded("mobcapturingtool");
   public static final boolean MOB_CATCHER_LOADED = ModList.get().isLoaded("mob_catcher");
+  public static final boolean MOBCATCHER_LOADED = ModList.get().isLoaded("mobcatcher");
 }
