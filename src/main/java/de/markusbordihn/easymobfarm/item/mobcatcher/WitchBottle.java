@@ -46,7 +46,7 @@ public class WitchBottle extends MobCatcherItem {
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
     mobCatchingLuck = COMMON.witchBottleMobCatchingLuck.get();
     acceptedMobTypes = new HashSet<>(COMMON.witchBottleMobs.get());
-    log.info("The witch bottle require {} luck and is able to catch the following mobs: {}",
+    log.info("The witch bottle requires {} luck and is able to catch the following mobs: {}",
         mobCatchingLuck, acceptedMobTypes);
   }
 

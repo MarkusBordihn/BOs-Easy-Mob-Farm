@@ -161,6 +161,12 @@ dependencies {
   compileOnly fg.deobf("curse.maven:create-328085:4550986")
   runtimeOnly fg.deobf("curse.maven:create-328085:4550986")
 
+  // Forbidden and Arcanus: Integration
+  compileOnly fg.deobf("curse.maven:valhelsia-core-416935:3886212")
+  runtimeOnly fg.deobf("curse.maven:valhelsia-core-416935:3886212")
+  compileOnly fg.deobf("curse.maven:forbidden-arcanus-309858:4442836")
+  runtimeOnly fg.deobf("curse.maven:forbidden-arcanus-309858:4442836")
+
   // Mob Capturing Tool: Integration
   compileOnly fg.deobf("curse.maven:mob-capturing-tool-630272:3834440")
   runtimeOnly fg.deobf("curse.maven:mob-capturing-tool-630272:3834440")

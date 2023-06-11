@@ -52,7 +52,7 @@ public class InsectNet extends MobCatcherItem {
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
     mobCatchingLuck = COMMON.insectNetMobCatchingLuck.get();
     acceptedMobTypes = new HashSet<>(COMMON.insectNetMobs.get());
-    log.info("The insect net require {} luck and is able to catch the following mobs: {}",
+    log.info("The insect net requires {} luck and is able to catch the following mobs: {}",
         mobCatchingLuck, acceptedMobTypes);
   }
 

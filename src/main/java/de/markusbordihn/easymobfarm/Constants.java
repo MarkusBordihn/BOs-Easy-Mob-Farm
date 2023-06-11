@@ -75,11 +75,13 @@ public final class Constants {
       new ResourceLocation(MINECRAFT_PREFIX, "textures/gui/container/inventory.png");
 
   // Supported Mods
-  public static final boolean PRODUCTIVE_BEES_LOADED = ModList.get().isLoaded("productivebees");
   public static final boolean CORAIL_SPAWNERS_LOADED = ModList.get().isLoaded("corail_spawners");
   public static final boolean CREATE_LOADED = ModList.get().isLoaded("create");
+  public static final boolean FORBIDDEN_ARCANUS_LOADED =
+      ModList.get().isLoaded("forbidden_arcanus");
+  public static final boolean MOBCATCHER_LOADED = ModList.get().isLoaded("mobcatcher");
   public static final boolean MOB_CAPTURING_TOOL_LOADED =
       ModList.get().isLoaded("mobcapturingtool");
   public static final boolean MOB_CATCHER_LOADED = ModList.get().isLoaded("mob_catcher");
-  public static final boolean MOBCATCHER_LOADED = ModList.get().isLoaded("mobcatcher");
+  public static final boolean PRODUCTIVE_BEES_LOADED = ModList.get().isLoaded("productivebees");
 }

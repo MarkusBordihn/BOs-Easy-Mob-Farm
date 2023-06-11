@@ -40,6 +40,7 @@ public class CapturedMobVirtual {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
+  // Compound Tags
   private static final String BLOCK_ENTITY_TAG = "BlockEntityTag";
   private static final String CAPTURED_ENTITY_TAG = "CapturedEntity";
   private static final String ENTITY_HOLDER_TAG = "entity_holder";
@@ -56,6 +57,7 @@ public class CapturedMobVirtual {
   private static final String MOB_CAPTURING_TOOL = "mobcapturingtool:mob_capturing_tool";
   private static final String MOB_CATCHER_DIAMOND = "mob_catcher:diamond_mob_catcher";
   private static final String MOB_CATCHER_NETHERITE = "mob_catcher:netherite_mob_catcher";
+  private static final String QUANTUM_CATCHER = "forbidden_arcanus:quantum_catcher";
 
   protected CapturedMobVirtual() {}
 
@@ -105,10 +107,17 @@ public class CapturedMobVirtual {
         return !compoundTag.getCompound(BLOCK_ENTITY_TAG).getCompound(SPAWN_DATA_TAG)
             .getCompound(ENTITY_TAG).getString(ID_TAG).isEmpty();
       }
+    } else if (Constants.FORBIDDEN_ARCANUS_LOADED && itemName.equals(QUANTUM_CATCHER)) {
+      CompoundTag compoundTag = itemStack.getOrCreateTag();
+      if (compoundTag.contains(ENTITY_TAG)
+          && compoundTag.getCompound(ENTITY_TAG).contains(ID_TAG)) {
+        return !compoundTag.getCompound(ENTITY_TAG).getString(ID_TAG).isEmpty();
+      }
     } else if (item instanceof SpawnEggItem) {
       return true;
     } else if (!(item instanceof AirItem)) {
-      log.debug("Unsupported mob catching Item {} {}", item, itemName);
+      CompoundTag compoundTag = itemStack.getOrCreateTag();
+      log.debug("Unsupported mob catching Item {} {}: {}", item, itemName, compoundTag);
     }
     return false;
   }
@@ -138,6 +147,8 @@ public class CapturedMobVirtual {
       return !getCapturedMobType(itemStack).isBlank() && !getCapturedMobType(itemStack).isEmpty();
     } else if (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER)) {
       return !getCapturedMobType(itemStack).isBlank() && !getCapturedMobType(itemStack).isEmpty();
+    } else if (Constants.FORBIDDEN_ARCANUS_LOADED && itemName.equals(QUANTUM_CATCHER)) {
+      return !getCapturedMobType(itemStack).isBlank() && !getCapturedMobType(itemStack).isEmpty();
     } else if (item instanceof SpawnEggItem) {
       return true;
     }
@@ -166,7 +177,8 @@ public class CapturedMobVirtual {
     } else if ((Constants.MOB_CAPTURING_TOOL_LOADED && itemName.equals(MOB_CAPTURING_TOOL))
         || (Constants.MOBCATCHER_LOADED && itemName.equals(MOBCATCHER_NET))
         || (item instanceof SpawnEggItem)
-        || (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER))) {
+        || (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER))
+        || (Constants.FORBIDDEN_ARCANUS_LOADED && itemName.equals(QUANTUM_CATCHER))) {
       EntityType<?> entityType = getCapturedMobEntityType(itemStack);
       String descriptionId = entityType != null ? entityType.getDescriptionId() : "";
       return !descriptionId.isBlank() ? new TranslatableComponent(descriptionId).getString()
@@ -194,7 +206,8 @@ public class CapturedMobVirtual {
         || (Constants.MOB_CAPTURING_TOOL_LOADED && itemName.equals(MOB_CAPTURING_TOOL))
         || (Constants.MOBCATCHER_LOADED && itemName.equals(MOBCATCHER_NET))
         || (Constants.CREATE_LOADED && itemName.equals(CREATE_BLAZE_BURNER))
-        || (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER))) {
+        || (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER))
+        || (Constants.FORBIDDEN_ARCANUS_LOADED && itemName.equals(QUANTUM_CATCHER))) {
       String capturedMobType = getCapturedMobType(itemStack);
       if (capturedMobType.contains(":")) {
         ResourceLocation resourceLocation = new ResourceLocation(capturedMobType);
@@ -238,6 +251,9 @@ public class CapturedMobVirtual {
       CompoundTag compoundTag = itemStack.getOrCreateTag();
       return compoundTag.getCompound(BLOCK_ENTITY_TAG).getCompound(SPAWN_DATA_TAG)
           .getCompound(ENTITY_TAG).getString(ID_TAG);
+    } else if (Constants.FORBIDDEN_ARCANUS_LOADED && itemName.equals(QUANTUM_CATCHER)) {
+      CompoundTag compoundTag = itemStack.getOrCreateTag();
+      return compoundTag.getCompound(ENTITY_TAG).getString(ID_TAG);
     } else if (item instanceof SpawnEggItem) {
       EntityType<?> entityType = getCapturedMobEntityType(itemStack);
       String descriptionId = entityType != null ? entityType.getDescriptionId() : "";
@@ -271,7 +287,8 @@ public class CapturedMobVirtual {
         || (Constants.MOB_CAPTURING_TOOL_LOADED && itemName.equals(MOB_CAPTURING_TOOL))
         || (Constants.MOBCATCHER_LOADED && itemName.equals(MOBCATCHER_NET))
         || (item instanceof SpawnEggItem)
-        || (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER))) {
+        || (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER))
+        || (Constants.FORBIDDEN_ARCANUS_LOADED && itemName.equals(QUANTUM_CATCHER))) {
       String capturedMobType = getCapturedMobType(itemStack);
       if (capturedMobType != null && capturedMobType.contains(":")) {
         String[] mobTypeParts = capturedMobType.split("\\:");

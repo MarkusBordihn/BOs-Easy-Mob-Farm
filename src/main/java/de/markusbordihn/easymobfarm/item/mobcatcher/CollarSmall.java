@@ -46,7 +46,7 @@ public class CollarSmall extends MobCatcherItem {
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
     mobCatchingLuck = COMMON.collarSmallMobCatchingLuck.get();
     acceptedMobTypes = new HashSet<>(COMMON.collarSmallMobs.get());
-    log.info("The collar small require {} luck and is able to catch the following mobs: {}",
+    log.info("The collar small requires {} luck and is able to catch the following mobs: {}",
         mobCatchingLuck, acceptedMobTypes);
   }
 
