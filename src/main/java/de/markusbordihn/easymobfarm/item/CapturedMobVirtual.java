@@ -41,21 +41,64 @@ public class CapturedMobVirtual {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
+  // Compound Tags
   private static final String BLOCK_ENTITY_TAG = "BlockEntityTag";
+  private static final String CAPTURED_ENTITY_TAG = "CapturedEntity";
+  private static final String ENTITY_HOLDER_TAG = "entity_holder";
   private static final String ENTITY_TAG = "entity";
+  private static final String ENTITY_TYPE_TAG = "EntityType";
   private static final String ID_TAG = "id";
   private static final String MOD_DATA_TAG = "mob_data";
   private static final String NAME_TAG = "name";
   private static final String SPAWN_DATA_TAG = "SpawnData";
 
+  // Supported mod mob catcher items
+  private static final String CREATE_BLAZE_BURNER = "create:blaze_burner";
+  private static final String MOBCATCHER_NET = "mobcatcher:net";
+  private static final String MOB_CAPTURING_TOOL = "mobcapturingtool:mob_capturing_tool";
+  private static final String MOB_CATCHER_DIAMOND = "mob_catcher:diamond_mob_catcher";
+  private static final String MOB_CATCHER_NETHERITE = "mob_catcher:netherite_mob_catcher";
+  private static final String QUANTUM_CATCHER = "forbidden_arcanus:quantum_catcher";
+
   protected CapturedMobVirtual() {}
 
   public static boolean isSupported(ItemStack itemStack) {
+    if (itemStack == null || itemStack.isEmpty()) {
+      return false;
+    }
+
+    // Early exit for captured mob items.
     Item item = itemStack.getItem();
     if (item instanceof CapturedMob) {
       return true;
-    } else if (item instanceof SpawnEggItem) {
+    }
+
+    // Check for supported items from other mods.
+    ResourceLocation itemRegistryName = ForgeRegistries.ITEMS.getKey(item);
+    String itemName =
+        itemRegistryName != ForgeRegistries.ITEMS.getDefaultKey() ? itemRegistryName.toString()
+            : "";
+    if (Constants.MOB_CATCHER_LOADED
+        && (itemName.equals(MOB_CATCHER_DIAMOND) || itemName.equals(MOB_CATCHER_NETHERITE))) {
+      CompoundTag compoundTag = itemStack.getOrCreateTag();
+      if (compoundTag.contains(MOD_DATA_TAG)
+          && compoundTag.getCompound(MOD_DATA_TAG).contains(ID_TAG)) {
+        return !compoundTag.getCompound(MOD_DATA_TAG).getString(ID_TAG).isEmpty();
+      }
+    } else if (Constants.CREATE_LOADED && itemName.equals(CREATE_BLAZE_BURNER)) {
       return true;
+    } else if (Constants.MOB_CAPTURING_TOOL_LOADED && itemName.equals(MOB_CAPTURING_TOOL)) {
+      CompoundTag compoundTag = itemStack.getOrCreateTag();
+      if (compoundTag.contains(CAPTURED_ENTITY_TAG)
+          && compoundTag.getCompound(CAPTURED_ENTITY_TAG).contains(ENTITY_TYPE_TAG)) {
+        return !compoundTag.getCompound(CAPTURED_ENTITY_TAG).getString(ENTITY_TYPE_TAG).isEmpty();
+      }
+    } else if (Constants.MOBCATCHER_LOADED && itemName.equals(MOBCATCHER_NET)) {
+      CompoundTag compoundTag = itemStack.getOrCreateTag();
+      if (compoundTag.contains(ENTITY_HOLDER_TAG)
+          && compoundTag.getCompound(ENTITY_HOLDER_TAG).contains(ID_TAG)) {
+        return !compoundTag.getCompound(ENTITY_HOLDER_TAG).getString(ID_TAG).isEmpty();
+      }
     } else if (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER)) {
       CompoundTag compoundTag = itemStack.getOrCreateTag();
       if (compoundTag.contains(BLOCK_ENTITY_TAG)
@@ -67,8 +110,17 @@ public class CapturedMobVirtual {
         return !compoundTag.getCompound(BLOCK_ENTITY_TAG).getCompound(SPAWN_DATA_TAG)
             .getCompound(ENTITY_TAG).getString(ID_TAG).isEmpty();
       }
+    } else if (Constants.FORBIDDEN_ARCANUS_LOADED && itemName.equals(QUANTUM_CATCHER)) {
+      CompoundTag compoundTag = itemStack.getOrCreateTag();
+      if (compoundTag.contains(ENTITY_TAG)
+          && compoundTag.getCompound(ENTITY_TAG).contains(ID_TAG)) {
+        return !compoundTag.getCompound(ENTITY_TAG).getString(ID_TAG).isEmpty();
+      }
+    } else if (item instanceof SpawnEggItem) {
+      return true;
     } else if (!(item instanceof AirItem)) {
-      log.debug("Unsupported mob catching Item {}", item);
+      CompoundTag compoundTag = itemStack.getOrCreateTag();
+      log.debug("Unsupported mob catching Item {} {}: {}", item, itemName, compoundTag);
     }
     return false;
   }
@@ -77,13 +129,33 @@ public class CapturedMobVirtual {
     if (!isSupported(itemStack)) {
       return false;
     }
+
+    // Early exit for captured mob items.
     Item item = itemStack.getItem();
     if (item instanceof CapturedMob) {
       return CapturedMob.hasCapturedMob(itemStack);
-    } else if (item instanceof SpawnEggItem) {
+    }
+
+    // Check for supported items from other mods.
+    ResourceLocation itemRegistryName = ForgeRegistries.ITEMS.getKey(item);
+    String itemName =
+        itemRegistryName != ForgeRegistries.ITEMS.getDefaultKey() ? itemRegistryName.toString()
+            : "";
+    if (Constants.MOB_CATCHER_LOADED
+        && (itemName.equals(MOB_CATCHER_DIAMOND) || itemName.equals(MOB_CATCHER_NETHERITE))) {
+      return !getCapturedMobType(itemStack).isBlank() && !getCapturedMobType(itemStack).isEmpty();
+    } else if (Constants.CREATE_LOADED && itemName.equals(CREATE_BLAZE_BURNER)) {
       return true;
+    } else if (Constants.MOB_CAPTURING_TOOL_LOADED && itemName.equals(MOB_CAPTURING_TOOL)) {
+      return !getCapturedMobType(itemStack).isBlank() && !getCapturedMobType(itemStack).isEmpty();
+    } else if (Constants.MOBCATCHER_LOADED && itemName.equals(MOBCATCHER_NET)) {
+      return !getCapturedMobType(itemStack).isBlank() && !getCapturedMobType(itemStack).isEmpty();
     } else if (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER)) {
       return !getCapturedMobType(itemStack).isBlank() && !getCapturedMobType(itemStack).isEmpty();
+    } else if (Constants.FORBIDDEN_ARCANUS_LOADED && itemName.equals(QUANTUM_CATCHER)) {
+      return !getCapturedMobType(itemStack).isBlank() && !getCapturedMobType(itemStack).isEmpty();
+    } else if (item instanceof SpawnEggItem) {
+      return true;
     }
     return false;
   }
@@ -92,11 +164,28 @@ public class CapturedMobVirtual {
     if (!isSupported(itemStack)) {
       return "";
     }
+    // Early exit for captured mob items.
     Item item = itemStack.getItem();
     if (item instanceof CapturedMob) {
       return CapturedMob.getCapturedMob(itemStack);
-    } else if ((item instanceof SpawnEggItem)
-        || (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER))) {
+    }
+
+    // Check for supported items from other mods.
+    ResourceLocation itemRegistryName = ForgeRegistries.ITEMS.getKey(item);
+    String itemName =
+        itemRegistryName != ForgeRegistries.ITEMS.getDefaultKey() ? itemRegistryName.toString()
+            : "";
+    if (Constants.MOB_CATCHER_LOADED
+        && (itemName.equals(MOB_CATCHER_DIAMOND) || itemName.equals(MOB_CATCHER_NETHERITE))) {
+      CompoundTag compoundTag = itemStack.getOrCreateTag();
+      return compoundTag.getString(NAME_TAG);
+    } else if (Constants.CREATE_LOADED && itemName.equals(CREATE_BLAZE_BURNER)) {
+      return "Blaze";
+    } else if ((Constants.MOB_CAPTURING_TOOL_LOADED && itemName.equals(MOB_CAPTURING_TOOL))
+        || (Constants.MOBCATCHER_LOADED && itemName.equals(MOBCATCHER_NET))
+        || (item instanceof SpawnEggItem)
+        || (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER))
+        || (Constants.FORBIDDEN_ARCANUS_LOADED && itemName.equals(QUANTUM_CATCHER))) {
       EntityType<?> entityType = getCapturedMobEntityType(itemStack);
       String descriptionId = entityType != null ? entityType.getDescriptionId() : "";
       return !descriptionId.isBlank() ? Component.translatable(descriptionId).getString()
@@ -105,31 +194,35 @@ public class CapturedMobVirtual {
     return "";
   }
 
-  public static DyeColor getCapturedMobColor(ItemStack itemStack) {
-    if (!isSupported(itemStack)) {
-      return null;
-    }
-    Item item = itemStack.getItem();
-    if (item instanceof CapturedMob) {
-      return CapturedMob.getCapturedMobColor(itemStack);
-    }
-    return null;
-  }
-
   public static EntityType<?> getCapturedMobEntityType(ItemStack itemStack) {
     if (!isSupported(itemStack)) {
       return null;
     }
+
+    // Early exit for captured mob items.
     Item item = itemStack.getItem();
     if (item instanceof CapturedMob) {
       return CapturedMob.getCapturedMobEntityType(itemStack);
-    } else if ((Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER))) {
+    }
+
+    // Check for supported items from other mods.
+    ResourceLocation itemRegistryName = ForgeRegistries.ITEMS.getKey(item);
+    String itemName =
+        itemRegistryName != ForgeRegistries.ITEMS.getDefaultKey() ? itemRegistryName.toString()
+            : "";
+    if ((Constants.MOB_CATCHER_LOADED
+        && (itemName.equals(MOB_CATCHER_DIAMOND) || itemName.equals(MOB_CATCHER_NETHERITE)))
+        || (Constants.MOB_CAPTURING_TOOL_LOADED && itemName.equals(MOB_CAPTURING_TOOL))
+        || (Constants.MOBCATCHER_LOADED && itemName.equals(MOBCATCHER_NET))
+        || (Constants.CREATE_LOADED && itemName.equals(CREATE_BLAZE_BURNER))
+        || (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER))
+        || (Constants.FORBIDDEN_ARCANUS_LOADED && itemName.equals(QUANTUM_CATCHER))) {
       String capturedMobType = getCapturedMobType(itemStack);
       if (capturedMobType.contains(":")) {
         ResourceLocation resourceLocation = new ResourceLocation(capturedMobType);
         return ForgeRegistries.ENTITY_TYPES.getValue(resourceLocation);
       } else {
-        log.info("Unable to get capture mob entity type for {}", capturedMobType);
+        log.warn("Unable to get capture mob entity type for {}", capturedMobType);
       }
     } else if (item instanceof SpawnEggItem spawnEggItem) {
       return spawnEggItem.getType(itemStack.getOrCreateTag());
@@ -141,10 +234,38 @@ public class CapturedMobVirtual {
     if (!isSupported(itemStack)) {
       return "";
     }
+
+    // Early exit for captured mob items.
     Item item = itemStack.getItem();
     if (item instanceof CapturedMob) {
       return CapturedMob.getCapturedMobType(itemStack);
-    } else if ((item instanceof SpawnEggItem)) {
+    }
+
+    // Check for supported items from other mods.
+    ResourceLocation itemRegistryName = ForgeRegistries.ITEMS.getKey(item);
+    String itemName =
+        itemRegistryName != ForgeRegistries.ITEMS.getDefaultKey() ? itemRegistryName.toString()
+            : "";
+    if (Constants.MOB_CATCHER_LOADED
+        && (itemName.equals(MOB_CATCHER_DIAMOND) || itemName.equals(MOB_CATCHER_NETHERITE))) {
+      CompoundTag compoundTag = itemStack.getOrCreateTag();
+      return compoundTag.getCompound(MOD_DATA_TAG).getString(ID_TAG);
+    } else if (Constants.CREATE_LOADED && itemName.equals(CREATE_BLAZE_BURNER)) {
+      return "minecraft:blaze";
+    } else if (Constants.MOB_CAPTURING_TOOL_LOADED && itemName.equals(MOB_CAPTURING_TOOL)) {
+      CompoundTag compoundTag = itemStack.getOrCreateTag();
+      return compoundTag.getCompound(CAPTURED_ENTITY_TAG).getString(ENTITY_TYPE_TAG);
+    } else if (Constants.MOBCATCHER_LOADED && itemName.equals(MOBCATCHER_NET)) {
+      CompoundTag compoundTag = itemStack.getOrCreateTag();
+      return compoundTag.getCompound(ENTITY_HOLDER_TAG).getString(ID_TAG);
+    } else if (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER)) {
+      CompoundTag compoundTag = itemStack.getOrCreateTag();
+      return compoundTag.getCompound(BLOCK_ENTITY_TAG).getCompound(SPAWN_DATA_TAG)
+          .getCompound(ENTITY_TAG).getString(ID_TAG);
+    } else if (Constants.FORBIDDEN_ARCANUS_LOADED && itemName.equals(QUANTUM_CATCHER)) {
+      CompoundTag compoundTag = itemStack.getOrCreateTag();
+      return compoundTag.getCompound(ENTITY_TAG).getString(ID_TAG);
+    } else if (item instanceof SpawnEggItem) {
       EntityType<?> entityType = getCapturedMobEntityType(itemStack);
       String descriptionId = entityType != null ? entityType.getDescriptionId() : "";
       if (descriptionId != null && descriptionId.contains("entity.")) {
@@ -153,10 +274,6 @@ public class CapturedMobVirtual {
           return descriptionIdParts[1] + ":" + descriptionIdParts[2];
         }
       }
-    } else if (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER)) {
-      CompoundTag compoundTag = itemStack.getOrCreateTag();
-      return compoundTag.getCompound(BLOCK_ENTITY_TAG).getCompound(SPAWN_DATA_TAG)
-          .getCompound(ENTITY_TAG).getString(ID_TAG);
     }
     return "";
   }
@@ -165,11 +282,26 @@ public class CapturedMobVirtual {
     if (!isSupported(itemStack)) {
       return "";
     }
+
+    // Early exit for captured mob items.
     Item item = itemStack.getItem();
     if (item instanceof CapturedMob) {
       return CapturedMob.getLootTable(itemStack);
-    } else if ((item instanceof SpawnEggItem)
-        || (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER))) {
+    }
+
+    // Check for supported items from other mods.
+    ResourceLocation itemRegistryName = ForgeRegistries.ITEMS.getKey(item);
+    String itemName =
+        itemRegistryName != ForgeRegistries.ITEMS.getDefaultKey() ? itemRegistryName.toString()
+            : "";
+    if ((Constants.MOB_CATCHER_LOADED
+        && (itemName.equals(MOB_CATCHER_DIAMOND) || itemName.equals(MOB_CATCHER_NETHERITE)))
+        || (Constants.CREATE_LOADED && itemName.equals(CREATE_BLAZE_BURNER))
+        || (Constants.MOB_CAPTURING_TOOL_LOADED && itemName.equals(MOB_CAPTURING_TOOL))
+        || (Constants.MOBCATCHER_LOADED && itemName.equals(MOBCATCHER_NET))
+        || (item instanceof SpawnEggItem)
+        || (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER))
+        || (Constants.FORBIDDEN_ARCANUS_LOADED && itemName.equals(QUANTUM_CATCHER))) {
       String capturedMobType = getCapturedMobType(itemStack);
       if (capturedMobType != null && capturedMobType.contains(":")) {
         String[] mobTypeParts = capturedMobType.split("\\:");
@@ -177,6 +309,32 @@ public class CapturedMobVirtual {
       }
     }
     return "";
+  }
+
+  public static DyeColor getCapturedMobColor(ItemStack itemStack) {
+    if (!isSupported(itemStack)) {
+      return null;
+    }
+
+    // Early exit for captured mob items.
+    Item item = itemStack.getItem();
+    if (item instanceof CapturedMob) {
+      return CapturedMob.getCapturedMobColor(itemStack);
+    }
+    return null;
+  }
+
+  public static boolean getCapturedMobShearedStatus(ItemStack itemStack) {
+    if (!isSupported(itemStack)) {
+      return false;
+    }
+
+    // Early exit for captured mob items.
+    Item item = itemStack.getItem();
+    if (item instanceof CapturedMob) {
+      return CapturedMob.getCapturedMobShearedStatus(itemStack);
+    }
+    return false;
   }
 
 }

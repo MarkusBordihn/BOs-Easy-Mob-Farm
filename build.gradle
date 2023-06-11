@@ -138,7 +138,7 @@ dependencies {
 
   // Productive Bees: Integration
   compileOnly fg.deobf("curse.maven:productivebees-377897:4366951")
-  // runtimeOnly fg.deobf("curse.maven:productivebees-377897:4366951")
+  runtimeOnly fg.deobf("curse.maven:productivebees-377897:4366951")
 
   // Jade Integration
   compileOnly fg.deobf("curse.maven:jade-324717:4330163")
@@ -160,6 +160,12 @@ dependencies {
   // Corail Spawners: Integration
   // compileOnly fg.deobf("curse.maven:corail-spawners-438467:4028301")
   // runtimeOnly fg.deobf("curse.maven:corail-spawners-438467:4028301")
+
+  // Forbidden and Arcanus: Integration
+  compileOnly fg.deobf("curse.maven:valhelsia-core-416935:4384377")
+  runtimeOnly fg.deobf("curse.maven:valhelsia-core-416935:4384377")
+  compileOnly fg.deobf("curse.maven:forbidden-arcanus-309858:4457443")
+  runtimeOnly fg.deobf("curse.maven:forbidden-arcanus-309858:4457443")
 
   // Alex Mob's (Testing)
   // runtimeOnly fg.deobf("curse.maven:citadel-331936:3584733:deobf")

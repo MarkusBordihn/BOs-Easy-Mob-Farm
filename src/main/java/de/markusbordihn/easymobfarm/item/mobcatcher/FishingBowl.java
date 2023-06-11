@@ -46,7 +46,7 @@ public class FishingBowl extends MobCatcherItem {
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
     acceptedMobTypes = new HashSet<>(COMMON.fishingBowlMobs.get());
-    log.info("The fishing bowl require {} luck and is able to catch the following mobs: {}",
+    log.info("The fishing bowl requires {} luck and is able to catch the following mobs: {}",
         COMMON.fishingBowlMobCatchingLuck.get(), acceptedMobTypes);
   }
 

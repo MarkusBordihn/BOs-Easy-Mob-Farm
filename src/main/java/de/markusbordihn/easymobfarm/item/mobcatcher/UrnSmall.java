@@ -46,7 +46,7 @@ public class UrnSmall extends MobCatcherItem {
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
     acceptedMobTypes = new HashSet<>(COMMON.urnSmallMobs.get());
-    log.info("The urn small require {} luck and is able to catch the following mobs: {}",
+    log.info("The urn small requires {} luck and is able to catch the following mobs: {}",
         COMMON.urnSmallMobCatchingLuck.get(), acceptedMobTypes);
   }
 

@@ -32,7 +32,6 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
@@ -93,9 +92,6 @@ public class MobFarmMenu extends AbstractContainerMenu {
   private int mobFarmStatus;
   private int mobFarmTotalTime;
 
-  // Misc
-  protected final Level level;
-
   public MobFarmMenu(int windowIdIn, Inventory inventory) {
     this(windowIdIn, inventory, new SimpleContainer(containerSize),
         new SimpleContainerData(MobFarmBlockEntityData.DATA_SIZE),
@@ -116,7 +112,6 @@ public class MobFarmMenu extends AbstractContainerMenu {
     checkContainerDataCount(containerData, MobFarmBlockEntityData.DATA_SIZE);
     this.container = container;
     this.data = containerData;
-    this.level = playerInventory.player.level;
 
     // Define slots and position on UI (note: order sensitive)
     this.addSlot(new CapturedMobSlot(container, CAPTURED_MOB_SLOT, CAPTURED_MOB_SLOT_LEFT,
