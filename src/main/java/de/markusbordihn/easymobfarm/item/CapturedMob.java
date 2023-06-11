@@ -60,6 +60,7 @@ public class CapturedMob extends Item {
   protected static final String ENTITY_POSSIBLE_LOOT_TAG = "EntityPossibleLoot";
   protected static final String ENTITY_TYPE_TAG = "EntityType";
   protected static final String ENTITY_COLOR_TAG = "EntityColor";
+  protected static final String ENTITY_SHEARED = "EntitySheared";
 
   protected static final String FALL_DISTANCE_TAG = "FallDistance";
   protected static final String FIRE_TAG = "Fire";
@@ -132,6 +133,14 @@ public class CapturedMob extends Item {
     return null;
   }
 
+  public static boolean getCapturedMobShearedStatus(ItemStack itemStack) {
+    CompoundTag compoundTag = itemStack.getOrCreateTag();
+    if (compoundTag.contains(ENTITY_SHEARED)) {
+      return compoundTag.getBoolean(ENTITY_SHEARED);
+    }
+    return false;
+  }
+
   public static String getLootTable(ItemStack itemStack) {
     CompoundTag compoundTag = itemStack.getOrCreateTag();
     if (compoundTag.contains(ENTITY_LOOT_TABLE_TAG)) {
@@ -178,6 +187,7 @@ public class CapturedMob extends Item {
     compoundTag.putString(ENTITY_ID_TAG, livingEntity.getEncodeId());
     if (livingEntity instanceof Sheep sheep) {
       compoundTag.putInt(ENTITY_COLOR_TAG, sheep.getColor().getId());
+      compoundTag.putBoolean(ENTITY_SHEARED, sheep.isSheared());
     }
     compoundTag.merge(entityData);
     itemStack.save(compoundTag);
@@ -233,6 +243,7 @@ public class CapturedMob extends Item {
       compoundTag.remove(ENTITY_POSSIBLE_LOOT_TAG);
       compoundTag.remove(ENTITY_TYPE_TAG);
       compoundTag.remove(ENTITY_COLOR_TAG);
+      compoundTag.remove(ENTITY_SHEARED);
       entity.load(compoundTag);
 
       // Remove compoundTag data from item.

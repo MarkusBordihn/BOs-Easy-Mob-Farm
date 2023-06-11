@@ -149,9 +149,8 @@ dependencies {
   runtimeOnly fg.deobf("curse.maven:mob-catcher-498389:4062963")
 
   // Create: Integration
-  compileOnly fg.deobf("curse.maven:create-328085:4174330")
-  // runtimeOnly fg.deobf("curse.maven:flywheel-486392:4174759")
-  runtimeOnly fg.deobf("curse.maven:create-328085:4174330")
+  compileOnly fg.deobf("curse.maven:create-328085:4550987")
+  runtimeOnly fg.deobf("curse.maven:create-328085:4550987")
 
   // Mob Capturing Tool: Integration
   compileOnly fg.deobf("curse.maven:mob-capturing-tool-630272:3902520")
@@ -160,6 +159,12 @@ dependencies {
   // Corail Spawners: Integration
   compileOnly fg.deobf("curse.maven:corail-spawners-438467:4028301")
   runtimeOnly fg.deobf("curse.maven:corail-spawners-438467:4028301")
+
+  // Forbidden and Arcanus: Integration
+  compileOnly fg.deobf("curse.maven:valhelsia-core-416935:4181245")
+  runtimeOnly fg.deobf("curse.maven:valhelsia-core-416935:4181245")
+  compileOnly fg.deobf("curse.maven:forbidden-arcanus-309858:4512412")
+  runtimeOnly fg.deobf("curse.maven:forbidden-arcanus-309858:4512412")
 
   // Alex Mob's (Testing)
   // runtimeOnly fg.deobf("curse.maven:citadel-331936:3584733:deobf")

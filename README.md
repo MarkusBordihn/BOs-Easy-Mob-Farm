@@ -47,57 +47,57 @@ The experience will be generated randomly, so not on each drop.
 
 List of currently supported mobs and their corresponding catch item and mob farm.
 
-| Mob Name                   | Catch Item                      | Mob Farm                                                    |
-| -------------------------- | ------------------------------- | ----------------------------------------------------------- |
-| minecraft:bee              | Insect net                      | Bee Hive Farm                                               |
-| minecraft:blaze            |                                 | Nether Fortress Farm                                        |
-| minecraft:cave_spider      | Urn small                       | Monster Plains Cave Farm                                    |
-| minecraft:chicken          | Catch Cage small, Collar small  | Animal Plains Farms, Swamp Farm, Jungle Farm                |
-| minecraft:cod              | Fishing bowl, Fishing net small | Ocean Farm                                                  |
-| minecraft:cow              | Collar small                    | Animal Plains Farms, Swamp Farm, Jungle Farm                |
-| minecraft:creeper          | Urn small                       | Desert Farm, Monster Plains Cave Farm                       |
-| minecraft:donkey           | Collar small                    | Animal Plains Farms                                         |
-| minecraft:drowned          | Fishing net small               | Ocean Farm                                                  |
-| minecraft:enderman         | Witch Bottle                    | Desert Farm                                                 |
-| minecraft:evoker           |                                 |                                                             |
-| minecraft:ghast            |                                 |                                                             |
-| minecraft:glow_squid       | Fishing net small               | Ocean Farm                                                  |
-| minecraft:guardian         |                                 |                                                             |
-| minecraft:hoglin           |                                 |                                                             |
-| minecraft:horse            | Collar small                    | Animal Plains Farms                                         |
-| minecraft:husk             | Urn small                       | Desert Farm                                                 |
-| minecraft:iron_golem       |                                 |                                                             |
-| minecraft:lama             |                                 |                                                             |
-| minecraft:magma_cube       |                                 | Nether Fortress Farm                                        |
-| minecraft:mooshroom        |                                 |                                                             |
-| minecraft:mule             |                                 |                                                             |
-| minecraft:panda            | Catch Cage                      | Jungle Farm                                                 |
-| minecraft:parrot           | Catch Cage small                | Jungle Farm                                                 |
-| minecraft:phantom          |                                 |                                                             |
-| minecraft:pig              | Collar small                    | Animal Plains Farms, Swamp Farm, Jungle Farm                |
-| minecraft:piglin_brute     |                                 |                                                             |
-| minecraft:pillager         |                                 |                                                             |
-| minecraft:polar_bear       | Catch Cage                      |                                                             |
-| minecraft:pufferfish       |                                 |                                                             |
-| minecraft:rabbit           | Catch Cage small                | Desert Farm                                                 |
-| minecraft:ravager          |                                 |                                                             |
-| minecraft:salmon           | Fishing bowl, Fishing net small | Ocean Farm                                                  |
-| minecraft:sheep            | Collar small                    | Animal Plains Farms, Swamp Farm, Jungle Farm                |
-| minecraft:shulker          |                                 |                                                             |
-| minecraft:skeleton         | Urn small                       | Desert Farm, Monster Plains Cave Farm, Nether Fortress Farm |
-| minecraft:skeleton_horse   |                                 |                                                             |
-| minecraft:slime            | Witch Bottle                    | Swamp Farm                                                  |
-| minecraft:spider           | Urn small                       | Desert Farm, Swamp Farm                                     |
-| minecraft:squid            | Fishing net small               | Ocean Farm                                                  |
-| minecraft:stray            |                                 |                                                             |
-| minecraft:strider          |                                 |                                                             |
-| minecraft:tropical_fish    |                                 |                                                             |
-| minecraft:turtle           |                                 |                                                             |
-| minecraft:witch            | Witch Bottle                    | Desert Farm, Swamp Farm                                     |
-| minecraft:wither_skeleton  |                                 | Nether Fortress Farm                                        |
-| minecraft:zombie           | Urn small                       | Desert Farm, Monster Plains Cave Farm,Swamp Farm            |
-| minecraft:zombie_villager  | Urn small                       | Desert Farm, Monster Plains Cave Farm,Swamp Farm            |
-| minecraft:zombified_piglin |                                 | Nether Fortress Farm                                        |
+| Mob Name                   | Catch Item                      | Mob Farm                                                    | Requires       |
+| -------------------------- | ------------------------------- | ----------------------------------------------------------- | -------------- |
+| minecraft:bee              | Insect net                      | Bee Hive Farm                                               |                |
+| minecraft:blaze            |                                 | Nether Fortress Farm                                        | Weapon         |
+| minecraft:cave_spider      | Urn small                       | Monster Plains Cave Farm                                    |                |
+| minecraft:chicken          | Catch Cage small, Collar small  | Animal Plains Farms, Swamp Farm, Jungle Farm                |                |
+| minecraft:cod              | Fishing bowl, Fishing net small | Ocean Farm                                                  |                |
+| minecraft:cow              | Collar small                    | Animal Plains Farms, Swamp Farm, Jungle Farm                |                |
+| minecraft:creeper          | Urn small                       | Desert Farm, Monster Plains Cave Farm                       |                |
+| minecraft:donkey           | Collar small                    | Animal Plains Farms                                         |                |
+| minecraft:drowned          | Fishing net small               | Ocean Farm                                                  |                |
+| minecraft:enderman         | Witch Bottle                    | Desert Farm                                                 |                |
+| minecraft:evoker           |                                 |                                                             |                |
+| minecraft:ghast            |                                 |                                                             |                |
+| minecraft:glow_squid       | Fishing net small               | Ocean Farm                                                  |                |
+| minecraft:guardian         |                                 |                                                             |                |
+| minecraft:hoglin           |                                 |                                                             |                |
+| minecraft:horse            | Collar small                    | Animal Plains Farms                                         |                |
+| minecraft:husk             | Urn small                       | Desert Farm                                                 |                |
+| minecraft:iron_golem       |                                 |                                                             |                |
+| minecraft:lama             |                                 |                                                             |                |
+| minecraft:magma_cube       |                                 | Nether Fortress Farm                                        | Big Magma Cube |
+| minecraft:mooshroom        |                                 |                                                             |                |
+| minecraft:mule             |                                 |                                                             |                |
+| minecraft:panda            | Catch Cage                      | Jungle Farm                                                 |                |
+| minecraft:parrot           | Catch Cage small                | Jungle Farm                                                 |                |
+| minecraft:phantom          |                                 |                                                             |                |
+| minecraft:pig              | Collar small                    | Animal Plains Farms, Swamp Farm, Jungle Farm                |                |
+| minecraft:piglin_brute     |                                 |                                                             |                |
+| minecraft:pillager         |                                 |                                                             |                |
+| minecraft:polar_bear       | Catch Cage                      |                                                             |                |
+| minecraft:pufferfish       |                                 |                                                             |                |
+| minecraft:rabbit           | Catch Cage small                | Desert Farm                                                 |                |
+| minecraft:ravager          |                                 |                                                             |                |
+| minecraft:salmon           | Fishing bowl, Fishing net small | Ocean Farm                                                  |                |
+| minecraft:sheep            | Collar small                    | Animal Plains Farms, Swamp Farm, Jungle Farm                |                |
+| minecraft:shulker          |                                 |                                                             |                |
+| minecraft:skeleton         | Urn small                       | Desert Farm, Monster Plains Cave Farm, Nether Fortress Farm |                |
+| minecraft:skeleton_horse   |                                 |                                                             |                |
+| minecraft:slime            | Witch Bottle                    | Swamp Farm                                                  |                |
+| minecraft:spider           | Urn small                       | Desert Farm, Swamp Farm                                     |                |
+| minecraft:squid            | Fishing net small               | Ocean Farm                                                  |                |
+| minecraft:stray            |                                 |                                                             |                |
+| minecraft:strider          |                                 |                                                             |                |
+| minecraft:tropical_fish    |                                 |                                                             |                |
+| minecraft:turtle           |                                 |                                                             |                |
+| minecraft:witch            | Witch Bottle                    | Desert Farm, Swamp Farm                                     |                |
+| minecraft:wither_skeleton  |                                 | Nether Fortress Farm                                        |                |
+| minecraft:zombie           | Urn small                       | Desert Farm, Monster Plains Cave Farm,Swamp Farm            |                |
+| minecraft:zombie_villager  | Urn small                       | Desert Farm, Monster Plains Cave Farm,Swamp Farm            |                |
+| minecraft:zombified_piglin |                                 | Nether Fortress Farm                                        |                |
 
 **Note: If a mob is missing a catch item, mob farm or both it's WIP and could not be used without the creative items.**
 
@@ -179,6 +179,7 @@ Furthermore I'm not able to display the possible lot drop for catching items fro
 
 - Spawn Eggs (variants from SpawnEggItem)
 - [Create](https://www.curseforge.com/minecraft/mc-mods/create): Blaze Burner
+- [MobCatcher](https://www.curseforge.com/minecraft/mc-mods/mob-catcher)
 - [Mob Catcher](https://www.curseforge.com/minecraft/mc-mods/mob-catcher-fabric)
 - [Mob Capturing Tool](https://www.curseforge.com/minecraft/mc-mods/mob-capturing-tool)
 - [Corail Spawners](https://www.curseforge.com/minecraft/mc-mods/corail-spawners)
