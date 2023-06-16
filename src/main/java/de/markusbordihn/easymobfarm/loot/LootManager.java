@@ -31,6 +31,7 @@ import org.apache.logging.log4j.Logger;
 import com.google.common.collect.Lists;
 import com.mojang.authlib.GameProfile;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -48,9 +49,7 @@ import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-
-import cy.jdkdigital.productivebees.init.ModItems;
-import cy.jdkdigital.productivebees.util.BeeCreator;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.config.CommonConfig;
@@ -69,12 +68,23 @@ public class LootManager {
 
   private static final Random random = new Random();
 
+  // Fake Player
   private static FakePlayer fakePlayer;
   private static final GameProfile GAME_PROFILE =
       new GameProfile(UUID.randomUUID(), "[BOs_Easy_Mob_Farm]");
 
+  // Loot Table Cache
   private static Map<ResourceLocation, List<String>> lootTableDropListCache =
       new ConcurrentHashMap<>();
+
+  // Mod Items
+  private static final String PRODUCTIVE_BEES_CONFIGURABLE_HONEYCOMB =
+      "productivebees:configurable_honeycomb";
+  private static final String PRODUCTIVE_BEES_HONEYCOMB_GHOSTLY =
+      "productivebees:honeycomb_ghostly";
+  private static final String PRODUCTIVE_BEES_HONEYCOMB_MILKY = "productivebees:honeycomb_milky";
+  private static final String PRODUCTIVE_BEES_HONEYCOMB_POWDERY =
+      "productivebees:honeycomb_powdery";
 
   protected LootManager() {}
 
@@ -111,12 +121,15 @@ public class LootManager {
       ServerLevel serverLevel = (ServerLevel) level;
       FakePlayer player = getPlayer(serverLevel);
 
+      // Define damage source for loot context.
+      DamageSource damageSource = serverLevel.damageSources().playerAttack(player);
+
       // Handles if loot should be "killed_by_player" or just normal loot.
       LootContext.Builder lootBuilder = null;
       if (weaponItem != null && !weaponItem.isEmpty()) {
         // Kills with weapons has automatically a higher luck.
         lootBuilder = new LootContext.Builder(serverLevel).withLuck(0.6F)
-            .withParameter(LootContextParams.DAMAGE_SOURCE, DamageSource.playerAttack(player))
+            .withParameter(LootContextParams.DAMAGE_SOURCE, damageSource)
             .withParameter(LootContextParams.DIRECT_KILLER_ENTITY, player)
             .withParameter(LootContextParams.KILLER_ENTITY, player)
             .withParameter(LootContextParams.LAST_DAMAGE_PLAYER, player)
@@ -124,14 +137,17 @@ public class LootManager {
             .withParameter(LootContextParams.THIS_ENTITY, player);
       } else {
         lootBuilder = new LootContext.Builder(serverLevel).withLuck(0.5F)
-            .withParameter(LootContextParams.DAMAGE_SOURCE, DamageSource.playerAttack(player))
+            .withParameter(LootContextParams.DAMAGE_SOURCE, damageSource)
             .withParameter(LootContextParams.ORIGIN, player.position())
             .withParameter(LootContextParams.THIS_ENTITY, player);
       }
       LootTable lootTable = server.getLootTables().get(lootTableLocation);
       List<ItemStack> lootDrops =
           lootTable.getRandomItems(lootBuilder.create(LootContextParamSets.ENTITY));
-      if (lootDrops.isEmpty()) {
+      if (lootDrops.isEmpty() && !lootTableLocation.equals(new ResourceLocation("minecraft:empty"))
+          && !lootTableLocation.equals(new ResourceLocation("minecraft:entities/bee"))
+          && !lootTableLocation.equals(new ResourceLocation("minecraft:entities/blaze"))
+          && !"productivebees".equals(lootTableLocation.getNamespace())) {
         log.debug(Constants.LOOT_MANAGER_PREFIX + "Loot drop for {} with loot table {} was empty!",
             player, lootTableLocation);
       }
@@ -172,32 +188,55 @@ public class LootManager {
   public static List<ItemStack> filterLootDrop(List<ItemStack> lootDrops, String mobType) {
     List<ItemStack> filteredLootDrops = Lists.newArrayList();
 
-    // Adding additional drops for specific cases.
+    // Blaze rod drop support.
     if (Boolean.TRUE.equals(COMMON.blazeDropBlazeRod.get())
         && mobType.equals(HostileNetherMonster.BLAZE)) {
       lootDrops.add(new ItemStack(Items.BLAZE_ROD));
-    } else if (Boolean.TRUE.equals(COMMON.chickenDropEggs.get())
+    }
+
+    // Chicken egg drop support.
+    if (Boolean.TRUE.equals(COMMON.chickenDropEggs.get())
         && mobType.equals(PassiveAnimal.CHICKEN)) {
       lootDrops.add(new ItemStack(Items.EGG));
-    } else if (Boolean.TRUE.equals(COMMON.beeDropHoneycomb.get())
-        && mobType.equals(BeeAnimal.BEE)) {
+    }
+
+    // Bee drop support.
+    if (Boolean.TRUE.equals(COMMON.beeDropHoneycomb.get() && mobType.equals(BeeAnimal.BEE))
+        && random.nextInt(3) == 0) {
+      lootDrops.add(new ItemStack(Items.HONEYCOMB));
+    }
+
+    // Productive Bees support
+    if (Boolean.TRUE.equals(COMMON.beeDropHoneycomb.get() && Constants.PRODUCTIVE_BEES_LOADED)
+        && BeeAnimal.ProductiveBees.contains(mobType)) {
+      // Get the configurable honeycomb from the forge item registry.
+      Item configurableHoneycomb = ForgeRegistries.ITEMS
+          .getValue(new ResourceLocation(PRODUCTIVE_BEES_CONFIGURABLE_HONEYCOMB));
+
       if (random.nextInt(3) == 0) {
         lootDrops.add(new ItemStack(Items.HONEYCOMB));
-      }
-    } else if (Boolean.TRUE.equals(COMMON.beeDropHoneycomb.get())
-        && Constants.PRODUCTIVE_BEES_LOADED && BeeAnimal.ProductiveBees.contains(mobType)) {
-      if (random.nextInt(3) == 0) {
-        lootDrops.add(new ItemStack(Items.HONEYCOMB));
-      } else if (random.nextInt(3) == 1) {
-        if (mobType.equals(BeeAnimal.GHOSTLY_BEE)) {
-          lootDrops.add(new ItemStack(ModItems.HONEYCOMB_GHOSTLY.get()));
-        } else if (mobType.equals(BeeAnimal.RANCHER_BEE)) {
-          lootDrops.add(new ItemStack(ModItems.HONEYCOMB_MILKY.get()));
-        } else if (mobType.equals(BeeAnimal.CREEPER_BEE)) {
-          lootDrops.add(new ItemStack(ModItems.HONEYCOMB_POWDERY.get()));
+      } else if (random.nextInt(3) == 1 && configurableHoneycomb != null) {
+        // Getting typical honeycomb from the registry.
+        Item honeyCombGhostly =
+            ForgeRegistries.ITEMS.getValue(new ResourceLocation(PRODUCTIVE_BEES_HONEYCOMB_GHOSTLY));
+        Item honeyCombMilky =
+            ForgeRegistries.ITEMS.getValue(new ResourceLocation(PRODUCTIVE_BEES_HONEYCOMB_MILKY));
+        Item honeyCombPowdery =
+            ForgeRegistries.ITEMS.getValue(new ResourceLocation(PRODUCTIVE_BEES_HONEYCOMB_POWDERY));
+
+        // Productive bees honeycomb support.
+        if (mobType.equals(BeeAnimal.GHOSTLY_BEE) && honeyCombGhostly != null) {
+          lootDrops.add(new ItemStack(honeyCombGhostly));
+        } else if (mobType.equals(BeeAnimal.RANCHER_BEE) && honeyCombMilky != null) {
+          lootDrops.add(new ItemStack(honeyCombMilky));
+        } else if (mobType.equals(BeeAnimal.CREEPER_BEE) && honeyCombPowdery != null) {
+          lootDrops.add(new ItemStack(honeyCombPowdery));
         } else {
-          ItemStack honeyComb = new ItemStack(ModItems.CONFIGURABLE_HONEYCOMB.get());
-          BeeCreator.setTag(mobType.replace("_bee", "").replace("_mining", ""), honeyComb);
+          // If no specific honeycomb is found, get the default one and set the entity type.
+          String honeyCompType = mobType.replace("_bee", "").replace("_mining", "");
+          ItemStack honeyComb = new ItemStack(configurableHoneycomb);
+          CompoundTag compoundTag = honeyComb.getOrCreateTagElement("EntityTag");
+          compoundTag.putString("type", honeyCompType);
           lootDrops.add(honeyComb);
         }
       }

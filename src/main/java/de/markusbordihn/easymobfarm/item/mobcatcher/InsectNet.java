@@ -51,7 +51,7 @@ public class InsectNet extends MobCatcherItem {
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
     acceptedMobTypes = new HashSet<>(COMMON.insectNetMobs.get());
-    log.info("The insect net require {} luck and is able to catch the following mobs: {}",
+    log.info("The insect net requires {} luck and is able to catch the following mobs: {}",
         COMMON.insectNetMobs.get(), acceptedMobTypes);
   }
 

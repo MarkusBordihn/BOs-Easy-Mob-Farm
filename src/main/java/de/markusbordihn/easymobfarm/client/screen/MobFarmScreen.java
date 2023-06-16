@@ -24,7 +24,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-
+import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
@@ -202,23 +202,23 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
     RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     RenderSystem.setShaderTexture(0, Constants.TEXTURE_GENERIC_54);
-    this.blit(poseStack, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight);
+    GuiComponent.blit(poseStack, leftPos, topPos, 0, 0, this.imageWidth, this.imageHeight);
     blit(poseStack, leftPos + 5, topPos + 5, 50, 50, 165, 100, 2000, 2000);
 
     // Hopper slots and experience slot
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
     RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     RenderSystem.setShaderTexture(0, Constants.TEXTURE_HOPPER);
-    this.blit(poseStack, leftPos + 2, topPos + 85, 2, 5, 170, 40);
-    this.blit(poseStack, leftPos + 151, topPos + 99, 43, 19, 18, 18);
+    GuiComponent.blit(poseStack, leftPos + 2, topPos + 85, 2, 5, 170, 40);
+    GuiComponent.blit(poseStack, leftPos + 151, topPos + 99, 43, 19, 18, 18);
 
     // Captured Mob Display, mob captured slot and weapon slot.
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
     RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     RenderSystem.setShaderTexture(0, Constants.TEXTURE_INVENTORY);
-    this.blit(poseStack, leftPos + 6, topPos + 15, 25, 7, 51, 72);
-    this.blit(poseStack, leftPos + 80, topPos + 50, 76, 61, 18, 18);
-    this.blit(poseStack, leftPos + 130, topPos + 50, 76, 61, 18, 18);
+    GuiComponent.blit(poseStack, leftPos + 6, topPos + 15, 25, 7, 51, 72);
+    GuiComponent.blit(poseStack, leftPos + 80, topPos + 50, 76, 61, 18, 18);
+    GuiComponent.blit(poseStack, leftPos + 130, topPos + 50, 76, 61, 18, 18);
 
     // Captured Mob name and additional details
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -226,27 +226,27 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
     RenderSystem.setShaderTexture(0, Constants.TEXTURE_HORSE);
     int mobDetailsLeftPos = leftPos + 58;
     int mobDetailsTopPos = topPos + 15;
-    this.blit(poseStack, mobDetailsLeftPos, mobDetailsTopPos + 7, 79, 56, 90, 15);
-    this.blit(poseStack, mobDetailsLeftPos + 22, mobDetailsTopPos + 7, 80, 56, 90, 15);
-    this.blit(poseStack, mobDetailsLeftPos, mobDetailsTopPos, 79, 17, 90, 15);
-    this.blit(poseStack, mobDetailsLeftPos + 22, mobDetailsTopPos, 80, 17, 90, 15);
+    GuiComponent.blit(poseStack, mobDetailsLeftPos, mobDetailsTopPos + 7, 79, 56, 90, 15);
+    GuiComponent.blit(poseStack, mobDetailsLeftPos + 22, mobDetailsTopPos + 7, 80, 56, 90, 15);
+    GuiComponent.blit(poseStack, mobDetailsLeftPos, mobDetailsTopPos, 79, 17, 90, 15);
+    GuiComponent.blit(poseStack, mobDetailsLeftPos + 22, mobDetailsTopPos, 80, 17, 90, 15);
 
     // Hopper State Icon
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
     RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     RenderSystem.setShaderTexture(0, Constants.TEXTURE_ICONS);
-    this.blit(poseStack, leftPos + 20, topPos + 100, 40, 7, 20, 16);
+    GuiComponent.blit(poseStack, leftPos + 20, topPos + 100, 40, 7, 20, 16);
 
     // Guiding Images
     if (!this.mobFarmMenu.hasMobFarmWeaponItem()) {
-      this.blit(poseStack, leftPos + 127, topPos + 60, 105, 3, 23, 54);
+      GuiComponent.blit(poseStack, leftPos + 127, topPos + 60, 105, 3, 23, 54);
     } else {
-      this.blit(poseStack, leftPos + 127, topPos + 60, 81, 3, 23, 54);
+      GuiComponent.blit(poseStack, leftPos + 127, topPos + 60, 81, 3, 23, 54);
     }
     if (!this.mobFarmMenu.hasMobFarmCapturedMob()) {
       // Rotate all 8 icons.
       int capturedMobIconsLeft = this.animationTicker / 50 * 16;
-      this.blit(poseStack, leftPos + 81, topPos + 50, capturedMobIconsLeft, 60, 16, 16);
+      GuiComponent.blit(poseStack, leftPos + 81, topPos + 50, capturedMobIconsLeft, 60, 16, 16);
     }
 
     // Render Mob Farm Status
@@ -254,15 +254,15 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
       case MobFarmBlockEntityData.FARM_STATUS_DONE:
       case MobFarmBlockEntityData.FARM_STATUS_WORKING:
         // Hopper progress animation
-        this.blit(poseStack, leftPos + 21, topPos + 100, 41, 26, 18,
+        GuiComponent.blit(poseStack, leftPos + 21, topPos + 100, 41, 26, 18,
             this.mobFarmMenu.getMobFarmProgressImage());
         break;
       case MobFarmBlockEntityData.FARM_STATUS_FULL:
-        this.blit(poseStack, leftPos + 23, topPos + 99, 65, 6, 16, 14);
+        GuiComponent.blit(poseStack, leftPos + 23, topPos + 99, 65, 6, 16, 14);
         break;
       case MobFarmBlockEntityData.FARM_STATUS_WAITING:
-        this.blit(poseStack, leftPos + 12, topPos + 30, 1, 1, 40, 50);
-        this.blit(poseStack, leftPos + 100, topPos + 54, 62, 28, 20, 15);
+        GuiComponent.blit(poseStack, leftPos + 12, topPos + 30, 1, 1, 40, 50);
+        GuiComponent.blit(poseStack, leftPos + 100, topPos + 54, 62, 28, 20, 15);
         break;
       default:
     }

@@ -5,6 +5,22 @@
 This change log includes the summarized changes.
 For the full changelog, please go to the [Git Hub History][history] instead.
 
+### 2023.06.17
+
+- Refactored code to 1.19.4-45.1.0
+
+### 2023.06.11
+
+- Added support for [Forbidden Arcanus](https://www.curseforge.com/minecraft/mc-mods/forbidden-arcanus) Quantum Catcher
+- Improved Productive Bees support.
+
+### 2023.06.08
+
+- Replaced hard links to supported mods with custom links to allow better mod support.
+- Added support for [MobCatcher](https://www.curseforge.com/minecraft/mc-mods/mob-catcher).
+- Added support for sheared entities like sheep.
+- Fixed issue with broken weapons in weapon slot.
+
 ### 2023.03.13
 
 - Added config options `playDropSound` to general disable mob drop sounds.

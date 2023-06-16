@@ -133,16 +133,16 @@ dependencies {
   minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
   // Required: Bo's Material Elements (dev dependency)
-  compileOnly fg.deobf("curse.maven:material_elements-541620:4377715")
-  runtimeOnly fg.deobf("curse.maven:material_elements-541620:4377715")
+  compileOnly fg.deobf("curse.maven:material_elements-541620:4591583")
+  runtimeOnly fg.deobf("curse.maven:material_elements-541620:4591583")
 
   // Productive Bees: Integration
-  compileOnly fg.deobf("curse.maven:productivebees-377897:4366951")
+  // compileOnly fg.deobf("curse.maven:productivebees-377897:4366951")
   // runtimeOnly fg.deobf("curse.maven:productivebees-377897:4366951")
 
   // Jade Integration
-  compileOnly fg.deobf("curse.maven:jade-324717:4330163")
-  runtimeOnly fg.deobf("curse.maven:jade-324717:4330163")
+  // compileOnly fg.deobf("curse.maven:jade-324717:4330163")
+  // runtimeOnly fg.deobf("curse.maven:jade-324717:4330163")
 
   // Mob Catcher: Integration
   // compileOnly fg.deobf("curse.maven:mob-catcher-498389:4062963")
@@ -166,10 +166,10 @@ dependencies {
   // runtimeOnly fg.deobf("curse.maven:alex_mobs-426558:3575698")
 
   // Aquaculture 2 (Testing)
-  runtimeOnly fg.deobf("curse.maven:aquaculture-60028:4307997")
+  runtimeOnly fg.deobf("curse.maven:aquaculture-60028:4549017")
 
   // Additional helpful Mods for development (dev depenedency)
-  runtimeOnly fg.deobf("curse.maven:jei-238222:4371830")
+  runtimeOnly fg.deobf("curse.maven:jei-238222:4581325")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

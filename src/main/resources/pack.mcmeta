@@ -1,8 +1,7 @@
 {
   "pack": {
     "description": "Bo's Easy Mob Farm resources",
-    "pack_format": 12,
-    "forge:resource_pack_format": 12,
-    "forge:data_pack_format": 10
+    "forge:server_data_pack_format": 12,
+    "pack_format": 13
   }
 }

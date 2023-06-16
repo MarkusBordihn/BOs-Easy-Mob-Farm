@@ -45,7 +45,7 @@ public class CatchCageSmall extends MobCatcherItem {
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
     acceptedMobTypes = new HashSet<>(COMMON.catchCageSmallMobs.get());
-    log.info("The catch cage small require {} luck and is able to catch the following mobs: {}",
+    log.info("The catch cage small requires {} luck and is able to catch the following mobs: {}",
         COMMON.catchCageSmallMobCatchingLuck.get(), acceptedMobTypes);
   }
 

@@ -66,6 +66,7 @@ public class RenderHelper {
   private Quaternionf blockRotation;
   private RenderModels renderModels;
   private DyeColor entityColor;
+  private boolean entitySheared;
 
   public RenderHelper(int renderId, Minecraft minecraft, BlockEntity blockEntity) {
     this.minecraft = minecraft;
@@ -97,6 +98,14 @@ public class RenderHelper {
       this.entityColor = mobFarmBlockEntity.getFarmMobColor();
     }
     return this.entityColor;
+  }
+
+  public boolean getEntityShearedStatus() {
+    if (!this.entitySheared
+        && this.blockEntity instanceof MobFarmBlockEntity mobFarmBlockEntity) {
+      this.entitySheared = mobFarmBlockEntity.getFarmMobShearedStatus();
+    }
+    return this.entitySheared;
   }
 
   public void renderCustomEntity(EntityType<?> entityType, PoseStack poseStack,
@@ -193,7 +202,8 @@ public class RenderHelper {
   public void renderSheep(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
       double y, double z, int combinedLight) {
     renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
-        this.renderModels.getSheepRenderer(), this.renderModels.getSheep(getEntityColor()));
+        this.renderModels.getSheepRenderer(), this.renderModels.getSheep(getEntityColor(),
+            getEntityShearedStatus()));
   }
 
   public void renderSkeleton(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,

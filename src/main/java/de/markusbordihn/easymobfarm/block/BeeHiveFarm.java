@@ -144,7 +144,7 @@ public class BeeHiveFarm extends MobFarmBlock {
       // List each single possible mob types (incl. modded mobs types).
       MutableComponent mobTypeOverview = Component.literal("").withStyle(ChatFormatting.DARK_GREEN);
       for (String acceptedMob : acceptedMobTypes) {
-        // We will skip he entries in the following cases:
+        // We will skip the entries in the following cases:
         // 1.) Productive Bees is not loaded but entry starts with productive bees
         // 2.) Accepted Mob Types Size > 16 and Productive Bees is loaded and entry starts with
         // productive bees
