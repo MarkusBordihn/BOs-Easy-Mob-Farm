@@ -125,8 +125,8 @@ dependencies {
   minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
   // Required: Bo's Material Elements (dev dependency)
-  compileOnly fg.deobf("curse.maven:material_elements-541620:4594604")
-  runtimeOnly fg.deobf("curse.maven:material_elements-541620:4594604")
+  compileOnly fg.deobf("curse.maven:material_elements-541620:4594644")
+  runtimeOnly fg.deobf("curse.maven:material_elements-541620:4594644")
 
   // Productive Bees: Integration
   // compileOnly fg.deobf("curse.maven:productivebees-377897:4366951")
@@ -161,7 +161,7 @@ dependencies {
   // runtimeOnly fg.deobf("curse.maven:aquaculture-60028:4549017")
 
   // Additional helpful Mods for development (dev depenedency)
-  runtimeOnly fg.deobf("curse.maven:jei-238222:4581323")
+  runtimeOnly fg.deobf("curse.maven:jei-238222:4597711")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
