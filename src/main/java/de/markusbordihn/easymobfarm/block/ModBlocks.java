@@ -23,7 +23,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
 
 import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -55,54 +55,68 @@ public class ModBlocks {
 
   // Mob Farm Templates
   public static final RegistryObject<Block> IRON_MOB_FARM_TEMPLATE =
-      BLOCKS.register("iron_mob_farm_template",
-          () -> new Block(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops()
-              .strength(3.0F, 6.0F).sound(SoundType.METAL).noOcclusion()));
+      BLOCKS
+          .register("iron_mob_farm_template",
+              () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
+                  .requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.METAL)
+                  .noOcclusion()));
   public static final RegistryObject<Block> STEEL_MOB_FARM_TEMPLATE =
-      BLOCKS.register("steel_mob_farm_template",
-          () -> new Block(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops()
-              .strength(3.0F, 6.0F).sound(SoundType.METAL).noOcclusion()));
+      BLOCKS
+          .register("steel_mob_farm_template",
+              () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
+                  .requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.METAL)
+                  .noOcclusion()));
 
   // Mob Farms
   public static final RegistryObject<Block> ANIMAL_PLAINS_FARM =
       BLOCKS.register(AnimalPlainsFarm.NAME,
-          () -> new AnimalPlainsFarm(BlockBehaviour.Properties.of(Material.STONE)
+          () -> new AnimalPlainsFarm(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
               .requiresCorrectToolForDrops().strength(2.0F, 2.0F)
               .lightLevel(AnimalPlainsFarm::getLightLevel).sound(SoundType.METAL).noOcclusion()));
   public static final RegistryObject<Block> BEE_HIVE_FARM = BLOCKS.register(BeeHiveFarm.NAME,
-      () -> new BeeHiveFarm(BlockBehaviour.Properties.of(Material.STONE)
+      () -> new BeeHiveFarm(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
           .requiresCorrectToolForDrops().strength(2.0F, 2.0F).lightLevel(BeeHiveFarm::getLightLevel)
           .sound(SoundType.METAL).noOcclusion()));
   public static final RegistryObject<Block> CREATIVE_MOB_FARM =
       BLOCKS
           .register(CreativeMobFarm.NAME,
-              () -> new CreativeMobFarm(BlockBehaviour.Properties.of(Material.STONE)
+              () -> new CreativeMobFarm(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
                   .requiresCorrectToolForDrops().strength(2.0F, 2.0F)
                   .lightLevel(CreativeMobFarm::getLightLevel).noOcclusion()));
-  public static final RegistryObject<Block> DESERT_FARM = BLOCKS.register(DesertFarm.NAME,
-      () -> new DesertFarm(
-          BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops()
-              .strength(2.0F, 2.0F).lightLevel(DesertFarm::getLightLevel).noOcclusion()));
-  public static final RegistryObject<Block> JUNGLE_FARM = BLOCKS.register(JungleFarm.NAME,
-      () -> new JungleFarm(
-          BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops()
-              .strength(2.0F, 2.0F).lightLevel(DesertFarm::getLightLevel).noOcclusion()));
+  public static final RegistryObject<Block> DESERT_FARM =
+      BLOCKS
+          .register(DesertFarm.NAME,
+              () -> new DesertFarm(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
+                  .requiresCorrectToolForDrops().strength(2.0F, 2.0F)
+                  .lightLevel(DesertFarm::getLightLevel).noOcclusion()));
+  public static final RegistryObject<Block> JUNGLE_FARM =
+      BLOCKS
+          .register(JungleFarm.NAME,
+              () -> new JungleFarm(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
+                  .requiresCorrectToolForDrops().strength(2.0F, 2.0F)
+                  .lightLevel(DesertFarm::getLightLevel).noOcclusion()));
   public static final RegistryObject<Block> MONSTER_PLAINS_CAVE_FARM = BLOCKS.register(
       MonsterPlainsCaveFarm.NAME,
-      () -> new MonsterPlainsCaveFarm(BlockBehaviour.Properties.of(Material.STONE)
+      () -> new MonsterPlainsCaveFarm(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
           .requiresCorrectToolForDrops().strength(2.0F, 2.0F)
           .lightLevel(MonsterPlainsCaveFarm::getLightLevel).sound(SoundType.METAL).noOcclusion()));
   public static final RegistryObject<Block> NETHER_FORTRESS_FARM =
       BLOCKS.register(NetherFortressFarm.NAME,
-          () -> new NetherFortressFarm(BlockBehaviour.Properties.of(Material.STONE)
+          () -> new NetherFortressFarm(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
               .requiresCorrectToolForDrops().strength(2.0F, 2.0F)
               .lightLevel(NetherFortressFarm::getLightLevel).noOcclusion()));
-  public static final RegistryObject<Block> OCEAN_FARM = BLOCKS.register(OceanFarm.NAME,
-      () -> new OceanFarm(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops()
-          .strength(2.0F, 2.0F).lightLevel(OceanFarm::getLightLevel).noOcclusion()));
-  public static final RegistryObject<Block> SWAMP_FARM = BLOCKS.register(SwampFarm.NAME,
-      () -> new SwampFarm(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops()
-          .strength(2.0F, 2.0F).lightLevel(SwampFarm::getLightLevel).noOcclusion()));
+  public static final RegistryObject<Block> OCEAN_FARM =
+      BLOCKS
+          .register(OceanFarm.NAME,
+              () -> new OceanFarm(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
+                  .requiresCorrectToolForDrops().strength(2.0F, 2.0F)
+                  .lightLevel(OceanFarm::getLightLevel).noOcclusion()));
+  public static final RegistryObject<Block> SWAMP_FARM =
+      BLOCKS
+          .register(SwampFarm.NAME,
+              () -> new SwampFarm(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
+                  .requiresCorrectToolForDrops().strength(2.0F, 2.0F)
+                  .lightLevel(SwampFarm::getLightLevel).noOcclusion()));
 
   @TemplateEntryPoint("Register Entity")
 

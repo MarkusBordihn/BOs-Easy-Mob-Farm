@@ -238,7 +238,7 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
   @Override
   public void setItem(int index, ItemStack itemStack) {
     ItemStack itemStackFromIndex = this.items.get(index);
-    if (itemStack.sameItem(itemStackFromIndex)) {
+    if (itemStack.is(itemStackFromIndex.getItem())) {
       return;
     }
     this.items.set(index, itemStack);

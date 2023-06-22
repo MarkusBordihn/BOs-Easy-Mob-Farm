@@ -155,7 +155,7 @@ public class MobCatcherItem extends CapturedMob {
     if (livingEntity == null || livingEntity instanceof Player || livingEntity.isDeadOrDying()) {
       return InteractionResult.FAIL;
     }
-    Level level = livingEntity.getLevel();
+    Level level = livingEntity.level();
 
     // Try to check if we could catching the targeted mob.
     if (!hasCapturedMob(itemStack)) {

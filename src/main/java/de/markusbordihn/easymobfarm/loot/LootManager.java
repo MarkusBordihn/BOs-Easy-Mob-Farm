@@ -40,7 +40,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -125,10 +125,11 @@ public class LootManager {
       DamageSource damageSource = serverLevel.damageSources().playerAttack(player);
 
       // Handles if loot should be "killed_by_player" or just normal loot.
-      LootContext.Builder lootBuilder = null;
+      LootParams.Builder lootBuilder = null;
+
       if (weaponItem != null && !weaponItem.isEmpty()) {
         // Kills with weapons has automatically a higher luck.
-        lootBuilder = new LootContext.Builder(serverLevel).withLuck(0.6F)
+        lootBuilder = new LootParams.Builder(serverLevel).withLuck(0.6F)
             .withParameter(LootContextParams.DAMAGE_SOURCE, damageSource)
             .withParameter(LootContextParams.DIRECT_KILLER_ENTITY, player)
             .withParameter(LootContextParams.KILLER_ENTITY, player)
@@ -136,12 +137,12 @@ public class LootManager {
             .withParameter(LootContextParams.ORIGIN, player.position())
             .withParameter(LootContextParams.THIS_ENTITY, player);
       } else {
-        lootBuilder = new LootContext.Builder(serverLevel).withLuck(0.5F)
+        lootBuilder = new LootParams.Builder(serverLevel).withLuck(0.5F)
             .withParameter(LootContextParams.DAMAGE_SOURCE, damageSource)
             .withParameter(LootContextParams.ORIGIN, player.position())
             .withParameter(LootContextParams.THIS_ENTITY, player);
       }
-      LootTable lootTable = server.getLootTables().get(lootTableLocation);
+      LootTable lootTable = server.getLootData().getLootTable(lootTableLocation);
       List<ItemStack> lootDrops =
           lootTable.getRandomItems(lootBuilder.create(LootContextParamSets.ENTITY));
       if (lootDrops.isEmpty() && !lootTableLocation.equals(new ResourceLocation("minecraft:empty"))

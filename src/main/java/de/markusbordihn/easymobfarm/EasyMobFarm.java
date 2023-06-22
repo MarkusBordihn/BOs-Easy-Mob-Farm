@@ -63,7 +63,7 @@ public class EasyMobFarm {
       modEventBus.addListener(ClientRenderer::registerBlockEntityRenderers);
       modEventBus.addListener(ClientScreens::registerScreens);
       modEventBus.addListener(EasyMobFarmTab::handleCreativeModeTab);
-      modEventBus.addListener(EasyMobFarmTab::handleCreativeModeTabRegister);
+      EasyMobFarmTab.CREATIVE_TABS.register(modEventBus);
       modEventBus.addListener(ModItemProperties::registerItemProperties);
     });
   }

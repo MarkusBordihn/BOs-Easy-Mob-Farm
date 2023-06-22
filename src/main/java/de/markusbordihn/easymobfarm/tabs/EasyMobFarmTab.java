@@ -22,13 +22,14 @@ package de.markusbordihn.easymobfarm.tabs;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.ItemStack;
 
-import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegistryObject;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.item.ModItems;
@@ -39,31 +40,22 @@ public class EasyMobFarmTab {
 
   protected EasyMobFarmTab() {}
 
-  protected static CreativeModeTab MOB_FARM;
+  public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS =
+      DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Constants.MOD_ID);
 
-  protected static CreativeModeTab TOOLS;
+  public static final RegistryObject<CreativeModeTab> MOB_FARM = CREATIVE_TABS.register("mob_farm",
+      () -> CreativeModeTab.builder()
+          .icon(() -> ModItems.ANIMAL_PLAINS_FARM.get().getDefaultInstance())
+          .displayItems(new MobFarmItems())
+          .title(Component.translatable("itemGroup.easy_mob_farm.mob_farm")).build());
 
-  public static void handleCreativeModeTabRegister(CreativeModeTabEvent.Register event) {
+  public static final RegistryObject<CreativeModeTab> TOOLS = CREATIVE_TABS.register("tools",
+      () -> CreativeModeTab.builder().icon(() -> ModItems.COLLAR_SMALL.get().getDefaultInstance())
+          .displayItems(new MobCaptureItems())
+          .title(Component.translatable("itemGroup.easy_mob_farm.tools")).build());
 
-    log.info("{} creative mod tabs ...", Constants.LOG_REGISTER_PREFIX);
-
-    MOB_FARM = event.registerCreativeModeTab(new ResourceLocation(Constants.MOD_ID, "mob_farm"),
-        builder -> {
-          builder.icon(() -> new ItemStack(ModItems.ANIMAL_PLAINS_FARM.get()))
-              .displayItems(new MobFarmItems())
-              .title(Component.translatable("itemGroup.easy_mob_farm.mob_farm")).build();
-        });
-
-    TOOLS =
-        event.registerCreativeModeTab(new ResourceLocation(Constants.MOD_ID, "tools"), builder -> {
-          builder.icon(() -> new ItemStack(ModItems.COLLAR_SMALL.get()))
-              .displayItems(new MobCaptureItems())
-              .title(Component.translatable("itemGroup.easy_mob_farm.tools")).build();
-        });
-  }
-
-  public static void handleCreativeModeTab(CreativeModeTabEvent.BuildContents event) {
-    if (event.getTab() == CreativeModeTabs.BUILDING_BLOCKS) {
+  public static void handleCreativeModeTab(BuildCreativeModeTabContentsEvent event) {
+    if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
       event.accept(ModItems.IRON_MOB_FARM_TEMPLATE.get());
       event.accept(ModItems.STEEL_MOB_FARM_TEMPLATE.get());
     }

@@ -161,7 +161,7 @@ public class CapturedMob extends Item {
     ResourceLocation lootTable = livingEntity.getLootTable();
     if (lootTable != null) {
       List<String> possibleLoot =
-          LootManager.getRandomLootDropOverview(lootTable, livingEntity.getLevel(), type);
+          LootManager.getRandomLootDropOverview(lootTable, livingEntity.level(), type);
       if (possibleLoot != null) {
         compoundTag.putString(ENTITY_POSSIBLE_LOOT_TAG, gson.toJson(possibleLoot));
       }
