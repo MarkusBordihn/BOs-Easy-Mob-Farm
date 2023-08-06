@@ -49,6 +49,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 
+import de.markusbordihn.easymobfarm.data.FarmTier;
 import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
@@ -185,6 +186,10 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
     return null;
   }
 
+  public FarmTier getFarmTier() {
+    return FarmTier.DEFAULT;
+  }
+
   public ItemStack takeItem(int index) {
     if (index < 0 || index >= this.items.size()) {
       return ItemStack.EMPTY;
@@ -207,12 +212,10 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
   public void syncContents(ServerPlayer player) {
     player.connection.send(getUpdatePacket());
   }
-
   @Override
   protected Component getDefaultName() {
     return new TranslatableComponent("container.easy_mob_farm");
   }
-
   @Override
   public boolean stillValid(Player player) {
     Level level = this.level;
@@ -220,7 +223,6 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
         && player.distanceToSqr(this.worldPosition.getX() + 0.5D, this.worldPosition.getY() + 0.5D,
             this.worldPosition.getZ() + 0.5D) <= 64.0D;
   }
-
   @Override
   public boolean isEmpty() {
     for (ItemStack itemStack : this.items) {
@@ -230,12 +232,10 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
     }
     return true;
   }
-
   @Override
   public ItemStack getItem(int index) {
     return this.items.get(index);
   }
-
   @Override
   public void setItem(int index, ItemStack itemStack) {
     ItemStack itemStackFromIndex = this.items.get(index);
@@ -244,49 +244,40 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
     }
     this.items.set(index, itemStack);
   }
-
   @Override
   public int getContainerSize() {
     return this.items.size();
   }
-
   @Override
   public void clearContent() {
     this.items.clear();
   }
-
   @Override
   public ItemStack removeItem(int index, int count) {
     return ContainerHelper.removeItem(this.items, index, count);
   }
-
   @Override
   public ItemStack removeItemNoUpdate(int index) {
     return ContainerHelper.takeItem(this.items, index);
   }
-
   @Override
   protected AbstractContainerMenu createMenu(int windowId, Inventory inventory) {
     return new MobFarmMenu(windowId, inventory, this, this.dataAccess);
   }
-
   @Override
   public Packet<ClientGamePacketListener> getUpdatePacket() {
     return ClientboundBlockEntityDataPacket.create(this);
   }
-
   @Override
   public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket dataPacket) {
     handleUpdateTag(dataPacket.getTag());
   }
-
   @Override
   public CompoundTag getUpdateTag() {
     CompoundTag updateCompoundTag = new CompoundTag();
     saveAdditional(updateCompoundTag);
     return updateCompoundTag;
   }
-
   @Override
   public void load(CompoundTag compoundTag) {
     super.load(compoundTag);
@@ -320,7 +311,6 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
       this.farmMobEntityType = CapturedMobVirtual.getCapturedMobEntityType(capturedMob);
     }
   }
-
   @Override
   public void saveAdditional(CompoundTag compoundTag) {
     super.saveAdditional(compoundTag);

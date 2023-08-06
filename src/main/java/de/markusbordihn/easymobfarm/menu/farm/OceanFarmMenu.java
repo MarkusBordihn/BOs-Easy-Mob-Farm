@@ -30,7 +30,7 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.registries.ObjectHolder;
 
 import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.OceanFarm;
+import de.markusbordihn.easymobfarm.block.farm.iron.IronOceanFarm;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
 public class OceanFarmMenu extends MobFarmMenu {
@@ -48,10 +48,9 @@ public class OceanFarmMenu extends MobFarmMenu {
       final ContainerData containerData) {
     super(windowId, playerInventory, container, containerData, TYPE);
   }
-
   @Override
   public boolean mayPlaceCapturedMobType(String mobType) {
-    return OceanFarm.isAcceptedCapturedMobType(mobType);
+    return IronOceanFarm.isAcceptedCapturedMobType(mobType);
   }
 
 }

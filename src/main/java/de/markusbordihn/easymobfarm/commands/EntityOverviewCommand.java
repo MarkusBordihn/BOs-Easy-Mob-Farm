@@ -47,7 +47,6 @@ public class EntityOverviewCommand extends CustomCommand {
   public static ArgumentBuilder<CommandSourceStack, ?> register() {
     return Commands.literal("entities").requires(cs -> cs.hasPermission(2)).executes(command);
   }
-
   @Override
   public int run(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
     Set<ResourceLocation> entitiesKeys = ForgeRegistries.ENTITIES.getKeys();

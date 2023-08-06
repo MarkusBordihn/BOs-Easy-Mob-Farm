@@ -49,47 +49,173 @@ public class ClientRenderer {
   public static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
     log.info("{} Block Entity Renderers ...", Constants.LOG_REGISTER_PREFIX);
 
-    // @TemplateEntryPoint("Register Entity Renderer")
-    event.registerBlockEntityRenderer(ModBlocks.ANIMAL_PLAINS_FARM_ENTITY.get(),
+    // Mob Farm Renderer - Copper
+    event.registerBlockEntityRenderer(ModBlocks.COPPER_ANIMAL_PLAINS_FARM_ENTITY.get(),
         AnimalPlainsFarmRenderer::new);
-    event.registerBlockEntityRenderer(ModBlocks.BEE_HIVE_FARM_ENTITY.get(),
+    event.registerBlockEntityRenderer(ModBlocks.COPPER_BEE_HIVE_FARM_ENTITY.get(),
         BeeHiveFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.COPPER_DESERT_FARM_ENTITY.get(),
+        DesertFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.COPPER_JUNGLE_FARM_ENTITY.get(),
+        JungleFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.COPPER_MONSTER_PLAINS_CAVE_FARM_ENTITY.get(),
+        MonsterPlainsCaveFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.COPPER_NETHER_FORTRESS_FARM_ENTITY.get(),
+        NetherFortressFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.COPPER_OCEAN_FARM_ENTITY.get(),
+        OceanFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.COPPER_SWAMP_FARM_ENTITY.get(),
+        SwampFarmRenderer::new);
+
+    // Mob Farm Renderer - Iron
+    event.registerBlockEntityRenderer(ModBlocks.IRON_ANIMAL_PLAINS_FARM_ENTITY.get(),
+        AnimalPlainsFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.IRON_BEE_HIVE_FARM_ENTITY.get(),
+        BeeHiveFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.IRON_DESERT_FARM_ENTITY.get(),
+        DesertFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.IRON_JUNGLE_FARM_ENTITY.get(),
+        JungleFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.IRON_MONSTER_PLAINS_CAVE_FARM_ENTITY.get(),
+        MonsterPlainsCaveFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.IRON_NETHER_FORTRESS_FARM_ENTITY.get(),
+        NetherFortressFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.IRON_OCEAN_FARM_ENTITY.get(),
+        OceanFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.IRON_SWAMP_FARM_ENTITY.get(),
+        SwampFarmRenderer::new);
+
+    // Mob Farm Renderer - Gold
+    event.registerBlockEntityRenderer(ModBlocks.GOLD_ANIMAL_PLAINS_FARM_ENTITY.get(),
+        AnimalPlainsFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.GOLD_BEE_HIVE_FARM_ENTITY.get(),
+        BeeHiveFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.GOLD_DESERT_FARM_ENTITY.get(),
+        DesertFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.GOLD_JUNGLE_FARM_ENTITY.get(),
+        JungleFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.GOLD_MONSTER_PLAINS_CAVE_FARM_ENTITY.get(),
+        MonsterPlainsCaveFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.GOLD_NETHER_FORTRESS_FARM_ENTITY.get(),
+        NetherFortressFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.GOLD_OCEAN_FARM_ENTITY.get(),
+        OceanFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.GOLD_SWAMP_FARM_ENTITY.get(),
+        SwampFarmRenderer::new);
+
+    // Mob Farm Renderer - Netherite
+    event.registerBlockEntityRenderer(ModBlocks.NETHERITE_ANIMAL_PLAINS_FARM_ENTITY.get(),
+        AnimalPlainsFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.NETHERITE_BEE_HIVE_FARM_ENTITY.get(),
+        BeeHiveFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.NETHERITE_DESERT_FARM_ENTITY.get(),
+        DesertFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.NETHERITE_JUNGLE_FARM_ENTITY.get(),
+        JungleFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.NETHERITE_MONSTER_PLAINS_CAVE_FARM_ENTITY.get(),
+        MonsterPlainsCaveFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.NETHERITE_NETHER_FORTRESS_FARM_ENTITY.get(),
+        NetherFortressFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.NETHERITE_OCEAN_FARM_ENTITY.get(),
+        OceanFarmRenderer::new);
+    event.registerBlockEntityRenderer(ModBlocks.NETHERITE_SWAMP_FARM_ENTITY.get(),
+        SwampFarmRenderer::new);
+
+    // Mob Farm Renderer - Creative
     event.registerBlockEntityRenderer(ModBlocks.CREATIVE_MOB_FARM_ENTITY.get(),
         CreativeMobFarmRenderer::new);
-    event.registerBlockEntityRenderer(ModBlocks.DESERT_FARM_ENTITY.get(), DesertFarmRenderer::new);
-    event.registerBlockEntityRenderer(ModBlocks.JUNGLE_FARM_ENTITY.get(), JungleFarmRenderer::new);
-    event.registerBlockEntityRenderer(ModBlocks.MONSTER_PLAINS_CAVE_FARM_ENTITY.get(),
-        MonsterPlainsCaveFarmRenderer::new);
-    event.registerBlockEntityRenderer(ModBlocks.NETHER_FORTRESS_FARM_ENTITY.get(),
-        NetherFortressFarmRenderer::new);
-    event.registerBlockEntityRenderer(ModBlocks.OCEAN_FARM_ENTITY.get(), OceanFarmRenderer::new);
-    event.registerBlockEntityRenderer(ModBlocks.SWAMP_FARM_ENTITY.get(), SwampFarmRenderer::new);
+
   }
 
   public static void registerRenderLayers(final FMLClientSetupEvent event) {
     log.info("{} Render Layers ...", Constants.LOG_REGISTER_PREFIX);
 
     event.enqueueWork(() -> {
-      // @TemplateEntryPoint("Register Render Layers")
-
       // Mob Farm Templates
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.COPPER_MOB_FARM_TEMPLATE.get(),
+          RenderType.cutoutMipped());
       ItemBlockRenderTypes.setRenderLayer(ModBlocks.IRON_MOB_FARM_TEMPLATE.get(),
           RenderType.cutoutMipped());
-
-      // Mobs Farms
-      ItemBlockRenderTypes.setRenderLayer(ModBlocks.ANIMAL_PLAINS_FARM.get(),
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.GOLD_MOB_FARM_TEMPLATE.get(),
           RenderType.cutoutMipped());
-      ItemBlockRenderTypes.setRenderLayer(ModBlocks.BEE_HIVE_FARM.get(), RenderType.cutoutMipped());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.NETHERITE_MOB_FARM_TEMPLATE.get(),
+          RenderType.cutoutMipped());
+
+      // Mob Farm Blocks - Copper
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.COPPER_MONSTER_PLAINS_CAVE_FARM.get(),
+          RenderType.cutoutMipped());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.COPPER_ANIMAL_PLAINS_FARM.get(),
+          RenderType.cutoutMipped());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.COPPER_BEE_HIVE_FARM.get(),
+          RenderType.cutoutMipped());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.COPPER_DESERT_FARM.get(),
+          RenderType.cutoutMipped());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.COPPER_JUNGLE_FARM.get(),
+          RenderType.cutoutMipped());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.COPPER_NETHER_FORTRESS_FARM.get(),
+          RenderType.cutoutMipped());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.COPPER_OCEAN_FARM.get(),
+          RenderType.cutoutMipped());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.COPPER_SWAMP_FARM.get(),
+          RenderType.cutoutMipped());
+
+      // Mob Farm Blocks - Iron
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.IRON_MONSTER_PLAINS_CAVE_FARM.get(),
+          RenderType.cutoutMipped());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.IRON_ANIMAL_PLAINS_FARM.get(),
+          RenderType.cutoutMipped());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.IRON_BEE_HIVE_FARM.get(),
+          RenderType.cutoutMipped());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.IRON_DESERT_FARM.get(),
+          RenderType.cutoutMipped());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.IRON_JUNGLE_FARM.get(),
+          RenderType.cutoutMipped());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.IRON_NETHER_FORTRESS_FARM.get(),
+          RenderType.cutoutMipped());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.IRON_OCEAN_FARM.get(),
+          RenderType.translucent());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.IRON_SWAMP_FARM.get(),
+          RenderType.cutoutMipped());
+
+      // Mob Farm Blocks - Gold
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.GOLD_MONSTER_PLAINS_CAVE_FARM.get(),
+          RenderType.cutoutMipped());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.GOLD_ANIMAL_PLAINS_FARM.get(),
+          RenderType.cutoutMipped());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.GOLD_BEE_HIVE_FARM.get(),
+          RenderType.cutoutMipped());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.GOLD_DESERT_FARM.get(),
+          RenderType.cutoutMipped());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.GOLD_JUNGLE_FARM.get(),
+          RenderType.cutoutMipped());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.GOLD_NETHER_FORTRESS_FARM.get(),
+          RenderType.cutoutMipped());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.GOLD_OCEAN_FARM.get(),
+          RenderType.translucent());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.GOLD_SWAMP_FARM.get(),
+      RenderType.cutoutMipped());
+
+      // Mob Farm Blocks - Netherite
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.NETHERITE_MONSTER_PLAINS_CAVE_FARM.get(),
+          RenderType.cutoutMipped());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.NETHERITE_ANIMAL_PLAINS_FARM.get(),
+          RenderType.cutoutMipped());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.NETHERITE_BEE_HIVE_FARM.get(),
+          RenderType.cutoutMipped());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.NETHERITE_DESERT_FARM.get(),
+          RenderType.cutoutMipped());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.NETHERITE_JUNGLE_FARM.get(),
+          RenderType.cutoutMipped());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.NETHERITE_NETHER_FORTRESS_FARM.get(),
+          RenderType.cutoutMipped());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.NETHERITE_OCEAN_FARM.get(),
+          RenderType.translucent());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.NETHERITE_SWAMP_FARM.get(),
+          RenderType.cutoutMipped());
+
+      // Mob Farm Blocks - Creative
       ItemBlockRenderTypes.setRenderLayer(ModBlocks.CREATIVE_MOB_FARM.get(),
           RenderType.cutoutMipped());
-      ItemBlockRenderTypes.setRenderLayer(ModBlocks.DESERT_FARM.get(), RenderType.cutoutMipped());
-      ItemBlockRenderTypes.setRenderLayer(ModBlocks.JUNGLE_FARM.get(), RenderType.cutoutMipped());
-      ItemBlockRenderTypes.setRenderLayer(ModBlocks.MONSTER_PLAINS_CAVE_FARM.get(),
-          RenderType.cutoutMipped());
-      ItemBlockRenderTypes.setRenderLayer(ModBlocks.NETHER_FORTRESS_FARM.get(),
-          RenderType.cutoutMipped());
-      ItemBlockRenderTypes.setRenderLayer(ModBlocks.OCEAN_FARM.get(), RenderType.translucent());
-      ItemBlockRenderTypes.setRenderLayer(ModBlocks.SWAMP_FARM.get(), RenderType.cutoutMipped());
     });
   }
 

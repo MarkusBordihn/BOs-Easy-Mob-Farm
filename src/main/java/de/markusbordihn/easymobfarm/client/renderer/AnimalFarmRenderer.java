@@ -34,7 +34,6 @@ public class AnimalFarmRenderer extends MobFarmRendererBase<MobFarmBlockEntity> 
   public AnimalFarmRenderer(BlockEntityRendererProvider.Context context) {
     super(context);
   }
-
   @Override
   public void render(MobFarmBlockEntity blockEntity, float partialTicks, PoseStack poseStack,
       MultiBufferSource buffer, int combinedLight, int combinedOverlay) {

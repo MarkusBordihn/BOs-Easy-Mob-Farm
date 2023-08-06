@@ -19,6 +19,8 @@
 
 package de.markusbordihn.easymobfarm.config.mobs;
 
+import java.util.Set;
+
 public class HostileMonster {
 
   protected HostileMonster() {}
@@ -33,4 +35,8 @@ public class HostileMonster {
   public static final String WITCH = "minecraft:witch";
   public static final String ZOMBIE = "minecraft:zombie";
   public static final String ZOMBIE_VILLAGER = "minecraft:zombie_villager";
+
+
+  public static final Set<String> All = Set.of(CAVE_SPIDER, CREEPER, ENDERMAN, HUSK, SKELETON, SLIME,
+      SPIDER, WITCH, ZOMBIE, ZOMBIE_VILLAGER);
 }

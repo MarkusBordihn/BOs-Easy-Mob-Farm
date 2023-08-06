@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "easy_mob_farm:copper_animal_plains_farm",
+    "easy_mob_farm:copper_bee_hive_farm",
+    "easy_mob_farm:copper_desert_farm",
+    "easy_mob_farm:copper_jungle_farm",
+    "easy_mob_farm:copper_mob_farm_template",
+    "easy_mob_farm:copper_monster_plains_cave_farm",
+    "easy_mob_farm:copper_ocean_farm",
+    "easy_mob_farm:copper_swamp_farm"
+  ]
+}

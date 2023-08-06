@@ -33,12 +33,14 @@ public final class Constants {
   public static final String MOD_COMMAND = "easy_mob_farm";
   public static final String MOD_ID = "easy_mob_farm";
   public static final String MOD_NAME = "Bo's Easy Mob Farm";
+  public static final String MOD_URL = "https://www.curseforge.com/minecraft/mc-mods/easy-mob-farm";
 
   // Prefixes
   public static final String LOOT_MANAGER_PREFIX = "[Loot Manager] ";
   public static final String MESSAGE_PREFIX = "message.easy_mob_farm.";
   public static final String MINECRAFT_PREFIX = "minecraft";
   public static final String TEXT_PREFIX = "text.easy_mob_farm.";
+  public static final String BLOCK_TEXT_PREFIX = "block.easy_mob_farm.";
 
   // Functional Blocks
   public static final String ANIMAL_PLAINS_FARM = "animal_plains_farm";
@@ -77,6 +79,7 @@ public final class Constants {
   // Supported Mods
   public static final boolean CORAIL_SPAWNERS_LOADED = ModList.get().isLoaded("corail_spawners");
   public static final boolean CREATE_LOADED = ModList.get().isLoaded("create");
+  public static final boolean CYCLIC_LOADED = ModList.get().isLoaded("cyclic");
   public static final boolean FORBIDDEN_ARCANUS_LOADED =
       ModList.get().isLoaded("forbidden_arcanus");
   public static final boolean MOBCATCHER_LOADED = ModList.get().isLoaded("mobcatcher");

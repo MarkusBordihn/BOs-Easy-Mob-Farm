@@ -47,7 +47,6 @@ public class ItemOverviewCommand extends CustomCommand {
   public static ArgumentBuilder<CommandSourceStack, ?> register() {
     return Commands.literal("items").requires(cs -> cs.hasPermission(2)).executes(command);
   }
-
   @Override
   public int run(CommandContext<CommandSourceStack> context) throws CommandSyntaxException {
     Set<ResourceLocation> itemsKeys = ForgeRegistries.ITEMS.getKeys();

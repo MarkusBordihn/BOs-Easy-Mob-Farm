@@ -19,6 +19,7 @@
 
 package de.markusbordihn.easymobfarm.block;
 
+import java.util.HashSet;
 import java.util.Set;
 import javax.annotation.Nullable;
 
@@ -39,7 +40,6 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.farm.CreativeMobFarmEntity;
-import de.markusbordihn.easymobfarm.config.biome.Plains;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
 public class CreativeMobFarm extends MobFarmBlock {
@@ -48,47 +48,41 @@ public class CreativeMobFarm extends MobFarmBlock {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  private static final Set<String> acceptedMobTypes = Plains.Passive;
+  private static final Set<String> acceptedMobTypes = new HashSet<>();
 
   public CreativeMobFarm(BlockBehaviour.Properties properties) {
     super(properties);
   }
 
   public static boolean isAcceptedCapturedMobType(String mobType) {
-    return acceptedMobTypes.contains(mobType);
+    return acceptedMobTypes.isEmpty() || acceptedMobTypes.contains(mobType);
   }
 
   public static int getLightLevel(BlockState blockState) {
     return 15;
   }
-
   @Override
   public Set<String> getAcceptedMobTypes() {
-    return null;
+    return new HashSet<>();
   }
-
   @Override
   public boolean isAcceptedMobType(String mobType) {
     return mobType != null && !mobType.isBlank();
   }
-
   @Override
   public String getFarmDescriptionId() {
     return "supported_creative";
   }
-
   @Override
   public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
     return new CreativeMobFarmEntity(ModBlocks.CREATIVE_MOB_FARM_ENTITY.get(), blockPos, blockState);
   }
-
   @Override
   protected void openContainer(Level level, BlockPos blockPos, Player player) {
     if (level.getBlockEntity(blockPos) instanceof CreativeMobFarmEntity creativeMobFarmEntity) {
       player.openMenu(creativeMobFarmEntity);
     }
   }
-
   @Override
   public InteractionResult consumeCapturedMob(Level level, BlockPos blockPos, BlockState blockState,
       BlockEntity blockEntity, ItemStack itemStack, UseOnContext context) {
@@ -104,7 +98,6 @@ public class CreativeMobFarm extends MobFarmBlock {
     }
     return InteractionResult.PASS;
   }
-
   @Override
   @Nullable
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState,

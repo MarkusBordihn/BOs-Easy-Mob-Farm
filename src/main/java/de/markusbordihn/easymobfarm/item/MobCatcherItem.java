@@ -49,11 +49,14 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.CapturedMobCompatible;
+import de.markusbordihn.easymobfarm.config.CommonConfig;
 import de.markusbordihn.easymobfarm.text.TranslatableText;
 
 public class MobCatcherItem extends CapturedMob {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+
+  protected static final CommonConfig.Config COMMON = CommonConfig.COMMON;
 
   private static final String DEFAULT_DESCRIPTION_ID = "supported_mobs";
 
@@ -82,8 +85,13 @@ public class MobCatcherItem extends CapturedMob {
   }
 
   public int getMobCatchingLuck() {
+    return getMobCatchingLuckConfig() > 0 ? this.random.nextInt(getMobCatchingLuckConfig()) : 0;
+  }
+
+  public int getMobCatchingLuckConfig() {
     return mobCatchingLuck;
   }
+
 
   public void appendHoverTextCatchableMobs(List<Component> tooltipList) {
     Set<String> acceptedMobTypes = getAcceptedMobTypes();
@@ -105,6 +113,13 @@ public class MobCatcherItem extends CapturedMob {
         acceptedMobsOverview.append(mobTypeOverview).append("...");
         tooltipList.add(acceptedMobsOverview);
       }
+    }
+
+    // Display the catching luck.
+    if (getMobCatchingLuckConfig() > 0) {
+      TranslatableComponent catchingLuck = new TranslatableComponent(
+          Constants.TEXT_PREFIX + "mob_catching_luck", getMobCatchingLuckConfig());
+      tooltipList.add(catchingLuck);
     }
   }
 

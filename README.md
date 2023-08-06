@@ -161,6 +161,7 @@ Furthermore I'm not able to display the possible lot drop for catching items fro
 
 - Spawn Eggs (variants from SpawnEggItem)
 - [Create](https://www.curseforge.com/minecraft/mc-mods/create): Blaze Burner
+- [Cyclic](https://www.curseforge.com/minecraft/mc-mods/cyclic): Monster Ball
 - [MobCatcher](https://www.curseforge.com/minecraft/mc-mods/mob-catcher)
 - [Mob Catcher](https://www.curseforge.com/minecraft/mc-mods/mob-catcher-fabric)
 - [Mob Capturing Tool](https://www.curseforge.com/minecraft/mc-mods/mob-capturing-tool)

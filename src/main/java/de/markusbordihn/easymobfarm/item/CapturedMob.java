@@ -19,12 +19,12 @@
 
 package de.markusbordihn.easymobfarm.item;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -85,7 +85,7 @@ public class CapturedMob extends Item {
     if (compoundTag.contains(ENTITY_POSSIBLE_LOOT_TAG)) {
       String possibleLootString = compoundTag.getString(ENTITY_POSSIBLE_LOOT_TAG);
       if (!possibleLootString.isBlank()) {
-        return gson.fromJson(possibleLootString, ArrayList.class);
+        return gson.fromJson(possibleLootString, new TypeToken<List<String>>() {}.getType());
       }
     }
     return Lists.newArrayList();
@@ -260,7 +260,8 @@ public class CapturedMob extends Item {
   }
 
   public static boolean willItemBreak(ItemStack itemStack, int damage) {
-    return itemStack.getDamageValue() + damage >= itemStack.getMaxDamage();
+    return itemStack.isDamageableItem()
+        && itemStack.getDamageValue() + damage >= itemStack.getMaxDamage();
   }
 
   public static void damageItem(ItemStack itemStack, int damage) {

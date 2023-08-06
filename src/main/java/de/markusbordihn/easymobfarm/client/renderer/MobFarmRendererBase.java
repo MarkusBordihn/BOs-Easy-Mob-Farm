@@ -74,7 +74,6 @@ public class MobFarmRendererBase<T extends MobFarmBlockEntity> implements BlockE
     }
     return this.player;
   }
-
   @Override
   public void render(T blockEntity, float partialTicks, PoseStack poseStack,
       MultiBufferSource buffer, int combinedLight, int combinedOverlay) {}

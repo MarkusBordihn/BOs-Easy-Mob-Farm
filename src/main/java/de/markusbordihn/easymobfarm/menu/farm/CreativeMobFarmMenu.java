@@ -47,7 +47,6 @@ public class CreativeMobFarmMenu extends MobFarmMenu {
       final ContainerData containerData) {
     super(windowId, playerInventory, container, containerData, TYPE);
   }
-
   @Override
   public boolean mayPlaceCapturedMobType(String mobType) {
     return true;

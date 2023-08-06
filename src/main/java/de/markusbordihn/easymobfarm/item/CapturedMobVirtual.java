@@ -57,6 +57,7 @@ public class CapturedMobVirtual {
   private static final String MOB_CAPTURING_TOOL = "mobcapturingtool:mob_capturing_tool";
   private static final String MOB_CATCHER_DIAMOND = "mob_catcher:diamond_mob_catcher";
   private static final String MOB_CATCHER_NETHERITE = "mob_catcher:netherite_mob_catcher";
+  private static final String MONSTER_BALL = "cyclic:mob_container";
   private static final String QUANTUM_CATCHER = "forbidden_arcanus:quantum_catcher";
 
   protected CapturedMobVirtual() {}
@@ -113,6 +114,9 @@ public class CapturedMobVirtual {
           && compoundTag.getCompound(ENTITY_TAG).contains(ID_TAG)) {
         return !compoundTag.getCompound(ENTITY_TAG).getString(ID_TAG).isEmpty();
       }
+    } else if (Constants.CYCLIC_LOADED && itemName.equals(MONSTER_BALL)) {
+      CompoundTag compoundTag = itemStack.getOrCreateTag();
+      return !compoundTag.getString(ID_TAG).isEmpty();
     } else if (item instanceof SpawnEggItem) {
       return true;
     } else if (!(item instanceof AirItem)) {
@@ -149,6 +153,8 @@ public class CapturedMobVirtual {
       return !getCapturedMobType(itemStack).isBlank() && !getCapturedMobType(itemStack).isEmpty();
     } else if (Constants.FORBIDDEN_ARCANUS_LOADED && itemName.equals(QUANTUM_CATCHER)) {
       return !getCapturedMobType(itemStack).isBlank() && !getCapturedMobType(itemStack).isEmpty();
+    } else if (Constants.CYCLIC_LOADED && itemName.equals(MONSTER_BALL)) {
+      return !getCapturedMobType(itemStack).isBlank() && !getCapturedMobType(itemStack).isEmpty();
     } else if (item instanceof SpawnEggItem) {
       return true;
     }
@@ -178,7 +184,8 @@ public class CapturedMobVirtual {
         || (Constants.MOBCATCHER_LOADED && itemName.equals(MOBCATCHER_NET))
         || (item instanceof SpawnEggItem)
         || (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER))
-        || (Constants.FORBIDDEN_ARCANUS_LOADED && itemName.equals(QUANTUM_CATCHER))) {
+        || (Constants.FORBIDDEN_ARCANUS_LOADED && itemName.equals(QUANTUM_CATCHER))
+        || (Constants.CYCLIC_LOADED && itemName.equals(MONSTER_BALL))) {
       EntityType<?> entityType = getCapturedMobEntityType(itemStack);
       String descriptionId = entityType != null ? entityType.getDescriptionId() : "";
       return !descriptionId.isBlank() ? new TranslatableComponent(descriptionId).getString()
@@ -207,7 +214,8 @@ public class CapturedMobVirtual {
         || (Constants.MOBCATCHER_LOADED && itemName.equals(MOBCATCHER_NET))
         || (Constants.CREATE_LOADED && itemName.equals(CREATE_BLAZE_BURNER))
         || (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER))
-        || (Constants.FORBIDDEN_ARCANUS_LOADED && itemName.equals(QUANTUM_CATCHER))) {
+        || (Constants.FORBIDDEN_ARCANUS_LOADED && itemName.equals(QUANTUM_CATCHER))
+        || (Constants.CYCLIC_LOADED && itemName.equals(MONSTER_BALL))) {
       String capturedMobType = getCapturedMobType(itemStack);
       if (capturedMobType.contains(":")) {
         ResourceLocation resourceLocation = new ResourceLocation(capturedMobType);
@@ -254,6 +262,9 @@ public class CapturedMobVirtual {
     } else if (Constants.FORBIDDEN_ARCANUS_LOADED && itemName.equals(QUANTUM_CATCHER)) {
       CompoundTag compoundTag = itemStack.getOrCreateTag();
       return compoundTag.getCompound(ENTITY_TAG).getString(ID_TAG);
+    } else if (Constants.CYCLIC_LOADED && itemName.equals(MONSTER_BALL)) {
+      CompoundTag compoundTag = itemStack.getOrCreateTag();
+      return compoundTag.getString(ID_TAG);
     } else if (item instanceof SpawnEggItem) {
       EntityType<?> entityType = getCapturedMobEntityType(itemStack);
       String descriptionId = entityType != null ? entityType.getDescriptionId() : "";
@@ -288,7 +299,8 @@ public class CapturedMobVirtual {
         || (Constants.MOBCATCHER_LOADED && itemName.equals(MOBCATCHER_NET))
         || (item instanceof SpawnEggItem)
         || (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER))
-        || (Constants.FORBIDDEN_ARCANUS_LOADED && itemName.equals(QUANTUM_CATCHER))) {
+        || (Constants.FORBIDDEN_ARCANUS_LOADED && itemName.equals(QUANTUM_CATCHER))
+        || (Constants.CYCLIC_LOADED && itemName.equals(MONSTER_BALL))) {
       String capturedMobType = getCapturedMobType(itemStack);
       if (capturedMobType != null && capturedMobType.contains(":")) {
         String[] mobTypeParts = capturedMobType.split("\\:");

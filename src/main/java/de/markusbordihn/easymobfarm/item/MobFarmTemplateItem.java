@@ -38,7 +38,6 @@ public class MobFarmTemplateItem extends BlockItem {
   public MobFarmTemplateItem(Block block, Properties properties) {
     super(block, properties);
   }
-
   @Override
   public void appendHoverText(ItemStack itemStack, @Nullable Level level,
       List<Component> tooltipList, TooltipFlag tooltipFlag) {

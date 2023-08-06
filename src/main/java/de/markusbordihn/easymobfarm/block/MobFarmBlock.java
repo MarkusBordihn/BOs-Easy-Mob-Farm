@@ -25,6 +25,9 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -63,12 +66,18 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
+import de.markusbordihn.easymobfarm.config.CommonConfig;
+import de.markusbordihn.easymobfarm.data.FarmTier;
 import de.markusbordihn.easymobfarm.item.CapturedMob;
 import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import de.markusbordihn.easymobfarm.text.TranslatableText;
 
 public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatible {
+
+  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+
+  protected static final CommonConfig.Config COMMON = CommonConfig.COMMON;
 
   public static final String NAME = "mob_farm";
   public static final String SUPPORTED_MOBS_TEXT = "supported_mobs";
@@ -101,11 +110,20 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
   }
 
   public boolean isAcceptedMobType(String mobType) {
-    return mobType != null && !mobType.isBlank();
+    return mobType != null && !mobType.isBlank() && (getAcceptedMobTypes() == null
+        || getAcceptedMobTypes().isEmpty() || getAcceptedMobTypes().contains(mobType));
   }
 
   public String getFarmDescriptionId() {
     return SUPPORTED_MOBS_TEXT;
+  }
+
+  public String getFarmName() {
+    return NAME;
+  }
+
+  public FarmTier getFarmTier() {
+    return FarmTier.DEFAULT;
   }
 
   public void appendHoverTextAcceptedMobs(List<Component> tooltipList) {
@@ -128,6 +146,9 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
         supportedMobsOverview.append(mobTypeOverview).append("...");
         tooltipList.add(supportedMobsOverview);
       }
+    } else {
+      tooltipList.add(new TranslatableComponent(Constants.TEXT_PREFIX + "supported_all")
+          .withStyle(ChatFormatting.GREEN));
     }
   }
 
@@ -169,7 +190,7 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
     BlockEntity blockEntity = level.getBlockEntity(blockPos);
 
     // Ignore event, if the stored mob could be consumed.
-    if (itemStack.getItem() instanceof CapturedMob
+    if ((itemStack.getItem() instanceof CapturedMob)
         && blockEntity instanceof MobFarmBlockEntity mobFarmBlockEntity
         && !mobFarmBlockEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
       return InteractionResult.PASS;
@@ -179,7 +200,16 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
       return InteractionResult.SUCCESS;
     }
 
-    // Remove existing mob if player is sneaking.
+    // Take virtual captured mob from player inventory and place it in the farm.
+    if (CapturedMobVirtual.hasCapturedMob(itemStack)
+        && blockEntity instanceof MobFarmBlockEntity mobFarmBlockEntity
+        && !mobFarmBlockEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)
+        && isAcceptedMobType(CapturedMobVirtual.getCapturedMobType(itemStack))) {
+      mobFarmBlockEntity.takePlayerItem(MobFarmMenu.CAPTURED_MOB_SLOT, player, hand);
+      return InteractionResult.CONSUME;
+    }
+
+    // Remove existing mob item from farm, if player is sneaking.
     if (player.isShiftKeyDown() && blockEntity instanceof MobFarmBlockEntity mobFarmBlockEntity
         && mobFarmBlockEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
       mobFarmBlockEntity.givePlayerItem(MobFarmMenu.CAPTURED_MOB_SLOT, level, player, hand,
@@ -258,6 +288,14 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
   @SuppressWarnings("java:S1874")
   public float getShadeBrightness(BlockState state, BlockGetter worldIn, BlockPos pos) {
     return 1F;
+  }
+
+  public static void logAcceptedMobTypes(String name, Set<String> acceptedMobTypes) {
+    if (acceptedMobTypes == null || acceptedMobTypes.isEmpty()) {
+      log.info("The {} will accept all mobs.", name);
+    } else {
+      log.info("The {} will accept only the following mobs: {}", name, acceptedMobTypes);
+    }
   }
 
 }

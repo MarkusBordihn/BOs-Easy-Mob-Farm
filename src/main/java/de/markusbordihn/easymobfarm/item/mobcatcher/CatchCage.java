@@ -23,20 +23,17 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.minecraft.world.item.Item;
-
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.event.world.WorldEvent;
 
-import de.markusbordihn.easymobfarm.config.CommonConfig;
 import de.markusbordihn.easymobfarm.item.MobCatcherItem;
 
 @EventBusSubscriber
 public class CatchCage extends MobCatcherItem {
 
-  private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
-  private static int mobCatchingLuck = COMMON.catchCageSmallMobCatchingLuck.get();
-  private static Set<String> acceptedMobTypes = new HashSet<>(COMMON.catchCageMobs.get());
+  private static Set<String> acceptedMobTypes = new HashSet<>();
 
   public CatchCage(Item.Properties properties) {
     super(properties);
@@ -44,10 +41,16 @@ public class CatchCage extends MobCatcherItem {
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    mobCatchingLuck = COMMON.catchCageMobCatchingLuck.get();
     acceptedMobTypes = new HashSet<>(COMMON.catchCageMobs.get());
     log.info("The catch cage requires {} luck and is able to catch the following mobs: {}",
-        mobCatchingLuck, acceptedMobTypes);
+        COMMON.catchCageSmallMobCatchingLuck.get(), acceptedMobTypes);
+  }
+
+  @SubscribeEvent
+  public static void handleWorldEventLoad(WorldEvent.Load event) {
+    if (event.getWorld().isClientSide() && acceptedMobTypes.isEmpty()) {
+      acceptedMobTypes = new HashSet<>(COMMON.catchCageMobs.get());
+    }
   }
 
   @Override
@@ -57,12 +60,13 @@ public class CatchCage extends MobCatcherItem {
 
   @Override
   public boolean canCatchMobType(String mobType) {
-    return acceptedMobTypes.contains(mobType);
+    return acceptedMobTypes == null || acceptedMobTypes.isEmpty()
+        || acceptedMobTypes.contains(mobType);
   }
 
   @Override
-  public int getMobCatchingLuck() {
-    return mobCatchingLuck > 0 ? this.random.nextInt(mobCatchingLuck) : 0;
+  public int getMobCatchingLuckConfig() {
+    return COMMON.catchCageSmallMobCatchingLuck.get();
   }
 
 }

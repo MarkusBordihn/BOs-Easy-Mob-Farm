@@ -5,7 +5,7 @@
 		"floor_back": "block/nether_portal",
 		"glass": "block/glass",
 		"background": "block/netherite_block",
-		"edge": "material_elements:block/netherite_rod"
+		"edge": "easy_mob_farm:block/netherite_rod"
 	},
 	"elements": [
 		{

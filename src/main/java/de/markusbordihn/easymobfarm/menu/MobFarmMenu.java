@@ -251,7 +251,6 @@ public class MobFarmMenu extends AbstractContainerMenu {
   public boolean mayPlaceCapturedMobType(String mobType) {
     return !mobType.isBlank();
   }
-
   @Override
   public ItemStack quickMoveStack(Player player, int slotIndex) {
     Slot slot = this.slots.get(slotIndex);
@@ -262,8 +261,8 @@ public class MobFarmMenu extends AbstractContainerMenu {
     // Get itemStack we need to handle.
     ItemStack itemStack = slot.getItem();
 
-    // Handle CaptureMob items for moving in and out.
-    if (itemStack.getItem() instanceof CapturedMob) {
+    // Handle CaptureMob and CapturedMobVirtual items for moving in and out.
+    if (itemStack.getItem() instanceof CapturedMob || CapturedMobVirtual.isSupported(itemStack)) {
       if (slotIndex == CAPTURED_MOB_SLOT) {
         if (!this.moveItemStackTo(itemStack, 6, 42, false)) {
           return ItemStack.EMPTY;

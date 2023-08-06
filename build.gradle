@@ -135,11 +135,7 @@ dependencies {
   // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
   // that the dep is a ForgeGradle 'patcher' dependency. And it's patches will be applied.
   // The userdev artifact is a special name and will get all sorts of transformations applied to it.
-  minecraft 'net.minecraftforge:forge:1.18.2-40.2.9'
-
-  // Required: Bo's Material Elements (dev dependency)
-  compileOnly fg.deobf("curse.maven:material_elements-541620:3835039")
-  runtimeOnly fg.deobf("curse.maven:material_elements-541620:3835039")
+  minecraft 'net.minecraftforge:forge:1.18.2-40.2.10'
 
   // Productive Bees: Integration
   compileOnly fg.deobf("curse.maven:productivebees-377897:4257307")
@@ -174,6 +170,15 @@ dependencies {
   // Corail Spawners: Integration
   compileOnly fg.deobf("curse.maven:corail-spawners-438467:4028300")
   runtimeOnly fg.deobf("curse.maven:corail-spawners-438467:4028300")
+
+  // Cyclic: Integration
+  compileOnly fg.deobf("curse.maven:cyclic-239286:4577350")
+  runtimeOnly fg.deobf("curse.maven:cyclic-239286:4577350")
+
+  // Alex's Mobs: Integration
+  compileOnly fg.deobf("curse.maven:alex_mobs-426558:3853078")
+  runtimeOnly fg.deobf("curse.maven:alex_mobs-426558:3853078")
+  runtimeOnly fg.deobf("curse.maven:citadel-331936:3783096")
 
   // Alex Mob's (Testing)
   // runtimeOnly fg.deobf("curse.maven:citadel-331936:3584733:deobf")
@@ -227,16 +232,17 @@ curseforge {
   project {
     id = "${curseforge_project_id}"
     changelog = file("CHANGELOG.md")
-    releaseType = 'release'
+    releaseType = 'beta'
     addGameVersion("1.18.2")
     addGameVersion("Forge")
     mainArtifact(jar) {
       relations {
-        requiredDependency 'material-elements'
+        optionalDependency 'alexs-mobs'
         optionalDependency 'corail-spawners'
         optionalDependency 'create'
+        optionalDependency 'cyclic'
         optionalDependency 'mob-capturing-tool'
-        optionalDependency 'mob-catcher-fabric'
+        optionalDependency 'mob-catcher'
       }
     }
   }

@@ -37,6 +37,11 @@ public class CreativeMobCatcher extends MobCatcherItem {
   }
 
   @Override
+  public int getMobCatchingLuckConfig() {
+    return 0;
+  }
+
+  @Override
   public UseAnim getUseAnimation(ItemStack itemStack) {
     return UseAnim.CROSSBOW;
   }

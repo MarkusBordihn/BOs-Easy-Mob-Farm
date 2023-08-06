@@ -19,13 +19,18 @@
 
 package de.markusbordihn.easymobfarm.config.mobs;
 
+import java.util.Set;
+
 public final class PassiveAnimal {
 
   protected PassiveAnimal() {}
 
+  public static final String BAT = "minecraft:bat";
+  public static final String CAT = "minecraft:cat";
   public static final String CHICKEN = "minecraft:chicken";
   public static final String COW = "minecraft:cow";
   public static final String DONKEY = "minecraft:donkey";
+  public static final String FLY = "alexsmobs:fly";
   public static final String HORSE = "minecraft:horse";
   public static final String LAMA = "minecraft:lama";
   public static final String PANDA = "minecraft:panda";
@@ -33,4 +38,7 @@ public final class PassiveAnimal {
   public static final String PIG = "minecraft:pig";
   public static final String RABBIT = "minecraft:rabbit";
   public static final String SHEEP = "minecraft:sheep";
+
+  public static final Set<String> All =
+      Set.of(BAT, CAT, CHICKEN, COW, DONKEY, HORSE, LAMA, PANDA, PARROT, PIG, RABBIT, SHEEP);
 }

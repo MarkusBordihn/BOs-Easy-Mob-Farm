@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["OHD", "O#G", "B--"],
+  "key": {
+    "#": {
+      "item": "easy_mob_farm:copper_mob_farm_template"
+    },
+    "B": {
+      "item": "minecraft:blue_orchid"
+    },
+    "G": {
+      "item": "minecraft:grass"
+    },
+    "D": {
+      "item": "minecraft:oxeye_daisy"
+    },
+    "-": {
+      "item": "minecraft:dirt"
+    },
+    "O": {
+      "item": "minecraft:oak_log"
+    },
+    "H": {
+      "item": "minecraft:beehive"
+    }
+  },
+  "result": {
+    "item": "easy_mob_farm:copper_bee_hive_farm"
+  }
+}

@@ -49,8 +49,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.event.server.ServerAboutToStartEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
@@ -67,15 +65,11 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
+  protected static final CommonConfig.Config COMMON = CommonConfig.COMMON;
+
   protected final Random random = new Random();
 
   private static final int DEFAULT_FARM_PROCESSING_TIME = 6000;
-
-  // Config settings
-  private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
-  private static boolean informOwnerAboutFullStorage = COMMON.informOwnerAboutFullStorage.get();
-  private static boolean logFullStorage = COMMON.logFullStorage.get();
-  protected static boolean playDropSound = COMMON.playDropSound.get();
 
   public MobFarmBlockEntity(BlockPos blockPos, BlockState blockState) {
     super(null, blockPos, blockState);
@@ -84,16 +78,6 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
   public MobFarmBlockEntity(BlockEntityType<?> blockEntity, BlockPos blockPos,
       BlockState blockState) {
     super(blockEntity, blockPos, blockState);
-  }
-
-  @SubscribeEvent
-  public static void onServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    informOwnerAboutFullStorage = COMMON.informOwnerAboutFullStorage.get();
-    logFullStorage = COMMON.logFullStorage.get();
-    playDropSound = COMMON.playDropSound.get();
-    if (!playDropSound) {
-      log.info("Easy Mob Farm drop sounds are disabled!");
-    }
   }
 
   public void updateLevel(Level level) {
@@ -113,10 +97,12 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
   public void givePlayerItem(int index, Level level, Player player, InteractionHand hand,
       BlockPos blockPos) {
     ItemStack itemStack = takeItem(index);
-    if (itemStack.isEmpty() || itemStack.getDamageValue() >= itemStack.getMaxDamage()) {
+    if (itemStack.isEmpty() || (itemStack.isDamageableItem()
+        && itemStack.getDamageValue() >= itemStack.getMaxDamage())) {
       return;
     }
     ItemStack handItemStack = player.getItemInHand(hand);
+    log.info("Hand item {}.", handItemStack);
     if (handItemStack.isEmpty()) {
       player.setItemInHand(hand, itemStack);
     } else if (!player.getInventory().add(itemStack) && level != null) {
@@ -124,6 +110,26 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
           blockPos.getZ() + 0.5D, itemStack));
     }
     syncData();
+  }
+
+  public void takePlayerItem(int index, Player player, InteractionHand hand) {
+    ItemStack handItemStack = player.getItemInHand(hand);
+    if (handItemStack.isEmpty() || (handItemStack.isDamageableItem()
+        && handItemStack.getDamageValue() >= handItemStack.getMaxDamage())) {
+      return;
+    }
+    if (CapturedMob.hasCapturedMob(handItemStack)
+        || CapturedMobVirtual.hasCapturedMob(handItemStack)) {
+
+      // Check if captured mob is a valid mob for this farm.
+
+
+      ItemStack itemStack = handItemStack.copy();
+      itemStack.setCount(1);
+      setItem(index, itemStack);
+      handItemStack.shrink(1);
+      syncData();
+    }
   }
 
   @SuppressWarnings("java:S1172")
@@ -274,24 +280,26 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
       MobFarmBlockEntity blockEntity, ItemStack capturedMob) {
     // Additional effects like sound or particles on mob drop.
     SoundEvent farmDropSound = getFarmDropSound();
-    if (playDropSound && farmDropSound != null) {
+    if (Boolean.TRUE.equals(COMMON.playDropSound.get()) && farmDropSound != null) {
       level.playSound(null, blockPos, farmDropSound, SoundSource.BLOCKS, 1.0F, 1.0F);
     }
   }
 
   public void processFullStorage(MobFarmBlockEntity blockEntity, List<ItemStack> lootDrop) {
-    if (!informOwnerAboutFullStorage && !logFullStorage) {
+    if (Boolean.TRUE.equals(!COMMON.informOwnerAboutFullStorage.get())
+        && Boolean.TRUE.equals(!COMMON.logFullStorage.get())) {
       return;
     }
     UUID ownerUUID = blockEntity.getOwner();
     BlockPos blockPos = blockEntity.getBlockPos();
 
-    if (logFullStorage) {
+    if (Boolean.TRUE.equals(COMMON.logFullStorage.get())) {
       log.warn("Unable to store loot drop {} for mob farm {} at {} for owner {}!", lootDrop,
           this.farmMobName, blockPos, ownerUUID);
     }
     Level level = blockEntity.level;
-    if (informOwnerAboutFullStorage && ownerUUID != null && level != null) {
+    if (Boolean.TRUE.equals(COMMON.informOwnerAboutFullStorage.get()) && ownerUUID != null
+        && blockEntity.level != null && level != null) {
       Player owner = level.getPlayerByUUID(ownerUUID);
       if (owner != null && owner.isAlive()) {
         MutableComponent message =
@@ -301,7 +309,6 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
       }
     }
   }
-
   @Override
   public void setItem(int index, ItemStack itemStack) {
     super.setItem(index, itemStack);
@@ -348,7 +355,6 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
       syncData();
     }
   }
-
   @Override
   public ItemStack removeItem(int index, int count) {
     ItemStack itemStack = super.removeItem(index, count);
@@ -357,7 +363,6 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
     }
     return itemStack;
   }
-
   @Override
   public int[] getSlotsForFace(Direction direction) {
     if (direction == Direction.DOWN) {
@@ -366,13 +371,11 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
     }
     return new int[] {};
   }
-
   @Override
   public boolean canPlaceItemThroughFace(int slotIndex, ItemStack itemStack,
       @Nullable Direction direction) {
     return false;
   }
-
   @Override
   public boolean canTakeItemThroughFace(int slotIndex, ItemStack itemStack, Direction direction) {
     // Only allow the down direction and only for the result slot.
@@ -383,7 +386,6 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
 
   LazyOptional<? extends net.minecraftforge.items.IItemHandler>[] handlers =
       SidedInvWrapper.create(this, Direction.DOWN);
-
   @Override
   public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(
       net.minecraftforge.common.capabilities.Capability<T> capability, @Nullable Direction facing) {

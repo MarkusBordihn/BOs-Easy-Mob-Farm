@@ -33,7 +33,6 @@ public class UniversalFarmRenderer extends MobFarmRendererBase<MobFarmBlockEntit
   public UniversalFarmRenderer(BlockEntityRendererProvider.Context context) {
     super(context);
   }
-
   @Override
   public void render(MobFarmBlockEntity blockEntity, float partialTicks, PoseStack poseStack,
       MultiBufferSource buffer, int combinedLight, int combinedOverlay) {

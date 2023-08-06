@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [" G ", "G#G", " G "],
+  "key": {
+    "G": {
+      "item": "minecraft:netherite_scrap"
+    },
+    "#": {
+      "item": "easy_mob_farm:ender_lasso"
+    }
+  },
+  "result": {
+    "item": "easy_mob_farm:netherite_lasso"
+  }
+}

@@ -25,18 +25,16 @@ import java.util.Set;
 import net.minecraft.world.item.Item;
 
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
-import de.markusbordihn.easymobfarm.config.CommonConfig;
 import de.markusbordihn.easymobfarm.item.MobCatcherItem;
 
 @EventBusSubscriber
 public class WitchBottle extends MobCatcherItem {
 
-  private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
-  private static int mobCatchingLuck = COMMON.witchBottleMobCatchingLuck.get();
-  private static Set<String> acceptedMobTypes = new HashSet<>(COMMON.witchBottleMobs.get());
+  private static Set<String> acceptedMobTypes = new HashSet<>();
 
   public WitchBottle(Item.Properties properties) {
     super(properties);
@@ -44,10 +42,16 @@ public class WitchBottle extends MobCatcherItem {
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    mobCatchingLuck = COMMON.witchBottleMobCatchingLuck.get();
     acceptedMobTypes = new HashSet<>(COMMON.witchBottleMobs.get());
     log.info("The witch bottle requires {} luck and is able to catch the following mobs: {}",
-        mobCatchingLuck, acceptedMobTypes);
+        COMMON.witchBottleMobCatchingLuck.get(), acceptedMobTypes);
+  }
+
+  @SubscribeEvent
+  public static void handleWorldEventLoad(WorldEvent.Load event) {
+    if (event.getWorld().isClientSide() && acceptedMobTypes.isEmpty()) {
+      acceptedMobTypes = new HashSet<>(COMMON.witchBottleMobs.get());
+    }
   }
 
   @Override
@@ -57,12 +61,13 @@ public class WitchBottle extends MobCatcherItem {
 
   @Override
   public boolean canCatchMobType(String mobType) {
-    return acceptedMobTypes.contains(mobType);
+    return acceptedMobTypes == null || acceptedMobTypes.isEmpty()
+        || acceptedMobTypes.contains(mobType);
   }
 
   @Override
-  public int getMobCatchingLuck() {
-    return mobCatchingLuck > 0 ? this.random.nextInt(mobCatchingLuck) : 0;
+  public int getMobCatchingLuckConfig() {
+    return COMMON.witchBottleMobCatchingLuck.get();
   }
 
 }
