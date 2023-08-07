@@ -101,7 +101,6 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
       }
     }
   }
-
   @Override
   public void init() {
     super.init();
@@ -141,7 +140,6 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
     this.renderEntityType(poseStack, x, y);
     this.renderTooltip(poseStack, x, y);
   }
-
   @Override
   protected void renderLabels(PoseStack poseStack, int x, int y) {
     super.renderLabels(poseStack, x, y);
@@ -194,7 +192,6 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
       default:
     }
   }
-
   @Override
   protected void renderBg(PoseStack poseStack, float partialTicks, int mouseX, int mouseY) {
 

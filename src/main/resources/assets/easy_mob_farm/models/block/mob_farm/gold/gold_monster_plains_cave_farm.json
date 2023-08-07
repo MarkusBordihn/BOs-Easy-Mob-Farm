@@ -1,0 +1,7 @@
+{
+  "parent": "easy_mob_farm:block/mob_farm/template/monster_plains_cave_farm",
+  "textures": {
+    "particle": "easy_mob_farm:block/gold_rod",
+    "edge": "easy_mob_farm:block/gold_rod"
+  }
+}

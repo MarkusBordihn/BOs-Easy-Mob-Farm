@@ -36,13 +36,11 @@ public class ExperienceSlot extends Slot {
   public ExperienceSlot(Container container, int index, int x, int y) {
     super(container, index, x, y);
   }
-
   @Override
   public boolean mayPlace(ItemStack itemStack) {
     return itemStack != null && (itemStack.getItem() instanceof ExperienceBottleItem
         || itemStack.is(Items.GLASS_BOTTLE));
   }
-
   @Override
   public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
     return Pair.of(InventoryMenu.BLOCK_ATLAS, ModTextures.EMPTY_EXPERIENCE_BOTTLE);

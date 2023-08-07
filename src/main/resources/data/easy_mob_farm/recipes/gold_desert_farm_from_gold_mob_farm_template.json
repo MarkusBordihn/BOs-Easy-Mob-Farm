@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CSD",
+    "S#C",
+    "D-C"],
+  "key": {
+    "#": {
+      "item": "easy_mob_farm:gold_mob_farm_template"
+    },
+    "C": {
+      "item": "minecraft:cactus"
+    },
+    "S": {
+      "item": "minecraft:sandstone"
+    },
+    "D": {
+      "item": "minecraft:dead_bush"
+    },
+    "-": {
+      "item": "minecraft:sand"
+    }
+  },
+  "result": {
+    "item": "easy_mob_farm:gold_desert_farm"
+  }
+}

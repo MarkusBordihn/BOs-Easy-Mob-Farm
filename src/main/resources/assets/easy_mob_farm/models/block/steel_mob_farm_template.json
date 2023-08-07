@@ -1,7 +1,0 @@
-{
-  "parent": "easy_mob_farm:block/template/mob_farm_template",
-  "textures": {
-    "particle": "material_elements:block/steel_rod",
-    "texture": "material_elements:block/steel_rod"
-  }
-}

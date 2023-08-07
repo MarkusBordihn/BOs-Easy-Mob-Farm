@@ -30,7 +30,7 @@ public class EasyMobFarmTab {
 
   public static final CreativeModeTab MOB_FARM = new CreativeModeTab("easy_mob_farm") {
     public ItemStack makeIcon() {
-      return new ItemStack(ModItems.ANIMAL_PLAINS_FARM.get());
+      return new ItemStack(ModItems.IRON_ANIMAL_PLAINS_FARM.get());
     }
   };
 

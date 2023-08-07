@@ -38,6 +38,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.WorldlyContainer;
+
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ExperienceBottleItem;
@@ -46,9 +47,9 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
 import de.markusbordihn.easymobfarm.Constants;
@@ -59,15 +60,16 @@ import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
 import de.markusbordihn.easymobfarm.loot.LootManager;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
+@Mod.EventBusSubscriber
 public class MobFarmBlockEntity extends MobFarmBlockEntityData implements WorldlyContainer {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
+  protected static final CommonConfig.Config COMMON = CommonConfig.COMMON;
+
   protected final Random random = new Random();
 
   private static final int DEFAULT_FARM_PROCESSING_TIME = 6000;
-
-  private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
 
   public MobFarmBlockEntity(BlockPos blockPos, BlockState blockState) {
     super(null, blockPos, blockState);
@@ -95,7 +97,8 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
   public void givePlayerItem(int index, Level level, Player player, InteractionHand hand,
       BlockPos blockPos) {
     ItemStack itemStack = takeItem(index);
-    if (itemStack.isEmpty() || itemStack.getDamageValue() >= itemStack.getMaxDamage()) {
+    if (itemStack.isEmpty() || (itemStack.isDamageableItem()
+        && itemStack.getDamageValue() >= itemStack.getMaxDamage())) {
       return;
     }
     ItemStack handItemStack = player.getItemInHand(hand);
@@ -106,6 +109,26 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
           blockPos.getZ() + 0.5D, itemStack));
     }
     syncData();
+  }
+
+  public void takePlayerItem(int index, Player player, InteractionHand hand) {
+    ItemStack handItemStack = player.getItemInHand(hand);
+    if (handItemStack.isEmpty() || (handItemStack.isDamageableItem()
+        && handItemStack.getDamageValue() >= handItemStack.getMaxDamage())) {
+      return;
+    }
+    if (CapturedMob.hasCapturedMob(handItemStack)
+        || CapturedMobVirtual.hasCapturedMob(handItemStack)) {
+
+      // Check if captured mob is a valid mob for this farm.
+
+
+      ItemStack itemStack = handItemStack.copy();
+      itemStack.setCount(1);
+      setItem(index, itemStack);
+      handItemStack.shrink(1);
+      syncData();
+    }
   }
 
   @SuppressWarnings("java:S1172")
@@ -315,7 +338,6 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
         } else {
           this.farmTotalTime = DEFAULT_FARM_PROCESSING_TIME;
         }
-        log.debug("Farm Processing time {}", this.farmTotalTime);
       }
 
       // Update Block state

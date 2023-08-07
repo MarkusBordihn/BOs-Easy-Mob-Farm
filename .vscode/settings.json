@@ -21,6 +21,7 @@
     "blastfurnace",
     "blit",
     "blizz",
+    "blobfish",
     "Blockbench",
     "bordihn",
     "bufferbuilder",
@@ -34,6 +35,7 @@
     "Critera",
     "cullface",
     "curseforge",
+    "datafixer",
     "desh",
     "DISPLAYTEST",
     "draconium",
@@ -97,6 +99,7 @@
     "productivebees",
     "prudentium",
     "pufferfish",
+    "Reposts",
     "righthand",
     "seagrass",
     "Serializers",
@@ -153,5 +156,6 @@
     "org.springframework.lang.NonNull",
     "javax.annotation.Nonnull",
     "org.eclipse.jdt.annotation.NonNull"
-  ]
+  ],
+  "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx2G -Xms100m -Xlog:disable"
 }

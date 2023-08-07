@@ -1,0 +1,7 @@
+{
+  "parent": "easy_mob_farm:block/mob_farm/template/jungle_farm",
+  "textures": {
+    "particle": "easy_mob_farm:block/iron_rod",
+    "edge": "easy_mob_farm:block/iron_rod"
+  }
+}

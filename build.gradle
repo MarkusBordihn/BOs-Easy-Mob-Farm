@@ -132,13 +132,18 @@ dependencies {
   // The userdev artifact is a special name and will get all sorts of transformations applied to it.
   minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
-  // Required: Bo's Material Elements (dev dependency)
-  compileOnly fg.deobf("curse.maven:material_elements-541620:4182622")
-  runtimeOnly fg.deobf("curse.maven:material_elements-541620:4182622")
-
   // Productive Bees: Integration
-  compileOnly fg.deobf("curse.maven:productivebees-377897:4257390")
-  runtimeOnly fg.deobf("curse.maven:productivebees-377897:4257390")
+  compileOnly fg.deobf("curse.maven:productivebees-377897:4566382")
+  runtimeOnly fg.deobf("curse.maven:productivebees-377897:4566382")
+
+  // Cyclic: Integration
+  compileOnly fg.deobf("curse.maven:cyclic-239286:4660268")
+  runtimeOnly fg.deobf("curse.maven:cyclic-239286:4660268")
+
+  // Alex's Mobs: Integration
+  compileOnly fg.deobf("curse.maven:alexs-mobs-426558:4159154")
+  runtimeOnly fg.deobf("curse.maven:alexs-mobs-426558:4159154")
+  runtimeOnly fg.deobf("curse.maven:citadel-331936:4556677")
 
   // Jade Integration
   compileOnly fg.deobf("curse.maven:jade-324717:4054920")
@@ -149,8 +154,8 @@ dependencies {
   runtimeOnly fg.deobf("curse.maven:mob-catcher-498389:4062963")
 
   // Create: Integration
-  compileOnly fg.deobf("curse.maven:create-328085:4550987")
-  runtimeOnly fg.deobf("curse.maven:create-328085:4550987")
+  compileOnly fg.deobf("curse.maven:create-328085:4625534")
+  runtimeOnly fg.deobf("curse.maven:create-328085:4625534")
 
   // Mob Capturing Tool: Integration
   compileOnly fg.deobf("curse.maven:mob-capturing-tool-630272:3902520")
@@ -166,16 +171,8 @@ dependencies {
   compileOnly fg.deobf("curse.maven:forbidden-arcanus-309858:4512412")
   runtimeOnly fg.deobf("curse.maven:forbidden-arcanus-309858:4512412")
 
-  // Alex Mob's (Testing)
-  // runtimeOnly fg.deobf("curse.maven:citadel-331936:3584733:deobf")
-  // runtimeOnly fg.deobf("curse.maven:alex_mobs-426558:3575698")
-
-  // Aquaculture 2 (Testing)
-  // runtimeOnly fg.deobf("curse.maven:aquaculture-60028:3750710")
-
   // Additional helpful Mods for development (dev depenedency)
-  // runtimeOnly fg.deobf("curse.maven:item-zoom-261725:3574021")
-  // runtimeOnly fg.deobf("curse.maven:jei-238222:3773518")
+  runtimeOnly fg.deobf("curse.maven:jei-238222:4615177")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
@@ -222,11 +219,12 @@ curseforge {
     addGameVersion("Forge")
     mainArtifact(jar) {
       relations {
-        requiredDependency 'material-elements'
+        optionalDependency 'alexs-mobs'
         optionalDependency 'corail-spawners'
         optionalDependency 'create'
+        optionalDependency 'cyclic'
         optionalDependency 'mob-capturing-tool'
-        optionalDependency 'mob-catcher-fabric'
+        optionalDependency 'mob-catcher'
         optionalDependency 'productivebees'
       }
     }
