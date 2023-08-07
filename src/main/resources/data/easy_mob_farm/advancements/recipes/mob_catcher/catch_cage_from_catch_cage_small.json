@@ -4,7 +4,7 @@
     "recipes": ["easy_mob_farm:catch_cage_from_catch_cage_small"]
   },
   "criteria": {
-    "has_iron_bars": {
+    "has_catch_cage_small": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [

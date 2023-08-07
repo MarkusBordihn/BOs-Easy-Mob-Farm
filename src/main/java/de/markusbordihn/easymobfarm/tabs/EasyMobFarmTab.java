@@ -45,7 +45,7 @@ public class EasyMobFarmTab {
 
   public static final RegistryObject<CreativeModeTab> MOB_FARM = CREATIVE_TABS.register("mob_farm",
       () -> CreativeModeTab.builder()
-          .icon(() -> ModItems.ANIMAL_PLAINS_FARM.get().getDefaultInstance())
+          .icon(() -> ModItems.IRON_ANIMAL_PLAINS_FARM.get().getDefaultInstance())
           .displayItems(new MobFarmItems())
           .title(Component.translatable("itemGroup.easy_mob_farm.mob_farm")).build());
 
@@ -56,8 +56,11 @@ public class EasyMobFarmTab {
 
   public static void handleCreativeModeTab(BuildCreativeModeTabContentsEvent event) {
     if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
+      // Mob Farms Templates
+      event.accept(ModItems.COPPER_MOB_FARM_TEMPLATE.get());
       event.accept(ModItems.IRON_MOB_FARM_TEMPLATE.get());
-      event.accept(ModItems.STEEL_MOB_FARM_TEMPLATE.get());
+      event.accept(ModItems.GOLD_MOB_FARM_TEMPLATE.get());
+      event.accept(ModItems.NETHERITE_MOB_FARM_TEMPLATE.get());
     }
   }
 

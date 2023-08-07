@@ -1,0 +1,7 @@
+{
+  "parent": "easy_mob_farm:block/mob_farm/template/ocean_farm",
+  "textures": {
+    "particle": "easy_mob_farm:block/copper_rod",
+    "edge": "easy_mob_farm:block/copper_rod"
+  }
+}

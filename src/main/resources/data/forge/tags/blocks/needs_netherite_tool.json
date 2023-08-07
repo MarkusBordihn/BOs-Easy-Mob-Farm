@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "easy_mob_farm:creative_mob_farm",
+    "easy_mob_farm:netherite_animal_plains_farm",
+    "easy_mob_farm:netherite_bee_hive_farm",
+    "easy_mob_farm:netherite_desert_farm",
+    "easy_mob_farm:netherite_jungle_farm",
+    "easy_mob_farm:netherite_mob_farm_template",
+    "easy_mob_farm:netherite_monster_plains_cave_farm",
+    "easy_mob_farm:netherite_ocean_farm",
+    "easy_mob_farm:netherite_swamp_farm"
+  ]
+}

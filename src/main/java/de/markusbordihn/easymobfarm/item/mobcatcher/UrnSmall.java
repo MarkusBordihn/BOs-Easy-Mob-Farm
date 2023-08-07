@@ -29,13 +29,10 @@ import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
-import de.markusbordihn.easymobfarm.config.CommonConfig;
 import de.markusbordihn.easymobfarm.item.MobCatcherItem;
 
 @EventBusSubscriber
 public class UrnSmall extends MobCatcherItem {
-
-  private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
 
   private static Set<String> acceptedMobTypes = new HashSet<>();
 
@@ -64,14 +61,13 @@ public class UrnSmall extends MobCatcherItem {
 
   @Override
   public boolean canCatchMobType(String mobType) {
-    return acceptedMobTypes.contains(mobType);
+    return acceptedMobTypes == null || acceptedMobTypes.isEmpty()
+        || acceptedMobTypes.contains(mobType);
   }
 
   @Override
-  public int getMobCatchingLuck() {
-    return COMMON.urnSmallMobCatchingLuck.get() > 0
-        ? this.random.nextInt(COMMON.urnSmallMobCatchingLuck.get())
-        : 0;
+  public int getMobCatchingLuckConfig() {
+    return COMMON.urnSmallMobCatchingLuck.get();
   }
 
 }

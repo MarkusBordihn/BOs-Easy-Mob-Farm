@@ -34,6 +34,8 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.Squid;
+import net.minecraft.world.entity.monster.Spider;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
@@ -101,8 +103,7 @@ public class RenderHelper {
   }
 
   public boolean getEntityShearedStatus() {
-    if (!this.entitySheared
-        && this.blockEntity instanceof MobFarmBlockEntity mobFarmBlockEntity) {
+    if (!this.entitySheared && this.blockEntity instanceof MobFarmBlockEntity mobFarmBlockEntity) {
       this.entitySheared = mobFarmBlockEntity.getFarmMobShearedStatus();
     }
     return this.entitySheared;
@@ -202,8 +203,8 @@ public class RenderHelper {
   public void renderSheep(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
       double y, double z, int combinedLight) {
     renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
-        this.renderModels.getSheepRenderer(), this.renderModels.getSheep(getEntityColor(),
-            getEntityShearedStatus()));
+        this.renderModels.getSheepRenderer(),
+        this.renderModels.getSheep(getEntityColor(), getEntityShearedStatus()));
   }
 
   public void renderSkeleton(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
@@ -212,16 +213,20 @@ public class RenderHelper {
         this.renderModels.getSkeletonRenderer(), this.renderModels.getSkeleton());
   }
 
+  @SuppressWarnings("unchecked")
   public void renderSpider(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
       double y, double z, int combinedLight) {
     renderModel(poseStack, buffer, scale, -180, -180, x, y, z, combinedLight,
-        this.renderModels.getSpiderRenderer(), this.renderModels.getSpider());
+        (LivingEntityRenderer<? super Spider, ?>) this.renderModels.getSpiderRenderer(),
+        this.renderModels.getSpider());
   }
 
+  @SuppressWarnings("unchecked")
   public void renderSquid(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
       double y, double z, int combinedLight) {
     renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
-        this.renderModels.getSquidRenderer(), this.renderModels.getSquid());
+        (LivingEntityRenderer<? super Squid, ?>) this.renderModels.getSquidRenderer(),
+        this.renderModels.getSquid());
   }
 
   public void renderGlowSquid(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,

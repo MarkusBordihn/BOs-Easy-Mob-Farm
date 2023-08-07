@@ -60,8 +60,6 @@
   "block.easy_mob_farm.iron_mob_farm_template": "Iron Mob Farm-Vorlage",
   "block.easy_mob_farm.steel_mob_farm_template": "Stahlmob-Farm-Vorlage",
 
-  "block.placeholder.text": "Vorlagenplatzhalter nicht entfernen!",
-
   "block.easy_mob_farm.animal_plains_farm": "Farm der Tierebenen",
   "block.easy_mob_farm.bee_hive_farm": "Bienenstockfarm",
   "block.easy_mob_farm.creative_mob_farm": "Kreative Mob-Farm",
@@ -92,8 +90,6 @@
   "item.easy_mob_farm.insect_net": "Insektennetz",
   "item.easy_mob_farm.urn_small": "Urne klein (klein)",
   "item.easy_mob_farm.witch_bottle": "Hexenflasche",
-
-  "item.placeholder.text": "Vorlagenplatzhalter nicht entfernen!",
 
   "itemGroup.easy_mob_farm.mob_farm": "Einfache Mob-Farm",
   "itemGroup.easy_mob_farm.tools": "Easy Mob Farm: Werkzeuge"

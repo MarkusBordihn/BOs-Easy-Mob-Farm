@@ -447,7 +447,7 @@ public class RenderModels {
     return this.spider;
   }
 
-  public SpiderRenderer getSpiderRenderer() {
+  public SpiderRenderer<?> getSpiderRenderer() {
     if (this.spiderRenderer == null) {
       this.spiderRenderer = new SpiderRenderer<>(getEntityRendererContext());
     }
@@ -461,7 +461,7 @@ public class RenderModels {
     return this.squid;
   }
 
-  public SquidRenderer getSquidRenderer() {
+  public SquidRenderer<?> getSquidRenderer() {
     if (this.squidRenderer == null) {
       this.squidRenderer = new SquidRenderer<>(getEntityRendererContext(),
           new SquidModel<>(getEntityRendererContext().bakeLayer(ModelLayers.SQUID)));
