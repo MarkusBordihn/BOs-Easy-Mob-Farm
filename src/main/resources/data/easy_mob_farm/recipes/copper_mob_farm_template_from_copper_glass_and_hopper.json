@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["|||", "|#|", "|T|"],
+  "key": {
+    "|": {
+      "item": "minecraft:copper_ingot"
+    },
+    "#": {
+      "item": "minecraft:glass"
+    },
+    "T": {
+      "item": "minecraft:hopper"
+    }
+  },
+  "result": {
+    "item": "easy_mob_farm:copper_mob_farm_template"
+  }
+}

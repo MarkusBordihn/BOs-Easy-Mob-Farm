@@ -42,10 +42,3 @@ license="MIT"
   versionRange="[1.20,1.21)"
   ordering="NONE"
   side="BOTH"
-
-[[dependencies.easy_mob_farm]]
-  modId="material_elements"
-  mandatory=true
-  versionRange="[7.0.0,8.0.0)"
-  ordering="NONE"
-  side="BOTH"

@@ -28,7 +28,6 @@ public class LockedResultSlot extends Slot {
   public LockedResultSlot(Container container, int index, int x, int y) {
     super(container, index, x, y);
   }
-
   @Override
   public boolean mayPlace(ItemStack stack) {
     return false;

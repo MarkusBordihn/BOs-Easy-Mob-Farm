@@ -2,13 +2,13 @@
   "parent": "easy_mob_farm:crafting/root",
   "display": {
     "icon": {
-      "item": "easy_mob_farm:steel_mob_farm_template"
+      "item": "easy_mob_farm:iron_mob_farm_template"
     },
     "title": {
-      "translate": "advancements.easy_mob_farm.crafting.craft_steel_mob_farm_template.title"
+      "translate": "advancements.easy_mob_farm.crafting.craft_iron_mob_farm_template.title"
     },
     "description": {
-      "translate": "advancements.easy_mob_farm.crafting.craft_steel_mob_farm_template.description"
+      "translate": "advancements.easy_mob_farm.crafting.craft_iron_mob_farm_template.description"
     },
     "frame": "task",
     "show_toast": true,
@@ -16,16 +16,16 @@
     "hidden": false
   },
   "criteria": {
-    "get_steel_mob_farm_template": {
+    "get_iron_mob_farm_template": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "items": ["easy_mob_farm:steel_mob_farm_template"]
+            "items": ["easy_mob_farm:iron_mob_farm_template"]
           }
         ]
       }
     }
   },
-  "requirements": [["get_steel_mob_farm_template"]]
+  "requirements": [["get_iron_mob_farm_template"]]
 }

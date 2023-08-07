@@ -19,9 +19,6 @@
 
 package de.markusbordihn.easymobfarm.block.entity.farm;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -39,21 +36,16 @@ import net.minecraftforge.registries.ForgeRegistries;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
-import de.markusbordihn.easymobfarm.config.CommonConfig;
 import de.markusbordihn.easymobfarm.menu.farm.CreativeMobFarmMenu;
 
 @EventBusSubscriber
 public class CreativeMobFarmEntity extends MobFarmBlockEntity {
 
-  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
-
-  private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
-
   private static int farmProcessingTime = 60 * 20;
   private static SoundEvent farmDropSound;
 
   public CreativeMobFarmEntity(BlockPos blockPos, BlockState blockState) {
-    super(ModBlocks.CREATIVE_MOB_FARM_ENTITY.get(), blockPos, blockState);
+    this(ModBlocks.CREATIVE_MOB_FARM_ENTITY.get(), blockPos, blockState);
   }
 
   public CreativeMobFarmEntity(BlockEntityType<?> blockEntity, BlockPos blockPos,
@@ -67,8 +59,7 @@ public class CreativeMobFarmEntity extends MobFarmBlockEntity {
     log.info("{}: Creative Mob Farm Entity with drops every {}s", Constants.LOG_MOB_FARM_PREFIX,
         COMMON.creativeMobFarmProcessTime.get());
     String farmDropSoundName = COMMON.creativeMobFarmDropSound.get();
-    if (Boolean.TRUE.equals(COMMON.playDropSound.get()) && farmDropSoundName != null
-        && !farmDropSoundName.isEmpty()) {
+    if (Boolean.TRUE.equals(COMMON.playDropSound.get()) && farmDropSoundName != null && !farmDropSoundName.isEmpty()) {
       farmDropSound =
           ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(farmDropSoundName));
       if (farmDropSound != null) {
@@ -77,22 +68,18 @@ public class CreativeMobFarmEntity extends MobFarmBlockEntity {
       }
     }
   }
-
   @Override
   protected Component getDefaultName() {
     return Component.translatable("container.easy_mob_farm.creative_mob_farm");
   }
-
   @Override
   protected AbstractContainerMenu createMenu(int windowId, Inventory inventory) {
     return new CreativeMobFarmMenu(windowId, inventory, this, this.dataAccess);
   }
-
   @Override
   public int getFarmProcessingTime() {
     return farmProcessingTime;
   }
-
   @Override
   public SoundEvent getFarmDropSound() {
     return farmDropSound;

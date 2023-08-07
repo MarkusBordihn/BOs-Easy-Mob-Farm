@@ -1,14 +1,13 @@
 {
   "replace": false,
-  "values":  [
-    "easy_mob_farm:animal_plains_farm",
-    "easy_mob_farm:bee_hive_farm",
-    "easy_mob_farm:creative_mob_farm",
-    "easy_mob_farm:desert_farm",
+  "values": [
+    "easy_mob_farm:iron_animal_plains_farm",
+    "easy_mob_farm:iron_bee_hive_farm",
+    "easy_mob_farm:iron_desert_farm",
+    "easy_mob_farm:iron_jungle_farm",
     "easy_mob_farm:iron_mob_farm_template",
-    "easy_mob_farm:jungle_farm",
-    "easy_mob_farm:monster_plains_cave_farm",
-    "easy_mob_farm:ocean_farm",
-    "easy_mob_farm:swamp_farm"
+    "easy_mob_farm:iron_monster_plains_cave_farm",
+    "easy_mob_farm:iron_ocean_farm",
+    "easy_mob_farm:iron_swamp_farm"
   ]
 }

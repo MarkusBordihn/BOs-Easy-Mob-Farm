@@ -124,40 +124,41 @@ dependencies {
   // The userdev artifact is a special name and will get all sorts of transformations applied to it.
   minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
-  // Required: Bo's Material Elements (dev dependency)
-  compileOnly fg.deobf("curse.maven:material_elements-541620:4594604")
-  runtimeOnly fg.deobf("curse.maven:material_elements-541620:4594604")
-
   // Productive Bees: Integration
-  // compileOnly fg.deobf("curse.maven:productivebees-377897:4366951")
-  // runtimeOnly fg.deobf("curse.maven:productivebees-377897:4366951")
+  compileOnly fg.deobf("curse.maven:productivebees-377897:4633250")
+  runtimeOnly fg.deobf("curse.maven:productivebees-377897:4633250")
+
+  // Cyclic: Integration (!= 1.20)
+  // compileOnly fg.deobf("curse.maven:cyclic-239286:4660851")
+  // runtimeOnly fg.deobf("curse.maven:cyclic-239286:4660851")
+
+  // Alex's Mobs: Integration
+  compileOnly fg.deobf("curse.maven:alex_mobs-426558:4618074")
+  runtimeOnly fg.deobf("curse.maven:alex_mobs-426558:4618074")
+  runtimeOnly fg.deobf("curse.maven:citadel-331936:4579078")
 
   // Jade Integration
-  // compileOnly fg.deobf("curse.maven:jade-324717:4330163")
-  // runtimeOnly fg.deobf("curse.maven:jade-324717:4330163")
+  compileOnly fg.deobf("curse.maven:jade-324717:4681833")
+  runtimeOnly fg.deobf("curse.maven:jade-324717:4681833")
 
-  // Mob Catcher: Integration
+  // Mob Catcher: Integration (>1.19.2)
   // compileOnly fg.deobf("curse.maven:mob-catcher-498389:4062963")
   // runtimeOnly fg.deobf("curse.maven:mob-catcher-498389:4062963")
 
-  // Create: Integration
+  // Create: Integration (!= 1.20)
   // compileOnly fg.deobf("curse.maven:create-328085:4174330")
   // runtimeOnly fg.deobf("curse.maven:flywheel-486392:4174759")
   // runtimeOnly fg.deobf("curse.maven:create-328085:4174330")
 
   // Mob Capturing Tool: Integration
-  // compileOnly fg.deobf("curse.maven:mob-capturing-tool-630272:4153912")
-  // runtimeOnly fg.deobf("curse.maven:mob-capturing-tool-630272:4153912")
+  compileOnly fg.deobf("curse.maven:mob-capturing-tool-630272:4675932")
+  runtimeOnly fg.deobf("curse.maven:mob-capturing-tool-630272:4675932")
 
   // Corail Spawners: Integration
-  // compileOnly fg.deobf("curse.maven:corail-spawners-438467:4028301")
-  // runtimeOnly fg.deobf("curse.maven:corail-spawners-438467:4028301")
+  compileOnly fg.deobf("curse.maven:corail-spawners-438467:4583112")
+  runtimeOnly fg.deobf("curse.maven:corail-spawners-438467:4583112")
 
-  // Alex Mob's (Testing)
-  // runtimeOnly fg.deobf("curse.maven:citadel-331936:3584733:deobf")
-  // runtimeOnly fg.deobf("curse.maven:alex_mobs-426558:3575698")
-
-  // Aquaculture 2 (Testing)
+  // Aquaculture 2 (!= 1.20)
   // runtimeOnly fg.deobf("curse.maven:aquaculture-60028:4549017")
 
   // Additional helpful Mods for development (dev depenedency)
@@ -208,11 +209,12 @@ curseforge {
     addGameVersion("Forge")
     mainArtifact(jar) {
       relations {
-        requiredDependency 'material-elements'
+        optionalDependency 'alexs-mobs'
         optionalDependency 'corail-spawners'
         optionalDependency 'create'
+        optionalDependency 'cyclic'
         optionalDependency 'mob-capturing-tool'
-        optionalDependency 'mob-catcher-fabric'
+        optionalDependency 'mob-catcher'
         optionalDependency 'productivebees'
       }
     }

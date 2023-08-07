@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["JLJ", "J#J", "-B-"],
+  "key": {
+    "#": {
+      "item": "easy_mob_farm:netherite_mob_farm_template"
+    },
+    "J": {
+      "item": "minecraft:jungle_log"
+    },
+    "B": {
+      "item": "minecraft:bamboo"
+    },
+    "-": {
+      "item": "minecraft:dirt"
+    },
+    "L": {
+      "item": "minecraft:jungle_leaves"
+    }
+  },
+  "result": {
+    "item": "easy_mob_farm:netherite_jungle_farm"
+  }
+}
