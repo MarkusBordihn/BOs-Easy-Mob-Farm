@@ -23,6 +23,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
@@ -32,6 +33,7 @@ import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.client.item.ModItemProperties;
 import de.markusbordihn.easymobfarm.client.renderer.ClientRenderer;
 import de.markusbordihn.easymobfarm.client.screen.ClientScreens;
+import de.markusbordihn.easymobfarm.datafixer.ModDataFixer;
 import de.markusbordihn.easymobfarm.item.ModItems;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
 import de.markusbordihn.easymobfarm.tabs.EasyMobFarmTab;
@@ -46,6 +48,9 @@ public class EasyMobFarm {
     final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
     StopModReposts.checkStopModReposts();
+
+    log.info("{} Data Fixer ...", Constants.LOG_REGISTER_PREFIX);
+    MinecraftForge.EVENT_BUS.register(ModDataFixer.class);
 
     log.info("{} Items ...", Constants.LOG_REGISTER_PREFIX);
     ModItems.ITEMS.register(modEventBus);

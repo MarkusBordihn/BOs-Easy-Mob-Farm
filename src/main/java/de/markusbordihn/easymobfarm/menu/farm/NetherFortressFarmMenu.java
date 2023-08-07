@@ -27,7 +27,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerData;
 
 import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.NetherFortressFarm;
+import de.markusbordihn.easymobfarm.block.farm.iron.IronNetherFortressFarm;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
 
@@ -47,7 +47,7 @@ public class NetherFortressFarmMenu extends MobFarmMenu {
 
   @Override
   public boolean mayPlaceCapturedMobType(String mobType) {
-    return NetherFortressFarm.isAcceptedCapturedMobType(mobType);
+    return IronNetherFortressFarm.isAcceptedCapturedMobType(mobType);
   }
 
 }

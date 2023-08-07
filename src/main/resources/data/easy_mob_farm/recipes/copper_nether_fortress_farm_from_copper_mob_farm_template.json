@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["MFF", "S#D", "-L-"],
+  "key": {
+    "#": {
+      "item": "easy_mob_farm:copper_mob_farm_template"
+    },
+    "L": {
+      "item": "minecraft:lava_bucket"
+    },
+    "-": {
+      "item": "minecraft:netherrack"
+    },
+    "D": {
+      "item": "minecraft:nether_bricks"
+    },
+    "S": {
+      "item": "minecraft:soul_sand"
+    },
+    "F": {
+      "item": "minecraft:nether_brick_fence"
+    },
+    "M": {
+      "item": "minecraft:nether_wart"
+    }
+  },
+  "result": {
+    "item": "easy_mob_farm:copper_nether_fortress_farm"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["EGW", "T#G", "S-F"],
+  "key": {
+    "#": {
+      "item": "easy_mob_farm:netherite_mob_farm_template"
+    },
+    "G": {
+      "item": "minecraft:grass"
+    },
+    "W": {
+      "item": "minecraft:wheat"
+    },
+    "S": {
+      "item": "minecraft:wheat_seeds"
+    },
+    "E": {
+      "item": "minecraft:egg"
+    },
+    "T": {
+      "item": "minecraft:white_tulip"
+    },
+    "-": {
+      "item": "minecraft:dirt"
+    },
+    "F": {
+      "item": "minecraft:feather"
+    }
+  },
+  "result": {
+    "item": "easy_mob_farm:netherite_animal_plains_farm"
+  }
+}

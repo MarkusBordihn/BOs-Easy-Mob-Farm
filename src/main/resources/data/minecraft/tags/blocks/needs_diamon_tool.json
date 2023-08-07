@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "easy_mob_farm:gold_animal_plains_farm",
+    "easy_mob_farm:gold_bee_hive_farm",
+    "easy_mob_farm:gold_desert_farm",
+    "easy_mob_farm:gold_jungle_farm",
+    "easy_mob_farm:gold_mob_farm_template",
+    "easy_mob_farm:gold_monster_plains_cave_farm",
+    "easy_mob_farm:gold_ocean_farm",
+    "easy_mob_farm:gold_swamp_farm"
+  ]
+}

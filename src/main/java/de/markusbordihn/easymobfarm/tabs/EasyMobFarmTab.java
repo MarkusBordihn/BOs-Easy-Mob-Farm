@@ -51,7 +51,7 @@ public class EasyMobFarmTab {
 
     MOB_FARM = event.registerCreativeModeTab(new ResourceLocation(Constants.MOD_ID, "mob_farm"),
         builder -> {
-          builder.icon(() -> new ItemStack(ModItems.ANIMAL_PLAINS_FARM.get()))
+          builder.icon(() -> new ItemStack(ModItems.IRON_ANIMAL_PLAINS_FARM.get()))
               .displayItems(EasyMobFarmTab::addMobFarmTabItems)
               .title(Component.translatable("itemGroup.easy_mob_farm.mob_farm")).build();
         });
@@ -66,23 +66,58 @@ public class EasyMobFarmTab {
 
   public static void handleCreativeModeTab(CreativeModeTabEvent.BuildContents event) {
     if (event.getTab() == CreativeModeTabs.BUILDING_BLOCKS) {
+      // Mob Farms Templates
+      event.accept(ModItems.COPPER_MOB_FARM_TEMPLATE.get());
       event.accept(ModItems.IRON_MOB_FARM_TEMPLATE.get());
-      event.accept(ModItems.STEEL_MOB_FARM_TEMPLATE.get());
+      event.accept(ModItems.GOLD_MOB_FARM_TEMPLATE.get());
+      event.accept(ModItems.NETHERITE_MOB_FARM_TEMPLATE.get());
     }
   }
 
   private static void addMobFarmTabItems(FeatureFlagSet featureFlagSet, Output outputTab,
       boolean hasPermissions) {
-    // Mob Farms
-    outputTab.accept(ModItems.ANIMAL_PLAINS_FARM.get());
-    outputTab.accept(ModItems.BEE_HIVE_FARM.get());
+    // Mob Farms - Tier Copper
+    outputTab.accept(ModItems.COPPER_ANIMAL_PLAINS_FARM.get());
+    outputTab.accept(ModItems.COPPER_BEE_HIVE_FARM.get());
+    outputTab.accept(ModItems.COPPER_DESERT_FARM.get());
+    outputTab.accept(ModItems.COPPER_JUNGLE_FARM.get());
+    outputTab.accept(ModItems.COPPER_MONSTER_PLAINS_CAVE_FARM.get());
+    outputTab.accept(ModItems.COPPER_NETHER_FORTRESS_FARM.get());
+    outputTab.accept(ModItems.COPPER_OCEAN_FARM.get());
+    outputTab.accept(ModItems.COPPER_SWAMP_FARM.get());
+
+    // Mob Farms - Tier Iron
+    outputTab.accept(ModItems.IRON_ANIMAL_PLAINS_FARM.get());
+    outputTab.accept(ModItems.IRON_BEE_HIVE_FARM.get());
+    outputTab.accept(ModItems.IRON_DESERT_FARM.get());
+    outputTab.accept(ModItems.IRON_JUNGLE_FARM.get());
+    outputTab.accept(ModItems.IRON_MONSTER_PLAINS_CAVE_FARM.get());
+    outputTab.accept(ModItems.IRON_NETHER_FORTRESS_FARM.get());
+    outputTab.accept(ModItems.IRON_OCEAN_FARM.get());
+    outputTab.accept(ModItems.IRON_SWAMP_FARM.get());
+
+    // Mob Farms - Tier Gold
+    outputTab.accept(ModItems.GOLD_ANIMAL_PLAINS_FARM.get());
+    outputTab.accept(ModItems.GOLD_BEE_HIVE_FARM.get());
+    outputTab.accept(ModItems.GOLD_DESERT_FARM.get());
+    outputTab.accept(ModItems.GOLD_JUNGLE_FARM.get());
+    outputTab.accept(ModItems.GOLD_MONSTER_PLAINS_CAVE_FARM.get());
+    outputTab.accept(ModItems.GOLD_NETHER_FORTRESS_FARM.get());
+    outputTab.accept(ModItems.GOLD_OCEAN_FARM.get());
+    outputTab.accept(ModItems.GOLD_SWAMP_FARM.get());
+
+    // Mob Farms - Tier Netherite
+    outputTab.accept(ModItems.NETHERITE_ANIMAL_PLAINS_FARM.get());
+    outputTab.accept(ModItems.NETHERITE_BEE_HIVE_FARM.get());
+    outputTab.accept(ModItems.NETHERITE_DESERT_FARM.get());
+    outputTab.accept(ModItems.NETHERITE_JUNGLE_FARM.get());
+    outputTab.accept(ModItems.NETHERITE_MONSTER_PLAINS_CAVE_FARM.get());
+    outputTab.accept(ModItems.NETHERITE_NETHER_FORTRESS_FARM.get());
+    outputTab.accept(ModItems.NETHERITE_OCEAN_FARM.get());
+    outputTab.accept(ModItems.NETHERITE_SWAMP_FARM.get());
+
+    // Mob Farms - Special
     outputTab.accept(ModItems.CREATIVE_MOB_FARM.get());
-    outputTab.accept(ModItems.DESERT_FARM.get());
-    outputTab.accept(ModItems.JUNGLE_FARM.get());
-    outputTab.accept(ModItems.MONSTER_PLAINS_CAVE_FARM.get());
-    outputTab.accept(ModItems.NETHER_FORTRESS_FARM.get());
-    outputTab.accept(ModItems.OCEAN_FARM.get());
-    outputTab.accept(ModItems.SWAMP_FARM.get());
   }
 
   private static void addToolsTabItems(FeatureFlagSet featureFlagSet, Output outputTab,
@@ -93,9 +128,12 @@ public class EasyMobFarmTab {
     outputTab.accept(ModItems.CATCH_CAGE_SMALL.get());
     outputTab.accept(ModItems.COLLAR_SMALL.get());
     outputTab.accept(ModItems.CREATIVE_MOB_CATCHER.get());
-    outputTab.accept(ModItems.BOWL_SMALL.get());
+    outputTab.accept(ModItems.ENDER_LASSO.get());
+    outputTab.accept(ModItems.FISHING_BOWL_SMALL.get());
     outputTab.accept(ModItems.FISHING_NET_SMALL.get());
+    outputTab.accept(ModItems.GOLDEN_LASSO.get());
     outputTab.accept(ModItems.INSECT_NET.get());
+    outputTab.accept(ModItems.NETHERITE_LASSO.get());
     outputTab.accept(ModItems.URN_SMALL.get());
     outputTab.accept(ModItems.WITCH_BOTTLE.get());
   }

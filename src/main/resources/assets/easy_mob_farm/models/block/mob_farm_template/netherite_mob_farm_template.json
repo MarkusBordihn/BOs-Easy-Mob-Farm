@@ -1,0 +1,7 @@
+{
+  "parent": "easy_mob_farm:block/template/mob_farm_template",
+  "textures": {
+    "particle": "easy_mob_farm:block/netherite_rod",
+    "texture": "easy_mob_farm:block/netherite_rod"
+  }
+}

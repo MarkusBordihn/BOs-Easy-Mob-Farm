@@ -5,6 +5,20 @@
 This change log includes the summarized changes.
 For the full changelog, please go to the [Git Hub History][history] instead.
 
+### 2023.08.04
+
+Note: Please make sure to backup your world before updating to this version!
+In some cases you might need to remove your config file to get an updated version.
+
+- Removed Material Elements from the mod dependencies!
+- Added support for [Cyclic](https://www.curseforge.com/minecraft/mc-mods/cyclic) Monster Ball.
+- Added basic support for [Alex's Mobs](https://www.curseforge.com/minecraft/mc-mods/alexs-mobs).
+- Added cooper, iron, gold and netherite mob farms.
+- Added golden lasso, ender lasso and netherite lasso as mob catcher items.
+- Added support for remove mob limitation to catch and farm all mobs.
+- Balanced mob farms and catching items to provide end content.
+- Simplified mob farm recipes.
+
 ### 2023.06.11
 
 - Added support for [Forbidden Arcanus](https://www.curseforge.com/minecraft/mc-mods/forbidden-arcanus) Quantum Catcher

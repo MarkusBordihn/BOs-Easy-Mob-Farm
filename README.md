@@ -167,10 +167,6 @@ Each mob needs to have a catch item and a mob farm.
 
 Most of the mobs should already work out of the box with the creative farm, so you can use the creative farm for testing.
 
-## Requires
-
-- [Bo's Material and Elements][material-elements]
-
 ## Mob Catching Item Support
 
 The mod has integrated support for mob catching items from other mods and items, to allow more ways of capturing and using them inside the easy mob farm.
@@ -179,6 +175,7 @@ Furthermore I'm not able to display the possible lot drop for catching items fro
 
 - Spawn Eggs (variants from SpawnEggItem)
 - [Create](https://www.curseforge.com/minecraft/mc-mods/create): Blaze Burner
+- [Cyclic](https://www.curseforge.com/minecraft/mc-mods/cyclic): Monster Ball
 - [MobCatcher](https://www.curseforge.com/minecraft/mc-mods/mob-catcher)
 - [Mob Catcher](https://www.curseforge.com/minecraft/mc-mods/mob-catcher-fabric)
 - [Mob Capturing Tool](https://www.curseforge.com/minecraft/mc-mods/mob-capturing-tool)
@@ -291,7 +288,6 @@ If you are downloading this mod from other sources we could not make sure that i
 [item_overview]: examples/item_overview.png
 [jungle_farm]: examples/farms/jungle_farm.png
 [logo]: examples/logo.png
-[material-elements]: https://www.curseforge.com/minecraft/mc-mods/material-elements
 [mob_menu]: examples/mob_farm_menu.png
 [mod_page]: https://www.curseforge.com/minecraft/mc-mods/easy-mob-farm
 [monster_plains_cave_farm]: examples/farms/monster_plains_cave_farm.png
