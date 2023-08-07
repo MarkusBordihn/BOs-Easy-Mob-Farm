@@ -49,7 +49,7 @@ public class EasyMobFarmTab {
 
     MOB_FARM = event.registerCreativeModeTab(new ResourceLocation(Constants.MOD_ID, "mob_farm"),
         builder -> {
-          builder.icon(() -> new ItemStack(ModItems.ANIMAL_PLAINS_FARM.get()))
+          builder.icon(() -> new ItemStack(ModItems.IRON_ANIMAL_PLAINS_FARM.get()))
               .displayItems(new MobFarmItems())
               .title(Component.translatable("itemGroup.easy_mob_farm.mob_farm")).build();
         });
@@ -64,8 +64,11 @@ public class EasyMobFarmTab {
 
   public static void handleCreativeModeTab(CreativeModeTabEvent.BuildContents event) {
     if (event.getTab() == CreativeModeTabs.BUILDING_BLOCKS) {
+      // Mob Farms Templates
+      event.accept(ModItems.COPPER_MOB_FARM_TEMPLATE.get());
       event.accept(ModItems.IRON_MOB_FARM_TEMPLATE.get());
-      event.accept(ModItems.STEEL_MOB_FARM_TEMPLATE.get());
+      event.accept(ModItems.GOLD_MOB_FARM_TEMPLATE.get());
+      event.accept(ModItems.NETHERITE_MOB_FARM_TEMPLATE.get());
     }
   }
 

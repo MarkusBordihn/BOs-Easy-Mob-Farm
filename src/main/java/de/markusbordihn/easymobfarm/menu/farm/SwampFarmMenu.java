@@ -27,7 +27,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerData;
 
 import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.SwampFarm;
+import de.markusbordihn.easymobfarm.block.farm.iron.IronSwampFarm;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
 
@@ -46,7 +46,7 @@ public class SwampFarmMenu extends MobFarmMenu {
 
   @Override
   public boolean mayPlaceCapturedMobType(String mobType) {
-    return SwampFarm.isAcceptedCapturedMobType(mobType);
+    return IronSwampFarm.isAcceptedCapturedMobType(mobType);
   }
 
 }

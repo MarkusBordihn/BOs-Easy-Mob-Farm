@@ -1,6 +1,5 @@
 {
     "recommendations": [
-      "bungcip.better-toml",
       "davidanson.vscode-markdownlint",
       "dotjoshjohnson.xml",
       "esbenp.prettier-vscode",
@@ -13,6 +12,7 @@
       "streetsidesoftware.code-spell-checker-german",
       "tyriar.sort-lines",
       "vscjava.vscode-gradle",
-      "vscjava.vscode-java-pack"
+      "vscjava.vscode-java-pack",
+      "tamasfe.even-better-toml"
     ]
 }

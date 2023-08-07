@@ -28,19 +28,17 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.Item;
 
+import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.config.CommonConfig;
 import de.markusbordihn.easymobfarm.item.MobCatcherItem;
 import de.markusbordihn.easymobfarm.text.TranslatableText;
 
 @EventBusSubscriber
 public class InsectNet extends MobCatcherItem {
-
-  private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
 
   private static Set<String> acceptedMobTypes = new HashSet<>();
 
@@ -52,7 +50,14 @@ public class InsectNet extends MobCatcherItem {
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
     acceptedMobTypes = new HashSet<>(COMMON.insectNetMobs.get());
     log.info("The insect net requires {} luck and is able to catch the following mobs: {}",
-        COMMON.insectNetMobs.get(), acceptedMobTypes);
+        COMMON.insectNetMobCatchingLuck.get(), acceptedMobTypes);
+  }
+
+  @SubscribeEvent
+  public static void handleWorldEventLoad(LevelEvent.Load event) {
+    if (event.getLevel().isClientSide() && acceptedMobTypes.isEmpty()) {
+      acceptedMobTypes = new HashSet<>(COMMON.insectNetMobs.get());
+    }
   }
 
   @Override
@@ -62,14 +67,13 @@ public class InsectNet extends MobCatcherItem {
 
   @Override
   public boolean canCatchMobType(String mobType) {
-    return acceptedMobTypes.contains(mobType);
+    return acceptedMobTypes == null || acceptedMobTypes.isEmpty()
+        || acceptedMobTypes.contains(mobType);
   }
 
   @Override
-  public int getMobCatchingLuck() {
-    return COMMON.insectNetMobCatchingLuck.get() > 0
-        ? this.random.nextInt(COMMON.insectNetMobCatchingLuck.get())
-        : 0;
+  public int getMobCatchingLuckConfig() {
+    return COMMON.insectNetMobCatchingLuck.get();
   }
 
   @Override
@@ -103,6 +107,13 @@ public class InsectNet extends MobCatcherItem {
         acceptedMobsOverview.append(mobTypeOverview).append("...");
         tooltipList.add(acceptedMobsOverview);
       }
+    }
+
+    // Display the catching luck.
+    if (getMobCatchingLuck() > 0) {
+      MutableComponent catchingLuck =
+          Component.translatable(Constants.TEXT_PREFIX + "mob_catching_luck", getMobCatchingLuck());
+      tooltipList.add(catchingLuck);
     }
   }
 

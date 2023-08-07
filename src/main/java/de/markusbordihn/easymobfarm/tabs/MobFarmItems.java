@@ -30,15 +30,47 @@ public class MobFarmItems implements DisplayItemsGenerator {
 
   @Override
   public void accept(ItemDisplayParameters itemDisplayParameters, Output output) {
-    // Mob Farms
-    output.accept(ModItems.ANIMAL_PLAINS_FARM.get());
-    output.accept(ModItems.BEE_HIVE_FARM.get());
+    // Mob Farms - Tier Copper
+    output.accept(ModItems.COPPER_ANIMAL_PLAINS_FARM.get());
+    output.accept(ModItems.COPPER_BEE_HIVE_FARM.get());
+    output.accept(ModItems.COPPER_DESERT_FARM.get());
+    output.accept(ModItems.COPPER_JUNGLE_FARM.get());
+    output.accept(ModItems.COPPER_MONSTER_PLAINS_CAVE_FARM.get());
+    output.accept(ModItems.COPPER_NETHER_FORTRESS_FARM.get());
+    output.accept(ModItems.COPPER_OCEAN_FARM.get());
+    output.accept(ModItems.COPPER_SWAMP_FARM.get());
+
+    // Mob Farms - Tier Iron
+    output.accept(ModItems.IRON_ANIMAL_PLAINS_FARM.get());
+    output.accept(ModItems.IRON_BEE_HIVE_FARM.get());
+    output.accept(ModItems.IRON_DESERT_FARM.get());
+    output.accept(ModItems.IRON_JUNGLE_FARM.get());
+    output.accept(ModItems.IRON_MONSTER_PLAINS_CAVE_FARM.get());
+    output.accept(ModItems.IRON_NETHER_FORTRESS_FARM.get());
+    output.accept(ModItems.IRON_OCEAN_FARM.get());
+    output.accept(ModItems.IRON_SWAMP_FARM.get());
+
+    // Mob Farms - Tier Gold
+    output.accept(ModItems.GOLD_ANIMAL_PLAINS_FARM.get());
+    output.accept(ModItems.GOLD_BEE_HIVE_FARM.get());
+    output.accept(ModItems.GOLD_DESERT_FARM.get());
+    output.accept(ModItems.GOLD_JUNGLE_FARM.get());
+    output.accept(ModItems.GOLD_MONSTER_PLAINS_CAVE_FARM.get());
+    output.accept(ModItems.GOLD_NETHER_FORTRESS_FARM.get());
+    output.accept(ModItems.GOLD_OCEAN_FARM.get());
+    output.accept(ModItems.GOLD_SWAMP_FARM.get());
+
+    // Mob Farms - Tier Netherite
+    output.accept(ModItems.NETHERITE_ANIMAL_PLAINS_FARM.get());
+    output.accept(ModItems.NETHERITE_BEE_HIVE_FARM.get());
+    output.accept(ModItems.NETHERITE_DESERT_FARM.get());
+    output.accept(ModItems.NETHERITE_JUNGLE_FARM.get());
+    output.accept(ModItems.NETHERITE_MONSTER_PLAINS_CAVE_FARM.get());
+    output.accept(ModItems.NETHERITE_NETHER_FORTRESS_FARM.get());
+    output.accept(ModItems.NETHERITE_OCEAN_FARM.get());
+    output.accept(ModItems.NETHERITE_SWAMP_FARM.get());
+
+    // Mob Farms - Special
     output.accept(ModItems.CREATIVE_MOB_FARM.get());
-    output.accept(ModItems.DESERT_FARM.get());
-    output.accept(ModItems.JUNGLE_FARM.get());
-    output.accept(ModItems.MONSTER_PLAINS_CAVE_FARM.get());
-    output.accept(ModItems.NETHER_FORTRESS_FARM.get());
-    output.accept(ModItems.OCEAN_FARM.get());
-    output.accept(ModItems.SWAMP_FARM.get());
   }
 }

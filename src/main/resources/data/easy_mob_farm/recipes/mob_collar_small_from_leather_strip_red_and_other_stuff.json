@@ -3,7 +3,7 @@
   "pattern": ["S#L", "#O#", "S#T"],
   "key": {
     "#": {
-      "item": "material_elements:leather_strip_red"
+      "item": "minecraft:leather"
     },
     "L": {
       "item": "minecraft:lead"

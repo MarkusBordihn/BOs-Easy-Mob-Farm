@@ -23,19 +23,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.minecraft.world.item.Item;
-
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
-import de.markusbordihn.easymobfarm.config.CommonConfig;
 import de.markusbordihn.easymobfarm.item.MobCatcherItem;
 
 @EventBusSubscriber
 public class CatchCage extends MobCatcherItem {
-
-  private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
 
   private static Set<String> acceptedMobTypes = new HashSet<>();
 
@@ -47,7 +43,7 @@ public class CatchCage extends MobCatcherItem {
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
     acceptedMobTypes = new HashSet<>(COMMON.catchCageMobs.get());
     log.info("The catch cage requires {} luck and is able to catch the following mobs: {}",
-        COMMON.catchCageMobCatchingLuck.get(), acceptedMobTypes);
+        COMMON.catchCageSmallMobCatchingLuck.get(), acceptedMobTypes);
   }
 
   @SubscribeEvent
@@ -64,14 +60,13 @@ public class CatchCage extends MobCatcherItem {
 
   @Override
   public boolean canCatchMobType(String mobType) {
-    return acceptedMobTypes.contains(mobType);
+    return acceptedMobTypes == null || acceptedMobTypes.isEmpty()
+        || acceptedMobTypes.contains(mobType);
   }
 
   @Override
-  public int getMobCatchingLuck() {
-    return COMMON.catchCageMobCatchingLuck.get() > 0
-        ? this.random.nextInt(COMMON.catchCageMobCatchingLuck.get())
-        : 0;
+  public int getMobCatchingLuckConfig() {
+    return COMMON.catchCageSmallMobCatchingLuck.get();
   }
 
 }

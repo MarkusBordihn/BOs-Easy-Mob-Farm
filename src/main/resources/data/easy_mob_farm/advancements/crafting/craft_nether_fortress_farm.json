@@ -1,5 +1,5 @@
 {
-  "parent": "easy_mob_farm:crafting/craft_steel_mob_farm_template",
+  "parent": "easy_mob_farm:crafting/craft_iron_mob_farm_template",
   "display": {
     "icon": {
       "item": "easy_mob_farm:nether_fortress_farm"

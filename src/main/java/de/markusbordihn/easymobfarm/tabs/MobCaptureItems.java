@@ -36,9 +36,12 @@ public class MobCaptureItems implements DisplayItemsGenerator {
     output.accept(ModItems.CATCH_CAGE_SMALL.get());
     output.accept(ModItems.COLLAR_SMALL.get());
     output.accept(ModItems.CREATIVE_MOB_CATCHER.get());
-    output.accept(ModItems.BOWL_SMALL.get());
+    output.accept(ModItems.ENDER_LASSO.get());
+    output.accept(ModItems.FISHING_BOWL_SMALL.get());
     output.accept(ModItems.FISHING_NET_SMALL.get());
+    output.accept(ModItems.GOLDEN_LASSO.get());
     output.accept(ModItems.INSECT_NET.get());
+    output.accept(ModItems.NETHERITE_LASSO.get());
     output.accept(ModItems.URN_SMALL.get());
     output.accept(ModItems.WITCH_BOTTLE.get());
   }

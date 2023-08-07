@@ -40,6 +40,7 @@ public final class Constants {
   public static final String MESSAGE_PREFIX = "message.easy_mob_farm.";
   public static final String MINECRAFT_PREFIX = "minecraft";
   public static final String TEXT_PREFIX = "text.easy_mob_farm.";
+  public static final String BLOCK_TEXT_PREFIX = "block.easy_mob_farm.";
 
   // Colors
   public static final int FONT_COLOR_BLACK = 0;
@@ -66,6 +67,7 @@ public final class Constants {
   // Supported Mods
   public static final boolean CORAIL_SPAWNERS_LOADED = ModList.get().isLoaded("corail_spawners");
   public static final boolean CREATE_LOADED = ModList.get().isLoaded("create");
+  public static final boolean CYCLIC_LOADED = ModList.get().isLoaded("cyclic");
   public static final boolean FORBIDDEN_ARCANUS_LOADED =
       ModList.get().isLoaded("forbidden_arcanus");
   public static final boolean MOBCATCHER_LOADED = ModList.get().isLoaded("mobcatcher");
