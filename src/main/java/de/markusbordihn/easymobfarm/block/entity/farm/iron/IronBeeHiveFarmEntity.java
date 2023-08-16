@@ -38,7 +38,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.data.FarmTier;
-import de.markusbordihn.easymobfarm.menu.farm.BeeHiveFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.iron.IronBeeHiveFarmMenu;
 
 @EventBusSubscriber
 public class IronBeeHiveFarmEntity extends MobFarmBlockEntity {
@@ -71,22 +71,27 @@ public class IronBeeHiveFarmEntity extends MobFarmBlockEntity {
       }
     }
   }
+
   @Override
   protected Component getDefaultName() {
     return new TranslatableComponent("container.easy_mob_farm.bee_hive_farm");
   }
+
   @Override
   protected AbstractContainerMenu createMenu(int windowId, Inventory inventory) {
-    return new BeeHiveFarmMenu(windowId, inventory, this, this.dataAccess);
+    return new IronBeeHiveFarmMenu(windowId, inventory, this, this.dataAccess);
   }
+
   @Override
   public int getFarmProcessingTime() {
     return farmProcessingTime;
   }
+
   @Override
   public SoundEvent getFarmDropSound() {
     return farmDropSound;
   }
+
   @Override
   public FarmTier getFarmTier() {
     return FarmTier.IRON;

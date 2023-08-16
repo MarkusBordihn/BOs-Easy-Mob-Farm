@@ -38,7 +38,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.data.FarmTier;
-import de.markusbordihn.easymobfarm.menu.farm.SwampFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.gold.GoldSwampFarmMenu;
 
 @EventBusSubscriber
 public class GoldSwampFarmEntity extends MobFarmBlockEntity {
@@ -50,7 +50,8 @@ public class GoldSwampFarmEntity extends MobFarmBlockEntity {
     this(ModBlocks.GOLD_SWAMP_FARM_ENTITY.get(), blockPos, blockState);
   }
 
-  public GoldSwampFarmEntity(BlockEntityType<?> blockEntity, BlockPos blockPos, BlockState blockState) {
+  public GoldSwampFarmEntity(BlockEntityType<?> blockEntity, BlockPos blockPos,
+      BlockState blockState) {
     super(blockEntity, blockPos, blockState);
   }
 
@@ -65,27 +66,32 @@ public class GoldSwampFarmEntity extends MobFarmBlockEntity {
       farmDropSound =
           ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(farmDropSoundName));
       if (farmDropSound != null) {
-        log.info("{}: Gold Swamp Farm Entity will play drop sound: {}", Constants.LOG_MOB_FARM_PREFIX,
-            farmDropSound.getRegistryName());
+        log.info("{}: Gold Swamp Farm Entity will play drop sound: {}",
+            Constants.LOG_MOB_FARM_PREFIX, farmDropSound.getRegistryName());
       }
     }
   }
+
   @Override
   protected Component getDefaultName() {
     return new TranslatableComponent("container.easy_mob_farm.swamp_farm");
   }
+
   @Override
   protected AbstractContainerMenu createMenu(int windowId, Inventory inventory) {
-    return new SwampFarmMenu(windowId, inventory, this, this.dataAccess);
+    return new GoldSwampFarmMenu(windowId, inventory, this, this.dataAccess);
   }
+
   @Override
   public int getFarmProcessingTime() {
     return farmProcessingTime;
   }
+
   @Override
   public SoundEvent getFarmDropSound() {
     return farmDropSound;
   }
+
   @Override
   public FarmTier getFarmTier() {
     return FarmTier.GOLD;

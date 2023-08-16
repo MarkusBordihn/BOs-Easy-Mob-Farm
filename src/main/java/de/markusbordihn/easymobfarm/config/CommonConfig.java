@@ -652,6 +652,7 @@ public class CommonConfig {
           .defineInRange("enderLassoMobCatchingLuck", 10, 0, 100);
       enderLassoMobs = builder.comment(getCatchableMobsText("ender lasso")).define("enderLassoMobs",
           new ArrayList<String>(HostileMonster.All));
+      builder.pop();
 
       builder.push("Fishing bowl (Mob Catching Item)");
       fishingBowlMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)

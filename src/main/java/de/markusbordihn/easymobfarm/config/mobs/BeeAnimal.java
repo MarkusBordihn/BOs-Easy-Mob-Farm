@@ -315,6 +315,7 @@ public class BeeAnimal {
 
   public static final String BEE = "minecraft:bee";
 
+  public static final String PRODUCTIVE_BEES_CONFIGURABLE = "productivebees:configurable_bee";
   public static final String AGATE_BEE = "productivebees:agate_bee";
   public static final String AIR_CRYSTAL_BEE = "productivebees:air_crystal_bee";
   public static final String ALEXANDRITE_BEE = "productivebees:alexandrite_bee";

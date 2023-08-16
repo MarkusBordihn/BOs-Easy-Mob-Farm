@@ -38,7 +38,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.data.FarmTier;
-import de.markusbordihn.easymobfarm.menu.farm.MonsterPlainsCaveFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.iron.IronMonsterPlainsCaveFarmMenu;
 
 @EventBusSubscriber
 public class IronMonsterPlainsCaveFarmEntity extends MobFarmBlockEntity {
@@ -71,22 +71,27 @@ public class IronMonsterPlainsCaveFarmEntity extends MobFarmBlockEntity {
       }
     }
   }
+
   @Override
   protected Component getDefaultName() {
     return new TranslatableComponent("container.easy_mob_farm.monster_plains_cave_farm");
   }
+
   @Override
   protected AbstractContainerMenu createMenu(int windowId, Inventory inventory) {
-    return new MonsterPlainsCaveFarmMenu(windowId, inventory, this, this.dataAccess);
+    return new IronMonsterPlainsCaveFarmMenu(windowId, inventory, this, this.dataAccess);
   }
+
   @Override
   public int getFarmProcessingTime() {
     return farmProcessingTime;
   }
+
   @Override
   public SoundEvent getFarmDropSound() {
     return farmDropSound;
   }
+
   @Override
   public FarmTier getFarmTier() {
     return FarmTier.IRON;

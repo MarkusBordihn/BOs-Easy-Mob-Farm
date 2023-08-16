@@ -46,7 +46,7 @@ import de.markusbordihn.easymobfarm.menu.slots.WeaponSlot;
 
 public class MobFarmMenu extends AbstractContainerMenu {
 
-  public static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   @ObjectHolder("easy_mob_farm:mob_farm")
   public static MenuType<MobFarmMenu> TYPE;
@@ -76,7 +76,7 @@ public class MobFarmMenu extends AbstractContainerMenu {
   public static final int EXPERIENCE_SLOT_TOP = 100;
 
   // Defining basic layout options
-  private static int containerSize = 8;
+  protected static int containerSize = 8;
   private static int slotSize = 18;
   private static int slotSpacing = 8;
 
@@ -91,6 +91,7 @@ public class MobFarmMenu extends AbstractContainerMenu {
   private String mobFarmName = "- unknown -";
   private String mobFarmTotalTimeText = "";
   private String mobFarmType = "";
+  private String mobFarmSubType = "";
   private int mobFarmProgress;
   private int mobFarmProgressImage;
   private int mobFarmRemainingTime;
@@ -163,12 +164,15 @@ public class MobFarmMenu extends AbstractContainerMenu {
       if (currentItemStack.isEmpty()) {
         this.mobFarmName = "- unknown -";
         this.mobFarmType = "";
+        this.mobFarmSubType = "";
       } else if (currentItemStack.getItem() instanceof CapturedMob) {
-        this.mobFarmName = CapturedMob.getCapturedMob(currentItemStack);
+        this.mobFarmName = CapturedMob.getCapturedMobName(currentItemStack);
         this.mobFarmType = CapturedMob.getCapturedMobType(currentItemStack);
+        this.mobFarmSubType = CapturedMob.getCapturedMobSubType(currentItemStack);
       } else if (CapturedMobVirtual.isSupported(currentItemStack)) {
-        this.mobFarmName = CapturedMobVirtual.getCapturedMob(currentItemStack);
+        this.mobFarmName = CapturedMobVirtual.getCapturedMobName(currentItemStack);
         this.mobFarmType = CapturedMobVirtual.getCapturedMobType(currentItemStack);
+        this.mobFarmSubType = CapturedMobVirtual.getCapturedMobSubType(currentItemStack);
       }
       this.mobFarmCapturedMob = currentItemStack;
     }
@@ -223,6 +227,10 @@ public class MobFarmMenu extends AbstractContainerMenu {
     return this.mobFarmType;
   }
 
+  public String getMobFarmSubType() {
+    return this.mobFarmSubType;
+  }
+
   public boolean hasMobFarmCapturedMob() {
     return this.mobFarmCapturedMob != null && !this.mobFarmCapturedMob.isEmpty();
   }
@@ -251,6 +259,7 @@ public class MobFarmMenu extends AbstractContainerMenu {
   public boolean mayPlaceCapturedMobType(String mobType) {
     return !mobType.isBlank();
   }
+
   @Override
   public ItemStack quickMoveStack(Player player, int slotIndex) {
     Slot slot = this.slots.get(slotIndex);

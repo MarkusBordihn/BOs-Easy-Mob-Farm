@@ -120,10 +120,6 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
     }
     if (CapturedMob.hasCapturedMob(handItemStack)
         || CapturedMobVirtual.hasCapturedMob(handItemStack)) {
-
-      // Check if captured mob is a valid mob for this farm.
-
-
       ItemStack itemStack = handItemStack.copy();
       itemStack.setCount(1);
       setItem(index, itemStack);
@@ -309,6 +305,7 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
       }
     }
   }
+
   @Override
   public void setItem(int index, ItemStack itemStack) {
     super.setItem(index, itemStack);
@@ -318,16 +315,19 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
       if (itemStack.getItem() instanceof CapturedMob) {
         this.farmMobName = CapturedMob.getCapturedMob(itemStack);
         this.farmMobType = CapturedMob.getCapturedMobType(itemStack);
+        this.farmMobSubType = CapturedMob.getCapturedMobSubType(itemStack);
         this.farmMobColor = CapturedMob.getCapturedMobColor(itemStack);
         this.farmMobEntityType = CapturedMob.getCapturedMobEntityType(itemStack);
       } else if (CapturedMobVirtual.isSupported(itemStack)) {
         this.farmMobName = CapturedMobVirtual.getCapturedMob(itemStack);
         this.farmMobType = CapturedMobVirtual.getCapturedMobType(itemStack);
+        this.farmMobSubType = CapturedMobVirtual.getCapturedMobSubType(itemStack);
         this.farmMobColor = CapturedMobVirtual.getCapturedMobColor(itemStack);
         this.farmMobEntityType = CapturedMobVirtual.getCapturedMobEntityType(itemStack);
       } else {
         this.farmMobName = "";
         this.farmMobType = "";
+        this.farmMobSubType = "";
         this.farmMobColor = null;
         this.farmMobEntityType = null;
       }
@@ -339,7 +339,6 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
         } else {
           this.farmTotalTime = DEFAULT_FARM_PROCESSING_TIME;
         }
-        log.debug("Farm Processing time {}", this.farmTotalTime);
       }
 
       // Update Block state
@@ -355,6 +354,7 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
       syncData();
     }
   }
+
   @Override
   public ItemStack removeItem(int index, int count) {
     ItemStack itemStack = super.removeItem(index, count);
@@ -363,6 +363,7 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
     }
     return itemStack;
   }
+
   @Override
   public int[] getSlotsForFace(Direction direction) {
     if (direction == Direction.DOWN) {
@@ -371,11 +372,13 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
     }
     return new int[] {};
   }
+
   @Override
   public boolean canPlaceItemThroughFace(int slotIndex, ItemStack itemStack,
       @Nullable Direction direction) {
     return false;
   }
+
   @Override
   public boolean canTakeItemThroughFace(int slotIndex, ItemStack itemStack, Direction direction) {
     // Only allow the down direction and only for the result slot.
@@ -386,6 +389,7 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
 
   LazyOptional<? extends net.minecraftforge.items.IItemHandler>[] handlers =
       SidedInvWrapper.create(this, Direction.DOWN);
+
   @Override
   public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(
       net.minecraftforge.common.capabilities.Capability<T> capability, @Nullable Direction facing) {

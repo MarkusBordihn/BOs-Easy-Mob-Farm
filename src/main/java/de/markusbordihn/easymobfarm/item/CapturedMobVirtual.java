@@ -45,11 +45,13 @@ public class CapturedMobVirtual {
   private static final String CAPTURED_ENTITY_TAG = "CapturedEntity";
   private static final String ENTITY_HOLDER_TAG = "entity_holder";
   private static final String ENTITY_TAG = "entity";
+  private static final String ENTITY_TAG_TAG = "EntityTag";
   private static final String ENTITY_TYPE_TAG = "EntityType";
   private static final String ID_TAG = "id";
   private static final String MOD_DATA_TAG = "mob_data";
   private static final String NAME_TAG = "name";
   private static final String SPAWN_DATA_TAG = "SpawnData";
+  private static final String TYPE_TAG = "type";
 
   // Supported mod mob catcher items
   private static final String CREATE_BLAZE_BURNER = "create:blaze_burner";
@@ -59,6 +61,8 @@ public class CapturedMobVirtual {
   private static final String MOB_CATCHER_NETHERITE = "mob_catcher:netherite_mob_catcher";
   private static final String MONSTER_BALL = "cyclic:mob_container";
   private static final String QUANTUM_CATCHER = "forbidden_arcanus:quantum_catcher";
+  private static final String SPAWN_EGG_CONFIGURABLE_BEE =
+      "productivebees:spawn_egg_configurable_bee";
 
   protected CapturedMobVirtual() {}
 
@@ -117,6 +121,12 @@ public class CapturedMobVirtual {
     } else if (Constants.CYCLIC_LOADED && itemName.equals(MONSTER_BALL)) {
       CompoundTag compoundTag = itemStack.getOrCreateTag();
       return !compoundTag.getString(ID_TAG).isEmpty();
+    } else if (Constants.PRODUCTIVE_BEES_LOADED && itemName.equals(SPAWN_EGG_CONFIGURABLE_BEE)) {
+      CompoundTag compoundTag = itemStack.getOrCreateTag();
+      if (compoundTag.contains(ENTITY_TAG_TAG)
+          && compoundTag.getCompound(ENTITY_TAG_TAG).contains(TYPE_TAG)) {
+        return !compoundTag.getCompound(ENTITY_TAG_TAG).getString(TYPE_TAG).isEmpty();
+      }
     } else if (item instanceof SpawnEggItem) {
       return true;
     } else if (!(item instanceof AirItem)) {
@@ -155,6 +165,8 @@ public class CapturedMobVirtual {
       return !getCapturedMobType(itemStack).isBlank() && !getCapturedMobType(itemStack).isEmpty();
     } else if (Constants.CYCLIC_LOADED && itemName.equals(MONSTER_BALL)) {
       return !getCapturedMobType(itemStack).isBlank() && !getCapturedMobType(itemStack).isEmpty();
+    } else if (Constants.PRODUCTIVE_BEES_LOADED && itemName.equals(SPAWN_EGG_CONFIGURABLE_BEE)) {
+      return !getCapturedMobType(itemStack).isBlank() && !getCapturedMobType(itemStack).isEmpty();
     } else if (item instanceof SpawnEggItem) {
       return true;
     }
@@ -185,13 +197,39 @@ public class CapturedMobVirtual {
         || (item instanceof SpawnEggItem)
         || (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER))
         || (Constants.FORBIDDEN_ARCANUS_LOADED && itemName.equals(QUANTUM_CATCHER))
-        || (Constants.CYCLIC_LOADED && itemName.equals(MONSTER_BALL))) {
+        || (Constants.CYCLIC_LOADED && itemName.equals(MONSTER_BALL))
+        || (Constants.PRODUCTIVE_BEES_LOADED && itemName.equals(SPAWN_EGG_CONFIGURABLE_BEE))) {
       EntityType<?> entityType = getCapturedMobEntityType(itemStack);
       String descriptionId = entityType != null ? entityType.getDescriptionId() : "";
       return !descriptionId.isBlank() ? new TranslatableComponent(descriptionId).getString()
           : descriptionId;
     }
     return "";
+  }
+
+  public static String getCapturedMobName(ItemStack itemStack) {
+    if (!isSupported(itemStack)) {
+      return "";
+    }
+    // Early exit for captured mob items.
+    Item item = itemStack.getItem();
+    if (item instanceof CapturedMob) {
+      return CapturedMob.getCapturedMob(itemStack);
+    }
+
+    // Check for supported items from other mods.
+    ResourceLocation itemRegistryName = item.getRegistryName();
+    String itemName = itemRegistryName != null ? itemRegistryName.toString() : "";
+    if (Constants.PRODUCTIVE_BEES_LOADED && itemName.equals(SPAWN_EGG_CONFIGURABLE_BEE)) {
+      CompoundTag compoundTag = itemStack.getOrCreateTag();
+      String beeType = compoundTag.getCompound(ENTITY_TAG_TAG).getString(TYPE_TAG);
+      if (beeType != null && beeType.contains(":")) {
+        String beeTypeName = "entity.productivebees." + beeType.split(":")[1] + "_bee";
+        return new TranslatableComponent(beeTypeName).getString();
+      }
+    }
+
+    return getCapturedMob(itemStack);
   }
 
   public static EntityType<?> getCapturedMobEntityType(ItemStack itemStack) {
@@ -215,7 +253,8 @@ public class CapturedMobVirtual {
         || (Constants.CREATE_LOADED && itemName.equals(CREATE_BLAZE_BURNER))
         || (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER))
         || (Constants.FORBIDDEN_ARCANUS_LOADED && itemName.equals(QUANTUM_CATCHER))
-        || (Constants.CYCLIC_LOADED && itemName.equals(MONSTER_BALL))) {
+        || (Constants.CYCLIC_LOADED && itemName.equals(MONSTER_BALL))
+        || (Constants.PRODUCTIVE_BEES_LOADED && itemName.equals(SPAWN_EGG_CONFIGURABLE_BEE))) {
       String capturedMobType = getCapturedMobType(itemStack);
       if (capturedMobType.contains(":")) {
         ResourceLocation resourceLocation = new ResourceLocation(capturedMobType);
@@ -265,6 +304,8 @@ public class CapturedMobVirtual {
     } else if (Constants.CYCLIC_LOADED && itemName.equals(MONSTER_BALL)) {
       CompoundTag compoundTag = itemStack.getOrCreateTag();
       return compoundTag.getString(ID_TAG);
+    } else if (Constants.PRODUCTIVE_BEES_LOADED && itemName.equals(SPAWN_EGG_CONFIGURABLE_BEE)) {
+      return "productivebees:configurable_bee";
     } else if (item instanceof SpawnEggItem) {
       EntityType<?> entityType = getCapturedMobEntityType(itemStack);
       String descriptionId = entityType != null ? entityType.getDescriptionId() : "";
@@ -275,6 +316,28 @@ public class CapturedMobVirtual {
         }
       }
     }
+    return "";
+  }
+
+  public static String getCapturedMobSubType(ItemStack itemStack) {
+    if (!isSupported(itemStack)) {
+      return "";
+    }
+
+    // Early exit for captured mob items.
+    Item item = itemStack.getItem();
+    if (item instanceof CapturedMob) {
+      return CapturedMob.getCapturedMobSubType(itemStack);
+    }
+
+    // Check for supported items from other mods.
+    ResourceLocation itemRegistryName = item.getRegistryName();
+    String itemName = itemRegistryName != null ? itemRegistryName.toString() : "";
+    if (Constants.PRODUCTIVE_BEES_LOADED && itemName.equals(SPAWN_EGG_CONFIGURABLE_BEE)) {
+      CompoundTag compoundTag = itemStack.getOrCreateTag();
+      return compoundTag.getCompound(ENTITY_TAG_TAG).getString(TYPE_TAG);
+    }
+
     return "";
   }
 
@@ -306,6 +369,9 @@ public class CapturedMobVirtual {
         String[] mobTypeParts = capturedMobType.split("\\:");
         return mobTypeParts[0] + ":entities/" + mobTypeParts[1];
       }
+    } else if (Constants.PRODUCTIVE_BEES_LOADED && itemName.equals(SPAWN_EGG_CONFIGURABLE_BEE)) {
+      String capturedMobType = getCapturedMobType(itemStack);
+      log.info("Bees captured mob type: " + capturedMobType);
     }
     return "";
   }

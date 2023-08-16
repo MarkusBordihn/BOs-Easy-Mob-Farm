@@ -92,7 +92,6 @@ public class MobCatcherItem extends CapturedMob {
     return mobCatchingLuck;
   }
 
-
   public void appendHoverTextCatchableMobs(List<Component> tooltipList) {
     Set<String> acceptedMobTypes = getAcceptedMobTypes();
     if (!acceptedMobTypes.isEmpty()) {

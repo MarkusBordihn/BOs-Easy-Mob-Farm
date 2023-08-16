@@ -29,9 +29,7 @@ import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import de.markusbordihn.easymobfarm.Annotations.TemplateEntryPoint;
 import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.entity.farm.CreativeMobFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.copper.CopperAnimalPlainsFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.copper.CopperBeeHiveFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.copper.CopperDesertFarmEntity;
@@ -64,6 +62,7 @@ import de.markusbordihn.easymobfarm.block.entity.farm.netherite.NetheriteMonster
 import de.markusbordihn.easymobfarm.block.entity.farm.netherite.NetheriteNetherFortressFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.netherite.NetheriteOceanFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.netherite.NetheriteSwampFarmEntity;
+import de.markusbordihn.easymobfarm.block.entity.farm.special.CreativeMobFarmEntity;
 import de.markusbordihn.easymobfarm.block.farm.copper.CopperAnimalPlainsFarm;
 import de.markusbordihn.easymobfarm.block.farm.copper.CopperBeeHiveFarm;
 import de.markusbordihn.easymobfarm.block.farm.copper.CopperDesertFarm;
@@ -96,6 +95,7 @@ import de.markusbordihn.easymobfarm.block.farm.netherite.NetheriteMonsterPlainsC
 import de.markusbordihn.easymobfarm.block.farm.netherite.NetheriteNetherFortressFarm;
 import de.markusbordihn.easymobfarm.block.farm.netherite.NetheriteOceanFarm;
 import de.markusbordihn.easymobfarm.block.farm.netherite.NetheriteSwampFarm;
+import de.markusbordihn.easymobfarm.block.farm.special.CreativeMobFarm;
 
 public class ModBlocks {
 
@@ -106,8 +106,6 @@ public class ModBlocks {
 
   public static final DeferredRegister<BlockEntityType<?>> ENTITIES =
       DeferredRegister.create(ForgeRegistries.BLOCK_ENTITIES, Constants.MOD_ID);
-
-  @TemplateEntryPoint("Register Blocks")
 
   // Mob Farm Templates
   public static final RegistryObject<Block> COPPER_MOB_FARM_TEMPLATE =

@@ -36,15 +36,39 @@ import de.markusbordihn.easymobfarm.client.screen.farm.MonsterPlainsCaveFarmScre
 import de.markusbordihn.easymobfarm.client.screen.farm.NetherFortressFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.OceanFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.SwampFarmScreen;
-import de.markusbordihn.easymobfarm.menu.farm.AnimalPlainsFarmMenu;
-import de.markusbordihn.easymobfarm.menu.farm.BeeHiveFarmMenu;
-import de.markusbordihn.easymobfarm.menu.farm.CreativeMobFarmMenu;
-import de.markusbordihn.easymobfarm.menu.farm.DesertFarmMenu;
-import de.markusbordihn.easymobfarm.menu.farm.JungleFarmMenu;
-import de.markusbordihn.easymobfarm.menu.farm.MonsterPlainsCaveFarmMenu;
-import de.markusbordihn.easymobfarm.menu.farm.NetherFortressFarmMenu;
-import de.markusbordihn.easymobfarm.menu.farm.OceanFarmMenu;
-import de.markusbordihn.easymobfarm.menu.farm.SwampFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.copper.CopperAnimalPlainsFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.copper.CopperBeeHiveFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.copper.CopperDesertFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.copper.CopperJungleFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.copper.CopperMonsterPlainsCaveFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.copper.CopperNetherFortressFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.copper.CopperOceanFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.copper.CopperSwampFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.gold.GoldAnimalPlainsFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.gold.GoldBeeHiveFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.gold.GoldDesertFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.gold.GoldJungleFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.gold.GoldMonsterPlainsCaveFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.gold.GoldNetherFortressFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.gold.GoldOceanFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.gold.GoldSwampFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.iron.IronAnimalPlainsFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.iron.IronBeeHiveFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.iron.IronDesertFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.iron.IronJungleFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.iron.IronMonsterPlainsCaveFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.iron.IronNetherFortressFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.iron.IronOceanFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.iron.IronSwampFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteAnimalPlainsFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteBeeHiveFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteDesertFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteJungleFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteMonsterPlainsCaveFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteNetherFortressFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteOceanFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteSwampFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.special.CreativeMobFarmMenu;
 
 public class ClientScreens {
 
@@ -56,16 +80,68 @@ public class ClientScreens {
     log.info("{} Client Screens ...", Constants.LOG_REGISTER_PREFIX);
 
     event.enqueueWork(() -> {
-      // Mob Farm UI screen
-      MenuScreens.register(AnimalPlainsFarmMenu.TYPE, AnimalPlainsFarmScreen::new);
-      MenuScreens.register(BeeHiveFarmMenu.TYPE, BeeHiveFarmScreen::new);
+
+      // Special Mob Farm UI screen
       MenuScreens.register(CreativeMobFarmMenu.TYPE, CreativeMobFarmScreen::new);
-      MenuScreens.register(DesertFarmMenu.TYPE, DesertFarmScreen::new);
-      MenuScreens.register(JungleFarmMenu.TYPE, JungleFarmScreen::new);
-      MenuScreens.register(MonsterPlainsCaveFarmMenu.TYPE, MonsterPlainsCaveFarmScreen::new);
-      MenuScreens.register(NetherFortressFarmMenu.TYPE, NetherFortressFarmScreen::new);
-      MenuScreens.register(OceanFarmMenu.TYPE, OceanFarmScreen::new);
-      MenuScreens.register(SwampFarmMenu.TYPE, SwampFarmScreen::new);
+
+      // Copper Mob Farm UI screen
+      MenuScreens.register(CopperAnimalPlainsFarmMenu.TYPE,
+          AnimalPlainsFarmScreen<CopperAnimalPlainsFarmMenu>::new);
+      MenuScreens.register(CopperBeeHiveFarmMenu.TYPE,
+          BeeHiveFarmScreen<CopperBeeHiveFarmMenu>::new);
+      MenuScreens.register(CopperDesertFarmMenu.TYPE, DesertFarmScreen<CopperDesertFarmMenu>::new);
+      MenuScreens.register(CopperJungleFarmMenu.TYPE, JungleFarmScreen<CopperJungleFarmMenu>::new);
+      MenuScreens.register(CopperMonsterPlainsCaveFarmMenu.TYPE,
+          MonsterPlainsCaveFarmScreen<CopperMonsterPlainsCaveFarmMenu>::new);
+      MenuScreens.register(CopperNetherFortressFarmMenu.TYPE,
+          NetherFortressFarmScreen<CopperNetherFortressFarmMenu>::new);
+      MenuScreens.register(CopperOceanFarmMenu.TYPE, OceanFarmScreen<CopperOceanFarmMenu>::new);
+      MenuScreens.register(CopperSwampFarmMenu.TYPE, SwampFarmScreen<CopperSwampFarmMenu>::new);
+
+      // Gold Mob Farm UI screen
+      MenuScreens.register(GoldAnimalPlainsFarmMenu.TYPE,
+          AnimalPlainsFarmScreen<GoldAnimalPlainsFarmMenu>::new);
+      MenuScreens.register(GoldBeeHiveFarmMenu.TYPE, BeeHiveFarmScreen<GoldBeeHiveFarmMenu>::new);
+      MenuScreens.register(GoldDesertFarmMenu.TYPE, DesertFarmScreen<GoldDesertFarmMenu>::new);
+      MenuScreens.register(GoldJungleFarmMenu.TYPE, JungleFarmScreen<GoldJungleFarmMenu>::new);
+      MenuScreens.register(GoldMonsterPlainsCaveFarmMenu.TYPE,
+          MonsterPlainsCaveFarmScreen<GoldMonsterPlainsCaveFarmMenu>::new);
+      MenuScreens.register(GoldNetherFortressFarmMenu.TYPE,
+          NetherFortressFarmScreen<GoldNetherFortressFarmMenu>::new);
+      MenuScreens.register(GoldOceanFarmMenu.TYPE, OceanFarmScreen<GoldOceanFarmMenu>::new);
+      MenuScreens.register(GoldSwampFarmMenu.TYPE, SwampFarmScreen<GoldSwampFarmMenu>::new);
+
+      // Iron Mob Farm UI screen
+      MenuScreens.register(IronAnimalPlainsFarmMenu.TYPE,
+          AnimalPlainsFarmScreen<IronAnimalPlainsFarmMenu>::new);
+      MenuScreens.register(IronBeeHiveFarmMenu.TYPE, BeeHiveFarmScreen<IronBeeHiveFarmMenu>::new);
+      MenuScreens.register(IronDesertFarmMenu.TYPE, DesertFarmScreen<IronDesertFarmMenu>::new);
+      MenuScreens.register(IronJungleFarmMenu.TYPE, JungleFarmScreen<IronJungleFarmMenu>::new);
+      MenuScreens.register(IronMonsterPlainsCaveFarmMenu.TYPE,
+          MonsterPlainsCaveFarmScreen<IronMonsterPlainsCaveFarmMenu>::new);
+      MenuScreens.register(IronNetherFortressFarmMenu.TYPE,
+          NetherFortressFarmScreen<IronNetherFortressFarmMenu>::new);
+      MenuScreens.register(IronOceanFarmMenu.TYPE, OceanFarmScreen<IronOceanFarmMenu>::new);
+      MenuScreens.register(IronSwampFarmMenu.TYPE, SwampFarmScreen<IronSwampFarmMenu>::new);
+
+      // Netherite Mob Farm UI screen
+      MenuScreens.register(NetheriteAnimalPlainsFarmMenu.TYPE,
+          AnimalPlainsFarmScreen<NetheriteAnimalPlainsFarmMenu>::new);
+      MenuScreens.register(NetheriteBeeHiveFarmMenu.TYPE,
+          BeeHiveFarmScreen<NetheriteBeeHiveFarmMenu>::new);
+      MenuScreens.register(NetheriteDesertFarmMenu.TYPE,
+          DesertFarmScreen<NetheriteDesertFarmMenu>::new);
+      MenuScreens.register(NetheriteJungleFarmMenu.TYPE,
+          JungleFarmScreen<NetheriteJungleFarmMenu>::new);
+      MenuScreens.register(NetheriteMonsterPlainsCaveFarmMenu.TYPE,
+          MonsterPlainsCaveFarmScreen<NetheriteMonsterPlainsCaveFarmMenu>::new);
+      MenuScreens.register(NetheriteNetherFortressFarmMenu.TYPE,
+          NetherFortressFarmScreen<NetheriteNetherFortressFarmMenu>::new);
+      MenuScreens.register(NetheriteOceanFarmMenu.TYPE,
+          OceanFarmScreen<NetheriteOceanFarmMenu>::new);
+      MenuScreens.register(NetheriteSwampFarmMenu.TYPE,
+          SwampFarmScreen<NetheriteSwampFarmMenu>::new);
+
     });
   }
 }

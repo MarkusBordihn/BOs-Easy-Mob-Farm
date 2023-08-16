@@ -38,7 +38,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.data.FarmTier;
-import de.markusbordihn.easymobfarm.menu.farm.DesertFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteDesertFarmMenu;
 
 @EventBusSubscriber
 public class NetheriteDesertFarmEntity extends MobFarmBlockEntity {
@@ -71,22 +71,27 @@ public class NetheriteDesertFarmEntity extends MobFarmBlockEntity {
       }
     }
   }
+
   @Override
   protected Component getDefaultName() {
     return new TranslatableComponent("container.easy_mob_farm.desert_farm");
   }
+
   @Override
   protected AbstractContainerMenu createMenu(int windowId, Inventory inventory) {
-    return new DesertFarmMenu(windowId, inventory, this, this.dataAccess);
+    return new NetheriteDesertFarmMenu(windowId, inventory, this, this.dataAccess);
   }
+
   @Override
   public int getFarmProcessingTime() {
     return farmProcessingTime;
   }
+
   @Override
   public SoundEvent getFarmDropSound() {
     return farmDropSound;
   }
+
   @Override
   public FarmTier getFarmTier() {
     return FarmTier.NETHERITE;

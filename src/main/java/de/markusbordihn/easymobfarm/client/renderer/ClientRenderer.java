@@ -155,7 +155,7 @@ public class ClientRenderer {
       ItemBlockRenderTypes.setRenderLayer(ModBlocks.COPPER_NETHER_FORTRESS_FARM.get(),
           RenderType.cutoutMipped());
       ItemBlockRenderTypes.setRenderLayer(ModBlocks.COPPER_OCEAN_FARM.get(),
-          RenderType.cutoutMipped());
+          RenderType.translucent());
       ItemBlockRenderTypes.setRenderLayer(ModBlocks.COPPER_SWAMP_FARM.get(),
           RenderType.cutoutMipped());
 
@@ -193,7 +193,7 @@ public class ClientRenderer {
       ItemBlockRenderTypes.setRenderLayer(ModBlocks.GOLD_OCEAN_FARM.get(),
           RenderType.translucent());
       ItemBlockRenderTypes.setRenderLayer(ModBlocks.GOLD_SWAMP_FARM.get(),
-      RenderType.cutoutMipped());
+          RenderType.cutoutMipped());
 
       // Mob Farm Blocks - Netherite
       ItemBlockRenderTypes.setRenderLayer(ModBlocks.NETHERITE_MONSTER_PLAINS_CAVE_FARM.get(),

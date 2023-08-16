@@ -26,15 +26,39 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.event.RegistryEvent;
 
 import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.menu.farm.AnimalPlainsFarmMenu;
-import de.markusbordihn.easymobfarm.menu.farm.BeeHiveFarmMenu;
-import de.markusbordihn.easymobfarm.menu.farm.CreativeMobFarmMenu;
-import de.markusbordihn.easymobfarm.menu.farm.DesertFarmMenu;
-import de.markusbordihn.easymobfarm.menu.farm.JungleFarmMenu;
-import de.markusbordihn.easymobfarm.menu.farm.MonsterPlainsCaveFarmMenu;
-import de.markusbordihn.easymobfarm.menu.farm.NetherFortressFarmMenu;
-import de.markusbordihn.easymobfarm.menu.farm.OceanFarmMenu;
-import de.markusbordihn.easymobfarm.menu.farm.SwampFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.copper.CopperAnimalPlainsFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.copper.CopperBeeHiveFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.copper.CopperDesertFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.copper.CopperJungleFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.copper.CopperMonsterPlainsCaveFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.copper.CopperNetherFortressFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.copper.CopperOceanFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.copper.CopperSwampFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.gold.GoldAnimalPlainsFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.gold.GoldBeeHiveFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.gold.GoldDesertFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.gold.GoldJungleFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.gold.GoldMonsterPlainsCaveFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.gold.GoldNetherFortressFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.gold.GoldOceanFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.gold.GoldSwampFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.iron.IronAnimalPlainsFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.iron.IronBeeHiveFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.iron.IronDesertFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.iron.IronJungleFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.iron.IronMonsterPlainsCaveFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.iron.IronNetherFortressFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.iron.IronOceanFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.iron.IronSwampFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteAnimalPlainsFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteBeeHiveFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteDesertFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteJungleFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteMonsterPlainsCaveFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteNetherFortressFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteOceanFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteSwampFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.special.CreativeMobFarmMenu;
 
 public class ContainerMenu {
 
@@ -45,25 +69,81 @@ public class ContainerMenu {
   public static void registerContainerMenu(RegistryEvent.Register<MenuType<?>> event) {
     log.info("{} Container Menu ...", Constants.LOG_REGISTER_PREFIX);
 
-    // Mob Farm Container Menu
-    event.getRegistry().registerAll(
-        new MenuType<>(AnimalPlainsFarmMenu::new).setRegistryName(Constants.ANIMAL_PLAINS_FARM));
-    event.getRegistry()
-        .registerAll(new MenuType<>(BeeHiveFarmMenu::new).setRegistryName(Constants.BEE_HIVE_FARM));
+    // Special Mob Farm
     event.getRegistry().registerAll(
         new MenuType<>(CreativeMobFarmMenu::new).setRegistryName(Constants.CREATIVE_MOB_FARM));
-    event.getRegistry()
-        .registerAll(new MenuType<>(DesertFarmMenu::new).setRegistryName(Constants.DESERT_FARM));
-    event.getRegistry()
-        .registerAll(new MenuType<>(JungleFarmMenu::new).setRegistryName(Constants.JUNGLE_FARM));
-    event.getRegistry().registerAll(new MenuType<>(MonsterPlainsCaveFarmMenu::new)
-        .setRegistryName(Constants.MONSTER_PLAINS_CAVE_FARM));
-    event.getRegistry().registerAll(new MenuType<>(NetherFortressFarmMenu::new)
-        .setRegistryName(Constants.NETHER_FORTRESS_FARM));
-    event.getRegistry()
-        .registerAll(new MenuType<>(OceanFarmMenu::new).setRegistryName(Constants.OCEAN_FARM));
-    event.getRegistry()
-        .registerAll(new MenuType<>(SwampFarmMenu::new).setRegistryName(Constants.SWAMP_FARM));
+
+    // Copper Mob Farm Container Menu
+    event.getRegistry().registerAll(new MenuType<>(CopperAnimalPlainsFarmMenu::new)
+        .setRegistryName(Constants.COPPER_ANIMAL_PLAINS_FARM));
+    event.getRegistry().registerAll(
+        new MenuType<>(CopperBeeHiveFarmMenu::new).setRegistryName(Constants.COPPER_BEE_HIVE_FARM));
+    event.getRegistry().registerAll(
+        new MenuType<>(CopperDesertFarmMenu::new).setRegistryName(Constants.COPPER_DESERT_FARM));
+    event.getRegistry().registerAll(
+        new MenuType<>(CopperJungleFarmMenu::new).setRegistryName(Constants.COPPER_JUNGLE_FARM));
+    event.getRegistry().registerAll(new MenuType<>(CopperMonsterPlainsCaveFarmMenu::new)
+        .setRegistryName(Constants.COPPER_MONSTER_PLAINS_CAVE_FARM));
+    event.getRegistry().registerAll(new MenuType<>(CopperNetherFortressFarmMenu::new)
+        .setRegistryName(Constants.COPPER_NETHER_FORTRESS_FARM));
+    event.getRegistry().registerAll(
+        new MenuType<>(CopperOceanFarmMenu::new).setRegistryName(Constants.COPPER_OCEAN_FARM));
+    event.getRegistry().registerAll(
+        new MenuType<>(CopperSwampFarmMenu::new).setRegistryName(Constants.COPPER_SWAMP_FARM));
+
+    // Gold Mob Farm Container Menu
+    event.getRegistry().registerAll(new MenuType<>(GoldAnimalPlainsFarmMenu::new)
+        .setRegistryName(Constants.GOLD_ANIMAL_PLAINS_FARM));
+    event.getRegistry().registerAll(
+        new MenuType<>(GoldBeeHiveFarmMenu::new).setRegistryName(Constants.GOLD_BEE_HIVE_FARM));
+    event.getRegistry().registerAll(
+        new MenuType<>(GoldDesertFarmMenu::new).setRegistryName(Constants.GOLD_DESERT_FARM));
+    event.getRegistry().registerAll(
+        new MenuType<>(GoldJungleFarmMenu::new).setRegistryName(Constants.GOLD_JUNGLE_FARM));
+    event.getRegistry().registerAll(new MenuType<>(GoldMonsterPlainsCaveFarmMenu::new)
+        .setRegistryName(Constants.GOLD_MONSTER_PLAINS_CAVE_FARM));
+    event.getRegistry().registerAll(new MenuType<>(GoldNetherFortressFarmMenu::new)
+        .setRegistryName(Constants.GOLD_NETHER_FORTRESS_FARM));
+    event.getRegistry().registerAll(
+        new MenuType<>(GoldOceanFarmMenu::new).setRegistryName(Constants.GOLD_OCEAN_FARM));
+    event.getRegistry().registerAll(
+        new MenuType<>(GoldSwampFarmMenu::new).setRegistryName(Constants.GOLD_SWAMP_FARM));
+
+    // Iron Mob Farm Container Menu
+    event.getRegistry().registerAll(new MenuType<>(IronAnimalPlainsFarmMenu::new)
+        .setRegistryName(Constants.IRON_ANIMAL_PLAINS_FARM));
+    event.getRegistry().registerAll(
+        new MenuType<>(IronBeeHiveFarmMenu::new).setRegistryName(Constants.IRON_BEE_HIVE_FARM));
+    event.getRegistry().registerAll(
+        new MenuType<>(IronDesertFarmMenu::new).setRegistryName(Constants.IRON_DESERT_FARM));
+    event.getRegistry().registerAll(
+        new MenuType<>(IronJungleFarmMenu::new).setRegistryName(Constants.IRON_JUNGLE_FARM));
+    event.getRegistry().registerAll(new MenuType<>(IronMonsterPlainsCaveFarmMenu::new)
+        .setRegistryName(Constants.IRON_MONSTER_PLAINS_CAVE_FARM));
+    event.getRegistry().registerAll(new MenuType<>(IronNetherFortressFarmMenu::new)
+        .setRegistryName(Constants.IRON_NETHER_FORTRESS_FARM));
+    event.getRegistry().registerAll(
+        new MenuType<>(IronOceanFarmMenu::new).setRegistryName(Constants.IRON_OCEAN_FARM));
+    event.getRegistry().registerAll(
+        new MenuType<>(IronSwampFarmMenu::new).setRegistryName(Constants.IRON_SWAMP_FARM));
+
+    // Netherite Mob Farm Container Menu
+    event.getRegistry().registerAll(new MenuType<>(NetheriteAnimalPlainsFarmMenu::new)
+        .setRegistryName(Constants.NETHERITE_ANIMAL_PLAINS_FARM));
+    event.getRegistry().registerAll(new MenuType<>(NetheriteBeeHiveFarmMenu::new)
+        .setRegistryName(Constants.NETHERITE_BEE_HIVE_FARM));
+    event.getRegistry().registerAll(new MenuType<>(NetheriteDesertFarmMenu::new)
+        .setRegistryName(Constants.NETHERITE_DESERT_FARM));
+    event.getRegistry().registerAll(new MenuType<>(NetheriteJungleFarmMenu::new)
+        .setRegistryName(Constants.NETHERITE_JUNGLE_FARM));
+    event.getRegistry().registerAll(new MenuType<>(NetheriteMonsterPlainsCaveFarmMenu::new)
+        .setRegistryName(Constants.NETHERITE_MONSTER_PLAINS_CAVE_FARM));
+    event.getRegistry().registerAll(new MenuType<>(NetheriteNetherFortressFarmMenu::new)
+        .setRegistryName(Constants.NETHERITE_NETHER_FORTRESS_FARM));
+    event.getRegistry().registerAll(new MenuType<>(NetheriteOceanFarmMenu::new)
+        .setRegistryName(Constants.NETHERITE_OCEAN_FARM));
+    event.getRegistry().registerAll(new MenuType<>(NetheriteSwampFarmMenu::new)
+        .setRegistryName(Constants.NETHERITE_SWAMP_FARM));
 
     event.getRegistry()
         .registerAll(new MenuType<>(MobFarmMenu::new).setRegistryName(Constants.MOB_FARM));

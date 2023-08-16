@@ -38,7 +38,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.data.FarmTier;
-import de.markusbordihn.easymobfarm.menu.farm.OceanFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.gold.GoldOceanFarmMenu;
 
 @EventBusSubscriber
 public class GoldOceanFarmEntity extends MobFarmBlockEntity {
@@ -50,7 +50,8 @@ public class GoldOceanFarmEntity extends MobFarmBlockEntity {
     this(ModBlocks.GOLD_OCEAN_FARM_ENTITY.get(), blockPos, blockState);
   }
 
-  public GoldOceanFarmEntity(BlockEntityType<?> blockEntity, BlockPos blockPos, BlockState blockState) {
+  public GoldOceanFarmEntity(BlockEntityType<?> blockEntity, BlockPos blockPos,
+      BlockState blockState) {
     super(blockEntity, blockPos, blockState);
   }
 
@@ -70,22 +71,27 @@ public class GoldOceanFarmEntity extends MobFarmBlockEntity {
       }
     }
   }
+
   @Override
   protected Component getDefaultName() {
     return new TranslatableComponent("container.easy_mob_farm.ocean_farm");
   }
+
   @Override
   protected AbstractContainerMenu createMenu(int windowId, Inventory inventory) {
-    return new OceanFarmMenu(windowId, inventory, this, this.dataAccess);
+    return new GoldOceanFarmMenu(windowId, inventory, this, this.dataAccess);
   }
+
   @Override
   public int getFarmProcessingTime() {
     return farmProcessingTime;
   }
+
   @Override
   public SoundEvent getFarmDropSound() {
     return farmDropSound;
   }
+
   @Override
   public FarmTier getFarmTier() {
     return FarmTier.GOLD;

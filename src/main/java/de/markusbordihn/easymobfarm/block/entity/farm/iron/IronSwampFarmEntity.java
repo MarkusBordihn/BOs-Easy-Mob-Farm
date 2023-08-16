@@ -38,7 +38,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.data.FarmTier;
-import de.markusbordihn.easymobfarm.menu.farm.SwampFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.iron.IronSwampFarmMenu;
 
 @EventBusSubscriber
 public class IronSwampFarmEntity extends MobFarmBlockEntity {
@@ -50,7 +50,8 @@ public class IronSwampFarmEntity extends MobFarmBlockEntity {
     this(ModBlocks.IRON_SWAMP_FARM_ENTITY.get(), blockPos, blockState);
   }
 
-  public IronSwampFarmEntity(BlockEntityType<?> blockEntity, BlockPos blockPos, BlockState blockState) {
+  public IronSwampFarmEntity(BlockEntityType<?> blockEntity, BlockPos blockPos,
+      BlockState blockState) {
     super(blockEntity, blockPos, blockState);
   }
 
@@ -70,22 +71,27 @@ public class IronSwampFarmEntity extends MobFarmBlockEntity {
       }
     }
   }
+
   @Override
   protected Component getDefaultName() {
     return new TranslatableComponent("container.easy_mob_farm.swamp_farm");
   }
+
   @Override
   protected AbstractContainerMenu createMenu(int windowId, Inventory inventory) {
-    return new SwampFarmMenu(windowId, inventory, this, this.dataAccess);
+    return new IronSwampFarmMenu(windowId, inventory, this, this.dataAccess);
   }
+
   @Override
   public int getFarmProcessingTime() {
     return farmProcessingTime;
   }
+
   @Override
   public SoundEvent getFarmDropSound() {
     return farmDropSound;
   }
+
   @Override
   public FarmTier getFarmTier() {
     return FarmTier.IRON;
