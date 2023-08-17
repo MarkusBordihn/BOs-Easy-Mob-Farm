@@ -37,7 +37,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.data.FarmTier;
-import de.markusbordihn.easymobfarm.menu.farm.SwampFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteSwampFarmMenu;
 
 @EventBusSubscriber
 public class NetheriteSwampFarmEntity extends MobFarmBlockEntity {
@@ -49,7 +49,8 @@ public class NetheriteSwampFarmEntity extends MobFarmBlockEntity {
     this(ModBlocks.NETHERITE_SWAMP_FARM_ENTITY.get(), blockPos, blockState);
   }
 
-  public NetheriteSwampFarmEntity(BlockEntityType<?> blockEntity, BlockPos blockPos, BlockState blockState) {
+  public NetheriteSwampFarmEntity(BlockEntityType<?> blockEntity, BlockPos blockPos,
+      BlockState blockState) {
     super(blockEntity, blockPos, blockState);
   }
 
@@ -64,27 +65,32 @@ public class NetheriteSwampFarmEntity extends MobFarmBlockEntity {
       farmDropSound =
           ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(farmDropSoundName));
       if (farmDropSound != null) {
-        log.info("{}: Netherite Swamp Farm Entity will play drop sound: {}", Constants.LOG_MOB_FARM_PREFIX,
-            farmDropSound.getLocation());
+        log.info("{}: Netherite Swamp Farm Entity will play drop sound: {}",
+            Constants.LOG_MOB_FARM_PREFIX, farmDropSound.getLocation());
       }
     }
   }
+
   @Override
   protected Component getDefaultName() {
     return Component.translatable("container.easy_mob_farm.swamp_farm");
   }
+
   @Override
   protected AbstractContainerMenu createMenu(int windowId, Inventory inventory) {
-    return new SwampFarmMenu(windowId, inventory, this, this.dataAccess);
+    return new NetheriteSwampFarmMenu(windowId, inventory, this, this.dataAccess);
   }
+
   @Override
   public int getFarmProcessingTime() {
     return farmProcessingTime;
   }
+
   @Override
   public SoundEvent getFarmDropSound() {
     return farmDropSound;
   }
+
   @Override
   public FarmTier getFarmTier() {
     return FarmTier.NETHERITE;

@@ -1,8 +1,0 @@
-{
-  "private": true,
-  "version": "0.0.0",
-  "dependencies": {
-    "minecraft-forge-utils": "^2.0.0"
-  },
-  "scripts": {}
-}

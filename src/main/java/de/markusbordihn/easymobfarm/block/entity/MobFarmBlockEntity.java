@@ -119,10 +119,6 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
     }
     if (CapturedMob.hasCapturedMob(handItemStack)
         || CapturedMobVirtual.hasCapturedMob(handItemStack)) {
-
-      // Check if captured mob is a valid mob for this farm.
-
-
       ItemStack itemStack = handItemStack.copy();
       itemStack.setCount(1);
       setItem(index, itemStack);
@@ -317,16 +313,19 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
       if (itemStack.getItem() instanceof CapturedMob) {
         this.farmMobName = CapturedMob.getCapturedMob(itemStack);
         this.farmMobType = CapturedMob.getCapturedMobType(itemStack);
+        this.farmMobSubType = CapturedMob.getCapturedMobSubType(itemStack);
         this.farmMobColor = CapturedMob.getCapturedMobColor(itemStack);
         this.farmMobEntityType = CapturedMob.getCapturedMobEntityType(itemStack);
       } else if (CapturedMobVirtual.isSupported(itemStack)) {
         this.farmMobName = CapturedMobVirtual.getCapturedMob(itemStack);
         this.farmMobType = CapturedMobVirtual.getCapturedMobType(itemStack);
+        this.farmMobSubType = CapturedMobVirtual.getCapturedMobSubType(itemStack);
         this.farmMobColor = CapturedMobVirtual.getCapturedMobColor(itemStack);
         this.farmMobEntityType = CapturedMobVirtual.getCapturedMobEntityType(itemStack);
       } else {
         this.farmMobName = "";
         this.farmMobType = "";
+        this.farmMobSubType = "";
         this.farmMobColor = null;
         this.farmMobEntityType = null;
       }

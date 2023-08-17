@@ -41,7 +41,7 @@ public class WeaponSlot extends Slot {
 
   @Override
   public boolean mayPlace(ItemStack itemStack) {
-    return itemStack != null && itemStack.getItem() instanceof SwordItem;
+    return itemStack != null && itemStack.getItem() instanceof SwordItem && !hasItem();
   }
 
   @Override
