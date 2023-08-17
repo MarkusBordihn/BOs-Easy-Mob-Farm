@@ -37,7 +37,7 @@ public class CapturedMobSlot extends Slot {
   }
   @Override
   public boolean mayPlace(ItemStack itemStack) {
-    if (!this.menu.mayPlaceCapturedMob(itemStack)) {
+    if (!this.menu.mayPlaceCapturedMob(itemStack) || hasItem()) {
       return false;
     }
     if (itemStack.getItem() instanceof CapturedMob) {

@@ -35,10 +35,12 @@ public class WeaponSlot extends Slot {
   public WeaponSlot(Container container, int index, int x, int y) {
     super(container, index, x, y);
   }
+
   @Override
   public boolean mayPlace(ItemStack itemStack) {
-    return itemStack != null && itemStack.getItem() instanceof SwordItem;
+    return itemStack != null && itemStack.getItem() instanceof SwordItem && !hasItem();
   }
+
   @Override
   public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
     return Pair.of(InventoryMenu.BLOCK_ATLAS, ModTextures.EMPTY_SWORD);

@@ -8,6 +8,7 @@ For the full changelog, please go to the [Git Hub History][history] instead.
 ### 2023.08.16
 
 - Added full support for [Productive Bees](https://www.curseforge.com/minecraft/mc-mods/productivebees) for the Bee Hive Farm.
+- Added additional duplication checks for mob farms.
 - Added Germany translation.
 - Fixed issue with mixed mob farm tiers and limited mobs.
 - Improved render performance for mob farm models.

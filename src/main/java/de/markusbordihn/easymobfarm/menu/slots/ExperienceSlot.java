@@ -25,7 +25,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ExperienceBottleItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
@@ -36,15 +35,16 @@ public class ExperienceSlot extends Slot {
   public ExperienceSlot(Container container, int index, int x, int y) {
     super(container, index, x, y);
   }
+
   @Override
   public boolean mayPlace(ItemStack itemStack) {
-    return itemStack != null && (itemStack.getItem() instanceof ExperienceBottleItem
-        || itemStack.is(Items.GLASS_BOTTLE));
+    return itemStack != null && itemStack.is(Items.GLASS_BOTTLE) && itemStack.getCount() == 1
+        && !hasItem();
   }
+
   @Override
   public Pair<ResourceLocation, ResourceLocation> getNoItemIcon() {
     return Pair.of(InventoryMenu.BLOCK_ATLAS, ModTextures.EMPTY_EXPERIENCE_BOTTLE);
   }
-
 
 }
