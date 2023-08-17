@@ -1,9 +1,0 @@
-diff a/src/main/java/de/markusbordihn/easymobfarm/client/screen/MobFarmScreen.java b/src/main/java/de/markusbordihn/easymobfarm/client/screen/MobFarmScreen.java	(rejected hunks)
-@@ -119,7 +118,6 @@ public void init() {
-     this.warningFullText = Component.translatable(Constants.TEXT_PREFIX + "warning_full");
-     this.renderModels = new RenderModels(this.minecraft);
-   }
--
-   @Override
-   public void render(PoseStack poseStack, int x, int y, float partialTicks) {
-     // Update data cache only every 40 ticks to avoid expensive operations on hight fps.

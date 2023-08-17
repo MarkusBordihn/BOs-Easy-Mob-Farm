@@ -31,7 +31,10 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ExperienceBottleItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.SwordItem;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
@@ -44,7 +47,7 @@ import de.markusbordihn.easymobfarm.menu.slots.WeaponSlot;
 
 public class MobFarmMenu extends AbstractContainerMenu {
 
-  public static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   // Define Slot index for easier access
   public static final int CAPTURED_MOB_SLOT = 0;
@@ -71,7 +74,7 @@ public class MobFarmMenu extends AbstractContainerMenu {
   public static final int EXPERIENCE_SLOT_TOP = 100;
 
   // Defining basic layout options
-  private static int containerSize = 8;
+  protected static int containerSize = 8;
   private static int slotSize = 18;
   private static int slotSpacing = 8;
 
@@ -86,6 +89,7 @@ public class MobFarmMenu extends AbstractContainerMenu {
   private String mobFarmName = "- unknown -";
   private String mobFarmTotalTimeText = "";
   private String mobFarmType = "";
+  private String mobFarmSubType = "";
   private int mobFarmProgress;
   private int mobFarmProgressImage;
   private int mobFarmRemainingTime;
@@ -159,12 +163,15 @@ public class MobFarmMenu extends AbstractContainerMenu {
       if (currentItemStack.isEmpty()) {
         this.mobFarmName = "- unknown -";
         this.mobFarmType = "";
+        this.mobFarmSubType = "";
       } else if (currentItemStack.getItem() instanceof CapturedMob) {
-        this.mobFarmName = CapturedMob.getCapturedMob(currentItemStack);
+        this.mobFarmName = CapturedMob.getCapturedMobName(currentItemStack);
         this.mobFarmType = CapturedMob.getCapturedMobType(currentItemStack);
+        this.mobFarmSubType = CapturedMob.getCapturedMobSubType(currentItemStack);
       } else if (CapturedMobVirtual.isSupported(currentItemStack)) {
-        this.mobFarmName = CapturedMobVirtual.getCapturedMob(currentItemStack);
+        this.mobFarmName = CapturedMobVirtual.getCapturedMobName(currentItemStack);
         this.mobFarmType = CapturedMobVirtual.getCapturedMobType(currentItemStack);
+        this.mobFarmSubType = CapturedMobVirtual.getCapturedMobSubType(currentItemStack);
       }
       this.mobFarmCapturedMob = currentItemStack;
     }
@@ -219,6 +226,10 @@ public class MobFarmMenu extends AbstractContainerMenu {
     return this.mobFarmType;
   }
 
+  public String getMobFarmSubType() {
+    return this.mobFarmSubType;
+  }
+
   public boolean hasMobFarmCapturedMob() {
     return this.mobFarmCapturedMob != null && !this.mobFarmCapturedMob.isEmpty();
   }
@@ -247,23 +258,59 @@ public class MobFarmMenu extends AbstractContainerMenu {
   public boolean mayPlaceCapturedMobType(String mobType) {
     return !mobType.isBlank();
   }
+
   @Override
   public ItemStack quickMoveStack(Player player, int slotIndex) {
+    ItemStack itemStack = ItemStack.EMPTY;
+
     Slot slot = this.slots.get(slotIndex);
     if (!slot.hasItem()) {
-      return ItemStack.EMPTY;
+      return itemStack;
     }
 
     // Get itemStack we need to handle.
-    ItemStack itemStack = slot.getItem();
+    ItemStack slotItemStack = slot.getItem();
+    itemStack = slotItemStack.copy();
 
-    // Handle CaptureMob and CapturedMobVirtual items for moving in and out.
-    if (itemStack.getItem() instanceof CapturedMob || CapturedMobVirtual.isSupported(itemStack)) {
-      if (slotIndex == CAPTURED_MOB_SLOT) {
-        if (!this.moveItemStackTo(itemStack, 6, 42, false)) {
+    // Handle glass bottles for moving in and out.
+    if (slotItemStack.is(Items.GLASS_BOTTLE) && slotItemStack.getCount() == 1) {
+      if (slotIndex == EXPERIENCE_SLOT) {
+        if (!this.moveItemStackTo(slotItemStack, 6, 42, true)) {
           return ItemStack.EMPTY;
         }
-      } else if (slotIndex >= 6 && !this.moveItemStackTo(itemStack, 0, 1, false)) {
+      } else if (slotIndex >= 6 && !this.slots.get(EXPERIENCE_SLOT).hasItem()
+          && !this.moveItemStackTo(slotItemStack, EXPERIENCE_SLOT, EXPERIENCE_SLOT + 1, false)) {
+        return ItemStack.EMPTY;
+      }
+    }
+
+    // Handle experience bottles for moving out.
+    else if (slotItemStack.getItem() instanceof ExperienceBottleItem && slotIndex == EXPERIENCE_SLOT
+        && !this.moveItemStackTo(slotItemStack, 6, 42, true)) {
+      return ItemStack.EMPTY;
+    }
+
+    // Handle Weapons like swords for moving in and out.
+    else if (slotItemStack.getItem() instanceof SwordItem) {
+      if (slotIndex == WEAPON_SLOT) {
+        if (!this.moveItemStackTo(slotItemStack, 6, 42, true)) {
+          return ItemStack.EMPTY;
+        }
+      } else if (slotIndex >= 6
+          && !this.moveItemStackTo(slotItemStack, WEAPON_SLOT, WEAPON_SLOT + 1, false)) {
+        return ItemStack.EMPTY;
+      }
+    }
+
+    // Handle CaptureMob and CapturedMobVirtual items for moving in and out.
+    else if (slotItemStack.getItem() instanceof CapturedMob
+        || CapturedMobVirtual.isSupported(slotItemStack)) {
+      if (slotIndex == CAPTURED_MOB_SLOT) {
+        if (!this.moveItemStackTo(slotItemStack, 6, 42, true)) {
+          return ItemStack.EMPTY;
+        }
+      } else if (slotIndex >= 6 && !this.moveItemStackTo(slotItemStack, CAPTURED_MOB_SLOT,
+          CAPTURED_MOB_SLOT + 1, false)) {
         return ItemStack.EMPTY;
       }
     }
@@ -271,20 +318,25 @@ public class MobFarmMenu extends AbstractContainerMenu {
     // Move result items to the player inventory.
     else if ((slotIndex == RESULT_1_SLOT || slotIndex == RESULT_2_SLOT || slotIndex == RESULT_3_SLOT
         || slotIndex == RESULT_4_SLOT || slotIndex == RESULT_5_SLOT)
-        && this.moveItemStackTo(itemStack, 6, 42, false)) {
+        && this.moveItemStackTo(slotItemStack, 6, 42, true)) {
       return ItemStack.EMPTY;
     }
 
     // Store changes if itemStack is not empty.
-    if (itemStack.isEmpty()) {
+    if (slotItemStack.isEmpty()) {
       slot.set(ItemStack.EMPTY);
     } else {
       slot.setChanged();
     }
 
-    slot.onTake(player, itemStack);
+    // Additional sanity check.
+    if (slotItemStack.getCount() == itemStack.getCount()) {
+      return ItemStack.EMPTY;
+    }
 
-    return ItemStack.EMPTY;
+    slot.onTake(player, slotItemStack);
+
+    return itemStack;
   }
 
 }
