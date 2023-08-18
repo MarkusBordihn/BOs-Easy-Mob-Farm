@@ -34,6 +34,7 @@ public class WaterFarmRenderer extends MobFarmRendererBase<MobFarmBlockEntity> {
   public WaterFarmRenderer(BlockEntityRendererProvider.Context context) {
     super(context);
   }
+
   @Override
   public void render(MobFarmBlockEntity blockEntity, float partialTicks, PoseStack poseStack,
       MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
@@ -42,6 +43,7 @@ public class WaterFarmRenderer extends MobFarmRendererBase<MobFarmBlockEntity> {
     // Get unique farm id for caching, the renderer itself is a single instance.
     int farmId = blockEntity.getFarmId();
 
+    // Reset render helper if no mob is captured.
     if (!blockEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
       resetRenderHelper(farmId);
       return;
@@ -53,11 +55,12 @@ public class WaterFarmRenderer extends MobFarmRendererBase<MobFarmBlockEntity> {
 
     // Render individual mob types if possible, because custom entity renderer is not optimized.
     // This makes a huge different with up to 20% more fps with a larger farm.
-    boolean renderedWaterEntity =
-        renderHelper.renderWaterEntity(poseStack, buffer, combinedLight, farmMobType);
+    if (renderHelper.renderWaterEntity(poseStack, buffer, combinedLight, farmMobType)) {
+      return;
+    }
 
     // Only render custom model if we are not able to render the model otherwise.
-    if (!renderedWaterEntity && blockEntity.getFarmMobEntityType() != null) {
+    if (blockEntity.getFarmMobEntityType() != null) {
       EntityType<?> entityType = blockEntity.getFarmMobEntityType();
       renderHelper.renderLivingEntity(poseStack, buffer, combinedLight, entityType);
     }

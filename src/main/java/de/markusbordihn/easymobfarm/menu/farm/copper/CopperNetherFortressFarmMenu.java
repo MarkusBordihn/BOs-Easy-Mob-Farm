@@ -17,36 +17,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.menu.farm;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+package de.markusbordihn.easymobfarm.menu.farm.copper;
 
 import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
 
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.farm.iron.IronDesertFarm;
+import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
+import de.markusbordihn.easymobfarm.block.farm.copper.CopperNetherFortressFarm;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
 
-public class DesertFarmMenu extends MobFarmMenu {
+public class CopperNetherFortressFarmMenu extends MobFarmMenu {
 
-  public static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
-
-  public DesertFarmMenu(int windowIdIn, Inventory inventory) {
-    super(windowIdIn, inventory);
+  public CopperNetherFortressFarmMenu(int windowIdIn, Inventory inventory) {
+    super(windowIdIn, inventory, new SimpleContainer(containerSize),
+        new SimpleContainerData(MobFarmBlockEntityData.DATA_SIZE),
+        ModMenuTypes.COPPER_NETHER_FORTRESS_FARM_MENU.get());
   }
 
-  public DesertFarmMenu(final int windowId, final Inventory playerInventory,
+  public CopperNetherFortressFarmMenu(final int windowId, final Inventory playerInventory,
       final Container container, final ContainerData containerData) {
-    super(windowId, playerInventory, container, containerData, ModMenuTypes.DESERT_FARM_MENU.get());
+    super(windowId, playerInventory, container, containerData,
+        ModMenuTypes.COPPER_NETHER_FORTRESS_FARM_MENU.get());
   }
 
   @Override
   public boolean mayPlaceCapturedMobType(String mobType) {
-    return IronDesertFarm.isAcceptedCapturedMobType(mobType);
+    return CopperNetherFortressFarm.isAcceptedCapturedMobType(mobType);
   }
 
 }

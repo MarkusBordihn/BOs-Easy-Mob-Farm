@@ -125,8 +125,8 @@ dependencies {
   minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
   // Productive Bees: Integration
-  compileOnly fg.deobf("curse.maven:productivebees-377897:4633250")
-  runtimeOnly fg.deobf("curse.maven:productivebees-377897:4633250")
+  compileOnly fg.deobf("curse.maven:productivebees-377897:4709520")
+  runtimeOnly fg.deobf("curse.maven:productivebees-377897:4709520")
 
   // Cyclic: Integration (!= 1.20)
   compileOnly fg.deobf("curse.maven:cyclic-239286:4661938")

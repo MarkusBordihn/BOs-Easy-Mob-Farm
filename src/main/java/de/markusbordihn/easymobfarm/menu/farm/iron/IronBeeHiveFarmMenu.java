@@ -17,36 +17,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.menu.farm;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+package de.markusbordihn.easymobfarm.menu.farm.iron;
 
 import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
 
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.farm.iron.IronJungleFarm;
+import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
+import de.markusbordihn.easymobfarm.block.farm.iron.IronBeeHiveFarm;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
 
-public class JungleFarmMenu extends MobFarmMenu {
+public class IronBeeHiveFarmMenu extends MobFarmMenu {
 
-  public static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
-
-  public JungleFarmMenu(int windowIdIn, Inventory inventory) {
-    super(windowIdIn, inventory);
+  public IronBeeHiveFarmMenu(int windowIdIn, Inventory inventory) {
+    super(windowIdIn, inventory, new SimpleContainer(containerSize),
+        new SimpleContainerData(MobFarmBlockEntityData.DATA_SIZE),
+        ModMenuTypes.IRON_BEE_HIVE_FARM_MENU.get());
   }
 
-  public JungleFarmMenu(final int windowId, final Inventory playerInventory,
+  public IronBeeHiveFarmMenu(final int windowId, final Inventory playerInventory,
       final Container container, final ContainerData containerData) {
-    super(windowId, playerInventory, container, containerData, ModMenuTypes.JUNGLE_FARM_MENU.get());
+    super(windowId, playerInventory, container, containerData,
+        ModMenuTypes.IRON_BEE_HIVE_FARM_MENU.get());
   }
 
   @Override
   public boolean mayPlaceCapturedMobType(String mobType) {
-    return IronJungleFarm.isAcceptedCapturedMobType(mobType);
+    return IronBeeHiveFarm.isAcceptedCapturedMobType(mobType);
   }
 
 }

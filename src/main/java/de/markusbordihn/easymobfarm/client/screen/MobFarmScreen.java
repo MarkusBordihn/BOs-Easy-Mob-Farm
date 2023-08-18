@@ -29,14 +29,13 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.AbstractContainerMenu;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
 import de.markusbordihn.easymobfarm.client.renderer.helper.RenderModels;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
-public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractContainerScreen<T> {
+public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScreen<T> {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
@@ -48,9 +47,9 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
   public static final int SNAP_WITH = 34;
   public static final int SNAP_HEIGHT = 53;
 
-  private MobFarmMenu mobFarmMenu;
   private MutableComponent warningFullText;
   private RenderModels renderModels;
+  private T mobFarmMenu;
   private float dropTimeLabelScale = 0.75F;
   private float nextDropTimeLabelScale = 0.75F;
   private int animationTicker = 0;
@@ -62,7 +61,7 @@ public class MobFarmScreen<T extends AbstractContainerMenu> extends AbstractCont
 
   public MobFarmScreen(T menu, Inventory inventory, Component component) {
     super(menu, inventory, component);
-    this.mobFarmMenu = (MobFarmMenu) menu;
+    this.mobFarmMenu = menu;
   }
 
   protected void renderSnapshot(GuiGraphics guiGraphics, ResourceLocation mobFarmTypeSnapshot) {

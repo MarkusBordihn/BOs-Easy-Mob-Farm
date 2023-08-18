@@ -17,37 +17,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.menu.farm;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+package de.markusbordihn.easymobfarm.menu.farm.netherite;
 
 import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
 
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.farm.iron.IronNetherFortressFarm;
+import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
+import de.markusbordihn.easymobfarm.block.farm.netherite.NetheriteOceanFarm;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
 
-public class NetherFortressFarmMenu extends MobFarmMenu {
+public class NetheriteOceanFarmMenu extends MobFarmMenu {
 
-  public static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
-
-  public NetherFortressFarmMenu(int windowIdIn, Inventory inventory) {
-    super(windowIdIn, inventory);
+  public NetheriteOceanFarmMenu(int windowIdIn, Inventory inventory) {
+    super(windowIdIn, inventory, new SimpleContainer(containerSize),
+        new SimpleContainerData(MobFarmBlockEntityData.DATA_SIZE),
+        ModMenuTypes.NETHERITE_OCEAN_FARM_MENU.get());
   }
 
-  public NetherFortressFarmMenu(final int windowId, final Inventory playerInventory,
+  public NetheriteOceanFarmMenu(final int windowId, final Inventory playerInventory,
       final Container container, final ContainerData containerData) {
     super(windowId, playerInventory, container, containerData,
-        ModMenuTypes.NETHER_FORTRESS_FARM_MENU.get());
+        ModMenuTypes.NETHERITE_OCEAN_FARM_MENU.get());
   }
 
   @Override
   public boolean mayPlaceCapturedMobType(String mobType) {
-    return IronNetherFortressFarm.isAcceptedCapturedMobType(mobType);
+    return NetheriteOceanFarm.isAcceptedCapturedMobType(mobType);
   }
 
 }

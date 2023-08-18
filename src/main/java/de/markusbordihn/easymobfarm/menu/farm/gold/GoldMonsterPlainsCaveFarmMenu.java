@@ -17,36 +17,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.menu.farm;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+package de.markusbordihn.easymobfarm.menu.farm.gold;
 
 import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
 
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.farm.iron.IronOceanFarm;
+import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
+import de.markusbordihn.easymobfarm.block.farm.gold.GoldMonsterPlainsCaveFarm;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
 
-public class OceanFarmMenu extends MobFarmMenu {
+public class GoldMonsterPlainsCaveFarmMenu extends MobFarmMenu {
 
-  public static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
-
-  public OceanFarmMenu(int windowIdIn, Inventory inventory) {
-    super(windowIdIn, inventory);
+  public GoldMonsterPlainsCaveFarmMenu(int windowIdIn, Inventory inventory) {
+    super(windowIdIn, inventory, new SimpleContainer(containerSize),
+        new SimpleContainerData(MobFarmBlockEntityData.DATA_SIZE),
+        ModMenuTypes.GOLD_MONSTER_PLAINS_CAVE_FARM_MENU.get());
   }
 
-  public OceanFarmMenu(final int windowId, final Inventory playerInventory,
+  public GoldMonsterPlainsCaveFarmMenu(final int windowId, final Inventory playerInventory,
       final Container container, final ContainerData containerData) {
-    super(windowId, playerInventory, container, containerData, ModMenuTypes.OCEAN_FARM_MENU.get());
+    super(windowId, playerInventory, container, containerData,
+        ModMenuTypes.GOLD_MONSTER_PLAINS_CAVE_FARM_MENU.get());
   }
 
   @Override
   public boolean mayPlaceCapturedMobType(String mobType) {
-    return IronOceanFarm.isAcceptedCapturedMobType(mobType);
+    return GoldMonsterPlainsCaveFarm.isAcceptedCapturedMobType(mobType);
   }
 
 }

@@ -27,7 +27,6 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.CreativeMobFarm;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.block.farm.copper.CopperAnimalPlainsFarm;
 import de.markusbordihn.easymobfarm.block.farm.copper.CopperBeeHiveFarm;
@@ -61,6 +60,7 @@ import de.markusbordihn.easymobfarm.block.farm.netherite.NetheriteMonsterPlainsC
 import de.markusbordihn.easymobfarm.block.farm.netherite.NetheriteNetherFortressFarm;
 import de.markusbordihn.easymobfarm.block.farm.netherite.NetheriteOceanFarm;
 import de.markusbordihn.easymobfarm.block.farm.netherite.NetheriteSwampFarm;
+import de.markusbordihn.easymobfarm.block.farm.special.CreativeMobFarm;
 import de.markusbordihn.easymobfarm.item.mobcatcher.FishingBowl;
 import de.markusbordihn.easymobfarm.item.mobcatcher.CatchCage;
 import de.markusbordihn.easymobfarm.item.mobcatcher.CatchCageSmall;
@@ -74,7 +74,6 @@ import de.markusbordihn.easymobfarm.item.mobcatcher.Net;
 import de.markusbordihn.easymobfarm.item.mobcatcher.NetheriteLasso;
 import de.markusbordihn.easymobfarm.item.mobcatcher.UrnSmall;
 import de.markusbordihn.easymobfarm.item.mobcatcher.WitchBottle;
-import de.markusbordihn.easymobfarm.Annotations.TemplateEntryPoint;
 
 public class ModItems {
 
@@ -84,8 +83,6 @@ public class ModItems {
 
   public static final DeferredRegister<Item> ITEMS =
       DeferredRegister.create(ForgeRegistries.ITEMS, Constants.MOD_ID);
-
-  @TemplateEntryPoint("Register Items")
 
   // Mob Capture Items
   public static final RegistryObject<Item> CAPTURE_NET = ITEMS.register("capture_net",
@@ -115,8 +112,6 @@ public class ModItems {
       () -> new UrnSmall(new Item.Properties().stacksTo(1).durability(15)));
   public static final RegistryObject<Item> WITCH_BOTTLE = ITEMS.register("witch_bottle",
       () -> new WitchBottle(new Item.Properties().stacksTo(1).durability(15)));
-
-  @TemplateEntryPoint("Register Block Items")
 
   // Mob Farm Templates
   public static final RegistryObject<Item> COPPER_MOB_FARM_TEMPLATE =

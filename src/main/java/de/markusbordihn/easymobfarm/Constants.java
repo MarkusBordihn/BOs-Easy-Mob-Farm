@@ -42,6 +42,50 @@ public final class Constants {
   public static final String TEXT_PREFIX = "text.easy_mob_farm.";
   public static final String BLOCK_TEXT_PREFIX = "block.easy_mob_farm.";
 
+  // Special Mob Farm
+  public static final String CREATIVE_MOB_FARM = "creative_mob_farm";
+
+  // Copper Mob Farms
+  public static final String COPPER_ANIMAL_PLAINS_FARM = "copper_animal_plains_farm";
+  public static final String COPPER_BEE_HIVE_FARM = "copper_bee_hive_farm";
+  public static final String COPPER_DESERT_FARM = "copper_desert_farm";
+  public static final String COPPER_JUNGLE_FARM = "copper_jungle_farm";
+  public static final String COPPER_MONSTER_PLAINS_CAVE_FARM = "copper_monster_plains_cave_farm";
+  public static final String COPPER_NETHER_FORTRESS_FARM = "copper_nether_fortress_farm";
+  public static final String COPPER_OCEAN_FARM = "copper_ocean_farm";
+  public static final String COPPER_SWAMP_FARM = "copper_swamp_farm";
+
+  // Gold Mob Farms
+  public static final String GOLD_ANIMAL_PLAINS_FARM = "gold_animal_plains_farm";
+  public static final String GOLD_BEE_HIVE_FARM = "gold_bee_hive_farm";
+  public static final String GOLD_DESERT_FARM = "gold_desert_farm";
+  public static final String GOLD_JUNGLE_FARM = "gold_jungle_farm";
+  public static final String GOLD_MONSTER_PLAINS_CAVE_FARM = "gold_monster_plains_cave_farm";
+  public static final String GOLD_NETHER_FORTRESS_FARM = "gold_nether_fortress_farm";
+  public static final String GOLD_OCEAN_FARM = "gold_ocean_farm";
+  public static final String GOLD_SWAMP_FARM = "gold_swamp_farm";
+
+  // Iron Mob Farms
+  public static final String IRON_ANIMAL_PLAINS_FARM = "iron_animal_plains_farm";
+  public static final String IRON_BEE_HIVE_FARM = "iron_bee_hive_farm";
+  public static final String IRON_DESERT_FARM = "iron_desert_farm";
+  public static final String IRON_JUNGLE_FARM = "iron_jungle_farm";
+  public static final String IRON_MONSTER_PLAINS_CAVE_FARM = "iron_monster_plains_cave_farm";
+  public static final String IRON_NETHER_FORTRESS_FARM = "iron_nether_fortress_farm";
+  public static final String IRON_OCEAN_FARM = "iron_ocean_farm";
+  public static final String IRON_SWAMP_FARM = "iron_swamp_farm";
+
+  // Netherite Mob Farms
+  public static final String NETHERITE_ANIMAL_PLAINS_FARM = "netherite_animal_plains_farm";
+  public static final String NETHERITE_BEE_HIVE_FARM = "netherite_bee_hive_farm";
+  public static final String NETHERITE_DESERT_FARM = "netherite_desert_farm";
+  public static final String NETHERITE_JUNGLE_FARM = "netherite_jungle_farm";
+  public static final String NETHERITE_MONSTER_PLAINS_CAVE_FARM =
+      "netherite_monster_plains_cave_farm";
+  public static final String NETHERITE_NETHER_FORTRESS_FARM = "netherite_nether_fortress_farm";
+  public static final String NETHERITE_OCEAN_FARM = "netherite_ocean_farm";
+  public static final String NETHERITE_SWAMP_FARM = "netherite_swamp_farm";
+
   // Colors
   public static final int FONT_COLOR_BLACK = 0;
   public static final int FONT_COLOR_DARK_GREEN = 43520;

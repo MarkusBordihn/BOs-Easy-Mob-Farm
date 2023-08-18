@@ -60,6 +60,7 @@ public class CapturedMob extends Item {
   protected static final String ENTITY_NAME_TAG = "EntityName";
   protected static final String ENTITY_POSSIBLE_LOOT_TAG = "EntityPossibleLoot";
   protected static final String ENTITY_TYPE_TAG = "EntityType";
+  protected static final String ENTITY_SUB_TYPE_TAG = "EntitySubType";
   protected static final String ENTITY_COLOR_TAG = "EntityColor";
   protected static final String ENTITY_SHEARED = "EntitySheared";
 
@@ -100,6 +101,10 @@ public class CapturedMob extends Item {
     return "";
   }
 
+  public static String getCapturedMobName(ItemStack itemStack) {
+    return getCapturedMob(itemStack);
+  }
+
   public static Float getCapturedMobHealth(ItemStack itemStack) {
     CompoundTag compoundTag = itemStack.getOrCreateTag();
     if (compoundTag.contains("Health")) {
@@ -112,6 +117,14 @@ public class CapturedMob extends Item {
     CompoundTag compoundTag = itemStack.getOrCreateTag();
     if (compoundTag.contains(ENTITY_TYPE_TAG)) {
       return compoundTag.getString(ENTITY_TYPE_TAG);
+    }
+    return "";
+  }
+
+  public static String getCapturedMobSubType(ItemStack itemStack) {
+    CompoundTag compoundTag = itemStack.getOrCreateTag();
+    if (compoundTag.contains(ENTITY_SUB_TYPE_TAG)) {
+      return compoundTag.getString(ENTITY_SUB_TYPE_TAG);
     }
     return "";
   }
@@ -156,17 +169,7 @@ public class CapturedMob extends Item {
     CompoundTag compoundTag = itemStack.getOrCreateTag();
     String name = livingEntity.getName().getString();
     String type = EntityType.getKey(livingEntity.getType()).toString();
-
-    // Handle possible loot for tool tips.
-    ResourceLocation lootTable = livingEntity.getLootTable();
-    if (lootTable != null) {
-      List<String> possibleLoot =
-          LootManager.getRandomLootDropOverview(lootTable, livingEntity.level(), type);
-      if (possibleLoot != null) {
-        compoundTag.putString(ENTITY_POSSIBLE_LOOT_TAG, gson.toJson(possibleLoot));
-      }
-      compoundTag.putString(ENTITY_LOOT_TABLE_TAG, lootTable.toString());
-    }
+    String subType = "";
 
     // Remove negative effects, which could cause side effects.
     if (entityData.contains(FIRE_TAG) && entityData.getShort(FIRE_TAG) > 0) {
@@ -186,6 +189,28 @@ public class CapturedMob extends Item {
     compoundTag.putString(ENTITY_NAME_TAG, name);
     compoundTag.putString(ENTITY_TYPE_TAG, type);
     compoundTag.putString(ENTITY_ID_TAG, livingEntity.getEncodeId());
+
+    // Store sub type for specific entities like productive bees.
+    if ("productivebees:configurable_bee".equals(type) && entityData.contains("type")) {
+      String beeType = entityData.getString("type");
+      if (beeType != null && !beeType.isEmpty()) {
+        subType = beeType;
+        compoundTag.putString(ENTITY_SUB_TYPE_TAG, beeType);
+      }
+    }
+
+    // Handle possible loot for tool tips.
+    ResourceLocation lootTable = livingEntity.getLootTable();
+    if (lootTable != null) {
+      List<String> possibleLoot =
+          LootManager.getRandomLootDropOverview(lootTable, livingEntity.level(), type, subType);
+      if (possibleLoot != null) {
+        compoundTag.putString(ENTITY_POSSIBLE_LOOT_TAG, gson.toJson(possibleLoot));
+      }
+      compoundTag.putString(ENTITY_LOOT_TABLE_TAG, lootTable.toString());
+    }
+
+    // Store color and sheared status for sheep.
     if (livingEntity instanceof Sheep sheep) {
       compoundTag.putInt(ENTITY_COLOR_TAG, sheep.getColor().getId());
       compoundTag.putBoolean(ENTITY_SHEARED, sheep.isSheared());

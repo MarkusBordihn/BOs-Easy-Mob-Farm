@@ -17,36 +17,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.menu.farm;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+package de.markusbordihn.easymobfarm.menu.farm.copper;
 
 import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
 
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.farm.iron.IronSwampFarm;
+import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
+import de.markusbordihn.easymobfarm.block.farm.copper.CopperBeeHiveFarm;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
 
-public class SwampFarmMenu extends MobFarmMenu {
+public class CopperBeeHiveFarmMenu extends MobFarmMenu {
 
-  public static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
-
-  public SwampFarmMenu(int windowIdIn, Inventory inventory) {
-    super(windowIdIn, inventory);
+  public CopperBeeHiveFarmMenu(int windowIdIn, Inventory inventory) {
+    super(windowIdIn, inventory, new SimpleContainer(containerSize),
+        new SimpleContainerData(MobFarmBlockEntityData.DATA_SIZE),
+        ModMenuTypes.COPPER_BEE_HIVE_FARM_MENU.get());
   }
 
-  public SwampFarmMenu(final int windowId, final Inventory playerInventory,
+  public CopperBeeHiveFarmMenu(final int windowId, final Inventory playerInventory,
       final Container container, final ContainerData containerData) {
-    super(windowId, playerInventory, container, containerData, ModMenuTypes.SWAMP_FARM_MENU.get());
+    super(windowId, playerInventory, container, containerData,
+        ModMenuTypes.COPPER_BEE_HIVE_FARM_MENU.get());
   }
 
   @Override
   public boolean mayPlaceCapturedMobType(String mobType) {
-    return IronSwampFarm.isAcceptedCapturedMobType(mobType);
+    return CopperBeeHiveFarm.isAcceptedCapturedMobType(mobType);
   }
 
 }
