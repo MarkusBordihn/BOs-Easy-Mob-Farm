@@ -270,6 +270,7 @@ public class BeeAnimal {
     BeeAnimal.BROWN_SHROOM_BEE,
     BeeAnimal.CHOCOLATE_MINING_BEE,
     BeeAnimal.COAL_BEE,
+    BeeAnimal.CONFIGURABLE_BEE,
     BeeAnimal.COPPER_BEE,
     BeeAnimal.CREEPER_BEE,
     BeeAnimal.CRYSTALLINE_BEE,
@@ -298,6 +299,7 @@ public class BeeAnimal {
     BeeAnimal.SILKY_BEE,
     BeeAnimal.SKELETAL_BEE,
     BeeAnimal.SLIMY_BEE,
+    BeeAnimal.SPAWN_EGG_CONFIGURABLE_BEE,
     BeeAnimal.STEEL_BEE,
     BeeAnimal.TEA_BEE,
     BeeAnimal.TERRASTEEL_BEE,
@@ -412,6 +414,7 @@ public class BeeAnimal {
   public static final String HOARDER_BEE = "productivebees:hoarder_bee";
   public static final String ICHOR_SLIMY_BEE = "productivebees:ichor_slimy_bee";
   public static final String IESNIUM_BEE = "productivebees:iesnium_bee";
+  public static final String IMPERIUM_BEE = "productivebees:imperium_bee";
   public static final String INERT_CRYSTAL_BEE = "productivebees:inert_crystal_bee";
   public static final String INFERIUM_BEE = "productivebees:inferium_bee";
   public static final String INSANIUM_BEE = "productivebees:insanium_bee";
@@ -441,7 +444,6 @@ public class BeeAnimal {
   public static final String MOLDAVITE_BEE = "productivebees:moldavite_bee";
   public static final String MOONSTONE_BEE = "productivebees:moonstone_bee";
   public static final String MORGANITE_BEE = "productivebees:morganite_bee";
-  public static final String IMPERIUM_BEE = "productivebees:imperium_bee";
   public static final String NEON_CUCKOO_BEE = "productivebees:neon_cuckoo_bee";
   public static final String NETHERITE_BEE = "productivebees:netherite_bee";
   public static final String NETHER_GOBBER_BEE = "productivebees:nether_gobber_bee";
@@ -465,6 +467,7 @@ public class BeeAnimal {
   public static final String PLASTIC_BEE = "productivebees:plastic_bee";
   public static final String PLATINUM_BEE = "productivebees:platinum_bee";
   public static final String PRISMARINE_BEE = "productivebees:prismarine_bee";
+  public static final String PRODUCTIVE_BEES_CONFIGURABLE = "productivebees:configurable_bee";
   public static final String PROSPERITY_BEE = "productivebees:prosperity_bee";
   public static final String PRUDENTIUM_BEE = "productivebees:prudentium_bee";
   public static final String PURE_BEE = "productivebees:pure_bee";
@@ -501,6 +504,7 @@ public class BeeAnimal {
   public static final String SOULSTEEL_BEE = "productivebees:soulsteel_bee";
   public static final String SOUL_LAVA_BEE = "productivebees:soul_lava_bee";
   public static final String SPACIAL_BEE = "productivebees:spacial_bee";
+  public static final String SPAWN_EGG_CONFIGURABLE_BEE = "productivebees:spawn_egg_configurable_bee";
   public static final String SPECTRUM_BEE = "productivebees:spectrum_bee";
   public static final String SPINEL_BEE = "productivebees:spinel_bee";
   public static final String SPIRIT_BEE = "productivebees:spirit_bee";

@@ -17,7 +17,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.block;
+package de.markusbordihn.easymobfarm.block.farm.special;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -39,7 +39,9 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 
 import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.entity.farm.CreativeMobFarmEntity;
+import de.markusbordihn.easymobfarm.block.MobFarmBlock;
+import de.markusbordihn.easymobfarm.block.ModBlocks;
+import de.markusbordihn.easymobfarm.block.entity.farm.special.CreativeMobFarmEntity;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
 public class CreativeMobFarm extends MobFarmBlock {

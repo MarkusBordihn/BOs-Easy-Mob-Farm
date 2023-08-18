@@ -27,13 +27,13 @@ import net.minecraft.world.entity.player.Inventory;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.client.screen.MobFarmScreen;
-import de.markusbordihn.easymobfarm.menu.farm.JungleFarmMenu;
+import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
-public class JungleFarmScreen extends MobFarmScreen<JungleFarmMenu> {
+public class JungleFarmScreen<T extends MobFarmMenu> extends MobFarmScreen<T> {
 
   public static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  public JungleFarmScreen(JungleFarmMenu menu, Inventory inventory, Component component) {
+  public JungleFarmScreen(T menu, Inventory inventory, Component component) {
     super(menu, inventory, component);
   }
 }

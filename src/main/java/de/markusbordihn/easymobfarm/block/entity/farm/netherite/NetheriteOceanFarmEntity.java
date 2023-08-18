@@ -37,7 +37,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.data.FarmTier;
-import de.markusbordihn.easymobfarm.menu.farm.OceanFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteOceanFarmMenu;
 
 @EventBusSubscriber
 public class NetheriteOceanFarmEntity extends MobFarmBlockEntity {
@@ -49,7 +49,8 @@ public class NetheriteOceanFarmEntity extends MobFarmBlockEntity {
     this(ModBlocks.NETHERITE_OCEAN_FARM_ENTITY.get(), blockPos, blockState);
   }
 
-  public NetheriteOceanFarmEntity(BlockEntityType<?> blockEntity, BlockPos blockPos, BlockState blockState) {
+  public NetheriteOceanFarmEntity(BlockEntityType<?> blockEntity, BlockPos blockPos,
+      BlockState blockState) {
     super(blockEntity, blockPos, blockState);
   }
 
@@ -69,22 +70,27 @@ public class NetheriteOceanFarmEntity extends MobFarmBlockEntity {
       }
     }
   }
+
   @Override
   protected Component getDefaultName() {
     return Component.translatable("container.easy_mob_farm.ocean_farm");
   }
+
   @Override
   protected AbstractContainerMenu createMenu(int windowId, Inventory inventory) {
-    return new OceanFarmMenu(windowId, inventory, this, this.dataAccess);
+    return new NetheriteOceanFarmMenu(windowId, inventory, this, this.dataAccess);
   }
+
   @Override
   public int getFarmProcessingTime() {
     return farmProcessingTime;
   }
+
   @Override
   public SoundEvent getFarmDropSound() {
     return farmDropSound;
   }
+
   @Override
   public FarmTier getFarmTier() {
     return FarmTier.NETHERITE;

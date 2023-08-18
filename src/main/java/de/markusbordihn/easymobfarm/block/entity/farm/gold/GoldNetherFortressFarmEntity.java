@@ -37,7 +37,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.data.FarmTier;
-import de.markusbordihn.easymobfarm.menu.farm.NetherFortressFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.gold.GoldNetherFortressFarmMenu;
 
 @EventBusSubscriber
 public class GoldNetherFortressFarmEntity extends MobFarmBlockEntity {
@@ -70,22 +70,27 @@ public class GoldNetherFortressFarmEntity extends MobFarmBlockEntity {
       }
     }
   }
+
   @Override
   protected Component getDefaultName() {
     return Component.translatable("container.easy_mob_farm.nether_fortress_farm");
   }
+
   @Override
   protected AbstractContainerMenu createMenu(int windowId, Inventory inventory) {
-    return new NetherFortressFarmMenu(windowId, inventory, this, this.dataAccess);
+    return new GoldNetherFortressFarmMenu(windowId, inventory, this, this.dataAccess);
   }
+
   @Override
   public int getFarmProcessingTime() {
     return farmProcessingTime;
   }
+
   @Override
   public SoundEvent getFarmDropSound() {
     return farmDropSound;
   }
+
   @Override
   public FarmTier getFarmTier() {
     return FarmTier.GOLD;

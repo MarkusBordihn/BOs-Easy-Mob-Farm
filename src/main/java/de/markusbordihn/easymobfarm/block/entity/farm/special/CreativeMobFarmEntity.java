@@ -17,7 +17,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.block.entity.farm;
+package de.markusbordihn.easymobfarm.block.entity.farm.special;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -36,7 +36,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
-import de.markusbordihn.easymobfarm.menu.farm.CreativeMobFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.special.CreativeMobFarmMenu;
 
 @EventBusSubscriber
 public class CreativeMobFarmEntity extends MobFarmBlockEntity {
@@ -59,7 +59,8 @@ public class CreativeMobFarmEntity extends MobFarmBlockEntity {
     log.info("{}: Creative Mob Farm Entity with drops every {}s", Constants.LOG_MOB_FARM_PREFIX,
         COMMON.creativeMobFarmProcessTime.get());
     String farmDropSoundName = COMMON.creativeMobFarmDropSound.get();
-    if (Boolean.TRUE.equals(COMMON.playDropSound.get()) && farmDropSoundName != null && !farmDropSoundName.isEmpty()) {
+    if (Boolean.TRUE.equals(COMMON.playDropSound.get()) && farmDropSoundName != null
+        && !farmDropSoundName.isEmpty()) {
       farmDropSound =
           ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(farmDropSoundName));
       if (farmDropSound != null) {
@@ -68,18 +69,22 @@ public class CreativeMobFarmEntity extends MobFarmBlockEntity {
       }
     }
   }
+
   @Override
   protected Component getDefaultName() {
     return Component.translatable("container.easy_mob_farm.creative_mob_farm");
   }
+
   @Override
   protected AbstractContainerMenu createMenu(int windowId, Inventory inventory) {
     return new CreativeMobFarmMenu(windowId, inventory, this, this.dataAccess);
   }
+
   @Override
   public int getFarmProcessingTime() {
     return farmProcessingTime;
   }
+
   @Override
   public SoundEvent getFarmDropSound() {
     return farmDropSound;

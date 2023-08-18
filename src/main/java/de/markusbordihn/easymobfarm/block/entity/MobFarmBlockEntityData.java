@@ -88,6 +88,7 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
   public int farmId;
   public String farmMobName = "";
   public String farmMobType = "";
+  public String farmMobSubType = "";
   public DyeColor farmMobColor = null;
   public EntityType<?> farmMobEntityType = null;
   public boolean farmMobShearedStatus = false;
@@ -165,6 +166,10 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
     return this.farmMobType;
   }
 
+  public String getFarmMobSubType() {
+    return this.farmMobSubType;
+  }
+
   public DyeColor getFarmMobColor() {
     return this.farmMobColor;
   }
@@ -211,10 +216,12 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
   public void syncContents(ServerPlayer player) {
     player.connection.send(getUpdatePacket());
   }
+
   @Override
   protected Component getDefaultName() {
     return Component.translatable("container.easy_mob_farm");
   }
+
   @Override
   public boolean stillValid(Player player) {
     Level level = this.level;
@@ -222,6 +229,7 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
         && player.distanceToSqr(this.worldPosition.getX() + 0.5D, this.worldPosition.getY() + 0.5D,
             this.worldPosition.getZ() + 0.5D) <= 64.0D;
   }
+
   @Override
   public boolean isEmpty() {
     for (ItemStack itemStack : this.items) {
@@ -231,10 +239,12 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
     }
     return true;
   }
+
   @Override
   public ItemStack getItem(int index) {
     return this.items.get(index);
   }
+
   @Override
   public void setItem(int index, ItemStack itemStack) {
     ItemStack itemStackFromIndex = this.items.get(index);
@@ -243,40 +253,49 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
     }
     this.items.set(index, itemStack);
   }
+
   @Override
   public int getContainerSize() {
     return this.items.size();
   }
+
   @Override
   public void clearContent() {
     this.items.clear();
   }
+
   @Override
   public ItemStack removeItem(int index, int count) {
     return ContainerHelper.removeItem(this.items, index, count);
   }
+
   @Override
   public ItemStack removeItemNoUpdate(int index) {
     return ContainerHelper.takeItem(this.items, index);
   }
+
   @Override
   protected AbstractContainerMenu createMenu(int windowId, Inventory inventory) {
     return new MobFarmMenu(windowId, inventory, this, this.dataAccess);
   }
+
   @Override
   public Packet<ClientGamePacketListener> getUpdatePacket() {
     return ClientboundBlockEntityDataPacket.create(this);
   }
+
   @Override
   public void onDataPacket(Connection net, ClientboundBlockEntityDataPacket dataPacket) {
     handleUpdateTag(dataPacket.getTag());
   }
+
   @Override
   public CompoundTag getUpdateTag() {
     CompoundTag updateCompoundTag = new CompoundTag();
     saveAdditional(updateCompoundTag);
     return updateCompoundTag;
   }
+
   @Override
   public void load(CompoundTag compoundTag) {
     super.load(compoundTag);
@@ -305,11 +324,13 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
     if (CapturedMobVirtual.isSupported(capturedMob)) {
       this.farmMobName = CapturedMobVirtual.getCapturedMob(capturedMob);
       this.farmMobType = CapturedMobVirtual.getCapturedMobType(capturedMob);
+      this.farmMobSubType = CapturedMobVirtual.getCapturedMobSubType(capturedMob);
       this.farmMobColor = CapturedMobVirtual.getCapturedMobColor(capturedMob);
       this.farmMobShearedStatus = CapturedMobVirtual.getCapturedMobShearedStatus(capturedMob);
       this.farmMobEntityType = CapturedMobVirtual.getCapturedMobEntityType(capturedMob);
     }
   }
+
   @Override
   public void saveAdditional(CompoundTag compoundTag) {
     super.saveAdditional(compoundTag);
