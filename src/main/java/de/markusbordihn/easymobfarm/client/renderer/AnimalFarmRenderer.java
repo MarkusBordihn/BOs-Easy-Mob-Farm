@@ -34,6 +34,7 @@ public class AnimalFarmRenderer extends MobFarmRendererBase<MobFarmBlockEntity> 
   public AnimalFarmRenderer(BlockEntityRendererProvider.Context context) {
     super(context);
   }
+
   @Override
   public void render(MobFarmBlockEntity blockEntity, float partialTicks, PoseStack poseStack,
       MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
@@ -42,6 +43,7 @@ public class AnimalFarmRenderer extends MobFarmRendererBase<MobFarmBlockEntity> 
     // Get unique farm id for caching, the renderer itself is a single instance.
     int farmId = blockEntity.getFarmId();
 
+    // Reset render helper if no mob is captured.
     if (!blockEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
       resetRenderHelper(farmId);
       return;
@@ -50,16 +52,20 @@ public class AnimalFarmRenderer extends MobFarmRendererBase<MobFarmBlockEntity> 
     // Get Render Helper for better performance and more FPS for other things.
     RenderHelper renderHelper = getRenderHelper(farmId, blockEntity);
     String farmMobType = blockEntity.getFarmMobType();
+    String farmMobSubType = blockEntity.getFarmMobSubType();
+    EntityType<?> farmMobEntityType = blockEntity.getFarmMobEntityType();
 
     // Render individual mob types if possible, because custom entity renderer is not optimized.
     // This makes a huge different with up to 20% more fps with a larger farm.
-    boolean renderedAnimal =
-        renderHelper.renderAnimal(poseStack, buffer, combinedLight, farmMobType);
+    if (renderHelper.renderAnimal(poseStack, buffer, combinedLight, farmMobType)
+        || renderHelper.renderBee(poseStack, buffer, combinedLight, farmMobType, farmMobSubType,
+            farmMobEntityType)) {
+      return;
+    }
 
     // Only render custom model if we are not able to render the model otherwise.
-    if (!renderedAnimal && blockEntity.getFarmMobEntityType() != null) {
-      EntityType<?> entityType = blockEntity.getFarmMobEntityType();
-      renderHelper.renderLivingEntity(poseStack, buffer, combinedLight, entityType);
+    if (farmMobEntityType != null) {
+      renderHelper.renderLivingEntity(poseStack, buffer, combinedLight, farmMobEntityType);
     }
   }
 

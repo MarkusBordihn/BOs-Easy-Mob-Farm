@@ -31,6 +31,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -118,6 +119,14 @@ public class RenderHelper {
     }
   }
 
+  public void renderCustomEntity(Entity entity, PoseStack poseStack, MultiBufferSource buffer,
+      int combinedLight) {
+    if (entity != null) {
+      this.renderModels.getEntityRendererDispatcher().render(entity, 0, 0, 0, 1F, this.headRotation,
+          poseStack, buffer, combinedLight);
+    }
+  }
+
   public float getCustomEntityScale() {
     return this.renderModels.getCustomEntityScale();
   }
@@ -126,6 +135,14 @@ public class RenderHelper {
       double y, double z, int combinedLight) {
     renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
         this.renderModels.getBeeRenderer(), this.renderModels.getBee());
+  }
+
+  public void renderProductiveBee(PoseStack poseStack, MultiBufferSource buffer, float scale,
+      double x, double y, double z, int combinedLight, String beeType, EntityType<?> entityType) {
+    CompoundTag compoundTag = new CompoundTag();
+    compoundTag.putString("type", beeType);
+    Entity entity = this.renderModels.getCustomEntity(entityType, compoundTag);
+    renderCustomModel(poseStack, buffer, scale, x, y, z, combinedLight, entity);
   }
 
   public void renderBlaze(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
@@ -272,6 +289,23 @@ public class RenderHelper {
     return true;
   }
 
+  public boolean renderBee(PoseStack poseStack, MultiBufferSource buffer, int combinedLight,
+      String farmMobType, String farmMobSubType, EntityType<?> entityType) {
+    // Render Bee using their specific Renderer and predefined scaling and position.
+    switch (farmMobType) {
+      case BeeAnimal.BEE:
+        renderBee(poseStack, buffer, 0.5F, 0D, 0.25D, 2D / 16D, combinedLight);
+        break;
+      case BeeAnimal.PRODUCTIVE_BEES_CONFIGURABLE:
+        renderProductiveBee(poseStack, buffer, 0.5F, 0D, 0.25D, 2D / 16D, combinedLight,
+            farmMobSubType, entityType);
+        break;
+      default:
+        return false;
+    }
+    return true;
+  }
+
   public boolean renderMonster(PoseStack poseStack, MultiBufferSource buffer, int combinedLight,
       String farmMobType) {
     // Render Monster using their specific Renderer and predefined scaling and position.
@@ -393,6 +427,20 @@ public class RenderHelper {
       poseStack.mulPose((new Quaternionf()).rotateY(rotationY * Constants.PI_180DEG));
       poseStack.scale(scale, scale, scale);
       renderCustomEntity(entityType, poseStack, buffer, combinedLight);
+      poseStack.popPose();
+    }
+  }
+
+  @SuppressWarnings("java:S107")
+  public void renderCustomModel(PoseStack poseStack, MultiBufferSource buffer, float scale,
+      double x, double y, double z, int combinedLight, Entity entity) {
+    if (entity != null) {
+      poseStack.pushPose();
+      poseStack.translate(0.5D, 1D / 16D, 0.5D);
+      poseStack.mulPose(getBlockRotation());
+      poseStack.translate(x, y, z);
+      poseStack.scale(scale, scale, scale);
+      renderCustomEntity(entity, poseStack, buffer, combinedLight);
       poseStack.popPose();
     }
   }

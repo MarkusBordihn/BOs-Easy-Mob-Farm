@@ -27,7 +27,7 @@ import net.minecraft.world.entity.player.Inventory;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.client.screen.MobFarmScreen;
-import de.markusbordihn.easymobfarm.menu.farm.CreativeMobFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.special.CreativeMobFarmMenu;
 
 public class CreativeMobFarmScreen extends MobFarmScreen<CreativeMobFarmMenu> {
 

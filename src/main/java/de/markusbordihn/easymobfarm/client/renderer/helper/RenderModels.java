@@ -47,7 +47,7 @@ import net.minecraft.client.renderer.entity.SkeletonRenderer;
 import net.minecraft.client.renderer.entity.SpiderRenderer;
 import net.minecraft.client.renderer.entity.SquidRenderer;
 import net.minecraft.client.renderer.entity.ZombieRenderer;
-
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.GlowSquid;
@@ -172,6 +172,16 @@ public class RenderModels {
   public Entity getCustomEntity(EntityType<?> entityType) {
     if (this.customEntity == null && entityType != null) {
       this.customEntity = entityType.create(getLevel());
+    }
+    return this.customEntity;
+  }
+
+  public Entity getCustomEntity(EntityType<?> entityType, CompoundTag compoundTag) {
+    if (this.customEntity == null && entityType != null) {
+      this.customEntity = entityType.create(getLevel());
+      if (compoundTag != null) {
+        this.customEntity.load(compoundTag);
+      }
     }
     return this.customEntity;
   }

@@ -29,6 +29,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.Lists;
+
 import com.mojang.authlib.GameProfile;
 
 import net.minecraft.nbt.CompoundTag;
@@ -94,12 +95,12 @@ public class LootManager {
   }
 
   public static List<String> getRandomLootDropOverview(ResourceLocation lootTableLocation,
-      Level level, String mobType) {
+      Level level, String mobType, String mobSubType) {
     // Roll's the loot a specific time (default: 2) to get more accurate results.
     List<String> lootDropList = Lists.newArrayList();
     for (int i = 0; i < COMMON.lootPreviewRolls.get(); i++) {
       List<ItemStack> lootDrops =
-          getFilteredRandomLootDrop(lootTableLocation, ItemStack.EMPTY, level, mobType);
+          getFilteredRandomLootDrop(lootTableLocation, ItemStack.EMPTY, level, mobType, mobSubType);
 
       // Use a internal cache to improve loot prediction over time.
       lootDropList = cacheLootDrops(lootTableLocation, lootDrops);
@@ -110,7 +111,7 @@ public class LootManager {
   }
 
   public static List<ItemStack> getRandomLootDrops(ResourceLocation lootTableLocation,
-      ItemStack weaponItem, Level level) {
+      ItemStack weaponItem, Level level, String mobType, String mobSubType) {
     if (lootTableLocation == null || level == null || level.getServer() == null) {
       log.error(Constants.LOOT_MANAGER_PREFIX + "Unable to get loot drops for {} and {}",
           lootTableLocation, level);
@@ -147,10 +148,42 @@ public class LootManager {
       if (lootDrops.isEmpty() && !lootTableLocation.equals(new ResourceLocation("minecraft:empty"))
           && !lootTableLocation.equals(new ResourceLocation("minecraft:entities/bee"))
           && !lootTableLocation.equals(new ResourceLocation("minecraft:entities/blaze"))
-          && !"productivebees".equals(lootTableLocation.getNamespace())) {
+          && !"productivebees".equals(lootTableLocation.getNamespace())
+          && !"alexsmobs".equals(lootTableLocation.getNamespace())) {
         log.debug(Constants.LOOT_MANAGER_PREFIX + "Loot drop for {} with loot table {} was empty!",
             player, lootTableLocation);
       }
+
+      // Productive Bees support (1 out of 3)
+      if (lootDrops.isEmpty() && Constants.PRODUCTIVE_BEES_LOADED
+          && "productivebees:entities/configurable_bee".equals(lootTableLocation.toString())
+          && random.nextInt(3) == 0) {
+
+        // Getting typical honeycomb from the registry.
+        Item honeyCombGhostly =
+            ForgeRegistries.ITEMS.getValue(new ResourceLocation(PRODUCTIVE_BEES_HONEYCOMB_GHOSTLY));
+        Item honeyCombMilky =
+            ForgeRegistries.ITEMS.getValue(new ResourceLocation(PRODUCTIVE_BEES_HONEYCOMB_MILKY));
+        Item honeyCombPowdery =
+            ForgeRegistries.ITEMS.getValue(new ResourceLocation(PRODUCTIVE_BEES_HONEYCOMB_POWDERY));
+        Item configurableHoneycomb = ForgeRegistries.ITEMS
+            .getValue(new ResourceLocation(PRODUCTIVE_BEES_CONFIGURABLE_HONEYCOMB));
+
+        // Productive bees honeycomb support.
+        if (mobType.equals(BeeAnimal.GHOSTLY_BEE) && honeyCombGhostly != null) {
+          lootDrops.add(new ItemStack(honeyCombGhostly));
+        } else if (mobType.equals(BeeAnimal.RANCHER_BEE) && honeyCombMilky != null) {
+          lootDrops.add(new ItemStack(honeyCombMilky));
+        } else if (mobType.equals(BeeAnimal.CREEPER_BEE) && honeyCombPowdery != null) {
+          lootDrops.add(new ItemStack(honeyCombPowdery));
+        } else if (mobSubType != null && !mobSubType.isEmpty() && configurableHoneycomb != null) {
+          ItemStack honeyComb = new ItemStack(configurableHoneycomb);
+          CompoundTag compoundTag = honeyComb.getOrCreateTagElement("EntityTag");
+          compoundTag.putString("type", mobSubType);
+          lootDrops.add(honeyComb);
+        }
+      }
+
       return lootDrops;
     }
     return Lists.newArrayList();
@@ -164,19 +197,23 @@ public class LootManager {
       return Lists.newArrayList();
     } else {
       String mobType = "";
+      String mobSubType = "";
       if (capturedMob.getItem() instanceof CapturedMob) {
         mobType = CapturedMob.getCapturedMobType(capturedMob);
+        mobSubType = CapturedMob.getCapturedMobSubType(capturedMob);
       } else if (CapturedMobVirtual.isSupported(capturedMob)) {
         mobType = CapturedMobVirtual.getCapturedMobType(capturedMob);
+        mobSubType = CapturedMobVirtual.getCapturedMobSubType(capturedMob);
       }
-      return getFilteredRandomLootDrop(lootTable, weaponItem, level, mobType);
+      return getFilteredRandomLootDrop(lootTable, weaponItem, level, mobType, mobSubType);
     }
   }
 
   public static List<ItemStack> getFilteredRandomLootDrop(ResourceLocation lootTableLocation,
-      ItemStack weaponItem, Level level, String mobType) {
+      ItemStack weaponItem, Level level, String mobType, String mobSubType) {
 
-    List<ItemStack> lootDrops = getRandomLootDrops(lootTableLocation, weaponItem, level);
+    List<ItemStack> lootDrops =
+        getRandomLootDrops(lootTableLocation, weaponItem, level, mobType, mobSubType);
     List<ItemStack> filteredLootDrops = filterLootDrop(lootDrops, mobType);
 
     // Cache each loot drop for more accurate loot preview
@@ -200,46 +237,12 @@ public class LootManager {
       lootDrops.add(new ItemStack(Items.EGG));
     }
 
-    // Bee drop support.
-    if (Boolean.TRUE.equals(COMMON.beeDropHoneycomb.get() && mobType.equals(BeeAnimal.BEE))
+    // Bee and Productive Bees drop support.
+    if (Boolean.TRUE.equals(COMMON.beeDropHoneycomb.get())
+        && (mobType.equals(BeeAnimal.BEE)
+            || (Constants.PRODUCTIVE_BEES_LOADED && BeeAnimal.ProductiveBees.contains(mobType)))
         && random.nextInt(3) == 0) {
       lootDrops.add(new ItemStack(Items.HONEYCOMB));
-    }
-
-    // Productive Bees support
-    if (Boolean.TRUE.equals(COMMON.beeDropHoneycomb.get() && Constants.PRODUCTIVE_BEES_LOADED)
-        && BeeAnimal.ProductiveBees.contains(mobType)) {
-      // Get the configurable honeycomb from the forge item registry.
-      Item configurableHoneycomb = ForgeRegistries.ITEMS
-          .getValue(new ResourceLocation(PRODUCTIVE_BEES_CONFIGURABLE_HONEYCOMB));
-
-      if (random.nextInt(3) == 0) {
-        lootDrops.add(new ItemStack(Items.HONEYCOMB));
-      } else if (random.nextInt(3) == 1 && configurableHoneycomb != null) {
-        // Getting typical honeycomb from the registry.
-        Item honeyCombGhostly =
-            ForgeRegistries.ITEMS.getValue(new ResourceLocation(PRODUCTIVE_BEES_HONEYCOMB_GHOSTLY));
-        Item honeyCombMilky =
-            ForgeRegistries.ITEMS.getValue(new ResourceLocation(PRODUCTIVE_BEES_HONEYCOMB_MILKY));
-        Item honeyCombPowdery =
-            ForgeRegistries.ITEMS.getValue(new ResourceLocation(PRODUCTIVE_BEES_HONEYCOMB_POWDERY));
-
-        // Productive bees honeycomb support.
-        if (mobType.equals(BeeAnimal.GHOSTLY_BEE) && honeyCombGhostly != null) {
-          lootDrops.add(new ItemStack(honeyCombGhostly));
-        } else if (mobType.equals(BeeAnimal.RANCHER_BEE) && honeyCombMilky != null) {
-          lootDrops.add(new ItemStack(honeyCombMilky));
-        } else if (mobType.equals(BeeAnimal.CREEPER_BEE) && honeyCombPowdery != null) {
-          lootDrops.add(new ItemStack(honeyCombPowdery));
-        } else {
-          // If no specific honeycomb is found, get the default one and set the entity type.
-          String honeyCompType = mobType.replace("_bee", "").replace("_mining", "");
-          ItemStack honeyComb = new ItemStack(configurableHoneycomb);
-          CompoundTag compoundTag = honeyComb.getOrCreateTagElement("EntityTag");
-          compoundTag.putString("type", honeyCompType);
-          lootDrops.add(honeyComb);
-        }
-      }
     }
 
     // Check each single loot drop.
@@ -316,9 +319,26 @@ public class LootManager {
       lootDropList.addAll(lootDropListCache);
     }
     for (ItemStack lootDrop : lootDrops) {
-      lootDropList.add(lootDrop.getItem().getDescriptionId());
+      String itemDescriptionId = lootDrop.getItem().getDescriptionId();
+      if (itemDescriptionId == null || itemDescriptionId.isEmpty()) {
+        continue;
+      }
+
+      // Productive Bees comb support.
+      if ("item.productivebees.configurable_honeycomb".equals(itemDescriptionId)) {
+        CompoundTag compoundTag = lootDrop.getOrCreateTagElement("EntityTag");
+        String combType = compoundTag.getString("type");
+        if (combType != null && !combType.isEmpty() && combType.contains(":")) {
+          itemDescriptionId = "item.productivebees.honeycomb_" + combType.split(":")[1];
+        }
+      }
+      lootDropList.add(itemDescriptionId);
     }
-    return lootTableDropListCache.put(lootTableLocation, lootDropList.stream().distinct().toList());
+
+    // Sort and remove duplicates from loot drop list.
+    List<String> sortedLootDropList = lootDropList.stream().distinct().sorted().toList();
+    lootTableDropListCache.put(lootTableLocation, sortedLootDropList);
+    return sortedLootDropList;
   }
 
 }
