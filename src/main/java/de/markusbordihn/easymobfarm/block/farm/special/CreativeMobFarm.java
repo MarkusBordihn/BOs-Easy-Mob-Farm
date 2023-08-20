@@ -56,42 +56,45 @@ public class CreativeMobFarm extends MobFarmBlock {
     super(properties);
   }
 
-  public static boolean isAcceptedCapturedMobType(String mobType) {
-    return acceptedMobTypes.isEmpty() || acceptedMobTypes.contains(mobType);
-  }
-
   public static int getLightLevel(BlockState blockState) {
     return 15;
   }
+
   @Override
   public Set<String> getAcceptedMobTypes() {
-    return new HashSet<>();
+    return acceptedMobTypes;
   }
+
   @Override
   public boolean isAcceptedMobType(String mobType) {
     return mobType != null && !mobType.isBlank();
   }
+
   @Override
   public String getFarmDescriptionId() {
     return "supported_creative";
   }
+
   @Override
   public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-    return new CreativeMobFarmEntity(ModBlocks.CREATIVE_MOB_FARM_ENTITY.get(), blockPos, blockState);
+    return new CreativeMobFarmEntity(ModBlocks.CREATIVE_MOB_FARM_ENTITY.get(), blockPos,
+        blockState);
   }
+
   @Override
   protected void openContainer(Level level, BlockPos blockPos, Player player) {
     if (level.getBlockEntity(blockPos) instanceof CreativeMobFarmEntity creativeMobFarmEntity) {
       player.openMenu(creativeMobFarmEntity);
     }
   }
+
   @Override
   public InteractionResult consumeCapturedMob(Level level, BlockPos blockPos, BlockState blockState,
       BlockEntity blockEntity, ItemStack itemStack, UseOnContext context) {
     CreativeMobFarmEntity creativeMobFarmEntity = (CreativeMobFarmEntity) blockEntity;
     creativeMobFarmEntity.updateLevel(level);
     if (!creativeMobFarmEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
-      creativeMobFarmEntity.setItem(MobFarmMenu.CAPTURED_MOB_SLOT,itemStack);
+      creativeMobFarmEntity.setItem(MobFarmMenu.CAPTURED_MOB_SLOT, itemStack);
       Player player = context.getPlayer();
       if (player != null) {
         player.setItemInHand(context.getHand(), ItemStack.EMPTY);
@@ -100,6 +103,7 @@ public class CreativeMobFarm extends MobFarmBlock {
     }
     return InteractionResult.PASS;
   }
+
   @Override
   @Nullable
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState,

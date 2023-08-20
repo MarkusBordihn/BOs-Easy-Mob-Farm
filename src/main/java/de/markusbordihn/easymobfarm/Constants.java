@@ -40,6 +40,7 @@ public final class Constants {
   public static final String MESSAGE_PREFIX = "message.easy_mob_farm.";
   public static final String MINECRAFT_PREFIX = "minecraft";
   public static final String TEXT_PREFIX = "text.easy_mob_farm.";
+  public static final String HELP_TEXT_PREFIX = "help_text.easy_mob_farm.";
   public static final String BLOCK_TEXT_PREFIX = "block.easy_mob_farm.";
 
   // Special Mob Farm
