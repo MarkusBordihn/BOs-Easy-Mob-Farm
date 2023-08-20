@@ -45,8 +45,8 @@ public class IronAnimalPlainsFarmMenu extends MobFarmMenu {
   }
 
   @Override
-  public boolean mayPlaceCapturedMobType(String mobType) {
-    return IronAnimalPlainsFarm.isAcceptedCapturedMobType(mobType);
+  public String getAcceptedMobTypeName() {
+    return IronAnimalPlainsFarm.NAME;
   }
 
 }

@@ -5,6 +5,16 @@
 This change log includes the summarized changes.
 For the full changelog, please go to the [Git Hub History][history] instead.
 
+### 2023.08.19
+
+Note: Please make sure to backup your world before updating to this version!
+The version tries automatically to convert existing mob farms to the new mob farms.
+It's recommended to backup your world before updating to make sure that nothing gets lost in the case of an error.
+
+- Added deny list for mob farms to allow better customization.
+- Moved documentation to wiki.
+- Fixed smaller issues.
+
 ### 2023.08.16
 
 - Added full support for [Productive Bees](https://www.curseforge.com/minecraft/mc-mods/productivebees) for the Bee Hive Farm.

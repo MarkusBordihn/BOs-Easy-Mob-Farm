@@ -45,8 +45,8 @@ public class GoldNetherFortressFarmMenu extends MobFarmMenu {
   }
 
   @Override
-  public boolean mayPlaceCapturedMobType(String mobType) {
-    return GoldNetherFortressFarm.isAcceptedCapturedMobType(mobType);
+  public String getAcceptedMobTypeName() {
+    return GoldNetherFortressFarm.NAME;
   }
 
 }

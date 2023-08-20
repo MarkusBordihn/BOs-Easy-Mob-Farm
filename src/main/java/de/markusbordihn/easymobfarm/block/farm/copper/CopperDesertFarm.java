@@ -59,13 +59,8 @@ public class CopperDesertFarm extends MobFarmBlock {
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    acceptedMobTypes = new HashSet<>(COMMON.copperDesertFarmMobs.get());
+    acceptedMobTypes = new HashSet<>(COMMON.copperDesertFarmAllowedMobs.get());
     logAcceptedMobTypes(NAME, acceptedMobTypes);
-  }
-
-  public static boolean isAcceptedCapturedMobType(String mobType) {
-    return acceptedMobTypes == null || acceptedMobTypes.isEmpty()
-        || acceptedMobTypes.contains(mobType);
   }
 
   @Override

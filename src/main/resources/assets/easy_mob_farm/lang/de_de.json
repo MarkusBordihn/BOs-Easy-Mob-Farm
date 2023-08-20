@@ -44,6 +44,7 @@
 
   "text.easy_mob_farm.capture": "► Ziel-Mob anvisieren und Rechtsklick zum Fangen",
   "text.easy_mob_farm.catchable_mobs": "Fangbare Mobs:",
+  "text.easy_mob_farm.catchable_mobs_all": "Kann alle Mobs fangen.",
   "text.easy_mob_farm.catched_mob": "Gefangenes Mob: %1$s",
   "text.easy_mob_farm.mob_catching_luck": "Glück beim Mob-Fangen: 1 von %1$s",
   "text.easy_mob_farm.health": "Gesundheit: %d",
@@ -55,10 +56,14 @@
   "text.easy_mob_farm.supported_mobs": "Die Mob-Farm kann folgende Arten von Mobs verarbeiten:",
   "text.easy_mob_farm.supported_monster": "Die Monsterfarm kann folgende Arten von Monstern verarbeiten:",
   "text.easy_mob_farm.supported_all": "Die Mob-Farm kann alle Arten von Mobs verarbeiten",
-
   "text.easy_mob_farm.next_drop_secs": "Nächster Drop: %ds",
   "text.easy_mob_farm.drop_time_secs": "Drop-Zeit: alle %ds",
   "text.easy_mob_farm.warning_full": "Ausgabeslots sind voll!",
+
+  "help_text.easy_mob_farm.capture_slot": "Platziere einen gefangenen Mob in diesem Slot.\nDiese Farm unterstützt die folgenden Mobs:\n%1$s",
+  "help_text.easy_mob_farm.capture_slot_all": "Platziere einen gefangenen Mob in diesem Slot.\nAlle Mobs werden unterstützt.",
+  "help_text.easy_mob_farm.weapon_slot": "Platziere eine Waffe in diesem Slot,\num bessere Mob-Drops zu erhalten.",
+  "help_text.easy_mob_farm.experience_slot": "Platziere einen %1$s in diesem Slot,\num Erfahrungspunkte als\n%2$s für deinen gefangenen Mob zu erhalten.",
 
   "message.easy_mob_farm.warning_full": "Deine Einfache Mob-Farm (%1$s) bei %2$s ist voll und kann nicht speichern: %3$s!",
 
