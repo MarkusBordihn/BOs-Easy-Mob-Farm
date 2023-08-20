@@ -44,6 +44,7 @@
 
   "text.easy_mob_farm.capture": "► Target mob and right click to capture",
   "text.easy_mob_farm.catchable_mobs": "Catchable Mobs:",
+  "text.easy_mob_farm.catchable_mobs_all": "Can catch all mobs",
   "text.easy_mob_farm.catched_mob": "Catched Mob: %1$s",
   "text.easy_mob_farm.mob_catching_luck": "Mob Catching Luck: 1 out of %1$s",
   "text.easy_mob_farm.health": "Health: %d",
@@ -55,10 +56,14 @@
   "text.easy_mob_farm.supported_mobs": "The mob farm is able to process the following type of mobs:",
   "text.easy_mob_farm.supported_monster": "The monster farm is able to process the following type of monster:",
   "text.easy_mob_farm.supported_all": "The mob farm is able to process all types of mobs",
-
   "text.easy_mob_farm.next_drop_secs": "Next Drop: %ds",
   "text.easy_mob_farm.drop_time_secs": "Drop Time: every %ds",
   "text.easy_mob_farm.warning_full": "Output slots are full!",
+
+  "help_text.easy_mob_farm.capture_slot": "Place a capture mob into this slot.\nThis farm supports the following mobs:\n%1$s",
+  "help_text.easy_mob_farm.capture_slot_all": "Place a capture mob into this slot.\nAll mobs are supported.",
+  "help_text.easy_mob_farm.weapon_slot": "Place a weapon in this slot\nto get better mob drops.",
+  "help_text.easy_mob_farm.experience_slot": "Place a %1$s in this slot\nto get experience points as\n%2$s for your catched mob.",
 
   "message.easy_mob_farm.warning_full": "Your Easy Mob Farm (%1$s) at %2$s is full and unable to store: %3$s!",
 

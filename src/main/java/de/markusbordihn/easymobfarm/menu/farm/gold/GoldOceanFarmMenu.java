@@ -45,8 +45,8 @@ public class GoldOceanFarmMenu extends MobFarmMenu {
   }
 
   @Override
-  public boolean mayPlaceCapturedMobType(String mobType) {
-    return GoldOceanFarm.isAcceptedCapturedMobType(mobType);
+  public String getAcceptedMobTypeName() {
+    return GoldOceanFarm.NAME;
   }
 
 }

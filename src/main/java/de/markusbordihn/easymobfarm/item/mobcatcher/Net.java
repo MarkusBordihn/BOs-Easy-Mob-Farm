@@ -25,6 +25,8 @@ import de.markusbordihn.easymobfarm.item.MobCatcherItem;
 
 public class Net extends MobCatcherItem {
 
+  public static final String NAME = "Net";
+
   public Net(Item.Properties properties) {
     super(properties);
   }
@@ -37,6 +39,11 @@ public class Net extends MobCatcherItem {
   @Override
   public int getMobCatchingLuckConfig() {
     return 0;
+  }
+
+  @Override
+  public String getMobCatcherItemName() {
+    return NAME;
   }
 
 }

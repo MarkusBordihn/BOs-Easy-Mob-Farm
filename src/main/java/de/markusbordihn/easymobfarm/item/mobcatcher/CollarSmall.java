@@ -19,55 +19,26 @@
 
 package de.markusbordihn.easymobfarm.item.mobcatcher;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import net.minecraft.world.item.Item;
-
-import net.minecraftforge.event.level.LevelEvent;
-import net.minecraftforge.event.server.ServerAboutToStartEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 import de.markusbordihn.easymobfarm.item.MobCatcherItem;
 
-@EventBusSubscriber
 public class CollarSmall extends MobCatcherItem {
 
-  private static Set<String> acceptedMobTypes = new HashSet<>();
+  public static final String NAME = "Collar Small";
 
   public CollarSmall(Item.Properties properties) {
     super(properties);
   }
 
-  @SubscribeEvent
-  public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    acceptedMobTypes = new HashSet<>(COMMON.collarSmallMobs.get());
-    log.info("The collar small requires {} luck and is able to catch the following mobs: {}",
-        COMMON.collarSmallMobCatchingLuck.get(), acceptedMobTypes);
-  }
-
-  @SubscribeEvent
-  public static void handleWorldEventLoad(LevelEvent.Load event) {
-    if (event.getLevel().isClientSide() && acceptedMobTypes.isEmpty()) {
-      acceptedMobTypes = new HashSet<>(COMMON.collarSmallMobs.get());
-    }
-  }
-
-  @Override
-  public Set<String> getAcceptedMobTypes() {
-    return acceptedMobTypes;
-  }
-
-  @Override
-  public boolean canCatchMobType(String mobType) {
-    return acceptedMobTypes == null || acceptedMobTypes.isEmpty()
-        || acceptedMobTypes.contains(mobType);
-  }
-
   @Override
   public int getMobCatchingLuckConfig() {
     return COMMON.collarSmallMobCatchingLuck.get();
+  }
+
+  @Override
+  public String getMobCatcherItemName() {
+    return NAME;
   }
 
 }

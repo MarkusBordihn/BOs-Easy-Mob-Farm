@@ -45,8 +45,8 @@ public class NetheriteMonsterPlainsCaveFarmMenu extends MobFarmMenu {
   }
 
   @Override
-  public boolean mayPlaceCapturedMobType(String mobType) {
-    return NetheriteMonsterPlainsCaveFarm.isAcceptedCapturedMobType(mobType);
+  public String getAcceptedMobTypeName() {
+    return NetheriteMonsterPlainsCaveFarm.NAME;
   }
 
 }
