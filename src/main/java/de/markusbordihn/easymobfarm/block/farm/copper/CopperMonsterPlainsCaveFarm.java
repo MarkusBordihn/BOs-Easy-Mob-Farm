@@ -51,7 +51,7 @@ public class CopperMonsterPlainsCaveFarm extends MobFarmBlock {
   public static final String NAME = "copper_monster_plains_cave_farm";
 
   private static Set<String> acceptedMobTypes =
-      new HashSet<>(COMMON.copperMonsterPlainsCaveFarmMobs.get());
+      new HashSet<>(COMMON.copperMonsterPlainsCaveFarmAllowedMobs.get());
 
   public CopperMonsterPlainsCaveFarm(BlockBehaviour.Properties properties) {
     super(properties);
@@ -59,14 +59,10 @@ public class CopperMonsterPlainsCaveFarm extends MobFarmBlock {
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    acceptedMobTypes = new HashSet<>(COMMON.copperMonsterPlainsCaveFarmMobs.get());
+    acceptedMobTypes = new HashSet<>(COMMON.copperMonsterPlainsCaveFarmAllowedMobs.get());
     logAcceptedMobTypes(NAME, acceptedMobTypes);
   }
 
-  public static boolean isAcceptedCapturedMobType(String mobType) {
-    return acceptedMobTypes == null || acceptedMobTypes.isEmpty()
-        || acceptedMobTypes.contains(mobType);
-  }
 
   @Override
   public Set<String> getAcceptedMobTypes() {

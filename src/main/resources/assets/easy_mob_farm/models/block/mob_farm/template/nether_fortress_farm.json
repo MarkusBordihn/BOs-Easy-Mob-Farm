@@ -3,7 +3,7 @@
 	"ambientocclusion": false,
 	"textures": {
 		"glass": "block/glass",
-		"edge": "material_elements:block/steel_rod",
+		"edge": "easy_mob_farm:block/iron_rod",
 		"particle": "block/netherrack",
 		"netherrack": "block/netherrack",
 		"soul_sand": "block/soul_sand",

@@ -19,55 +19,26 @@
 
 package de.markusbordihn.easymobfarm.item.mobcatcher;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import net.minecraft.world.item.Item;
-
-import net.minecraftforge.event.server.ServerAboutToStartEvent;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 import de.markusbordihn.easymobfarm.item.MobCatcherItem;
 
-@EventBusSubscriber
 public class NetheriteLasso extends MobCatcherItem {
 
-  private static Set<String> acceptedMobTypes = new HashSet<>();
+  public static final String NAME = "Netherite Lasso";
 
   public NetheriteLasso(Item.Properties properties) {
     super(properties);
   }
 
-  @SubscribeEvent
-  public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    acceptedMobTypes = new HashSet<>(COMMON.netheriteLassoMobs.get());
-    log.info("The netherite lasso requires {} luck and is able to catch the following mobs: {}",
-        COMMON.netheriteLassoMobCatchingLuck.get(), acceptedMobTypes);
-  }
-
-  @SubscribeEvent
-  public static void handleWorldEventLoad(WorldEvent.Load event) {
-    if (event.getWorld().isClientSide() && acceptedMobTypes.isEmpty()) {
-      acceptedMobTypes = new HashSet<>(COMMON.netheriteLassoMobs.get());
-    }
-  }
-
-  @Override
-  public Set<String> getAcceptedMobTypes() {
-    return acceptedMobTypes;
-  }
-
-  @Override
-  public boolean canCatchMobType(String mobType) {
-    return acceptedMobTypes == null || acceptedMobTypes.isEmpty()
-        || acceptedMobTypes.contains(mobType);
-  }
-
   @Override
   public int getMobCatchingLuckConfig() {
     return COMMON.netheriteLassoMobCatchingLuck.get();
+  }
+
+  @Override
+  public String getMobCatcherItemName() {
+    return NAME;
   }
 
 }

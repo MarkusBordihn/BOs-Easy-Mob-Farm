@@ -19,7 +19,6 @@
 
 package de.markusbordihn.easymobfarm.item;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import javax.annotation.Nullable;
@@ -50,9 +49,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.CapturedMobCompatible;
 import de.markusbordihn.easymobfarm.config.CommonConfig;
+import de.markusbordihn.easymobfarm.config.MobTypeManager;
 import de.markusbordihn.easymobfarm.text.TranslatableText;
 
 public class MobCatcherItem extends CapturedMob {
+
+  public static final String NAME = "Mob Catcher";
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
@@ -60,24 +62,43 @@ public class MobCatcherItem extends CapturedMob {
 
   private static final String DEFAULT_DESCRIPTION_ID = "supported_mobs";
 
-  public static final Set<String> ACCEPTED_MOB_TYPES = Collections.emptySet();
-
   private static int mobCatchingLuck = 3;
 
   public MobCatcherItem(Item.Properties properties) {
     super(properties);
   }
 
+  public Set<String> getGeneralAllowedMobTypes() {
+    return MobTypeManager.getGeneralAllowedMobTypes();
+  }
+
+  public Set<String> getGeneralDeniedMobTypes() {
+    return MobTypeManager.getGeneralDeniedMobTypes();
+  }
+
   public Set<String> getAcceptedMobTypes() {
-    return ACCEPTED_MOB_TYPES;
+    return MobTypeManager.getAcceptedMobTypes(getMobCatcherItemName());
   }
 
-  public boolean canCatchMob(LivingEntity livingEntity) {
-    return livingEntity instanceof LivingEntity;
+  public Set<String> getDeniedMobTypes() {
+    return MobTypeManager.getDeniedMobTypes(getMobCatcherItemName());
   }
 
-  public boolean canCatchMobType(String mobType) {
-    return !mobType.isEmpty();
+  public String getMobCatcherItemName() {
+    return NAME;
+  }
+
+  public boolean isAcceptedMob(LivingEntity livingEntity) {
+    if (livingEntity instanceof LivingEntity) {
+      ResourceLocation registryName = livingEntity.getType().getRegistryName();
+      String mobType = registryName != null ? registryName.toString() : null;
+      return isAcceptedMobType(mobType);
+    }
+    return false;
+  }
+
+  public boolean isAcceptedMobType(String mobType) {
+    return MobTypeManager.isAcceptedMobType(getMobCatcherItemName(), mobType);
   }
 
   public String getCatchingItemDescriptionId() {
@@ -94,7 +115,11 @@ public class MobCatcherItem extends CapturedMob {
 
   public void appendHoverTextCatchableMobs(List<Component> tooltipList) {
     Set<String> acceptedMobTypes = getAcceptedMobTypes();
-    if (!acceptedMobTypes.isEmpty()) {
+
+    if (acceptedMobTypes.isEmpty()) {
+      tooltipList.add(new TranslatableComponent(Constants.TEXT_PREFIX + "catchable_mobs_all")
+          .withStyle(ChatFormatting.GREEN));
+    } else {
       // List each single possible mob types (incl. modded mobs types).
       TranslatableComponent mobTypeOverview = (TranslatableComponent) new TranslatableComponent("")
           .withStyle(ChatFormatting.DARK_GREEN);
@@ -121,6 +146,8 @@ public class MobCatcherItem extends CapturedMob {
       tooltipList.add(catchingLuck);
     }
   }
+
+
 
   @Override
   public InteractionResult useOn(UseOnContext context) {
@@ -187,9 +214,9 @@ public class MobCatcherItem extends CapturedMob {
 
       // Check if we could catch the mob Type
       ResourceLocation registryName = livingEntity.getType().getRegistryName();
-      String mobType = registryName != null ? registryName.toString() : null;
-      if (!canCatchMob(livingEntity) || (mobType != null && !canCatchMobType(mobType))) {
-        log.debug("Unable to catch living entity {} with {}!", registryName, this);
+      if (!isAcceptedMob(livingEntity)) {
+        String mobType = registryName != null ? registryName.toString() : null;
+        log.debug("Unable to catch living entity {} ({}) with {}!", registryName, mobType, this);
         return InteractionResult.FAIL;
       }
 

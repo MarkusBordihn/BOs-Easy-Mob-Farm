@@ -48,8 +48,8 @@ public class GoldSwampFarmMenu extends MobFarmMenu {
   }
 
   @Override
-  public boolean mayPlaceCapturedMobType(String mobType) {
-    return GoldSwampFarm.isAcceptedCapturedMobType(mobType);
+  public String getAcceptedMobTypeName() {
+    return GoldSwampFarm.NAME;
   }
 
 }

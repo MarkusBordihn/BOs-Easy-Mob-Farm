@@ -29,7 +29,7 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraftforge.registries.ObjectHolder;
 
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
-import de.markusbordihn.easymobfarm.block.farm.iron.IronDesertFarm;
+import de.markusbordihn.easymobfarm.block.farm.netherite.NetheriteDesertFarm;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
 public class NetheriteDesertFarmMenu extends MobFarmMenu {
@@ -48,8 +48,8 @@ public class NetheriteDesertFarmMenu extends MobFarmMenu {
   }
 
   @Override
-  public boolean mayPlaceCapturedMobType(String mobType) {
-    return IronDesertFarm.isAcceptedCapturedMobType(mobType);
+  public String getAcceptedMobTypeName() {
+    return NetheriteDesertFarm.NAME;
   }
 
 }

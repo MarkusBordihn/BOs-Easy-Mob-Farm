@@ -51,7 +51,7 @@ public class GoldMonsterPlainsCaveFarm extends MobFarmBlock {
   public static final String NAME = "gold_monster_plains_cave_farm";
 
   private static Set<String> acceptedMobTypes =
-      new HashSet<>(COMMON.goldMonsterPlainsCaveFarmMobs.get());
+      new HashSet<>(COMMON.goldMonsterPlainsCaveFarmAllowedMobs.get());
 
   public GoldMonsterPlainsCaveFarm(BlockBehaviour.Properties properties) {
     super(properties);
@@ -59,7 +59,7 @@ public class GoldMonsterPlainsCaveFarm extends MobFarmBlock {
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    acceptedMobTypes = new HashSet<>(COMMON.goldMonsterPlainsCaveFarmMobs.get());
+    acceptedMobTypes = new HashSet<>(COMMON.goldMonsterPlainsCaveFarmAllowedMobs.get());
     logAcceptedMobTypes(NAME, acceptedMobTypes);
   }
 
@@ -68,10 +68,6 @@ public class GoldMonsterPlainsCaveFarm extends MobFarmBlock {
     return acceptedMobTypes;
   }
 
-  public static boolean isAcceptedCapturedMobType(String mobType) {
-    return acceptedMobTypes == null || acceptedMobTypes.isEmpty()
-        || acceptedMobTypes.contains(mobType);
-  }
 
   @Override
   public String getFarmDescriptionId() {

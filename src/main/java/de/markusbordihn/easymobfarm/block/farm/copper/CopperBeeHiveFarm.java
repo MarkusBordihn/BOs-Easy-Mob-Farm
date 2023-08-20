@@ -65,13 +65,8 @@ public class CopperBeeHiveFarm extends MobFarmBlock {
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    acceptedMobTypes = new HashSet<>(COMMON.copperBeeHiveFarmMobs.get());
+    acceptedMobTypes = new HashSet<>(COMMON.copperBeeHiveFarmAllowedMobs.get());
     logAcceptedMobTypes(NAME, acceptedMobTypes);
-  }
-
-  public static boolean isAcceptedCapturedMobType(String mobType) {
-    return acceptedMobTypes == null || acceptedMobTypes.isEmpty()
-        || acceptedMobTypes.contains(mobType);
   }
 
   @Override
@@ -166,9 +161,8 @@ public class CopperBeeHiveFarm extends MobFarmBlock {
         tooltipList.add(supportedMobsOverview);
       }
     } else {
-      tooltipList
-          .add(new TranslatableComponent(Constants.TEXT_PREFIX + "supported_all")
-              .withStyle(ChatFormatting.GREEN));
+      tooltipList.add(new TranslatableComponent(Constants.TEXT_PREFIX + "supported_all")
+          .withStyle(ChatFormatting.GREEN));
     }
   }
 

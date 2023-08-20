@@ -39,6 +39,7 @@ import net.minecraftforge.registries.ObjectHolder;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
+import de.markusbordihn.easymobfarm.config.MobTypeManager;
 import de.markusbordihn.easymobfarm.item.CapturedMob;
 import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
 import de.markusbordihn.easymobfarm.menu.slots.CapturedMobSlot;
@@ -233,6 +234,10 @@ public class MobFarmMenu extends AbstractContainerMenu {
     return this.mobFarmSubType;
   }
 
+  public String getAcceptedMobTypeName() {
+    return "";
+  }
+
   public boolean hasMobFarmCapturedMob() {
     return this.mobFarmCapturedMob != null && !this.mobFarmCapturedMob.isEmpty();
   }
@@ -259,7 +264,7 @@ public class MobFarmMenu extends AbstractContainerMenu {
   }
 
   public boolean mayPlaceCapturedMobType(String mobType) {
-    return !mobType.isBlank();
+    return MobTypeManager.isAcceptedMobType(getAcceptedMobTypeName(), mobType);
   }
 
   @Override
@@ -276,9 +281,9 @@ public class MobFarmMenu extends AbstractContainerMenu {
     itemStack = slotItemStack.copy();
 
     // Handle glass bottles for moving in and out.
-    if (slotItemStack.is(Items.GLASS_BOTTLE) && slotItemStack.getCount() == 1) {
+    if (slotItemStack.is(Items.GLASS_BOTTLE) && slotItemStack.getCount() >= 1) {
       if (slotIndex == EXPERIENCE_SLOT) {
-        if (!this.moveItemStackTo(slotItemStack, 6, 42, true)) {
+        if (!this.moveItemStackTo(slotItemStack, PLAYER_SLOT_START, slots.size(), true)) {
           return ItemStack.EMPTY;
         }
       } else if (slotIndex >= 6 && !this.slots.get(EXPERIENCE_SLOT).hasItem()
@@ -289,14 +294,14 @@ public class MobFarmMenu extends AbstractContainerMenu {
 
     // Handle experience bottles for moving out.
     else if (slotItemStack.getItem() instanceof ExperienceBottleItem && slotIndex == EXPERIENCE_SLOT
-        && !this.moveItemStackTo(slotItemStack, 6, 42, true)) {
+        && !this.moveItemStackTo(slotItemStack, PLAYER_SLOT_START, slots.size(), true)) {
       return ItemStack.EMPTY;
     }
 
     // Handle Weapons like swords for moving in and out.
     else if (slotItemStack.getItem() instanceof SwordItem) {
       if (slotIndex == WEAPON_SLOT) {
-        if (!this.moveItemStackTo(slotItemStack, 6, 42, true)) {
+        if (!this.moveItemStackTo(slotItemStack, PLAYER_SLOT_START, slots.size(), true)) {
           return ItemStack.EMPTY;
         }
       } else if (slotIndex >= 6
@@ -309,7 +314,7 @@ public class MobFarmMenu extends AbstractContainerMenu {
     else if (slotItemStack.getItem() instanceof CapturedMob
         || CapturedMobVirtual.isSupported(slotItemStack)) {
       if (slotIndex == CAPTURED_MOB_SLOT) {
-        if (!this.moveItemStackTo(slotItemStack, 6, 42, true)) {
+        if (!this.moveItemStackTo(slotItemStack, PLAYER_SLOT_START, slots.size(), true)) {
           return ItemStack.EMPTY;
         }
       } else if (slotIndex >= 6 && !this.moveItemStackTo(slotItemStack, CAPTURED_MOB_SLOT,
@@ -321,7 +326,7 @@ public class MobFarmMenu extends AbstractContainerMenu {
     // Move result items to the player inventory.
     else if ((slotIndex == RESULT_1_SLOT || slotIndex == RESULT_2_SLOT || slotIndex == RESULT_3_SLOT
         || slotIndex == RESULT_4_SLOT || slotIndex == RESULT_5_SLOT)
-        && this.moveItemStackTo(slotItemStack, 6, 42, true)) {
+        && this.moveItemStackTo(slotItemStack, PLAYER_SLOT_START, slots.size(), true)) {
       return ItemStack.EMPTY;
     }
 

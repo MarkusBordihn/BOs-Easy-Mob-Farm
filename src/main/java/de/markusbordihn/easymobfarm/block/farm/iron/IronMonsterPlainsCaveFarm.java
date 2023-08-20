@@ -52,7 +52,7 @@ public class IronMonsterPlainsCaveFarm extends MobFarmBlock {
   public static final String LEGACY_NAME = "monster_plains_cave_farm";
 
   private static Set<String> acceptedMobTypes =
-      new HashSet<>(COMMON.ironMonsterPlainsCaveFarmMobs.get());
+      new HashSet<>(COMMON.ironMonsterPlainsCaveFarmAllowedMobs.get());
 
   public IronMonsterPlainsCaveFarm(BlockBehaviour.Properties properties) {
     super(properties);
@@ -60,14 +60,10 @@ public class IronMonsterPlainsCaveFarm extends MobFarmBlock {
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    acceptedMobTypes = new HashSet<>(COMMON.ironMonsterPlainsCaveFarmMobs.get());
+    acceptedMobTypes = new HashSet<>(COMMON.ironMonsterPlainsCaveFarmAllowedMobs.get());
     logAcceptedMobTypes(NAME, acceptedMobTypes);
   }
 
-  public static boolean isAcceptedCapturedMobType(String mobType) {
-    return acceptedMobTypes == null || acceptedMobTypes.isEmpty()
-        || acceptedMobTypes.contains(mobType);
-  }
 
   @Override
   public Set<String> getAcceptedMobTypes() {

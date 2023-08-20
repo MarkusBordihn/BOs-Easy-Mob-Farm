@@ -19,7 +19,6 @@
 
 package de.markusbordihn.easymobfarm.item.mobcatcher;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -28,47 +27,16 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.Item;
 
-import net.minecraftforge.event.server.ServerAboutToStartEvent;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.item.MobCatcherItem;
 import de.markusbordihn.easymobfarm.text.TranslatableText;
 
-@EventBusSubscriber
 public class InsectNet extends MobCatcherItem {
 
-  private static Set<String> acceptedMobTypes = new HashSet<>();
+  public static final String NAME = "Insect Net";
 
   public InsectNet(Item.Properties properties) {
     super(properties);
-  }
-
-  @SubscribeEvent
-  public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    acceptedMobTypes = new HashSet<>(COMMON.insectNetMobs.get());
-    log.info("The insect net requires {} luck and is able to catch the following mobs: {}",
-        COMMON.insectNetMobCatchingLuck.get(), acceptedMobTypes);
-  }
-
-  @SubscribeEvent
-  public static void handleWorldEventLoad(WorldEvent.Load event) {
-    if (event.getWorld().isClientSide() && acceptedMobTypes.isEmpty()) {
-      acceptedMobTypes = new HashSet<>(COMMON.insectNetMobs.get());
-    }
-  }
-
-  @Override
-  public Set<String> getAcceptedMobTypes() {
-    return acceptedMobTypes;
-  }
-
-  @Override
-  public boolean canCatchMobType(String mobType) {
-    return acceptedMobTypes == null || acceptedMobTypes.isEmpty()
-        || acceptedMobTypes.contains(mobType);
   }
 
   @Override
@@ -77,7 +45,13 @@ public class InsectNet extends MobCatcherItem {
   }
 
   @Override
+  public String getMobCatcherItemName() {
+    return NAME;
+  }
+
+  @Override
   public void appendHoverTextCatchableMobs(List<Component> tooltipList) {
+    Set<String> acceptedMobTypes = getAcceptedMobTypes();
     if (!acceptedMobTypes.isEmpty()) {
       // List each single possible mob types (incl. modded mobs types).
       TranslatableComponent mobTypeOverview = (TranslatableComponent) new TranslatableComponent("")
@@ -112,9 +86,9 @@ public class InsectNet extends MobCatcherItem {
     }
 
     // Display the catching luck.
-    if (getMobCatchingLuck() > 0) {
+    if (getMobCatchingLuckConfig() > 0) {
       TranslatableComponent catchingLuck = new TranslatableComponent(
-          Constants.TEXT_PREFIX + "mob_catching_luck", getMobCatchingLuck());
+          Constants.TEXT_PREFIX + "mob_catching_luck", getMobCatchingLuckConfig());
       tooltipList.add(catchingLuck);
     }
   }

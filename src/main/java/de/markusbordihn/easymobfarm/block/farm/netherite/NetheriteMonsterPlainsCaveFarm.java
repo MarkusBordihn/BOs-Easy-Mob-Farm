@@ -51,7 +51,7 @@ public class NetheriteMonsterPlainsCaveFarm extends MobFarmBlock {
   public static final String NAME = "netherite_monster_plains_cave_farm";
 
   private static Set<String> acceptedMobTypes =
-      new HashSet<>(COMMON.netheriteMonsterPlainsCaveFarmMobs.get());
+      new HashSet<>(COMMON.netheriteMonsterPlainsCaveFarmAllowedMobs.get());
 
   public NetheriteMonsterPlainsCaveFarm(BlockBehaviour.Properties properties) {
     super(properties);
@@ -59,14 +59,10 @@ public class NetheriteMonsterPlainsCaveFarm extends MobFarmBlock {
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    acceptedMobTypes = new HashSet<>(COMMON.netheriteMonsterPlainsCaveFarmMobs.get());
+    acceptedMobTypes = new HashSet<>(COMMON.netheriteMonsterPlainsCaveFarmAllowedMobs.get());
     logAcceptedMobTypes(NAME, acceptedMobTypes);
   }
 
-  public static boolean isAcceptedCapturedMobType(String mobType) {
-    return acceptedMobTypes == null || acceptedMobTypes.isEmpty()
-        || acceptedMobTypes.contains(mobType);
-  }
 
   @Override
   public Set<String> getAcceptedMobTypes() {

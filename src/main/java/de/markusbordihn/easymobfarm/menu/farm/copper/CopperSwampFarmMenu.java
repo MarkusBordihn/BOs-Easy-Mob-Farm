@@ -48,8 +48,8 @@ public class CopperSwampFarmMenu extends MobFarmMenu {
   }
 
   @Override
-  public boolean mayPlaceCapturedMobType(String mobType) {
-    return CopperSwampFarm.isAcceptedCapturedMobType(mobType);
+  public String getAcceptedMobTypeName() {
+    return CopperSwampFarm.NAME;
   }
 
 }

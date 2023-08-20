@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -42,6 +43,7 @@ import de.markusbordihn.easymobfarm.config.biome.PlainsCave;
 import de.markusbordihn.easymobfarm.config.biome.Swamp;
 import de.markusbordihn.easymobfarm.config.mobs.AmbientWaterAnimal;
 import de.markusbordihn.easymobfarm.config.mobs.BeeAnimal;
+import de.markusbordihn.easymobfarm.config.mobs.BossMonster;
 import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
 import de.markusbordihn.easymobfarm.config.mobs.HostileWaterMonster;
 import de.markusbordihn.easymobfarm.config.mobs.NeutralAnimal;
@@ -65,20 +67,30 @@ public class CommonConfig {
       "Defines the sound which is played when a loot drop is performed.";
   private static final String SUPPORTED_MOBS_ANIMAL_PLANS_FARM =
       "Supported Mobs for the animal plains farm. (Use empty list to allow all mobs.)";
+  private static final String DENIED_MOBS_ANIMAL_PLANS_FARM =
+      "Denied Mobs for the animal plains farm.";
   private static final String SUPPORTED_MOBS_BEE_HIVE_FARM =
       "Supported Mobs for the bee hive farm. (Use empty list to allow all mobs.)";
+  private static final String DENIED_MOBS_BEE_HIVE_FARM = "Denied Mobs for the bee hive farm.";
   private static final String SUPPORTED_MOBS_DESERT_FARM =
       "Supported Mobs for the desert farm. (Use empty list to allow all mobs.)";
+  private static final String DENIED_MOBS_DESERT_FARM = "Denied Mobs for the desert farm.";
   private static final String SUPPORTED_MOBS_JUNGLE_FARM =
       "Supported Mobs for the jungle farm. (Use empty list to allow all mobs.)";
+  private static final String DENIED_MOBS_JUNGLE_FARM = "Denied Mobs for the jungle farm.";
   private static final String SUPPORTED_MOBS_NETHER_FARM =
       "Supported Mobs for the nether farm. (Use empty list to allow all mobs.)";
+  private static final String DENIED_MOBS_NETHER_FARM = "Denied Mobs for the nether farm.";
   private static final String SUPPORTED_MOBS_OCEAN_FARM =
       "Supported Mobs for the ocean farm. (Use empty list to allow all mobs.)";
+  private static final String DENIED_MOBS_OCEAN_FARM = "Denied Mobs for the ocean farm.";
   private static final String SUPPORTED_MOBS_PLAINS_CAVE_FARM =
       "Supported Mobs for the plains cave farm. (Use empty list to allow all mobs.)";
+  private static final String DENIED_MOBS_PLAINS_CAVE_FARM =
+      "Denied Mobs for the plains cave farm.";
   private static final String SUPPORTED_MOBS_SWAMP_FARM =
       "Supported Mobs for the swamp farm. (Use empty list to allow all mobs.)";
+  private static final String DENIED_MOBS_SWAMP_FARM = "Denied Mobs for the swamp farm.";
 
   protected CommonConfig() {}
 
@@ -96,182 +108,234 @@ public class CommonConfig {
 
     private static final String getCatchableMobsText(String itemName) {
       return "The following mobs can be catched with the " + itemName
-          + ". (Use empty list to allow all mobs.)";
+          + ". (Use empty list to allow all mobs!)";
     }
 
+    private static final String getDeniedMobsText(String itemName) {
+      return "The following mobs are not catchable with the " + itemName
+          + ". (Use empty list to allow all mobs!)";
+    }
+
+    // General config
     public final ForgeConfigSpec.BooleanValue informOwnerAboutFullStorage;
     public final ForgeConfigSpec.BooleanValue logFullStorage;
     public final ForgeConfigSpec.IntValue lootPreviewRolls;
     public final ForgeConfigSpec.BooleanValue playDropSound;
+    public final ForgeConfigSpec.ConfigValue<List<String>> generalAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> generalDeniedMobs;
 
+    // Creative Mob Farm
     public final ForgeConfigSpec.IntValue creativeMobFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> creativeMobFarmDropSound;
 
     // Copper Mob Farm
     public final ForgeConfigSpec.IntValue copperAnimalPlainsFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> copperAnimalPlainsFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> copperAnimalPlainsFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> copperAnimalPlainsFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> copperAnimalPlainsFarmDeniedMobs;
 
     public final ForgeConfigSpec.IntValue copperBeeHiveFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> copperBeeHiveFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> copperBeeHiveFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> copperBeeHiveFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> copperBeeHiveFarmDeniedMobs;
 
     public final ForgeConfigSpec.IntValue copperDesertFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> copperDesertFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> copperDesertFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> copperDesertFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> copperDesertFarmDeniedMobs;
 
     public final ForgeConfigSpec.IntValue copperJungleFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> copperJungleFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> copperJungleFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> copperJungleFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> copperJungleFarmDeniedMobs;
 
     public final ForgeConfigSpec.IntValue copperMonsterPlainsCaveFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> copperMonsterPlainsCaveFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> copperMonsterPlainsCaveFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> copperMonsterPlainsCaveFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> copperMonsterPlainsCaveFarmDeniedMobs;
 
     public final ForgeConfigSpec.IntValue copperNetherFortressFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> copperNetherFortressFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> copperNetherFortressFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> copperNetherFortressFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> copperNetherFortressFarmDeniedMobs;
 
     public final ForgeConfigSpec.IntValue copperOceanFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> copperOceanFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> copperOceanFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> copperOceanFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> copperOceanFarmDeniedMobs;
 
     public final ForgeConfigSpec.IntValue copperSwampFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> copperSwampFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> copperSwampFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> copperSwampFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> copperSwampFarmDeniedMobs;
 
     // Iron Mob Farm
     public final ForgeConfigSpec.IntValue ironAnimalPlainsFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> ironAnimalPlainsFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> ironAnimalPlainsFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> ironAnimalPlainsFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> ironAnimalPlainsFarmDeniedMobs;
 
     public final ForgeConfigSpec.IntValue ironBeeHiveFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> ironBeeHiveFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> ironBeeHiveFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> ironBeeHiveFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> ironBeeHiveFarmDeniedMobs;
 
     public final ForgeConfigSpec.IntValue ironDesertFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> ironDesertFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> ironDesertFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> ironDesertFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> ironDesertFarmDeniedMobs;
 
     public final ForgeConfigSpec.IntValue ironJungleFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> ironJungleFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> ironJungleFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> ironJungleFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> ironJungleFarmDeniedMobs;
 
     public final ForgeConfigSpec.IntValue ironMonsterPlainsCaveFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> ironMonsterPlainsCaveFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> ironMonsterPlainsCaveFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> ironMonsterPlainsCaveFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> ironMonsterPlainsCaveFarmDeniedMobs;
 
     public final ForgeConfigSpec.IntValue ironNetherFortressFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> ironNetherFortressFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> ironNetherFortressFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> ironNetherFortressFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> ironNetherFortressFarmDeniedMobs;
 
     public final ForgeConfigSpec.IntValue ironOceanFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> ironOceanFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> ironOceanFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> ironOceanFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> ironOceanFarmDeniedMobs;
 
     public final ForgeConfigSpec.IntValue ironSwampFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> ironSwampFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> ironSwampFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> ironSwampFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> ironSwampFarmDeniedMobs;
 
     // Gold Mob Farm
     public final ForgeConfigSpec.IntValue goldAnimalPlainsFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> goldAnimalPlainsFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> goldAnimalPlainsFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> goldAnimalPlainsFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> goldAnimalPlainsFarmDeniedMobs;
 
     public final ForgeConfigSpec.IntValue goldBeeHiveFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> goldBeeHiveFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> goldBeeHiveFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> goldBeeHiveFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> goldBeeHiveFarmDeniedMobs;
 
     public final ForgeConfigSpec.IntValue goldDesertFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> goldDesertFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> goldDesertFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> goldDesertFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> goldDesertFarmDeniedMobs;
 
     public final ForgeConfigSpec.IntValue goldJungleFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> goldJungleFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> goldJungleFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> goldJungleFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> goldJungleFarmDeniedMobs;
 
     public final ForgeConfigSpec.IntValue goldMonsterPlainsCaveFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> goldMonsterPlainsCaveFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> goldMonsterPlainsCaveFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> goldMonsterPlainsCaveFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> goldMonsterPlainsCaveFarmDeniedMobs;
 
     public final ForgeConfigSpec.IntValue goldNetherFortressFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> goldNetherFortressFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> goldNetherFortressFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> goldNetherFortressFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> goldNetherFortressFarmDeniedMobs;
 
     public final ForgeConfigSpec.IntValue goldOceanFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> goldOceanFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> goldOceanFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> goldOceanFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> goldOceanFarmDeniedMobs;
 
     public final ForgeConfigSpec.IntValue goldSwampFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> goldSwampFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> goldSwampFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> goldSwampFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> goldSwampFarmDeniedMobs;
 
     // Netherite Mob Farm
     public final ForgeConfigSpec.IntValue netheriteAnimalPlainsFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> netheriteAnimalPlainsFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> netheriteAnimalPlainsFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> netheriteAnimalPlainsFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> netheriteAnimalPlainsFarmDeniedMobs;
 
     public final ForgeConfigSpec.IntValue netheriteBeeHiveFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> netheriteBeeHiveFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> netheriteBeeHiveFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> netheriteBeeHiveFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> netheriteBeeHiveFarmDeniedMobs;
 
     public final ForgeConfigSpec.IntValue netheriteDesertFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> netheriteDesertFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> netheriteDesertFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> netheriteDesertFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> netheriteDesertFarmDeniedMobs;
 
     public final ForgeConfigSpec.IntValue netheriteJungleFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> netheriteJungleFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> netheriteJungleFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> netheriteJungleFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> netheriteJungleFarmDeniedMobs;
 
     public final ForgeConfigSpec.IntValue netheriteMonsterPlainsCaveFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> netheriteMonsterPlainsCaveFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> netheriteMonsterPlainsCaveFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> netheriteMonsterPlainsCaveFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> netheriteMonsterPlainsCaveFarmDeniedMobs;
 
     public final ForgeConfigSpec.IntValue netheriteNetherFortressFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> netheriteNetherFortressFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> netheriteNetherFortressFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> netheriteNetherFortressFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> netheriteNetherFortressFarmDeniedMobs;
 
     public final ForgeConfigSpec.IntValue netheriteOceanFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> netheriteOceanFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> netheriteOceanFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> netheriteOceanFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> netheriteOceanFarmDeniedMobs;
 
     public final ForgeConfigSpec.IntValue netheriteSwampFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> netheriteSwampFarmDropSound;
-    public final ForgeConfigSpec.ConfigValue<List<String>> netheriteSwampFarmMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> netheriteSwampFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> netheriteSwampFarmDeniedMobs;
 
     // Mob Catcher
     public final ForgeConfigSpec.IntValue catchCageMobCatchingLuck;
-    public final ForgeConfigSpec.ConfigValue<List<String>> catchCageMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> catchCageAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> catchCageDeniedMobs;
 
     public final ForgeConfigSpec.IntValue catchCageSmallMobCatchingLuck;
-    public final ForgeConfigSpec.ConfigValue<List<String>> catchCageSmallMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> catchCageSmallAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> catchCageSmallDeniedMobs;
 
     public final ForgeConfigSpec.IntValue collarSmallMobCatchingLuck;
-    public final ForgeConfigSpec.ConfigValue<List<String>> collarSmallMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> collarSmallAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> collarSmallDeniedMobs;
 
     public final ForgeConfigSpec.IntValue enderLassoMobCatchingLuck;
-    public final ForgeConfigSpec.ConfigValue<List<String>> enderLassoMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> enderLassoAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> enderLassoDeniedMobs;
 
     public final ForgeConfigSpec.IntValue fishingBowlMobCatchingLuck;
-    public final ForgeConfigSpec.ConfigValue<List<String>> fishingBowlMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> fishingBowlAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> fishingBowlDeniedMobs;
 
     public final ForgeConfigSpec.IntValue fishingNetSmallMobCatchingLuck;
-    public final ForgeConfigSpec.ConfigValue<List<String>> fishingNetSmallMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> fishingNetSmallAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> fishingNetSmallDeniedMobs;
 
     public final ForgeConfigSpec.IntValue goldenLassoMobCatchingLuck;
-    public final ForgeConfigSpec.ConfigValue<List<String>> goldenLassoMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> goldenLassoAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> goldenLassoDeniedMobs;
 
     public final ForgeConfigSpec.IntValue insectNetMobCatchingLuck;
-    public final ForgeConfigSpec.ConfigValue<List<String>> insectNetMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> insectNetAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> insectNetDeniedMobs;
 
     public final ForgeConfigSpec.IntValue netheriteLassoMobCatchingLuck;
-    public final ForgeConfigSpec.ConfigValue<List<String>> netheriteLassoMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> netheriteLassoAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> netheriteLassoDeniedMobs;
 
     public final ForgeConfigSpec.IntValue urnSmallMobCatchingLuck;
-    public final ForgeConfigSpec.ConfigValue<List<String>> urnSmallMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> urnSmallAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> urnSmallDeniedMobs;
 
     public final ForgeConfigSpec.IntValue witchBottleMobCatchingLuck;
-    public final ForgeConfigSpec.ConfigValue<List<String>> witchBottleMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> witchBottleAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> witchBottleDeniedMobs;
 
     // Drop Settings
     public final ForgeConfigSpec.BooleanValue beeDropHoneycomb;
@@ -296,6 +360,12 @@ public class CommonConfig {
           .defineInRange("lootPreviewRolls", 2, 1, 5);
       playDropSound = builder.comment("Enable/Disable the drop sound for the loot drops.")
           .define("playDropSound", true);
+      generalAllowedMobs = builder.comment(
+          "The following mobs are allowed to be captured with any mob catcher and all mob farms. (Use empty list to disable!)")
+          .define("generalAllowedMobs", new ArrayList<String>());
+      generalDeniedMobs = builder.comment(
+          "The following mobs are not allowed to be captured with any mob catcher and all mob farms. (Use empty list to allow all mobs!)")
+          .define("generalDeniedMobs", new ArrayList<String>(BossMonster.All));
       builder.pop();
 
       // Copper Mob Farms
@@ -307,8 +377,10 @@ public class CommonConfig {
           .defineInRange("copperAnimalPlainsFarmProcessTime", 600, 10, 3600);
       copperAnimalPlainsFarmDropSound = builder.comment(DROP_SOUND_TEXT)
           .define("copperAnimalPlainsFarmDropSound", "minecraft:entity.chicken.egg");
-      copperAnimalPlainsFarmMobs = builder.comment(SUPPORTED_MOBS_ANIMAL_PLANS_FARM)
+      copperAnimalPlainsFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_ANIMAL_PLANS_FARM)
           .define("copperAnimalPlainsFarmMobs", new ArrayList<String>(Plains.Passive));
+      copperAnimalPlainsFarmDeniedMobs = builder.comment(DENIED_MOBS_ANIMAL_PLANS_FARM)
+          .define("copperAnimalPlainsFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Copper Bee Hive Farms");
@@ -316,8 +388,10 @@ public class CommonConfig {
           .defineInRange("copperBeeHiveFarmProcessTime", 600, 10, 3600);
       copperBeeHiveFarmDropSound = builder.comment(DROP_SOUND_TEXT)
           .define("copperBeeHiveFarmDropSound", "minecraft:block.beehive.exit");
-      copperBeeHiveFarmMobs = builder.comment(SUPPORTED_MOBS_BEE_HIVE_FARM)
+      copperBeeHiveFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_BEE_HIVE_FARM)
           .define("copperBeeHiveFarmMobs", new ArrayList<String>(BeeAnimal.AllLootable));
+      copperBeeHiveFarmDeniedMobs = builder.comment(DENIED_MOBS_BEE_HIVE_FARM)
+          .define("copperBeeHiveFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Copper Desert Farm");
@@ -326,8 +400,10 @@ public class CommonConfig {
               .defineInRange("copperDesertFarmProcessTime", 600, 10, 3600);
       copperDesertFarmDropSound = builder.comment(DROP_SOUND_TEXT)
           .define("copperDesertFarmDropSound", "minecraft:block.sand.hit");
-      copperDesertFarmMobs = builder.comment(SUPPORTED_MOBS_DESERT_FARM)
+      copperDesertFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_DESERT_FARM)
           .define("copperDesertFarmMobs", new ArrayList<String>(Desert.All));
+      copperDesertFarmDeniedMobs = builder.comment(DENIED_MOBS_DESERT_FARM)
+          .define("copperDesertFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Copper Jungle Farm");
@@ -336,8 +412,10 @@ public class CommonConfig {
               .defineInRange("copperJungleFarmProcessTime", 600, 10, 3600);
       copperJungleFarmDropSound = builder.comment(DROP_SOUND_TEXT)
           .define("copperJungleFarmDropSound", "minecraft:block.azalea.hit");
-      copperJungleFarmMobs = builder.comment(SUPPORTED_MOBS_JUNGLE_FARM)
+      copperJungleFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_JUNGLE_FARM)
           .define("copperJungleFarmMobs", new ArrayList<String>(Jungle.All));
+      copperJungleFarmDeniedMobs = builder.comment(DENIED_MOBS_JUNGLE_FARM)
+          .define("copperJungleFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Copper Monster Plains Cave Farm");
@@ -345,8 +423,10 @@ public class CommonConfig {
           .defineInRange("copperMonsterPlainsCaveFarmProcessTime", 600, 10, 3600);
       copperMonsterPlainsCaveFarmDropSound = builder.comment(DROP_SOUND_TEXT)
           .define("copperMonsterPlainsCaveFarmDropSound", "minecraft:block.cave_vines.fall");
-      copperMonsterPlainsCaveFarmMobs = builder.comment(SUPPORTED_MOBS_PLAINS_CAVE_FARM)
+      copperMonsterPlainsCaveFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_PLAINS_CAVE_FARM)
           .define("copperMonsterPlainsCaveFarmMobs", new ArrayList<String>(PlainsCave.Hostile));
+      copperMonsterPlainsCaveFarmDeniedMobs = builder.comment(DENIED_MOBS_PLAINS_CAVE_FARM)
+          .define("copperMonsterPlainsCaveFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Copper Nether Fortress Farm");
@@ -354,8 +434,10 @@ public class CommonConfig {
           .defineInRange("copperNetherFortressFarmProcessTime", 600, 10, 3600);
       copperNetherFortressFarmDropSound = builder.comment(DROP_SOUND_TEXT)
           .define("copperNetherFortressFarmDropSound", "minecraft:block.netherrack.fall");
-      copperNetherFortressFarmMobs = builder.comment(SUPPORTED_MOBS_NETHER_FARM)
+      copperNetherFortressFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_NETHER_FARM)
           .define("copperNetherFortressFarmMobs", new ArrayList<String>(NetherFortress.All));
+      copperNetherFortressFarmDeniedMobs = builder.comment(DENIED_MOBS_NETHER_FARM)
+          .define("copperNetherFortressFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Copper Ocean Farm");
@@ -363,8 +445,10 @@ public class CommonConfig {
           .defineInRange("copperOceanFarmProcessTime", 600, 10, 3600);
       copperOceanFarmDropSound = builder.comment(DROP_SOUND_TEXT).define("copperOceanFarmDropSound",
           "minecraft:entity.fish.swim");
-      copperOceanFarmMobs = builder.comment(SUPPORTED_MOBS_OCEAN_FARM).define("copperOceanFarmMobs",
-          new ArrayList<String>(Ocean.All));
+      copperOceanFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_OCEAN_FARM)
+          .define("copperOceanFarmMobs", new ArrayList<String>(Ocean.All));
+      copperOceanFarmDeniedMobs = builder.comment(DENIED_MOBS_OCEAN_FARM)
+          .define("copperOceanFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Copper Swamp Farm");
@@ -372,8 +456,10 @@ public class CommonConfig {
           .defineInRange("copperSwampFarmProcessTime", 600, 10, 3600);
       copperSwampFarmDropSound = builder.comment(DROP_SOUND_TEXT).define("copperSwampFarmDropSound",
           "minecraft:entity.slime.squish");
-      copperSwampFarmMobs = builder.comment(SUPPORTED_MOBS_SWAMP_FARM).define("copperSwampFarmMobs",
-          new ArrayList<String>(Swamp.All));
+      copperSwampFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_SWAMP_FARM)
+          .define("copperSwampFarmMobs", new ArrayList<String>(Swamp.All));
+      copperSwampFarmDeniedMobs = builder.comment(DENIED_MOBS_SWAMP_FARM)
+          .define("copperSwampFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.pop();
@@ -387,8 +473,10 @@ public class CommonConfig {
           .defineInRange("ironAnimalPlainsFarmProcessTime", 300, 10, 3600);
       ironAnimalPlainsFarmDropSound = builder.comment(DROP_SOUND_TEXT)
           .define("ironAnimalPlainsFarmDropSound", "minecraft:entity.chicken.egg");
-      ironAnimalPlainsFarmMobs = builder.comment(SUPPORTED_MOBS_ANIMAL_PLANS_FARM)
+      ironAnimalPlainsFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_ANIMAL_PLANS_FARM)
           .define("ironAnimalPlainsFarmMobs", new ArrayList<String>(Plains.Passive));
+      ironAnimalPlainsFarmDeniedMobs = builder.comment(DENIED_MOBS_ANIMAL_PLANS_FARM)
+          .define("ironAnimalPlainsFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Iron Bee Hive Farms");
@@ -396,8 +484,10 @@ public class CommonConfig {
           .defineInRange("ironBeeHiveFarmProcessTime", 300, 10, 3600);
       ironBeeHiveFarmDropSound = builder.comment(DROP_SOUND_TEXT).define("ironBeeHiveFarmDropSound",
           "minecraft:block.beehive.exit");
-      ironBeeHiveFarmMobs = builder.comment(SUPPORTED_MOBS_BEE_HIVE_FARM)
+      ironBeeHiveFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_BEE_HIVE_FARM)
           .define("ironBeeHiveFarmMobs", new ArrayList<String>(BeeAnimal.AllLootable));
+      ironBeeHiveFarmDeniedMobs = builder.comment(DENIED_MOBS_BEE_HIVE_FARM)
+          .define("ironBeeHiveFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Iron Desert Farm");
@@ -405,8 +495,10 @@ public class CommonConfig {
           .defineInRange("ironDesertFarmProcessTime", 300, 10, 3600);
       ironDesertFarmDropSound = builder.comment(DROP_SOUND_TEXT).define("ironDesertFarmDropSound",
           "minecraft:block.sand.hit");
-      ironDesertFarmMobs = builder.comment(SUPPORTED_MOBS_DESERT_FARM).define("ironDesertFarmMobs",
-          new ArrayList<String>(Desert.All));
+      ironDesertFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_DESERT_FARM)
+          .define("ironDesertFarmMobs", new ArrayList<String>(Desert.All));
+      ironDesertFarmDeniedMobs = builder.comment(DENIED_MOBS_DESERT_FARM)
+          .define("ironDesertFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Iron Jungle Farm");
@@ -414,8 +506,10 @@ public class CommonConfig {
           .defineInRange("ironJungleFarmProcessTime", 300, 10, 3600);
       ironJungleFarmDropSound = builder.comment(DROP_SOUND_TEXT).define("ironJungleFarmDropSound",
           "minecraft:block.azalea.hit");
-      ironJungleFarmMobs = builder.comment(SUPPORTED_MOBS_JUNGLE_FARM).define("ironJungleFarmMobs",
-          new ArrayList<String>(Jungle.All));
+      ironJungleFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_JUNGLE_FARM)
+          .define("ironJungleFarmMobs", new ArrayList<String>(Jungle.All));
+      ironJungleFarmDeniedMobs = builder.comment(DENIED_MOBS_JUNGLE_FARM)
+          .define("ironJungleFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Iron Monster Plains Cave Farm");
@@ -423,8 +517,10 @@ public class CommonConfig {
           .defineInRange("ironMonsterPlainsCaveFarmProcessTime", 300, 10, 3600);
       ironMonsterPlainsCaveFarmDropSound = builder.comment(DROP_SOUND_TEXT)
           .define("ironMonsterPlainsCaveFarmDropSound", "minecraft:block.cave_vines.fall");
-      ironMonsterPlainsCaveFarmMobs = builder.comment(SUPPORTED_MOBS_PLAINS_CAVE_FARM)
+      ironMonsterPlainsCaveFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_PLAINS_CAVE_FARM)
           .define("ironMonsterPlainsCaveFarmMobs", new ArrayList<String>(PlainsCave.Hostile));
+      ironMonsterPlainsCaveFarmDeniedMobs = builder.comment(DENIED_MOBS_PLAINS_CAVE_FARM)
+          .define("ironMonsterPlainsCaveFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Iron Nether Fortress Farm");
@@ -432,8 +528,10 @@ public class CommonConfig {
           .defineInRange("ironNetherFortressFarmProcessTime", 300, 10, 3600);
       ironNetherFortressFarmDropSound = builder.comment(DROP_SOUND_TEXT)
           .define("ironNetherFortressFarmDropSound", "minecraft:block.netherrack.fall");
-      ironNetherFortressFarmMobs = builder.comment(SUPPORTED_MOBS_NETHER_FARM)
+      ironNetherFortressFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_NETHER_FARM)
           .define("ironNetherFortressFarmMobs", new ArrayList<String>(NetherFortress.All));
+      ironNetherFortressFarmDeniedMobs = builder.comment(DENIED_MOBS_NETHER_FARM)
+          .define("ironNetherFortressFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Iron Ocean Farm");
@@ -441,8 +539,10 @@ public class CommonConfig {
           .defineInRange("ironOceanFarmProcessTime", 300, 10, 3600);
       ironOceanFarmDropSound = builder.comment(DROP_SOUND_TEXT).define("ironOceanFarmDropSound",
           "minecraft:entity.fish.swim");
-      ironOceanFarmMobs = builder.comment(SUPPORTED_MOBS_OCEAN_FARM).define("ironOceanFarmMobs",
-          new ArrayList<String>(Ocean.All));
+      ironOceanFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_OCEAN_FARM)
+          .define("ironOceanFarmMobs", new ArrayList<String>(Ocean.All));
+      ironOceanFarmDeniedMobs = builder.comment(DENIED_MOBS_OCEAN_FARM)
+          .define("ironOceanFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Iron Swamp Farm");
@@ -450,8 +550,10 @@ public class CommonConfig {
           .defineInRange("ironSwampFarmProcessTime", 300, 10, 3600);
       ironSwampFarmDropSound = builder.comment(DROP_SOUND_TEXT).define("ironSwampFarmDropSound",
           "minecraft:entity.slime.squish");
-      ironSwampFarmMobs = builder.comment(SUPPORTED_MOBS_SWAMP_FARM).define("ironSwampFarmMobs",
-          new ArrayList<String>(Swamp.All));
+      ironSwampFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_SWAMP_FARM)
+          .define("ironSwampFarmMobs", new ArrayList<String>(Swamp.All));
+      ironSwampFarmDeniedMobs = builder.comment(DENIED_MOBS_SWAMP_FARM)
+          .define("ironSwampFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.pop();
@@ -465,8 +567,10 @@ public class CommonConfig {
           .defineInRange("goldAnimalPlainsFarmProcessTime", 150, 10, 3600);
       goldAnimalPlainsFarmDropSound = builder.comment(DROP_SOUND_TEXT)
           .define("goldAnimalPlainsFarmDropSound", "minecraft:entity.chicken.egg");
-      goldAnimalPlainsFarmMobs = builder.comment(SUPPORTED_MOBS_ANIMAL_PLANS_FARM)
+      goldAnimalPlainsFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_ANIMAL_PLANS_FARM)
           .define("goldAnimalPlainsFarmMobs", new ArrayList<String>(Plains.Passive));
+      goldAnimalPlainsFarmDeniedMobs = builder.comment(DENIED_MOBS_ANIMAL_PLANS_FARM)
+          .define("goldAnimalPlainsFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Gold Bee Hive Farms");
@@ -474,8 +578,10 @@ public class CommonConfig {
           .defineInRange("goldBeeHiveFarmProcessTime", 150, 10, 3600);
       goldBeeHiveFarmDropSound = builder.comment(DROP_SOUND_TEXT).define("goldBeeHiveFarmDropSound",
           "minecraft:block.beehive.exit");
-      goldBeeHiveFarmMobs = builder.comment(SUPPORTED_MOBS_BEE_HIVE_FARM)
+      goldBeeHiveFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_BEE_HIVE_FARM)
           .define("goldBeeHiveFarmMobs", new ArrayList<String>(BeeAnimal.AllLootable));
+      goldBeeHiveFarmDeniedMobs = builder.comment(DENIED_MOBS_BEE_HIVE_FARM)
+          .define("goldBeeHiveFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Gold Desert Farm");
@@ -483,8 +589,10 @@ public class CommonConfig {
           .defineInRange("goldDesertFarmProcessTime", 150, 10, 3600);
       goldDesertFarmDropSound = builder.comment(DROP_SOUND_TEXT).define("goldDesertFarmDropSound",
           "minecraft:block.sand.hit");
-      goldDesertFarmMobs = builder.comment(SUPPORTED_MOBS_DESERT_FARM).define("goldDesertFarmMobs",
-          new ArrayList<String>(Desert.All));
+      goldDesertFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_DESERT_FARM)
+          .define("goldDesertFarmMobs", new ArrayList<String>(Desert.All));
+      goldDesertFarmDeniedMobs = builder.comment(DENIED_MOBS_DESERT_FARM)
+          .define("goldDesertFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Gold Jungle Farm");
@@ -492,8 +600,10 @@ public class CommonConfig {
           .defineInRange("goldJungleFarmProcessTime", 150, 10, 3600);
       goldJungleFarmDropSound = builder.comment(DROP_SOUND_TEXT).define("goldJungleFarmDropSound",
           "minecraft:block.azalea.hit");
-      goldJungleFarmMobs = builder.comment(SUPPORTED_MOBS_JUNGLE_FARM).define("goldJungleFarmMobs",
-          new ArrayList<String>(Jungle.All));
+      goldJungleFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_JUNGLE_FARM)
+          .define("goldJungleFarmMobs", new ArrayList<String>(Jungle.All));
+      goldJungleFarmDeniedMobs = builder.comment(DENIED_MOBS_JUNGLE_FARM)
+          .define("goldJungleFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Gold Monster Plains Cave Farm");
@@ -501,8 +611,10 @@ public class CommonConfig {
           .defineInRange("goldMonsterPlainsCaveFarmProcessTime", 150, 10, 3600);
       goldMonsterPlainsCaveFarmDropSound = builder.comment(DROP_SOUND_TEXT)
           .define("goldMonsterPlainsCaveFarmDropSound", "minecraft:block.cave_vines.fall");
-      goldMonsterPlainsCaveFarmMobs = builder.comment(SUPPORTED_MOBS_PLAINS_CAVE_FARM)
+      goldMonsterPlainsCaveFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_PLAINS_CAVE_FARM)
           .define("goldMonsterPlainsCaveFarmMobs", new ArrayList<String>(PlainsCave.Hostile));
+      goldMonsterPlainsCaveFarmDeniedMobs = builder.comment(DENIED_MOBS_PLAINS_CAVE_FARM)
+          .define("goldMonsterPlainsCaveFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Gold Nether Fortress Farm");
@@ -510,8 +622,10 @@ public class CommonConfig {
           .defineInRange("goldNetherFortressFarmProcessTime", 150, 10, 3600);
       goldNetherFortressFarmDropSound = builder.comment(DROP_SOUND_TEXT)
           .define("goldNetherFortressFarmDropSound", "minecraft:block.netherrack.fall");
-      goldNetherFortressFarmMobs = builder.comment(SUPPORTED_MOBS_NETHER_FARM)
+      goldNetherFortressFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_NETHER_FARM)
           .define("goldNetherFortressFarmMobs", new ArrayList<String>(NetherFortress.All));
+      goldNetherFortressFarmDeniedMobs = builder.comment(DENIED_MOBS_NETHER_FARM)
+          .define("goldNetherFortressFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Gold Ocean Farm");
@@ -519,8 +633,10 @@ public class CommonConfig {
           .defineInRange("goldOceanFarmProcessTime", 150, 10, 3600);
       goldOceanFarmDropSound = builder.comment(DROP_SOUND_TEXT).define("goldOceanFarmDropSound",
           "minecraft:entity.fish.swim");
-      goldOceanFarmMobs = builder.comment(SUPPORTED_MOBS_OCEAN_FARM).define("goldOceanFarmMobs",
-          new ArrayList<String>(Ocean.All));
+      goldOceanFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_OCEAN_FARM)
+          .define("goldOceanFarmMobs", new ArrayList<String>(Ocean.All));
+      goldOceanFarmDeniedMobs = builder.comment(DENIED_MOBS_OCEAN_FARM)
+          .define("goldOceanFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Gold Swamp Farm");
@@ -528,8 +644,10 @@ public class CommonConfig {
           .defineInRange("goldSwampFarmProcessTime", 150, 10, 3600);
       goldSwampFarmDropSound = builder.comment(DROP_SOUND_TEXT).define("goldSwampFarmDropSound",
           "minecraft:entity.slime.squish");
-      goldSwampFarmMobs = builder.comment(SUPPORTED_MOBS_SWAMP_FARM).define("goldSwampFarmMobs",
-          new ArrayList<String>(Swamp.All));
+      goldSwampFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_SWAMP_FARM)
+          .define("goldSwampFarmMobs", new ArrayList<String>(Swamp.All));
+      goldSwampFarmDeniedMobs = builder.comment(DENIED_MOBS_SWAMP_FARM)
+          .define("goldSwampFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.pop();
@@ -543,8 +661,10 @@ public class CommonConfig {
           .defineInRange("netheriteAnimalPlainsFarmProcessTime", 75, 10, 3600);
       netheriteAnimalPlainsFarmDropSound = builder.comment(DROP_SOUND_TEXT)
           .define("netheriteAnimalPlainsFarmDropSound", "minecraft:entity.chicken.egg");
-      netheriteAnimalPlainsFarmMobs = builder.comment(SUPPORTED_MOBS_ANIMAL_PLANS_FARM)
+      netheriteAnimalPlainsFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_ANIMAL_PLANS_FARM)
           .define("netheriteAnimalPlainsFarmMobs", new ArrayList<String>());
+      netheriteAnimalPlainsFarmDeniedMobs = builder.comment(DENIED_MOBS_ANIMAL_PLANS_FARM)
+          .define("netheriteAnimalPlainsFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Netherite Bee Hive Farms");
@@ -552,8 +672,10 @@ public class CommonConfig {
           .defineInRange("netheriteBeeHiveFarmProcessTime", 75, 10, 3600);
       netheriteBeeHiveFarmDropSound = builder.comment(DROP_SOUND_TEXT)
           .define("netheriteBeeHiveFarmDropSound", "minecraft:block.beehive.exit");
-      netheriteBeeHiveFarmMobs = builder.comment(SUPPORTED_MOBS_BEE_HIVE_FARM)
+      netheriteBeeHiveFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_BEE_HIVE_FARM)
           .define("netheriteBeeHiveFarmMobs", new ArrayList<String>());
+      netheriteBeeHiveFarmDeniedMobs = builder.comment(DENIED_MOBS_BEE_HIVE_FARM)
+          .define("netheriteBeeHiveFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Netherite Desert Farms");
@@ -561,8 +683,10 @@ public class CommonConfig {
           .defineInRange("netheriteDesertFarmProcessTime", 75, 10, 3600);
       netheriteDesertFarmDropSound = builder.comment(DROP_SOUND_TEXT)
           .define("netheriteDesertFarmDropSound", "minecraft:block.sand.hit");
-      netheriteDesertFarmMobs = builder.comment(SUPPORTED_MOBS_DESERT_FARM)
+      netheriteDesertFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_DESERT_FARM)
           .define("netheriteDesertFarmMobs", new ArrayList<String>());
+      netheriteDesertFarmDeniedMobs = builder.comment(DENIED_MOBS_DESERT_FARM)
+          .define("netheriteDesertFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Netherite Jungle Farm");
@@ -570,8 +694,10 @@ public class CommonConfig {
           .defineInRange("netheriteJungleFarmProcessTime", 75, 10, 3600);
       netheriteJungleFarmDropSound = builder.comment(DROP_SOUND_TEXT)
           .define("netheriteJungleFarmDropSound", "minecraft:block.bamboo.break");
-      netheriteJungleFarmMobs = builder.comment(SUPPORTED_MOBS_JUNGLE_FARM)
+      netheriteJungleFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_JUNGLE_FARM)
           .define("netheriteJungleFarmMobs", new ArrayList<String>());
+      netheriteJungleFarmDeniedMobs = builder.comment(DENIED_MOBS_JUNGLE_FARM)
+          .define("netheriteJungleFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Netherite Monster Plains Cave Farms");
@@ -579,8 +705,10 @@ public class CommonConfig {
           .defineInRange("netheriteMonsterPlainsCaveFarmProcessTime", 75, 10, 3600);
       netheriteMonsterPlainsCaveFarmDropSound = builder.comment(DROP_SOUND_TEXT)
           .define("netheriteMonsterPlainsCaveFarmDropSound", "minecraft:block.netherrack.fall");
-      netheriteMonsterPlainsCaveFarmMobs = builder.comment(SUPPORTED_MOBS_PLAINS_CAVE_FARM)
+      netheriteMonsterPlainsCaveFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_PLAINS_CAVE_FARM)
           .define("netheriteMonsterPlainsCaveFarmMobs", new ArrayList<String>());
+      netheriteMonsterPlainsCaveFarmDeniedMobs = builder.comment(DENIED_MOBS_PLAINS_CAVE_FARM)
+          .define("netheriteMonsterPlainsCaveFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Netherite Nether Fortress Farm");
@@ -588,8 +716,10 @@ public class CommonConfig {
           .defineInRange("netheriteNetherFortressFarmProcessTime", 75, 10, 3600);
       netheriteNetherFortressFarmDropSound = builder.comment(DROP_SOUND_TEXT)
           .define("netheriteNetherFortressFarmDropSound", "minecraft:block.nether_wart.break");
-      netheriteNetherFortressFarmMobs = builder.comment(SUPPORTED_MOBS_NETHER_FARM)
+      netheriteNetherFortressFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_NETHER_FARM)
           .define("netheriteNetherFortressFarmMobs", new ArrayList<String>());
+      netheriteNetherFortressFarmDeniedMobs = builder.comment(DENIED_MOBS_NETHER_FARM)
+          .define("netheriteNetherFortressFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Netherite Ocean Farm");
@@ -597,8 +727,10 @@ public class CommonConfig {
           .defineInRange("netheriteOceanFarmProcessTime", 75, 10, 3600);
       netheriteOceanFarmDropSound = builder.comment(DROP_SOUND_TEXT)
           .define("netheriteOceanFarmDropSound", "minecraft:block.bubble_column.bubble_pop");
-      netheriteOceanFarmMobs = builder.comment(SUPPORTED_MOBS_OCEAN_FARM)
+      netheriteOceanFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_OCEAN_FARM)
           .define("netheriteOceanFarmMobs", new ArrayList<String>());
+      netheriteOceanFarmDeniedMobs = builder.comment(DENIED_MOBS_OCEAN_FARM)
+          .define("netheriteOceanFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Netherite Swamp Farm");
@@ -606,8 +738,10 @@ public class CommonConfig {
           .defineInRange("netheriteSwampFarmProcessTime", 75, 10, 3600);
       netheriteSwampFarmDropSound = builder.comment(DROP_SOUND_TEXT)
           .define("netheriteSwampFarmDropSound", "minecraft:block.slime_block.break");
-      netheriteSwampFarmMobs = builder.comment(SUPPORTED_MOBS_SWAMP_FARM)
+      netheriteSwampFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_SWAMP_FARM)
           .define("netheriteSwampFarmMobs", new ArrayList<String>());
+      netheriteSwampFarmDeniedMobs = builder.comment(DENIED_MOBS_SWAMP_FARM)
+          .define("netheriteSwampFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.pop();
@@ -625,51 +759,62 @@ public class CommonConfig {
       builder.push("Catch Cage (Mob Catching Item)");
       catchCageMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
           .defineInRange("catchCageMobCatchingLuck", 6, 0, 100);
-      catchCageMobs = builder.comment(getCatchableMobsText("catch cage")).define("catchCageMobs",
-          new ArrayList<String>(Arrays.asList(PassiveAnimal.PANDA, NeutralAnimal.POLAR_BEAR)));
+      catchCageAllowedMobs =
+          builder.comment(getCatchableMobsText("catch cage")).define("catchCageMobs",
+              new ArrayList<String>(Arrays.asList(PassiveAnimal.PANDA, NeutralAnimal.POLAR_BEAR)));
+      catchCageDeniedMobs = builder.comment(getDeniedMobsText("catch cage"))
+          .define("catchCageDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Catch Cage small (Mob Catching Item)");
       catchCageSmallMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
           .defineInRange("catchCageSmallMobCatchingLuck", 3, 0, 100);
-      catchCageSmallMobs = builder.comment(getCatchableMobsText("catch cage small"))
+      catchCageSmallAllowedMobs = builder.comment(getCatchableMobsText("catch cage small"))
           .define("catchCageSmallMobs", new ArrayList<String>(
               Arrays.asList(PassiveAnimal.CHICKEN, PassiveAnimal.RABBIT, PassiveAnimal.PARROT)));
+      catchCageSmallDeniedMobs = builder.comment(getDeniedMobsText("catch cage small"))
+          .define("catchCageSmallDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Collar small (Mob Catching Item)");
       collarSmallMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
           .defineInRange("collarSmallMobCatchingLuck", 3, 0, 100);
-      collarSmallMobs =
+      collarSmallAllowedMobs =
           builder.comment(getCatchableMobsText("collar small")).define("collarSmallMobs",
               new ArrayList<String>(
                   Arrays.asList(PassiveAnimal.CHICKEN, PassiveAnimal.COW, PassiveAnimal.DONKEY,
                       PassiveAnimal.HORSE, PassiveAnimal.PIG, PassiveAnimal.SHEEP)));
+      collarSmallDeniedMobs = builder.comment(getDeniedMobsText("collar small"))
+          .define("collarSmallDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Ender Lasso (Mob Catching Item)");
       enderLassoMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
           .defineInRange("enderLassoMobCatchingLuck", 10, 0, 100);
-      enderLassoMobs = builder.comment(getCatchableMobsText("ender lasso")).define("enderLassoMobs",
-          new ArrayList<String>(HostileMonster.All));
+      enderLassoAllowedMobs = builder.comment(getCatchableMobsText("ender lasso"))
+          .define("enderLassoMobs", new ArrayList<String>(HostileMonster.All));
+      enderLassoDeniedMobs = builder.comment(getDeniedMobsText("ender lasso"))
+          .define("enderLassoDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Fishing bowl (Mob Catching Item)");
       fishingBowlMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
           .defineInRange("fishingBowlMobCatchingLuck", 3, 0, 100);
-      fishingBowlMobs =
+      fishingBowlAllowedMobs =
           builder.comment(getCatchableMobsText("fishing bowl")).define("fishingBowlMobs",
               new ArrayList<String>(Arrays.asList(AmbientWaterAnimal.COD, AmbientWaterAnimal.SALMON,
                   AmbientWaterAnimal.ATLANTIC_COD, AmbientWaterAnimal.ATLANTIC_HALIBUT,
                   AmbientWaterAnimal.ATLANTIC_HERRING, AmbientWaterAnimal.BLACKFISH,
                   AmbientWaterAnimal.PACIFIC_HALIBUT, AmbientWaterAnimal.PINK_SALMON,
                   AmbientWaterAnimal.POLLOCK, AmbientWaterAnimal.RAINBOW_TROUT)));
+      fishingBowlDeniedMobs = builder.comment(getDeniedMobsText("fishing bowl"))
+          .define("fishingBowlDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Fishing net small (Mob Catching Item)");
       fishingNetSmallMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
           .defineInRange("fishingNetSmallMobCatchingLuck", 3, 0, 100);
-      fishingNetSmallMobs =
+      fishingNetSmallAllowedMobs =
           builder
               .comment(
                   getCatchableMobsText("fishing net small"))
@@ -680,46 +825,60 @@ public class CommonConfig {
                               Arrays.asList(AmbientWaterAnimal.COD, AmbientWaterAnimal.SALMON,
                                   HostileWaterMonster.DROWNED).stream())
                           .collect(Collectors.toList())));
+      fishingNetSmallDeniedMobs = builder.comment(getDeniedMobsText("fishing net small"))
+          .define("fishingNetSmallDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Golden Lasso (Mob Catching Item)");
       goldenLassoMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
           .defineInRange("goldenLassoMobCatchingLuck", 10, 0, 100);
-      goldenLassoMobs = builder.comment(getCatchableMobsText("golden lasso"))
+      goldenLassoAllowedMobs = builder.comment(getCatchableMobsText("golden lasso"))
           .define("goldenLassoMobs", new ArrayList<String>(PassiveAnimal.All));
+      goldenLassoDeniedMobs = builder.comment(getDeniedMobsText("golden lasso"))
+          .define("goldenLassoDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Insect net (Mob Catching Item)");
       insectNetMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
           .defineInRange("insectNetMobCatchingLuck", 3, 0, 100);
-      insectNetMobs = builder.comment(getCatchableMobsText("insect net")).define("insectNetMobs",
-          new ArrayList<String>(
-              Stream.concat(BeeAnimal.All.stream(), Arrays.asList(PassiveAnimal.FLY).stream())
-                  .collect(Collectors.toList())));
+      insectNetAllowedMobs =
+          builder.comment(getCatchableMobsText("insect net")).define("insectNetMobs",
+              new ArrayList<String>(
+                  Stream.concat(BeeAnimal.All.stream(), Arrays.asList(PassiveAnimal.FLY).stream())
+                      .collect(Collectors.toList())));
+      insectNetDeniedMobs = builder.comment(getDeniedMobsText("insect net"))
+          .define("insectNetDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Netherite Lasso (Mob Catching Item)");
       netheriteLassoMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
           .defineInRange("netheriteLassoMobCatchingLuck", 2, 0, 100);
-      netheriteLassoMobs = builder.comment(getCatchableMobsText("netherite lasso"))
+      netheriteLassoAllowedMobs = builder.comment(getCatchableMobsText("netherite lasso"))
           .define("netheriteLassoMobs", new ArrayList<String>());
+      netheriteLassoDeniedMobs = builder.comment(getDeniedMobsText("netherite lasso"))
+          .define("netheriteLassoDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Urn small (Mob Catching Item)");
       urnSmallMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
           .defineInRange("urnSmallMobCatchingLuck", 3, 0, 100);
-      urnSmallMobs = builder.comment(getCatchableMobsText("urn small")).define("urnSmallMobs",
-          new ArrayList<String>(Arrays.asList(HostileMonster.CAVE_SPIDER, HostileMonster.CREEPER,
-              HostileMonster.SPIDER, HostileMonster.SKELETON, HostileMonster.HUSK,
-              HostileMonster.ZOMBIE, HostileMonster.ZOMBIE_VILLAGER)));
+      urnSmallAllowedMobs =
+          builder.comment(getCatchableMobsText("urn small")).define("urnSmallMobs",
+              new ArrayList<String>(Arrays.asList(HostileMonster.CAVE_SPIDER,
+                  HostileMonster.CREEPER, HostileMonster.SPIDER, HostileMonster.SKELETON,
+                  HostileMonster.HUSK, HostileMonster.ZOMBIE, HostileMonster.ZOMBIE_VILLAGER)));
+      urnSmallDeniedMobs = builder.comment(getDeniedMobsText("urn small"))
+          .define("urnSmallDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Witch Bottle (Mob Catching Item)");
       witchBottleMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
           .defineInRange("witchBottleMobCatchingLuck", 10, 0, 100);
-      witchBottleMobs = builder.comment(getCatchableMobsText("witch bottle"))
+      witchBottleAllowedMobs = builder.comment(getCatchableMobsText("witch bottle"))
           .define("witchBottleMobs", new ArrayList<String>(
               Arrays.asList(HostileMonster.ENDERMAN, HostileMonster.SLIME, HostileMonster.WITCH)));
+      witchBottleDeniedMobs = builder.comment(getDeniedMobsText("witch bottle"))
+          .define("witchBottleDeniedMobs", new ArrayList<String>());
       builder.pop();
 
       builder.push("Bee Settings");

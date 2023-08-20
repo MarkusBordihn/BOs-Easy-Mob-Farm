@@ -48,8 +48,8 @@ public class GoldBeeHiveFarmMenu extends MobFarmMenu {
   }
 
   @Override
-  public boolean mayPlaceCapturedMobType(String mobType) {
-    return GoldBeeHiveFarm.isAcceptedCapturedMobType(mobType);
+  public String getAcceptedMobTypeName() {
+    return GoldBeeHiveFarm.NAME;
   }
 
 }

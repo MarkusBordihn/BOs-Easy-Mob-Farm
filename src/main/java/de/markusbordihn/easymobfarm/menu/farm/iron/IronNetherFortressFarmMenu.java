@@ -48,8 +48,8 @@ public class IronNetherFortressFarmMenu extends MobFarmMenu {
   }
 
   @Override
-  public boolean mayPlaceCapturedMobType(String mobType) {
-    return IronNetherFortressFarm.isAcceptedCapturedMobType(mobType);
+  public String getAcceptedMobTypeName() {
+    return IronNetherFortressFarm.NAME;
   }
 
 }
