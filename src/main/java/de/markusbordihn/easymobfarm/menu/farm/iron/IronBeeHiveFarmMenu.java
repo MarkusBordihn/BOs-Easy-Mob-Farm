@@ -45,8 +45,8 @@ public class IronBeeHiveFarmMenu extends MobFarmMenu {
   }
 
   @Override
-  public boolean mayPlaceCapturedMobType(String mobType) {
-    return IronBeeHiveFarm.isAcceptedCapturedMobType(mobType);
+  public String getAcceptedMobTypeName() {
+    return IronBeeHiveFarm.NAME;
   }
 
 }

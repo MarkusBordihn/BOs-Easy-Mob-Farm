@@ -17,28 +17,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.item.mobcatcher;
+package de.markusbordihn.easymobfarm.config.mobs;
 
-import net.minecraft.world.item.Item;
+import java.util.Set;
 
-import de.markusbordihn.easymobfarm.item.MobCatcherItem;
+public class BossMonster {
 
-public class CatchCage extends MobCatcherItem {
+  protected BossMonster() {}
 
-  public static final String NAME = "Catch Cage";
+  public static final String ENDER_DRAGON = "minecraft:ender_dragon";
+  public static final String WARDEN = "minecraft:warden";
+  public static final String WITHER = "minecraft:wither";
 
-  public CatchCage(Item.Properties properties) {
-    super(properties);
-  }
-
-  @Override
-  public int getMobCatchingLuckConfig() {
-    return COMMON.catchCageSmallMobCatchingLuck.get();
-  }
-
-  @Override
-  public String getMobCatcherItemName() {
-    return NAME;
-  }
-
+  public static final Set<String> All = Set.of(ENDER_DRAGON, WARDEN, WITHER);
 }

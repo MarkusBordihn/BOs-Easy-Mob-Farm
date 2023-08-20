@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.block;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -63,6 +64,10 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.event.level.LevelEvent;
+import net.minecraftforge.event.server.ServerAboutToStartEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
@@ -73,6 +78,7 @@ import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import de.markusbordihn.easymobfarm.text.TranslatableText;
 
+@EventBusSubscriber
 public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatible {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
@@ -86,6 +92,10 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
   public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
   public static final Set<String> ACCEPTED_MOB_TYPES = Collections.emptySet();
+  public static final Set<String> DENIED_MOB_TYPES = Collections.emptySet();
+
+  private static Set<String> generalAllowedMobTypes = Collections.emptySet();
+  private static Set<String> generalDeniedMobTypes = Collections.emptySet();
 
   protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 
@@ -95,10 +105,40 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
         .setValue(WORKING, Boolean.valueOf(false)));
   }
 
+  @SubscribeEvent
+  public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
+    if (generalAllowedMobTypes.isEmpty()) {
+      generalAllowedMobTypes = new HashSet<>(COMMON.generalAllowedMobs.get());
+    }
+    if (generalDeniedMobTypes.isEmpty()) {
+      generalDeniedMobTypes = new HashSet<>(COMMON.generalDeniedMobs.get());
+    }
+  }
+
+  @SubscribeEvent
+  public static void handleWorldEventLoad(LevelEvent.Load event) {
+    if (event.getLevel().isClientSide()) {
+      if (generalAllowedMobTypes.isEmpty()) {
+        generalAllowedMobTypes = new HashSet<>(COMMON.generalAllowedMobs.get());
+      }
+      if (generalDeniedMobTypes.isEmpty()) {
+        generalDeniedMobTypes = new HashSet<>(COMMON.generalDeniedMobs.get());
+      }
+    }
+  }
+
   protected void openContainer(Level level, BlockPos blockPos, Player player) {
     if (level.getBlockEntity(blockPos) instanceof MobFarmBlockEntity mobFarm) {
       player.openMenu(mobFarm);
     }
+  }
+
+  public Set<String> getGeneralAllowedMobTypes() {
+    return generalAllowedMobTypes;
+  }
+
+  public Set<String> getGeneralDeniedMobTypes() {
+    return generalDeniedMobTypes;
   }
 
   public static int getLightLevel(BlockState blockState) {
@@ -109,9 +149,28 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
     return ACCEPTED_MOB_TYPES;
   }
 
+  public Set<String> getDeniedMobTypes() {
+    return DENIED_MOB_TYPES;
+  }
+
   public boolean isAcceptedMobType(String mobType) {
-    return mobType != null && !mobType.isBlank() && (getAcceptedMobTypes() == null
-        || getAcceptedMobTypes().isEmpty() || getAcceptedMobTypes().contains(mobType));
+    if (mobType == null || mobType.isBlank()) {
+      return false;
+    }
+    if (getGeneralDeniedMobTypes().contains(mobType)) {
+      return false;
+    }
+    if (getGeneralAllowedMobTypes().contains(mobType)) {
+      return true;
+    }
+    if (getDeniedMobTypes().contains(mobType)) {
+      return false;
+    }
+    return getAcceptedMobTypes().isEmpty() || getAcceptedMobTypes().contains(mobType);
+  }
+
+  public boolean isDeniedMobType(String mobType) {
+    return !isAcceptedMobType(mobType);
   }
 
   public String getFarmDescriptionId() {

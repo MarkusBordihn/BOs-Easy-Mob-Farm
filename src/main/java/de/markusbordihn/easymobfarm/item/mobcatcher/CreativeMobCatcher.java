@@ -27,6 +27,8 @@ import de.markusbordihn.easymobfarm.item.MobCatcherItem;
 
 public class CreativeMobCatcher extends MobCatcherItem {
 
+  public static final String NAME = "Creative Mob Catcher";
+
   public CreativeMobCatcher(Item.Properties properties) {
     super(properties);
   }
@@ -44,6 +46,11 @@ public class CreativeMobCatcher extends MobCatcherItem {
   @Override
   public UseAnim getUseAnimation(ItemStack itemStack) {
     return UseAnim.CROSSBOW;
+  }
+
+  @Override
+  public String getMobCatcherItemName() {
+    return NAME;
   }
 
 }
