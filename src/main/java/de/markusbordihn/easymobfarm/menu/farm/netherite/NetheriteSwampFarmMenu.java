@@ -45,8 +45,8 @@ public class NetheriteSwampFarmMenu extends MobFarmMenu {
   }
 
   @Override
-  public boolean mayPlaceCapturedMobType(String mobType) {
-    return NetheriteSwampFarm.isAcceptedCapturedMobType(mobType);
+  public String getAcceptedMobTypeName() {
+    return NetheriteSwampFarm.NAME;
   }
 
 }

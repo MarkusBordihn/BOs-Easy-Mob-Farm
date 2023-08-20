@@ -59,14 +59,10 @@ public class GoldDesertFarm extends MobFarmBlock {
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    acceptedMobTypes = new HashSet<>(COMMON.goldDesertFarmMobs.get());
+    acceptedMobTypes = new HashSet<>(COMMON.goldDesertFarmAllowedMobs.get());
     logAcceptedMobTypes(NAME, acceptedMobTypes);
   }
 
-  public static boolean isAcceptedCapturedMobType(String mobType) {
-    return acceptedMobTypes == null || acceptedMobTypes.isEmpty()
-        || acceptedMobTypes.contains(mobType);
-  }
 
   @Override
   public Set<String> getAcceptedMobTypes() {

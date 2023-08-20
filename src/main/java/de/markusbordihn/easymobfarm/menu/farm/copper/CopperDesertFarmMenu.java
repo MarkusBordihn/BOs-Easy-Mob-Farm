@@ -26,7 +26,7 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
-import de.markusbordihn.easymobfarm.block.farm.iron.IronDesertFarm;
+import de.markusbordihn.easymobfarm.block.farm.copper.CopperDesertFarm;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
 
@@ -45,8 +45,8 @@ public class CopperDesertFarmMenu extends MobFarmMenu {
   }
 
   @Override
-  public boolean mayPlaceCapturedMobType(String mobType) {
-    return IronDesertFarm.isAcceptedCapturedMobType(mobType);
+  public String getAcceptedMobTypeName() {
+    return CopperDesertFarm.NAME;
   }
 
 }

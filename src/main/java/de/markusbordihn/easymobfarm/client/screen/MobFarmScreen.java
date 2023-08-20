@@ -19,24 +19,36 @@
 
 package de.markusbordihn.easymobfarm.client.screen;
 
+import java.util.Set;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.StringSplitter;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.Items;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
 import de.markusbordihn.easymobfarm.client.renderer.helper.RenderModels;
+import de.markusbordihn.easymobfarm.config.MobTypeManager;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
+import de.markusbordihn.easymobfarm.menu.slots.CapturedMobSlot;
+import de.markusbordihn.easymobfarm.menu.slots.ExperienceSlot;
+import de.markusbordihn.easymobfarm.menu.slots.WeaponSlot;
+import de.markusbordihn.easymobfarm.text.TranslatableText;
 
 public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScreen<T> {
 
@@ -49,10 +61,11 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
 
   public static final int SNAP_WITH = 34;
   public static final int SNAP_HEIGHT = 53;
+  public static final int MAX_HELP_TEXT_WIDTH = 300;
 
-  private MutableComponent warningFullText;
-  private RenderModels renderModels;
   private T mobFarmMenu;
+  private RenderModels renderModels;
+  private MutableComponent warningFullText;
   private float dropTimeLabelScale = 0.75F;
   private float nextDropTimeLabelScale = 0.75F;
   private int animationTicker = 0;
@@ -61,6 +74,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
   private int nextDropTimeLabelX;
   private int nextDropTimeLabelY;
   private int ticker = 0;
+  private StringSplitter stringSplitter;
 
   public MobFarmScreen(T menu, Inventory inventory, Component component) {
     super(menu, inventory, component);
@@ -101,6 +115,52 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
     }
   }
 
+  protected void renderHelpText(PoseStack poseStack, int x, int y) {
+    if (this.menu.getCarried().isEmpty() && this.hoveredSlot != null && !this.hoveredSlot.hasItem()
+        && font != null && stringSplitter != null) {
+      if (this.hoveredSlot instanceof CapturedMobSlot) {
+        Set<String> acceptedMobTypes =
+            MobTypeManager.getAcceptedMobTypes(this.menu.getAcceptedMobTypeName());
+        if (acceptedMobTypes != null && !acceptedMobTypes.isEmpty()) {
+          MutableComponent mobTypeOverview =
+              Component.literal("").withStyle(ChatFormatting.DARK_GREEN);
+          for (String acceptedMob : acceptedMobTypes) {
+            Component acceptedMobName = TranslatableText.getEntityName(acceptedMob);
+            if (!acceptedMobName.getString().isBlank()) {
+              mobTypeOverview.append(acceptedMobName).append(", ")
+                  .withStyle(ChatFormatting.DARK_GREEN);
+            }
+          }
+          mobTypeOverview.append(Component.literal("..."));
+          this.renderComponentTooltip(poseStack,
+              stringSplitter.splitLines(Component
+                  .translatable(Constants.HELP_TEXT_PREFIX + "capture_slot", mobTypeOverview),
+                  MAX_HELP_TEXT_WIDTH, Style.EMPTY),
+              x, y, font);
+        } else {
+          this.renderComponentTooltip(poseStack,
+              stringSplitter.splitLines(
+                  Component.translatable(Constants.HELP_TEXT_PREFIX + "capture_slot_all"),
+                  MAX_HELP_TEXT_WIDTH, Style.EMPTY),
+              x, y, font);
+        }
+      } else if (this.hoveredSlot instanceof WeaponSlot) {
+        this.renderComponentTooltip(poseStack,
+            stringSplitter.splitLines(
+                Component.translatable(Constants.HELP_TEXT_PREFIX + "weapon_slot"),
+                MAX_HELP_TEXT_WIDTH, Style.EMPTY),
+            x, y, font);
+      } else if (this.hoveredSlot instanceof ExperienceSlot) {
+        this.renderComponentTooltip(poseStack,
+            stringSplitter.splitLines(
+                Component.translatable(Constants.HELP_TEXT_PREFIX + "experience_slot",
+                    Items.GLASS_BOTTLE.getDescription(), Items.EXPERIENCE_BOTTLE.getDescription()),
+                MAX_HELP_TEXT_WIDTH, Style.EMPTY),
+            x, y, font);
+      }
+    }
+  }
+
   @Override
   public void init() {
     super.init();
@@ -117,6 +177,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
     this.nextDropTimeLabelY = Math.round(91 / nextDropTimeLabelScale);
     this.warningFullText = Component.translatable(Constants.TEXT_PREFIX + "warning_full");
     this.renderModels = new RenderModels(this.minecraft);
+    this.stringSplitter = this.font.getSplitter();
   }
 
   @Override
@@ -139,6 +200,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
     super.render(poseStack, x, y, partialTicks);
     this.renderEntityType(poseStack, x, y);
     this.renderTooltip(poseStack, x, y);
+    this.renderHelpText(poseStack, x, y);
   }
 
   @Override
