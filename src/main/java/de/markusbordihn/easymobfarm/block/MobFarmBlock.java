@@ -64,21 +64,17 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.event.server.ServerAboutToStartEvent;
-import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.config.CommonConfig;
+import de.markusbordihn.easymobfarm.config.MobTypeManager;
 import de.markusbordihn.easymobfarm.data.FarmTier;
 import de.markusbordihn.easymobfarm.item.CapturedMob;
 import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import de.markusbordihn.easymobfarm.text.TranslatableText;
 
-@EventBusSubscriber
 public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatible {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
@@ -94,37 +90,12 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
   public static final Set<String> ACCEPTED_MOB_TYPES = Collections.emptySet();
   public static final Set<String> DENIED_MOB_TYPES = Collections.emptySet();
 
-  private static Set<String> generalAllowedMobTypes = Collections.emptySet();
-  private static Set<String> generalDeniedMobTypes = Collections.emptySet();
-
   protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 
   public MobFarmBlock(BlockBehaviour.Properties properties) {
     super(properties);
     this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH)
         .setValue(WORKING, Boolean.valueOf(false)));
-  }
-
-  @SubscribeEvent
-  public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    if (generalAllowedMobTypes.isEmpty()) {
-      generalAllowedMobTypes = new HashSet<>(COMMON.generalAllowedMobs.get());
-    }
-    if (generalDeniedMobTypes.isEmpty()) {
-      generalDeniedMobTypes = new HashSet<>(COMMON.generalDeniedMobs.get());
-    }
-  }
-
-  @SubscribeEvent
-  public static void handleWorldEventLoad(WorldEvent.Load event) {
-    if (event.getWorld().isClientSide()) {
-      if (generalAllowedMobTypes.isEmpty()) {
-        generalAllowedMobTypes = new HashSet<>(COMMON.generalAllowedMobs.get());
-      }
-      if (generalDeniedMobTypes.isEmpty()) {
-        generalDeniedMobTypes = new HashSet<>(COMMON.generalDeniedMobs.get());
-      }
-    }
   }
 
   protected void openContainer(Level level, BlockPos blockPos, Player player) {
@@ -134,11 +105,11 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
   }
 
   public Set<String> getGeneralAllowedMobTypes() {
-    return generalAllowedMobTypes;
+    return MobTypeManager.getGeneralAllowedMobTypes();
   }
 
   public Set<String> getGeneralDeniedMobTypes() {
-    return generalDeniedMobTypes;
+    return MobTypeManager.getGeneralDeniedMobTypes();
   }
 
   public static int getLightLevel(BlockState blockState) {
@@ -146,11 +117,11 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
   }
 
   public Set<String> getAcceptedMobTypes() {
-    return ACCEPTED_MOB_TYPES;
+    return MobTypeManager.getAcceptedMobTypes(getFarmName());
   }
 
   public Set<String> getDeniedMobTypes() {
-    return DENIED_MOB_TYPES;
+    return MobTypeManager.getDeniedMobTypes(getFarmName());
   }
 
   public boolean isAcceptedMobType(String mobType) {

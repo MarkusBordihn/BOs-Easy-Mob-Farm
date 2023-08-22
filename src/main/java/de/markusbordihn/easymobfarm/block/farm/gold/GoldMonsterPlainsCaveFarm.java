@@ -19,8 +19,6 @@
 
 package de.markusbordihn.easymobfarm.block.farm.gold;
 
-import java.util.HashSet;
-import java.util.Set;
 import javax.annotation.Nullable;
 
 import net.minecraft.core.BlockPos;
@@ -35,39 +33,19 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 
-import net.minecraftforge.event.server.ServerAboutToStartEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-
 import de.markusbordihn.easymobfarm.block.MobFarmBlock;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.block.entity.farm.gold.GoldMonsterPlainsCaveFarmEntity;
 import de.markusbordihn.easymobfarm.data.FarmTier;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
-@EventBusSubscriber
 public class GoldMonsterPlainsCaveFarm extends MobFarmBlock {
 
   public static final String NAME = "gold_monster_plains_cave_farm";
 
-  private static Set<String> acceptedMobTypes =
-      new HashSet<>(COMMON.goldMonsterPlainsCaveFarmAllowedMobs.get());
-
   public GoldMonsterPlainsCaveFarm(BlockBehaviour.Properties properties) {
     super(properties);
   }
-
-  @SubscribeEvent
-  public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    acceptedMobTypes = new HashSet<>(COMMON.goldMonsterPlainsCaveFarmAllowedMobs.get());
-    logAcceptedMobTypes(NAME, acceptedMobTypes);
-  }
-
-  @Override
-  public Set<String> getAcceptedMobTypes() {
-    return acceptedMobTypes;
-  }
-
 
   @Override
   public String getFarmDescriptionId() {
