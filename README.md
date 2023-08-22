@@ -51,5 +51,5 @@ The experience will be generated randomly, so not on each drop.
 Please check the wiki <https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/wiki> for additional information.
 
 [item_overview]: examples/item_overview.png
-[logo]: wiki/logo_header.png
+[logo]: https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/wiki/logo_header.png
 [mob_menu]: examples/mob_farm_menu.png
