@@ -757,31 +757,32 @@ public class CommonConfig {
 
       // Mob Catching Item
 
-      builder.push("Catch Cage (Mob Catching Item)");
+      builder.push("Mob Catching Item");
+      builder.push("Catch Cage");
       catchCageMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
           .defineInRange("catchCageMobCatchingLuck", 6, 0, 100);
       catchCageAllowedMobs =
-          builder.comment(getCatchableMobsText("catch cage")).define("catchCageMobs",
+          builder.comment(getCatchableMobsText("catch cage")).define("catchCageAllowedMobs",
               new ArrayList<String>(Arrays.asList(PassiveAnimal.PANDA, NeutralAnimal.POLAR_BEAR)));
       catchCageDeniedMobs = builder.comment(getDeniedMobsText("catch cage"))
           .define("catchCageDeniedMobs", new ArrayList<String>());
       builder.pop();
 
-      builder.push("Catch Cage small (Mob Catching Item)");
+      builder.push("Catch Cage small");
       catchCageSmallMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
           .defineInRange("catchCageSmallMobCatchingLuck", 3, 0, 100);
       catchCageSmallAllowedMobs = builder.comment(getCatchableMobsText("catch cage small"))
-          .define("catchCageSmallMobs", new ArrayList<String>(
+          .define("catchCageSmallAllowedMobs", new ArrayList<String>(
               Arrays.asList(PassiveAnimal.CHICKEN, PassiveAnimal.RABBIT, PassiveAnimal.PARROT)));
       catchCageSmallDeniedMobs = builder.comment(getDeniedMobsText("catch cage small"))
           .define("catchCageSmallDeniedMobs", new ArrayList<String>());
       builder.pop();
 
-      builder.push("Collar small (Mob Catching Item)");
+      builder.push("Collar small");
       collarSmallMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
           .defineInRange("collarSmallMobCatchingLuck", 3, 0, 100);
       collarSmallAllowedMobs =
-          builder.comment(getCatchableMobsText("collar small")).define("collarSmallMobs",
+          builder.comment(getCatchableMobsText("collar small")).define("collarSmallAllowedMobs",
               new ArrayList<String>(
                   Arrays.asList(PassiveAnimal.CHICKEN, PassiveAnimal.COW, PassiveAnimal.DONKEY,
                       PassiveAnimal.HORSE, PassiveAnimal.PIG, PassiveAnimal.SHEEP)));
@@ -789,20 +790,20 @@ public class CommonConfig {
           .define("collarSmallDeniedMobs", new ArrayList<String>());
       builder.pop();
 
-      builder.push("Ender Lasso (Mob Catching Item)");
+      builder.push("Ender Lasso");
       enderLassoMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
-          .defineInRange("enderLassoMobCatchingLuck", 10, 0, 100);
+          .defineInRange("enderLassoMobCatchingLuck", 4, 0, 100);
       enderLassoAllowedMobs = builder.comment(getCatchableMobsText("ender lasso"))
-          .define("enderLassoMobs", new ArrayList<String>(HostileMonster.All));
+          .define("enderLassoAllowedMobs", new ArrayList<String>(HostileMonster.All));
       enderLassoDeniedMobs = builder.comment(getDeniedMobsText("ender lasso"))
           .define("enderLassoDeniedMobs", new ArrayList<String>());
       builder.pop();
 
-      builder.push("Fishing bowl (Mob Catching Item)");
+      builder.push("Fishing bowl");
       fishingBowlMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
           .defineInRange("fishingBowlMobCatchingLuck", 3, 0, 100);
       fishingBowlAllowedMobs =
-          builder.comment(getCatchableMobsText("fishing bowl")).define("fishingBowlMobs",
+          builder.comment(getCatchableMobsText("fishing bowl")).define("fishingBowlAllowedMobs",
               new ArrayList<String>(Arrays.asList(AmbientWaterAnimal.COD, AmbientWaterAnimal.SALMON,
                   AmbientWaterAnimal.ATLANTIC_COD, AmbientWaterAnimal.ATLANTIC_HALIBUT,
                   AmbientWaterAnimal.ATLANTIC_HERRING, AmbientWaterAnimal.BLACKFISH,
@@ -812,14 +813,14 @@ public class CommonConfig {
           .define("fishingBowlDeniedMobs", new ArrayList<String>());
       builder.pop();
 
-      builder.push("Fishing net small (Mob Catching Item)");
+      builder.push("Fishing net small");
       fishingNetSmallMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
           .defineInRange("fishingNetSmallMobCatchingLuck", 3, 0, 100);
       fishingNetSmallAllowedMobs =
           builder
               .comment(
                   getCatchableMobsText("fishing net small"))
-              .define("fishingNetSmallMobs",
+              .define("fishingNetSmallAllowedMobs",
                   new ArrayList<String>(
                       Stream
                           .concat(PassiveWaterAnimal.All.stream(),
@@ -830,20 +831,20 @@ public class CommonConfig {
           .define("fishingNetSmallDeniedMobs", new ArrayList<String>());
       builder.pop();
 
-      builder.push("Golden Lasso (Mob Catching Item)");
+      builder.push("Golden Lasso");
       goldenLassoMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
-          .defineInRange("goldenLassoMobCatchingLuck", 10, 0, 100);
+          .defineInRange("goldenLassoMobCatchingLuck", 8, 0, 100);
       goldenLassoAllowedMobs = builder.comment(getCatchableMobsText("golden lasso"))
-          .define("goldenLassoMobs", new ArrayList<String>(PassiveAnimal.All));
+          .define("goldenLassoAllowedMobs", new ArrayList<String>(PassiveAnimal.All));
       goldenLassoDeniedMobs = builder.comment(getDeniedMobsText("golden lasso"))
           .define("goldenLassoDeniedMobs", new ArrayList<String>());
       builder.pop();
 
-      builder.push("Insect net (Mob Catching Item)");
+      builder.push("Insect net");
       insectNetMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
           .defineInRange("insectNetMobCatchingLuck", 3, 0, 100);
       insectNetAllowedMobs =
-          builder.comment(getCatchableMobsText("insect net")).define("insectNetMobs",
+          builder.comment(getCatchableMobsText("insect net")).define("insectNetAllowedMobs",
               new ArrayList<String>(
                   Stream.concat(BeeAnimal.All.stream(), Arrays.asList(PassiveAnimal.FLY).stream())
                       .collect(Collectors.toList())));
@@ -851,20 +852,20 @@ public class CommonConfig {
           .define("insectNetDeniedMobs", new ArrayList<String>());
       builder.pop();
 
-      builder.push("Netherite Lasso (Mob Catching Item)");
+      builder.push("Netherite Lasso");
       netheriteLassoMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
           .defineInRange("netheriteLassoMobCatchingLuck", 2, 0, 100);
       netheriteLassoAllowedMobs = builder.comment(getCatchableMobsText("netherite lasso"))
-          .define("netheriteLassoMobs", new ArrayList<String>());
+          .define("netheriteLassoAllowedMobs", new ArrayList<String>());
       netheriteLassoDeniedMobs = builder.comment(getDeniedMobsText("netherite lasso"))
           .define("netheriteLassoDeniedMobs", new ArrayList<String>());
       builder.pop();
 
-      builder.push("Urn small (Mob Catching Item)");
+      builder.push("Urn small");
       urnSmallMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
           .defineInRange("urnSmallMobCatchingLuck", 3, 0, 100);
       urnSmallAllowedMobs =
-          builder.comment(getCatchableMobsText("urn small")).define("urnSmallMobs",
+          builder.comment(getCatchableMobsText("urn small")).define("urnSmallAllowedMobs",
               new ArrayList<String>(Arrays.asList(HostileMonster.CAVE_SPIDER,
                   HostileMonster.CREEPER, HostileMonster.SPIDER, HostileMonster.SKELETON,
                   HostileMonster.HUSK, HostileMonster.ZOMBIE, HostileMonster.ZOMBIE_VILLAGER)));
@@ -876,42 +877,49 @@ public class CommonConfig {
       witchBottleMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
           .defineInRange("witchBottleMobCatchingLuck", 10, 0, 100);
       witchBottleAllowedMobs = builder.comment(getCatchableMobsText("witch bottle"))
-          .define("witchBottleMobs", new ArrayList<String>(
+          .define("witchBottleAllowedMobs", new ArrayList<String>(
               Arrays.asList(HostileMonster.ENDERMAN, HostileMonster.SLIME, HostileMonster.WITCH)));
       witchBottleDeniedMobs = builder.comment(getDeniedMobsText("witch bottle"))
           .define("witchBottleDeniedMobs", new ArrayList<String>());
       builder.pop();
 
-      builder.push("Bee Settings");
+      builder.pop();
+
+      // Additional Drop Settings
+      builder.push("Additional Drop Settings");
+
+      builder.push("Bee Drop Settings");
       beeDropHoneycomb =
           builder.comment("Enable/Disable honeycomb drops.").define("beeDropHoneycomb", true);
       builder.pop();
 
-      builder.push("Blaze Settings");
+      builder.push("Blaze Drop Settings");
       blazeDropBlazeRod =
           builder.comment("Enable/Disable blaze rod drops.").define("blazeDropBlazeRod", false);
       builder.pop();
 
-      builder.push("Chicken Settings");
+      builder.push("Chicken Drop Settings");
       chickenDropEggs =
           builder.comment("Enable/Disable chicken egg drops.").define("chickenDropEggs", true);
       chickenDropRawChicken = builder.comment("Enable/Disable raw chicken drops.")
           .define("chickenDropRawChicken", true);
       builder.pop();
 
-      builder.push("Cow Settings");
+      builder.push("Cow Drop Settings");
       cowDropRawBeef =
           builder.comment("Enable/Disable cow raw beef drops.").define("cowDropRawBeef", true);
       builder.pop();
 
-      builder.push("Sheep Settings");
+      builder.push("Sheep Drop Settings");
       sheepDropRawMutton = builder.comment("Enable/Disable sheep raw mutton drops.")
           .define("sheepDropRawMutton", true);
       builder.pop();
 
-      builder.push("Slime Settings");
+      builder.push("Slime Drop Settings");
       slimeDropSlime = builder.comment("Enable/Disable slime drops regardless of size.")
           .define("slimeDropSlime", true);
+      builder.pop();
+
       builder.pop();
     }
   }

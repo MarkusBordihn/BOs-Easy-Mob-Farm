@@ -19,8 +19,6 @@
 
 package de.markusbordihn.easymobfarm.block.farm.special;
 
-import java.util.HashSet;
-import java.util.Set;
 import javax.annotation.Nullable;
 
 import org.apache.logging.log4j.LogManager;
@@ -50,19 +48,12 @@ public class CreativeMobFarm extends MobFarmBlock {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  private static final Set<String> acceptedMobTypes = new HashSet<>();
-
   public CreativeMobFarm(BlockBehaviour.Properties properties) {
     super(properties);
   }
 
   public static int getLightLevel(BlockState blockState) {
     return 15;
-  }
-
-  @Override
-  public Set<String> getAcceptedMobTypes() {
-    return acceptedMobTypes;
   }
 
   @Override
