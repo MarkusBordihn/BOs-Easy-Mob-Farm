@@ -97,7 +97,7 @@ public class ModItems {
       ITEMS.register("creative_mob_catcher",
           () -> new CreativeMobCatcher(new Item.Properties().stacksTo(1).durability(1000)));
   public static final RegistryObject<Item> ENDER_LASSO = ITEMS.register("ender_lasso",
-      () -> new EnderLasso(new Item.Properties().stacksTo(1).durability(10)));
+      () -> new EnderLasso(new Item.Properties().stacksTo(1).durability(20)));
   public static final RegistryObject<Item> FISHING_BOWL_SMALL = ITEMS.register("fishing_bowl",
       () -> new FishingBowl(new Item.Properties().stacksTo(1).durability(20)));
   public static final RegistryObject<Item> FISHING_NET_SMALL = ITEMS.register("fishing_net_small",
