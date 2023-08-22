@@ -19,7 +19,6 @@
 
 package de.markusbordihn.easymobfarm.block.farm.iron;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -40,10 +39,6 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 
-import net.minecraftforge.event.server.ServerAboutToStartEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.MobFarmBlock;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
@@ -52,28 +47,13 @@ import de.markusbordihn.easymobfarm.data.FarmTier;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import de.markusbordihn.easymobfarm.text.TranslatableText;
 
-@EventBusSubscriber
 public class IronBeeHiveFarm extends MobFarmBlock {
 
   public static final String NAME = "iron_bee_hive_farm";
   public static final String LEGACY_NAME = "bee_hive_farm";
 
-  private static Set<String> acceptedMobTypes = new HashSet<>();
-
   public IronBeeHiveFarm(BlockBehaviour.Properties properties) {
     super(properties);
-  }
-
-  @SubscribeEvent
-  public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    acceptedMobTypes = new HashSet<>(COMMON.ironBeeHiveFarmAllowedMobs.get());
-    logAcceptedMobTypes(NAME, acceptedMobTypes);
-  }
-
-
-  @Override
-  public Set<String> getAcceptedMobTypes() {
-    return acceptedMobTypes;
   }
 
   @Override
@@ -131,6 +111,7 @@ public class IronBeeHiveFarm extends MobFarmBlock {
 
   @Override
   public void appendHoverTextAcceptedMobs(List<Component> tooltipList) {
+    Set<String> acceptedMobTypes = getAcceptedMobTypes();
     if (acceptedMobTypes != null && !acceptedMobTypes.isEmpty()) {
       // List each single possible mob types (incl. modded mobs types).
       MutableComponent mobTypeOverview =

@@ -5,6 +5,11 @@
 This change log includes the summarized changes.
 For the full changelog, please go to the [Git Hub History][history] instead.
 
+### 2023.08.22
+
+- Improved startup performance and general memory usage.
+- Adjusted mob catching luck and durability for new mob catching lassos to be more balanced with the rest of the mob catching items.
+
 ### 2023.08.19
 
 Note: Please make sure to backup your world before updating to this version!
