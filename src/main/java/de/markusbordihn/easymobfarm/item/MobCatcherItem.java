@@ -19,7 +19,6 @@
 
 package de.markusbordihn.easymobfarm.item;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 

@@ -103,7 +103,7 @@ public class ModItems {
           new Item.Properties().stacksTo(1).durability(1000).tab(EasyMobFarmTab.TOOLS)));
   public static final RegistryObject<Item> ENDER_LASSO =
       ITEMS.register("ender_lasso", () -> new EnderLasso(
-          new Item.Properties().stacksTo(1).durability(10).tab(EasyMobFarmTab.TOOLS)));
+          new Item.Properties().stacksTo(1).durability(20).tab(EasyMobFarmTab.TOOLS)));
   public static final RegistryObject<Item> FISHING_BOWL_SMALL =
       ITEMS.register("fishing_bowl", () -> new FishingBowl(
           new Item.Properties().stacksTo(1).durability(20).tab(EasyMobFarmTab.TOOLS)));

@@ -60,8 +60,8 @@
   "text.easy_mob_farm.drop_time_secs": "Drop Time: every %ds",
   "text.easy_mob_farm.warning_full": "Output slots are full!",
 
-  "help_text.easy_mob_farm.capture_slot": "Place a capture mob into this slot.\nThis farm supports the following mobs:\n%1$s",
-  "help_text.easy_mob_farm.capture_slot_all": "Place a capture mob into this slot.\nAll mobs are supported.",
+  "help_text.easy_mob_farm.capture_slot": "Place a captured mob into this slot.\nThis farm supports the following mobs:\n%1$s",
+  "help_text.easy_mob_farm.capture_slot_all": "Place a captured mob into this slot.\nAll mobs are supported.",
   "help_text.easy_mob_farm.weapon_slot": "Place a weapon in this slot\nto get better mob drops.",
   "help_text.easy_mob_farm.experience_slot": "Place a %1$s in this slot\nto get experience points as\n%2$s for your catched mob.",
 
