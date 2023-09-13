@@ -25,6 +25,7 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+import de.markusbordihn.easymobfarm.config.mobs.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -54,10 +55,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.config.CommonConfig;
-import de.markusbordihn.easymobfarm.config.mobs.BeeAnimal;
-import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
-import de.markusbordihn.easymobfarm.config.mobs.HostileNetherMonster;
-import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
 import de.markusbordihn.easymobfarm.item.CapturedMob;
 import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
 
@@ -265,6 +262,13 @@ public class LootManager {
         && mobType.equals(HostileMonster.SLIME)) {
       filteredLootDrops.add(new ItemStack(Items.SLIME_BALL));
     }
+    // Wither Support.
+    if (Boolean.TRUE.equals(filteredLootDrops.isEmpty() && COMMON.WitherDropStar.get())
+            && mobType.equals(BossMonster.WITHER) && random.nextInt(9) == 0){
+
+      filteredLootDrops.add(new ItemStack(Items.NETHER_STAR));
+    }
+
 
     return filteredLootDrops;
   }
