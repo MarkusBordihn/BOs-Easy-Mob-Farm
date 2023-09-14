@@ -348,6 +348,8 @@ public class CommonConfig {
 
     public final ForgeConfigSpec.BooleanValue WitherDropStar;
 
+    public final ForgeConfigSpec.BooleanValue VindicatorDrops;
+
     Config(ForgeConfigSpec.Builder builder) {
       builder.comment(Constants.MOD_NAME);
 
@@ -925,6 +927,11 @@ public class CommonConfig {
       builder.push("Wither Drop Settings");
       WitherDropStar = builder.comment("Enable/Disable Wither drops.")
               .define("WitherDropsStar", false);
+      builder.pop();
+
+      builder.push("Vindicator Drop Settings");
+      VindicatorDrops = builder.comment("Enable/Disable Wither drops.")
+              .define("VindicatorDrop", true);
       builder.pop();
 
       builder.pop();

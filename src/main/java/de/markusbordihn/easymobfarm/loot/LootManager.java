@@ -268,7 +268,12 @@ public class LootManager {
 
       filteredLootDrops.add(new ItemStack(Items.NETHER_STAR));
     }
+    //1/3 chance of an emerald drop
+    if (Boolean.TRUE.equals(filteredLootDrops.isEmpty() && COMMON.VindicatorDrops.get())
+            && mobType.equals(HostileMonster.VINDICATOR) && random.nextInt(3) == 0){
 
+      filteredLootDrops.add(new ItemStack(Items.EMERALD));
+    }
 
     return filteredLootDrops;
   }
