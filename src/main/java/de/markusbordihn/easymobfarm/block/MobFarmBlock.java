@@ -190,8 +190,9 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
 
   @Override
   public boolean canConnectRedstone(BlockState state, BlockGetter world, BlockPos pos, Direction side) {
-    return true;
+    return false;
   }
+
 
   @Override
   public void neighborChanged(BlockState blockstate, Level world, BlockPos pos, Block neighborBlock, BlockPos fromPos, boolean moving) {
@@ -199,12 +200,12 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
     BlockPos _pos = BlockPos.containing(pos.getX(), pos.getY(), pos.getZ());
     BlockState _bs = world.getBlockState(_pos);
 
-    if (world.getBestNeighborSignal(pos) > 0 ){
+    if (world.getDirectSignalTo(pos) > 4){//       world.getBestNeighborSignal(pos) > 0 ){
            if (Boolean.FALSE.equals(_bs.getValue(this.POWERED))) {
 
         world.setBlock(_pos, _bs.setValue(this.POWERED, true), 3);
       }
-    } else if (world.getBestNeighborSignal(pos) < 1 ) {
+    } else if (world.getDirectSignalTo(pos) < 5){//world.getBestNeighborSignal(pos) < 1 ) {
            if (Boolean.TRUE.equals(_bs.getValue(this.POWERED))){
 
              world.setBlock(_pos, _bs.setValue(this.POWERED, false), 6);
