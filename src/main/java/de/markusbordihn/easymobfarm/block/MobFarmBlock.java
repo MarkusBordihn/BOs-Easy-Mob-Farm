@@ -83,7 +83,11 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
   public static final String NAME = "mob_farm";
   public static final String SUPPORTED_MOBS_TEXT = "supported_mobs";
 
-  public static final BooleanProperty WORKING = BooleanProperty.create("working");
+  public static final BooleanProperty WORKING = BooleanProperty.create("canwork"); // since redstone is now invalved change this to can work instead of working.
+
+  //redstone controll
+  public static final BooleanProperty POWERED = BooleanProperty.create("powered");
+  public static final BooleanProperty CANWORK= BooleanProperty.create("willwork");
   public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
   public static final Set<String> ACCEPTED_MOB_TYPES = Collections.emptySet();
@@ -94,7 +98,9 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
   public MobFarmBlock(BlockBehaviour.Properties properties) {
     super(properties);
     this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH)
-        .setValue(WORKING, Boolean.valueOf(false)));
+        .setValue(WORKING, Boolean.valueOf(false))
+            //redstone controll
+            .setValue(POWERED, Boolean.valueOf(false)));
   }
 
   protected void openContainer(Level level, BlockPos blockPos, Player player) {
@@ -179,6 +185,36 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
     }
   }
 
+
+  //redstone controll
+
+  @Override
+  public boolean canConnectRedstone(BlockState state, BlockGetter world, BlockPos pos, Direction side) {
+    return true;
+  }
+
+  @Override
+  public void neighborChanged(BlockState blockstate, Level world, BlockPos pos, Block neighborBlock, BlockPos fromPos, boolean moving) {
+    super.neighborChanged(blockstate, world, pos, neighborBlock, fromPos, moving);
+    BlockPos _pos = BlockPos.containing(pos.getX(), pos.getY(), pos.getZ());
+    BlockState _bs = world.getBlockState(_pos);
+
+    if (world.getBestNeighborSignal(pos) > 0 ){
+           if (Boolean.FALSE.equals(_bs.getValue(this.POWERED))) {
+
+        world.setBlock(_pos, _bs.setValue(this.POWERED, true), 3);
+      }
+    } else if (world.getBestNeighborSignal(pos) < 1 ) {
+           if (Boolean.TRUE.equals(_bs.getValue(this.POWERED))){
+
+             world.setBlock(_pos, _bs.setValue(this.POWERED, false), 6);
+           }
+
+       }
+
+
+  }
+
   @Override
   @SuppressWarnings("java:S1874")
   public VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos,
@@ -194,7 +230,7 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
 
   @Override
   protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> blockState) {
-    blockState.add(FACING, WORKING);
+    blockState.add(FACING, WORKING, POWERED); //new block state of Powered
   }
 
   @Override
@@ -202,6 +238,8 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
   public BlockState getStateForPlacement(BlockPlaceContext context) {
     return this.defaultBlockState().setValue(FACING,
         context.getHorizontalDirection().getOpposite());
+            //redstone controll
+           // .setValue(POWERED, Boolean.valueOf(context.getLevel().hasNeighborSignal(context.getClickedPos())));
   }
 
   @Override
@@ -324,5 +362,6 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
       log.info("The {} will accept only the following mobs: {}", name, acceptedMobTypes);
     }
   }
+
 
 }

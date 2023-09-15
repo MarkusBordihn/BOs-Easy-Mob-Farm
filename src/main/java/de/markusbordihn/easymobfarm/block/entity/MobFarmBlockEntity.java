@@ -130,49 +130,52 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
   @SuppressWarnings("java:S1172")
   public static void serverTick(Level level, BlockPos blockPos, BlockState blockState,
       MobFarmBlockEntity blockEntity) {
-
-    // Check if there is something to progress...
-    ItemStack capturedMob = blockEntity.items.get(MobFarmMenu.CAPTURED_MOB_SLOT);
-    if (capturedMob.isEmpty() || !blockEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
-      blockEntity.farmProgress = 0;
-      blockEntity.farmStatus = FARM_STATUS_WAITING;
-      return;
-    }
-
-    // Make sure we have space to store the result items.
-    ItemStack resultItem1 = blockEntity.items.get(MobFarmMenu.RESULT_1_SLOT);
-    ItemStack resultItem2 = blockEntity.items.get(MobFarmMenu.RESULT_2_SLOT);
-    ItemStack resultItem3 = blockEntity.items.get(MobFarmMenu.RESULT_3_SLOT);
-    ItemStack resultItem4 = blockEntity.items.get(MobFarmMenu.RESULT_4_SLOT);
-    ItemStack resultItem5 = blockEntity.items.get(MobFarmMenu.RESULT_5_SLOT);
-    if (resultItem1.getCount() >= resultItem1.getMaxStackSize()
-        && resultItem2.getCount() >= resultItem2.getMaxStackSize()
-        && resultItem3.getCount() >= resultItem3.getMaxStackSize()
-        && resultItem4.getCount() >= resultItem4.getMaxStackSize()
-        && resultItem5.getCount() >= resultItem5.getMaxStackSize()) {
-      if (blockEntity.farmStatus != FARM_STATUS_FULL) {
-        blockEntity.farmStatus = FARM_STATUS_FULL;
+    //redstone controll
+    if (Boolean.FALSE.equals(blockState.getValue(MobFarmBlock.POWERED))) {
+      // Check if there is something to progress...
+      ItemStack capturedMob = blockEntity.items.get(MobFarmMenu.CAPTURED_MOB_SLOT);
+      if (capturedMob.isEmpty() || !blockEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
+        blockEntity.farmProgress = 0;
+        blockEntity.farmStatus = FARM_STATUS_WAITING;
+        return;
       }
-      return;
-    }
 
-    // Checking weapon and experience slot for any additional items.
-    ItemStack weaponItem = blockEntity.items.get(MobFarmMenu.WEAPON_SLOT);
-    ItemStack experienceItem = blockEntity.items.get(MobFarmMenu.EXPERIENCE_SLOT);
-
-    // Processing mob farm
-    if (blockEntity.farmProgress >= blockEntity.farmTotalTime) {
-      if (capturedMob.getItem() instanceof CapturedMob
-          || CapturedMobVirtual.isSupported(capturedMob)) {
-        blockEntity.processResult(capturedMob, weaponItem, experienceItem, blockEntity);
-        blockEntity.processAdditionalEffects(level, blockPos, blockEntity, capturedMob);
+      // Make sure we have space to store the result items.
+      ItemStack resultItem1 = blockEntity.items.get(MobFarmMenu.RESULT_1_SLOT);
+      ItemStack resultItem2 = blockEntity.items.get(MobFarmMenu.RESULT_2_SLOT);
+      ItemStack resultItem3 = blockEntity.items.get(MobFarmMenu.RESULT_3_SLOT);
+      ItemStack resultItem4 = blockEntity.items.get(MobFarmMenu.RESULT_4_SLOT);
+      ItemStack resultItem5 = blockEntity.items.get(MobFarmMenu.RESULT_5_SLOT);
+      if (resultItem1.getCount() >= resultItem1.getMaxStackSize()
+              && resultItem2.getCount() >= resultItem2.getMaxStackSize()
+              && resultItem3.getCount() >= resultItem3.getMaxStackSize()
+              && resultItem4.getCount() >= resultItem4.getMaxStackSize()
+              && resultItem5.getCount() >= resultItem5.getMaxStackSize()) {
+        if (blockEntity.farmStatus != FARM_STATUS_FULL) {
+          blockEntity.farmStatus = FARM_STATUS_FULL;
+        }
+        return;
       }
-      blockEntity.farmProgress = 0;
-      blockEntity.farmStatus = FARM_STATUS_DONE;
-    } else {
-      blockEntity.farmProgress++;
-      blockEntity.farmStatus = FARM_STATUS_WORKING;
+
+      // Checking weapon and experience slot for any additional items.
+      ItemStack weaponItem = blockEntity.items.get(MobFarmMenu.WEAPON_SLOT);
+      ItemStack experienceItem = blockEntity.items.get(MobFarmMenu.EXPERIENCE_SLOT);
+
+      // Processing mob farm
+      if (blockEntity.farmProgress >= blockEntity.farmTotalTime) {
+        if (capturedMob.getItem() instanceof CapturedMob
+                || CapturedMobVirtual.isSupported(capturedMob)) {
+          blockEntity.processResult(capturedMob, weaponItem, experienceItem, blockEntity);
+          blockEntity.processAdditionalEffects(level, blockPos, blockEntity, capturedMob);
+        }
+        blockEntity.farmProgress = 0;
+        blockEntity.farmStatus = FARM_STATUS_DONE;
+      } else {
+        blockEntity.farmProgress++;
+        blockEntity.farmStatus = FARM_STATUS_WORKING;
+      }
     }
+
   }
 
   @SuppressWarnings("java:S135")
@@ -307,7 +310,9 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
   @Override
   public void setItem(int index, ItemStack itemStack) {
     super.setItem(index, itemStack);
-    if (index == MobFarmMenu.CAPTURED_MOB_SLOT) {
+    BlockState blockState = getBlockState();
+    BlockPos blockPos = getBlockPos();
+    if (index == MobFarmMenu.CAPTURED_MOB_SLOT){
 
       // Update and cache data based on captured mob
       if (itemStack.getItem() instanceof CapturedMob) {
@@ -332,7 +337,7 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
 
       // Set Farm processing time, if there is any mob type.
       if (this.farmMobType != null && !this.farmMobType.isBlank()) {
-        if (getFarmProcessingTime() > 0) {
+        if (getFarmProcessingTime() > 0 ) {
           this.farmTotalTime = getFarmProcessingTime();
         } else {
           this.farmTotalTime = DEFAULT_FARM_PROCESSING_TIME;
@@ -340,8 +345,6 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
       }
 
       // Update Block state
-      BlockState blockState = getBlockState();
-      BlockPos blockPos = getBlockPos();
       Level level = this.level;
       if (blockState != null && blockPos != null && level != null) {
         BlockState newBlockState = blockState.setValue(MobFarmBlock.WORKING, !itemStack.isEmpty());
