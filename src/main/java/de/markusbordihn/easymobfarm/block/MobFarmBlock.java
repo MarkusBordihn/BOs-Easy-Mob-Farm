@@ -190,7 +190,7 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
 
   @Override
   public boolean canConnectRedstone(BlockState state, BlockGetter world, BlockPos pos, Direction side) {
-    return false;
+    return true; //for those who use redstone mods that need to connect
   }
 
 
