@@ -5,6 +5,12 @@
 This change log includes the summarized changes.
 For the full changelog, please go to the [Git Hub History][history] instead.
 
+### 2023.09.13
+
+- Added config option to enable nether star drop for the wither and redstone control. (Thanks x-j0nnay-x)
+- Added enchantment support for mending, unbreaking, sharpness and looting.
+- Improved import and export of items from/to slots for auto processing.
+
 ### 2023.08.22
 
 - Improved startup performance and general memory usage.

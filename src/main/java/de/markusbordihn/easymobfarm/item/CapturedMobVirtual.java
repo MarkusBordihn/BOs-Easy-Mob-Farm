@@ -28,7 +28,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.AirItem;
+import net.minecraft.world.item.BottleItem;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.ExperienceBottleItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -71,10 +73,13 @@ public class CapturedMobVirtual {
       return false;
     }
 
-    // Early exit for captured mob items.
+    // Early exit for captured mob items or items which are not supported.
     Item item = itemStack.getItem();
     if (item instanceof CapturedMob) {
       return true;
+    } else if (item instanceof AirItem || item instanceof ExperienceBottleItem
+        || item instanceof BottleItem) {
+      return false;
     }
 
     // Check for supported items from other mods.
@@ -130,9 +135,9 @@ public class CapturedMobVirtual {
       }
     } else if (item instanceof SpawnEggItem) {
       return true;
-    } else if (!(item instanceof AirItem)) {
+    } else {
       CompoundTag compoundTag = itemStack.getOrCreateTag();
-      log.debug("Unsupported mob catching Item {} {}: {}", item, itemName, compoundTag);
+      log.warn("Unsupported mob catching Item {} {}: {}", item, itemName, compoundTag);
     }
     return false;
   }
@@ -379,7 +384,7 @@ public class CapturedMobVirtual {
       }
     } else if (Constants.PRODUCTIVE_BEES_LOADED && itemName.equals(SPAWN_EGG_CONFIGURABLE_BEE)) {
       String capturedMobType = getCapturedMobType(itemStack);
-      log.info("Bees captured mob type: " + capturedMobType);
+      log.info("Bees captured mob type: {}", capturedMobType);
     }
     return "";
   }
