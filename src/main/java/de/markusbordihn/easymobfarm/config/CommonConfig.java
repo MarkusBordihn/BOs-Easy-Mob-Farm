@@ -345,8 +345,7 @@ public class CommonConfig {
     public final ForgeConfigSpec.BooleanValue cowDropRawBeef;
     public final ForgeConfigSpec.BooleanValue sheepDropRawMutton;
     public final ForgeConfigSpec.BooleanValue slimeDropSlime;
-
-    public final ForgeConfigSpec.BooleanValue WitherDropStar;
+    public final ForgeConfigSpec.BooleanValue witherDropNetherStar;
 
     Config(ForgeConfigSpec.Builder builder) {
       builder.comment(Constants.MOD_NAME);
@@ -923,8 +922,8 @@ public class CommonConfig {
       builder.pop();
 
       builder.push("Wither Drop Settings");
-      WitherDropStar = builder.comment("Enable/Disable Wither drops.")
-              .define("WitherDropsStar", false);
+      witherDropNetherStar = builder.comment("Enable/Disable nether star drops from wither.")
+          .define("witherDropNetherStar", false);
       builder.pop();
 
       builder.pop();

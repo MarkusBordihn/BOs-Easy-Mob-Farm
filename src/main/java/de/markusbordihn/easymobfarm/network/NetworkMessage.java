@@ -17,55 +17,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.item.mobcatcher;
+package de.markusbordihn.easymobfarm.network;
 
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.UseAnim;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import de.markusbordihn.easymobfarm.item.MobCatcherItem;
+import net.minecraft.core.BlockPos;
 
-public class CreativeMobCatcher extends MobCatcherItem {
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.data.RedstoneMode;
+import de.markusbordihn.easymobfarm.network.message.MessageRedstoneModeChange;
 
-  public static final String NAME = "Creative Mob Catcher";
+public class NetworkMessage {
 
-  public CreativeMobCatcher(Item.Properties properties) {
-    super(properties);
-  }
+  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  @Override
-  public boolean isAcceptedMob(LivingEntity livingEntity) {
-    if (livingEntity instanceof LivingEntity) {
-      return true;
+  protected NetworkMessage() {}
+
+  /**
+   * Send redstone mode change to server.
+   */
+  public static void sendRedstoneModeChangeToServer(BlockPos blockPos, RedstoneMode redstoneMode) {
+    if (blockPos != null && redstoneMode != null) {
+      NetworkHandler.sendToServer(new MessageRedstoneModeChange(blockPos, redstoneMode));
     }
-    log.warn("Mob {} is not supported by {}.", livingEntity, this);
-    return false;
-  }
-
-  @Override
-  public boolean isAcceptedMobType(String mobType) {
-    return true;
-  }
-
-  @Override
-  public int getMobCatchingLuck() {
-    return 0;
-  }
-
-  @Override
-  public int getMobCatchingLuckConfig() {
-    return 0;
-  }
-
-  @Override
-  public UseAnim getUseAnimation(ItemStack itemStack) {
-    return UseAnim.CROSSBOW;
-  }
-
-  @Override
-  public String getMobCatcherItemName() {
-    return NAME;
   }
 
 }
