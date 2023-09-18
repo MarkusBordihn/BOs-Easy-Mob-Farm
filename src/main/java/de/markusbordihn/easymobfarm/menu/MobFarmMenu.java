@@ -22,6 +22,7 @@ package de.markusbordihn.easymobfarm.menu;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -39,6 +40,7 @@ import net.minecraft.world.item.SwordItem;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
 import de.markusbordihn.easymobfarm.config.MobTypeManager;
+import de.markusbordihn.easymobfarm.data.RedstoneMode;
 import de.markusbordihn.easymobfarm.item.CapturedMob;
 import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
 import de.markusbordihn.easymobfarm.menu.slots.CapturedMobSlot;
@@ -84,13 +86,15 @@ public class MobFarmMenu extends AbstractContainerMenu {
   private final ContainerData data;
 
   // Define cache
+  private BlockPos mobFarmBlockPos;
   private ItemStack mobFarmCapturedMob = ItemStack.EMPTY;
   private ItemStack mobFarmExperienceItem = ItemStack.EMPTY;
   private ItemStack mobFarmWeaponItem = ItemStack.EMPTY;
+  private RedstoneMode mobFarmRedstoneMode;
   private String mobFarmName = "- unknown -";
+  private String mobFarmSubType = "";
   private String mobFarmTotalTimeText = "";
   private String mobFarmType = "";
-  private String mobFarmSubType = "";
   private int mobFarmProgress;
   private int mobFarmProgressImage;
   private int mobFarmRemainingTime;
@@ -193,6 +197,15 @@ public class MobFarmMenu extends AbstractContainerMenu {
           : 0;
       this.mobFarmRemainingTime = (this.mobFarmTotalTime - this.mobFarmProgress) / 20;
     }
+
+    // Redstone mode
+    this.mobFarmRedstoneMode =
+        RedstoneMode.valueOf(this.data.get(MobFarmBlockEntityData.FARM_REDSTONE_MODE_DATA));
+
+    // Block position
+    this.mobFarmBlockPos = new BlockPos(this.data.get(MobFarmBlockEntityData.FARM_BLOCK_POS_X_DATA),
+        this.data.get(MobFarmBlockEntityData.FARM_BLOCK_POS_Y_DATA),
+        this.data.get(MobFarmBlockEntityData.FARM_BLOCK_POS_Z_DATA));
   }
 
   public int getMobFarmProgress() {
@@ -229,6 +242,14 @@ public class MobFarmMenu extends AbstractContainerMenu {
 
   public String getMobFarmSubType() {
     return this.mobFarmSubType;
+  }
+
+  public BlockPos getMobFarmPosition() {
+    return this.mobFarmBlockPos;
+  }
+
+  public RedstoneMode getMobFarmRedstoneMode() {
+    return this.mobFarmRedstoneMode;
   }
 
   public String getAcceptedMobTypeName() {

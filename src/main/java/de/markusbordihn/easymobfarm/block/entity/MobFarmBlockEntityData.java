@@ -49,6 +49,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 
 import de.markusbordihn.easymobfarm.data.FarmTier;
+import de.markusbordihn.easymobfarm.data.RedstoneMode;
 import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
@@ -61,7 +62,11 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
   public static final int FARM_TOTAL_TIME_DATA = 3;
   public static final int FARM_STATUS_DATA = 4;
   public static final int FARM_MOB_NAME_DATA = 5;
-  public static final int DATA_SIZE = 6;
+  public static final int FARM_REDSTONE_MODE_DATA = 6;
+  public static final int FARM_BLOCK_POS_X_DATA = 7;
+  public static final int FARM_BLOCK_POS_Y_DATA = 8;
+  public static final int FARM_BLOCK_POS_Z_DATA = 9;
+  public static final int DATA_SIZE = 10;
 
   // Tags
   public static final String FARM_DURATION_TAG = "FarmDuration";
@@ -69,12 +74,14 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
   public static final String FARM_PROGRESS_TAG = "FarmProgress";
   public static final String FARM_TIME_TOTAL_TAG = "FarmTimeTotal";
   public static final String FARM_OWNER_TAG = "FarmOwner";
+  public static final String FARM_REDSTONE_MODE_TAG = "FarmRedstoneMode";
 
   // Farm Status
   public static final int FARM_STATUS_DONE = 0;
   public static final int FARM_STATUS_FULL = 1;
   public static final int FARM_STATUS_WAITING = 2;
   public static final int FARM_STATUS_WORKING = 3;
+  public static final int FARM_STATUS_DISABLED = 4;
 
   // Internal data states shared
   public UUID farmOwner;
@@ -92,6 +99,8 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
   public DyeColor farmMobColor = null;
   public EntityType<?> farmMobEntityType = null;
   public boolean farmMobShearedStatus = false;
+  public RedstoneMode farmRedstoneMode = RedstoneMode.DISABLED;
+  public BlockPos farmBlockPos = null;
 
   // Item Storage
   public NonNullList<ItemStack> items = NonNullList.withSize(8, ItemStack.EMPTY);
@@ -111,6 +120,14 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
           return farmTotalTime;
         case FARM_STATUS_DATA:
           return farmStatus;
+        case FARM_REDSTONE_MODE_DATA:
+          return farmRedstoneMode.ordinal();
+        case FARM_BLOCK_POS_X_DATA:
+          return farmBlockPos.getX();
+        case FARM_BLOCK_POS_Y_DATA:
+          return farmBlockPos.getY();
+        case FARM_BLOCK_POS_Z_DATA:
+          return farmBlockPos.getZ();
         default:
           return 0;
       }
@@ -133,6 +150,18 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
         case FARM_STATUS_DATA:
           farmStatus = value;
           break;
+        case FARM_REDSTONE_MODE_DATA:
+          farmRedstoneMode = RedstoneMode.values()[value];
+          break;
+        case FARM_BLOCK_POS_X_DATA:
+          farmBlockPos = new BlockPos(value, farmBlockPos.getY(), farmBlockPos.getZ());
+          break;
+        case FARM_BLOCK_POS_Y_DATA:
+          farmBlockPos = new BlockPos(farmBlockPos.getX(), value, farmBlockPos.getZ());
+          break;
+        case FARM_BLOCK_POS_Z_DATA:
+          farmBlockPos = new BlockPos(farmBlockPos.getX(), farmBlockPos.getY(), value);
+          break;
         default:
       }
     }
@@ -152,6 +181,16 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
   public void setOwner(LivingEntity livingEntity) {
     this.farmOwner = livingEntity.getUUID();
     this.setChanged();
+  }
+
+  public void setRedstoneMode(RedstoneMode redstoneMode) {
+    this.farmRedstoneMode = redstoneMode;
+    this.syncData();
+  }
+
+  public void setFarmBlockPos(BlockPos blockPos) {
+    this.farmBlockPos = blockPos;
+    this.syncData();
   }
 
   public UUID getOwner() {
@@ -192,6 +231,18 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
 
   public FarmTier getFarmTier() {
     return FarmTier.DEFAULT;
+  }
+
+  public RedstoneMode getRedstoneMode() {
+    return this.farmRedstoneMode;
+  }
+
+  public BlockPos getFarmBlockPos() {
+    return this.farmBlockPos;
+  }
+
+  public boolean hasItem(int index) {
+    return !this.items.get(index).isEmpty();
   }
 
   public ItemStack takeItem(int index) {
@@ -315,9 +366,18 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
       }
     }
 
+    // Mob Farm Owner
     if (compoundTag.hasUUID(FARM_OWNER_TAG)) {
       this.farmOwner = compoundTag.getUUID(FARM_OWNER_TAG);
     }
+
+    // Redstone Mode
+    if (compoundTag.contains(FARM_REDSTONE_MODE_TAG)) {
+      this.farmRedstoneMode = RedstoneMode.values()[compoundTag.getInt(FARM_REDSTONE_MODE_TAG)];
+    }
+
+    // Farm Block Position
+    this.farmBlockPos = this.getBlockPos();
 
     // Restore additional meta data
     ItemStack capturedMob = this.items.get(MobFarmMenu.CAPTURED_MOB_SLOT);
@@ -341,6 +401,7 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
     if (this.farmOwner != null) {
       compoundTag.putUUID(FARM_OWNER_TAG, this.farmOwner);
     }
+    compoundTag.putInt(FARM_REDSTONE_MODE_TAG, this.farmRedstoneMode.ordinal());
     ContainerHelper.saveAllItems(compoundTag, this.items);
   }
 
