@@ -139,7 +139,7 @@ public class LootManager {
         } else if (weaponItem.getEnchantmentLevel(Enchantments.FISHING_LUCK) > 0) {
           dropLuck = dropLuck + (weaponItem.getEnchantmentLevel(Enchantments.FISHING_LUCK) * 0.3f);
         }
-        lootBuilder = new LootParams.Builder(serverLevel).withLuck(0.6F)
+        lootBuilder = new LootParams.Builder(serverLevel).withLuck(dropLuck)
             .withParameter(LootContextParams.DAMAGE_SOURCE, damageSource)
             .withParameter(LootContextParams.DIRECT_KILLER_ENTITY, player)
             .withParameter(LootContextParams.KILLER_ENTITY, player)
