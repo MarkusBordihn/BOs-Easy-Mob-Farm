@@ -44,7 +44,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ExperienceBottleItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -55,6 +58,7 @@ import net.minecraftforge.items.wrapper.SidedInvWrapper;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.MobFarmBlock;
 import de.markusbordihn.easymobfarm.config.CommonConfig;
+import de.markusbordihn.easymobfarm.data.RedstoneMode;
 import de.markusbordihn.easymobfarm.item.CapturedMob;
 import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
 import de.markusbordihn.easymobfarm.loot.LootManager;
@@ -78,16 +82,13 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
   public MobFarmBlockEntity(BlockEntityType<?> blockEntity, BlockPos blockPos,
       BlockState blockState) {
     super(blockEntity, blockPos, blockState);
+    this.farmBlockPos = blockPos;
   }
 
   public void updateLevel(Level level) {
     if (this.level == null && this.level != level && !level.isClientSide()) {
       this.level = level;
     }
-  }
-
-  public boolean hasItem(int index) {
-    return !this.items.get(index).isEmpty();
   }
 
   public boolean allowLootDropItem(ItemStack itemStack) {
@@ -140,6 +141,16 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
       return;
     }
 
+    // Check redstone mode and power state
+    if ((blockEntity.getRedstoneMode() == RedstoneMode.ON
+        && !blockState.getValue(MobFarmBlock.POWERED))
+        || (blockEntity.getRedstoneMode() == RedstoneMode.OFF
+            && blockState.getValue(MobFarmBlock.POWERED))) {
+      blockEntity.farmProgress = 0;
+      blockEntity.farmStatus = FARM_STATUS_DISABLED;
+      return;
+    }
+
     // Make sure we have space to store the result items.
     ItemStack resultItem1 = blockEntity.items.get(MobFarmMenu.RESULT_1_SLOT);
     ItemStack resultItem2 = blockEntity.items.get(MobFarmMenu.RESULT_2_SLOT);
@@ -187,8 +198,16 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
 
     // Check if weapon should be damaged, if any.
     boolean hasWeaponItem = weaponItem != null && !weaponItem.isEmpty();
-    if (hasWeaponItem && weaponItem != null && weaponItem.isDamageableItem()) {
-      int damageValue = this.random.nextInt(10);
+    if (hasWeaponItem && weaponItem.isDamageableItem()) {
+      // Check if weapon has unbreaking enchantment and decrease damage value.
+      // - Unbreaking 0: 0-10 damage
+      // - Unbreaking 1: 0-5 damage
+      // - Unbreaking 2: 0-3 damage
+      // - Unbreaking 3: 0-2 damage
+      int unbreakingLevel =
+          EnchantmentHelper.getItemEnchantmentLevel(Enchantments.UNBREAKING, weaponItem) + 1;
+      int damageValue = this.random.nextInt(Math.max(0, 10 / unbreakingLevel));
+
       if (weaponItem.getDamageValue() + damageValue < weaponItem.getMaxDamage()) {
         weaponItem.setDamageValue(weaponItem.getDamageValue() + damageValue);
       } else {
@@ -196,13 +215,43 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
       }
     }
 
-    // Check if we should store experience, drop change is increased with weapon.
-    int experienceDropChange = hasWeaponItem ? this.random.nextInt(5) : this.random.nextInt(10);
-    if (experienceItem != null && !experienceItem.isEmpty() && experienceDropChange == 0) {
-      // Convert glass bottle to experience bottles or just increase the stack size.
-      if (experienceItem.is(Items.GLASS_BOTTLE)) {
+    // Check if we should store experience, exp drop is increased with weapon and enchantments.
+    // - No weapon: 10% chance
+    // - Weapon: 20% chance
+    // - Weapon with sharpness or looting enchantment: 33% chance
+    int experienceDropChange = 0;
+    if (hasWeaponItem) {
+      if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SHARPNESS, weaponItem) > 0
+          || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING, weaponItem) > 0) {
+        experienceDropChange = this.random.nextInt(3);
+      } else {
+        experienceDropChange = this.random.nextInt(5);
+      }
+    } else {
+      experienceDropChange = this.random.nextInt(10);
+    }
+
+    // Check if we should repair mending items with experience or convert glass bottles to
+    // experience bottles.
+    boolean hasExperienceItem = experienceItem != null && !experienceItem.isEmpty();
+    if ((hasWeaponItem || hasExperienceItem) && experienceDropChange == 0) {
+
+      // Repair mending items with experience, if damaged.
+      if (hasWeaponItem && weaponItem.getDamageValue() > 0
+          && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MENDING, weaponItem) > 0) {
+        int repairAmount = this.random.nextInt(10);
+        if (repairAmount > 0) {
+          weaponItem.setDamageValue(weaponItem.getDamageValue() - repairAmount);
+        }
+      }
+
+      // Convert glass bottles to experience bottles.
+      else if (hasExperienceItem && experienceItem.is(Items.GLASS_BOTTLE)) {
         blockEntity.items.set(MobFarmMenu.EXPERIENCE_SLOT, new ItemStack(Items.EXPERIENCE_BOTTLE));
-      } else if (experienceItem.getItem() instanceof ExperienceBottleItem
+      }
+
+      // Increase experience bottle stack size, if possible.
+      else if (hasExperienceItem && experienceItem.getItem() instanceof ExperienceBottleItem
           && experienceItem.getCount() < experienceItem.getMaxStackSize()) {
         experienceItem.setCount(experienceItem.getCount() + 1);
         blockEntity.items.set(MobFarmMenu.EXPERIENCE_SLOT, experienceItem);
@@ -347,7 +396,7 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
       Level level = this.level;
       if (blockState != null && blockPos != null && level != null) {
         BlockState newBlockState = blockState.setValue(MobFarmBlock.WORKING, !itemStack.isEmpty());
-        level.setBlock(blockPos, newBlockState, 3);
+        level.setBlock(blockPos, newBlockState, Block.UPDATE_ALL);
         setChanged(level, blockPos, newBlockState);
       }
 
@@ -366,36 +415,75 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
 
   @Override
   public int[] getSlotsForFace(Direction direction) {
-    if (direction == Direction.DOWN) {
-      return new int[] {MobFarmMenu.RESULT_1_SLOT, MobFarmMenu.RESULT_2_SLOT,
-          MobFarmMenu.RESULT_3_SLOT, MobFarmMenu.RESULT_4_SLOT, MobFarmMenu.RESULT_5_SLOT};
+    switch (direction) {
+      case DOWN:
+        return new int[] {MobFarmMenu.RESULT_1_SLOT, MobFarmMenu.RESULT_2_SLOT,
+            MobFarmMenu.RESULT_3_SLOT, MobFarmMenu.RESULT_4_SLOT, MobFarmMenu.RESULT_5_SLOT,
+            MobFarmMenu.EXPERIENCE_SLOT};
+      case SOUTH:
+        return new int[] {MobFarmMenu.CAPTURED_MOB_SLOT, MobFarmMenu.WEAPON_SLOT,
+            MobFarmMenu.EXPERIENCE_SLOT};
+      default:
+        return new int[] {};
     }
-    return new int[] {};
   }
 
   @Override
   public boolean canPlaceItemThroughFace(int slotIndex, ItemStack itemStack,
       @Nullable Direction direction) {
-    return false;
+    switch (slotIndex) {
+      case MobFarmMenu.CAPTURED_MOB_SLOT:
+        return !this.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)
+            && (CapturedMob.hasCapturedMob(itemStack)
+                || CapturedMobVirtual.hasCapturedMob(itemStack));
+      case MobFarmMenu.WEAPON_SLOT:
+        return !this.hasItem(MobFarmMenu.WEAPON_SLOT) && itemStack.isDamageableItem();
+      case MobFarmMenu.EXPERIENCE_SLOT:
+        return !this.hasItem(MobFarmMenu.EXPERIENCE_SLOT) && itemStack.is(Items.GLASS_BOTTLE);
+      default:
+        return false;
+    }
   }
 
   @Override
   public boolean canTakeItemThroughFace(int slotIndex, ItemStack itemStack, Direction direction) {
     // Only allow the down direction and only for the result slot.
-    return (direction == Direction.DOWN && (slotIndex == MobFarmMenu.RESULT_1_SLOT
-        || slotIndex == MobFarmMenu.RESULT_2_SLOT || slotIndex == MobFarmMenu.RESULT_3_SLOT
-        || slotIndex == MobFarmMenu.RESULT_4_SLOT || slotIndex == MobFarmMenu.RESULT_5_SLOT));
+    if (direction != Direction.DOWN) {
+      return false;
+    }
+
+    switch (slotIndex) {
+      case MobFarmMenu.RESULT_1_SLOT:
+      case MobFarmMenu.RESULT_2_SLOT:
+      case MobFarmMenu.RESULT_3_SLOT:
+      case MobFarmMenu.RESULT_4_SLOT:
+      case MobFarmMenu.RESULT_5_SLOT:
+        return true;
+      case MobFarmMenu.EXPERIENCE_SLOT:
+        return itemStack.is(Items.EXPERIENCE_BOTTLE);
+      default:
+        return false;
+    }
   }
 
   LazyOptional<? extends net.minecraftforge.items.IItemHandler>[] handlers =
-      SidedInvWrapper.create(this, Direction.DOWN);
+      SidedInvWrapper.create(this, Direction.DOWN, Direction.SOUTH);
 
   @Override
   public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(
       net.minecraftforge.common.capabilities.Capability<T> capability, @Nullable Direction facing) {
     if (!this.remove && facing != null
         && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
-      return handlers[0].cast();
+      Direction blockFacing = this.getBlockState().getValue(MobFarmBlock.FACING);
+      if (facing == Direction.DOWN) {
+        return handlers[0].cast();
+      } else if (facing == Direction.NORTH && blockFacing == Direction.SOUTH
+          || facing == Direction.SOUTH && blockFacing == Direction.NORTH
+          || facing == Direction.EAST && blockFacing == Direction.WEST
+          || facing == Direction.WEST && blockFacing == Direction.EAST) {
+        return handlers[1].cast();
+      }
+      return LazyOptional.empty();
     }
     return super.getCapability(capability, facing);
   }

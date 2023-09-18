@@ -84,6 +84,7 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
   public static final String NAME = "mob_farm";
   public static final String SUPPORTED_MOBS_TEXT = "supported_mobs";
 
+  public static final BooleanProperty POWERED = BooleanProperty.create("powered");
   public static final BooleanProperty WORKING = BooleanProperty.create("working");
   public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
@@ -95,7 +96,7 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
   public MobFarmBlock(BlockBehaviour.Properties properties) {
     super(properties);
     this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH)
-        .setValue(WORKING, Boolean.valueOf(false)));
+        .setValue(WORKING, Boolean.valueOf(false)).setValue(POWERED, Boolean.valueOf(false)));
   }
 
   protected void openContainer(Level level, BlockPos blockPos, Player player) {
@@ -184,6 +185,28 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
 
   @Override
   @SuppressWarnings("java:S1874")
+  public void onPlace(BlockState blockState, Level level, BlockPos blockPos,
+      BlockState formerBlockState, boolean notify) {
+    super.onPlace(blockState, level, blockPos, formerBlockState, notify);
+    if (!level.isClientSide()) {
+      level.setBlock(blockPos, blockState.setValue(POWERED, level.hasNeighborSignal(blockPos)),
+          Block.UPDATE_CLIENTS);
+    }
+  }
+
+  @Override
+  @SuppressWarnings("java:S1874")
+  public void neighborChanged(BlockState blockState, Level level, BlockPos blockPos, Block block,
+      BlockPos neighborBlockPos, boolean isMoving) {
+    super.onNeighborChange(blockState, level, blockPos, neighborBlockPos);
+    if (!level.isClientSide()) {
+      level.setBlock(blockPos, blockState.setValue(POWERED, level.hasNeighborSignal(blockPos)),
+          Block.UPDATE_CLIENTS);
+    }
+  }
+
+  @Override
+  @SuppressWarnings("java:S1874")
   public VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos,
       CollisionContext collisionContext) {
     return SHAPE;
@@ -196,8 +219,14 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
   }
 
   @Override
+  public boolean canConnectRedstone(BlockState blockState, BlockGetter blockGetter,
+      BlockPos blockPos, Direction direction) {
+    return true;
+  }
+
+  @Override
   protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> blockState) {
-    blockState.add(FACING, WORKING);
+    blockState.add(FACING, WORKING, POWERED);
   }
 
   @Override

@@ -38,16 +38,19 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
 import de.markusbordihn.easymobfarm.client.renderer.helper.RenderModels;
 import de.markusbordihn.easymobfarm.config.MobTypeManager;
+import de.markusbordihn.easymobfarm.data.RedstoneMode;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import de.markusbordihn.easymobfarm.menu.slots.CapturedMobSlot;
 import de.markusbordihn.easymobfarm.menu.slots.ExperienceSlot;
 import de.markusbordihn.easymobfarm.menu.slots.WeaponSlot;
+import de.markusbordihn.easymobfarm.network.NetworkMessage;
 import de.markusbordihn.easymobfarm.text.TranslatableText;
 
 public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScreen<T> {
@@ -75,6 +78,15 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
   private int nextDropTimeLabelY;
   private int ticker = 0;
   private StringSplitter stringSplitter;
+
+  // Redstone switch button
+  private int redstoneButtonX = 7;
+  private int redstoneButtonY = 93;
+  private int redstoneButtonModeOnY = redstoneButtonY;
+  private int redstoneButtonModeDisabledY = redstoneButtonModeOnY + 10;
+  private int redstoneButtonModeOffY = redstoneButtonModeDisabledY + 9;
+  private int redstoneButtonWidth = 12;
+  private int redstoneButtonHeight = 29;
 
   public MobFarmScreen(T menu, Inventory inventory, Component component) {
     super(menu, inventory, component);
@@ -122,9 +134,8 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
         Set<String> acceptedMobTypes =
             MobTypeManager.getAcceptedMobTypes(this.menu.getAcceptedMobTypeName());
         if (acceptedMobTypes != null && !acceptedMobTypes.isEmpty()) {
-          TranslatableComponent mobTypeOverview =
-              (TranslatableComponent) new TranslatableComponent("")
-                  .withStyle(ChatFormatting.DARK_GREEN);
+          TextComponent mobTypeOverview =
+              (TextComponent) new TextComponent("").withStyle(ChatFormatting.DARK_GREEN);
           for (String acceptedMob : acceptedMobTypes) {
             TranslatableComponent acceptedMobName = TranslatableText.getEntityName(acceptedMob);
             if (!acceptedMobName.getString().isBlank()) {
@@ -160,6 +171,85 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
             x, y, font);
       }
     }
+  }
+
+  public void renderRedstoneButton(PoseStack poseStack) {
+    int redstoneButtonModeY = 1;
+    switch (this.mobFarmMenu.getMobFarmRedstoneMode()) {
+      case ON:
+        redstoneButtonModeY += this.redstoneButtonHeight + 3;
+        break;
+      case OFF:
+        redstoneButtonModeY += (this.redstoneButtonHeight + 3) * 2;
+        break;
+      default:
+        redstoneButtonModeY = 1;
+    }
+    RenderSystem.setShader(GameRenderer::getPositionTexShader);
+    RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+    RenderSystem.setShaderTexture(0, Constants.TEXTURE_ICONS);
+    this.blit(poseStack, leftPos + this.redstoneButtonX, topPos + this.redstoneButtonY, 131,
+        redstoneButtonModeY, this.redstoneButtonWidth, this.redstoneButtonHeight);
+  }
+
+  @Override
+  protected void renderTooltip(PoseStack poseStack, int x, int y) {
+    int hoverPositionX = x - leftPos;
+    int hoverPositionY = y - topPos;
+    if (hoverPositionX > redstoneButtonX && hoverPositionX < redstoneButtonX + redstoneButtonWidth
+        && hoverPositionY > redstoneButtonY
+        && hoverPositionY < redstoneButtonY + redstoneButtonHeight) {
+      if (hoverPositionY > redstoneButtonModeOnY && hoverPositionY < redstoneButtonModeOnY + 10) {
+        renderComponentTooltip(poseStack,
+            stringSplitter.splitLines(
+                new TranslatableComponent(Constants.HELP_TEXT_PREFIX + "redstone_button_on"),
+                MAX_HELP_TEXT_WIDTH, Style.EMPTY),
+            x, y, ItemStack.EMPTY);
+      } else if (hoverPositionY > redstoneButtonModeDisabledY
+          && hoverPositionY < redstoneButtonModeDisabledY + 9) {
+        renderComponentTooltip(poseStack,
+            stringSplitter.splitLines(
+                new TranslatableComponent(Constants.HELP_TEXT_PREFIX + "redstone_button_disabled"),
+                MAX_HELP_TEXT_WIDTH, Style.EMPTY),
+            x, y, ItemStack.EMPTY);
+      } else if (hoverPositionY > redstoneButtonModeOffY
+          && hoverPositionY < redstoneButtonModeOffY + 10) {
+        renderComponentTooltip(poseStack,
+            stringSplitter.splitLines(
+                new TranslatableComponent(Constants.HELP_TEXT_PREFIX + "redstone_button_off"),
+                MAX_HELP_TEXT_WIDTH, Style.EMPTY),
+            x, y, ItemStack.EMPTY);
+      }
+    } else {
+      super.renderTooltip(poseStack, x, y);
+    }
+  }
+
+  @Override
+  public boolean mouseReleased(double x, double y, int button) {
+    double clickedPositionX = x - leftPos;
+    double clickedPositionY = y - topPos;
+
+    // Redstone switch button
+    if (button == 0 && clickedPositionX > redstoneButtonX
+        && clickedPositionX < redstoneButtonX + redstoneButtonWidth
+        && clickedPositionY > redstoneButtonY
+        && clickedPositionY < redstoneButtonY + redstoneButtonHeight) {
+      if (clickedPositionY > redstoneButtonModeOnY
+          && clickedPositionY < redstoneButtonModeOnY + 10) {
+        NetworkMessage.sendRedstoneModeChangeToServer(this.menu.getMobFarmPosition(),
+            RedstoneMode.ON);
+      } else if (clickedPositionY > redstoneButtonModeDisabledY
+          && clickedPositionY < redstoneButtonModeDisabledY + 9) {
+        NetworkMessage.sendRedstoneModeChangeToServer(this.menu.getMobFarmPosition(),
+            RedstoneMode.DISABLED);
+      } else if (clickedPositionY > redstoneButtonModeOffY
+          && clickedPositionY < redstoneButtonModeOffY + 10) {
+        NetworkMessage.sendRedstoneModeChangeToServer(this.menu.getMobFarmPosition(),
+            RedstoneMode.OFF);
+      }
+    }
+    return super.mouseReleased(x, y, button);
   }
 
   @Override
@@ -202,6 +292,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
     this.renderEntityType(poseStack, x, y);
     this.renderTooltip(poseStack, x, y);
     this.renderHelpText(poseStack, x, y);
+    this.renderRedstoneButton(poseStack);
   }
 
   @Override
@@ -325,6 +416,9 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
       case MobFarmBlockEntityData.FARM_STATUS_WAITING:
         this.blit(poseStack, leftPos + 12, topPos + 30, 1, 1, 40, 50);
         this.blit(poseStack, leftPos + 100, topPos + 54, 62, 28, 20, 15);
+        break;
+      case MobFarmBlockEntityData.FARM_STATUS_DISABLED:
+        this.blit(poseStack, leftPos + 24, topPos + 102, 67, 43, 13, 13);
         break;
       default:
     }

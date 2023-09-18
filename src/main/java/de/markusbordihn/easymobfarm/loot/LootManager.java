@@ -40,6 +40,8 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -55,6 +57,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.config.CommonConfig;
 import de.markusbordihn.easymobfarm.config.mobs.BeeAnimal;
+import de.markusbordihn.easymobfarm.config.mobs.BossMonster;
+import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
 import de.markusbordihn.easymobfarm.config.mobs.HostileNetherMonster;
 import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
 import de.markusbordihn.easymobfarm.item.CapturedMob;
@@ -175,13 +179,21 @@ public class LootManager {
       LootContext.Builder lootBuilder = null;
       if (weaponItem != null && !weaponItem.isEmpty()) {
         // Kills with weapons has automatically a higher luck.
-        lootBuilder = new LootContext.Builder(serverLevel).withLuck(0.6F)
+        // Looting and Luck of See automatically increase mob loot.
+        float dropLuck = 0.7f;
+        if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING, weaponItem) > 0) {
+          dropLuck = dropLuck + (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING, weaponItem) * 0.3f);
+        } else if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FISHING_LUCK, weaponItem) > 0) {
+          dropLuck = dropLuck + (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FISHING_LUCK, weaponItem) * 0.3f);
+        }
+        lootBuilder = new LootContext.Builder(serverLevel).withLuck(dropLuck)
             .withParameter(LootContextParams.DAMAGE_SOURCE, DamageSource.playerAttack(player))
             .withParameter(LootContextParams.DIRECT_KILLER_ENTITY, player)
             .withParameter(LootContextParams.KILLER_ENTITY, player)
             .withParameter(LootContextParams.LAST_DAMAGE_PLAYER, player)
             .withParameter(LootContextParams.ORIGIN, player.position())
-            .withParameter(LootContextParams.THIS_ENTITY, player);
+            .withParameter(LootContextParams.THIS_ENTITY, player)
+            .withParameter(LootContextParams.TOOL, weaponItem);
       } else {
         lootBuilder = new LootContext.Builder(serverLevel).withLuck(0.5F)
             .withParameter(LootContextParams.DAMAGE_SOURCE, DamageSource.playerAttack(player))
@@ -256,6 +268,12 @@ public class LootManager {
       lootDrops.add(new ItemStack(Items.HONEYCOMB));
     }
 
+    // Wither nether start drop support.
+    if (Boolean.TRUE.equals(COMMON.witherDropNetherStar.get()) && mobType.equals(BossMonster.WITHER)
+        && random.nextInt(9) == 0) {
+      lootDrops.add(new ItemStack(Items.NETHER_STAR));
+    }
+
     // Check each single loot drop.
     for (ItemStack lootDrop : lootDrops) {
       // Ignore empty stacks and filter loot drop, if specific drop is disabled.
@@ -266,6 +284,12 @@ public class LootManager {
         continue;
       }
       filteredLootDrops.add(lootDrop);
+    }
+
+    // Add additional loot drops, if loot drops are empty.
+    if (Boolean.TRUE.equals(filteredLootDrops.isEmpty() && COMMON.slimeDropSlime.get())
+        && mobType.equals(HostileMonster.SLIME)) {
+      filteredLootDrops.add(new ItemStack(Items.SLIME_BALL));
     }
 
     return filteredLootDrops;
