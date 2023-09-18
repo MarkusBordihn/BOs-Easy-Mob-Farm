@@ -36,6 +36,7 @@ import de.markusbordihn.easymobfarm.client.screen.ClientScreens;
 import de.markusbordihn.easymobfarm.datafixer.ModDataFixer;
 import de.markusbordihn.easymobfarm.item.ModItems;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
+import de.markusbordihn.easymobfarm.network.NetworkHandler;
 import de.markusbordihn.easymobfarm.tabs.EasyMobFarmTab;
 import de.markusbordihn.easymobfarm.utils.StopModReposts;
 
@@ -48,6 +49,8 @@ public class EasyMobFarm {
     final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
     StopModReposts.checkStopModReposts();
+
+    modEventBus.addListener(NetworkHandler::registerNetworkHandler);
 
     log.info("{} Data Fixer ...", Constants.LOG_REGISTER_PREFIX);
     MinecraftForge.EVENT_BUS.register(ModDataFixer.class);

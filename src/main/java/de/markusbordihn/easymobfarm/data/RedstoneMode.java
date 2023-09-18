@@ -17,55 +17,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.item.mobcatcher;
+package de.markusbordihn.easymobfarm.data;
 
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.util.StringRepresentable;
 
-import de.markusbordihn.easymobfarm.item.MobCatcherItem;
+public enum RedstoneMode implements StringRepresentable {
+  // @formatter:off
+  DISABLED("disabled"),
+  ON("default"),
+  OFF("copper");
+  // @formatter:on
 
-public class CreativeMobCatcher extends MobCatcherItem {
+  private final String mode;
 
-  public static final String NAME = "Creative Mob Catcher";
-
-  public CreativeMobCatcher(Item.Properties properties) {
-    super(properties);
+  private RedstoneMode(String mode) {
+    this.mode = mode;
   }
 
-  @Override
-  public boolean isAcceptedMob(LivingEntity livingEntity) {
-    if (livingEntity instanceof LivingEntity) {
-      return true;
+  public String getSerializedName() {
+    return this.mode;
+  }
+
+  public static RedstoneMode valueOf(int mode) {
+    switch (mode) {
+      case 0:
+        return DISABLED;
+      case 1:
+        return ON;
+      case 2:
+        return OFF;
+      default:
+        return DISABLED;
     }
-    log.warn("Mob {} is not supported by {}.", livingEntity, this);
-    return false;
   }
-
-  @Override
-  public boolean isAcceptedMobType(String mobType) {
-    return true;
-  }
-
-  @Override
-  public int getMobCatchingLuck() {
-    return 0;
-  }
-
-  @Override
-  public int getMobCatchingLuckConfig() {
-    return 0;
-  }
-
-  @Override
-  public UseAnim getUseAnimation(ItemStack itemStack) {
-    return UseAnim.CROSSBOW;
-  }
-
-  @Override
-  public String getMobCatcherItemName() {
-    return NAME;
-  }
-
 }

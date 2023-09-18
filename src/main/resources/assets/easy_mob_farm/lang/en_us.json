@@ -64,6 +64,9 @@
   "help_text.easy_mob_farm.capture_slot_all": "Place a captured mob into this slot.\nAll mobs are supported.",
   "help_text.easy_mob_farm.weapon_slot": "Place a weapon in this slot\nto get better mob drops.",
   "help_text.easy_mob_farm.experience_slot": "Place a %1$s in this slot\nto get experience points as\n%2$s for your catched mob.",
+  "help_text.easy_mob_farm.redstone_button_on" : "Enable the mob farm with a redstone signal.",
+  "help_text.easy_mob_farm.redstone_button_disabled" : "Ignore redstone signal.",
+  "help_text.easy_mob_farm.redstone_button_off" : "Disable the mob farm with a redstone signal.",
 
   "message.easy_mob_farm.warning_full": "Your Easy Mob Farm (%1$s) at %2$s is full and unable to store: %3$s!",
 
