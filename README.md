@@ -5,21 +5,23 @@
 
 ![Easy Mob Farm Logo][logo]
 
-The easy mob farm is a server friendly way to capture different kind of animals and mobs to gather their loot.
-This mod provides serval catching items and mob farms to make it more entertaining.
+The Easy Mob Farm offers a server-friendly solution for capturing various animals and mobs to harvest their valuable loot.
+This mod offers multiple capturing items and mob farms to enhance the gameplay experience.
 
-But there is also a creative version which is able to handle custom animals and monsters without any effort.
+Additionally, for those seeking a more creative approach, there is a version of the mod that effortlessly accommodates custom animals and monsters, requiring minimal effort on the player's part.
 
 ## 🔮 Features
 
-- Server friendly and optimized for the best performance on the client and server side.
-- Supporting `killed_by_player` loot drops with corresponding weapon (sword).
-- Displays possible loot from each catched mob.
-- Unique mob farms for the different kind of biomes and mobs.
-- Possibility to enable / disable specific drops from mobs like egg drops from chicken.
-- Automatic informs owner about full farms to make sure that there is no hopper lag or so.
-- Easy catching and releasing of mobs.
-- Configurable list of supported mobs per farm and mob catching item.
+- Designed for server-friendly operation while optimizing performance on both the client and server sides.
+- Enables loot drops upon `player kills`, ensuring that the dropped items correspond to the weapon used (e.g., swords).
+- Supports automated import and export of items for seamless processing.
+- Integrates with a redstone signal to enable or disable the mob farm as nee
+- Provides clear visibility of potential loot drops for each captured mob.
+- Offers distinct mob farms tailored to various biomes and mob types.
+- Grants users the ability to toggle specific mob drops on or off, such as egg drops from chickens.
+- Automatically notifies the owner when farms reach capacity to prevent hopper lag and other potential issues.
+- Facilitates easy capture and release of mobs, streamlining the process.
+- Allows for customization of supported mobs per farm and the item used for mob capture.
 
 ## User Interface
 

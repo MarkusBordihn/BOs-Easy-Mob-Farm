@@ -59,11 +59,15 @@
   "text.easy_mob_farm.next_drop_secs": "Nächster Drop: %ds",
   "text.easy_mob_farm.drop_time_secs": "Drop-Zeit: alle %ds",
   "text.easy_mob_farm.warning_full": "Ausgabeslots sind voll!",
+  "text.easy_mob_farm.warning_disabled": "Mob-Farm ist deaktiviert!",
 
   "help_text.easy_mob_farm.capture_slot": "Platziere einen gefangenen Mob in diesem Slot.\nDiese Farm unterstützt die folgenden Mobs:\n%1$s",
   "help_text.easy_mob_farm.capture_slot_all": "Platziere einen gefangenen Mob in diesem Slot.\nAlle Mobs werden unterstützt.",
   "help_text.easy_mob_farm.weapon_slot": "Platziere eine Waffe in diesem Slot,\num bessere Mob-Drops zu erhalten.",
   "help_text.easy_mob_farm.experience_slot": "Platziere einen %1$s in diesem Slot,\num Erfahrungspunkte als\n%2$s für deinen gefangenen Mob zu erhalten.",
+  "help_text.easy_mob_farm.redstone_button_on": "Aktiviere die Mob-Farm mit einem Redstone-Signal.",
+  "help_text.easy_mob_farm.redstone_button_disabled": "Ignoriere das Redstone-Signal.",
+  "help_text.easy_mob_farm.redstone_button_off": "Deaktiviere die Mob-Farm mit einem Redstone-Signal.",
 
   "message.easy_mob_farm.warning_full": "Deine Einfache Mob-Farm (%1$s) bei %2$s ist voll und kann nicht speichern: %3$s!",
 

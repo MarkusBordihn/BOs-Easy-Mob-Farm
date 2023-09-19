@@ -121,6 +121,7 @@ public class CommonConfig {
     public final ForgeConfigSpec.BooleanValue logFullStorage;
     public final ForgeConfigSpec.IntValue lootPreviewRolls;
     public final ForgeConfigSpec.BooleanValue playDropSound;
+    public final ForgeConfigSpec.BooleanValue damageWeaponItem;
     public final ForgeConfigSpec.ConfigValue<List<String>> generalAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> generalDeniedMobs;
 
@@ -362,6 +363,8 @@ public class CommonConfig {
           .defineInRange("lootPreviewRolls", 2, 1, 5);
       playDropSound = builder.comment("Enable/Disable the drop sound for the loot drops.")
           .define("playDropSound", true);
+      damageWeaponItem = builder.comment("Enable/Disable the damage of the weapon item which is used for player killed drops.")
+          .define("damageWeaponItem", true);
       generalAllowedMobs = builder.comment(
           "The following mobs are allowed to be captured with any mob catcher and all mob farms. (Use empty list to disable!)")
           .define("generalAllowedMobs", new ArrayList<String>());
