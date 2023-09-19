@@ -167,14 +167,12 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
       return;
     }
 
-    // Checking weapon and experience slot for any additional items.
-    ItemStack weaponItem = blockEntity.items.get(MobFarmMenu.WEAPON_SLOT);
-    ItemStack experienceItem = blockEntity.items.get(MobFarmMenu.EXPERIENCE_SLOT);
-
     // Processing mob farm
     if (blockEntity.farmProgress >= blockEntity.farmTotalTime) {
       if (capturedMob.getItem() instanceof CapturedMob
           || CapturedMobVirtual.isSupported(capturedMob)) {
+        ItemStack weaponItem = blockEntity.items.get(MobFarmMenu.WEAPON_SLOT);
+        ItemStack experienceItem = blockEntity.items.get(MobFarmMenu.EXPERIENCE_SLOT);
         blockEntity.processResult(capturedMob, weaponItem, experienceItem, blockEntity);
         blockEntity.processAdditionalEffects(level, blockPos, blockEntity, capturedMob);
       }
@@ -197,7 +195,8 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
 
     // Check if weapon should be damaged, if any.
     boolean hasWeaponItem = weaponItem != null && !weaponItem.isEmpty();
-    if (hasWeaponItem && weaponItem.isDamageableItem()) {
+    if (hasWeaponItem && weaponItem.isDamageableItem()
+        && Boolean.TRUE.equals(COMMON.damageWeaponItem.get())) {
       // Check if weapon has unbreaking enchantment and decrease damage value.
       // - Unbreaking 0: 0-10 damage
       // - Unbreaking 1: 0-5 damage
@@ -235,7 +234,7 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
     if ((hasWeaponItem || hasExperienceItem) && experienceDropChange == 0) {
 
       // Repair mending items with experience, if damaged.
-      if (hasWeaponItem && weaponItem.getDamageValue() > 0
+      if (hasWeaponItem && weaponItem.isDamageableItem() && weaponItem.getDamageValue() > 0
           && weaponItem.getEnchantmentLevel(Enchantments.MENDING) > 0) {
         int repairAmount = this.random.nextInt(10);
         if (repairAmount > 0) {
