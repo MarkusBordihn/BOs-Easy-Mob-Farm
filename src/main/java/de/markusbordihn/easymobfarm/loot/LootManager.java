@@ -182,9 +182,14 @@ public class LootManager {
         // Looting and Luck of See automatically increase mob loot.
         float dropLuck = 0.7f;
         if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING, weaponItem) > 0) {
-          dropLuck = dropLuck + (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING, weaponItem) * 0.3f);
-        } else if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FISHING_LUCK, weaponItem) > 0) {
-          dropLuck = dropLuck + (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FISHING_LUCK, weaponItem) * 0.3f);
+          dropLuck = dropLuck
+              + (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING, weaponItem)
+                  * 0.3f);
+        } else if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FISHING_LUCK,
+            weaponItem) > 0) {
+          dropLuck = dropLuck
+              + (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FISHING_LUCK, weaponItem)
+                  * 0.3f);
         }
         lootBuilder = new LootContext.Builder(serverLevel).withLuck(dropLuck)
             .withParameter(LootContextParams.DAMAGE_SOURCE, DamageSource.playerAttack(player))
