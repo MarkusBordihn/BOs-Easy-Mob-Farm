@@ -36,8 +36,11 @@ import net.minecraft.world.item.ExperienceBottleItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 
 import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.block.MobFarmBlock;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
 import de.markusbordihn.easymobfarm.config.MobTypeManager;
 import de.markusbordihn.easymobfarm.data.RedstoneMode;
@@ -90,11 +93,13 @@ public class MobFarmMenu extends AbstractContainerMenu {
   private ItemStack mobFarmCapturedMob = ItemStack.EMPTY;
   private ItemStack mobFarmExperienceItem = ItemStack.EMPTY;
   private ItemStack mobFarmWeaponItem = ItemStack.EMPTY;
+  private Level level;
   private RedstoneMode mobFarmRedstoneMode;
   private String mobFarmName = "- unknown -";
   private String mobFarmSubType = "";
   private String mobFarmTotalTimeText = "";
   private String mobFarmType = "";
+  private boolean mobFarmPowered = false;
   private int mobFarmProgress;
   private int mobFarmProgressImage;
   private int mobFarmRemainingTime;
@@ -115,6 +120,9 @@ public class MobFarmMenu extends AbstractContainerMenu {
   public MobFarmMenu(final int windowId, final Inventory playerInventory, final Container container,
       final ContainerData containerData, MenuType<?> menuType) {
     super(menuType, windowId);
+
+    // Level reference
+    this.level = playerInventory.player.level();
 
     // Make sure the passed container matched the expected sizes
     checkContainerSize(container, containerSize);
@@ -206,6 +214,10 @@ public class MobFarmMenu extends AbstractContainerMenu {
     this.mobFarmBlockPos = new BlockPos(this.data.get(MobFarmBlockEntityData.FARM_BLOCK_POS_X_DATA),
         this.data.get(MobFarmBlockEntityData.FARM_BLOCK_POS_Y_DATA),
         this.data.get(MobFarmBlockEntityData.FARM_BLOCK_POS_Z_DATA));
+
+    // Power mode
+    BlockState blockState = this.level.getBlockState(this.mobFarmBlockPos);
+    this.mobFarmPowered = blockState != null && blockState.getValue(MobFarmBlock.POWERED);
   }
 
   public int getMobFarmProgress() {
@@ -250,6 +262,10 @@ public class MobFarmMenu extends AbstractContainerMenu {
 
   public RedstoneMode getMobFarmRedstoneMode() {
     return this.mobFarmRedstoneMode;
+  }
+
+  public boolean isMobFarmPowered() {
+    return this.mobFarmPowered;
   }
 
   public String getAcceptedMobTypeName() {

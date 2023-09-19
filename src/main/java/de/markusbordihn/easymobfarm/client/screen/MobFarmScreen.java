@@ -64,6 +64,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
 
   private T mobFarmMenu;
   private RenderModels renderModels;
+  private MutableComponent warningDisabledText;
   private MutableComponent warningFullText;
   private float dropTimeLabelScale = 0.75F;
   private float nextDropTimeLabelScale = 0.75F;
@@ -76,8 +77,8 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
   private StringSplitter stringSplitter;
 
   // Redstone switch button
-  private int redstoneButtonX = 7;
-  private int redstoneButtonY = 93;
+  private int redstoneButtonX = 154;
+  private int redstoneButtonY = 44;
   private int redstoneButtonModeOnY = redstoneButtonY;
   private int redstoneButtonModeDisabledY = redstoneButtonModeOnY + 10;
   private int redstoneButtonModeOffY = redstoneButtonModeDisabledY + 9;
@@ -167,6 +168,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
   }
 
   public void renderRedstoneButton(GuiGraphics guiGraphics) {
+    int redstoneButtonModeX = this.menu.isMobFarmPowered() ? 145 : 131;
     int redstoneButtonModeY = 1;
     switch (this.mobFarmMenu.getMobFarmRedstoneMode()) {
       case ON:
@@ -179,8 +181,8 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
         redstoneButtonModeY = 1;
     }
     guiGraphics.blit(Constants.TEXTURE_ICONS, leftPos + this.redstoneButtonX,
-        topPos + this.redstoneButtonY, 131, redstoneButtonModeY, this.redstoneButtonWidth,
-        this.redstoneButtonHeight);
+        topPos + this.redstoneButtonY, redstoneButtonModeX, redstoneButtonModeY,
+        this.redstoneButtonWidth, this.redstoneButtonHeight);
   }
 
   @Override
@@ -257,6 +259,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
     this.dropTimeLabelY = Math.round(119 / dropTimeLabelScale);
     this.nextDropTimeLabelX = Math.round(66 / nextDropTimeLabelScale);
     this.nextDropTimeLabelY = Math.round(91 / nextDropTimeLabelScale);
+    this.warningDisabledText = Component.translatable(Constants.TEXT_PREFIX + "warning_disabled");
     this.warningFullText = Component.translatable(Constants.TEXT_PREFIX + "warning_full");
     this.renderModels = new RenderModels(this.minecraft);
     this.stringSplitter = this.font.getSplitter();
@@ -280,10 +283,10 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
     // Render screen in three parts.
     this.renderBackground(guiGraphics);
     super.render(guiGraphics, x, y, partialTicks);
+    this.renderRedstoneButton(guiGraphics);
     this.renderEntityType(guiGraphics, x, y);
     this.renderTooltip(guiGraphics, x, y);
     this.renderHelpText(guiGraphics, x, y);
-    this.renderRedstoneButton(guiGraphics);
   }
 
   @Override
@@ -291,8 +294,9 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
     super.renderLabels(guiGraphics, x, y);
     int mobFarmStatus = this.mobFarmMenu.getMobFarmStatus();
 
-    // Show Farm Details like drop time.
-    if (mobFarmStatus != MobFarmBlockEntityData.FARM_STATUS_FULL) {
+    // Show Farm Details like drop time, if not full or disabled.
+    if (mobFarmStatus != MobFarmBlockEntityData.FARM_STATUS_FULL
+        && mobFarmStatus != MobFarmBlockEntityData.FARM_STATUS_DISABLED) {
       guiGraphics.pose().pushPose();
       guiGraphics.pose().scale(dropTimeLabelScale, dropTimeLabelScale, dropTimeLabelScale);
       guiGraphics.drawString(this.font,
@@ -336,6 +340,13 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
             this.dropTimeLabelY, Constants.FONT_COLOR_WARNING, false);
         guiGraphics.pose().popPose();
         break;
+      case MobFarmBlockEntityData.FARM_STATUS_DISABLED:
+        guiGraphics.pose().pushPose();
+        guiGraphics.pose().scale(dropTimeLabelScale, dropTimeLabelScale, dropTimeLabelScale);
+        guiGraphics.drawString(this.font, this.warningDisabledText, this.dropTimeLabelX,
+            this.dropTimeLabelY, Constants.FONT_COLOR_WARNING, false);
+        guiGraphics.pose().popPose();
+        break;
       default:
     }
   }
@@ -372,6 +383,11 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
     // Hopper State Icon
     guiGraphics.blit(Constants.TEXTURE_ICONS, leftPos + 20, topPos + 100, 40, 7, 20, 16);
 
+    // Power status
+    if (this.mobFarmMenu.isMobFarmPowered()) {
+      guiGraphics.blit(Constants.TEXTURE_ICONS, leftPos + 21, topPos + 100, 41, 45, 18, 16);
+    }
+
     // Guiding Images
     if (!this.mobFarmMenu.hasMobFarmWeaponItem()) {
       guiGraphics.blit(Constants.TEXTURE_ICONS, leftPos + 127, topPos + 60, 105, 3, 23, 54);
@@ -398,10 +414,10 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
         break;
       case MobFarmBlockEntityData.FARM_STATUS_WAITING:
         guiGraphics.blit(Constants.TEXTURE_ICONS, leftPos + 12, topPos + 30, 1, 1, 40, 50);
-        guiGraphics.blit(Constants.TEXTURE_ICONS, leftPos + 100, topPos + 54, 62, 28, 20, 15);
+        guiGraphics.blit(Constants.TEXTURE_ICONS, leftPos + 100, topPos + 54, 62, 28, 20, 14);
         break;
       case MobFarmBlockEntityData.FARM_STATUS_DISABLED:
-        guiGraphics.blit(Constants.TEXTURE_ICONS, leftPos + 24, topPos + 102, 67, 43, 13, 13);
+        guiGraphics.blit(Constants.TEXTURE_ICONS, leftPos + 23, topPos + 101, 66, 42, 16, 16);
         break;
       default:
     }
