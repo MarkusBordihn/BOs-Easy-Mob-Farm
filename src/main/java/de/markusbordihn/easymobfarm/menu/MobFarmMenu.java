@@ -221,7 +221,8 @@ public class MobFarmMenu extends AbstractContainerMenu {
 
     // Power mode
     BlockState blockState = this.level.getBlockState(this.mobFarmBlockPos);
-    this.mobFarmPowered = blockState != null && blockState.getValue(MobFarmBlock.POWERED);
+    this.mobFarmPowered =
+        blockState.getBlock() instanceof MobFarmBlock && blockState.getValue(MobFarmBlock.POWERED);
   }
 
   public int getMobFarmProgress() {

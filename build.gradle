@@ -138,8 +138,8 @@ dependencies {
   minecraft 'net.minecraftforge:forge:1.18.2-40.2.10'
 
   // Productive Bees: Integration
-  compileOnly fg.deobf("curse.maven:productivebees-377897:4257307")
-  runtimeOnly fg.deobf("curse.maven:productivebees-377897:4257307")
+  // compileOnly fg.deobf("curse.maven:productivebees-377897:4257307")
+  // runtimeOnly fg.deobf("curse.maven:productivebees-377897:4257307")
 
   // Jade: Integration
   compileOnly fg.deobf("curse.maven:jade-324717:3761542")

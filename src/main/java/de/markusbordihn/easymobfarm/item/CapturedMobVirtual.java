@@ -28,6 +28,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.AirItem;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BottleItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ExperienceBottleItem;
@@ -78,7 +79,8 @@ public class CapturedMobVirtual {
     if (item instanceof CapturedMob) {
       return true;
     } else if (item instanceof AirItem || item instanceof ExperienceBottleItem
-        || item instanceof BottleItem) {
+        || item instanceof BottleItem || item instanceof MobFarmTemplateItem
+        || item instanceof BlockItem) {
       return false;
     }
 
