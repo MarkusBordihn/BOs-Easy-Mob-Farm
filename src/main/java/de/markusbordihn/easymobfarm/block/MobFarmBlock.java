@@ -217,7 +217,7 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
 
   @Override
   public boolean canConnectRedstone(BlockState blockState, BlockGetter blockGetter,
-      BlockPos blockPos, Direction direction) {
+      BlockPos blockPos, @Nullable Direction direction) {
     return true;
   }
 
