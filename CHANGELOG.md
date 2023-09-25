@@ -5,6 +5,11 @@
 This change log includes the summarized changes.
 For the full changelog, please go to the [Git Hub History][history] instead.
 
+### 2023.09.24
+
+- Fixed wrong item drop from breaking monster plains cave farms.
+- Added safety checks to avoid potential crashes with slow loaded chunks.
+
 ### 2023.09.13
 
 - Added config option to enable nether star drop for the wither and redstone control. (Thanks x-j0nnay-x)

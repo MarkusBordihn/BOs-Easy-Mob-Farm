@@ -62,10 +62,11 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
   public static final int SNAP_HEIGHT = 53;
   public static final int MAX_HELP_TEXT_WIDTH = 300;
 
-  private T mobFarmMenu;
+  private final MutableComponent warningDisabledText;
+  private final MutableComponent warningFullText;
+  private final T mobFarmMenu;
+
   private RenderModels renderModels;
-  private MutableComponent warningDisabledText;
-  private MutableComponent warningFullText;
   private float dropTimeLabelScale = 0.75F;
   private float nextDropTimeLabelScale = 0.75F;
   private int animationTicker = 0;
@@ -88,6 +89,8 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
   public MobFarmScreen(T menu, Inventory inventory, Component component) {
     super(menu, inventory, component);
     this.mobFarmMenu = menu;
+    this.warningDisabledText = Component.translatable(Constants.TEXT_PREFIX + "warning_disabled");
+    this.warningFullText = Component.translatable(Constants.TEXT_PREFIX + "warning_full");
   }
 
   protected void renderSnapshot(GuiGraphics guiGraphics, ResourceLocation mobFarmTypeSnapshot) {
@@ -259,8 +262,6 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
     this.dropTimeLabelY = Math.round(119 / dropTimeLabelScale);
     this.nextDropTimeLabelX = Math.round(66 / nextDropTimeLabelScale);
     this.nextDropTimeLabelY = Math.round(91 / nextDropTimeLabelScale);
-    this.warningDisabledText = Component.translatable(Constants.TEXT_PREFIX + "warning_disabled");
-    this.warningFullText = Component.translatable(Constants.TEXT_PREFIX + "warning_full");
     this.renderModels = new RenderModels(this.minecraft);
     this.stringSplitter = this.font.getSplitter();
   }

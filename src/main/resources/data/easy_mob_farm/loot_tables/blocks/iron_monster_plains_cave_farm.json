@@ -13,7 +13,7 @@
               "source": "block_entity"
             }
           ],
-          "name": "easy_mob_farm:iron_mob_farm_template"
+          "name": "easy_mob_farm:iron_monster_plains_cave_farm"
         }
       ],
       "conditions": [
