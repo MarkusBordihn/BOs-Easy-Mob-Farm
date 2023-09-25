@@ -13,7 +13,7 @@
               "source": "block_entity"
             }
           ],
-          "name": "easy_mob_farm:netherite_mob_farm_template"
+          "name": "easy_mob_farm:netherite_monster_plains_cave_farm"
         }
       ],
       "conditions": [
