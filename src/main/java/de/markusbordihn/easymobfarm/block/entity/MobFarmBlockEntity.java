@@ -82,7 +82,6 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
   public MobFarmBlockEntity(BlockEntityType<?> blockEntity, BlockPos blockPos,
       BlockState blockState) {
     super(blockEntity, blockPos, blockState);
-    this.farmBlockPos = blockPos;
   }
 
   public void updateLevel(Level level) {
