@@ -100,7 +100,6 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
   public EntityType<?> farmMobEntityType = null;
   public boolean farmMobShearedStatus = false;
   public RedstoneMode farmRedstoneMode = RedstoneMode.DISABLED;
-  public BlockPos farmBlockPos = null;
 
   // Item Storage
   public NonNullList<ItemStack> items = NonNullList.withSize(8, ItemStack.EMPTY);
@@ -123,11 +122,11 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
         case FARM_REDSTONE_MODE_DATA:
           return farmRedstoneMode.ordinal();
         case FARM_BLOCK_POS_X_DATA:
-          return farmBlockPos.getX();
+          return getBlockPos().getX();
         case FARM_BLOCK_POS_Y_DATA:
-          return farmBlockPos.getY();
+          return getBlockPos().getY();
         case FARM_BLOCK_POS_Z_DATA:
-          return farmBlockPos.getZ();
+          return getBlockPos().getZ();
         default:
           return 0;
       }
@@ -153,15 +152,6 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
         case FARM_REDSTONE_MODE_DATA:
           farmRedstoneMode = RedstoneMode.values()[value];
           break;
-        case FARM_BLOCK_POS_X_DATA:
-          farmBlockPos = new BlockPos(value, farmBlockPos.getY(), farmBlockPos.getZ());
-          break;
-        case FARM_BLOCK_POS_Y_DATA:
-          farmBlockPos = new BlockPos(farmBlockPos.getX(), value, farmBlockPos.getZ());
-          break;
-        case FARM_BLOCK_POS_Z_DATA:
-          farmBlockPos = new BlockPos(farmBlockPos.getX(), farmBlockPos.getY(), value);
-          break;
         default:
       }
     }
@@ -185,11 +175,6 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
 
   public void setRedstoneMode(RedstoneMode redstoneMode) {
     this.farmRedstoneMode = redstoneMode;
-    this.syncData();
-  }
-
-  public void setFarmBlockPos(BlockPos blockPos) {
-    this.farmBlockPos = blockPos;
     this.syncData();
   }
 
@@ -235,10 +220,6 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
 
   public RedstoneMode getRedstoneMode() {
     return this.farmRedstoneMode;
-  }
-
-  public BlockPos getFarmBlockPos() {
-    return this.farmBlockPos;
   }
 
   public boolean hasItem(int index) {
@@ -375,9 +356,6 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
     if (compoundTag.contains(FARM_REDSTONE_MODE_TAG)) {
       this.farmRedstoneMode = RedstoneMode.values()[compoundTag.getInt(FARM_REDSTONE_MODE_TAG)];
     }
-
-    // Farm Block Position
-    this.farmBlockPos = this.getBlockPos();
 
     // Restore additional meta data
     ItemStack capturedMob = this.items.get(MobFarmMenu.CAPTURED_MOB_SLOT);
