@@ -35,6 +35,7 @@ import com.mojang.authlib.GameProfile;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ClientInformation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.item.Item;
@@ -47,7 +48,6 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 
-import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -287,7 +287,7 @@ public class LootManager {
 
   private static FakePlayer getPlayer(ServerLevel level) {
     if (fakePlayer == null) {
-      fakePlayer = new FakePlayer(level, GAME_PROFILE);
+      fakePlayer = new FakePlayer(level, GAME_PROFILE, ClientInformation.createDefault());
     }
     return fakePlayer;
   }

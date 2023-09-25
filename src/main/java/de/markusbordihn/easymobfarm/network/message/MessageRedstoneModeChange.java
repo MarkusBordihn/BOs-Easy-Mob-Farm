@@ -25,9 +25,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.event.network.CustomPayloadEvent;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
@@ -53,14 +54,24 @@ public class MessageRedstoneModeChange {
     return this.blockPos;
   }
 
+  public static MessageRedstoneModeChange decode(final FriendlyByteBuf buffer) {
+    BlockPos blockPos = buffer.readBlockPos();
+    RedstoneMode redstoneMode = buffer.readEnum(RedstoneMode.class);
+    return new MessageRedstoneModeChange(blockPos, redstoneMode);
+  }
+
+  public static void encode(final MessageRedstoneModeChange message, final FriendlyByteBuf buffer) {
+    buffer.writeBlockPos(message.getBlockPos());
+    buffer.writeEnum(message.getRedstoneMode());
+  }
+
   public static void handle(MessageRedstoneModeChange message,
-      Supplier<NetworkEvent.Context> contextSupplier) {
-    NetworkEvent.Context context = contextSupplier.get();
+      CustomPayloadEvent.Context context) {
     context.enqueueWork(() -> handlePacket(message, context));
     context.setPacketHandled(true);
   }
 
-  public static void handlePacket(MessageRedstoneModeChange message, NetworkEvent.Context context) {
+  public static void handlePacket(MessageRedstoneModeChange message, CustomPayloadEvent.Context context) {
     ServerPlayer serverPlayer = context.getSender();
     if (serverPlayer == null) {
       return;

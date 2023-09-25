@@ -23,11 +23,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.resources.ResourceLocation;
-
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.common.ForgeConfig.Server;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.network.ChannelBuilder;
+import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.minecraftforge.network.PacketDistributor;
+import net.minecraftforge.network.SimpleChannel;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.data.RedstoneMode;
@@ -38,33 +42,31 @@ public class NetworkHandler {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  private static final String PROTOCOL_VERSION = "1";
-  public static final SimpleChannel INSTANCE =
-      NetworkRegistry.newSimpleChannel(new ResourceLocation(Constants.MOD_ID, "network"),
-          () -> PROTOCOL_VERSION, PROTOCOL_VERSION::equals, PROTOCOL_VERSION::equals);
-
   private static int id = 0;
+  private static final int PROTOCOL_VERSION = 1;
+  private static final SimpleChannel SIMPLE_CHANNEL =
+      ChannelBuilder.named(new ResourceLocation(Constants.MOD_ID, "network"))
+          .networkProtocolVersion(PROTOCOL_VERSION).simpleChannel();
 
   public static void registerNetworkHandler(final FMLCommonSetupEvent event) {
 
     log.info("{} Network Handler for {} with version {} ...", Constants.LOG_REGISTER_PREFIX,
-        INSTANCE, PROTOCOL_VERSION);
+        SIMPLE_CHANNEL, PROTOCOL_VERSION);
 
     event.enqueueWork(() -> {
 
       // Redstone Mode Change: Client -> Server
-      INSTANCE.registerMessage(id++, MessageRedstoneModeChange.class, (message, buffer) -> {
-        buffer.writeBlockPos(message.getBlockPos());
-        buffer.writeEnum(message.getRedstoneMode());
-      }, buffer -> new MessageRedstoneModeChange(buffer.readBlockPos(),
-          buffer.readEnum(RedstoneMode.class)), MessageRedstoneModeChange::handle);
+      SIMPLE_CHANNEL
+          .messageBuilder(MessageRedstoneModeChange.class, id++, NetworkDirection.PLAY_TO_SERVER)
+          .decoder(MessageRedstoneModeChange::decode).encoder(MessageRedstoneModeChange::encode)
+          .consumerNetworkThread(MessageRedstoneModeChange::handle).add();
     });
 
   }
 
   public static <M> void sendToServer(M message) {
     try {
-      INSTANCE.sendToServer(message);
+      //SIMPLE_CHANNEL.send(message);
     } catch (Exception e) {
       log.error("Failed to send {} to server, got error: {}", message, e.getMessage());
     }
