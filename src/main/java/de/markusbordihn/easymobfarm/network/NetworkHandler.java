@@ -23,18 +23,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.common.ForgeConfig.Server;
+
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.network.ChannelBuilder;
 import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.SimpleChannel;
 
 import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.data.RedstoneMode;
 import de.markusbordihn.easymobfarm.network.message.MessageRedstoneModeChange;
 
 @EventBusSubscriber
@@ -66,7 +63,7 @@ public class NetworkHandler {
 
   public static <M> void sendToServer(M message) {
     try {
-      //SIMPLE_CHANNEL.send(message);
+      SIMPLE_CHANNEL.send(message, PacketDistributor.SERVER.noArg());
     } catch (Exception e) {
       log.error("Failed to send {} to server, got error: {}", message, e.getMessage());
     }

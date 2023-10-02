@@ -19,8 +19,6 @@
 
 package de.markusbordihn.easymobfarm.network.message;
 
-import java.util.function.Supplier;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

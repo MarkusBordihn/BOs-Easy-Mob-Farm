@@ -5,6 +5,10 @@
 This change log includes the summarized changes.
 For the full changelog, please go to the [Git Hub History][history] instead.
 
+### 2023.10.02
+
+- Refactored code to 1.20.2-48.0.13
+
 ### 2023.09.24
 
 - Fixed wrong item drop from breaking monster plains cave farms.
