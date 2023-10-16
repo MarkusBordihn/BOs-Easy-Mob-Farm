@@ -341,9 +341,10 @@ public class CommonConfig {
     // Drop Settings
     public final ForgeConfigSpec.BooleanValue beeDropHoneycomb;
     public final ForgeConfigSpec.BooleanValue blazeDropBlazeRod;
-    public final ForgeConfigSpec.BooleanValue cowDropRawBeef;
     public final ForgeConfigSpec.BooleanValue chickenDropEggs;
     public final ForgeConfigSpec.BooleanValue chickenDropRawChicken;
+    public final ForgeConfigSpec.BooleanValue cowDropRawBeef;
+    public final ForgeConfigSpec.BooleanValue endermanDropEnderPearl;
     public final ForgeConfigSpec.BooleanValue sheepDropRawMutton;
     public final ForgeConfigSpec.BooleanValue slimeDropSlime;
     public final ForgeConfigSpec.BooleanValue witherDropNetherStar;
@@ -363,7 +364,9 @@ public class CommonConfig {
           .defineInRange("lootPreviewRolls", 2, 1, 5);
       playDropSound = builder.comment("Enable/Disable the drop sound for the loot drops.")
           .define("playDropSound", true);
-      damageWeaponItem = builder.comment("Enable/Disable the damage of the weapon item which is used for player killed drops.")
+      damageWeaponItem = builder
+          .comment(
+              "Enable/Disable the damage of the weapon item which is used for player killed drops.")
           .define("damageWeaponItem", true);
       generalAllowedMobs = builder.comment(
           "The following mobs are allowed to be captured with any mob catcher and all mob farms. (Use empty list to disable!)")
@@ -762,6 +765,8 @@ public class CommonConfig {
       // Mob Catching Item
 
       builder.push("Mob Catching Item");
+      builder.comment("Configuration for the mob catching item.");
+
       builder.push("Catch Cage");
       catchCageMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
           .defineInRange("catchCageMobCatchingLuck", 6, 0, 100);
@@ -877,7 +882,7 @@ public class CommonConfig {
           .define("urnSmallDeniedMobs", new ArrayList<String>());
       builder.pop();
 
-      builder.push("Witch Bottle");
+      builder.push("Witch Bottle (Mob Catching Item)");
       witchBottleMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
           .defineInRange("witchBottleMobCatchingLuck", 10, 0, 100);
       witchBottleAllowedMobs = builder.comment(getCatchableMobsText("witch bottle"))
@@ -891,40 +896,47 @@ public class CommonConfig {
 
       // Additional Drop Settings
       builder.push("Additional Drop Settings");
+      builder.comment("Configuration for drops like forced and disabled drops.");
+
       builder.push("Bee Drop Settings");
-      beeDropHoneycomb =
-          builder.comment("Enable/Disable honeycomb drops.").define("beeDropHoneycomb", true);
+      beeDropHoneycomb = builder.comment("Enable/Disable forced honeycomb drops.")
+          .define("beeDropHoneycomb", true);
       builder.pop();
 
       builder.push("Blaze Drop Settings");
-      blazeDropBlazeRod =
-          builder.comment("Enable/Disable blaze rod drops.").define("blazeDropBlazeRod", false);
+      blazeDropBlazeRod = builder.comment("Enable/Disable forced blaze rod drops.")
+          .define("blazeDropBlazeRod", false);
+      builder.pop();
+
+      builder.push("Chicken Drop Settings");
+      chickenDropEggs = builder.comment("Enable/Disable forced chicken egg drops.")
+          .define("chickenDropEggs", true);
+      chickenDropRawChicken =
+          builder.comment("Disable raw chicken drops.").define("chickenDropRawChicken", false);
       builder.pop();
 
       builder.push("Cow Drop Settings");
       cowDropRawBeef =
-          builder.comment("Enable/Disable cow raw beef drops.").define("cowDropRawBeef", true);
+          builder.comment("Disable cow raw beef drops.").define("cowDropRawBeef", false);
       builder.pop();
 
-      builder.push("Chicken Drop Settings");
-      chickenDropEggs =
-          builder.comment("Enable/Disable chicken egg drops.").define("chickenDropEggs", true);
-      chickenDropRawChicken = builder.comment("Enable/Disable raw chicken drops.")
-          .define("chickenDropRawChicken", true);
+      builder.push("Enderman Drop Settings");
+      endermanDropEnderPearl = builder.comment("Enable/Disable forced enderman ender pearl drops.")
+          .define("endermanDropEnderPearl", false);
       builder.pop();
 
       builder.push("Sheep Drop Settings");
-      sheepDropRawMutton = builder.comment("Enable/Disable sheep raw mutton drops.")
-          .define("sheepDropRawMutton", true);
+      sheepDropRawMutton =
+          builder.comment("Disable sheep raw mutton drops.").define("sheepDropRawMutton", false);
       builder.pop();
 
       builder.push("Slime Drop Settings");
-      slimeDropSlime = builder.comment("Enable/Disable slime drops regardless of size.")
+      slimeDropSlime = builder.comment("Enable/Disable forced slime drops regardless of size.")
           .define("slimeDropSlime", true);
       builder.pop();
 
       builder.push("Wither Drop Settings");
-      witherDropNetherStar = builder.comment("Enable/Disable nether star drops from wither.")
+      witherDropNetherStar = builder.comment("Enable/Disable forced nether star drops from wither.")
           .define("witherDropNetherStar", false);
       builder.pop();
 

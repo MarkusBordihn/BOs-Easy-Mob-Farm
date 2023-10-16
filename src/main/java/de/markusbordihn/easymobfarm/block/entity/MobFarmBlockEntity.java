@@ -323,7 +323,8 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
       MobFarmBlockEntity blockEntity, ItemStack capturedMob) {
     // Additional effects like sound or particles on mob drop.
     SoundEvent farmDropSound = getFarmDropSound();
-    if (Boolean.TRUE.equals(COMMON.playDropSound.get()) && farmDropSound != null) {
+    if (Boolean.TRUE.equals(COMMON.playDropSound.get()) && farmDropSound != null
+        && farmDropSound.getLocation() != null && level != null && blockPos != null) {
       level.playSound(null, blockPos, farmDropSound, SoundSource.BLOCKS, 1.0F, 1.0F);
     }
   }
