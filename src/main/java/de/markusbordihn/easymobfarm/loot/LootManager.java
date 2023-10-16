@@ -150,8 +150,20 @@ public class LootManager {
             .withParameter(LootContextParams.THIS_ENTITY, player);
       }
       LootTable lootTable = server.getLootTables().get(lootTableLocation);
+
       List<ItemStack> lootDrops =
           lootTable.getRandomItems(lootBuilder.create(LootContextParamSets.ENTITY));
+
+      // Add additional loot drops, if looting enchantment is used.
+      if (weaponItem != null && !weaponItem.isEmpty()
+          && weaponItem.getEnchantmentLevel(Enchantments.MOB_LOOTING) > 0) {
+        for (int i = 0; i < weaponItem.getEnchantmentLevel(Enchantments.MOB_LOOTING); i++) {
+          lootDrops
+              .addAll(lootTable.getRandomItems(lootBuilder.create(LootContextParamSets.ENTITY)));
+        }
+      }
+
+      // Report empty loot drops for debugging purpose.
       if (lootDrops.isEmpty() && !lootTableLocation.equals(new ResourceLocation("minecraft:empty"))
           && !lootTableLocation.equals(new ResourceLocation("minecraft:entities/bee"))
           && !lootTableLocation.equals(new ResourceLocation("minecraft:entities/blaze"))
@@ -232,6 +244,14 @@ public class LootManager {
   public static List<ItemStack> filterLootDrop(List<ItemStack> lootDrops, String mobType) {
     List<ItemStack> filteredLootDrops = Lists.newArrayList();
 
+    // Bee and Productive Bees drop support.
+    if (Boolean.TRUE.equals(COMMON.beeDropHoneycomb.get())
+        && (mobType.equals(BeeAnimal.BEE)
+            || (Constants.PRODUCTIVE_BEES_LOADED && BeeAnimal.ProductiveBees.contains(mobType)))
+        && random.nextInt(3) == 0) {
+      lootDrops.add(new ItemStack(Items.HONEYCOMB));
+    }
+
     // Blaze rod drop support.
     if (Boolean.TRUE.equals(COMMON.blazeDropBlazeRod.get())
         && mobType.equals(HostileNetherMonster.BLAZE)) {
@@ -244,12 +264,10 @@ public class LootManager {
       lootDrops.add(new ItemStack(Items.EGG));
     }
 
-    // Bee and Productive Bees drop support.
-    if (Boolean.TRUE.equals(COMMON.beeDropHoneycomb.get())
-        && (mobType.equals(BeeAnimal.BEE)
-            || (Constants.PRODUCTIVE_BEES_LOADED && BeeAnimal.ProductiveBees.contains(mobType)))
-        && random.nextInt(3) == 0) {
-      lootDrops.add(new ItemStack(Items.HONEYCOMB));
+    // Ender pearl drop support.
+    if (Boolean.TRUE.equals(COMMON.endermanDropEnderPearl.get())
+        && mobType.equals(HostileMonster.ENDERMAN)) {
+      lootDrops.add(new ItemStack(Items.ENDER_PEARL));
     }
 
     // Wither nether start drop support.
@@ -315,7 +333,7 @@ public class LootManager {
   private static boolean filter(boolean status, String blockedMobType, Item blockedLootDrop,
       String mobType, ItemStack lootDrop) {
     // Filter only if loot drop is disabled = false.
-    if (status) {
+    if (!status) {
       return false;
     }
     return mobType.equals(blockedMobType) && lootDrop.is(blockedLootDrop);
