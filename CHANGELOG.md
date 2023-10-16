@@ -5,6 +5,11 @@
 This change log includes the summarized changes.
 For the full changelog, please go to the [Git Hub History][history] instead.
 
+### 2023.10.16
+
+- Added support for multiple drops for looting enchantment.
+- Added config option to force ender pearl drop from enderman.
+
 ### 2023.10.02
 
 - Refactored code to 1.20.2-48.0.13
