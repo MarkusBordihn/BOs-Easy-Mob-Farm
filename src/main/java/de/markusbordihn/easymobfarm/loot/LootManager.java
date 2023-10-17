@@ -72,15 +72,6 @@ public class LootManager {
 
   private static final Random random = new Random();
 
-  // Configuration
-  private static boolean beeDropHoneycomb = COMMON.beeDropHoneycomb.get();
-  private static boolean blazeDropBlazeRod = COMMON.blazeDropBlazeRod.get();
-  private static boolean cowDropRawBeef = COMMON.cowDropRawBeef.get();
-  private static boolean chickenDropEggs = COMMON.chickenDropEggs.get();
-  private static boolean chickenDropRawChicken = COMMON.chickenDropRawChicken.get();
-  private static boolean sheepDropRawMutton = COMMON.sheepDropRawMutton.get();
-  private static int lootPreviewRolls = COMMON.lootPreviewRolls.get();
-
   // Fake Player
   private static FakePlayer fakePlayer;
   private static final GameProfile GAME_PROFILE =
@@ -104,13 +95,6 @@ public class LootManager {
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
-    beeDropHoneycomb = COMMON.beeDropHoneycomb.get();
-    blazeDropBlazeRod = COMMON.blazeDropBlazeRod.get();
-    cowDropRawBeef = COMMON.cowDropRawBeef.get();
-    chickenDropEggs = COMMON.chickenDropEggs.get();
-    chickenDropRawChicken = COMMON.chickenDropRawChicken.get();
-    sheepDropRawMutton = COMMON.sheepDropRawMutton.get();
-    lootPreviewRolls = COMMON.lootPreviewRolls.get();
     lootTableDropListCache = new ConcurrentHashMap<>();
   }
 
@@ -118,7 +102,7 @@ public class LootManager {
       Level level, String mobType, String mobSubType) {
     // Roll's the loot a specific time (default: 2) to get more accurate results.
     List<String> lootDropList = Lists.newArrayList();
-    for (int i = 0; i < lootPreviewRolls; i++) {
+    for (int i = 0; i < COMMON.lootPreviewRolls.get(); i++) {
       List<ItemStack> lootDrops =
           getFilteredRandomLootDrop(lootTableLocation, ItemStack.EMPTY, level, mobType, mobSubType);
 
@@ -126,7 +110,7 @@ public class LootManager {
       lootDropList = cacheLootDrops(lootTableLocation, lootDrops);
     }
     log.debug(Constants.LOOT_MANAGER_PREFIX + "Loot for {} with {} roll {} result: {}", mobType,
-        lootTableLocation, lootPreviewRolls, lootDropList);
+        lootTableLocation, COMMON.lootPreviewRolls.get(), lootDropList);
     return lootDropList;
   }
 
@@ -269,7 +253,7 @@ public class LootManager {
     List<ItemStack> filteredLootDrops = Lists.newArrayList();
 
     // Bee and Productive Bees drop support.
-    if (beeDropHoneycomb
+    if (Boolean.TRUE.equals(COMMON.beeDropHoneycomb.get())
         && (mobType.equals(BeeAnimal.BEE)
             || (Constants.PRODUCTIVE_BEES_LOADED && BeeAnimal.ProductiveBees.contains(mobType)))
         && random.nextInt(3) == 0) {
@@ -277,12 +261,14 @@ public class LootManager {
     }
 
     // Blaze rod drop support.
-    if (blazeDropBlazeRod && mobType.equals(HostileNetherMonster.BLAZE)) {
+    if (Boolean.TRUE.equals(COMMON.blazeDropBlazeRod.get())
+        && mobType.equals(HostileNetherMonster.BLAZE)) {
       lootDrops.add(new ItemStack(Items.BLAZE_ROD));
     }
 
     // Chicken egg drop support.
-    if (chickenDropEggs && mobType.equals(PassiveAnimal.CHICKEN)) {
+    if (Boolean.TRUE.equals(COMMON.chickenDropEggs.get())
+        && mobType.equals(PassiveAnimal.CHICKEN)) {
       lootDrops.add(new ItemStack(Items.EGG));
     }
 
@@ -302,9 +288,11 @@ public class LootManager {
     for (ItemStack lootDrop : lootDrops) {
       // Ignore empty stacks and filter loot drop, if specific drop is disabled.
       if (lootDrop.isEmpty()
-          || filter(chickenDropRawChicken, PassiveAnimal.CHICKEN, Items.CHICKEN, mobType, lootDrop)
-          || filter(cowDropRawBeef, PassiveAnimal.COW, Items.BEEF, mobType, lootDrop)
-          || filter(sheepDropRawMutton, PassiveAnimal.SHEEP, Items.MUTTON, mobType, lootDrop)) {
+          || filter(COMMON.chickenDropRawChicken.get(), PassiveAnimal.CHICKEN, Items.CHICKEN,
+              mobType, lootDrop)
+          || filter(COMMON.cowDropRawBeef.get(), PassiveAnimal.COW, Items.BEEF, mobType, lootDrop)
+          || filter(COMMON.sheepDropRawMutton.get(), PassiveAnimal.SHEEP, Items.MUTTON, mobType,
+              lootDrop)) {
         continue;
       }
       filteredLootDrops.add(lootDrop);
