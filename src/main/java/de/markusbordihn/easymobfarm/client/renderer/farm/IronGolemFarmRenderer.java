@@ -21,11 +21,11 @@ package de.markusbordihn.easymobfarm.client.renderer.farm;
 
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
-import de.markusbordihn.easymobfarm.client.renderer.AnimalFarmRenderer;
+import de.markusbordihn.easymobfarm.client.renderer.SpecialFarmRenderer;
 
-public class AnimalPlainsFarmRenderer extends AnimalFarmRenderer {
+public class IronGolemFarmRenderer extends SpecialFarmRenderer {
 
-  public AnimalPlainsFarmRenderer(BlockEntityRendererProvider.Context context) {
+  public IronGolemFarmRenderer(BlockEntityRendererProvider.Context context) {
     super(context);
   }
 

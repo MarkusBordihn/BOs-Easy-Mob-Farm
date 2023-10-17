@@ -45,6 +45,7 @@ public final class Constants {
 
   // Special Mob Farm
   public static final String CREATIVE_MOB_FARM = "creative_mob_farm";
+  public static final String IRON_GOLEM_FARM = "iron_golem_farm";
 
   // Copper Mob Farms
   public static final String COPPER_ANIMAL_PLAINS_FARM = "copper_animal_plains_farm";

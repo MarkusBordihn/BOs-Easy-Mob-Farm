@@ -34,9 +34,13 @@ import net.minecraft.world.entity.LivingEntity;
 public class MobFarmScreenHelper {
 
   public static void renderEntity(int x, int y, float yRot, float xRot, LivingEntity livingEntity) {
+    renderEntity(x, y, yRot, xRot, 19, livingEntity);
+  }
+
+  public static void renderEntity(int x, int y, float yRot, float xRot, int scale,
+      LivingEntity livingEntity) {
     float f = (float) Math.atan(yRot / 40.0F);
     float f1 = (float) Math.atan(xRot / 40.0F);
-    int scale = 19;
     PoseStack poseStack = RenderSystem.getModelViewStack();
     poseStack.pushPose();
     poseStack.translate(x, y, 1050.0D);
