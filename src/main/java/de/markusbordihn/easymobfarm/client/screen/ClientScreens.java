@@ -23,7 +23,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.client.gui.screens.MenuScreens;
-
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 import de.markusbordihn.easymobfarm.Constants;
@@ -31,6 +30,7 @@ import de.markusbordihn.easymobfarm.client.screen.farm.AnimalPlainsFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.BeeHiveFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.CreativeMobFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.DesertFarmScreen;
+import de.markusbordihn.easymobfarm.client.screen.farm.SpecialFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.JungleFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.MonsterPlainsCaveFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.NetherFortressFarmScreen;
@@ -69,6 +69,7 @@ import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteNetherFortressF
 import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteOceanFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteSwampFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.special.CreativeMobFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.special.IronGolemFarmMenu;
 
 public class ClientScreens {
 
@@ -80,9 +81,6 @@ public class ClientScreens {
     log.info("{} Client Screens ...", Constants.LOG_REGISTER_PREFIX);
 
     event.enqueueWork(() -> {
-
-      // Special Mob Farm UI screen
-      MenuScreens.register(CreativeMobFarmMenu.TYPE, CreativeMobFarmScreen::new);
 
       // Copper Mob Farm UI screen
       MenuScreens.register(CopperAnimalPlainsFarmMenu.TYPE,
@@ -141,6 +139,10 @@ public class ClientScreens {
           OceanFarmScreen<NetheriteOceanFarmMenu>::new);
       MenuScreens.register(NetheriteSwampFarmMenu.TYPE,
           SwampFarmScreen<NetheriteSwampFarmMenu>::new);
+
+      // Special Mob Farm UI screen
+      MenuScreens.register(CreativeMobFarmMenu.TYPE, CreativeMobFarmScreen::new);
+      MenuScreens.register(IronGolemFarmMenu.TYPE, SpecialFarmScreen<IronGolemFarmMenu>::new);
 
     });
   }

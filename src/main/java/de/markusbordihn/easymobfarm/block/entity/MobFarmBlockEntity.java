@@ -102,7 +102,6 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
       return;
     }
     ItemStack handItemStack = player.getItemInHand(hand);
-    log.info("Hand item {}.", handItemStack);
     if (handItemStack.isEmpty()) {
       player.setItemInHand(hand, itemStack);
     } else if (!player.getInventory().add(itemStack) && level != null) {
@@ -184,13 +183,18 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
     }
   }
 
+  protected List<ItemStack> processLootDrop(ItemStack capturedMob, ItemStack weaponItem,
+      Level level) {
+    return LootManager.getFilteredRandomLootDrop(capturedMob, weaponItem, level);
+  }
+
   @SuppressWarnings("java:S135")
   private void processResult(ItemStack capturedMob, ItemStack weaponItem, ItemStack experienceItem,
       MobFarmBlockEntity blockEntity) {
 
     // Get corresponding loot drops.
     List<ItemStack> lootDrops =
-        LootManager.getFilteredRandomLootDrop(capturedMob, weaponItem, blockEntity.getLevel());
+        this.processLootDrop(capturedMob, weaponItem, blockEntity.getLevel());
     List<ItemStack> unstoredLootDrops = new ArrayList<>();
 
     // Check if weapon should be damaged, if any.

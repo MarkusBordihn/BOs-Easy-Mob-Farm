@@ -49,6 +49,7 @@ import de.markusbordihn.easymobfarm.config.mobs.BeeAnimal;
 import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
 import de.markusbordihn.easymobfarm.config.mobs.HostileNetherMonster;
 import de.markusbordihn.easymobfarm.config.mobs.HostileWaterMonster;
+import de.markusbordihn.easymobfarm.config.mobs.NeutralMonster;
 import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
 import de.markusbordihn.easymobfarm.config.mobs.PassiveWaterAnimal;
 
@@ -194,6 +195,18 @@ public class RenderHelper {
         this.renderModels.getEndermanRenderer(), this.renderModels.getEnderman());
   }
 
+  public void renderIronGolem(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
+      double y, double z, int combinedLight) {
+    renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
+        this.renderModels.getIronGolemRenderer(), this.renderModels.getIronGolem());
+  }
+
+  public void renderMagmaCube(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
+      double y, double z, int combinedLight) {
+    renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
+        this.renderModels.getMagmaCubeRenderer(), this.renderModels.getMagmaCube());
+  }
+
   public void renderPanda(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
       double y, double z, int combinedLight) {
     renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
@@ -323,6 +336,9 @@ public class RenderHelper {
       case HostileMonster.ENDERMAN:
         renderEnderman(poseStack, buffer, 0.25F, 0D, 0D, 2D / 16D, combinedLight);
         break;
+      case HostileNetherMonster.MAGMA_CUBE:
+        renderMagmaCube(poseStack, buffer, 0.25F, 0D, 0D, 2D / 16D, combinedLight);
+        break;
       case HostileMonster.SKELETON:
         renderSkeleton(poseStack, buffer, 0.25F, 0D, 0D, 2D / 16D, combinedLight);
         break;
@@ -331,6 +347,19 @@ public class RenderHelper {
         break;
       case HostileMonster.ZOMBIE:
         renderZombie(poseStack, buffer, 0.25F, 0D, 0D, 2D / 16D, combinedLight);
+        break;
+      default:
+        return false;
+    }
+    return true;
+  }
+
+  public boolean renderSpecialEntity(PoseStack poseStack, MultiBufferSource buffer,
+      int combinedLight, String farmMobType) {
+    // Render Special Entity using their specific Renderer and predefined scaling and position.
+    switch (farmMobType) {
+      case NeutralMonster.IRON_GOLEM:
+        renderIronGolem(poseStack, buffer, 0.25F, 0D, 0D, 2D / 16D, combinedLight);
         break;
       default:
         return false;

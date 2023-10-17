@@ -59,6 +59,7 @@ import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteNetherFortressF
 import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteOceanFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteSwampFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.special.CreativeMobFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.special.IronGolemFarmMenu;
 
 public class ContainerMenu {
 
@@ -68,10 +69,6 @@ public class ContainerMenu {
 
   public static void registerContainerMenu(RegistryEvent.Register<MenuType<?>> event) {
     log.info("{} Container Menu ...", Constants.LOG_REGISTER_PREFIX);
-
-    // Special Mob Farm
-    event.getRegistry().registerAll(
-        new MenuType<>(CreativeMobFarmMenu::new).setRegistryName(Constants.CREATIVE_MOB_FARM));
 
     // Copper Mob Farm Container Menu
     event.getRegistry().registerAll(new MenuType<>(CopperAnimalPlainsFarmMenu::new)
@@ -144,6 +141,12 @@ public class ContainerMenu {
         .setRegistryName(Constants.NETHERITE_OCEAN_FARM));
     event.getRegistry().registerAll(new MenuType<>(NetheriteSwampFarmMenu::new)
         .setRegistryName(Constants.NETHERITE_SWAMP_FARM));
+
+    // Special Mob Farm
+    event.getRegistry().registerAll(
+        new MenuType<>(CreativeMobFarmMenu::new).setRegistryName(Constants.CREATIVE_MOB_FARM));
+    event.getRegistry().registerAll(
+        new MenuType<>(IronGolemFarmMenu::new).setRegistryName(Constants.IRON_GOLEM_FARM));
 
     event.getRegistry()
         .registerAll(new MenuType<>(MobFarmMenu::new).setRegistryName(Constants.MOB_FARM));

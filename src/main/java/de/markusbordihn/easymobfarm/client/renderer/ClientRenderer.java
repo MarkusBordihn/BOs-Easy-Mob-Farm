@@ -34,6 +34,7 @@ import de.markusbordihn.easymobfarm.client.renderer.farm.AnimalPlainsFarmRendere
 import de.markusbordihn.easymobfarm.client.renderer.farm.BeeHiveFarmRenderer;
 import de.markusbordihn.easymobfarm.client.renderer.farm.CreativeMobFarmRenderer;
 import de.markusbordihn.easymobfarm.client.renderer.farm.DesertFarmRenderer;
+import de.markusbordihn.easymobfarm.client.renderer.farm.IronGolemFarmRenderer;
 import de.markusbordihn.easymobfarm.client.renderer.farm.JungleFarmRenderer;
 import de.markusbordihn.easymobfarm.client.renderer.farm.MonsterPlainsCaveFarmRenderer;
 import de.markusbordihn.easymobfarm.client.renderer.farm.NetherFortressFarmRenderer;
@@ -121,10 +122,11 @@ public class ClientRenderer {
     event.registerBlockEntityRenderer(ModBlocks.NETHERITE_SWAMP_FARM_ENTITY.get(),
         SwampFarmRenderer::new);
 
-    // Mob Farm Renderer - Creative
+    // Special Mob Farm Renderer
     event.registerBlockEntityRenderer(ModBlocks.CREATIVE_MOB_FARM_ENTITY.get(),
         CreativeMobFarmRenderer::new);
-
+    event.registerBlockEntityRenderer(ModBlocks.IRON_GOLEM_FARM_ENTITY.get(),
+        IronGolemFarmRenderer::new);
   }
 
   public static void registerRenderLayers(final FMLClientSetupEvent event) {
@@ -213,8 +215,10 @@ public class ClientRenderer {
       ItemBlockRenderTypes.setRenderLayer(ModBlocks.NETHERITE_SWAMP_FARM.get(),
           RenderType.cutoutMipped());
 
-      // Mob Farm Blocks - Creative
+      // Special Mob Farm Blocks
       ItemBlockRenderTypes.setRenderLayer(ModBlocks.CREATIVE_MOB_FARM.get(),
+          RenderType.cutoutMipped());
+      ItemBlockRenderTypes.setRenderLayer(ModBlocks.IRON_GOLEM_FARM.get(),
           RenderType.cutoutMipped());
     });
   }

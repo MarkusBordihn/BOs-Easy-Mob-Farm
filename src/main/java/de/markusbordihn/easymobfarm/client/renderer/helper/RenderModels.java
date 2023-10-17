@@ -37,7 +37,9 @@ import net.minecraft.client.renderer.entity.EndermanRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.GlowSquidRenderer;
+import net.minecraft.client.renderer.entity.IronGolemRenderer;
 import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.renderer.entity.MagmaCubeRenderer;
 import net.minecraft.client.renderer.entity.PandaRenderer;
 import net.minecraft.client.renderer.entity.PigRenderer;
 import net.minecraft.client.renderer.entity.RabbitRenderer;
@@ -56,6 +58,7 @@ import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.Cod;
 import net.minecraft.world.entity.animal.Cow;
+import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.animal.Panda;
 import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.animal.Rabbit;
@@ -67,6 +70,7 @@ import net.minecraft.world.entity.monster.CaveSpider;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Drowned;
 import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.monster.MagmaCube;
 import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.monster.Spider;
 import net.minecraft.world.entity.monster.Zombie;
@@ -77,6 +81,7 @@ import net.minecraft.world.phys.AABB;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.config.mobs.BeeAnimal;
 import de.markusbordihn.easymobfarm.config.mobs.HostileNetherMonster;
+import de.markusbordihn.easymobfarm.config.mobs.NeutralMonster;
 import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
 
 public class RenderModels {
@@ -90,60 +95,47 @@ public class RenderModels {
   private float customEntityScale = 0F;
   private EntityRenderDispatcher entityRenderDispatcher = null;
 
+  // LivingEntity Models and Renderers
   private Bee bee = null;
   private BeeRenderer beeRenderer = null;
-
-  private CaveSpider caveSpider = null;
-  private CaveSpiderRenderer caveSpiderRenderer = null;
-
-  private Cod cod = null;
-  private CodRenderer codRenderer = null;
-
-  private Chicken chicken = null;
-  private ChickenRenderer chickenRenderer = null;
-
-  private Creeper creeper = null;
-  private CreeperRenderer creeperRenderer = null;
-
-  private Cow cow = null;
-  private CowRenderer cowRenderer = null;
-
   private Blaze blaze = null;
   private BlazeRenderer blazeRenderer = null;
-
+  private CaveSpider caveSpider = null;
+  private CaveSpiderRenderer caveSpiderRenderer = null;
+  private Chicken chicken = null;
+  private ChickenRenderer chickenRenderer = null;
+  private Cod cod = null;
+  private CodRenderer codRenderer = null;
+  private Cow cow = null;
+  private CowRenderer cowRenderer = null;
+  private Creeper creeper = null;
+  private CreeperRenderer creeperRenderer = null;
   private Drowned drowned = null;
   private DrownedRenderer drownedRenderer = null;
-
   private EnderMan enderman = null;
   private EndermanRenderer endermanRenderer = null;
-
-  private Sheep sheep = null;
-  private SheepRenderer sheepRenderer = null;
-
-  private Panda panda = null;
-  private PandaRenderer pandaRenderer = null;
-
-  private Pig pig = null;
-  private PigRenderer pigRenderer = null;
-
-  private Rabbit rabbit = null;
-  private RabbitRenderer rabbitRenderer = null;
-
-  private Salmon salmon = null;
-  private SalmonRenderer salmonRenderer = null;
-
-  private Skeleton skeleton = null;
-  private SkeletonRenderer skeletonRenderer = null;
-
-  private Spider spider = null;
-  private SpiderRenderer<?> spiderRenderer = null;
-
-  private Squid squid = null;
-  private SquidRenderer<?> squidRenderer = null;
-
   private GlowSquid glowSquid = null;
   private GlowSquidRenderer glowSquidRenderer = null;
-
+  private IronGolem ironGolem = null;
+  private IronGolemRenderer ironGolemRenderer = null;
+  private MagmaCube magmaCube = null;
+  private MagmaCubeRenderer magmaCubeRenderer = null;
+  private Panda panda = null;
+  private PandaRenderer pandaRenderer = null;
+  private Pig pig = null;
+  private PigRenderer pigRenderer = null;
+  private Rabbit rabbit = null;
+  private RabbitRenderer rabbitRenderer = null;
+  private Salmon salmon = null;
+  private SalmonRenderer salmonRenderer = null;
+  private Sheep sheep = null;
+  private SheepRenderer sheepRenderer = null;
+  private Skeleton skeleton = null;
+  private SkeletonRenderer skeletonRenderer = null;
+  private Spider spider = null;
+  private SpiderRenderer<?> spiderRenderer = null;
+  private Squid squid = null;
+  private SquidRenderer<?> squidRenderer = null;
   private Zombie zombie = null;
   private ZombieRenderer zombieRenderer = null;
 
@@ -214,6 +206,10 @@ public class RenderModels {
         return getBee();
       case HostileNetherMonster.BLAZE:
         return getBlaze();
+      case NeutralMonster.IRON_GOLEM:
+        return getIronGolem();
+      case HostileNetherMonster.MAGMA_CUBE:
+        return getMagmaCube();
       case PassiveAnimal.RABBIT:
         return getRabbit();
       case PassiveAnimal.PANDA:
@@ -347,6 +343,34 @@ public class RenderModels {
       this.endermanRenderer = new EndermanRenderer(getEntityRendererContext());
     }
     return this.endermanRenderer;
+  }
+
+  public IronGolem getIronGolem() {
+    if (this.ironGolem == null) {
+      this.ironGolem = new IronGolem(EntityType.IRON_GOLEM, getLevel());
+    }
+    return this.ironGolem;
+  }
+
+  public IronGolemRenderer getIronGolemRenderer() {
+    if (this.ironGolemRenderer == null) {
+      this.ironGolemRenderer = new IronGolemRenderer(getEntityRendererContext());
+    }
+    return this.ironGolemRenderer;
+  }
+
+  public MagmaCube getMagmaCube() {
+    if (this.magmaCube == null) {
+      this.magmaCube = new MagmaCube(EntityType.MAGMA_CUBE, getLevel());
+    }
+    return this.magmaCube;
+  }
+
+  public MagmaCubeRenderer getMagmaCubeRenderer() {
+    if (this.magmaCubeRenderer == null) {
+      this.magmaCubeRenderer = new MagmaCubeRenderer(getEntityRendererContext());
+    }
+    return this.magmaCubeRenderer;
   }
 
   public Salmon getSalmon() {

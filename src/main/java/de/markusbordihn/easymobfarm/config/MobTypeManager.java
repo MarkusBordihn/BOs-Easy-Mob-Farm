@@ -25,8 +25,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.farm.copper.CopperAnimalPlainsFarm;
 import de.markusbordihn.easymobfarm.block.farm.copper.CopperBeeHiveFarm;
@@ -60,6 +62,7 @@ import de.markusbordihn.easymobfarm.block.farm.netherite.NetheriteMonsterPlainsC
 import de.markusbordihn.easymobfarm.block.farm.netherite.NetheriteNetherFortressFarm;
 import de.markusbordihn.easymobfarm.block.farm.netherite.NetheriteOceanFarm;
 import de.markusbordihn.easymobfarm.block.farm.netherite.NetheriteSwampFarm;
+import de.markusbordihn.easymobfarm.block.farm.special.IronGolemFarm;
 import de.markusbordihn.easymobfarm.item.mobcatcher.CatchCage;
 import de.markusbordihn.easymobfarm.item.mobcatcher.CatchCageSmall;
 import de.markusbordihn.easymobfarm.item.mobcatcher.CollarSmall;
@@ -67,6 +70,8 @@ import de.markusbordihn.easymobfarm.item.mobcatcher.EnderLasso;
 import de.markusbordihn.easymobfarm.item.mobcatcher.FishingBowl;
 import de.markusbordihn.easymobfarm.item.mobcatcher.GoldenLasso;
 import de.markusbordihn.easymobfarm.item.mobcatcher.InsectNet;
+import de.markusbordihn.easymobfarm.item.mobcatcher.NetheriteLasso;
+import de.markusbordihn.easymobfarm.item.mobcatcher.PoppyBouquet;
 import de.markusbordihn.easymobfarm.item.mobcatcher.UrnSmall;
 import de.markusbordihn.easymobfarm.item.mobcatcher.WitchBottle;
 
@@ -128,6 +133,10 @@ public class MobTypeManager {
         COMMON.goldenLassoDeniedMobs.get());
     updateMobTypesForKey(InsectNet.NAME, COMMON.insectNetAllowedMobs.get(),
         COMMON.insectNetDeniedMobs.get());
+    updateMobTypesForKey(NetheriteLasso.NAME, COMMON.netheriteLassoAllowedMobs.get(),
+        COMMON.netheriteLassoDeniedMobs.get());
+    updateMobTypesForKey(PoppyBouquet.NAME, COMMON.poppyBouquetAllowedMobs.get(),
+        COMMON.poppyBouquetDeniedMobs.get());
     updateMobTypesForKey(UrnSmall.NAME, COMMON.urnSmallAllowedMobs.get(),
         COMMON.urnSmallDeniedMobs.get());
     updateMobTypesForKey(WitchBottle.NAME, COMMON.witchBottleAllowedMobs.get(),
@@ -214,6 +223,10 @@ public class MobTypeManager {
         COMMON.netheriteOceanFarmDeniedMobs.get());
     updateMobTypesForKey(NetheriteSwampFarm.NAME, COMMON.netheriteSwampFarmAllowedMobs.get(),
         COMMON.netheriteSwampFarmDeniedMobs.get());
+
+    // Special Mob Farm Types
+    updateMobTypesForKey(IronGolemFarm.NAME, COMMON.ironGolemFarmAllowedMobs.get(),
+        COMMON.ironGolemFarmDeniedMobs.get());
   }
 
   public static Set<String> getGeneralAllowedMobTypes() {

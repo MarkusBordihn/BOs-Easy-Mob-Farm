@@ -73,6 +73,7 @@ import de.markusbordihn.easymobfarm.item.mobcatcher.GoldenLasso;
 import de.markusbordihn.easymobfarm.item.mobcatcher.InsectNet;
 import de.markusbordihn.easymobfarm.item.mobcatcher.Net;
 import de.markusbordihn.easymobfarm.item.mobcatcher.NetheriteLasso;
+import de.markusbordihn.easymobfarm.item.mobcatcher.PoppyBouquet;
 import de.markusbordihn.easymobfarm.item.mobcatcher.UrnSmall;
 import de.markusbordihn.easymobfarm.item.mobcatcher.WitchBottle;
 import de.markusbordihn.easymobfarm.tabs.EasyMobFarmTab;
@@ -119,6 +120,9 @@ public class ModItems {
   public static final RegistryObject<Item> NETHERITE_LASSO =
       ITEMS.register("netherite_lasso", () -> new NetheriteLasso(
           new Item.Properties().stacksTo(1).durability(40).tab(EasyMobFarmTab.TOOLS)));
+  public static final RegistryObject<Item> POPPY_BOUQUET =
+      ITEMS.register("poppy_bouquet", () -> new PoppyBouquet(
+          new Item.Properties().stacksTo(1).durability(20).tab(EasyMobFarmTab.TOOLS)));
   public static final RegistryObject<Item> URN_SMALL =
       ITEMS.register("urn_small", () -> new UrnSmall(
           new Item.Properties().stacksTo(1).durability(15).tab(EasyMobFarmTab.TOOLS)));
@@ -255,8 +259,12 @@ public class ModItems {
       .register(NetheriteSwampFarm.NAME, () -> new BlockItem(ModBlocks.NETHERITE_SWAMP_FARM.get(),
           new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
 
-  // Mob Farms - Creative
+  // Special Mob Farms
   public static final RegistryObject<Item> CREATIVE_MOB_FARM =
       ITEMS.register(CreativeMobFarm.NAME, () -> new BlockItem(ModBlocks.CREATIVE_MOB_FARM.get(),
+          new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
+
+  public static final RegistryObject<Item> IRON_GOLEM_FARM =
+      ITEMS.register("iron_golem_farm", () -> new BlockItem(ModBlocks.IRON_GOLEM_FARM.get(),
           new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
 }

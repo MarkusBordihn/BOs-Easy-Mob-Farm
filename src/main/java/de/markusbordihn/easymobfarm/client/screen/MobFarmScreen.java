@@ -45,6 +45,8 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
 import de.markusbordihn.easymobfarm.client.renderer.helper.RenderModels;
 import de.markusbordihn.easymobfarm.config.MobTypeManager;
+import de.markusbordihn.easymobfarm.config.mobs.NeutralMonster;
+import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
 import de.markusbordihn.easymobfarm.data.RedstoneMode;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import de.markusbordihn.easymobfarm.menu.slots.CapturedMobSlot;
@@ -123,8 +125,22 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
         LivingEntity livingEntity = renderModels.getEntityTypeModel(mobFarmType);
         if (livingEntity != null) {
           this.renderSnapshot(poseStack, CUSTOM_SHADOW);
-          MobFarmScreenHelper.renderEntity(leftPos + 33, topPos + 65, leftPos + 33f - x,
-              topPos + 65f - y, livingEntity);
+
+          // Reposition entity for better view.
+          switch (mobFarmType) {
+            case PassiveAnimal.RABBIT:
+              MobFarmScreenHelper.renderEntity(leftPos + 33, topPos + 75, leftPos + 33f - x,
+                  topPos + 65f - y, 45, livingEntity);
+              break;
+            case NeutralMonster.IRON_GOLEM:
+              MobFarmScreenHelper.renderEntity(leftPos + 33, topPos + 75, leftPos + 33f - x,
+                  topPos + 65f - y, livingEntity);
+              break;
+            default:
+              MobFarmScreenHelper.renderEntity(leftPos + 33, topPos + 65, leftPos + 33f - x,
+                  topPos + 65f - y, livingEntity);
+          }
+
         } else {
           this.renderSnapshot(poseStack, CUSTOM);
         }

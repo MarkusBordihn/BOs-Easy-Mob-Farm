@@ -253,7 +253,7 @@ public class LootManager {
     List<ItemStack> filteredLootDrops = Lists.newArrayList();
 
     // Bee and Productive Bees drop support.
-    if (Boolean.TRUE.equals(COMMON.beeDropHoneycomb.get())
+    if (Boolean.TRUE.equals(COMMON.forceBeeDropHoneycomb.get())
         && (mobType.equals(BeeAnimal.BEE)
             || (Constants.PRODUCTIVE_BEES_LOADED && BeeAnimal.ProductiveBees.contains(mobType)))
         && random.nextInt(3) == 0) {
@@ -261,25 +261,25 @@ public class LootManager {
     }
 
     // Blaze rod drop support.
-    if (Boolean.TRUE.equals(COMMON.blazeDropBlazeRod.get())
+    if (Boolean.TRUE.equals(COMMON.forceBlazeDropBlazeRod.get())
         && mobType.equals(HostileNetherMonster.BLAZE)) {
       lootDrops.add(new ItemStack(Items.BLAZE_ROD));
     }
 
     // Chicken egg drop support.
-    if (Boolean.TRUE.equals(COMMON.chickenDropEggs.get())
+    if (Boolean.TRUE.equals(COMMON.forceChickenDropEggs.get())
         && mobType.equals(PassiveAnimal.CHICKEN)) {
       lootDrops.add(new ItemStack(Items.EGG));
     }
 
     // Ender pearl drop support.
-    if (Boolean.TRUE.equals(COMMON.endermanDropEnderPearl.get())
+    if (Boolean.TRUE.equals(COMMON.forceEndermanDropEnderPearl.get())
         && mobType.equals(HostileMonster.ENDERMAN)) {
       lootDrops.add(new ItemStack(Items.ENDER_PEARL));
     }
 
     // Wither nether start drop support.
-    if (Boolean.TRUE.equals(COMMON.witherDropNetherStar.get()) && mobType.equals(BossMonster.WITHER)
+    if (Boolean.TRUE.equals(COMMON.forceWitherDropNetherStar.get()) && mobType.equals(BossMonster.WITHER)
         && random.nextInt(9) == 0) {
       lootDrops.add(new ItemStack(Items.NETHER_STAR));
     }
@@ -288,10 +288,10 @@ public class LootManager {
     for (ItemStack lootDrop : lootDrops) {
       // Ignore empty stacks and filter loot drop, if specific drop is disabled.
       if (lootDrop.isEmpty()
-          || filter(COMMON.chickenDropRawChicken.get(), PassiveAnimal.CHICKEN, Items.CHICKEN,
+          || filter(COMMON.disableChickenDropRawChicken.get(), PassiveAnimal.CHICKEN, Items.CHICKEN,
               mobType, lootDrop)
-          || filter(COMMON.cowDropRawBeef.get(), PassiveAnimal.COW, Items.BEEF, mobType, lootDrop)
-          || filter(COMMON.sheepDropRawMutton.get(), PassiveAnimal.SHEEP, Items.MUTTON, mobType,
+          || filter(COMMON.disableCowDropRawBeef.get(), PassiveAnimal.COW, Items.BEEF, mobType, lootDrop)
+          || filter(COMMON.disableSheepDropRawMutton.get(), PassiveAnimal.SHEEP, Items.MUTTON, mobType,
               lootDrop)) {
         continue;
       }
@@ -299,7 +299,7 @@ public class LootManager {
     }
 
     // Add additional loot drops, if loot drops are empty.
-    if (Boolean.TRUE.equals(filteredLootDrops.isEmpty() && COMMON.slimeDropSlime.get())
+    if (Boolean.TRUE.equals(filteredLootDrops.isEmpty() && COMMON.forceSlimeDropSlime.get())
         && mobType.equals(HostileMonster.SLIME)) {
       filteredLootDrops.add(new ItemStack(Items.SLIME_BALL));
     }
@@ -338,9 +338,9 @@ public class LootManager {
     return null;
   }
 
-  private static boolean filter(boolean status, String blockedMobType, Item blockedLootDrop,
+  private static final boolean filter(boolean status, String blockedMobType, Item blockedLootDrop,
       String mobType, ItemStack lootDrop) {
-    // Filter only if loot drop is disabled = false.
+    // Filter only if loot drop is disabled (status = true).
     if (!status) {
       return false;
     }
