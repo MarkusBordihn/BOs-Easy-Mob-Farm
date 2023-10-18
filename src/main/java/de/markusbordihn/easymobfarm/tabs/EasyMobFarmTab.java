@@ -118,6 +118,7 @@ public class EasyMobFarmTab {
 
     // Mob Farms - Special
     outputTab.accept(ModItems.CREATIVE_MOB_FARM.get());
+    outputTab.accept(ModItems.IRON_GOLEM_FARM.get());
   }
 
   private static void addToolsTabItems(FeatureFlagSet featureFlagSet, Output outputTab,
@@ -134,6 +135,7 @@ public class EasyMobFarmTab {
     outputTab.accept(ModItems.GOLDEN_LASSO.get());
     outputTab.accept(ModItems.INSECT_NET.get());
     outputTab.accept(ModItems.NETHERITE_LASSO.get());
+    outputTab.accept(ModItems.POPPY_BOUQUET.get());
     outputTab.accept(ModItems.URN_SMALL.get());
     outputTab.accept(ModItems.WITCH_BOTTLE.get());
   }

@@ -1,0 +1,31 @@
+{
+  "parent": "easy_mob_farm:crafting/craft_iron_golem_farm",
+  "display": {
+    "icon": {
+      "item": "easy_mob_farm:poppy_bouquet"
+    },
+    "title": {
+      "translate": "advancements.easy_mob_farm.crafting.craft_poppy_bouquet.title"
+    },
+    "description": {
+      "translate": "advancements.easy_mob_farm.crafting.craft_poppy_bouquet.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "get_poppy_bouquet": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["easy_mob_farm:poppy_bouquet"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [["get_poppy_bouquet"]]
+}

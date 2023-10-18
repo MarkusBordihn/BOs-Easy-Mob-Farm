@@ -60,6 +60,7 @@ import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteNetherFortressF
 import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteOceanFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteSwampFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.special.CreativeMobFarmMenu;
+import de.markusbordihn.easymobfarm.menu.farm.special.IronGolemFarmMenu;
 
 public class ModMenuTypes {
 
@@ -69,11 +70,6 @@ public class ModMenuTypes {
 
   public static final DeferredRegister<MenuType<?>> MENU_TYPES =
       DeferredRegister.create(ForgeRegistries.MENU_TYPES, Constants.MOD_ID);
-
-  // Special Mob Farm
-  public static final RegistryObject<MenuType<CreativeMobFarmMenu>> CREATIVE_FARM_MENU =
-      MENU_TYPES.register(Constants.CREATIVE_MOB_FARM, () -> IForgeMenuType
-          .create((windowIdIn, inventory, data) -> new CreativeMobFarmMenu(windowIdIn, inventory)));
 
   // Copper Mob Farm Container Menu
   public static final RegistryObject<MenuType<CopperAnimalPlainsFarmMenu>> COPPER_ANIMAL_PLAINS_FARM_MENU =
@@ -185,6 +181,14 @@ public class ModMenuTypes {
   public static final RegistryObject<MenuType<NetheriteSwampFarmMenu>> NETHERITE_SWAMP_FARM_MENU =
       MENU_TYPES.register(Constants.NETHERITE_SWAMP_FARM, () -> IForgeMenuType.create(
           (windowIdIn, inventory, data) -> new NetheriteSwampFarmMenu(windowIdIn, inventory)));
+
+  // Special Mob Farm
+  public static final RegistryObject<MenuType<CreativeMobFarmMenu>> CREATIVE_FARM_MENU =
+      MENU_TYPES.register(Constants.CREATIVE_MOB_FARM, () -> IForgeMenuType
+          .create((windowIdIn, inventory, data) -> new CreativeMobFarmMenu(windowIdIn, inventory)));
+  public static final RegistryObject<MenuType<IronGolemFarmMenu>> IRON_GOLEM_FARM_MENU =
+      MENU_TYPES.register(Constants.IRON_GOLEM_FARM, () -> IForgeMenuType
+          .create((windowIdIn, inventory, data) -> new IronGolemFarmMenu(windowIdIn, inventory)));
 
   // Other
   public static final RegistryObject<MenuType<MobFarmMenu>> MOB_FARM_MENU =

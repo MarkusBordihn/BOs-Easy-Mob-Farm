@@ -47,6 +47,7 @@ import de.markusbordihn.easymobfarm.config.mobs.BossMonster;
 import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
 import de.markusbordihn.easymobfarm.config.mobs.HostileWaterMonster;
 import de.markusbordihn.easymobfarm.config.mobs.NeutralAnimal;
+import de.markusbordihn.easymobfarm.config.mobs.NeutralMonster;
 import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
 import de.markusbordihn.easymobfarm.config.mobs.PassiveWaterAnimal;
 import de.markusbordihn.easymobfarm.config.structure.NetherFortress;
@@ -92,6 +93,7 @@ public class CommonConfig {
       "Supported Mobs for the swamp farm. (Use empty list to allow all mobs.)";
   private static final String DENIED_MOBS_SWAMP_FARM = "Denied Mobs for the swamp farm.";
 
+
   protected CommonConfig() {}
 
   static {
@@ -128,6 +130,12 @@ public class CommonConfig {
     // Creative Mob Farm
     public final ForgeConfigSpec.IntValue creativeMobFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> creativeMobFarmDropSound;
+
+    // Iron Golem Mob Farm
+    public final ForgeConfigSpec.IntValue ironGolemFarmProcessTime;
+    public final ForgeConfigSpec.ConfigValue<String> ironGolemFarmDropSound;
+    public final ForgeConfigSpec.ConfigValue<List<String>> ironGolemFarmAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> ironGolemFarmDeniedMobs;
 
     // Copper Mob Farm
     public final ForgeConfigSpec.IntValue copperAnimalPlainsFarmProcessTime;
@@ -330,6 +338,10 @@ public class CommonConfig {
     public final ForgeConfigSpec.ConfigValue<List<String>> netheriteLassoAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> netheriteLassoDeniedMobs;
 
+    public final ForgeConfigSpec.IntValue poppyBouquetMobCatchingLuck;
+    public final ForgeConfigSpec.ConfigValue<List<String>> poppyBouquetAllowedMobs;
+    public final ForgeConfigSpec.ConfigValue<List<String>> poppyBouquetDeniedMobs;
+
     public final ForgeConfigSpec.IntValue urnSmallMobCatchingLuck;
     public final ForgeConfigSpec.ConfigValue<List<String>> urnSmallAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> urnSmallDeniedMobs;
@@ -339,15 +351,23 @@ public class CommonConfig {
     public final ForgeConfigSpec.ConfigValue<List<String>> witchBottleDeniedMobs;
 
     // Drop Settings
-    public final ForgeConfigSpec.BooleanValue beeDropHoneycomb;
-    public final ForgeConfigSpec.BooleanValue blazeDropBlazeRod;
-    public final ForgeConfigSpec.BooleanValue chickenDropEggs;
-    public final ForgeConfigSpec.BooleanValue chickenDropRawChicken;
-    public final ForgeConfigSpec.BooleanValue cowDropRawBeef;
-    public final ForgeConfigSpec.BooleanValue endermanDropEnderPearl;
-    public final ForgeConfigSpec.BooleanValue sheepDropRawMutton;
-    public final ForgeConfigSpec.BooleanValue slimeDropSlime;
-    public final ForgeConfigSpec.BooleanValue witherDropNetherStar;
+
+    public final ForgeConfigSpec.BooleanValue forceBeeDropHoneycomb;
+
+    public final ForgeConfigSpec.BooleanValue forceBlazeDropBlazeRod;
+
+    public final ForgeConfigSpec.BooleanValue forceChickenDropEggs;
+    public final ForgeConfigSpec.BooleanValue disableChickenDropRawChicken;
+
+    public final ForgeConfigSpec.BooleanValue disableCowDropRawBeef;
+
+    public final ForgeConfigSpec.BooleanValue forceEndermanDropEnderPearl;
+
+    public final ForgeConfigSpec.BooleanValue disableSheepDropRawMutton;
+
+    public final ForgeConfigSpec.BooleanValue forceSlimeDropSlime;
+
+    public final ForgeConfigSpec.BooleanValue forceWitherDropNetherStar;
 
     Config(ForgeConfigSpec.Builder builder) {
       builder.comment(Constants.MOD_NAME);
@@ -376,7 +396,7 @@ public class CommonConfig {
           .define("generalDeniedMobs", new ArrayList<String>(BossMonster.All));
       builder.pop();
 
-      // Copper Mob Farms
+      // == Copper Mob Farms
       builder.push("Copper Mob Farms");
       builder.comment("Configuration for the copper mob farms.");
 
@@ -472,7 +492,7 @@ public class CommonConfig {
 
       builder.pop();
 
-      // Iron Mob Farms
+      // == Iron Mob Farms
       builder.push("Iron Mob Farms");
       builder.comment("Configuration for the iron mob farms.");
 
@@ -566,7 +586,7 @@ public class CommonConfig {
 
       builder.pop();
 
-      // Gold Mob Farms
+      // == Gold Mob Farms
       builder.push("Gold Mob Farms");
       builder.comment("Configuration for the gold mob farms.");
 
@@ -660,7 +680,7 @@ public class CommonConfig {
 
       builder.pop();
 
-      // Netherite Mob Farms
+      // == Netherite Mob Farms
       builder.push("Netherite Mob Farms");
       builder.comment("Configuration for the netherite mob farms.");
 
@@ -754,6 +774,10 @@ public class CommonConfig {
 
       builder.pop();
 
+      // == Special Mob Farms
+      builder.push("Special Mob Farms");
+      builder.comment("Configuration for special mob farms.");
+
       // Creative Mob Farm
       builder.push("Creative Mob Farm");
       creativeMobFarmProcessTime = builder.comment(PROCESS_TIME_TEXT)
@@ -762,8 +786,23 @@ public class CommonConfig {
           "minecraft:entity.chicken.egg");
       builder.pop();
 
-      // Mob Catching Item
+      // Iron Golem Farm
+      builder.push("Iron Golem Farm");
+      ironGolemFarmProcessTime = builder.comment(PROCESS_TIME_TEXT)
+          .defineInRange("ironGolemFarmProcessTime", 100, 10, 3600);
+      ironGolemFarmDropSound = builder.comment(DROP_SOUND_TEXT).define("ironGolemFarmDropSound",
+          "minecraft:block.anvil.fall");
+      ironGolemFarmAllowedMobs = builder
+          .comment("Supported Mobs for the iron golem farm. (Use empty list to allow all mobs.)")
+          .define("ironGolemFarmMobs",
+              new ArrayList<String>(Arrays.asList(NeutralMonster.IRON_GOLEM)));
+      ironGolemFarmDeniedMobs = builder.comment("Denied Mobs for the iron golem farm.")
+          .define("ironGolemFarmDeniedMobs", new ArrayList<String>());
+      builder.pop();
 
+      builder.pop();
+
+      // == Mob Catching Item
       builder.push("Mob Catching Item");
       builder.comment("Configuration for the mob catching item.");
 
@@ -870,6 +909,16 @@ public class CommonConfig {
           .define("netheriteLassoDeniedMobs", new ArrayList<String>());
       builder.pop();
 
+      builder.push("Poppy Bouquet");
+      poppyBouquetMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
+          .defineInRange("poppyBouquetMobCatchingLuck", 3, 0, 100);
+      poppyBouquetAllowedMobs =
+          builder.comment(getCatchableMobsText("poppy bouquet")).define("poppyBouquetAllowedMobs",
+              new ArrayList<String>(Arrays.asList(NeutralMonster.IRON_GOLEM)));
+      poppyBouquetDeniedMobs = builder.comment(getDeniedMobsText("poppy bouquet"))
+          .define("poppyBouquetDeniedMobs", new ArrayList<String>());
+      builder.pop();
+
       builder.push("Urn small");
       urnSmallMobCatchingLuck = builder.comment(MOB_CATCHING_LUCK_TEXT)
           .defineInRange("urnSmallMobCatchingLuck", 3, 0, 100);
@@ -899,45 +948,47 @@ public class CommonConfig {
       builder.comment("Configuration for drops like forced and disabled drops.");
 
       builder.push("Bee Drop Settings");
-      beeDropHoneycomb = builder.comment("Enable/Disable forced honeycomb drops.")
-          .define("beeDropHoneycomb", true);
+      forceBeeDropHoneycomb = builder.comment("Enable/Disable forced honeycomb drops.")
+          .define("forceBeeDropHoneycomb", true);
       builder.pop();
 
       builder.push("Blaze Drop Settings");
-      blazeDropBlazeRod = builder.comment("Enable/Disable forced blaze rod drops.")
-          .define("blazeDropBlazeRod", false);
+      forceBlazeDropBlazeRod = builder.comment("Enable/Disable forced blaze rod drops.")
+          .define("forceBlazeDropBlazeRod", false);
       builder.pop();
 
       builder.push("Chicken Drop Settings");
-      chickenDropEggs = builder.comment("Enable/Disable forced chicken egg drops.")
-          .define("chickenDropEggs", true);
-      chickenDropRawChicken =
-          builder.comment("Disable raw chicken drops.").define("chickenDropRawChicken", false);
+      disableChickenDropRawChicken = builder.comment("Disable raw chicken drops.")
+          .define("disableChickenDropRawChicken", false);
+      forceChickenDropEggs = builder.comment("Enable/Disable forced chicken egg drops.")
+          .define("forceChickenDropEggs", true);
       builder.pop();
 
       builder.push("Cow Drop Settings");
-      cowDropRawBeef =
-          builder.comment("Disable cow raw beef drops.").define("cowDropRawBeef", false);
+      disableCowDropRawBeef =
+          builder.comment("Disable cow raw beef drops.").define("disableCowDropRawBeef", false);
       builder.pop();
 
       builder.push("Enderman Drop Settings");
-      endermanDropEnderPearl = builder.comment("Enable/Disable forced enderman ender pearl drops.")
-          .define("endermanDropEnderPearl", false);
+      forceEndermanDropEnderPearl =
+          builder.comment("Enable/Disable forced enderman ender pearl drops.")
+              .define("forceEndermanDropEnderPearl", false);
       builder.pop();
 
       builder.push("Sheep Drop Settings");
-      sheepDropRawMutton =
-          builder.comment("Disable sheep raw mutton drops.").define("sheepDropRawMutton", false);
+      disableSheepDropRawMutton = builder.comment("Disable sheep raw mutton drops.")
+          .define("disableSheepDropRawMutton", false);
       builder.pop();
 
       builder.push("Slime Drop Settings");
-      slimeDropSlime = builder.comment("Enable/Disable forced slime drops regardless of size.")
-          .define("slimeDropSlime", true);
+      forceSlimeDropSlime = builder.comment("Enable/Disable forced slime drops regardless of size.")
+          .define("forceSlimeDropSlime", true);
       builder.pop();
 
       builder.push("Wither Drop Settings");
-      witherDropNetherStar = builder.comment("Enable/Disable forced nether star drops from wither.")
-          .define("witherDropNetherStar", false);
+      forceWitherDropNetherStar =
+          builder.comment("Enable/Disable forced nether star drops from wither.")
+              .define("forceWitherDropNetherStar", false);
       builder.pop();
 
       builder.pop();
