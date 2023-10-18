@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "easy_mob_farm:item/poppy_bouquet"
+  }
+}
