@@ -5,6 +5,12 @@
 This change log includes the summarized changes.
 For the full changelog, please go to the [Git Hub History][history] instead.
 
+### 2023.10.18
+
+- Added Iron Golem farm and mob catching item.
+- Improved render performance by adding additional simplified entity models.
+- Improved config file options.
+
 ### 2023.10.16
 
 - Added support for multiple drops for looting enchantment.

@@ -1,0 +1,31 @@
+{
+  "parent": "easy_mob_farm:crafting/craft_iron_mob_farm_template",
+  "display": {
+    "icon": {
+      "item": "easy_mob_farm:iron_golem_farm"
+    },
+    "title": {
+      "translate": "advancements.easy_mob_farm.crafting.craft_iron_golem_farm.title"
+    },
+    "description": {
+      "translate": "advancements.easy_mob_farm.crafting.craft_iron_golem_farm.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "get_iron_golem_farm": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["easy_mob_farm:iron_golem_farm"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [["get_iron_golem_farm"]]
+}

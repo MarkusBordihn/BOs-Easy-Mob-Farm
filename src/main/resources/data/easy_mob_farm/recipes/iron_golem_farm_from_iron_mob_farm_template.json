@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["PGP", "G#G", "P-I"],
+  "key": {
+    "#": {
+      "item": "easy_mob_farm:iron_mob_farm_template"
+    },
+    "G": {
+      "item": "minecraft:grass"
+    },
+    "P": {
+      "item": "minecraft:poppy"
+    },
+    "-": {
+      "item": "minecraft:dirt"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "result": {
+    "item": "easy_mob_farm:iron_golem_farm"
+  }
+}

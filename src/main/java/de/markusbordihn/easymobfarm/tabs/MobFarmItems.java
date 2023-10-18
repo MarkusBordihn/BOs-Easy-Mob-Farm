@@ -72,5 +72,6 @@ public class MobFarmItems implements DisplayItemsGenerator {
 
     // Mob Farms - Special
     output.accept(ModItems.CREATIVE_MOB_FARM.get());
+    output.accept(ModItems.IRON_GOLEM_FARM.get());
   }
 }

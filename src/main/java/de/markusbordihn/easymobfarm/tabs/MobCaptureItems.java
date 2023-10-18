@@ -42,6 +42,7 @@ public class MobCaptureItems implements DisplayItemsGenerator {
     output.accept(ModItems.GOLDEN_LASSO.get());
     output.accept(ModItems.INSECT_NET.get());
     output.accept(ModItems.NETHERITE_LASSO.get());
+    output.accept(ModItems.POPPY_BOUQUET.get());
     output.accept(ModItems.URN_SMALL.get());
     output.accept(ModItems.WITCH_BOTTLE.get());
   }
