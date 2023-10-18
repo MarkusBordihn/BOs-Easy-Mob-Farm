@@ -29,8 +29,9 @@ import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.client.renderer.helper.RenderHelper;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
-public class UniversalFarmRenderer extends MobFarmRendererBase<MobFarmBlockEntity> {
-  public UniversalFarmRenderer(BlockEntityRendererProvider.Context context) {
+public class SpecialFarmRenderer extends MobFarmRendererBase<MobFarmBlockEntity> {
+
+  public SpecialFarmRenderer(BlockEntityRendererProvider.Context context) {
     super(context);
   }
 
@@ -51,23 +52,18 @@ public class UniversalFarmRenderer extends MobFarmRendererBase<MobFarmBlockEntit
     // Get Render Helper for better performance and more FPS for other things.
     RenderHelper renderHelper = getRenderHelper(farmId, blockEntity);
     String farmMobType = blockEntity.getFarmMobType();
-    String farmMobSubType = blockEntity.getFarmMobSubType();
-    EntityType<?> farmMobEntityType = blockEntity.getFarmMobEntityType();
 
     // Render individual mob types if possible, because custom entity renderer is not optimized.
     // This makes a huge different with up to 20% more fps with a larger farm.
-    if (renderHelper.renderAnimal(poseStack, buffer, combinedLight, farmMobType)
-        || renderHelper.renderBee(poseStack, buffer, combinedLight, farmMobType, farmMobSubType,
-            farmMobEntityType)
-        || renderHelper.renderMonster(poseStack, buffer, combinedLight, farmMobType)
-        || renderHelper.renderSpecialEntity(poseStack, buffer, combinedLight, farmMobType)
-        || renderHelper.renderWaterEntity(poseStack, buffer, combinedLight, farmMobType)) {
+    if (renderHelper.renderSpecialEntity(poseStack, buffer, combinedLight, farmMobType)) {
       return;
     }
 
     // Only render custom model if we are not able to render the model otherwise.
-    if (farmMobEntityType != null) {
-      renderHelper.renderLivingEntity(poseStack, buffer, combinedLight, farmMobEntityType);
+    if (blockEntity.getFarmMobEntityType() != null) {
+      EntityType<?> entityType = blockEntity.getFarmMobEntityType();
+      renderHelper.renderLivingEntity(poseStack, buffer, combinedLight, entityType);
     }
   }
+
 }

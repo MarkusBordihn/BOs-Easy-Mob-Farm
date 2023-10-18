@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["PPP", " # ", " S "],
+  "key": {
+    "#": {
+      "item": "minecraft:iron_ingot"
+    },
+    "S": {
+      "item": "minecraft:string"
+    },
+    "P": {
+      "item": "minecraft:poppy"
+    }
+  },
+  "result": {
+    "item": "easy_mob_farm:poppy_bouquet"
+  }
+}
