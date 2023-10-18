@@ -1,0 +1,25 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": ["easy_mob_farm:poppy_bouquet_from_poppy"]
+  },
+  "criteria": {
+    "has_poppy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:poppy"]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "easy_mob_farm:poppy_bouquet_from_poppy"
+      }
+    }
+  },
+  "requirements": [["has_poppy", "has_the_recipe"]]
+}

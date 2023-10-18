@@ -63,6 +63,7 @@ import de.markusbordihn.easymobfarm.block.entity.farm.netherite.NetheriteNetherF
 import de.markusbordihn.easymobfarm.block.entity.farm.netherite.NetheriteOceanFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.netherite.NetheriteSwampFarmEntity;
 import de.markusbordihn.easymobfarm.block.entity.farm.special.CreativeMobFarmEntity;
+import de.markusbordihn.easymobfarm.block.entity.farm.special.IronGolemFarmEntity;
 import de.markusbordihn.easymobfarm.block.farm.copper.CopperAnimalPlainsFarm;
 import de.markusbordihn.easymobfarm.block.farm.copper.CopperBeeHiveFarm;
 import de.markusbordihn.easymobfarm.block.farm.copper.CopperDesertFarm;
@@ -82,8 +83,8 @@ import de.markusbordihn.easymobfarm.block.farm.gold.GoldSwampFarm;
 import de.markusbordihn.easymobfarm.block.farm.iron.IronAnimalPlainsFarm;
 import de.markusbordihn.easymobfarm.block.farm.iron.IronBeeHiveFarm;
 import de.markusbordihn.easymobfarm.block.farm.iron.IronDesertFarm;
-import de.markusbordihn.easymobfarm.block.farm.iron.IronMonsterPlainsCaveFarm;
 import de.markusbordihn.easymobfarm.block.farm.iron.IronJungleFarm;
+import de.markusbordihn.easymobfarm.block.farm.iron.IronMonsterPlainsCaveFarm;
 import de.markusbordihn.easymobfarm.block.farm.iron.IronNetherFortressFarm;
 import de.markusbordihn.easymobfarm.block.farm.iron.IronOceanFarm;
 import de.markusbordihn.easymobfarm.block.farm.iron.IronSwampFarm;
@@ -96,6 +97,7 @@ import de.markusbordihn.easymobfarm.block.farm.netherite.NetheriteNetherFortress
 import de.markusbordihn.easymobfarm.block.farm.netherite.NetheriteOceanFarm;
 import de.markusbordihn.easymobfarm.block.farm.netherite.NetheriteSwampFarm;
 import de.markusbordihn.easymobfarm.block.farm.special.CreativeMobFarm;
+import de.markusbordihn.easymobfarm.block.farm.special.IronGolemFarm;
 
 public class ModBlocks {
 
@@ -315,13 +317,19 @@ public class ModBlocks {
               .requiresCorrectToolForDrops().strength(2.0F, 2.0F)
               .lightLevel(NetheriteSwampFarm::getLightLevel).noOcclusion()));
 
-  // Creative Farms
+  // Special Mob Farms
   public static final RegistryObject<Block> CREATIVE_MOB_FARM =
       BLOCKS
           .register(CreativeMobFarm.NAME,
               () -> new CreativeMobFarm(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
                   .requiresCorrectToolForDrops().strength(2.0F, 2.0F)
                   .lightLevel(CreativeMobFarm::getLightLevel).noOcclusion()));
+  public static final RegistryObject<Block> IRON_GOLEM_FARM =
+      BLOCKS
+          .register(IronGolemFarm.NAME,
+              () -> new IronGolemFarm(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
+                  .requiresCorrectToolForDrops().strength(2.0F, 2.0F)
+                  .lightLevel(IronGolemFarm::getLightLevel).noOcclusion()));
 
   // Mob Farms Block Entity - Copper
   public static final RegistryObject<BlockEntityType<CopperAnimalPlainsFarmEntity>> COPPER_ANIMAL_PLAINS_FARM_ENTITY =
@@ -439,8 +447,12 @@ public class ModBlocks {
       BLOCK_ENTITY_TYPES.register(NetheriteSwampFarm.NAME, () -> BlockEntityType.Builder
           .of(NetheriteSwampFarmEntity::new, NETHERITE_SWAMP_FARM.get()).build(null));
 
-  // Mob Farm Block Entity - Creative
+  // Special Mob Farms Entity
   public static final RegistryObject<BlockEntityType<CreativeMobFarmEntity>> CREATIVE_MOB_FARM_ENTITY =
       BLOCK_ENTITY_TYPES.register(CreativeMobFarm.NAME, () -> BlockEntityType.Builder
           .of(CreativeMobFarmEntity::new, CREATIVE_MOB_FARM.get()).build(null));
+  public static final RegistryObject<BlockEntityType<IronGolemFarmEntity>> IRON_GOLEM_FARM_ENTITY =
+      BLOCK_ENTITY_TYPES.register(IronGolemFarm.NAME, () -> BlockEntityType.Builder
+          .of(IronGolemFarmEntity::new, IRON_GOLEM_FARM.get()).build(null));
+
 }

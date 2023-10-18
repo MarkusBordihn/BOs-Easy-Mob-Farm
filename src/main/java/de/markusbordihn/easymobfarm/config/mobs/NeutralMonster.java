@@ -17,16 +17,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.client.renderer.farm;
+package de.markusbordihn.easymobfarm.config.mobs;
 
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+public final class NeutralMonster {
 
-import de.markusbordihn.easymobfarm.client.renderer.AnimalFarmRenderer;
+  protected NeutralMonster() {}
 
-public class AnimalPlainsFarmRenderer extends AnimalFarmRenderer {
-
-  public AnimalPlainsFarmRenderer(BlockEntityRendererProvider.Context context) {
-    super(context);
-  }
-
+  public static final String IRON_GOLEM = "minecraft:iron_golem";
 }

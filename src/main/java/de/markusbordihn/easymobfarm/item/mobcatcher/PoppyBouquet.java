@@ -17,16 +17,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.client.renderer.farm;
+package de.markusbordihn.easymobfarm.item.mobcatcher;
 
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.world.item.Item;
 
-import de.markusbordihn.easymobfarm.client.renderer.AnimalFarmRenderer;
+import de.markusbordihn.easymobfarm.item.MobCatcherItem;
 
-public class AnimalPlainsFarmRenderer extends AnimalFarmRenderer {
+public class PoppyBouquet extends MobCatcherItem {
 
-  public AnimalPlainsFarmRenderer(BlockEntityRendererProvider.Context context) {
-    super(context);
+  public static final String NAME = "Poppy Bouquet";
+
+  public PoppyBouquet(Item.Properties properties) {
+    super(properties);
+  }
+
+  @Override
+  public int getMobCatchingLuckConfig() {
+    return COMMON.poppyBouquetMobCatchingLuck.get();
+  }
+
+  @Override
+  public String getMobCatcherItemName() {
+    return NAME;
   }
 
 }
