@@ -81,7 +81,9 @@ public class IronGolemFarmEntity extends MobFarmBlockEntity {
   protected List<ItemStack> processLootDrop(ItemStack capturedMob, ItemStack weaponItem,
       Level level) {
     List<ItemStack> lootDrops = super.processLootDrop(capturedMob, weaponItem, level);
-    lootDrops.removeIf(itemStack -> itemStack.getItem().equals(Items.POPPY));
+    if (Boolean.TRUE.equals(COMMON.ironGolemFarmFilterPoppy.get())) {
+      lootDrops.removeIf(itemStack -> itemStack.getItem().equals(Items.POPPY));
+    }
     return lootDrops;
   }
 

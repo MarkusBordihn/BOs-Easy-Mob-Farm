@@ -1,7 +1,9 @@
 {
   "parent": "minecraft:recipes/root",
   "rewards": {
-    "recipes": ["easy_mob_farm:iron_golem_farm_from_iron_mob_farm_template"]
+    "recipes": [
+      "easy_mob_farm:iron_nether_fortress_farm_from_iron_mob_farm_template"
+    ]
   },
   "criteria": {
     "has_iron_mob_farm_template": {
@@ -14,12 +16,12 @@
         ]
       }
     },
-    "has_poppy": {
+    "has_nether_bricks": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "items": ["minecraft:poppy"]
+            "items": ["minecraft:nether_bricks"]
           }
         ]
       }
@@ -27,11 +29,11 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "easy_mob_farm:iron_golem_farm_from_iron_mob_farm_template"
+        "recipe": "easy_mob_farm:iron_nether_fortress_farm_from_iron_mob_farm_template"
       }
     }
   },
   "requirements": [
-    ["has_iron_mob_farm_template", "has_poppy", "has_the_recipe"]
+    ["has_iron_mob_farm_template", "has_nether_bricks", "has_the_recipe"]
   ]
 }
