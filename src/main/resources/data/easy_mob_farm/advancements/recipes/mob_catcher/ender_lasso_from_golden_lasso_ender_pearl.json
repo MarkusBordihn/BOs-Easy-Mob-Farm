@@ -1,15 +1,15 @@
 {
   "parent": "minecraft:recipes/root",
   "rewards": {
-    "recipes": ["easy_mob_farm:jungle_farm_from_iron_mob_farm_template"]
+    "recipes": ["easy_mob_farm:ender_lasso_from_golden_lasso_ender_pearl"]
   },
   "criteria": {
-    "has_jungle_log": {
+    "has_golden_lasso": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "items": ["minecraft:jungle_log"]
+            "items": ["easy_mob_farm:golden_lasso"]
           }
         ]
       }
@@ -17,9 +17,9 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "easy_mob_farm:jungle_farm_from_iron_mob_farm_template"
+        "recipe": "easy_mob_farm:ender_lasso_from_golden_lasso_ender_pearl"
       }
     }
   },
-  "requirements": [["has_jungle_log", "has_the_recipe"]]
+  "requirements": [["has_golden_lasso", "has_the_recipe"]]
 }
