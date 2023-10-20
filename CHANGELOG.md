@@ -5,6 +5,14 @@
 This change log includes the summarized changes.
 For the full changelog, please go to the [Git Hub History][history] instead.
 
+### 2023.10.20
+
+- Fixed Allow dynamic filter options for Iron Golem Farm. #38
+- Fixed Fishing Net (Small) catches all mobs #39
+- Fixed Curseforge Client Changelog link is invalid  #40
+- Fixed Advancements and Recipes don't work as expected #41
+- Fixed Change naming convention for config variables #42
+
 ### 2023.10.18
 
 - Added Iron Golem farm and mob catching item.
