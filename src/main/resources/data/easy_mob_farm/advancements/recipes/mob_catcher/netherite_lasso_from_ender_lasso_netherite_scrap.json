@@ -1,15 +1,15 @@
 {
   "parent": "minecraft:recipes/root",
   "rewards": {
-    "recipes": ["easy_mob_farm:bee_hive_farm_from_iron_mob_farm_template"]
+    "recipes": ["easy_mob_farm:netherite_lasso_from_ender_lasso_netherite_scrap"]
   },
   "criteria": {
-    "has_beehive": {
+    "has_ender_lasso": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "items": ["minecraft:beehive"]
+            "items": ["easy_mob_farm:ender_lasso"]
           }
         ]
       }
@@ -17,9 +17,9 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "easy_mob_farm:bee_hive_farm_from_iron_mob_farm_template"
+        "recipe": "easy_mob_farm:netherite_lasso_from_ender_lasso_netherite_scrap"
       }
     }
   },
-  "requirements": [["has_beehive", "has_the_recipe"]]
+  "requirements": [["has_ender_lasso", "has_the_recipe"]]
 }

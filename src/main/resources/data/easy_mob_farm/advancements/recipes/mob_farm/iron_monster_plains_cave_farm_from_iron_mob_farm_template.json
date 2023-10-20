@@ -1,25 +1,27 @@
 {
   "parent": "minecraft:recipes/root",
   "rewards": {
-    "recipes": ["easy_mob_farm:ocean_farm_from_iron_mob_farm_template"]
+    "recipes": [
+      "easy_mob_farm:iron_monster_plains_cave_farm_from_iron_mob_farm_template"
+    ]
   },
   "criteria": {
-    "has_water_bucket": {
+    "has_iron_mob_farm_template": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "items": ["minecraft:water_bucket"]
+            "items": ["easy_mob_farm:iron_mob_farm_template"]
           }
         ]
       }
     },
-    "has_sea_lantern": {
+    "has_glow_lichen": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "items": ["minecraft:sea_lantern"]
+            "items": ["minecraft:glow_lichen"]
           }
         ]
       }
@@ -27,9 +29,11 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "easy_mob_farm:ocean_farm_from_iron_mob_farm_template"
+        "recipe": "easy_mob_farm:iron_monster_plains_cave_farm_from_iron_mob_farm_template"
       }
     }
   },
-  "requirements": [["has_water_bucket", "has_sea_lantern", "has_the_recipe"]]
+  "requirements": [
+    ["has_iron_mob_farm_template", "has_glow_lichen", "has_the_recipe"]
+  ]
 }
