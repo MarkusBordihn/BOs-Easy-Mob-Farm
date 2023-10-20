@@ -1,17 +1,15 @@
 {
   "parent": "minecraft:recipes/root",
   "rewards": {
-    "recipes": [
-      "easy_mob_farm:nether_fortress_farm_from_iron_mob_farm_template"
-    ]
+    "recipes": ["easy_mob_farm:golden_lasso_from_gold_lead"]
   },
   "criteria": {
-    "has_nether_bricks": {
+    "has_lead": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "items": ["minecraft:nether_bricks"]
+            "items": ["minecraft:lead"]
           }
         ]
       }
@@ -19,9 +17,9 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "easy_mob_farm:nether_fortress_farm_from_iron_mob_farm_template"
+        "recipe": "easy_mob_farm:golden_lasso_from_gold_lead"
       }
     }
   },
-  "requirements": [["has_nether_bricks", "has_the_recipe"]]
+  "requirements": [["has_lead", "has_the_recipe"]]
 }

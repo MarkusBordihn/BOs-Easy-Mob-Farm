@@ -59,6 +59,7 @@ import de.markusbordihn.easymobfarm.config.mobs.BeeAnimal;
 import de.markusbordihn.easymobfarm.config.mobs.BossMonster;
 import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
 import de.markusbordihn.easymobfarm.config.mobs.HostileNetherMonster;
+import de.markusbordihn.easymobfarm.config.mobs.NeutralMonster;
 import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
 import de.markusbordihn.easymobfarm.item.CapturedMob;
 import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
@@ -289,6 +290,8 @@ public class LootManager {
           || filter(COMMON.disableCowDropRawBeef.get(), PassiveAnimal.COW, Items.BEEF, mobType,
               lootDrop)
           || filter(COMMON.disableSheepDropRawMutton.get(), PassiveAnimal.SHEEP, Items.MUTTON,
+              mobType, lootDrop)
+          || filter(COMMON.disableIronGolemDropPoppy.get(), NeutralMonster.IRON_GOLEM, Items.POPPY,
               mobType, lootDrop)) {
         continue;
       }
