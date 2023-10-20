@@ -68,6 +68,7 @@ import de.markusbordihn.easymobfarm.item.mobcatcher.CatchCageSmall;
 import de.markusbordihn.easymobfarm.item.mobcatcher.CollarSmall;
 import de.markusbordihn.easymobfarm.item.mobcatcher.EnderLasso;
 import de.markusbordihn.easymobfarm.item.mobcatcher.FishingBowl;
+import de.markusbordihn.easymobfarm.item.mobcatcher.FishingNetSmall;
 import de.markusbordihn.easymobfarm.item.mobcatcher.GoldenLasso;
 import de.markusbordihn.easymobfarm.item.mobcatcher.InsectNet;
 import de.markusbordihn.easymobfarm.item.mobcatcher.NetheriteLasso;
@@ -129,6 +130,8 @@ public class MobTypeManager {
         COMMON.enderLassoDeniedMobs.get());
     updateMobTypesForKey(FishingBowl.NAME, COMMON.fishingBowlAllowedMobs.get(),
         COMMON.fishingBowlDeniedMobs.get());
+    updateMobTypesForKey(FishingNetSmall.NAME, COMMON.fishingNetSmallAllowedMobs.get(),
+        COMMON.fishingNetSmallDeniedMobs.get());
     updateMobTypesForKey(GoldenLasso.NAME, COMMON.goldenLassoAllowedMobs.get(),
         COMMON.goldenLassoDeniedMobs.get());
     updateMobTypesForKey(InsectNet.NAME, COMMON.insectNetAllowedMobs.get(),
