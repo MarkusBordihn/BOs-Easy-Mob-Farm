@@ -1,25 +1,25 @@
 {
   "parent": "minecraft:recipes/root",
   "rewards": {
-    "recipes": ["easy_mob_farm:desert_farm_from_iron_mob_farm_template"]
+    "recipes": ["easy_mob_farm:iron_jungle_farm_from_iron_mob_farm_template"]
   },
   "criteria": {
-    "has_cactus": {
+    "has_iron_mob_farm_template": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "items": ["minecraft:cactus"]
+            "items": ["easy_mob_farm:iron_mob_farm_template"]
           }
         ]
       }
     },
-    "has_sandstone": {
+    "has_jungle_log": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "items": ["minecraft:sandstone"]
+            "items": ["minecraft:jungle_log"]
           }
         ]
       }
@@ -27,9 +27,11 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "easy_mob_farm:desert_farm_from_iron_mob_farm_template"
+        "recipe": "easy_mob_farm:iron_jungle_farm_from_iron_mob_farm_template"
       }
     }
   },
-  "requirements": [["has_cactus", "has_sandstone", "has_the_recipe"]]
+  "requirements": [
+    ["has_iron_mob_farm_template", "has_jungle_log", "has_the_recipe"]
+  ]
 }

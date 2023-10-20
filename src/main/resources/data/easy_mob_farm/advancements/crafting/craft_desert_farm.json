@@ -2,7 +2,7 @@
   "parent": "easy_mob_farm:crafting/craft_iron_mob_farm_template",
   "display": {
     "icon": {
-      "item": "easy_mob_farm:desert_farm"
+      "item": "easy_mob_farm:iron_desert_farm"
     },
     "title": {
       "translate": "advancements.easy_mob_farm.crafting.craft_desert_farm.title"
@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "items": ["easy_mob_farm:desert_farm"]
+            "items": ["easy_mob_farm:iron_desert_farm"]
           }
         ]
       }
