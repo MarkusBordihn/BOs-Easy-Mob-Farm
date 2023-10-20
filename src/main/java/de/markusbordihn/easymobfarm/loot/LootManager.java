@@ -59,6 +59,7 @@ import de.markusbordihn.easymobfarm.config.mobs.BeeAnimal;
 import de.markusbordihn.easymobfarm.config.mobs.BossMonster;
 import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
 import de.markusbordihn.easymobfarm.config.mobs.HostileNetherMonster;
+import de.markusbordihn.easymobfarm.config.mobs.NeutralMonster;
 import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
 import de.markusbordihn.easymobfarm.item.CapturedMob;
 import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
@@ -274,8 +275,8 @@ public class LootManager {
     }
 
     // Wither nether start drop support.
-    if (Boolean.TRUE.equals(COMMON.forceWitherDropNetherStar.get()) && mobType.equals(BossMonster.WITHER)
-        && random.nextInt(9) == 0) {
+    if (Boolean.TRUE.equals(COMMON.forceWitherDropNetherStar.get())
+        && mobType.equals(BossMonster.WITHER) && random.nextInt(9) == 0) {
       lootDrops.add(new ItemStack(Items.NETHER_STAR));
     }
 
@@ -285,9 +286,12 @@ public class LootManager {
       if (lootDrop.isEmpty()
           || filter(COMMON.disableChickenDropRawChicken.get(), PassiveAnimal.CHICKEN, Items.CHICKEN,
               mobType, lootDrop)
-          || filter(COMMON.disableCowDropRawBeef.get(), PassiveAnimal.COW, Items.BEEF, mobType, lootDrop)
-          || filter(COMMON.disableSheepDropRawMutton.get(), PassiveAnimal.SHEEP, Items.MUTTON, mobType,
-              lootDrop)) {
+          || filter(COMMON.disableCowDropRawBeef.get(), PassiveAnimal.COW, Items.BEEF, mobType,
+              lootDrop)
+          || filter(COMMON.disableSheepDropRawMutton.get(), PassiveAnimal.SHEEP, Items.MUTTON,
+              mobType, lootDrop)
+          || filter(COMMON.disableIronGolemDropPoppy.get(), NeutralMonster.IRON_GOLEM, Items.POPPY,
+              mobType, lootDrop)) {
         continue;
       }
       filteredLootDrops.add(lootDrop);

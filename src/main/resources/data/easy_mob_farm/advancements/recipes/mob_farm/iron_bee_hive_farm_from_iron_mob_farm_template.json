@@ -1,25 +1,25 @@
 {
   "parent": "minecraft:recipes/root",
   "rewards": {
-    "recipes": ["easy_mob_farm:swamp_farm_from_iron_mob_farm_template"]
+    "recipes": ["easy_mob_farm:iron_bee_hive_farm_from_iron_mob_farm_template"]
   },
   "criteria": {
-    "has_blue_orchid": {
+    "has_iron_mob_farm_template": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "items": ["minecraft:blue_orchid"]
+            "items": ["easy_mob_farm:iron_mob_farm_template"]
           }
         ]
       }
     },
-    "has_brown_mushroom": {
+    "has_beehive": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "items": ["minecraft:brown_mushroom"]
+            "items": ["minecraft:beehive"]
           }
         ]
       }
@@ -27,9 +27,11 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "easy_mob_farm:swamp_farm_from_iron_mob_farm_template"
+        "recipe": "easy_mob_farm:iron_bee_hive_farm_from_iron_mob_farm_template"
       }
     }
   },
-  "requirements": [["has_blue_orchid", "has_brown_mushroom", "has_the_recipe"]]
+  "requirements": [
+    ["has_iron_mob_farm_template", "has_beehive", "has_the_recipe"]
+  ]
 }
