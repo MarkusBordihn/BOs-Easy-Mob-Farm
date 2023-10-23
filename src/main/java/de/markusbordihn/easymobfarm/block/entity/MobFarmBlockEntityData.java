@@ -100,6 +100,7 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
   public DyeColor farmMobColor = null;
   public EntityType<?> farmMobEntityType = null;
   public boolean farmMobShearedStatus = false;
+  public int farmMobSize = 1;
   public RedstoneMode farmRedstoneMode = RedstoneMode.DISABLED;
 
   // Item Storage
@@ -205,6 +206,10 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
 
   public boolean getFarmMobShearedStatus() {
     return this.farmMobShearedStatus;
+  }
+
+  public int getFarmMobSize() {
+    return this.farmMobSize;
   }
 
   public int getFarmProcessingTime() {
@@ -366,6 +371,7 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
       this.farmMobSubType = CapturedMobVirtual.getCapturedMobSubType(capturedMob);
       this.farmMobColor = CapturedMobVirtual.getCapturedMobColor(capturedMob);
       this.farmMobShearedStatus = CapturedMobVirtual.getCapturedMobShearedStatus(capturedMob);
+      this.farmMobSize = CapturedMobVirtual.getCapturedMobSize(capturedMob);
       this.farmMobEntityType = CapturedMobVirtual.getCapturedMobEntityType(capturedMob);
     }
   }

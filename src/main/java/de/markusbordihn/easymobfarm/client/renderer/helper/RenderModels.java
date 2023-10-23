@@ -46,6 +46,7 @@ import net.minecraft.client.renderer.entity.RabbitRenderer;
 import net.minecraft.client.renderer.entity.SalmonRenderer;
 import net.minecraft.client.renderer.entity.SheepRenderer;
 import net.minecraft.client.renderer.entity.SkeletonRenderer;
+import net.minecraft.client.renderer.entity.SlimeRenderer;
 import net.minecraft.client.renderer.entity.SpiderRenderer;
 import net.minecraft.client.renderer.entity.SquidRenderer;
 import net.minecraft.client.renderer.entity.ZombieRenderer;
@@ -72,6 +73,7 @@ import net.minecraft.world.entity.monster.Drowned;
 import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.entity.monster.MagmaCube;
 import net.minecraft.world.entity.monster.Skeleton;
+import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.monster.Spider;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.DyeColor;
@@ -132,6 +134,8 @@ public class RenderModels {
   private SheepRenderer sheepRenderer = null;
   private Skeleton skeleton = null;
   private SkeletonRenderer skeletonRenderer = null;
+  private Slime slime = null;
+  private SlimeRenderer slimeRenderer = null;
   private Spider spider = null;
   private SpiderRenderer<?> spiderRenderer = null;
   private Squid squid = null;
@@ -359,6 +363,19 @@ public class RenderModels {
     return this.ironGolemRenderer;
   }
 
+  public MagmaCube getMagmaCube(int size) {
+    if (this.magmaCube == null) {
+      this.magmaCube = new MagmaCube(EntityType.MAGMA_CUBE, getLevel());
+      if (size > 1) {
+        CompoundTag compoundTag = new CompoundTag();
+        this.magmaCube.save(compoundTag);
+        compoundTag.putInt("Size", size);
+        this.magmaCube.load(compoundTag);
+      }
+    }
+    return this.magmaCube;
+  }
+
   public MagmaCube getMagmaCube() {
     if (this.magmaCube == null) {
       this.magmaCube = new MagmaCube(EntityType.MAGMA_CUBE, getLevel());
@@ -472,6 +489,33 @@ public class RenderModels {
       this.skeletonRenderer = new SkeletonRenderer(getEntityRendererContext());
     }
     return this.skeletonRenderer;
+  }
+
+  public Slime getSlime(int size) {
+    if (this.slime == null) {
+      this.slime = new Slime(EntityType.MAGMA_CUBE, getLevel());
+      if (size > 1) {
+        CompoundTag compoundTag = new CompoundTag();
+        this.slime.save(compoundTag);
+        compoundTag.putInt("Size", size);
+        this.slime.load(compoundTag);
+      }
+    }
+    return this.slime;
+  }
+
+  public Slime getSlime() {
+    if (this.slime == null) {
+      this.slime = new Slime(EntityType.MAGMA_CUBE, getLevel());
+    }
+    return this.slime;
+  }
+
+  public SlimeRenderer getSlimeRenderer() {
+    if (this.slimeRenderer == null) {
+      this.slimeRenderer = new SlimeRenderer(getEntityRendererContext());
+    }
+    return this.slimeRenderer;
   }
 
   public Spider getSpider() {
