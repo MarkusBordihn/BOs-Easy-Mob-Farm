@@ -224,12 +224,13 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
     if (hasWeaponItem) {
       if (weaponItem.getEnchantmentLevel(Enchantments.SHARPNESS) > 0
           || weaponItem.getEnchantmentLevel(Enchantments.MOB_LOOTING) > 0) {
-        experienceDropChange = this.random.nextInt(3);
+        experienceDropChange =
+            this.random.nextInt(COMMON.experienceDropChangeWithEnchantedWeapon.get());
       } else {
-        experienceDropChange = this.random.nextInt(5);
+        experienceDropChange = this.random.nextInt(COMMON.experienceDropChangeWithWeapon.get());
       }
     } else {
-      experienceDropChange = this.random.nextInt(10);
+      experienceDropChange = this.random.nextInt(COMMON.experienceDropChangeNoWeapon.get());
     }
 
     // Check if we should repair mending items with experience or convert glass bottles to
@@ -240,7 +241,7 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
       // Repair mending items with experience, if damaged.
       if (hasWeaponItem && weaponItem.isDamageableItem() && weaponItem.getDamageValue() > 0
           && weaponItem.getEnchantmentLevel(Enchantments.MENDING) > 0) {
-        int repairAmount = this.random.nextInt(10);
+        int repairAmount = this.random.nextInt(COMMON.experienceDropMendingRepairAmount.get());
         if (repairAmount > 0) {
           weaponItem.setDamageValue(weaponItem.getDamageValue() - repairAmount);
         }
@@ -363,23 +364,29 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
 
       // Update and cache data based on captured mob
       if (itemStack.getItem() instanceof CapturedMob) {
-        this.farmMobName = CapturedMob.getCapturedMob(itemStack);
-        this.farmMobType = CapturedMob.getCapturedMobType(itemStack);
-        this.farmMobSubType = CapturedMob.getCapturedMobSubType(itemStack);
         this.farmMobColor = CapturedMob.getCapturedMobColor(itemStack);
         this.farmMobEntityType = CapturedMob.getCapturedMobEntityType(itemStack);
+        this.farmMobName = CapturedMob.getCapturedMob(itemStack);
+        this.farmMobShearedStatus = CapturedMob.getCapturedMobShearedStatus(itemStack);
+        this.farmMobSize = CapturedMob.getCapturedMobSize(itemStack);
+        this.farmMobSubType = CapturedMob.getCapturedMobSubType(itemStack);
+        this.farmMobType = CapturedMob.getCapturedMobType(itemStack);
       } else if (CapturedMobVirtual.isSupported(itemStack)) {
-        this.farmMobName = CapturedMobVirtual.getCapturedMob(itemStack);
-        this.farmMobType = CapturedMobVirtual.getCapturedMobType(itemStack);
-        this.farmMobSubType = CapturedMobVirtual.getCapturedMobSubType(itemStack);
         this.farmMobColor = CapturedMobVirtual.getCapturedMobColor(itemStack);
         this.farmMobEntityType = CapturedMobVirtual.getCapturedMobEntityType(itemStack);
+        this.farmMobName = CapturedMobVirtual.getCapturedMob(itemStack);
+        this.farmMobShearedStatus = CapturedMobVirtual.getCapturedMobShearedStatus(itemStack);
+        this.farmMobSize = CapturedMobVirtual.getCapturedMobSize(itemStack);
+        this.farmMobSubType = CapturedMobVirtual.getCapturedMobSubType(itemStack);
+        this.farmMobType = CapturedMobVirtual.getCapturedMobType(itemStack);
       } else {
-        this.farmMobName = "";
-        this.farmMobType = "";
-        this.farmMobSubType = "";
         this.farmMobColor = null;
         this.farmMobEntityType = null;
+        this.farmMobName = "";
+        this.farmMobShearedStatus = false;
+        this.farmMobSize = 1;
+        this.farmMobSubType = "";
+        this.farmMobType = "";
       }
 
       // Set Farm processing time, if there is any mob type.

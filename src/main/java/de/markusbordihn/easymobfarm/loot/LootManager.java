@@ -298,10 +298,21 @@ public class LootManager {
       filteredLootDrops.add(lootDrop);
     }
 
-    // Add additional loot drops, if loot drops are empty.
-    if (Boolean.TRUE.equals(filteredLootDrops.isEmpty() && COMMON.forceSlimeDropSlime.get())
+    // Return filtered loot drops, if any otherwise try to force a specific drop.
+    if (!filteredLootDrops.isEmpty()) {
+      return filteredLootDrops;
+    }
+
+    // Slime ball drop support.
+    if (Boolean.TRUE.equals(COMMON.forceSlimeDropSlime.get())
         && mobType.equals(HostileMonster.SLIME)) {
       filteredLootDrops.add(new ItemStack(Items.SLIME_BALL));
+    }
+
+    // Magma Cream drop support.
+    if (Boolean.TRUE.equals(COMMON.forceMagmaCubeDropMagmaCream.get())
+        && mobType.equals(HostileNetherMonster.MAGMA_CUBE)) {
+      filteredLootDrops.add(new ItemStack(Items.MAGMA_CREAM));
     }
 
     return filteredLootDrops;
