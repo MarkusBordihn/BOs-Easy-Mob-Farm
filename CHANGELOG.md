@@ -5,6 +5,17 @@
 This change log includes the summarized changes.
 For the full changelog, please go to the [Git Hub History][history] instead.
 
+### 2023.10.23
+
+Thanks a lot to cringoleg for all of the valuable and detailed bug reports. 👍
+
+- Fixed unstackable item drops from mob farms #45
+- Fixed Magma Slimes mot working with Creative or Netherite Mob Farms #44
+- Added Experience Drop Config Options #43
+- Added Slime and Magma Cube render with size support.
+- Improved loot table and drop prediction for mob farms.
+- Improved logging and removed some debug messages.
+
 ### 2023.10.20
 
 - Fixed Allow dynamic filter options for Iron Golem Farm. #38

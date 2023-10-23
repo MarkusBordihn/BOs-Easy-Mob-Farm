@@ -127,6 +127,12 @@ public class CommonConfig {
     public final ForgeConfigSpec.ConfigValue<List<String>> generalAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> generalDeniedMobs;
 
+    // Experience Settings
+    public final ForgeConfigSpec.IntValue experienceDropChangeNoWeapon;
+    public final ForgeConfigSpec.IntValue experienceDropChangeWithWeapon;
+    public final ForgeConfigSpec.IntValue experienceDropChangeWithEnchantedWeapon;
+    public final ForgeConfigSpec.IntValue experienceDropMendingRepairAmount;
+
     // Copper Mob Farm
     public final ForgeConfigSpec.IntValue copperAnimalPlainsFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> copperAnimalPlainsFarmDropSound;
@@ -370,6 +376,8 @@ public class CommonConfig {
 
     public final ForgeConfigSpec.BooleanValue forceSlimeDropSlime;
 
+    public final ForgeConfigSpec.BooleanValue forceMagmaCubeDropMagmaCream;
+
     public final ForgeConfigSpec.BooleanValue forceWitherDropNetherStar;
 
     Config(ForgeConfigSpec.Builder builder) {
@@ -397,6 +405,21 @@ public class CommonConfig {
       generalDeniedMobs = builder.comment(
           "The following mobs are not allowed to be captured with any mob catcher and all mob farms. (Use empty list to allow all mobs!)")
           .define("generalDeniedMobs", new ArrayList<String>(BossMonster.All));
+      builder.pop();
+
+      builder.push("Experience Dropping");
+      experienceDropChangeNoWeapon = builder.comment(
+          "Defines the change of dropping experience without a weapon. (lower number = higher change)")
+          .defineInRange("experienceDropChangeNoWeapon", 10, 1, 100);
+      experienceDropChangeWithWeapon = builder.comment(
+          "Defines the change of dropping experience with a weapon. (lower number = higher change)")
+          .defineInRange("experienceDropChangeWithWeapon", 5, 1, 100);
+      experienceDropChangeWithEnchantedWeapon = builder.comment(
+          "Defines the change of dropping experience with an enchanted weapon. (lower number = higher change)")
+          .defineInRange("experienceDropChangeWithEnchantedWeapon", 3, 1, 100);
+      experienceDropMendingRepairAmount = builder.comment(
+          "Defines the max amount to repair a mending weapon with experience points. (higher number = more repair)")
+          .defineInRange("experienceDropMendingRepairAmount", 10, 1, 100);
       builder.pop();
 
       // == Copper Mob Farms
@@ -454,8 +477,9 @@ public class CommonConfig {
           .defineInRange("copperMonsterPlainsCaveFarmProcessTime", 600, 10, 3600);
       copperMonsterPlainsCaveFarmDropSound = builder.comment(DROP_SOUND_TEXT)
           .define("copperMonsterPlainsCaveFarmDropSound", "minecraft:block.cave_vines.fall");
-      copperMonsterPlainsCaveFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_PLAINS_CAVE_FARM)
-          .define("copperMonsterPlainsCaveFarmAllowedMobs", new ArrayList<String>(PlainsCave.Hostile));
+      copperMonsterPlainsCaveFarmAllowedMobs =
+          builder.comment(SUPPORTED_MOBS_PLAINS_CAVE_FARM).define(
+              "copperMonsterPlainsCaveFarmAllowedMobs", new ArrayList<String>(PlainsCave.Hostile));
       copperMonsterPlainsCaveFarmDeniedMobs = builder.comment(DENIED_MOBS_PLAINS_CAVE_FARM)
           .define("copperMonsterPlainsCaveFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
@@ -548,8 +572,9 @@ public class CommonConfig {
           .defineInRange("ironMonsterPlainsCaveFarmProcessTime", 300, 10, 3600);
       ironMonsterPlainsCaveFarmDropSound = builder.comment(DROP_SOUND_TEXT)
           .define("ironMonsterPlainsCaveFarmDropSound", "minecraft:block.cave_vines.fall");
-      ironMonsterPlainsCaveFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_PLAINS_CAVE_FARM)
-          .define("ironMonsterPlainsCaveFarmAllowedMobs", new ArrayList<String>(PlainsCave.Hostile));
+      ironMonsterPlainsCaveFarmAllowedMobs =
+          builder.comment(SUPPORTED_MOBS_PLAINS_CAVE_FARM).define(
+              "ironMonsterPlainsCaveFarmAllowedMobs", new ArrayList<String>(PlainsCave.Hostile));
       ironMonsterPlainsCaveFarmDeniedMobs = builder.comment(DENIED_MOBS_PLAINS_CAVE_FARM)
           .define("ironMonsterPlainsCaveFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
@@ -642,8 +667,9 @@ public class CommonConfig {
           .defineInRange("goldMonsterPlainsCaveFarmProcessTime", 150, 10, 3600);
       goldMonsterPlainsCaveFarmDropSound = builder.comment(DROP_SOUND_TEXT)
           .define("goldMonsterPlainsCaveFarmDropSound", "minecraft:block.cave_vines.fall");
-      goldMonsterPlainsCaveFarmAllowedMobs = builder.comment(SUPPORTED_MOBS_PLAINS_CAVE_FARM)
-          .define("goldMonsterPlainsCaveFarmAllowedMobs", new ArrayList<String>(PlainsCave.Hostile));
+      goldMonsterPlainsCaveFarmAllowedMobs =
+          builder.comment(SUPPORTED_MOBS_PLAINS_CAVE_FARM).define(
+              "goldMonsterPlainsCaveFarmAllowedMobs", new ArrayList<String>(PlainsCave.Hostile));
       goldMonsterPlainsCaveFarmDeniedMobs = builder.comment(DENIED_MOBS_PLAINS_CAVE_FARM)
           .define("goldMonsterPlainsCaveFarmDeniedMobs", new ArrayList<String>());
       builder.pop();
@@ -993,6 +1019,12 @@ public class CommonConfig {
       builder.push("Slime Drop Settings");
       forceSlimeDropSlime = builder.comment("Enable/Disable forced slime drops regardless of size.")
           .define("forceSlimeDropSlime", true);
+      builder.pop();
+
+      builder.push("Magma Cube Drop Settings");
+      forceMagmaCubeDropMagmaCream =
+          builder.comment("Enable/Disable forced magma cream drops regardless of size.")
+              .define("forceMagmaCubeDropMagmaCream", true);
       builder.pop();
 
       builder.push("Wither Drop Settings");
