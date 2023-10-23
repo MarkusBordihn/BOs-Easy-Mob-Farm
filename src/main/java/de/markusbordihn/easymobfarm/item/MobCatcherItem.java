@@ -160,7 +160,8 @@ public class MobCatcherItem extends CapturedMob {
     // Interact with the block directly, if it is Captured Mob Compatible.
     if (block instanceof CapturedMobCompatible capturedMobCompatible) {
       BlockEntity blockEntity = level.getBlockEntity(blockPos);
-      // Make sure that the block can consume the token, we only accept server-side confirmations.
+
+      // Make sure that the block can consume the captured mob, we only accept server-side.
       if (!level.isClientSide && capturedMobCompatible.canConsumeCapturedMob(level, blockPos,
           blockState, blockEntity, player, itemStack)) {
         return capturedMobCompatible.consumeCapturedMob(level, blockPos, blockState, blockEntity,
