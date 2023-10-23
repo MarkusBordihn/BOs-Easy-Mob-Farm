@@ -40,12 +40,14 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Entity.RemovalReason;
 import net.minecraft.world.entity.animal.Sheep;
+import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.loot.LootManager;
@@ -54,14 +56,15 @@ public class CapturedMob extends Item {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
+  protected static final String ENTITY_COLOR_TAG = "EntityColor";
   protected static final String ENTITY_ID_TAG = "EntityId";
   protected static final String ENTITY_LOOT_TABLE_TAG = "EntityLootTable";
   protected static final String ENTITY_NAME_TAG = "EntityName";
   protected static final String ENTITY_POSSIBLE_LOOT_TAG = "EntityPossibleLoot";
-  protected static final String ENTITY_TYPE_TAG = "EntityType";
-  protected static final String ENTITY_SUB_TYPE_TAG = "EntitySubType";
-  protected static final String ENTITY_COLOR_TAG = "EntityColor";
   protected static final String ENTITY_SHEARED = "EntitySheared";
+  protected static final String ENTITY_SIZE_TAG = "EntitySize";
+  protected static final String ENTITY_SUB_TYPE_TAG = "EntitySubType";
+  protected static final String ENTITY_TYPE_TAG = "EntityType";
 
   protected static final String FALL_DISTANCE_TAG = "FallDistance";
   protected static final String FIRE_TAG = "Fire";
@@ -154,6 +157,14 @@ public class CapturedMob extends Item {
     return false;
   }
 
+  public static int getCapturedMobSize(ItemStack itemStack) {
+    CompoundTag compoundTag = itemStack.getOrCreateTag();
+    if (compoundTag.contains(ENTITY_SIZE_TAG)) {
+      return compoundTag.getInt(ENTITY_SIZE_TAG);
+    }
+    return 1;
+  }
+
   public static String getLootTable(ItemStack itemStack) {
     CompoundTag compoundTag = itemStack.getOrCreateTag();
     if (compoundTag.contains(ENTITY_LOOT_TABLE_TAG)) {
@@ -198,8 +209,15 @@ public class CapturedMob extends Item {
       }
     }
 
-    // Handle possible loot for tool tips.
+    // Store loot table for easier processing.
     ResourceLocation lootTable = livingEntity.getLootTable();
+
+    // Run a second check for alternative loot table to avoid empty loot tables.
+    if (lootTable == null || lootTable == BuiltInLootTables.EMPTY) {
+      lootTable = livingEntity.getType().getDefaultLootTable();
+    }
+
+     // Handle possible loot for tool tips.
     if (lootTable != null) {
       List<String> possibleLoot =
           LootManager.getRandomLootDropOverview(lootTable, livingEntity.getLevel(), type, subType);
@@ -214,6 +232,12 @@ public class CapturedMob extends Item {
       compoundTag.putInt(ENTITY_COLOR_TAG, sheep.getColor().getId());
       compoundTag.putBoolean(ENTITY_SHEARED, sheep.isSheared());
     }
+
+    // Sore size for slimes.
+    if (livingEntity instanceof Slime slime) {
+      compoundTag.putInt(ENTITY_SIZE_TAG, slime.getSize());
+    }
+
     compoundTag.merge(entityData);
     itemStack.save(compoundTag);
 
@@ -269,6 +293,7 @@ public class CapturedMob extends Item {
       compoundTag.remove(ENTITY_TYPE_TAG);
       compoundTag.remove(ENTITY_COLOR_TAG);
       compoundTag.remove(ENTITY_SHEARED);
+      compoundTag.remove(ENTITY_SIZE_TAG);
       entity.load(compoundTag);
 
       // Remove compoundTag data from item.

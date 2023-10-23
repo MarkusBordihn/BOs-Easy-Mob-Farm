@@ -38,6 +38,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.MobFarmBlock;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
@@ -344,6 +345,13 @@ public class MobFarmMenu extends AbstractContainerMenu {
       }
     }
 
+    // Move result items to the player inventory.
+    else if ((slotIndex == RESULT_1_SLOT || slotIndex == RESULT_2_SLOT || slotIndex == RESULT_3_SLOT
+        || slotIndex == RESULT_4_SLOT || slotIndex == RESULT_5_SLOT)
+        && !this.moveItemStackTo(slotItemStack, PLAYER_SLOT_START, slots.size(), false)) {
+      return ItemStack.EMPTY;
+    }
+
     // Handle CaptureMob and CapturedMobVirtual items for moving in and out.
     else if (slotItemStack.getItem() instanceof CapturedMob
         || CapturedMobVirtual.isSupported(slotItemStack)) {
@@ -355,13 +363,6 @@ public class MobFarmMenu extends AbstractContainerMenu {
           CAPTURED_MOB_SLOT + 1, false)) {
         return ItemStack.EMPTY;
       }
-    }
-
-    // Move result items to the player inventory.
-    else if ((slotIndex == RESULT_1_SLOT || slotIndex == RESULT_2_SLOT || slotIndex == RESULT_3_SLOT
-        || slotIndex == RESULT_4_SLOT || slotIndex == RESULT_5_SLOT)
-        && this.moveItemStackTo(slotItemStack, PLAYER_SLOT_START, slots.size(), true)) {
-      return ItemStack.EMPTY;
     }
 
     // Store changes if itemStack is not empty.

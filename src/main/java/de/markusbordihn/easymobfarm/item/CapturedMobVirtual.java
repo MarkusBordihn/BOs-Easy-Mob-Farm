@@ -28,13 +28,17 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.AirItem;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.BedItem;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BottleItem;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.ExperienceBottleItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.SignItem;
 import net.minecraft.world.item.SpawnEggItem;
 
 import de.markusbordihn.easymobfarm.Constants;
@@ -80,17 +84,18 @@ public class CapturedMobVirtual {
       return true;
     } else if (item instanceof AirItem || item instanceof ExperienceBottleItem
         || item instanceof BottleItem || item instanceof MobFarmTemplateItem
-        || item instanceof BlockItem) {
+        || item instanceof ArmorItem || item instanceof SignItem || item instanceof DyeItem
+        || item instanceof BedItem || item instanceof BlockItem) {
       return false;
     }
 
     // Check for supported items from other mods.
+    CompoundTag compoundTag = itemStack.copy().getOrCreateTag();
     ResourceLocation itemRegistryName = Registry.ITEM.getKey(item);
     String itemName =
         itemRegistryName != Registry.ITEM.getDefaultKey() ? itemRegistryName.toString() : "";
     if (Constants.MOB_CATCHER_LOADED
         && (itemName.equals(MOB_CATCHER_DIAMOND) || itemName.equals(MOB_CATCHER_NETHERITE))) {
-      CompoundTag compoundTag = itemStack.getOrCreateTag();
       if (compoundTag.contains(MOD_DATA_TAG)
           && compoundTag.getCompound(MOD_DATA_TAG).contains(ID_TAG)) {
         return !compoundTag.getCompound(MOD_DATA_TAG).getString(ID_TAG).isEmpty();
@@ -98,19 +103,16 @@ public class CapturedMobVirtual {
     } else if (Constants.CREATE_LOADED && itemName.equals(CREATE_BLAZE_BURNER)) {
       return true;
     } else if (Constants.MOB_CAPTURING_TOOL_LOADED && itemName.equals(MOB_CAPTURING_TOOL)) {
-      CompoundTag compoundTag = itemStack.getOrCreateTag();
       if (compoundTag.contains(CAPTURED_ENTITY_TAG)
           && compoundTag.getCompound(CAPTURED_ENTITY_TAG).contains(ENTITY_TYPE_TAG)) {
         return !compoundTag.getCompound(CAPTURED_ENTITY_TAG).getString(ENTITY_TYPE_TAG).isEmpty();
       }
     } else if (Constants.MOBCATCHER_LOADED && itemName.equals(MOBCATCHER_NET)) {
-      CompoundTag compoundTag = itemStack.getOrCreateTag();
       if (compoundTag.contains(ENTITY_HOLDER_TAG)
           && compoundTag.getCompound(ENTITY_HOLDER_TAG).contains(ID_TAG)) {
         return !compoundTag.getCompound(ENTITY_HOLDER_TAG).getString(ID_TAG).isEmpty();
       }
     } else if (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER)) {
-      CompoundTag compoundTag = itemStack.getOrCreateTag();
       if (compoundTag.contains(BLOCK_ENTITY_TAG)
           && compoundTag.getCompound(BLOCK_ENTITY_TAG).contains(SPAWN_DATA_TAG)
           && compoundTag.getCompound(BLOCK_ENTITY_TAG).getCompound(SPAWN_DATA_TAG)
@@ -121,24 +123,20 @@ public class CapturedMobVirtual {
             .getCompound(ENTITY_TAG).getString(ID_TAG).isEmpty();
       }
     } else if (Constants.FORBIDDEN_ARCANUS_LOADED && itemName.equals(QUANTUM_CATCHER)) {
-      CompoundTag compoundTag = itemStack.getOrCreateTag();
       if (compoundTag.contains(ENTITY_TAG)
           && compoundTag.getCompound(ENTITY_TAG).contains(ID_TAG)) {
         return !compoundTag.getCompound(ENTITY_TAG).getString(ID_TAG).isEmpty();
       }
     } else if (Constants.CYCLIC_LOADED && itemName.equals(MONSTER_BALL)) {
-      CompoundTag compoundTag = itemStack.getOrCreateTag();
       return !compoundTag.getString(ID_TAG).isEmpty();
     } else if (Constants.PRODUCTIVE_BEES_LOADED && itemName.equals(SPAWN_EGG_CONFIGURABLE_BEE)) {
-      CompoundTag compoundTag = itemStack.getOrCreateTag();
       if (compoundTag.contains(ENTITY_TAG_TAG)
           && compoundTag.getCompound(ENTITY_TAG_TAG).contains(TYPE_TAG)) {
         return !compoundTag.getCompound(ENTITY_TAG_TAG).getString(TYPE_TAG).isEmpty();
       }
     } else if (item instanceof SpawnEggItem) {
       return true;
-    } else {
-      CompoundTag compoundTag = itemStack.getOrCreateTag();
+    } else if (!compoundTag.isEmpty()) {
       log.warn("Unsupported mob catching Item {} {}: {}", item, itemName, compoundTag);
     }
     return false;
@@ -295,27 +293,22 @@ public class CapturedMobVirtual {
     ResourceLocation itemRegistryName = Registry.ITEM.getKey(item);
     String itemName =
         itemRegistryName != Registry.ITEM.getDefaultKey() ? itemRegistryName.toString() : "";
+    CompoundTag compoundTag = itemStack.getOrCreateTag();
     if (Constants.MOB_CATCHER_LOADED
         && (itemName.equals(MOB_CATCHER_DIAMOND) || itemName.equals(MOB_CATCHER_NETHERITE))) {
-      CompoundTag compoundTag = itemStack.getOrCreateTag();
       return compoundTag.getCompound(MOD_DATA_TAG).getString(ID_TAG);
     } else if (Constants.CREATE_LOADED && itemName.equals(CREATE_BLAZE_BURNER)) {
       return "minecraft:blaze";
     } else if (Constants.MOB_CAPTURING_TOOL_LOADED && itemName.equals(MOB_CAPTURING_TOOL)) {
-      CompoundTag compoundTag = itemStack.getOrCreateTag();
       return compoundTag.getCompound(CAPTURED_ENTITY_TAG).getString(ENTITY_TYPE_TAG);
     } else if (Constants.MOBCATCHER_LOADED && itemName.equals(MOBCATCHER_NET)) {
-      CompoundTag compoundTag = itemStack.getOrCreateTag();
       return compoundTag.getCompound(ENTITY_HOLDER_TAG).getString(ID_TAG);
     } else if (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER)) {
-      CompoundTag compoundTag = itemStack.getOrCreateTag();
       return compoundTag.getCompound(BLOCK_ENTITY_TAG).getCompound(SPAWN_DATA_TAG)
           .getCompound(ENTITY_TAG).getString(ID_TAG);
     } else if (Constants.FORBIDDEN_ARCANUS_LOADED && itemName.equals(QUANTUM_CATCHER)) {
-      CompoundTag compoundTag = itemStack.getOrCreateTag();
       return compoundTag.getCompound(ENTITY_TAG).getString(ID_TAG);
     } else if (Constants.CYCLIC_LOADED && itemName.equals(MONSTER_BALL)) {
-      CompoundTag compoundTag = itemStack.getOrCreateTag();
       return compoundTag.getString(ID_TAG);
     } else if (Constants.PRODUCTIVE_BEES_LOADED && itemName.equals(SPAWN_EGG_CONFIGURABLE_BEE)) {
       return "productivebees:configurable_bee";
@@ -386,7 +379,8 @@ public class CapturedMobVirtual {
       }
     } else if (Constants.PRODUCTIVE_BEES_LOADED && itemName.equals(SPAWN_EGG_CONFIGURABLE_BEE)) {
       String capturedMobType = getCapturedMobType(itemStack);
-      log.info("Bees captured mob type: {}", capturedMobType);
+    } else {
+      log.warn("Unable to get loot table for {}", itemStack);
     }
     return "";
   }
@@ -415,6 +409,19 @@ public class CapturedMobVirtual {
       return CapturedMob.getCapturedMobShearedStatus(itemStack);
     }
     return false;
+  }
+
+  public static int getCapturedMobSize(ItemStack itemStack) {
+    if (!isSupported(itemStack)) {
+      return 1;
+    }
+
+    // Early exit for captured mob items.
+    Item item = itemStack.getItem();
+    if (item instanceof CapturedMob) {
+      return CapturedMob.getCapturedMobSize(itemStack);
+    }
+    return 1;
   }
 
 }

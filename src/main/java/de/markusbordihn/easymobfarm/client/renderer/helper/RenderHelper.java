@@ -72,6 +72,7 @@ public class RenderHelper {
   private RenderModels renderModels;
   private DyeColor entityColor;
   private boolean entitySheared;
+  private int entitySize;
 
   public RenderHelper(int renderId, Minecraft minecraft, BlockEntity blockEntity) {
     this.minecraft = minecraft;
@@ -110,6 +111,13 @@ public class RenderHelper {
       this.entitySheared = mobFarmBlockEntity.getFarmMobShearedStatus();
     }
     return this.entitySheared;
+  }
+
+  public int getEntitySize() {
+    if (this.entitySize <= 0 && this.blockEntity instanceof MobFarmBlockEntity mobFarmBlockEntity) {
+      this.entitySize = mobFarmBlockEntity.getFarmMobSize();
+    }
+    return this.entitySize;
   }
 
   public void renderCustomEntity(EntityType<?> entityType, PoseStack poseStack,
@@ -204,7 +212,7 @@ public class RenderHelper {
   public void renderMagmaCube(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
       double y, double z, int combinedLight) {
     renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
-        this.renderModels.getMagmaCubeRenderer(), this.renderModels.getMagmaCube());
+        this.renderModels.getMagmaCubeRenderer(), this.renderModels.getMagmaCube(getEntitySize()));
   }
 
   public void renderPanda(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
@@ -242,6 +250,12 @@ public class RenderHelper {
       double y, double z, int combinedLight) {
     renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
         this.renderModels.getSkeletonRenderer(), this.renderModels.getSkeleton());
+  }
+
+  public void renderSlime(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
+      double y, double z, int combinedLight) {
+    renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
+        this.renderModels.getSlimeRenderer(), this.renderModels.getSlime(getEntitySize()));
   }
 
   @SuppressWarnings("unchecked")
@@ -337,10 +351,13 @@ public class RenderHelper {
         renderEnderman(poseStack, buffer, 0.25F, 0D, 0D, 2D / 16D, combinedLight);
         break;
       case HostileNetherMonster.MAGMA_CUBE:
-        renderMagmaCube(poseStack, buffer, 0.25F, 0D, 0D, 2D / 16D, combinedLight);
+        renderMagmaCube(poseStack, buffer, 0.20F, 0D, 0D, 2D / 16D, combinedLight);
         break;
       case HostileMonster.SKELETON:
         renderSkeleton(poseStack, buffer, 0.25F, 0D, 0D, 2D / 16D, combinedLight);
+        break;
+      case HostileMonster.SLIME:
+        renderSlime(poseStack, buffer, 0.25F, 0D, 0D, 2D / 16D, combinedLight);
         break;
       case HostileMonster.SPIDER:
         renderSpider(poseStack, buffer, 0.35F, 0D, 15D / 16D, 2D / 16D, combinedLight);
@@ -359,7 +376,7 @@ public class RenderHelper {
     // Render Special Entity using their specific Renderer and predefined scaling and position.
     switch (farmMobType) {
       case NeutralMonster.IRON_GOLEM:
-        renderIronGolem(poseStack, buffer, 0.25F, 0D, 0D, 2D / 16D, combinedLight);
+        renderIronGolem(poseStack, buffer, 0.3F, 0D, 0D, 2D / 16D, combinedLight);
         break;
       default:
         return false;
