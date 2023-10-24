@@ -39,6 +39,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SignItem;
 import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.item.SwordItem;
 
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -86,7 +87,7 @@ public class CapturedMobVirtual {
     } else if (item instanceof AirItem || item instanceof ExperienceBottleItem
         || item instanceof BottleItem || item instanceof MobFarmTemplateItem
         || item instanceof ArmorItem || item instanceof SignItem || item instanceof DyeItem
-        || item instanceof BedItem || item instanceof BlockItem) {
+        || item instanceof BedItem || item instanceof BlockItem || item instanceof SwordItem) {
       return false;
     }
 
