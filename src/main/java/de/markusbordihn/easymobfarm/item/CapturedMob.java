@@ -217,7 +217,7 @@ public class CapturedMob extends Item {
       lootTable = livingEntity.getType().getDefaultLootTable();
     }
 
-     // Handle possible loot for tool tips.
+    // Handle possible loot for tool tips.
     if (lootTable != null) {
       List<String> possibleLoot =
           LootManager.getRandomLootDropOverview(lootTable, livingEntity.getLevel(), type, subType);
