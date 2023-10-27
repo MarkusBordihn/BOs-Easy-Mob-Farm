@@ -24,7 +24,13 @@ public class HostileNetherMonster {
   protected HostileNetherMonster() {}
 
   public static final String BLAZE = "minecraft:blaze";
+  public static final String GHAST = "minecraft:ghast";
+  public static final String HOGLIN = "minecraft:hoglin";
   public static final String MAGMA_CUBE = "minecraft:magma_cube";
+  public static final String PIGLIN = "minecraft:piglin";
+  public static final String PIGLIN_BRUTE = "minecraft:piglin_brute";
+  public static final String STRIDER = "minecraft:strider";
   public static final String WITHER_SKELETON = "minecraft:wither_skeleton";
+  public static final String ZOGLIN = "minecraft:zoglin";
   public static final String ZOMBIFIED_PIGLIN = "minecraft:zombified_piglin";
 }

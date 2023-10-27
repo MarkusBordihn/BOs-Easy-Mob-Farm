@@ -56,9 +56,6 @@ import net.minecraftforge.registries.ForgeRegistries;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.config.CommonConfig;
 import de.markusbordihn.easymobfarm.config.mobs.BeeAnimal;
-import de.markusbordihn.easymobfarm.config.mobs.BossMonster;
-import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
-import de.markusbordihn.easymobfarm.config.mobs.HostileNetherMonster;
 import de.markusbordihn.easymobfarm.config.mobs.NeutralMonster;
 import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
 import de.markusbordihn.easymobfarm.item.CapturedMob;
@@ -68,8 +65,8 @@ import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
 public class LootManager {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
-  private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
 
+  private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
   private static final Random random = new Random();
 
   // Fake Player
@@ -245,37 +242,8 @@ public class LootManager {
   public static List<ItemStack> filterLootDrop(List<ItemStack> lootDrops, String mobType) {
     List<ItemStack> filteredLootDrops = Lists.newArrayList();
 
-    // Bee and Productive Bees drop support.
-    if (Boolean.TRUE.equals(COMMON.forceBeeDropHoneycomb.get())
-        && (mobType.equals(BeeAnimal.BEE)
-            || (Constants.PRODUCTIVE_BEES_LOADED && BeeAnimal.ProductiveBees.contains(mobType)))
-        && random.nextInt(3) == 0) {
-      lootDrops.add(new ItemStack(Items.HONEYCOMB));
-    }
-
-    // Blaze rod drop support.
-    if (Boolean.TRUE.equals(COMMON.forceBlazeDropBlazeRod.get())
-        && mobType.equals(HostileNetherMonster.BLAZE)) {
-      lootDrops.add(new ItemStack(Items.BLAZE_ROD));
-    }
-
-    // Chicken egg drop support.
-    if (Boolean.TRUE.equals(COMMON.forceChickenDropEggs.get())
-        && mobType.equals(PassiveAnimal.CHICKEN)) {
-      lootDrops.add(new ItemStack(Items.EGG));
-    }
-
-    // Ender pearl drop support.
-    if (Boolean.TRUE.equals(COMMON.forceEndermanDropEnderPearl.get())
-        && mobType.equals(HostileMonster.ENDERMAN)) {
-      lootDrops.add(new ItemStack(Items.ENDER_PEARL));
-    }
-
-    // Wither nether start drop support.
-    if (Boolean.TRUE.equals(COMMON.forceWitherDropNetherStar.get())
-        && mobType.equals(BossMonster.WITHER) && random.nextInt(9) == 0) {
-      lootDrops.add(new ItemStack(Items.NETHER_STAR));
-    }
+    // Handle forced drops which are defined in the config.
+    LootManagerDrops.processForcedDrops(filteredLootDrops, mobType);
 
     // Check each single loot drop.
     for (ItemStack lootDrop : lootDrops) {
@@ -294,23 +262,7 @@ public class LootManager {
       filteredLootDrops.add(lootDrop);
     }
 
-    // Return filtered loot drops, if any otherwise try to force a specific drop.
-    if (!filteredLootDrops.isEmpty()) {
-      return filteredLootDrops;
-    }
-
-    // Slime ball drop support.
-    if (Boolean.TRUE.equals(COMMON.forceSlimeDropSlime.get())
-        && mobType.equals(HostileMonster.SLIME)) {
-      filteredLootDrops.add(new ItemStack(Items.SLIME_BALL));
-    }
-
-    // Magma Cream drop support.
-    if (Boolean.TRUE.equals(COMMON.forceMagmaCubeDropMagmaCream.get())
-        && mobType.equals(HostileNetherMonster.MAGMA_CUBE)) {
-      filteredLootDrops.add(new ItemStack(Items.MAGMA_CREAM));
-    }
-
+    // Return filtered loot drops.
     return filteredLootDrops;
   }
 
