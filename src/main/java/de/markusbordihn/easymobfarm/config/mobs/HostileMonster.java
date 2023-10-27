@@ -29,6 +29,7 @@ public class HostileMonster {
   public static final String CREEPER = "minecraft:creeper";
   public static final String ENDERMAN = "minecraft:enderman";
   public static final String HUSK = "minecraft:husk";
+  public static final String PILLAGER = "minecraft:pillager";
   public static final String SKELETON = "minecraft:skeleton";
   public static final String SLIME = "minecraft:slime";
   public static final String SPIDER = "minecraft:spider";
@@ -37,6 +38,6 @@ public class HostileMonster {
   public static final String ZOMBIE_VILLAGER = "minecraft:zombie_villager";
 
 
-  public static final Set<String> All = Set.of(CAVE_SPIDER, CREEPER, ENDERMAN, HUSK, SKELETON, SLIME,
-      SPIDER, WITCH, ZOMBIE, ZOMBIE_VILLAGER);
+  public static final Set<String> All = Set.of(CAVE_SPIDER, CREEPER, ENDERMAN, HUSK, PILLAGER,
+      SKELETON, SLIME, SPIDER, WITCH, ZOMBIE, ZOMBIE_VILLAGER);
 }

@@ -221,23 +221,23 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
     // - No weapon: 10% chance
     // - Weapon: 20% chance
     // - Weapon with sharpness or looting enchantment: 33% chance
-    int experienceDropChange = 0;
+    int experienceDropChance = 0;
     if (hasWeaponItem) {
       if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SHARPNESS, weaponItem) > 0
           || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MOB_LOOTING, weaponItem) > 0) {
-        experienceDropChange =
-            this.random.nextInt(COMMON.experienceDropChangeWithEnchantedWeapon.get());
+        experienceDropChance =
+            this.random.nextInt(COMMON.experienceDropChanceWithEnchantedWeapon.get());
       } else {
-        experienceDropChange = this.random.nextInt(COMMON.experienceDropChangeWithWeapon.get());
+        experienceDropChance = this.random.nextInt(COMMON.experienceDropChanceWithWeapon.get());
       }
     } else {
-      experienceDropChange = this.random.nextInt(COMMON.experienceDropChangeNoWeapon.get());
+      experienceDropChance = this.random.nextInt(COMMON.experienceDropChanceNoWeapon.get());
     }
 
     // Check if we should repair mending items with experience or convert glass bottles to
     // experience bottles.
     boolean hasExperienceItem = experienceItem != null && !experienceItem.isEmpty();
-    if ((hasWeaponItem || hasExperienceItem) && experienceDropChange == 0) {
+    if ((hasWeaponItem || hasExperienceItem) && experienceDropChance == 0) {
 
       // Repair mending items with experience, if damaged.
       if (hasWeaponItem && weaponItem.isDamageableItem() && weaponItem.getDamageValue() > 0
