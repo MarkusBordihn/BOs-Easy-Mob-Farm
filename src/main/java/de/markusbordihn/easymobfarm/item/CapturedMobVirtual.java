@@ -86,7 +86,7 @@ public class CapturedMobVirtual {
     } else if (item instanceof AirItem || item instanceof ExperienceBottleItem
         || item instanceof BottleItem || item instanceof MobFarmTemplateItem
         || item instanceof ArmorItem || item instanceof SignItem || item instanceof DyeItem
-        || item instanceof BedItem || item instanceof BlockItem || item instanceof SwordItem) {
+        || item instanceof BedItem || item instanceof SwordItem) {
       return false;
     }
 
@@ -137,8 +137,6 @@ public class CapturedMobVirtual {
       }
     } else if (item instanceof SpawnEggItem) {
       return true;
-    } else if (!compoundTag.isEmpty()) {
-      log.warn("Unsupported mob catching Item {} {}: {}", item, itemName, compoundTag);
     }
     return false;
   }
