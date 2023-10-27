@@ -5,6 +5,11 @@
 This change log includes the summarized changes.
 For the full changelog, please go to the [Git Hub History][history] instead.
 
+### 2023.10.28
+
+- Added better and additional forced drop options for Bee, Blaze, Chicken, Drowned, Enderman, Slime, MagmaCube, Piglin, Pillager, Wither, Wither Skeleton, Zombie and Zombie Piglin.
+- Improved loot manager to support armor and weapon drops with configurable drop chances.
+
 ### 2023.10.23
 
 Thanks a lot to cringoleg for all of the valuable and detailed bug reports. 👍
@@ -20,7 +25,7 @@ Thanks a lot to cringoleg for all of the valuable and detailed bug reports. 👍
 
 - Fixed Allow dynamic filter options for Iron Golem Farm. #38
 - Fixed Fishing Net (Small) catches all mobs #39
-- Fixed Curseforge Client Changelog link is invalid  #40
+- Fixed Curseforge Client Changelog link is invalid #40
 - Fixed Advancements and Recipes don't work as expected #41
 - Fixed Change naming convention for config variables #42
 

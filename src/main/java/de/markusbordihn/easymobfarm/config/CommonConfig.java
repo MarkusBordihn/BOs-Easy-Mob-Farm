@@ -118,6 +118,11 @@ public class CommonConfig {
           + ". (Use empty list to allow all mobs!)";
     }
 
+    private static final String getForcedDropChanceText(String itemName, String mobName) {
+      return "Defines the forced drop change of " + itemName + " from " + mobName
+          + ". (0 = disabled, lower number = higher change, 1 = every drop)";
+    }
+
     // General config
     public final ForgeConfigSpec.BooleanValue informOwnerAboutFullStorage;
     public final ForgeConfigSpec.BooleanValue logFullStorage;
@@ -128,9 +133,9 @@ public class CommonConfig {
     public final ForgeConfigSpec.ConfigValue<List<String>> generalDeniedMobs;
 
     // Experience Settings
-    public final ForgeConfigSpec.IntValue experienceDropChangeNoWeapon;
-    public final ForgeConfigSpec.IntValue experienceDropChangeWithWeapon;
-    public final ForgeConfigSpec.IntValue experienceDropChangeWithEnchantedWeapon;
+    public final ForgeConfigSpec.IntValue experienceDropChanceNoWeapon;
+    public final ForgeConfigSpec.IntValue experienceDropChanceWithWeapon;
+    public final ForgeConfigSpec.IntValue experienceDropChanceWithEnchantedWeapon;
     public final ForgeConfigSpec.IntValue experienceDropMendingRepairAmount;
 
     // Copper Mob Farm
@@ -358,27 +363,48 @@ public class CommonConfig {
     public final ForgeConfigSpec.ConfigValue<List<String>> witchBottleDeniedMobs;
 
     // Drop Settings
+    public final ForgeConfigSpec.IntValue forceBeeDropHoneycombChance;
 
-    public final ForgeConfigSpec.BooleanValue forceBeeDropHoneycomb;
+    public final ForgeConfigSpec.IntValue forceBlazeDropBlazeRodChance;
 
-    public final ForgeConfigSpec.BooleanValue forceBlazeDropBlazeRod;
-
-    public final ForgeConfigSpec.BooleanValue forceChickenDropEggs;
+    public final ForgeConfigSpec.IntValue forceChickenDropEggChance;
     public final ForgeConfigSpec.BooleanValue disableChickenDropRawChicken;
 
     public final ForgeConfigSpec.BooleanValue disableCowDropRawBeef;
 
-    public final ForgeConfigSpec.BooleanValue forceEndermanDropEnderPearl;
+    public final ForgeConfigSpec.IntValue forceDrownedDropArmorChance;
+    public final ForgeConfigSpec.IntValue forceDrownedDropCopperIngotChance;
+    public final ForgeConfigSpec.IntValue forceDrownedDropTridentChance;
+    public final ForgeConfigSpec.IntValue forceDrownedDropNautilusShellChance;
+
+    public final ForgeConfigSpec.IntValue forceEndermanDropEnderPearlChance;
 
     public final ForgeConfigSpec.BooleanValue disableIronGolemDropPoppy;
 
     public final ForgeConfigSpec.BooleanValue disableSheepDropRawMutton;
 
-    public final ForgeConfigSpec.BooleanValue forceSlimeDropSlime;
+    public final ForgeConfigSpec.IntValue forceSlimeDropSlimeBallChance;
 
-    public final ForgeConfigSpec.BooleanValue forceMagmaCubeDropMagmaCream;
+    public final ForgeConfigSpec.IntValue forceMagmaCubeDropMagmaCreamChance;
 
-    public final ForgeConfigSpec.BooleanValue forceWitherDropNetherStar;
+    public final ForgeConfigSpec.IntValue forcePiglinDropArmorChance;
+    public final ForgeConfigSpec.IntValue forcePiglinDropWeaponChance;
+
+    public final ForgeConfigSpec.IntValue forcePillagerDropArmorChance;
+    public final ForgeConfigSpec.IntValue forcePillagerDropEmeraldChance;
+    public final ForgeConfigSpec.IntValue forcePillagerDropEnchantedBookChance;
+    public final ForgeConfigSpec.IntValue forcePillagerDropWeaponChance;
+
+    public final ForgeConfigSpec.IntValue forceWitherDropNetherStarChance;
+
+    public final ForgeConfigSpec.IntValue forceWitherSkeletonDropWitherSkeletonSkullChance;
+
+    public final ForgeConfigSpec.IntValue forceZombieDropArmorChance;
+    public final ForgeConfigSpec.IntValue forceZombieDropWeaponChance;
+
+    public final ForgeConfigSpec.IntValue forceZombifiedPiglinDropGoldIngotChance;
+    public final ForgeConfigSpec.IntValue forceZombifiedPiglinDropGoldNuggetChance;
+    public final ForgeConfigSpec.IntValue forceZombifiedPiglinDropWeaponChance;
 
     Config(ForgeConfigSpec.Builder builder) {
       builder.comment(Constants.MOD_NAME);
@@ -408,15 +434,15 @@ public class CommonConfig {
       builder.pop();
 
       builder.push("Experience Dropping");
-      experienceDropChangeNoWeapon = builder.comment(
+      experienceDropChanceNoWeapon = builder.comment(
           "Defines the change of dropping experience without a weapon. (lower number = higher change)")
-          .defineInRange("experienceDropChangeNoWeapon", 10, 1, 100);
-      experienceDropChangeWithWeapon = builder.comment(
+          .defineInRange("experienceDropChanceNoWeapon", 10, 1, 100);
+      experienceDropChanceWithWeapon = builder.comment(
           "Defines the change of dropping experience with a weapon. (lower number = higher change)")
-          .defineInRange("experienceDropChangeWithWeapon", 5, 1, 100);
-      experienceDropChangeWithEnchantedWeapon = builder.comment(
+          .defineInRange("experienceDropChanceWithWeapon", 5, 1, 100);
+      experienceDropChanceWithEnchantedWeapon = builder.comment(
           "Defines the change of dropping experience with an enchanted weapon. (lower number = higher change)")
-          .defineInRange("experienceDropChangeWithEnchantedWeapon", 3, 1, 100);
+          .defineInRange("experienceDropChanceWithEnchantedWeapon", 3, 1, 100);
       experienceDropMendingRepairAmount = builder.comment(
           "Defines the max amount to repair a mending weapon with experience points. (higher number = more repair)")
           .defineInRange("experienceDropMendingRepairAmount", 10, 1, 100);
@@ -979,20 +1005,20 @@ public class CommonConfig {
       builder.comment("Configuration for drops like forced and disabled drops.");
 
       builder.push("Bee Drop Settings");
-      forceBeeDropHoneycomb = builder.comment("Enable/Disable forced honeycomb drops.")
-          .define("forceBeeDropHoneycomb", true);
+      forceBeeDropHoneycombChance = builder.comment(getForcedDropChanceText("honeycomb", "bee"))
+          .defineInRange("forceBeeDropHoneycombChance", 2, 0, 100);
       builder.pop();
 
       builder.push("Blaze Drop Settings");
-      forceBlazeDropBlazeRod = builder.comment("Enable/Disable forced blaze rod drops.")
-          .define("forceBlazeDropBlazeRod", false);
+      forceBlazeDropBlazeRodChance = builder.comment(getForcedDropChanceText("blaze rod", "blaze"))
+          .defineInRange("forceBlazeDropBlazeRodChance", 4, 0, 100);
       builder.pop();
 
       builder.push("Chicken Drop Settings");
       disableChickenDropRawChicken = builder.comment("Disable raw chicken drops.")
           .define("disableChickenDropRawChicken", false);
-      forceChickenDropEggs = builder.comment("Enable/Disable forced chicken egg drops.")
-          .define("forceChickenDropEggs", true);
+      forceChickenDropEggChance = builder.comment(getForcedDropChanceText("egg", "chicken"))
+          .defineInRange("forceChickenDropEggChance", 2, 0, 100);
       builder.pop();
 
       builder.push("Cow Drop Settings");
@@ -1000,10 +1026,23 @@ public class CommonConfig {
           builder.comment("Disable cow raw beef drops.").define("disableCowDropRawBeef", false);
       builder.pop();
 
+      builder.push("Drowned Drop Settings");
+      forceDrownedDropArmorChance = builder.comment(getForcedDropChanceText("armor", "drowned"))
+          .defineInRange("forceDrownedDropArmorChance", 12, 0, 100);
+      forceDrownedDropCopperIngotChance =
+          builder.comment(getForcedDropChanceText("copper ingot", "drowned"))
+              .defineInRange("forceDrownedDropCopperIngotChance", 10, 0, 100);
+      forceDrownedDropNautilusShellChance =
+          builder.comment(getForcedDropChanceText("nautilus shell", "drowned"))
+              .defineInRange("forceDrownedDropNautilusShellChance", 30, 0, 100);
+      forceDrownedDropTridentChance = builder.comment(getForcedDropChanceText("trident", "drowned"))
+          .defineInRange("forceDrownedDropTridentChance", 18, 0, 100);
+      builder.pop();
+
       builder.push("Enderman Drop Settings");
-      forceEndermanDropEnderPearl =
-          builder.comment("Enable/Disable forced enderman ender pearl drops.")
-              .define("forceEndermanDropEnderPearl", false);
+      forceEndermanDropEnderPearlChance =
+          builder.comment(getForcedDropChanceText("ender pearl", "enderman"))
+              .defineInRange("forceEndermanDropEnderPearlChance", 2, 0, 100);
       builder.pop();
 
       builder.push("Iron Golem Drop Settings");
@@ -1017,20 +1056,65 @@ public class CommonConfig {
       builder.pop();
 
       builder.push("Slime Drop Settings");
-      forceSlimeDropSlime = builder.comment("Enable/Disable forced slime drops regardless of size.")
-          .define("forceSlimeDropSlime", true);
+      forceSlimeDropSlimeBallChance = builder.comment(getForcedDropChanceText("slime", "slime"))
+          .defineInRange("forceSlimeDropSlimeBallChance", 2, 0, 100);
       builder.pop();
 
       builder.push("Magma Cube Drop Settings");
-      forceMagmaCubeDropMagmaCream =
-          builder.comment("Enable/Disable forced magma cream drops regardless of size.")
-              .define("forceMagmaCubeDropMagmaCream", true);
+      forceMagmaCubeDropMagmaCreamChance =
+          builder.comment(getForcedDropChanceText("magma cream", "magma cube"))
+              .defineInRange("forceMagmaCubeDropMagmaCreamChance", 2, 0, 100);
+      builder.pop();
+
+      builder.push("Piglin Drop Settings");
+      forcePiglinDropArmorChance = builder.comment(getForcedDropChanceText("armor", "piglin"))
+          .defineInRange("forcePiglinDropArmorChance", 12, 0, 100);
+      forcePiglinDropWeaponChance = builder.comment(getForcedDropChanceText("weapon", "piglin"))
+          .defineInRange("forcePiglinDropWeaponChance", 12, 0, 100);
+      builder.pop();
+
+      builder.push("Pillager Drop Settings");
+      forcePillagerDropArmorChance = builder.comment(getForcedDropChanceText("armor", "pillager"))
+          .defineInRange("forcePillagerDropArmorChance", 16, 0, 100);
+      forcePillagerDropEmeraldChance =
+          builder.comment(getForcedDropChanceText("emerald", "pillager"))
+              .defineInRange("forcePillagerDropEmeraldChance", 8, 0, 100);
+      forcePillagerDropEnchantedBookChance =
+          builder.comment(getForcedDropChanceText("enchanted book", "pillager"))
+              .defineInRange("forcePillagerDropEnchantedBookChance", 20, 0, 100);
+      forcePillagerDropWeaponChance = builder.comment(getForcedDropChanceText("weapon", "pillager"))
+          .defineInRange("forcePillagerDropWeaponChance", 16, 0, 100);
       builder.pop();
 
       builder.push("Wither Drop Settings");
-      forceWitherDropNetherStar =
-          builder.comment("Enable/Disable forced nether star drops from wither.")
-              .define("forceWitherDropNetherStar", false);
+      forceWitherDropNetherStarChance =
+          builder.comment(getForcedDropChanceText("nether star", "wither"))
+              .defineInRange("forceWitherDropNetherStarChance", 1, 0, 100);
+      builder.pop();
+
+      builder.push("Wither Skeleton Drop Settings");
+      forceWitherSkeletonDropWitherSkeletonSkullChance =
+          builder.comment(getForcedDropChanceText("wither skeleton skull", "wither skeleton"))
+              .defineInRange("forceWitherSkeletonDropWitherSkeletonSkullChance", 10, 0, 100);
+      builder.pop();
+
+      builder.push("Zombie Drop Settings");
+      forceZombieDropArmorChance = builder.comment(getForcedDropChanceText("armor", "zombie"))
+          .defineInRange("forceZombieDropArmorChance", 50, 0, 100);
+      forceZombieDropWeaponChance = builder.comment(getForcedDropChanceText("weapon", "zombie"))
+          .defineInRange("forceZombieDropWeaponChance", 100, 0, 100);
+      builder.pop();
+
+      builder.push("Zombified Piglin Drop Settings");
+      forceZombifiedPiglinDropGoldNuggetChance =
+          builder.comment(getForcedDropChanceText("gold nugget", "zombified piglin"))
+              .defineInRange("forceZombifiedPiglinDropGoldNuggetChance", 2, 0, 100);
+      forceZombifiedPiglinDropGoldIngotChance =
+          builder.comment(getForcedDropChanceText("gold ingot", "zombified piglin"))
+              .defineInRange("forceZombifiedPiglinDropGoldIngotChance", 4, 0, 100);
+      forceZombifiedPiglinDropWeaponChance =
+          builder.comment(getForcedDropChanceText("weapon", "zombified piglin"))
+              .defineInRange("forceZombifiedPiglinDropWeaponChance", 12, 0, 100);
       builder.pop();
 
       builder.pop();
