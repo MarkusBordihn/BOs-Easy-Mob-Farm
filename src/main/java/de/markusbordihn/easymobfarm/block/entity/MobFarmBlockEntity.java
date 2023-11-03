@@ -201,18 +201,22 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
     boolean hasWeaponItem = weaponItem != null && !weaponItem.isEmpty();
     if (hasWeaponItem && weaponItem.isDamageableItem()
         && Boolean.TRUE.equals(COMMON.damageWeaponItem.get())) {
+      int unbreakingLevel = weaponItem.getEnchantmentLevel(Enchantments.UNBREAKING);
       // Check if weapon has unbreaking enchantment and decrease damage value.
       // - Unbreaking 0: 0-10 damage
-      // - Unbreaking 1: 0-5 damage
+      // - Unbreaking 1: 0-6 damage
       // - Unbreaking 2: 0-3 damage
       // - Unbreaking 3: 0-2 damage
-      int unbreakingLevel = weaponItem.getEnchantmentLevel(Enchantments.UNBREAKING) + 1;
-      int damageValue = this.random.nextInt(Math.max(0, 10 / unbreakingLevel));
-
-      if (weaponItem.getDamageValue() + damageValue < weaponItem.getMaxDamage()) {
-        weaponItem.setDamageValue(weaponItem.getDamageValue() + damageValue);
-      } else {
-        blockEntity.items.set(MobFarmMenu.WEAPON_SLOT, ItemStack.EMPTY);
+      int randomDamageValue = this.random.nextInt(11);
+      int damageValue =
+          randomDamageValue - (unbreakingLevel * 2) > 0 ? randomDamageValue - (unbreakingLevel * 2)
+              : 0;
+      if (damageValue > 0) {
+        if (weaponItem.getDamageValue() + damageValue < weaponItem.getMaxDamage()) {
+          weaponItem.setDamageValue(weaponItem.getDamageValue() + damageValue);
+        } else {
+          blockEntity.items.set(MobFarmMenu.WEAPON_SLOT, ItemStack.EMPTY);
+        }
       }
     }
 
