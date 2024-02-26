@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,30 +19,27 @@
 
 package de.markusbordihn.easymobfarm.client.textures;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
+import de.markusbordihn.easymobfarm.Constants;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.InventoryMenu;
-
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-
-import de.markusbordihn.easymobfarm.Constants;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @EventBusSubscriber(value = Dist.CLIENT, bus = EventBusSubscriber.Bus.MOD)
 public class ModTextures {
-
-  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   public static final ResourceLocation EMPTY_EXPERIENCE_BOTTLE =
       new ResourceLocation(Constants.MOD_ID, "item/empty_experience_bottle");
   public static final ResourceLocation EMPTY_SWORD =
       new ResourceLocation(Constants.MOD_ID, "item/empty_sword");
+  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  protected ModTextures() {}
+  protected ModTextures() {
+  }
 
   @SubscribeEvent
   public static void handleTextureStitchEvent(TextureStitchEvent.Pre event) {

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -18,14 +18,6 @@
  */
 
 package de.markusbordihn.easymobfarm.item;
-
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
-
-import net.minecraftforge.registries.RegistryObject;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
@@ -48,8 +40,8 @@ import de.markusbordihn.easymobfarm.block.farm.gold.GoldSwampFarm;
 import de.markusbordihn.easymobfarm.block.farm.iron.IronAnimalPlainsFarm;
 import de.markusbordihn.easymobfarm.block.farm.iron.IronBeeHiveFarm;
 import de.markusbordihn.easymobfarm.block.farm.iron.IronDesertFarm;
-import de.markusbordihn.easymobfarm.block.farm.iron.IronMonsterPlainsCaveFarm;
 import de.markusbordihn.easymobfarm.block.farm.iron.IronJungleFarm;
+import de.markusbordihn.easymobfarm.block.farm.iron.IronMonsterPlainsCaveFarm;
 import de.markusbordihn.easymobfarm.block.farm.iron.IronNetherFortressFarm;
 import de.markusbordihn.easymobfarm.block.farm.iron.IronOceanFarm;
 import de.markusbordihn.easymobfarm.block.farm.iron.IronSwampFarm;
@@ -62,12 +54,12 @@ import de.markusbordihn.easymobfarm.block.farm.netherite.NetheriteNetherFortress
 import de.markusbordihn.easymobfarm.block.farm.netherite.NetheriteOceanFarm;
 import de.markusbordihn.easymobfarm.block.farm.netherite.NetheriteSwampFarm;
 import de.markusbordihn.easymobfarm.block.farm.special.CreativeMobFarm;
-import de.markusbordihn.easymobfarm.item.mobcatcher.FishingBowl;
 import de.markusbordihn.easymobfarm.item.mobcatcher.CatchCage;
 import de.markusbordihn.easymobfarm.item.mobcatcher.CatchCageSmall;
 import de.markusbordihn.easymobfarm.item.mobcatcher.CollarSmall;
 import de.markusbordihn.easymobfarm.item.mobcatcher.CreativeMobCatcher;
 import de.markusbordihn.easymobfarm.item.mobcatcher.EnderLasso;
+import de.markusbordihn.easymobfarm.item.mobcatcher.FishingBowl;
 import de.markusbordihn.easymobfarm.item.mobcatcher.FishingNetSmall;
 import de.markusbordihn.easymobfarm.item.mobcatcher.GoldenLasso;
 import de.markusbordihn.easymobfarm.item.mobcatcher.InsectNet;
@@ -77,16 +69,17 @@ import de.markusbordihn.easymobfarm.item.mobcatcher.PoppyBouquet;
 import de.markusbordihn.easymobfarm.item.mobcatcher.UrnSmall;
 import de.markusbordihn.easymobfarm.item.mobcatcher.WitchBottle;
 import de.markusbordihn.easymobfarm.tabs.EasyMobFarmTab;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 public class ModItems {
 
-  protected ModItems() {
-
-  }
-
   public static final DeferredRegister<Item> ITEMS =
       DeferredRegister.create(ForgeRegistries.ITEMS, Constants.MOD_ID);
-
   // Mob Capture Items
   public static final RegistryObject<Item> CAPTURE_NET = ITEMS.register("capture_net",
       () -> new Net(new Item.Properties().stacksTo(1).durability(1000).tab(EasyMobFarmTab.TOOLS)));
@@ -129,7 +122,6 @@ public class ModItems {
   public static final RegistryObject<Item> WITCH_BOTTLE =
       ITEMS.register("witch_bottle", () -> new WitchBottle(
           new Item.Properties().stacksTo(1).durability(15).tab(EasyMobFarmTab.TOOLS)));
-
   // Mob Farm Templates
   public static final RegistryObject<Item> COPPER_MOB_FARM_TEMPLATE =
       ITEMS.register("copper_mob_farm_template",
@@ -147,7 +139,6 @@ public class ModItems {
       ITEMS.register("netherite_mob_farm_template",
           () -> new MobFarmTemplateItem(ModBlocks.NETHERITE_MOB_FARM_TEMPLATE.get(),
               new Item.Properties().tab(CreativeModeTab.TAB_BUILDING_BLOCKS)));
-
   // Mob Farms - Tier Copper
   public static final RegistryObject<Item> COPPER_ANIMAL_PLAINS_FARM = ITEMS.register(
       CopperAnimalPlainsFarm.NAME, () -> new BlockItem(ModBlocks.COPPER_ANIMAL_PLAINS_FARM.get(),
@@ -175,7 +166,6 @@ public class ModItems {
   public static final RegistryObject<Item> COPPER_SWAMP_FARM =
       ITEMS.register(CopperSwampFarm.NAME, () -> new BlockItem(ModBlocks.COPPER_SWAMP_FARM.get(),
           new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
-
   // Mob Farms - Tier Iron
   public static final RegistryObject<Item> IRON_ANIMAL_PLAINS_FARM = ITEMS.register(
       IronAnimalPlainsFarm.NAME, () -> new BlockItem(ModBlocks.IRON_ANIMAL_PLAINS_FARM.get(),
@@ -202,7 +192,6 @@ public class ModItems {
   public static final RegistryObject<Item> IRON_SWAMP_FARM =
       ITEMS.register(IronSwampFarm.NAME, () -> new BlockItem(ModBlocks.IRON_SWAMP_FARM.get(),
           new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
-
   // Mob Farms - Tier Gold
   public static final RegistryObject<Item> GOLD_ANIMAL_PLAINS_FARM = ITEMS.register(
       GoldAnimalPlainsFarm.NAME, () -> new BlockItem(ModBlocks.GOLD_ANIMAL_PLAINS_FARM.get(),
@@ -229,7 +218,6 @@ public class ModItems {
   public static final RegistryObject<Item> GOLD_SWAMP_FARM =
       ITEMS.register(GoldSwampFarm.NAME, () -> new BlockItem(ModBlocks.GOLD_SWAMP_FARM.get(),
           new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
-
   // Mob Farms - Tier Netherite
   public static final RegistryObject<Item> NETHERITE_ANIMAL_PLAINS_FARM =
       ITEMS.register(NetheriteAnimalPlainsFarm.NAME,
@@ -258,13 +246,15 @@ public class ModItems {
   public static final RegistryObject<Item> NETHERITE_SWAMP_FARM = ITEMS
       .register(NetheriteSwampFarm.NAME, () -> new BlockItem(ModBlocks.NETHERITE_SWAMP_FARM.get(),
           new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
-
   // Special Mob Farms
   public static final RegistryObject<Item> CREATIVE_MOB_FARM =
       ITEMS.register(CreativeMobFarm.NAME, () -> new BlockItem(ModBlocks.CREATIVE_MOB_FARM.get(),
           new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
-
   public static final RegistryObject<Item> IRON_GOLEM_FARM =
       ITEMS.register("iron_golem_farm", () -> new BlockItem(ModBlocks.IRON_GOLEM_FARM.get(),
           new Item.Properties().tab(EasyMobFarmTab.MOB_FARM)));
+
+  protected ModItems() {
+
+  }
 }

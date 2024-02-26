@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,15 +19,19 @@
 
 package de.markusbordihn.easymobfarm.block;
 
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
+import de.markusbordihn.easymobfarm.config.CommonConfig;
+import de.markusbordihn.easymobfarm.config.MobTypeManager;
+import de.markusbordihn.easymobfarm.data.FarmTier;
+import de.markusbordihn.easymobfarm.item.CapturedMob;
+import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
+import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
+import de.markusbordihn.easymobfarm.text.TranslatableText;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-
 import javax.annotation.Nullable;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -60,42 +64,40 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
-import de.markusbordihn.easymobfarm.config.CommonConfig;
-import de.markusbordihn.easymobfarm.config.MobTypeManager;
-import de.markusbordihn.easymobfarm.data.FarmTier;
-import de.markusbordihn.easymobfarm.item.CapturedMob;
-import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
-import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
-import de.markusbordihn.easymobfarm.text.TranslatableText;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatible {
 
-  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
-
-  protected static final CommonConfig.Config COMMON = CommonConfig.COMMON;
-
   public static final String NAME = "mob_farm";
   public static final String SUPPORTED_MOBS_TEXT = "supported_mobs";
-
   public static final BooleanProperty POWERED = BooleanProperty.create("powered");
   public static final BooleanProperty WORKING = BooleanProperty.create("working");
   public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-
   public static final Set<String> ACCEPTED_MOB_TYPES = Collections.emptySet();
   public static final Set<String> DENIED_MOB_TYPES = Collections.emptySet();
-
+  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+  protected static final CommonConfig.Config COMMON = CommonConfig.COMMON;
   protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 
   public MobFarmBlock(BlockBehaviour.Properties properties) {
     super(properties);
     this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH)
         .setValue(WORKING, Boolean.valueOf(false)).setValue(POWERED, Boolean.valueOf(false)));
+  }
+
+  public static int getLightLevel(BlockState blockState) {
+    return Boolean.TRUE.equals(blockState.getValue(MobFarmBlock.WORKING)) ? 15 : 8;
+  }
+
+  public static void logAcceptedMobTypes(String name, Set<String> acceptedMobTypes) {
+    if (acceptedMobTypes == null || acceptedMobTypes.isEmpty()) {
+      log.info("The {} will accept all mobs.", name);
+    } else {
+      log.info("The {} will accept only the following mobs: {}", name, acceptedMobTypes);
+    }
   }
 
   protected void openContainer(Level level, BlockPos blockPos, Player player) {
@@ -110,10 +112,6 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
 
   public Set<String> getGeneralDeniedMobTypes() {
     return MobTypeManager.getGeneralDeniedMobTypes();
-  }
-
-  public static int getLightLevel(BlockState blockState) {
-    return Boolean.TRUE.equals(blockState.getValue(MobFarmBlock.WORKING)) ? 15 : 8;
   }
 
   public Set<String> getAcceptedMobTypes() {
@@ -172,7 +170,7 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
         TranslatableComponent supportedMobsOverview =
             (TranslatableComponent) new TranslatableComponent(
                 Constants.TEXT_PREFIX + getFarmDescriptionId()).append(" ")
-                    .withStyle(ChatFormatting.GREEN);
+                .withStyle(ChatFormatting.GREEN);
         supportedMobsOverview.append(mobTypeOverview).append("...");
         tooltipList.add(supportedMobsOverview);
       }
@@ -346,14 +344,6 @@ public class MobFarmBlock extends BaseEntityBlock implements CapturedMobCompatib
   @SuppressWarnings("java:S1874")
   public float getShadeBrightness(BlockState state, BlockGetter worldIn, BlockPos pos) {
     return 1F;
-  }
-
-  public static void logAcceptedMobTypes(String name, Set<String> acceptedMobTypes) {
-    if (acceptedMobTypes == null || acceptedMobTypes.isEmpty()) {
-      log.info("The {} will accept all mobs.", name);
-    } else {
-      log.info("The {} will accept only the following mobs: {}", name, acceptedMobTypes);
-    }
   }
 
 }

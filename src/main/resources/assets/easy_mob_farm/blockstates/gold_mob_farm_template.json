@@ -1,5 +1,5 @@
 {
   "variants": {
-    "": { "model": "easy_mob_farm:block/mob_farm_template/gold_mob_farm_template" }
+    "": {"model": "easy_mob_farm:block/mob_farm_template/gold_mob_farm_template"}
   }
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -18,12 +18,6 @@
  */
 
 package de.markusbordihn.easymobfarm.menu;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import net.minecraft.world.inventory.MenuType;
-import net.minecraftforge.event.RegistryEvent;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.menu.farm.copper.CopperAnimalPlainsFarmMenu;
@@ -60,12 +54,17 @@ import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteOceanFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteSwampFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.special.CreativeMobFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.special.IronGolemFarmMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraftforge.event.RegistryEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ContainerMenu {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  protected ContainerMenu() {}
+  protected ContainerMenu() {
+  }
 
   public static void registerContainerMenu(RegistryEvent.Register<MenuType<?>> event) {
     log.info("{} Container Menu ...", Constants.LOG_REGISTER_PREFIX);

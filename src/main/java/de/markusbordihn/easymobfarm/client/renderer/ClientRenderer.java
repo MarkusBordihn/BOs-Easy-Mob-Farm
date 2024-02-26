@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,15 +19,6 @@
 
 package de.markusbordihn.easymobfarm.client.renderer;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
-
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.client.renderer.farm.AnimalPlainsFarmRenderer;
@@ -40,12 +31,19 @@ import de.markusbordihn.easymobfarm.client.renderer.farm.MonsterPlainsCaveFarmRe
 import de.markusbordihn.easymobfarm.client.renderer.farm.NetherFortressFarmRenderer;
 import de.markusbordihn.easymobfarm.client.renderer.farm.OceanFarmRenderer;
 import de.markusbordihn.easymobfarm.client.renderer.farm.SwampFarmRenderer;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ClientRenderer {
 
   public static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  protected ClientRenderer() {}
+  protected ClientRenderer() {
+  }
 
   public static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
     log.info("{} Block Entity Renderers ...", Constants.LOG_REGISTER_PREFIX);

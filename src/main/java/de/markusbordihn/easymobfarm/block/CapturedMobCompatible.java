@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,6 +19,7 @@
 
 package de.markusbordihn.easymobfarm.block;
 
+import de.markusbordihn.easymobfarm.item.CapturedMob;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -28,21 +29,19 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-import de.markusbordihn.easymobfarm.item.CapturedMob;
-
-/**
+/*
  * This interface is used to interact with easy mob farm mobs.
  */
 
 public interface CapturedMobCompatible {
 
-  /**
+  /*
    * Defines the action for consuming the captured mob.
    */
   InteractionResult consumeCapturedMob(Level level, BlockPos blockPos, BlockState blockState,
       BlockEntity blockEntity, ItemStack itemStack, UseOnContext context);
 
-  /**
+  /*
    * Defines if the block is able to consume the captured mob. If this is false consumeCapturedMob
    * will not be triggered.
    */

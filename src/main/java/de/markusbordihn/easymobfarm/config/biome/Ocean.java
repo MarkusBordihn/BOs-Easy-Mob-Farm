@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,37 +19,32 @@
 
 package de.markusbordihn.easymobfarm.config.biome;
 
+import de.markusbordihn.easymobfarm.config.mobs.AmbientWaterAnimal;
+import de.markusbordihn.easymobfarm.config.mobs.HostileWaterMonster;
+import de.markusbordihn.easymobfarm.config.mobs.PassiveWaterAnimal;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import de.markusbordihn.easymobfarm.config.mobs.AmbientWaterAnimal;
-import de.markusbordihn.easymobfarm.config.mobs.HostileWaterMonster;
-import de.markusbordihn.easymobfarm.config.mobs.PassiveWaterAnimal;
-
 public class Ocean {
 
   // Reference: https://minecraft.fandom.com/wiki/Ocean
 
-  protected Ocean() {}
-
   public static final Set<String> Passive = new HashSet<>(Arrays.asList(
-  // @formatter:off
+      // @formatter:off
     PassiveWaterAnimal.GLOW_SQUID,
     PassiveWaterAnimal.SQUID
   // @formatter:on
   ));
-
   public static final Set<String> Hostile = new HashSet<>(Arrays.asList(
-  // @formatter:off
+      // @formatter:off
     HostileWaterMonster.DROWNED
   // @formatter:on
   ));
-
   public static final Set<String> Ambient = new HashSet<>(Arrays.asList(
-  // @formatter:off
+      // @formatter:off
     AmbientWaterAnimal.COD,
     AmbientWaterAnimal.SALMON,
     AmbientWaterAnimal.ATLANTIC_COD,
@@ -62,8 +57,10 @@ public class Ocean {
     AmbientWaterAnimal.RAINBOW_TROUT
   // @formatter:on
   ));
-
   public static final Set<String> All = Stream.concat(
       Stream.concat(Passive.stream(), Hostile.stream()).collect(Collectors.toSet()).stream(),
       Ambient.stream()).collect(Collectors.toSet());
+
+  protected Ocean() {
+  }
 }

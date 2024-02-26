@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,11 +19,16 @@
 
 package de.markusbordihn.easymobfarm.block.farm.iron;
 
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.block.MobFarmBlock;
+import de.markusbordihn.easymobfarm.block.ModBlocks;
+import de.markusbordihn.easymobfarm.block.entity.farm.iron.IronBeeHiveFarmEntity;
+import de.markusbordihn.easymobfarm.data.FarmTier;
+import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
+import de.markusbordihn.easymobfarm.text.TranslatableText;
 import java.util.List;
 import java.util.Set;
-
 import javax.annotation.Nullable;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -38,14 +43,6 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.MobFarmBlock;
-import de.markusbordihn.easymobfarm.block.ModBlocks;
-import de.markusbordihn.easymobfarm.block.entity.farm.iron.IronBeeHiveFarmEntity;
-import de.markusbordihn.easymobfarm.data.FarmTier;
-import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
-import de.markusbordihn.easymobfarm.text.TranslatableText;
 
 public class IronBeeHiveFarm extends MobFarmBlock {
 
@@ -123,7 +120,7 @@ public class IronBeeHiveFarm extends MobFarmBlock {
         // productive bees
         if (!((!Constants.PRODUCTIVE_BEES_LOADED && acceptedMob.startsWith("productivebees:"))
             || (acceptedMobTypes.size() >= 16 && Constants.PRODUCTIVE_BEES_LOADED
-                && acceptedMob.startsWith("productivebees:")))) {
+            && acceptedMob.startsWith("productivebees:")))) {
           TranslatableComponent acceptedMobName = TranslatableText.getEntityName(acceptedMob);
           if (!acceptedMobName.getString().isBlank()) {
             mobTypeOverview.append(acceptedMobName).append(", ")
@@ -139,7 +136,7 @@ public class IronBeeHiveFarm extends MobFarmBlock {
         TranslatableComponent supportedMobsOverview =
             (TranslatableComponent) new TranslatableComponent(
                 Constants.TEXT_PREFIX + getFarmDescriptionId()).append(" ")
-                    .withStyle(ChatFormatting.GREEN);
+                .withStyle(ChatFormatting.GREEN);
         supportedMobsOverview.append(mobTypeOverview).append("...");
         tooltipList.add(supportedMobsOverview);
       }

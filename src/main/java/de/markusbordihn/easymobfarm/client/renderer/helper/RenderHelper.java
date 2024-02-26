@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,15 +19,21 @@
 
 package de.markusbordihn.easymobfarm.client.renderer.helper;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import java.util.Random;
-
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
-
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.block.MobFarmBlock;
+import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
+import de.markusbordihn.easymobfarm.config.mobs.AmbientWaterAnimal;
+import de.markusbordihn.easymobfarm.config.mobs.BeeAnimal;
+import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
+import de.markusbordihn.easymobfarm.config.mobs.HostileNetherMonster;
+import de.markusbordihn.easymobfarm.config.mobs.HostileWaterMonster;
+import de.markusbordihn.easymobfarm.config.mobs.NeutralMonster;
+import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
+import de.markusbordihn.easymobfarm.config.mobs.PassiveWaterAnimal;
+import java.util.Random;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -40,18 +46,8 @@ import net.minecraft.world.entity.animal.Squid;
 import net.minecraft.world.entity.monster.Spider;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.entity.BlockEntity;
-
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.MobFarmBlock;
-import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
-import de.markusbordihn.easymobfarm.config.mobs.AmbientWaterAnimal;
-import de.markusbordihn.easymobfarm.config.mobs.BeeAnimal;
-import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
-import de.markusbordihn.easymobfarm.config.mobs.HostileNetherMonster;
-import de.markusbordihn.easymobfarm.config.mobs.HostileWaterMonster;
-import de.markusbordihn.easymobfarm.config.mobs.NeutralMonster;
-import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
-import de.markusbordihn.easymobfarm.config.mobs.PassiveWaterAnimal;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class RenderHelper {
 

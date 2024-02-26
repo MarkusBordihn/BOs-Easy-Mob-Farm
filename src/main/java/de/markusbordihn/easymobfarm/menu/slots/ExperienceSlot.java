@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -20,15 +20,13 @@
 package de.markusbordihn.easymobfarm.menu.slots;
 
 import com.mojang.datafixers.util.Pair;
-
+import de.markusbordihn.easymobfarm.client.textures.ModTextures;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-
-import de.markusbordihn.easymobfarm.client.textures.ModTextures;
 
 public class ExperienceSlot extends Slot {
 

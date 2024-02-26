@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,9 +19,17 @@
 
 package de.markusbordihn.easymobfarm.menu;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.block.MobFarmBlock;
+import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
+import de.markusbordihn.easymobfarm.config.MobTypeManager;
+import de.markusbordihn.easymobfarm.data.RedstoneMode;
+import de.markusbordihn.easymobfarm.item.CapturedMob;
+import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
+import de.markusbordihn.easymobfarm.menu.slots.CapturedMobSlot;
+import de.markusbordihn.easymobfarm.menu.slots.ExperienceSlot;
+import de.markusbordihn.easymobfarm.menu.slots.LockedResultSlot;
+import de.markusbordihn.easymobfarm.menu.slots.WeaponSlot;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -38,27 +46,11 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-
 import net.minecraftforge.registries.ObjectHolder;
-
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.MobFarmBlock;
-import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
-import de.markusbordihn.easymobfarm.config.MobTypeManager;
-import de.markusbordihn.easymobfarm.data.RedstoneMode;
-import de.markusbordihn.easymobfarm.item.CapturedMob;
-import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
-import de.markusbordihn.easymobfarm.menu.slots.CapturedMobSlot;
-import de.markusbordihn.easymobfarm.menu.slots.ExperienceSlot;
-import de.markusbordihn.easymobfarm.menu.slots.LockedResultSlot;
-import de.markusbordihn.easymobfarm.menu.slots.WeaponSlot;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class MobFarmMenu extends AbstractContainerMenu {
-
-  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
-
-  @ObjectHolder("easy_mob_farm:mob_farm")
-  public static MenuType<MobFarmMenu> TYPE;
 
   // Define Slot index for easier access
   public static final int CAPTURED_MOB_SLOT = 0;
@@ -69,11 +61,9 @@ public class MobFarmMenu extends AbstractContainerMenu {
   public static final int RESULT_5_SLOT = 5;
   public static final int WEAPON_SLOT = 6;
   public static final int EXPERIENCE_SLOT = 7;
-
   public static final int PLAYER_SLOT_START = 9;
   public static final int PLAYER_INVENTORY_SLOT_START = PLAYER_SLOT_START;
   public static final int PLAYER_SLOT_STOP = 3 * 9 + PLAYER_INVENTORY_SLOT_START + 8;
-
   // Storing slot position statically to able to access them from other UI parts.
   public static final int CAPTURED_MOB_SLOT_LEFT = 81;
   public static final int CAPTURED_MOB_SLOT_TOP = 51;
@@ -83,7 +73,9 @@ public class MobFarmMenu extends AbstractContainerMenu {
   public static final int WEAPON_SLOT_TOP = 51;
   public static final int EXPERIENCE_SLOT_LEFT = 152;
   public static final int EXPERIENCE_SLOT_TOP = 100;
-
+  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+  @ObjectHolder("easy_mob_farm:mob_farm")
+  public static MenuType<MobFarmMenu> TYPE;
   // Defining basic layout options
   protected static int containerSize = 8;
   private static int slotSize = 18;

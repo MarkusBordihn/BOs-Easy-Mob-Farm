@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -23,14 +23,13 @@ import java.util.Set;
 
 public final class PassiveWaterAnimal {
 
-  protected PassiveWaterAnimal() {}
-
   public static final String GLOW_SQUID = "minecraft:glow_squid";
   public static final String SQUID = "minecraft:squid";
-
   public static final String BLOB_FISH = "alexsmobs:blobfish";
   public static final String CATFISH = "alexsmobs:catfish";
   public static final String LOBSTER = "alexsmobs:lobster";
-
   public static final Set<String> All = Set.of(GLOW_SQUID, SQUID, BLOB_FISH, CATFISH, LOBSTER);
+
+  protected PassiveWaterAnimal() {
+  }
 }

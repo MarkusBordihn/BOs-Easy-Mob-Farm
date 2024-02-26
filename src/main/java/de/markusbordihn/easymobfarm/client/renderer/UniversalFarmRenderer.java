@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -20,16 +20,15 @@
 package de.markusbordihn.easymobfarm.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-
+import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
+import de.markusbordihn.easymobfarm.client.renderer.helper.RenderHelper;
+import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.entity.EntityType;
 
-import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
-import de.markusbordihn.easymobfarm.client.renderer.helper.RenderHelper;
-import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
-
 public class UniversalFarmRenderer extends MobFarmRendererBase<MobFarmBlockEntity> {
+
   public UniversalFarmRenderer(BlockEntityRendererProvider.Context context) {
     super(context);
   }
@@ -58,7 +57,7 @@ public class UniversalFarmRenderer extends MobFarmRendererBase<MobFarmBlockEntit
     // This makes a huge different with up to 20% more fps with a larger farm.
     if (renderHelper.renderAnimal(poseStack, buffer, combinedLight, farmMobType)
         || renderHelper.renderBee(poseStack, buffer, combinedLight, farmMobType, farmMobSubType,
-            farmMobEntityType)
+        farmMobEntityType)
         || renderHelper.renderMonster(poseStack, buffer, combinedLight, farmMobType)
         || renderHelper.renderSpecialEntity(poseStack, buffer, combinedLight, farmMobType)
         || renderHelper.renderWaterEntity(poseStack, buffer, combinedLight, farmMobType)) {

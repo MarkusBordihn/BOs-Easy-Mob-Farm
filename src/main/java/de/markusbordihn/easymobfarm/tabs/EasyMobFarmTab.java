@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -25,17 +25,17 @@ import net.minecraft.world.item.ItemStack;
 
 public class EasyMobFarmTab {
 
-  protected EasyMobFarmTab() {}
-
   public static final CreativeModeTab MOB_FARM = new CreativeModeTab("easy_mob_farm") {
     public ItemStack makeIcon() {
       return new ItemStack(ModItems.IRON_ANIMAL_PLAINS_FARM.get());
     }
   };
-
   public static final CreativeModeTab TOOLS = new CreativeModeTab("easy_mob_farm_tools") {
     public ItemStack makeIcon() {
       return new ItemStack(ModItems.COLLAR_SMALL.get());
     }
   };
+
+  protected EasyMobFarmTab() {
+  }
 }

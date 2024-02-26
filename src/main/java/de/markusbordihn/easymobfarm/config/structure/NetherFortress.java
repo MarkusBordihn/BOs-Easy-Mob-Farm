@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,20 +19,16 @@
 
 package de.markusbordihn.easymobfarm.config.structure;
 
+import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
+import de.markusbordihn.easymobfarm.config.mobs.HostileNetherMonster;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
-import de.markusbordihn.easymobfarm.config.mobs.HostileNetherMonster;
-
 public class NetherFortress {
 
-  // Ref: https://minecraft.fandom.com/wiki/Nether_Fortress
-  protected NetherFortress() {}
-
   public static final Set<String> Hostile = new HashSet<>(Arrays.asList(
-  // @formatter:off
+      // @formatter:off
     HostileNetherMonster.BLAZE,
     HostileNetherMonster.MAGMA_CUBE,
     HostileMonster.SKELETON,
@@ -40,6 +36,9 @@ public class NetherFortress {
     HostileNetherMonster.ZOMBIFIED_PIGLIN
   // @formatter:on
   ));
-
   public static final Set<String> All = Hostile;
+
+  // Ref: https://minecraft.fandom.com/wiki/Nether_Fortress
+  protected NetherFortress() {
+  }
 }

@@ -1,606 +1,606 @@
 {
-	"credit": "Made with Blockbench by Markus Bordihn",
-	"ambientocclusion": false,
-	"textures": {
-		"glass": "block/glass",
-		"edge": "easy_mob_farm:block/iron_rod",
-		"particle": "block/netherrack",
-		"netherrack": "block/netherrack",
-		"soul_sand": "block/soul_sand",
-		"nether_wart_stage0": "block/nether_wart_stage0",
-		"nether_wart_stage2": "block/nether_wart_stage2",
-		"nether_bricks": "block/nether_bricks",
-		"lava_flow": "block/lava_flow"
-	},
-	"elements": [
-		{
-			"name": "nether_floor",
-			"from": [4.925, 1.02, 4.974],
-			"to": [10.925, 1.02, 10.974],
-			"rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
-			"faces": {
-				"up": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#nether_bricks"}
-			}
-		},
-		{
-			"name": "netherrack_floor",
-			"from": [1.925, 1.01, 1.974],
-			"to": [13.925, 1.01, 13.974],
-			"rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
-			"faces": {
-				"up": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#netherrack"}
-			}
-		},
-		{
-			"name": "soul_sand",
-			"from": [1.925, 1.02, 7.974],
-			"to": [4.925, 1.02, 10.974],
-			"rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
-			"faces": {
-				"up": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#soul_sand"}
-			}
-		},
-		{
-			"name": "soul_sand",
-			"from": [10.925, 1, 1.975],
-			"to": [13.925, 4, 4.975],
-			"rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
-			"faces": {
-				"north": {"uv": [0, 0, 16, 16], "texture": "#soul_sand"},
-				"east": {"uv": [0, 0, 16, 16], "texture": "#soul_sand"},
-				"west": {"uv": [0, 0, 16, 16], "texture": "#soul_sand"},
-				"up": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#soul_sand"}
-			}
-		},
-		{
-			"name": "nether_bricks",
-			"from": [10.925, 1, 10.975],
-			"to": [13.925, 4, 13.975],
-			"rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
-			"faces": {
-				"east": {"uv": [0, 0, 16, 16], "texture": "#nether_bricks"},
-				"south": {"uv": [0, 0, 16, 16], "texture": "#nether_bricks"},
-				"up": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#nether_bricks"}
-			}
-		},
-		{
-			"name": "nether_bricks",
-			"from": [7.925, 1, 10.975],
-			"to": [10.925, 4, 13.975],
-			"rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
-			"faces": {
-				"north": {"uv": [0, 0, 16, 16], "texture": "#nether_bricks"},
-				"south": {"uv": [0, 0, 16, 16], "texture": "#nether_bricks"},
-				"up": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#nether_bricks"}
-			}
-		},
-		{
-			"name": "nether_bricks",
-			"from": [4.925, 1, 10.975],
-			"to": [7.925, 4, 13.975],
-			"rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
-			"faces": {
-				"north": {"uv": [0, 0, 16, 16], "texture": "#nether_bricks"},
-				"south": {"uv": [0, 0, 16, 16], "texture": "#nether_bricks"},
-				"up": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#nether_bricks"}
-			}
-		},
-		{
-			"name": "nether_bricks",
-			"from": [1.925, 1, 10.975],
-			"to": [4.925, 4, 13.975],
-			"rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
-			"faces": {
-				"north": {"uv": [0, 0, 16, 16], "texture": "#nether_bricks"},
-				"south": {"uv": [0, 0, 16, 16], "texture": "#nether_bricks"},
-				"west": {"uv": [0, 0, 16, 16], "texture": "#nether_bricks"},
-				"up": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#nether_bricks"}
-			}
-		},
-		{
-			"name": "nether_bricks",
-			"from": [10.925, 1, 7.975],
-			"to": [13.925, 4, 10.975],
-			"rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
-			"faces": {
-				"east": {"uv": [0, 0, 16, 16], "texture": "#nether_bricks"},
-				"west": {"uv": [0, 0, 16, 16], "texture": "#nether_bricks"},
-				"up": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#nether_bricks"}
-			}
-		},
-		{
-			"name": "nether_bricks",
-			"from": [10.925, 1, 4.975],
-			"to": [13.925, 4, 7.975],
-			"rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
-			"faces": {
-				"east": {"uv": [0, 0, 16, 16], "texture": "#nether_bricks"},
-				"west": {"uv": [0, 0, 16, 16], "texture": "#nether_bricks"},
-				"up": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#nether_bricks"}
-			}
-		},
-		{
-			"name": "nether_wart_stage2",
-			"from": [1.48258, 1.03, 9.63918],
-			"to": [5.48258, 5.03, 9.63918],
-			"rotation": {"angle": 45, "axis": "y", "origin": [3.25758, 3.5, 9.58918]},
-			"faces": {
-				"north": {"uv": [16, 0, 0, 16], "texture": "#nether_wart_stage0"},
-				"south": {"uv": [0, 0, 16, 16], "texture": "#nether_wart_stage2"}
-			}
-		},
-		{
-			"name": "nether_wart_stage2",
-			"from": [3.45758, 1.03, 7.61418],
-			"to": [3.45758, 5.03, 11.61418],
-			"rotation": {"angle": 45, "axis": "y", "origin": [3.25758, 3.5, 9.58918]},
-			"faces": {
-				"east": {"uv": [16, 0, 0, 16], "texture": "#nether_wart_stage2"},
-				"west": {"uv": [0, 0, 16, 16], "texture": "#nether_wart_stage2"}
-			}
-		},
-		{
-			"name": "nether_wart_stage0",
-			"from": [12.26837, 4, 1.50657],
-			"to": [12.26837, 8, 5.50657],
-			"rotation": {"angle": 45, "axis": "y", "origin": [12.29337, 6.5, 3.28157]},
-			"faces": {
-				"east": {"uv": [16, 0, 0, 16], "texture": "#nether_wart_stage0"},
-				"west": {"uv": [0, 0, 16, 16], "texture": "#nether_wart_stage0"}
-			}
-		},
-		{
-			"name": "nether_wart_stage0",
-			"from": [10.24337, 4, 3.53157],
-			"to": [14.24337, 8, 3.53157],
-			"rotation": {"angle": 45, "axis": "y", "origin": [12.29337, 6.5, 3.28157]},
-			"faces": {
-				"north": {"uv": [16, 0, 0, 16], "texture": "#nether_wart_stage0"},
-				"south": {"uv": [0, 0, 16, 16], "texture": "#nether_wart_stage0"}
-			}
-		},
-		{
-			"name": "top bar",
-			"from": [12.225, 5.75, 9.45],
-			"to": [12.725, 6.25, 10.95],
-			"rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
-			"faces": {
-				"east": {"uv": [0, 1, 9, 4], "texture": "#nether_bricks"},
-				"west": {"uv": [0, 1, 9, 4], "texture": "#nether_bricks"},
-				"up": {"uv": [7, 0, 9, 9], "rotation": 180, "texture": "#nether_bricks"},
-				"down": {"uv": [7, 0, 9, 9], "rotation": 180, "texture": "#nether_bricks"}
-			}
-		},
-		{
-			"name": "lower bar",
-			"from": [12.225, 4.5, 9.45],
-			"to": [12.725, 5, 10.95],
-			"rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
-			"faces": {
-				"east": {"uv": [0, 7, 9, 10], "texture": "#nether_bricks"},
-				"west": {"uv": [0, 7, 9, 10], "texture": "#nether_bricks"},
-				"up": {"uv": [7, 0, 9, 9], "rotation": 180, "texture": "#nether_bricks"},
-				"down": {"uv": [7, 0, 9, 9], "rotation": 180, "texture": "#nether_bricks"}
-			}
-		},
-		{
-			"name": "Center post",
-			"from": [11.975, 4, 8.95],
-			"to": [12.975, 7, 9.95],
-			"rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
-			"faces": {
-				"north": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
-				"east": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
-				"south": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
-				"west": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
-				"up": {"uv": [6, 6, 10, 10], "rotation": 90, "texture": "#nether_bricks"}
-			}
-		},
-		{
-			"name": "top bar",
-			"from": [12.225, 5.75, 10.95],
-			"to": [12.725, 6.25, 12.45],
-			"rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
-			"faces": {
-				"east": {"uv": [0, 1, 9, 4], "texture": "#nether_bricks"},
-				"west": {"uv": [0, 1, 9, 4], "texture": "#nether_bricks"},
-				"up": {"uv": [7, 0, 9, 9], "texture": "#nether_bricks"},
-				"down": {"uv": [7, 0, 9, 9], "texture": "#nether_bricks"}
-			}
-		},
-		{
-			"name": "lower bar",
-			"from": [12.225, 4.5, 10.95],
-			"to": [12.725, 5, 12.45],
-			"rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
-			"faces": {
-				"east": {"uv": [0, 7, 9, 10], "texture": "#nether_bricks"},
-				"west": {"uv": [0, 7, 9, 10], "texture": "#nether_bricks"},
-				"up": {"uv": [7, 0, 9, 9], "texture": "#nether_bricks"},
-				"down": {"uv": [7, 0, 9, 9], "texture": "#nether_bricks"}
-			}
-		},
-		{
-			"name": "top bar",
-			"from": [11, 5.75, 12.325],
-			"to": [12.5, 6.25, 12.825],
-			"rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
-			"faces": {
-				"north": {"uv": [0, 1, 9, 4], "texture": "#nether_bricks"},
-				"south": {"uv": [0, 1, 9, 4], "texture": "#nether_bricks"},
-				"up": {"uv": [7, 0, 9, 9], "rotation": 270, "texture": "#nether_bricks"},
-				"down": {"uv": [7, 0, 9, 9], "rotation": 90, "texture": "#nether_bricks"}
-			}
-		},
-		{
-			"name": "lower bar",
-			"from": [11, 4.5, 12.325],
-			"to": [12.5, 5, 12.825],
-			"rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
-			"faces": {
-				"north": {"uv": [0, 7, 9, 10], "texture": "#nether_bricks"},
-				"south": {"uv": [0, 7, 9, 10], "texture": "#nether_bricks"},
-				"up": {"uv": [7, 0, 9, 9], "rotation": 270, "texture": "#nether_bricks"},
-				"down": {"uv": [7, 0, 9, 9], "rotation": 90, "texture": "#nether_bricks"}
-			}
-		},
-		{
-			"name": "Center post",
-			"from": [12, 4, 12.075],
-			"to": [13, 7, 13.075],
-			"rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
-			"faces": {
-				"north": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
-				"east": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
-				"south": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
-				"west": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
-				"up": {"uv": [6, 6, 10, 10], "rotation": 180, "texture": "#nether_bricks"}
-			}
-		},
-		{
-			"name": "top bar",
-			"from": [8, 5.75, 12.325],
-			"to": [11, 6.25, 12.825],
-			"rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
-			"faces": {
-				"north": {"uv": [0, 1, 9, 4], "texture": "#nether_bricks"},
-				"south": {"uv": [0, 1, 9, 4], "texture": "#nether_bricks"},
-				"up": {"uv": [7, 0, 9, 9], "rotation": 90, "texture": "#nether_bricks"},
-				"down": {"uv": [7, 0, 9, 9], "rotation": 270, "texture": "#nether_bricks"}
-			}
-		},
-		{
-			"name": "lower bar",
-			"from": [8, 4.5, 12.325],
-			"to": [11, 5, 12.825],
-			"rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
-			"faces": {
-				"north": {"uv": [0, 7, 9, 10], "texture": "#nether_bricks"},
-				"south": {"uv": [0, 7, 9, 10], "texture": "#nether_bricks"},
-				"up": {"uv": [7, 0, 9, 9], "rotation": 90, "texture": "#nether_bricks"},
-				"down": {"uv": [7, 0, 9, 9], "rotation": 270, "texture": "#nether_bricks"}
-			}
-		},
-		{
-			"name": "Center post",
-			"from": [9, 4, 12.075],
-			"to": [10, 7, 13.075],
-			"rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
-			"faces": {
-				"north": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
-				"east": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
-				"south": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
-				"west": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
-				"up": {"uv": [6, 6, 10, 10], "texture": "#nether_bricks"}
-			}
-		},
-		{
-			"name": "top bar",
-			"from": [5, 5.75, 12.325],
-			"to": [8, 6.25, 12.825],
-			"rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
-			"faces": {
-				"north": {"uv": [0, 1, 9, 4], "texture": "#nether_bricks"},
-				"south": {"uv": [0, 1, 9, 4], "texture": "#nether_bricks"},
-				"up": {"uv": [7, 0, 9, 9], "rotation": 90, "texture": "#nether_bricks"},
-				"down": {"uv": [7, 0, 9, 9], "rotation": 270, "texture": "#nether_bricks"}
-			}
-		},
-		{
-			"name": "Center post",
-			"from": [6, 4, 12.075],
-			"to": [7, 7, 13.075],
-			"rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
-			"faces": {
-				"north": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
-				"east": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
-				"south": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
-				"west": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
-				"up": {"uv": [6, 6, 10, 10], "texture": "#nether_bricks"}
-			}
-		},
-		{
-			"name": "lower bar",
-			"from": [5, 4.5, 12.325],
-			"to": [8, 5, 12.825],
-			"rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
-			"faces": {
-				"north": {"uv": [0, 7, 9, 10], "texture": "#nether_bricks"},
-				"south": {"uv": [0, 7, 9, 10], "texture": "#nether_bricks"},
-				"up": {"uv": [7, 0, 9, 9], "rotation": 90, "texture": "#nether_bricks"},
-				"down": {"uv": [7, 0, 9, 9], "rotation": 270, "texture": "#nether_bricks"}
-			}
-		},
-		{
-			"name": "top bar",
-			"from": [4, 5.75, 12.325],
-			"to": [5, 6.25, 12.825],
-			"rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
-			"faces": {
-				"north": {"uv": [0, 1, 9, 4], "texture": "#nether_bricks"},
-				"south": {"uv": [0, 1, 9, 4], "texture": "#nether_bricks"},
-				"up": {"uv": [7, 0, 9, 9], "rotation": 90, "texture": "#nether_bricks"},
-				"down": {"uv": [7, 0, 9, 9], "rotation": 270, "texture": "#nether_bricks"}
-			}
-		},
-		{
-			"name": "Center post",
-			"from": [3, 4, 12.075],
-			"to": [4, 7, 13.075],
-			"rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
-			"faces": {
-				"north": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
-				"east": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
-				"south": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
-				"west": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
-				"up": {"uv": [6, 6, 10, 10], "texture": "#nether_bricks"}
-			}
-		},
-		{
-			"name": "lower bar",
-			"from": [4, 4.5, 12.325],
-			"to": [5, 5, 12.825],
-			"rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
-			"faces": {
-				"north": {"uv": [0, 7, 9, 10], "texture": "#nether_bricks"},
-				"south": {"uv": [0, 7, 9, 10], "texture": "#nether_bricks"},
-				"up": {"uv": [7, 0, 9, 9], "rotation": 90, "texture": "#nether_bricks"},
-				"down": {"uv": [7, 0, 9, 9], "rotation": 270, "texture": "#nether_bricks"}
-			}
-		},
-		{
-			"name": "bottom",
-			"from": [1, 0, 1],
-			"to": [15, 1, 15],
-			"faces": {
-				"up": {"uv": [16, 16, 0, 0], "rotation": 270, "texture": "#lava_flow"},
-				"down": {"uv": [0, 0, 16, 16], "rotation": 90, "texture": "#netherrack"}
-			}
-		},
-		{
-			"name": "edge_1",
-			"from": [0, 0, 0],
-			"to": [16, 1, 1],
-			"faces": {
-				"north": {"uv": [0, 0, 1, 16], "rotation": 90, "texture": "#edge"},
-				"east": {"uv": [8, 0, 9, 1], "texture": "#edge"},
-				"south": {"uv": [4, 0, 5, 16], "rotation": 90, "texture": "#edge"},
-				"west": {"uv": [8, 14, 9, 15], "texture": "#edge"},
-				"up": {"uv": [2, 0, 3, 16], "rotation": 90, "texture": "#edge"},
-				"down": {"uv": [6, 0, 7, 16], "rotation": 90, "texture": "#edge"}
-			}
-		},
-		{
-			"name": "edge_2",
-			"from": [0, 0, 15],
-			"to": [16, 1, 16],
-			"faces": {
-				"north": {"uv": [1, 0, 2, 16], "rotation": 90, "texture": "#edge"},
-				"east": {"uv": [8, 0, 9, 1], "texture": "#edge"},
-				"south": {"uv": [2, 0, 3, 16], "rotation": 90, "texture": "#edge"},
-				"west": {"uv": [8, 14, 9, 15], "texture": "#edge"},
-				"up": {"uv": [4, 0, 5, 16], "rotation": 90, "texture": "#edge"},
-				"down": {"uv": [6, 0, 7, 16], "rotation": 90, "texture": "#edge"}
-			}
-		},
-		{
-			"name": "edge_3",
-			"from": [0, 0, 1],
-			"to": [1, 1, 15],
-			"faces": {
-				"east": {"uv": [1, 1, 2, 14], "rotation": 90, "texture": "#edge"},
-				"west": {"uv": [3, 1, 4, 14], "rotation": 90, "texture": "#edge"},
-				"up": {"uv": [5, 1, 6, 14], "texture": "#edge"},
-				"down": {"uv": [7, 1, 8, 14], "texture": "#edge"}
-			}
-		},
-		{
-			"name": "edge_4",
-			"from": [15, 0, 1],
-			"to": [16, 1, 15],
-			"faces": {
-				"east": {"uv": [0, 1, 1, 15], "rotation": 90, "texture": "#edge"},
-				"west": {"uv": [2, 1, 3, 15], "rotation": 90, "texture": "#edge"},
-				"up": {"uv": [4, 1, 5, 15], "texture": "#edge"},
-				"down": {"uv": [6, 1, 7, 15], "texture": "#edge"}
-			}
-		},
-		{
-			"name": "edge_5",
-			"from": [0, 1, 0],
-			"to": [1, 15, 1],
-			"rotation": {"angle": 0, "axis": "y", "origin": [0.5, 0.5, 8]},
-			"faces": {
-				"north": {"uv": [0, 1, 1, 15], "rotation": 180, "texture": "#edge"},
-				"east": {"uv": [2, 1, 3, 15], "rotation": 180, "texture": "#edge"},
-				"south": {"uv": [5, 1, 4, 15], "rotation": 180, "texture": "#edge"},
-				"west": {"uv": [6, 1, 7, 15], "rotation": 180, "texture": "#edge"}
-			}
-		},
-		{
-			"name": "edge_6",
-			"from": [0, 1, 15],
-			"to": [1, 15, 16],
-			"rotation": {"angle": 0, "axis": "y", "origin": [0.5, 0.5, 8]},
-			"faces": {
-				"north": {"uv": [1, 1, 2, 15], "rotation": 180, "texture": "#edge"},
-				"east": {"uv": [3, 1, 4, 15], "rotation": 180, "texture": "#edge"},
-				"south": {"uv": [4, 1, 5, 15], "texture": "#edge"},
-				"west": {"uv": [6, 1, 7, 15], "rotation": 180, "texture": "#edge"}
-			}
-		},
-		{
-			"name": "edge_8",
-			"from": [15, 1, 0],
-			"to": [16, 15, 1],
-			"rotation": {"angle": 0, "axis": "y", "origin": [15.5, 8, 0.5]},
-			"faces": {
-				"north": {"uv": [1, 1, 2, 15], "texture": "#edge"},
-				"east": {"uv": [3, 1, 4, 15], "rotation": 180, "texture": "#edge"},
-				"south": {"uv": [5, 1, 6, 15], "rotation": 180, "texture": "#edge"},
-				"west": {"uv": [7, 1, 8, 15], "rotation": 180, "texture": "#edge"}
-			}
-		},
-		{
-			"name": "edge_7",
-			"from": [15, 1, 15],
-			"to": [16, 15, 16],
-			"rotation": {"angle": 0, "axis": "y", "origin": [15.5, 8, 0.5]},
-			"faces": {
-				"north": {"uv": [0, 1, 1, 15], "rotation": 180, "texture": "#edge"},
-				"east": {"uv": [3, 1, 4, 15], "rotation": 180, "texture": "#edge"},
-				"south": {"uv": [5, 1, 6, 15], "rotation": 180, "texture": "#edge"},
-				"west": {"uv": [7, 1, 8, 15], "rotation": 180, "texture": "#edge"}
-			}
-		},
-		{
-			"name": "edge_9",
-			"from": [15, 15, 1],
-			"to": [16, 16, 15],
-			"faces": {
-				"east": {"uv": [0, 1, 1, 15], "rotation": 90, "texture": "#edge"},
-				"west": {"uv": [2, 1, 3, 15], "rotation": 90, "texture": "#edge"},
-				"up": {"uv": [4, 1, 5, 15], "texture": "#edge"},
-				"down": {"uv": [6, 1, 7, 15], "texture": "#edge"}
-			}
-		},
-		{
-			"name": "edge_10",
-			"from": [0, 15, 1],
-			"to": [1, 16, 15],
-			"rotation": {"angle": 0, "axis": "y", "origin": [0.5, 15.5, 8]},
-			"faces": {
-				"east": {"uv": [1, 1, 2, 15], "rotation": 90, "texture": "#edge"},
-				"west": {"uv": [3, 1, 4, 15], "rotation": 90, "texture": "#edge"},
-				"up": {"uv": [4, 1, 5, 15], "rotation": 180, "texture": "#edge"},
-				"down": {"uv": [6, 1, 7, 15], "rotation": 180, "texture": "#edge"}
-			}
-		},
-		{
-			"name": "edge_11",
-			"from": [0, 15, 0],
-			"to": [16, 16, 1],
-			"faces": {
-				"north": {"uv": [0, 0, 1, 16], "rotation": 90, "texture": "#edge"},
-				"east": {"uv": [8, 0, 9, 1], "texture": "#edge"},
-				"south": {"uv": [2, 0, 3, 16], "rotation": 90, "texture": "#edge"},
-				"west": {"uv": [8, 14, 9, 15], "texture": "#edge"},
-				"up": {"uv": [4, 0, 5, 16], "rotation": 90, "texture": "#edge"},
-				"down": {"uv": [6, 0, 7, 16], "rotation": 90, "texture": "#edge"}
-			}
-		},
-		{
-			"name": "edge_12",
-			"from": [0, 15, 15],
-			"to": [16, 16, 16],
-			"faces": {
-				"north": {"uv": [1, 0, 2, 16], "rotation": 90, "texture": "#edge"},
-				"east": {"uv": [9, 1, 10, 2], "texture": "#edge"},
-				"south": {"uv": [3, 0, 4, 16], "rotation": 90, "texture": "#edge"},
-				"west": {"uv": [9, 15, 10, 16], "texture": "#edge"},
-				"up": {"uv": [5, 0, 6, 16], "rotation": 90, "texture": "#edge"},
-				"down": {"uv": [7, 0, 8, 16], "rotation": 90, "texture": "#edge"}
-			}
-		},
-		{
-			"name": "glass",
-			"from": [0, 1, 1],
-			"to": [1, 15, 15],
-			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
-			"faces": {
-				"east": {"uv": [16, 0, 0, 16], "texture": "#glass"},
-				"west": {"uv": [0, 0, 16, 16], "texture": "#glass"}
-			}
-		},
-		{
-			"name": "glass",
-			"from": [1, 1, 0],
-			"to": [15, 15, 1],
-			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
-			"faces": {
-				"north": {"uv": [0, 0, 16, 16], "texture": "#glass"},
-				"south": {"uv": [16, 0, 0, 16], "texture": "#glass"}
-			}
-		},
-		{
-			"name": "glass",
-			"from": [15, 1, 1],
-			"to": [16, 15, 15],
-			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
-			"faces": {
-				"east": {"uv": [0, 0, 16, 16], "texture": "#glass"},
-				"west": {"uv": [16, 0, 0, 16], "texture": "#glass"}
-			}
-		},
-		{
-			"name": "glass",
-			"from": [1, 1, 15],
-			"to": [15, 15, 16],
-			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
-			"faces": {
-				"north": {"uv": [16, 0, 0, 16], "texture": "#glass"},
-				"south": {"uv": [0, 0, 16, 16], "texture": "#glass"}
-			}
-		},
-		{
-			"name": "glass",
-			"from": [1, 15, 1],
-			"to": [15, 16, 15],
-			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
-			"faces": {
-				"up": {"uv": [0, 0, 16, 16], "texture": "#glass"},
-				"down": {"uv": [16, 0, 0, 16], "rotation": 180, "texture": "#glass"}
-			}
-		}
-	],
-	"display": {
-		"thirdperson_righthand": {
-			"rotation": [45, 0, 0],
-			"translation": [0, 5, 0.5],
-			"scale": [0.5, 0.5, 0.5]
-		},
-		"thirdperson_lefthand": {
-			"rotation": [45, 0, 0],
-			"translation": [0, 5, 0.5],
-			"scale": [0.5, 0.5, 0.5]
-		},
-		"firstperson_righthand": {
-			"scale": [0.5, 0.5, 0.5]
-		},
-		"firstperson_lefthand": {
-			"scale": [0.5, 0.5, 0.5]
-		},
-		"ground": {
-			"translation": [0, 2, 0],
-			"scale": [0.5, 0.5, 0.5]
-		},
-		"gui": {
-			"rotation": [30, -135, 0],
-			"scale": [0.6, 0.6, 0.6]
-		},
-		"fixed": {
-			"translation": [0, 0, -4],
-			"scale": [1, 1, 0.5]
-		}
-	}
+  "credit": "Made with Blockbench by Markus Bordihn",
+  "ambientocclusion": false,
+  "textures": {
+    "glass": "block/glass",
+    "edge": "easy_mob_farm:block/iron_rod",
+    "particle": "block/netherrack",
+    "netherrack": "block/netherrack",
+    "soul_sand": "block/soul_sand",
+    "nether_wart_stage0": "block/nether_wart_stage0",
+    "nether_wart_stage2": "block/nether_wart_stage2",
+    "nether_bricks": "block/nether_bricks",
+    "lava_flow": "block/lava_flow"
+  },
+  "elements": [
+    {
+      "name": "nether_floor",
+      "from": [4.925, 1.02, 4.974],
+      "to": [10.925, 1.02, 10.974],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
+      "faces": {
+        "up": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#nether_bricks"}
+      }
+    },
+    {
+      "name": "netherrack_floor",
+      "from": [1.925, 1.01, 1.974],
+      "to": [13.925, 1.01, 13.974],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
+      "faces": {
+        "up": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#netherrack"}
+      }
+    },
+    {
+      "name": "soul_sand",
+      "from": [1.925, 1.02, 7.974],
+      "to": [4.925, 1.02, 10.974],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
+      "faces": {
+        "up": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#soul_sand"}
+      }
+    },
+    {
+      "name": "soul_sand",
+      "from": [10.925, 1, 1.975],
+      "to": [13.925, 4, 4.975],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
+      "faces": {
+        "north": {"uv": [0, 0, 16, 16], "texture": "#soul_sand"},
+        "east": {"uv": [0, 0, 16, 16], "texture": "#soul_sand"},
+        "west": {"uv": [0, 0, 16, 16], "texture": "#soul_sand"},
+        "up": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#soul_sand"}
+      }
+    },
+    {
+      "name": "nether_bricks",
+      "from": [10.925, 1, 10.975],
+      "to": [13.925, 4, 13.975],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
+      "faces": {
+        "east": {"uv": [0, 0, 16, 16], "texture": "#nether_bricks"},
+        "south": {"uv": [0, 0, 16, 16], "texture": "#nether_bricks"},
+        "up": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#nether_bricks"}
+      }
+    },
+    {
+      "name": "nether_bricks",
+      "from": [7.925, 1, 10.975],
+      "to": [10.925, 4, 13.975],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
+      "faces": {
+        "north": {"uv": [0, 0, 16, 16], "texture": "#nether_bricks"},
+        "south": {"uv": [0, 0, 16, 16], "texture": "#nether_bricks"},
+        "up": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#nether_bricks"}
+      }
+    },
+    {
+      "name": "nether_bricks",
+      "from": [4.925, 1, 10.975],
+      "to": [7.925, 4, 13.975],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
+      "faces": {
+        "north": {"uv": [0, 0, 16, 16], "texture": "#nether_bricks"},
+        "south": {"uv": [0, 0, 16, 16], "texture": "#nether_bricks"},
+        "up": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#nether_bricks"}
+      }
+    },
+    {
+      "name": "nether_bricks",
+      "from": [1.925, 1, 10.975],
+      "to": [4.925, 4, 13.975],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
+      "faces": {
+        "north": {"uv": [0, 0, 16, 16], "texture": "#nether_bricks"},
+        "south": {"uv": [0, 0, 16, 16], "texture": "#nether_bricks"},
+        "west": {"uv": [0, 0, 16, 16], "texture": "#nether_bricks"},
+        "up": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#nether_bricks"}
+      }
+    },
+    {
+      "name": "nether_bricks",
+      "from": [10.925, 1, 7.975],
+      "to": [13.925, 4, 10.975],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
+      "faces": {
+        "east": {"uv": [0, 0, 16, 16], "texture": "#nether_bricks"},
+        "west": {"uv": [0, 0, 16, 16], "texture": "#nether_bricks"},
+        "up": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#nether_bricks"}
+      }
+    },
+    {
+      "name": "nether_bricks",
+      "from": [10.925, 1, 4.975],
+      "to": [13.925, 4, 7.975],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
+      "faces": {
+        "east": {"uv": [0, 0, 16, 16], "texture": "#nether_bricks"},
+        "west": {"uv": [0, 0, 16, 16], "texture": "#nether_bricks"},
+        "up": {"uv": [0, 0, 16, 16], "rotation": 180, "texture": "#nether_bricks"}
+      }
+    },
+    {
+      "name": "nether_wart_stage2",
+      "from": [1.48258, 1.03, 9.63918],
+      "to": [5.48258, 5.03, 9.63918],
+      "rotation": {"angle": 45, "axis": "y", "origin": [3.25758, 3.5, 9.58918]},
+      "faces": {
+        "north": {"uv": [16, 0, 0, 16], "texture": "#nether_wart_stage0"},
+        "south": {"uv": [0, 0, 16, 16], "texture": "#nether_wart_stage2"}
+      }
+    },
+    {
+      "name": "nether_wart_stage2",
+      "from": [3.45758, 1.03, 7.61418],
+      "to": [3.45758, 5.03, 11.61418],
+      "rotation": {"angle": 45, "axis": "y", "origin": [3.25758, 3.5, 9.58918]},
+      "faces": {
+        "east": {"uv": [16, 0, 0, 16], "texture": "#nether_wart_stage2"},
+        "west": {"uv": [0, 0, 16, 16], "texture": "#nether_wart_stage2"}
+      }
+    },
+    {
+      "name": "nether_wart_stage0",
+      "from": [12.26837, 4, 1.50657],
+      "to": [12.26837, 8, 5.50657],
+      "rotation": {"angle": 45, "axis": "y", "origin": [12.29337, 6.5, 3.28157]},
+      "faces": {
+        "east": {"uv": [16, 0, 0, 16], "texture": "#nether_wart_stage0"},
+        "west": {"uv": [0, 0, 16, 16], "texture": "#nether_wart_stage0"}
+      }
+    },
+    {
+      "name": "nether_wart_stage0",
+      "from": [10.24337, 4, 3.53157],
+      "to": [14.24337, 8, 3.53157],
+      "rotation": {"angle": 45, "axis": "y", "origin": [12.29337, 6.5, 3.28157]},
+      "faces": {
+        "north": {"uv": [16, 0, 0, 16], "texture": "#nether_wart_stage0"},
+        "south": {"uv": [0, 0, 16, 16], "texture": "#nether_wart_stage0"}
+      }
+    },
+    {
+      "name": "top bar",
+      "from": [12.225, 5.75, 9.45],
+      "to": [12.725, 6.25, 10.95],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
+      "faces": {
+        "east": {"uv": [0, 1, 9, 4], "texture": "#nether_bricks"},
+        "west": {"uv": [0, 1, 9, 4], "texture": "#nether_bricks"},
+        "up": {"uv": [7, 0, 9, 9], "rotation": 180, "texture": "#nether_bricks"},
+        "down": {"uv": [7, 0, 9, 9], "rotation": 180, "texture": "#nether_bricks"}
+      }
+    },
+    {
+      "name": "lower bar",
+      "from": [12.225, 4.5, 9.45],
+      "to": [12.725, 5, 10.95],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
+      "faces": {
+        "east": {"uv": [0, 7, 9, 10], "texture": "#nether_bricks"},
+        "west": {"uv": [0, 7, 9, 10], "texture": "#nether_bricks"},
+        "up": {"uv": [7, 0, 9, 9], "rotation": 180, "texture": "#nether_bricks"},
+        "down": {"uv": [7, 0, 9, 9], "rotation": 180, "texture": "#nether_bricks"}
+      }
+    },
+    {
+      "name": "Center post",
+      "from": [11.975, 4, 8.95],
+      "to": [12.975, 7, 9.95],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
+      "faces": {
+        "north": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
+        "east": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
+        "south": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
+        "west": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
+        "up": {"uv": [6, 6, 10, 10], "rotation": 90, "texture": "#nether_bricks"}
+      }
+    },
+    {
+      "name": "top bar",
+      "from": [12.225, 5.75, 10.95],
+      "to": [12.725, 6.25, 12.45],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
+      "faces": {
+        "east": {"uv": [0, 1, 9, 4], "texture": "#nether_bricks"},
+        "west": {"uv": [0, 1, 9, 4], "texture": "#nether_bricks"},
+        "up": {"uv": [7, 0, 9, 9], "texture": "#nether_bricks"},
+        "down": {"uv": [7, 0, 9, 9], "texture": "#nether_bricks"}
+      }
+    },
+    {
+      "name": "lower bar",
+      "from": [12.225, 4.5, 10.95],
+      "to": [12.725, 5, 12.45],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
+      "faces": {
+        "east": {"uv": [0, 7, 9, 10], "texture": "#nether_bricks"},
+        "west": {"uv": [0, 7, 9, 10], "texture": "#nether_bricks"},
+        "up": {"uv": [7, 0, 9, 9], "texture": "#nether_bricks"},
+        "down": {"uv": [7, 0, 9, 9], "texture": "#nether_bricks"}
+      }
+    },
+    {
+      "name": "top bar",
+      "from": [11, 5.75, 12.325],
+      "to": [12.5, 6.25, 12.825],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
+      "faces": {
+        "north": {"uv": [0, 1, 9, 4], "texture": "#nether_bricks"},
+        "south": {"uv": [0, 1, 9, 4], "texture": "#nether_bricks"},
+        "up": {"uv": [7, 0, 9, 9], "rotation": 270, "texture": "#nether_bricks"},
+        "down": {"uv": [7, 0, 9, 9], "rotation": 90, "texture": "#nether_bricks"}
+      }
+    },
+    {
+      "name": "lower bar",
+      "from": [11, 4.5, 12.325],
+      "to": [12.5, 5, 12.825],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
+      "faces": {
+        "north": {"uv": [0, 7, 9, 10], "texture": "#nether_bricks"},
+        "south": {"uv": [0, 7, 9, 10], "texture": "#nether_bricks"},
+        "up": {"uv": [7, 0, 9, 9], "rotation": 270, "texture": "#nether_bricks"},
+        "down": {"uv": [7, 0, 9, 9], "rotation": 90, "texture": "#nether_bricks"}
+      }
+    },
+    {
+      "name": "Center post",
+      "from": [12, 4, 12.075],
+      "to": [13, 7, 13.075],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
+      "faces": {
+        "north": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
+        "east": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
+        "south": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
+        "west": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
+        "up": {"uv": [6, 6, 10, 10], "rotation": 180, "texture": "#nether_bricks"}
+      }
+    },
+    {
+      "name": "top bar",
+      "from": [8, 5.75, 12.325],
+      "to": [11, 6.25, 12.825],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
+      "faces": {
+        "north": {"uv": [0, 1, 9, 4], "texture": "#nether_bricks"},
+        "south": {"uv": [0, 1, 9, 4], "texture": "#nether_bricks"},
+        "up": {"uv": [7, 0, 9, 9], "rotation": 90, "texture": "#nether_bricks"},
+        "down": {"uv": [7, 0, 9, 9], "rotation": 270, "texture": "#nether_bricks"}
+      }
+    },
+    {
+      "name": "lower bar",
+      "from": [8, 4.5, 12.325],
+      "to": [11, 5, 12.825],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
+      "faces": {
+        "north": {"uv": [0, 7, 9, 10], "texture": "#nether_bricks"},
+        "south": {"uv": [0, 7, 9, 10], "texture": "#nether_bricks"},
+        "up": {"uv": [7, 0, 9, 9], "rotation": 90, "texture": "#nether_bricks"},
+        "down": {"uv": [7, 0, 9, 9], "rotation": 270, "texture": "#nether_bricks"}
+      }
+    },
+    {
+      "name": "Center post",
+      "from": [9, 4, 12.075],
+      "to": [10, 7, 13.075],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
+      "faces": {
+        "north": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
+        "east": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
+        "south": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
+        "west": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
+        "up": {"uv": [6, 6, 10, 10], "texture": "#nether_bricks"}
+      }
+    },
+    {
+      "name": "top bar",
+      "from": [5, 5.75, 12.325],
+      "to": [8, 6.25, 12.825],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
+      "faces": {
+        "north": {"uv": [0, 1, 9, 4], "texture": "#nether_bricks"},
+        "south": {"uv": [0, 1, 9, 4], "texture": "#nether_bricks"},
+        "up": {"uv": [7, 0, 9, 9], "rotation": 90, "texture": "#nether_bricks"},
+        "down": {"uv": [7, 0, 9, 9], "rotation": 270, "texture": "#nether_bricks"}
+      }
+    },
+    {
+      "name": "Center post",
+      "from": [6, 4, 12.075],
+      "to": [7, 7, 13.075],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
+      "faces": {
+        "north": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
+        "east": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
+        "south": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
+        "west": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
+        "up": {"uv": [6, 6, 10, 10], "texture": "#nether_bricks"}
+      }
+    },
+    {
+      "name": "lower bar",
+      "from": [5, 4.5, 12.325],
+      "to": [8, 5, 12.825],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
+      "faces": {
+        "north": {"uv": [0, 7, 9, 10], "texture": "#nether_bricks"},
+        "south": {"uv": [0, 7, 9, 10], "texture": "#nether_bricks"},
+        "up": {"uv": [7, 0, 9, 9], "rotation": 90, "texture": "#nether_bricks"},
+        "down": {"uv": [7, 0, 9, 9], "rotation": 270, "texture": "#nether_bricks"}
+      }
+    },
+    {
+      "name": "top bar",
+      "from": [4, 5.75, 12.325],
+      "to": [5, 6.25, 12.825],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
+      "faces": {
+        "north": {"uv": [0, 1, 9, 4], "texture": "#nether_bricks"},
+        "south": {"uv": [0, 1, 9, 4], "texture": "#nether_bricks"},
+        "up": {"uv": [7, 0, 9, 9], "rotation": 90, "texture": "#nether_bricks"},
+        "down": {"uv": [7, 0, 9, 9], "rotation": 270, "texture": "#nether_bricks"}
+      }
+    },
+    {
+      "name": "Center post",
+      "from": [3, 4, 12.075],
+      "to": [4, 7, 13.075],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
+      "faces": {
+        "north": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
+        "east": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
+        "south": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
+        "west": {"uv": [6, 0, 10, 16], "texture": "#nether_bricks"},
+        "up": {"uv": [6, 6, 10, 10], "texture": "#nether_bricks"}
+      }
+    },
+    {
+      "name": "lower bar",
+      "from": [4, 4.5, 12.325],
+      "to": [5, 5, 12.825],
+      "rotation": {"angle": 0, "axis": "y", "origin": [7.875, 3.75, 7.7625]},
+      "faces": {
+        "north": {"uv": [0, 7, 9, 10], "texture": "#nether_bricks"},
+        "south": {"uv": [0, 7, 9, 10], "texture": "#nether_bricks"},
+        "up": {"uv": [7, 0, 9, 9], "rotation": 90, "texture": "#nether_bricks"},
+        "down": {"uv": [7, 0, 9, 9], "rotation": 270, "texture": "#nether_bricks"}
+      }
+    },
+    {
+      "name": "bottom",
+      "from": [1, 0, 1],
+      "to": [15, 1, 15],
+      "faces": {
+        "up": {"uv": [16, 16, 0, 0], "rotation": 270, "texture": "#lava_flow"},
+        "down": {"uv": [0, 0, 16, 16], "rotation": 90, "texture": "#netherrack"}
+      }
+    },
+    {
+      "name": "edge_1",
+      "from": [0, 0, 0],
+      "to": [16, 1, 1],
+      "faces": {
+        "north": {"uv": [0, 0, 1, 16], "rotation": 90, "texture": "#edge"},
+        "east": {"uv": [8, 0, 9, 1], "texture": "#edge"},
+        "south": {"uv": [4, 0, 5, 16], "rotation": 90, "texture": "#edge"},
+        "west": {"uv": [8, 14, 9, 15], "texture": "#edge"},
+        "up": {"uv": [2, 0, 3, 16], "rotation": 90, "texture": "#edge"},
+        "down": {"uv": [6, 0, 7, 16], "rotation": 90, "texture": "#edge"}
+      }
+    },
+    {
+      "name": "edge_2",
+      "from": [0, 0, 15],
+      "to": [16, 1, 16],
+      "faces": {
+        "north": {"uv": [1, 0, 2, 16], "rotation": 90, "texture": "#edge"},
+        "east": {"uv": [8, 0, 9, 1], "texture": "#edge"},
+        "south": {"uv": [2, 0, 3, 16], "rotation": 90, "texture": "#edge"},
+        "west": {"uv": [8, 14, 9, 15], "texture": "#edge"},
+        "up": {"uv": [4, 0, 5, 16], "rotation": 90, "texture": "#edge"},
+        "down": {"uv": [6, 0, 7, 16], "rotation": 90, "texture": "#edge"}
+      }
+    },
+    {
+      "name": "edge_3",
+      "from": [0, 0, 1],
+      "to": [1, 1, 15],
+      "faces": {
+        "east": {"uv": [1, 1, 2, 14], "rotation": 90, "texture": "#edge"},
+        "west": {"uv": [3, 1, 4, 14], "rotation": 90, "texture": "#edge"},
+        "up": {"uv": [5, 1, 6, 14], "texture": "#edge"},
+        "down": {"uv": [7, 1, 8, 14], "texture": "#edge"}
+      }
+    },
+    {
+      "name": "edge_4",
+      "from": [15, 0, 1],
+      "to": [16, 1, 15],
+      "faces": {
+        "east": {"uv": [0, 1, 1, 15], "rotation": 90, "texture": "#edge"},
+        "west": {"uv": [2, 1, 3, 15], "rotation": 90, "texture": "#edge"},
+        "up": {"uv": [4, 1, 5, 15], "texture": "#edge"},
+        "down": {"uv": [6, 1, 7, 15], "texture": "#edge"}
+      }
+    },
+    {
+      "name": "edge_5",
+      "from": [0, 1, 0],
+      "to": [1, 15, 1],
+      "rotation": {"angle": 0, "axis": "y", "origin": [0.5, 0.5, 8]},
+      "faces": {
+        "north": {"uv": [0, 1, 1, 15], "rotation": 180, "texture": "#edge"},
+        "east": {"uv": [2, 1, 3, 15], "rotation": 180, "texture": "#edge"},
+        "south": {"uv": [5, 1, 4, 15], "rotation": 180, "texture": "#edge"},
+        "west": {"uv": [6, 1, 7, 15], "rotation": 180, "texture": "#edge"}
+      }
+    },
+    {
+      "name": "edge_6",
+      "from": [0, 1, 15],
+      "to": [1, 15, 16],
+      "rotation": {"angle": 0, "axis": "y", "origin": [0.5, 0.5, 8]},
+      "faces": {
+        "north": {"uv": [1, 1, 2, 15], "rotation": 180, "texture": "#edge"},
+        "east": {"uv": [3, 1, 4, 15], "rotation": 180, "texture": "#edge"},
+        "south": {"uv": [4, 1, 5, 15], "texture": "#edge"},
+        "west": {"uv": [6, 1, 7, 15], "rotation": 180, "texture": "#edge"}
+      }
+    },
+    {
+      "name": "edge_8",
+      "from": [15, 1, 0],
+      "to": [16, 15, 1],
+      "rotation": {"angle": 0, "axis": "y", "origin": [15.5, 8, 0.5]},
+      "faces": {
+        "north": {"uv": [1, 1, 2, 15], "texture": "#edge"},
+        "east": {"uv": [3, 1, 4, 15], "rotation": 180, "texture": "#edge"},
+        "south": {"uv": [5, 1, 6, 15], "rotation": 180, "texture": "#edge"},
+        "west": {"uv": [7, 1, 8, 15], "rotation": 180, "texture": "#edge"}
+      }
+    },
+    {
+      "name": "edge_7",
+      "from": [15, 1, 15],
+      "to": [16, 15, 16],
+      "rotation": {"angle": 0, "axis": "y", "origin": [15.5, 8, 0.5]},
+      "faces": {
+        "north": {"uv": [0, 1, 1, 15], "rotation": 180, "texture": "#edge"},
+        "east": {"uv": [3, 1, 4, 15], "rotation": 180, "texture": "#edge"},
+        "south": {"uv": [5, 1, 6, 15], "rotation": 180, "texture": "#edge"},
+        "west": {"uv": [7, 1, 8, 15], "rotation": 180, "texture": "#edge"}
+      }
+    },
+    {
+      "name": "edge_9",
+      "from": [15, 15, 1],
+      "to": [16, 16, 15],
+      "faces": {
+        "east": {"uv": [0, 1, 1, 15], "rotation": 90, "texture": "#edge"},
+        "west": {"uv": [2, 1, 3, 15], "rotation": 90, "texture": "#edge"},
+        "up": {"uv": [4, 1, 5, 15], "texture": "#edge"},
+        "down": {"uv": [6, 1, 7, 15], "texture": "#edge"}
+      }
+    },
+    {
+      "name": "edge_10",
+      "from": [0, 15, 1],
+      "to": [1, 16, 15],
+      "rotation": {"angle": 0, "axis": "y", "origin": [0.5, 15.5, 8]},
+      "faces": {
+        "east": {"uv": [1, 1, 2, 15], "rotation": 90, "texture": "#edge"},
+        "west": {"uv": [3, 1, 4, 15], "rotation": 90, "texture": "#edge"},
+        "up": {"uv": [4, 1, 5, 15], "rotation": 180, "texture": "#edge"},
+        "down": {"uv": [6, 1, 7, 15], "rotation": 180, "texture": "#edge"}
+      }
+    },
+    {
+      "name": "edge_11",
+      "from": [0, 15, 0],
+      "to": [16, 16, 1],
+      "faces": {
+        "north": {"uv": [0, 0, 1, 16], "rotation": 90, "texture": "#edge"},
+        "east": {"uv": [8, 0, 9, 1], "texture": "#edge"},
+        "south": {"uv": [2, 0, 3, 16], "rotation": 90, "texture": "#edge"},
+        "west": {"uv": [8, 14, 9, 15], "texture": "#edge"},
+        "up": {"uv": [4, 0, 5, 16], "rotation": 90, "texture": "#edge"},
+        "down": {"uv": [6, 0, 7, 16], "rotation": 90, "texture": "#edge"}
+      }
+    },
+    {
+      "name": "edge_12",
+      "from": [0, 15, 15],
+      "to": [16, 16, 16],
+      "faces": {
+        "north": {"uv": [1, 0, 2, 16], "rotation": 90, "texture": "#edge"},
+        "east": {"uv": [9, 1, 10, 2], "texture": "#edge"},
+        "south": {"uv": [3, 0, 4, 16], "rotation": 90, "texture": "#edge"},
+        "west": {"uv": [9, 15, 10, 16], "texture": "#edge"},
+        "up": {"uv": [5, 0, 6, 16], "rotation": 90, "texture": "#edge"},
+        "down": {"uv": [7, 0, 8, 16], "rotation": 90, "texture": "#edge"}
+      }
+    },
+    {
+      "name": "glass",
+      "from": [0, 1, 1],
+      "to": [1, 15, 15],
+      "rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
+      "faces": {
+        "east": {"uv": [16, 0, 0, 16], "texture": "#glass"},
+        "west": {"uv": [0, 0, 16, 16], "texture": "#glass"}
+      }
+    },
+    {
+      "name": "glass",
+      "from": [1, 1, 0],
+      "to": [15, 15, 1],
+      "rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
+      "faces": {
+        "north": {"uv": [0, 0, 16, 16], "texture": "#glass"},
+        "south": {"uv": [16, 0, 0, 16], "texture": "#glass"}
+      }
+    },
+    {
+      "name": "glass",
+      "from": [15, 1, 1],
+      "to": [16, 15, 15],
+      "rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
+      "faces": {
+        "east": {"uv": [0, 0, 16, 16], "texture": "#glass"},
+        "west": {"uv": [16, 0, 0, 16], "texture": "#glass"}
+      }
+    },
+    {
+      "name": "glass",
+      "from": [1, 1, 15],
+      "to": [15, 15, 16],
+      "rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
+      "faces": {
+        "north": {"uv": [16, 0, 0, 16], "texture": "#glass"},
+        "south": {"uv": [0, 0, 16, 16], "texture": "#glass"}
+      }
+    },
+    {
+      "name": "glass",
+      "from": [1, 15, 1],
+      "to": [15, 16, 15],
+      "rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 8]},
+      "faces": {
+        "up": {"uv": [0, 0, 16, 16], "texture": "#glass"},
+        "down": {"uv": [16, 0, 0, 16], "rotation": 180, "texture": "#glass"}
+      }
+    }
+  ],
+  "display": {
+    "thirdperson_righthand": {
+      "rotation": [45, 0, 0],
+      "translation": [0, 5, 0.5],
+      "scale": [0.5, 0.5, 0.5]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [45, 0, 0],
+      "translation": [0, 5, 0.5],
+      "scale": [0.5, 0.5, 0.5]
+    },
+    "firstperson_righthand": {
+      "scale": [0.5, 0.5, 0.5]
+    },
+    "firstperson_lefthand": {
+      "scale": [0.5, 0.5, 0.5]
+    },
+    "ground": {
+      "translation": [0, 2, 0],
+      "scale": [0.5, 0.5, 0.5]
+    },
+    "gui": {
+      "rotation": [30, -135, 0],
+      "scale": [0.6, 0.6, 0.6]
+    },
+    "fixed": {
+      "translation": [0, 0, -4],
+      "scale": [1, 1, 0.5]
+    }
+  }
 }

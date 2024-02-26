@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,24 +19,22 @@
 
 package de.markusbordihn.easymobfarm.client.screen;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import net.minecraft.resources.ResourceLocation;
-
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
 import de.markusbordihn.easymobfarm.config.mobs.HostileWaterMonster;
 import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
 import de.markusbordihn.easymobfarm.config.mobs.PassiveWaterAnimal;
+import java.util.HashMap;
+import java.util.Map;
+import net.minecraft.resources.ResourceLocation;
 
 public class Snapshots {
 
-  protected Snapshots() {}
-
   private static final String SNAPSHOT_PATH = "textures/container/snaps/";
-
   protected static final Map<String, ResourceLocation> SnapshotsMap = createSnapshotMap();
+
+  protected Snapshots() {
+  }
 
   // This way allows a cpu and memory optimized may to create a static map.
   private static Map<String, ResourceLocation> createSnapshotMap() {

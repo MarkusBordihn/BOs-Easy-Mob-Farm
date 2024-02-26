@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -20,12 +20,6 @@
 
 package de.markusbordihn.easymobfarm.loot;
 
-import java.util.List;
-import java.util.Random;
-
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.config.CommonConfig;
 import de.markusbordihn.easymobfarm.config.mobs.BeeAnimal;
@@ -34,13 +28,18 @@ import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
 import de.markusbordihn.easymobfarm.config.mobs.HostileNetherMonster;
 import de.markusbordihn.easymobfarm.config.mobs.HostileWaterMonster;
 import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
+import java.util.List;
+import java.util.Random;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 public class LootManagerDrops {
 
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
   private static final Random random = new Random();
 
-  protected LootManagerDrops() {}
+  protected LootManagerDrops() {
+  }
 
   public static final void processForcedDrops(List<ItemStack> lootDrops, String mobType) {
     // Ignore empty mob type.
