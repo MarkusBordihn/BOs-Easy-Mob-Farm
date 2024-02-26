@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,22 +19,18 @@
 
 package de.markusbordihn.easymobfarm.config.biome;
 
+import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
+import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
-import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
-
 public class Jungle {
 
-  // Ref: https://minecraft.fandom.com/wiki/Jungle
-  protected Jungle() {}
-
   public static final Set<String> Passive = new HashSet<>(Arrays.asList(
-  // @formatter:off
+      // @formatter:off
     PassiveAnimal.CHICKEN,
     PassiveAnimal.COW,
     PassiveAnimal.PANDA,
@@ -43,9 +39,8 @@ public class Jungle {
     PassiveAnimal.SHEEP
   // @formatter:on
   ));
-
   public static final Set<String> Hostile = new HashSet<>(Arrays.asList(
-  // @formatter:off
+      // @formatter:off
     HostileMonster.CREEPER,
     HostileMonster.ENDERMAN,
     HostileMonster.SKELETON,
@@ -56,8 +51,11 @@ public class Jungle {
     HostileMonster.ZOMBIE_VILLAGER
   // @formatter:on
   ));
-
   public static final Set<String> All =
       Stream.concat(Passive.stream(), Hostile.stream()).collect(Collectors.toSet());
+
+  // Ref: https://minecraft.fandom.com/wiki/Jungle
+  protected Jungle() {
+  }
 
 }

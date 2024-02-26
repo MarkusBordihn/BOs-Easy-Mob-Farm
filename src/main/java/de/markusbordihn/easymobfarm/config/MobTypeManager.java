@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -18,16 +18,6 @@
  */
 
 package de.markusbordihn.easymobfarm.config;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.farm.copper.CopperAnimalPlainsFarm;
@@ -75,11 +65,18 @@ import de.markusbordihn.easymobfarm.item.mobcatcher.NetheriteLasso;
 import de.markusbordihn.easymobfarm.item.mobcatcher.PoppyBouquet;
 import de.markusbordihn.easymobfarm.item.mobcatcher.UrnSmall;
 import de.markusbordihn.easymobfarm.item.mobcatcher.WitchBottle;
-
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @EventBusSubscriber
 public class MobTypeManager {
@@ -96,7 +93,8 @@ public class MobTypeManager {
   private static Set<String> generalAllowedMobTypesSet = Collections.emptySet();
   private static Set<String> generalDeniedMobTypesSet = Collections.emptySet();
 
-  protected MobTypeManager() {}
+  protected MobTypeManager() {
+  }
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,16 +19,15 @@
 
 package de.markusbordihn.easymobfarm.menu.farm.copper;
 
+import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
+import de.markusbordihn.easymobfarm.block.farm.copper.CopperMonsterPlainsCaveFarm;
+import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
+import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
-
-import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
-import de.markusbordihn.easymobfarm.block.farm.copper.CopperMonsterPlainsCaveFarm;
-import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
-import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
 
 public class CopperMonsterPlainsCaveFarmMenu extends MobFarmMenu {
 

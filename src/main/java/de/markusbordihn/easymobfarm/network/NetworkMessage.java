@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,20 +19,19 @@
 
 package de.markusbordihn.easymobfarm.network;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import net.minecraft.core.BlockPos;
-
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.data.RedstoneMode;
 import de.markusbordihn.easymobfarm.network.message.MessageRedstoneModeChange;
+import net.minecraft.core.BlockPos;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class NetworkMessage {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  protected NetworkMessage() {}
+  protected NetworkMessage() {
+  }
 
   /**
    * Send redstone mode change to server.

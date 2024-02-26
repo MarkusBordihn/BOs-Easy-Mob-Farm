@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -34,10 +34,6 @@ public enum RedstoneMode implements StringRepresentable {
     this.mode = mode;
   }
 
-  public String getSerializedName() {
-    return this.mode;
-  }
-
   public static RedstoneMode valueOf(int mode) {
     switch (mode) {
       case 0:
@@ -49,5 +45,9 @@ public enum RedstoneMode implements StringRepresentable {
       default:
         return DISABLED;
     }
+  }
+
+  public String getSerializedName() {
+    return this.mode;
   }
 }

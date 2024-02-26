@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2023 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,14 +19,15 @@
 
 package de.markusbordihn.easymobfarm.tabs;
 
+import de.markusbordihn.easymobfarm.item.ModItems;
 import net.minecraft.world.item.CreativeModeTab.DisplayItemsGenerator;
 import net.minecraft.world.item.CreativeModeTab.ItemDisplayParameters;
 import net.minecraft.world.item.CreativeModeTab.Output;
 
-import de.markusbordihn.easymobfarm.item.ModItems;
-
 public class MobFarmItems implements DisplayItemsGenerator {
-  protected MobFarmItems() {}
+
+  protected MobFarmItems() {
+  }
 
   @Override
   public void accept(ItemDisplayParameters itemDisplayParameters, Output output) {

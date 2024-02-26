@@ -13,11 +13,13 @@ Without these information we are not able to proceed with your request.
 
 **Name and link of the mod**
 
-This is need to lookup for additional information. Please keep in mind that we are not able to support mods in a alpha status.
+This is need to lookup for additional information. Please keep in mind that we are not able to
+support mods in a alpha status.
 
 ### Animal / Monster
 
-This sections covers all of the relevant mobs, please note we need the full name of these mobs like `minecraft:cow` and not only `Cow`.
+This sections covers all of the relevant mobs, please note we need the full name of these mobs
+like `minecraft:cow` and not only `Cow`.
 
 **Ambient Animal**
 

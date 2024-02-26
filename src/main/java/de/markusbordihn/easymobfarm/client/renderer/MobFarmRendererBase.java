@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,14 +19,12 @@
 
 package de.markusbordihn.easymobfarm.client.renderer;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
+import de.markusbordihn.easymobfarm.client.renderer.helper.RenderHelper;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -34,10 +32,8 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
-
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
-import de.markusbordihn.easymobfarm.client.renderer.helper.RenderHelper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class MobFarmRendererBase<T extends MobFarmBlockEntity> implements BlockEntityRenderer<T> {
 
@@ -77,6 +73,7 @@ public class MobFarmRendererBase<T extends MobFarmBlockEntity> implements BlockE
 
   @Override
   public void render(T blockEntity, float partialTicks, PoseStack poseStack,
-      MultiBufferSource buffer, int combinedLight, int combinedOverlay) {}
+      MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+  }
 
 }

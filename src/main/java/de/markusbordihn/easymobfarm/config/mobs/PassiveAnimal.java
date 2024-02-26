@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -23,8 +23,6 @@ import java.util.Set;
 
 public final class PassiveAnimal {
 
-  protected PassiveAnimal() {}
-
   public static final String BAT = "minecraft:bat";
   public static final String CAT = "minecraft:cat";
   public static final String CHICKEN = "minecraft:chicken";
@@ -38,7 +36,9 @@ public final class PassiveAnimal {
   public static final String PIG = "minecraft:pig";
   public static final String RABBIT = "minecraft:rabbit";
   public static final String SHEEP = "minecraft:sheep";
-
   public static final Set<String> All =
       Set.of(BAT, CAT, CHICKEN, COW, DONKEY, HORSE, LAMA, PANDA, PARROT, PIG, RABBIT, SHEEP);
+
+  protected PassiveAnimal() {
+  }
 }

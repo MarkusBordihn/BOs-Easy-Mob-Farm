@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -24,8 +24,6 @@ import net.minecraftforge.fml.ModList;
 
 public final class Constants {
 
-  protected Constants() {}
-
   // General Mod definitions
   public static final String LOG_NAME = "Bo's Easy Mob Farm";
   public static final String LOG_REGISTER_PREFIX = "🪤 Register " + LOG_NAME;
@@ -34,7 +32,6 @@ public final class Constants {
   public static final String MOD_ID = "easy_mob_farm";
   public static final String MOD_NAME = "Bo's Easy Mob Farm";
   public static final String MOD_URL = "https://www.curseforge.com/minecraft/mc-mods/easy-mob-farm";
-
   // Prefixes
   public static final String LOOT_MANAGER_PREFIX = "[Loot Manager] ";
   public static final String MESSAGE_PREFIX = "message.easy_mob_farm.";
@@ -42,11 +39,9 @@ public final class Constants {
   public static final String TEXT_PREFIX = "text.easy_mob_farm.";
   public static final String HELP_TEXT_PREFIX = "help_text.easy_mob_farm.";
   public static final String BLOCK_TEXT_PREFIX = "block.easy_mob_farm.";
-
   // Special Mob Farm
   public static final String CREATIVE_MOB_FARM = "creative_mob_farm";
   public static final String IRON_GOLEM_FARM = "iron_golem_farm";
-
   // Copper Mob Farms
   public static final String COPPER_ANIMAL_PLAINS_FARM = "copper_animal_plains_farm";
   public static final String COPPER_BEE_HIVE_FARM = "copper_bee_hive_farm";
@@ -56,7 +51,6 @@ public final class Constants {
   public static final String COPPER_NETHER_FORTRESS_FARM = "copper_nether_fortress_farm";
   public static final String COPPER_OCEAN_FARM = "copper_ocean_farm";
   public static final String COPPER_SWAMP_FARM = "copper_swamp_farm";
-
   // Gold Mob Farms
   public static final String GOLD_ANIMAL_PLAINS_FARM = "gold_animal_plains_farm";
   public static final String GOLD_BEE_HIVE_FARM = "gold_bee_hive_farm";
@@ -66,7 +60,6 @@ public final class Constants {
   public static final String GOLD_NETHER_FORTRESS_FARM = "gold_nether_fortress_farm";
   public static final String GOLD_OCEAN_FARM = "gold_ocean_farm";
   public static final String GOLD_SWAMP_FARM = "gold_swamp_farm";
-
   // Iron Mob Farms
   public static final String IRON_ANIMAL_PLAINS_FARM = "iron_animal_plains_farm";
   public static final String IRON_BEE_HIVE_FARM = "iron_bee_hive_farm";
@@ -76,7 +69,6 @@ public final class Constants {
   public static final String IRON_NETHER_FORTRESS_FARM = "iron_nether_fortress_farm";
   public static final String IRON_OCEAN_FARM = "iron_ocean_farm";
   public static final String IRON_SWAMP_FARM = "iron_swamp_farm";
-
   // Netherite Mob Farms
   public static final String NETHERITE_ANIMAL_PLAINS_FARM = "netherite_animal_plains_farm";
   public static final String NETHERITE_BEE_HIVE_FARM = "netherite_bee_hive_farm";
@@ -87,7 +79,6 @@ public final class Constants {
   public static final String NETHERITE_NETHER_FORTRESS_FARM = "netherite_nether_fortress_farm";
   public static final String NETHERITE_OCEAN_FARM = "netherite_ocean_farm";
   public static final String NETHERITE_SWAMP_FARM = "netherite_swamp_farm";
-
   // Colors
   public static final int FONT_COLOR_BLACK = 0;
   public static final int FONT_COLOR_DARK_GREEN = 43520;
@@ -97,7 +88,6 @@ public final class Constants {
   public static final int FONT_COLOR_WARNING = FONT_COLOR_RED;
   public static final int FONT_COLOR_YELLOW = 16777045;
   public static final int FONT_COLOR_WHITE = 16777215;
-
   // Textures
   public static final ResourceLocation TEXTURE_GENERIC_54 =
       new ResourceLocation(MINECRAFT_PREFIX, "textures/gui/container/generic_54.png");
@@ -109,7 +99,6 @@ public final class Constants {
       new ResourceLocation(Constants.MOD_ID, "textures/container/icons.png");
   public static final ResourceLocation TEXTURE_INVENTORY =
       new ResourceLocation(MINECRAFT_PREFIX, "textures/gui/container/inventory.png");
-
   // Supported Mods
   public static final boolean CORAIL_SPAWNERS_LOADED = ModList.get().isLoaded("corail_spawners");
   public static final boolean CREATE_LOADED = ModList.get().isLoaded("create");
@@ -121,7 +110,9 @@ public final class Constants {
       ModList.get().isLoaded("mobcapturingtool");
   public static final boolean MOB_CATCHER_LOADED = ModList.get().isLoaded("mob_catcher");
   public static final boolean PRODUCTIVE_BEES_LOADED = ModList.get().isLoaded("productivebees");
-
   // Misc
-  public static final float PI_180DEG = (float) (Math.PI/180);
+  public static final float PI_180DEG = (float) (Math.PI / 180);
+
+  protected Constants() {
+  }
 }

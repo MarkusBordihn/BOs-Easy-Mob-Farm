@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -23,8 +23,6 @@ import java.util.Set;
 
 public class HostileMonster {
 
-  protected HostileMonster() {}
-
   public static final String CAVE_SPIDER = "minecraft:cave_spider";
   public static final String CREEPER = "minecraft:creeper";
   public static final String ENDERMAN = "minecraft:enderman";
@@ -36,8 +34,10 @@ public class HostileMonster {
   public static final String WITCH = "minecraft:witch";
   public static final String ZOMBIE = "minecraft:zombie";
   public static final String ZOMBIE_VILLAGER = "minecraft:zombie_villager";
-
-
   public static final Set<String> All = Set.of(CAVE_SPIDER, CREEPER, ENDERMAN, HUSK, PILLAGER,
       SKELETON, SLIME, SPIDER, WITCH, ZOMBIE, ZOMBIE_VILLAGER);
+
+
+  protected HostileMonster() {
+  }
 }

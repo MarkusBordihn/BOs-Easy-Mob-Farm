@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,9 +19,11 @@
 
 package de.markusbordihn.easymobfarm.client.renderer.helper;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.config.mobs.BeeAnimal;
+import de.markusbordihn.easymobfarm.config.mobs.HostileNetherMonster;
+import de.markusbordihn.easymobfarm.config.mobs.NeutralMonster;
+import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.SquidModel;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -79,12 +81,8 @@ import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
-
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.config.mobs.BeeAnimal;
-import de.markusbordihn.easymobfarm.config.mobs.HostileNetherMonster;
-import de.markusbordihn.easymobfarm.config.mobs.NeutralMonster;
-import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class RenderModels {
 
@@ -578,7 +576,8 @@ public class RenderModels {
 
   public EntityRendererProvider.Context getEntityRendererContext() {
     return new EntityRendererProvider.Context(minecraft.getEntityRenderDispatcher(),
-        minecraft.getItemRenderer(), minecraft.getBlockRenderer(), null, // minecraft.getItemInHandRenderer()
+        minecraft.getItemRenderer(), minecraft.getBlockRenderer(), null,
+        // minecraft.getItemInHandRenderer()
         minecraft.getResourceManager(), minecraft.getEntityModels(), minecraft.font);
   }
 

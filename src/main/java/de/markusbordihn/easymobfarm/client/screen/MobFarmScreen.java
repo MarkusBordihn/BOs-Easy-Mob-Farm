@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,24 +19,6 @@
 
 package de.markusbordihn.easymobfarm.client.screen;
 
-import java.util.Set;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import net.minecraft.ChatFormatting;
-import net.minecraft.client.StringSplitter;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
 import de.markusbordihn.easymobfarm.client.renderer.helper.RenderModels;
@@ -50,20 +32,32 @@ import de.markusbordihn.easymobfarm.menu.slots.ExperienceSlot;
 import de.markusbordihn.easymobfarm.menu.slots.WeaponSlot;
 import de.markusbordihn.easymobfarm.network.NetworkMessage;
 import de.markusbordihn.easymobfarm.text.TranslatableText;
+import java.util.Set;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.StringSplitter;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScreen<T> {
-
-  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
-
-  private static final ResourceLocation CUSTOM =
-      new ResourceLocation(Constants.MOD_ID, "textures/container/custom.png");
-  private static final ResourceLocation CUSTOM_SHADOW =
-      new ResourceLocation(Constants.MOD_ID, "textures/container/custom_shadow.png");
 
   public static final int SNAP_WITH = 34;
   public static final int SNAP_HEIGHT = 53;
   public static final int MAX_HELP_TEXT_WIDTH = 300;
-
+  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+  private static final ResourceLocation CUSTOM =
+      new ResourceLocation(Constants.MOD_ID, "textures/container/custom.png");
+  private static final ResourceLocation CUSTOM_SHADOW =
+      new ResourceLocation(Constants.MOD_ID, "textures/container/custom_shadow.png");
   private final MutableComponent warningDisabledText;
   private final MutableComponent warningFullText;
   private final T mobFarmMenu;
@@ -158,7 +152,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
           mobTypeOverview.append(Component.literal("..."));
           guiGraphics.renderComponentTooltip(font,
               stringSplitter.splitLines(Component
-                  .translatable(Constants.HELP_TEXT_PREFIX + "capture_slot", mobTypeOverview),
+                      .translatable(Constants.HELP_TEXT_PREFIX + "capture_slot", mobTypeOverview),
                   MAX_HELP_TEXT_WIDTH, Style.EMPTY),
               x, y, ItemStack.EMPTY);
         } else {
