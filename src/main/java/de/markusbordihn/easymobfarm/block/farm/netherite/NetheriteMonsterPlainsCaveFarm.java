@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,8 +19,12 @@
 
 package de.markusbordihn.easymobfarm.block.farm.netherite;
 
+import de.markusbordihn.easymobfarm.block.MobFarmBlock;
+import de.markusbordihn.easymobfarm.block.ModBlocks;
+import de.markusbordihn.easymobfarm.block.entity.farm.netherite.NetheriteMonsterPlainsCaveFarmEntity;
+import de.markusbordihn.easymobfarm.data.FarmTier;
+import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import javax.annotation.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -32,12 +36,6 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-
-import de.markusbordihn.easymobfarm.block.MobFarmBlock;
-import de.markusbordihn.easymobfarm.block.ModBlocks;
-import de.markusbordihn.easymobfarm.block.entity.farm.netherite.NetheriteMonsterPlainsCaveFarmEntity;
-import de.markusbordihn.easymobfarm.data.FarmTier;
-import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
 public class NetheriteMonsterPlainsCaveFarm extends MobFarmBlock {
 
@@ -70,15 +68,20 @@ public class NetheriteMonsterPlainsCaveFarm extends MobFarmBlock {
 
   @Override
   protected void openContainer(Level level, BlockPos blockPos, Player player) {
-    if (level.getBlockEntity(
-        blockPos) instanceof NetheriteMonsterPlainsCaveFarmEntity monsterPlainsCaveFarmEntity) {
+    if (level.getBlockEntity(blockPos)
+        instanceof NetheriteMonsterPlainsCaveFarmEntity monsterPlainsCaveFarmEntity) {
       player.openMenu(monsterPlainsCaveFarmEntity);
     }
   }
 
   @Override
-  public InteractionResult consumeCapturedMob(Level level, BlockPos blockPos, BlockState blockState,
-      BlockEntity blockEntity, ItemStack itemStack, UseOnContext context) {
+  public InteractionResult consumeCapturedMob(
+      Level level,
+      BlockPos blockPos,
+      BlockState blockState,
+      BlockEntity blockEntity,
+      ItemStack itemStack,
+      UseOnContext context) {
     NetheriteMonsterPlainsCaveFarmEntity monsterPlainsCaveMobFarmEntity =
         (NetheriteMonsterPlainsCaveFarmEntity) blockEntity;
     monsterPlainsCaveMobFarmEntity.updateLevel(level);
@@ -95,12 +98,13 @@ public class NetheriteMonsterPlainsCaveFarm extends MobFarmBlock {
 
   @Override
   @Nullable
-  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState,
-      BlockEntityType<T> blockEntityType) {
-    return level.isClientSide ? null
-        : createTickerHelper(blockEntityType,
+  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+      Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
+    return level.isClientSide
+        ? null
+        : createTickerHelper(
+            blockEntityType,
             ModBlocks.NETHERITE_MONSTER_PLAINS_CAVE_FARM_ENTITY.get(),
             NetheriteMonsterPlainsCaveFarmEntity::serverTick);
   }
-
 }

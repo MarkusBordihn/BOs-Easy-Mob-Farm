@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -64,21 +64,26 @@ public class GoldMonsterPlainsCaveFarm extends MobFarmBlock {
 
   @Override
   public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-    return new GoldMonsterPlainsCaveFarmEntity(ModBlocks.GOLD_MONSTER_PLAINS_CAVE_FARM_ENTITY.get(),
-        blockPos, blockState);
+    return new GoldMonsterPlainsCaveFarmEntity(
+        ModBlocks.GOLD_MONSTER_PLAINS_CAVE_FARM_ENTITY.get(), blockPos, blockState);
   }
 
   @Override
   protected void openContainer(Level level, BlockPos blockPos, Player player) {
-    if (level.getBlockEntity(
-        blockPos) instanceof GoldMonsterPlainsCaveFarmEntity monsterPlainsCaveFarmEntity) {
+    if (level.getBlockEntity(blockPos)
+        instanceof GoldMonsterPlainsCaveFarmEntity monsterPlainsCaveFarmEntity) {
       player.openMenu(monsterPlainsCaveFarmEntity);
     }
   }
 
   @Override
-  public InteractionResult consumeCapturedMob(Level level, BlockPos blockPos, BlockState blockState,
-      BlockEntity blockEntity, ItemStack itemStack, UseOnContext context) {
+  public InteractionResult consumeCapturedMob(
+      Level level,
+      BlockPos blockPos,
+      BlockState blockState,
+      BlockEntity blockEntity,
+      ItemStack itemStack,
+      UseOnContext context) {
     GoldMonsterPlainsCaveFarmEntity monsterPlainsCaveMobFarmEntity =
         (GoldMonsterPlainsCaveFarmEntity) blockEntity;
     monsterPlainsCaveMobFarmEntity.updateLevel(level);
@@ -95,11 +100,13 @@ public class GoldMonsterPlainsCaveFarm extends MobFarmBlock {
 
   @Override
   @Nullable
-  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState,
-      BlockEntityType<T> blockEntityType) {
-    return level.isClientSide ? null
-        : createTickerHelper(blockEntityType, ModBlocks.GOLD_MONSTER_PLAINS_CAVE_FARM_ENTITY.get(),
+  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+      Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
+    return level.isClientSide
+        ? null
+        : createTickerHelper(
+            blockEntityType,
+            ModBlocks.GOLD_MONSTER_PLAINS_CAVE_FARM_ENTITY.get(),
             GoldMonsterPlainsCaveFarmEntity::serverTick);
   }
-
 }

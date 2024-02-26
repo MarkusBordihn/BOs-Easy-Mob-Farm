@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -33,37 +33,44 @@ public class Ocean {
 
   // Reference: https://minecraft.fandom.com/wiki/Ocean
 
+  public static final Set<String> Passive =
+      new HashSet<>(
+          Arrays.asList(
+              // @formatter:off
+              PassiveWaterAnimal.GLOW_SQUID, PassiveWaterAnimal.SQUID
+              // @formatter:on
+              ));
+  public static final Set<String> Hostile =
+      new HashSet<>(
+          Arrays.asList(
+              // @formatter:off
+              HostileWaterMonster.DROWNED
+              // @formatter:on
+              ));
+  public static final Set<String> Ambient =
+      new HashSet<>(
+          Arrays.asList(
+              // @formatter:off
+              AmbientWaterAnimal.COD,
+              AmbientWaterAnimal.SALMON,
+              AmbientWaterAnimal.ATLANTIC_COD,
+              AmbientWaterAnimal.ATLANTIC_HALIBUT,
+              AmbientWaterAnimal.ATLANTIC_HERRING,
+              AmbientWaterAnimal.BLACKFISH,
+              AmbientWaterAnimal.PACIFIC_HALIBUT,
+              AmbientWaterAnimal.PINK_SALMON,
+              AmbientWaterAnimal.POLLOCK,
+              AmbientWaterAnimal.RAINBOW_TROUT
+              // @formatter:on
+              ));
+
   protected Ocean() {}
 
-  public static final Set<String> Passive = new HashSet<>(Arrays.asList(
-  // @formatter:off
-    PassiveWaterAnimal.GLOW_SQUID,
-    PassiveWaterAnimal.SQUID
-  // @formatter:on
-  ));
-
-  public static final Set<String> Hostile = new HashSet<>(Arrays.asList(
-  // @formatter:off
-    HostileWaterMonster.DROWNED
-  // @formatter:on
-  ));
-
-  public static final Set<String> Ambient = new HashSet<>(Arrays.asList(
-  // @formatter:off
-    AmbientWaterAnimal.COD,
-    AmbientWaterAnimal.SALMON,
-    AmbientWaterAnimal.ATLANTIC_COD,
-    AmbientWaterAnimal.ATLANTIC_HALIBUT,
-    AmbientWaterAnimal.ATLANTIC_HERRING,
-    AmbientWaterAnimal.BLACKFISH,
-    AmbientWaterAnimal.PACIFIC_HALIBUT,
-    AmbientWaterAnimal.PINK_SALMON,
-    AmbientWaterAnimal.POLLOCK,
-    AmbientWaterAnimal.RAINBOW_TROUT
-  // @formatter:on
-  ));
-
-  public static final Set<String> All = Stream.concat(
-      Stream.concat(Passive.stream(), Hostile.stream()).collect(Collectors.toSet()).stream(),
-      Ambient.stream()).collect(Collectors.toSet());
+  public static final Set<String> All =
+      Stream.concat(
+              Stream.concat(Passive.stream(), Hostile.stream())
+                  .collect(Collectors.toSet())
+                  .stream(),
+              Ambient.stream())
+          .collect(Collectors.toSet());
 }

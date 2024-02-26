@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -23,11 +23,10 @@ import java.util.Set;
 
 public class BossMonster {
 
-  protected BossMonster() {}
-
   public static final String ENDER_DRAGON = "minecraft:ender_dragon";
   public static final String WARDEN = "minecraft:warden";
   public static final String WITHER = "minecraft:wither";
-
   public static final Set<String> All = Set.of(ENDER_DRAGON, WARDEN, WITHER);
+
+  protected BossMonster() {}
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -38,27 +38,33 @@ import de.markusbordihn.easymobfarm.network.message.MessageRedstoneModeChange;
 public class NetworkHandler {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
-
-  private static int id = 0;
   private static final int PROTOCOL_VERSION = 1;
   private static final SimpleChannel SIMPLE_CHANNEL =
       ChannelBuilder.named(new ResourceLocation(Constants.MOD_ID, "network"))
-          .networkProtocolVersion(PROTOCOL_VERSION).simpleChannel();
+          .networkProtocolVersion(PROTOCOL_VERSION)
+          .simpleChannel();
+  private static int id = 0;
 
   public static void registerNetworkHandler(final FMLCommonSetupEvent event) {
 
-    log.info("{} Network Handler for {} with version {} ...", Constants.LOG_REGISTER_PREFIX,
-        SIMPLE_CHANNEL, PROTOCOL_VERSION);
+    log.info(
+        "{} Network Handler for {} with version {} ...",
+        Constants.LOG_REGISTER_PREFIX,
+        SIMPLE_CHANNEL,
+        PROTOCOL_VERSION);
 
-    event.enqueueWork(() -> {
+    event.enqueueWork(
+        () -> {
 
-      // Redstone Mode Change: Client -> Server
-      SIMPLE_CHANNEL
-          .messageBuilder(MessageRedstoneModeChange.class, id++, NetworkDirection.PLAY_TO_SERVER)
-          .decoder(MessageRedstoneModeChange::decode).encoder(MessageRedstoneModeChange::encode)
-          .consumerNetworkThread(MessageRedstoneModeChange::handle).add();
-    });
-
+          // Redstone Mode Change: Client -> Server
+          SIMPLE_CHANNEL
+              .messageBuilder(
+                  MessageRedstoneModeChange.class, id++, NetworkDirection.PLAY_TO_SERVER)
+              .decoder(MessageRedstoneModeChange::decode)
+              .encoder(MessageRedstoneModeChange::encode)
+              .consumerNetworkThread(MessageRedstoneModeChange::handle)
+              .add();
+        });
   }
 
   public static <M> void sendToServer(M message) {
@@ -68,5 +74,4 @@ public class NetworkHandler {
       log.error("Failed to send {} to server, got error: {}", message, e.getMessage());
     }
   }
-
 }

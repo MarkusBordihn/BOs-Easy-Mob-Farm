@@ -4,12 +4,10 @@
 
 package de.markusbordihn.easymobfarm.loot;
 
+import com.mojang.authlib.GameProfile;
 import java.util.Set;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-
-import com.mojang.authlib.GameProfile;
-
 import net.minecraft.network.Connection;
 import net.minecraft.network.PacketSendListener;
 import net.minecraft.network.chat.ChatType;
@@ -70,10 +68,9 @@ import net.minecraft.stats.Stat;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.RelativeMovement;
 import net.minecraft.world.entity.player.Player;
-
 import net.minecraftforge.server.ServerLifecycleHooks;
 
-/**
+/*
  * A basic fake server player implementation that can be used to simulate player actions.
  */
 public class FakePlayer extends ServerPlayer {
@@ -260,8 +257,8 @@ public class FakePlayer extends ServerPlayer {
     public void handleLockDifficulty(ServerboundLockDifficultyPacket packet) {}
 
     @Override
-    public void teleport(double x, double y, double z, float yaw, float pitch,
-        Set<RelativeMovement> relativeSet) {}
+    public void teleport(
+        double x, double y, double z, float yaw, float pitch, Set<RelativeMovement> relativeSet) {}
 
     @Override
     public void ackBlockChangesUpTo(int sequence) {}

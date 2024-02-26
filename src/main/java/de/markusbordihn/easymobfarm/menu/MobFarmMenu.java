@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,9 +19,17 @@
 
 package de.markusbordihn.easymobfarm.menu;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.block.MobFarmBlock;
+import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
+import de.markusbordihn.easymobfarm.config.MobTypeManager;
+import de.markusbordihn.easymobfarm.data.RedstoneMode;
+import de.markusbordihn.easymobfarm.item.CapturedMob;
+import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
+import de.markusbordihn.easymobfarm.menu.slots.CapturedMobSlot;
+import de.markusbordihn.easymobfarm.menu.slots.ExperienceSlot;
+import de.markusbordihn.easymobfarm.menu.slots.LockedResultSlot;
+import de.markusbordihn.easymobfarm.menu.slots.WeaponSlot;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -38,22 +46,10 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.MobFarmBlock;
-import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
-import de.markusbordihn.easymobfarm.config.MobTypeManager;
-import de.markusbordihn.easymobfarm.data.RedstoneMode;
-import de.markusbordihn.easymobfarm.item.CapturedMob;
-import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
-import de.markusbordihn.easymobfarm.menu.slots.CapturedMobSlot;
-import de.markusbordihn.easymobfarm.menu.slots.ExperienceSlot;
-import de.markusbordihn.easymobfarm.menu.slots.LockedResultSlot;
-import de.markusbordihn.easymobfarm.menu.slots.WeaponSlot;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class MobFarmMenu extends AbstractContainerMenu {
-
-  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   // Define Slot index for easier access
   public static final int CAPTURED_MOB_SLOT = 0;
@@ -64,11 +60,9 @@ public class MobFarmMenu extends AbstractContainerMenu {
   public static final int RESULT_5_SLOT = 5;
   public static final int WEAPON_SLOT = 6;
   public static final int EXPERIENCE_SLOT = 7;
-
   public static final int PLAYER_SLOT_START = 9;
   public static final int PLAYER_INVENTORY_SLOT_START = PLAYER_SLOT_START;
   public static final int PLAYER_SLOT_STOP = 3 * 9 + PLAYER_INVENTORY_SLOT_START + 8;
-
   // Storing slot position statically to able to access them from other UI parts.
   public static final int CAPTURED_MOB_SLOT_LEFT = 81;
   public static final int CAPTURED_MOB_SLOT_TOP = 51;
@@ -78,7 +72,7 @@ public class MobFarmMenu extends AbstractContainerMenu {
   public static final int WEAPON_SLOT_TOP = 51;
   public static final int EXPERIENCE_SLOT_LEFT = 152;
   public static final int EXPERIENCE_SLOT_TOP = 100;
-
+  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   // Defining basic layout options
   protected static int containerSize = 8;
   private static int slotSize = 18;
@@ -107,18 +101,28 @@ public class MobFarmMenu extends AbstractContainerMenu {
   private int mobFarmTotalTime;
 
   public MobFarmMenu(int windowIdIn, Inventory inventory) {
-    this(windowIdIn, inventory, new SimpleContainer(containerSize),
+    this(
+        windowIdIn,
+        inventory,
+        new SimpleContainer(containerSize),
         new SimpleContainerData(MobFarmBlockEntityData.DATA_SIZE),
         ModMenuTypes.MOB_FARM_MENU.get());
   }
 
-  public MobFarmMenu(final int windowId, final Inventory playerInventory, final Container container,
+  public MobFarmMenu(
+      final int windowId,
+      final Inventory playerInventory,
+      final Container container,
       final ContainerData containerData) {
     this(windowId, playerInventory, container, containerData, ModMenuTypes.MOB_FARM_MENU.get());
   }
 
-  public MobFarmMenu(final int windowId, final Inventory playerInventory, final Container container,
-      final ContainerData containerData, MenuType<?> menuType) {
+  public MobFarmMenu(
+      final int windowId,
+      final Inventory playerInventory,
+      final Container container,
+      final ContainerData containerData,
+      MenuType<?> menuType) {
     super(menuType, windowId);
 
     // Level reference
@@ -131,18 +135,23 @@ public class MobFarmMenu extends AbstractContainerMenu {
     this.data = containerData;
 
     // Define slots and position on UI (note: order sensitive)
-    this.addSlot(new CapturedMobSlot(container, CAPTURED_MOB_SLOT, CAPTURED_MOB_SLOT_LEFT,
-        CAPTURED_MOB_SLOT_TOP, this));
+    this.addSlot(
+        new CapturedMobSlot(
+            container, CAPTURED_MOB_SLOT, CAPTURED_MOB_SLOT_LEFT, CAPTURED_MOB_SLOT_TOP, this));
     this.addSlot(
         new LockedResultSlot(container, RESULT_1_SLOT, RESULT_SLOTS_LEFT, RESULT_SLOTS_TOP));
-    this.addSlot(new LockedResultSlot(container, RESULT_2_SLOT, RESULT_SLOTS_LEFT + 1 * 18,
-        RESULT_SLOTS_TOP));
-    this.addSlot(new LockedResultSlot(container, RESULT_3_SLOT, RESULT_SLOTS_LEFT + 2 * 18,
-        RESULT_SLOTS_TOP));
-    this.addSlot(new LockedResultSlot(container, RESULT_4_SLOT, RESULT_SLOTS_LEFT + 3 * 18,
-        RESULT_SLOTS_TOP));
-    this.addSlot(new LockedResultSlot(container, RESULT_5_SLOT, RESULT_SLOTS_LEFT + 4 * 18,
-        RESULT_SLOTS_TOP));
+    this.addSlot(
+        new LockedResultSlot(
+            container, RESULT_2_SLOT, RESULT_SLOTS_LEFT + 1 * 18, RESULT_SLOTS_TOP));
+    this.addSlot(
+        new LockedResultSlot(
+            container, RESULT_3_SLOT, RESULT_SLOTS_LEFT + 2 * 18, RESULT_SLOTS_TOP));
+    this.addSlot(
+        new LockedResultSlot(
+            container, RESULT_4_SLOT, RESULT_SLOTS_LEFT + 3 * 18, RESULT_SLOTS_TOP));
+    this.addSlot(
+        new LockedResultSlot(
+            container, RESULT_5_SLOT, RESULT_SLOTS_LEFT + 4 * 18, RESULT_SLOTS_TOP));
     this.addSlot(new WeaponSlot(container, WEAPON_SLOT, WEAPON_SLOT_LEFT, WEAPON_SLOT_TOP));
     this.addSlot(
         new ExperienceSlot(container, EXPERIENCE_SLOT, EXPERIENCE_SLOT_LEFT, EXPERIENCE_SLOT_TOP));
@@ -151,18 +160,24 @@ public class MobFarmMenu extends AbstractContainerMenu {
     int playerInventoryStartPositionY = 140;
     for (int inventoryRow = 0; inventoryRow < 3; ++inventoryRow) {
       for (int inventoryColumn = 0; inventoryColumn < 9; ++inventoryColumn) {
-        this.addSlot(new Slot(playerInventory,
-            inventoryColumn + inventoryRow * 9 + PLAYER_INVENTORY_SLOT_START,
-            slotSpacing + inventoryColumn * slotSize,
-            playerInventoryStartPositionY + inventoryRow * slotSize));
+        this.addSlot(
+            new Slot(
+                playerInventory,
+                inventoryColumn + inventoryRow * 9 + PLAYER_INVENTORY_SLOT_START,
+                slotSpacing + inventoryColumn * slotSize,
+                playerInventoryStartPositionY + inventoryRow * slotSize));
       }
     }
 
     // Player Hotbar
     int hotbarStartPositionY = 198;
     for (int playerInventorySlot = 0; playerInventorySlot < 9; ++playerInventorySlot) {
-      this.addSlot(new Slot(playerInventory, playerInventorySlot,
-          slotSpacing + playerInventorySlot * slotSize, hotbarStartPositionY));
+      this.addSlot(
+          new Slot(
+              playerInventory,
+              playerInventorySlot,
+              slotSpacing + playerInventorySlot * slotSize,
+              hotbarStartPositionY));
     }
 
     // Define container data
@@ -200,9 +215,10 @@ public class MobFarmMenu extends AbstractContainerMenu {
     this.mobFarmStatus = this.data.get(MobFarmBlockEntityData.FARM_STATUS_DATA);
     if (!this.mobFarmCapturedMob.isEmpty()) {
       int adaptiveTotalPixelHeight = this.mobFarmTotalTime > 200 ? 15 : 16;
-      this.mobFarmProgressImage = this.mobFarmTotalTime != 0 && this.mobFarmProgress != 0
-          ? this.mobFarmProgress * adaptiveTotalPixelHeight / this.mobFarmTotalTime
-          : 0;
+      this.mobFarmProgressImage =
+          this.mobFarmTotalTime != 0 && this.mobFarmProgress != 0
+              ? this.mobFarmProgress * adaptiveTotalPixelHeight / this.mobFarmTotalTime
+              : 0;
       this.mobFarmRemainingTime = (this.mobFarmTotalTime - this.mobFarmProgress) / 20;
     }
 
@@ -211,9 +227,11 @@ public class MobFarmMenu extends AbstractContainerMenu {
         RedstoneMode.valueOf(this.data.get(MobFarmBlockEntityData.FARM_REDSTONE_MODE_DATA));
 
     // Block position
-    this.mobFarmBlockPos = new BlockPos(this.data.get(MobFarmBlockEntityData.FARM_BLOCK_POS_X_DATA),
-        this.data.get(MobFarmBlockEntityData.FARM_BLOCK_POS_Y_DATA),
-        this.data.get(MobFarmBlockEntityData.FARM_BLOCK_POS_Z_DATA));
+    this.mobFarmBlockPos =
+        new BlockPos(
+            this.data.get(MobFarmBlockEntityData.FARM_BLOCK_POS_X_DATA),
+            this.data.get(MobFarmBlockEntityData.FARM_BLOCK_POS_Y_DATA),
+            this.data.get(MobFarmBlockEntityData.FARM_BLOCK_POS_Z_DATA));
 
     // Power mode
     BlockState blockState = this.level.getBlockState(this.mobFarmBlockPos);
@@ -321,14 +339,16 @@ public class MobFarmMenu extends AbstractContainerMenu {
         if (!this.moveItemStackTo(slotItemStack, PLAYER_SLOT_START, slots.size(), true)) {
           return ItemStack.EMPTY;
         }
-      } else if (slotIndex >= 6 && !this.slots.get(EXPERIENCE_SLOT).hasItem()
+      } else if (slotIndex >= 6
+          && !this.slots.get(EXPERIENCE_SLOT).hasItem()
           && !this.moveItemStackTo(slotItemStack, EXPERIENCE_SLOT, EXPERIENCE_SLOT + 1, false)) {
         return ItemStack.EMPTY;
       }
     }
 
     // Handle experience bottles for moving out.
-    else if (slotItemStack.getItem() instanceof ExperienceBottleItem && slotIndex == EXPERIENCE_SLOT
+    else if (slotItemStack.getItem() instanceof ExperienceBottleItem
+        && slotIndex == EXPERIENCE_SLOT
         && !this.moveItemStackTo(slotItemStack, PLAYER_SLOT_START, slots.size(), true)) {
       return ItemStack.EMPTY;
     }
@@ -346,8 +366,11 @@ public class MobFarmMenu extends AbstractContainerMenu {
     }
 
     // Move result items to the player inventory.
-    else if ((slotIndex == RESULT_1_SLOT || slotIndex == RESULT_2_SLOT || slotIndex == RESULT_3_SLOT
-        || slotIndex == RESULT_4_SLOT || slotIndex == RESULT_5_SLOT)
+    else if ((slotIndex == RESULT_1_SLOT
+            || slotIndex == RESULT_2_SLOT
+            || slotIndex == RESULT_3_SLOT
+            || slotIndex == RESULT_4_SLOT
+            || slotIndex == RESULT_5_SLOT)
         && !this.moveItemStackTo(slotItemStack, PLAYER_SLOT_START, slots.size(), false)) {
       return ItemStack.EMPTY;
     }
@@ -359,8 +382,9 @@ public class MobFarmMenu extends AbstractContainerMenu {
         if (!this.moveItemStackTo(slotItemStack, PLAYER_SLOT_START, slots.size(), true)) {
           return ItemStack.EMPTY;
         }
-      } else if (slotIndex >= 6 && !this.moveItemStackTo(slotItemStack, CAPTURED_MOB_SLOT,
-          CAPTURED_MOB_SLOT + 1, false)) {
+      } else if (slotIndex >= 6
+          && !this.moveItemStackTo(
+              slotItemStack, CAPTURED_MOB_SLOT, CAPTURED_MOB_SLOT + 1, false)) {
         return ItemStack.EMPTY;
       }
     }
@@ -381,5 +405,4 @@ public class MobFarmMenu extends AbstractContainerMenu {
 
     return itemStack;
   }
-
 }

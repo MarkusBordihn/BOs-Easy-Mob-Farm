@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -34,13 +34,10 @@ public class NetworkMessage {
 
   protected NetworkMessage() {}
 
-  /**
-   * Send redstone mode change to server.
-   */
+  /** Send redstone mode change to server. */
   public static void sendRedstoneModeChangeToServer(BlockPos blockPos, RedstoneMode redstoneMode) {
     if (blockPos != null && redstoneMode != null) {
       NetworkHandler.sendToServer(new MessageRedstoneModeChange(blockPos, redstoneMode));
     }
   }
-
 }

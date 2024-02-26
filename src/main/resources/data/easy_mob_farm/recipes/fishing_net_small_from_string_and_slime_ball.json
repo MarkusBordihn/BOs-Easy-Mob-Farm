@@ -3,7 +3,8 @@
   "pattern": [
     "SSS",
     "S#S",
-    "SSS"],
+    "SSS"
+  ],
   "key": {
     "#": {
       "item": "minecraft:slime_ball"

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,28 +19,37 @@
 
 package de.markusbordihn.easymobfarm.menu.farm.copper;
 
+import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
+import de.markusbordihn.easymobfarm.block.farm.copper.CopperNetherFortressFarm;
+import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
+import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 
-import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
-import de.markusbordihn.easymobfarm.block.farm.copper.CopperNetherFortressFarm;
-import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
-import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
-
 public class CopperNetherFortressFarmMenu extends MobFarmMenu {
 
   public CopperNetherFortressFarmMenu(int windowIdIn, Inventory inventory) {
-    super(windowIdIn, inventory, new SimpleContainer(containerSize),
+    super(
+        windowIdIn,
+        inventory,
+        new SimpleContainer(containerSize),
         new SimpleContainerData(MobFarmBlockEntityData.DATA_SIZE),
         ModMenuTypes.COPPER_NETHER_FORTRESS_FARM_MENU.get());
   }
 
-  public CopperNetherFortressFarmMenu(final int windowId, final Inventory playerInventory,
-      final Container container, final ContainerData containerData) {
-    super(windowId, playerInventory, container, containerData,
+  public CopperNetherFortressFarmMenu(
+      final int windowId,
+      final Inventory playerInventory,
+      final Container container,
+      final ContainerData containerData) {
+    super(
+        windowId,
+        playerInventory,
+        container,
+        containerData,
         ModMenuTypes.COPPER_NETHER_FORTRESS_FARM_MENU.get());
   }
 
@@ -48,5 +57,4 @@ public class CopperNetherFortressFarmMenu extends MobFarmMenu {
   public String getAcceptedMobTypeName() {
     return CopperNetherFortressFarm.NAME;
   }
-
 }

@@ -3,7 +3,8 @@
   "pattern": [
     "OOO",
     "O#O",
-    "OOO"],
+    "OOO"
+  ],
   "key": {
     "#": {
       "item": "minecraft:water_bucket"

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2021 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -31,9 +31,10 @@ public abstract class CustomCommand implements Command<CommandSourceStack> {
 
   public static void sendFeedback(CommandContext<CommandSourceStack> context, String feedback) {
     CommandSourceStack commandSource = context.getSource();
-    commandSource.sendSuccess(() -> {
-      return Component.literal(feedback);
-    }, false);
+    commandSource.sendSuccess(
+        () -> {
+          return Component.literal(feedback);
+        },
+        false);
   }
-
 }

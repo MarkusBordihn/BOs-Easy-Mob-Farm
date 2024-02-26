@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -67,13 +67,15 @@ public class EasyMobFarm {
     log.info("{} Menu Types ...", Constants.LOG_REGISTER_PREFIX);
     ModMenuTypes.MENU_TYPES.register(modEventBus);
 
-    DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-      modEventBus.addListener(ClientRenderer::registerBlockEntityRenderers);
-      modEventBus.addListener(ClientScreens::registerScreens);
-      modEventBus.addListener(EasyMobFarmTab::handleCreativeModeTab);
-      EasyMobFarmTab.CREATIVE_TABS.register(modEventBus);
-      modEventBus.addListener(ModItemProperties::registerItemProperties);
-    });
+    DistExecutor.unsafeRunWhenOn(
+        Dist.CLIENT,
+        () ->
+            () -> {
+              modEventBus.addListener(ClientRenderer::registerBlockEntityRenderers);
+              modEventBus.addListener(ClientScreens::registerScreens);
+              modEventBus.addListener(EasyMobFarmTab::handleCreativeModeTab);
+              EasyMobFarmTab.CREATIVE_TABS.register(modEventBus);
+              modEventBus.addListener(ModItemProperties::registerItemProperties);
+            });
   }
-
 }

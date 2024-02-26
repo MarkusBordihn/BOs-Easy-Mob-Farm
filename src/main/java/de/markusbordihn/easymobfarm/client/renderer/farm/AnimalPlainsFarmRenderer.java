@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,14 +19,12 @@
 
 package de.markusbordihn.easymobfarm.client.renderer.farm;
 
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-
 import de.markusbordihn.easymobfarm.client.renderer.AnimalFarmRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
 public class AnimalPlainsFarmRenderer extends AnimalFarmRenderer {
 
   public AnimalPlainsFarmRenderer(BlockEntityRendererProvider.Context context) {
     super(context);
   }
-
 }

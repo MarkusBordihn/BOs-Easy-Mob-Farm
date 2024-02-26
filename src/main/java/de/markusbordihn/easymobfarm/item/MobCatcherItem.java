@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,14 +19,14 @@
 
 package de.markusbordihn.easymobfarm.item;
 
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.block.CapturedMobCompatible;
+import de.markusbordihn.easymobfarm.config.CommonConfig;
+import de.markusbordihn.easymobfarm.config.MobTypeManager;
+import de.markusbordihn.easymobfarm.text.TranslatableText;
 import java.util.List;
 import java.util.Set;
-
 import javax.annotation.Nullable;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -47,12 +47,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.CapturedMobCompatible;
-import de.markusbordihn.easymobfarm.config.CommonConfig;
-import de.markusbordihn.easymobfarm.config.MobTypeManager;
-import de.markusbordihn.easymobfarm.text.TranslatableText;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class MobCatcherItem extends CapturedMob {
 
@@ -118,8 +114,9 @@ public class MobCatcherItem extends CapturedMob {
   public void appendHoverTextCatchableMobs(List<Component> tooltipList) {
     Set<String> acceptedMobTypes = getAcceptedMobTypes();
     if (acceptedMobTypes.isEmpty()) {
-      tooltipList.add(Component.translatable(Constants.TEXT_PREFIX + "catchable_mobs_all")
-          .withStyle(ChatFormatting.GREEN));
+      tooltipList.add(
+          Component.translatable(Constants.TEXT_PREFIX + "catchable_mobs_all")
+              .withStyle(ChatFormatting.GREEN));
     } else {
       // List each single possible mob types (incl. modded mobs types).
       MutableComponent mobTypeOverview = Component.literal("").withStyle(ChatFormatting.DARK_GREEN);
@@ -131,7 +128,8 @@ public class MobCatcherItem extends CapturedMob {
       }
       if (!mobTypeOverview.getString().isBlank()) {
         MutableComponent acceptedMobsOverview =
-            Component.translatable(Constants.TEXT_PREFIX + "catchable_mobs").append(" ")
+            Component.translatable(Constants.TEXT_PREFIX + "catchable_mobs")
+                .append(" ")
                 .withStyle(ChatFormatting.GREEN);
         acceptedMobsOverview.append(mobTypeOverview).append("...");
         tooltipList.add(acceptedMobsOverview);
@@ -140,13 +138,12 @@ public class MobCatcherItem extends CapturedMob {
 
     // Display the catching luck.
     if (getMobCatchingLuckConfig() > 0) {
-      MutableComponent catchingLuck = Component
-          .translatable(Constants.TEXT_PREFIX + "mob_catching_luck", getMobCatchingLuckConfig());
+      MutableComponent catchingLuck =
+          Component.translatable(
+              Constants.TEXT_PREFIX + "mob_catching_luck", getMobCatchingLuckConfig());
       tooltipList.add(catchingLuck);
     }
   }
-
-
 
   @Override
   public InteractionResult useOn(UseOnContext context) {
@@ -162,10 +159,11 @@ public class MobCatcherItem extends CapturedMob {
       BlockEntity blockEntity = level.getBlockEntity(blockPos);
 
       // Make sure that the block can consume the captured mob, we only accept server-side.
-      if (!level.isClientSide && capturedMobCompatible.canConsumeCapturedMob(level, blockPos,
-          blockState, blockEntity, player, itemStack)) {
-        return capturedMobCompatible.consumeCapturedMob(level, blockPos, blockState, blockEntity,
-            itemStack, context);
+      if (!level.isClientSide
+          && capturedMobCompatible.canConsumeCapturedMob(
+              level, blockPos, blockState, blockEntity, player, itemStack)) {
+        return capturedMobCompatible.consumeCapturedMob(
+            level, blockPos, blockState, blockEntity, itemStack, context);
       }
       return InteractionResult.sidedSuccess(level.isClientSide);
     }
@@ -190,8 +188,8 @@ public class MobCatcherItem extends CapturedMob {
   }
 
   @Override
-  public InteractionResult interactLivingEntity(ItemStack itemStack, Player player,
-      LivingEntity livingEntity, InteractionHand hand) {
+  public InteractionResult interactLivingEntity(
+      ItemStack itemStack, Player player, LivingEntity livingEntity, InteractionHand hand) {
 
     // Ignore players and dead entities for capturing.
     if (livingEntity == null || livingEntity instanceof Player || livingEntity.isDeadOrDying()) {
@@ -245,8 +243,11 @@ public class MobCatcherItem extends CapturedMob {
   }
 
   @Override
-  public void appendHoverText(ItemStack itemStack, @Nullable Level level,
-      List<Component> tooltipList, TooltipFlag tooltipFlag) {
+  public void appendHoverText(
+      ItemStack itemStack,
+      @Nullable Level level,
+      List<Component> tooltipList,
+      TooltipFlag tooltipFlag) {
     String entityName = getCapturedMob(itemStack);
     if (entityName.isEmpty()) {
 
@@ -259,12 +260,14 @@ public class MobCatcherItem extends CapturedMob {
       Float entityHealth = getCapturedMobHealth(itemStack);
 
       // Display release note.
-      tooltipList.add(Component.translatable(Constants.TEXT_PREFIX + "release", entityName)
-          .withStyle(ChatFormatting.YELLOW));
+      tooltipList.add(
+          Component.translatable(Constants.TEXT_PREFIX + "release", entityName)
+              .withStyle(ChatFormatting.YELLOW));
 
       // Display catched mob.
-      tooltipList.add(Component.translatable(Constants.TEXT_PREFIX + "catched_mob", entityName)
-          .withStyle(ChatFormatting.GOLD));
+      tooltipList.add(
+          Component.translatable(Constants.TEXT_PREFIX + "catched_mob", entityName)
+              .withStyle(ChatFormatting.GOLD));
 
       // Display possible loot of catched mob.
       List<String> possibleLoot = getPossibleLoot(itemStack);
@@ -279,7 +282,8 @@ public class MobCatcherItem extends CapturedMob {
         }
         if (!lootOverview.getString().isBlank()) {
           MutableComponent possibleLootOverview =
-              Component.translatable(Constants.TEXT_PREFIX + "possible_loot").append(" ")
+              Component.translatable(Constants.TEXT_PREFIX + "possible_loot")
+                  .append(" ")
                   .withStyle(ChatFormatting.GREEN);
           possibleLootOverview.append(lootOverview).append("...");
           tooltipList.add(possibleLootOverview);
@@ -295,8 +299,8 @@ public class MobCatcherItem extends CapturedMob {
   }
 
   @Override
-  public boolean canAttackBlock(BlockState blockState, Level level, BlockPos blockPos,
-      Player player) {
+  public boolean canAttackBlock(
+      BlockState blockState, Level level, BlockPos blockPos, Player player) {
     return false;
   }
 }

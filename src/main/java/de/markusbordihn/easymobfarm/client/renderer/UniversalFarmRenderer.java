@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -35,8 +35,13 @@ public class UniversalFarmRenderer extends MobFarmRendererBase<MobFarmBlockEntit
   }
 
   @Override
-  public void render(MobFarmBlockEntity blockEntity, float partialTicks, PoseStack poseStack,
-      MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+  public void render(
+      MobFarmBlockEntity blockEntity,
+      float partialTicks,
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      int combinedLight,
+      int combinedOverlay) {
     super.render(blockEntity, partialTicks, poseStack, buffer, combinedLight, combinedOverlay);
 
     // Get unique farm id for caching, the renderer itself is a single instance.
@@ -57,8 +62,8 @@ public class UniversalFarmRenderer extends MobFarmRendererBase<MobFarmBlockEntit
     // Render individual mob types if possible, because custom entity renderer is not optimized.
     // This makes a huge different with up to 20% more fps with a larger farm.
     if (renderHelper.renderAnimal(poseStack, buffer, combinedLight, farmMobType)
-        || renderHelper.renderBee(poseStack, buffer, combinedLight, farmMobType, farmMobSubType,
-            farmMobEntityType)
+        || renderHelper.renderBee(
+            poseStack, buffer, combinedLight, farmMobType, farmMobSubType, farmMobEntityType)
         || renderHelper.renderMonster(poseStack, buffer, combinedLight, farmMobType)
         || renderHelper.renderSpecialEntity(poseStack, buffer, combinedLight, farmMobType)
         || renderHelper.renderWaterEntity(poseStack, buffer, combinedLight, farmMobType)) {

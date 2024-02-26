@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,8 +19,12 @@
 
 package de.markusbordihn.easymobfarm.block.farm.netherite;
 
+import de.markusbordihn.easymobfarm.block.MobFarmBlock;
+import de.markusbordihn.easymobfarm.block.ModBlocks;
+import de.markusbordihn.easymobfarm.block.entity.farm.netherite.NetheriteJungleFarmEntity;
+import de.markusbordihn.easymobfarm.data.FarmTier;
+import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import javax.annotation.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -33,16 +37,9 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 
-import de.markusbordihn.easymobfarm.block.MobFarmBlock;
-import de.markusbordihn.easymobfarm.block.ModBlocks;
-import de.markusbordihn.easymobfarm.block.entity.farm.netherite.NetheriteJungleFarmEntity;
-import de.markusbordihn.easymobfarm.data.FarmTier;
-import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
-
 public class NetheriteJungleFarm extends MobFarmBlock {
 
   public static final String NAME = "netherite_jungle_farm";
-
 
   public NetheriteJungleFarm(BlockBehaviour.Properties properties) {
     super(properties);
@@ -60,8 +57,8 @@ public class NetheriteJungleFarm extends MobFarmBlock {
 
   @Override
   public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-    return new NetheriteJungleFarmEntity(ModBlocks.NETHERITE_JUNGLE_FARM_ENTITY.get(), blockPos,
-        blockState);
+    return new NetheriteJungleFarmEntity(
+        ModBlocks.NETHERITE_JUNGLE_FARM_ENTITY.get(), blockPos, blockState);
   }
 
   @Override
@@ -72,8 +69,13 @@ public class NetheriteJungleFarm extends MobFarmBlock {
   }
 
   @Override
-  public InteractionResult consumeCapturedMob(Level level, BlockPos blockPos, BlockState blockState,
-      BlockEntity blockEntity, ItemStack itemStack, UseOnContext context) {
+  public InteractionResult consumeCapturedMob(
+      Level level,
+      BlockPos blockPos,
+      BlockState blockState,
+      BlockEntity blockEntity,
+      ItemStack itemStack,
+      UseOnContext context) {
     NetheriteJungleFarmEntity jungleMobFarmEntity = (NetheriteJungleFarmEntity) blockEntity;
     jungleMobFarmEntity.updateLevel(level);
     if (!jungleMobFarmEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
@@ -89,11 +91,13 @@ public class NetheriteJungleFarm extends MobFarmBlock {
 
   @Override
   @Nullable
-  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState,
-      BlockEntityType<T> blockEntityType) {
-    return level.isClientSide ? null
-        : createTickerHelper(blockEntityType, ModBlocks.NETHERITE_JUNGLE_FARM_ENTITY.get(),
+  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+      Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
+    return level.isClientSide
+        ? null
+        : createTickerHelper(
+            blockEntityType,
+            ModBlocks.NETHERITE_JUNGLE_FARM_ENTITY.get(),
             NetheriteJungleFarmEntity::serverTick);
   }
-
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,9 +19,11 @@
 
 package de.markusbordihn.easymobfarm.client.renderer.helper;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.config.mobs.BeeAnimal;
+import de.markusbordihn.easymobfarm.config.mobs.HostileNetherMonster;
+import de.markusbordihn.easymobfarm.config.mobs.NeutralMonster;
+import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.SquidModel;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -79,12 +81,8 @@ import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
-
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.config.mobs.BeeAnimal;
-import de.markusbordihn.easymobfarm.config.mobs.HostileNetherMonster;
-import de.markusbordihn.easymobfarm.config.mobs.NeutralMonster;
-import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class RenderModels {
 
@@ -157,9 +155,12 @@ public class RenderModels {
   public float getEntityScale(Entity entity) {
     if (entity != null) {
       AABB boundingBox = entity.getBoundingBox();
-      float modelLength = (float) Math.max(
-          Math.max(boundingBox.maxX - boundingBox.minX, boundingBox.maxY - boundingBox.minY),
-          boundingBox.maxZ - boundingBox.minZ);
+      float modelLength =
+          (float)
+              Math.max(
+                  Math.max(
+                      boundingBox.maxX - boundingBox.minX, boundingBox.maxY - boundingBox.minY),
+                  boundingBox.maxZ - boundingBox.minZ);
       return 0.5F / modelLength;
     }
     return 0.5F;
@@ -541,8 +542,10 @@ public class RenderModels {
 
   public SquidRenderer<?> getSquidRenderer() {
     if (this.squidRenderer == null) {
-      this.squidRenderer = new SquidRenderer<>(getEntityRendererContext(),
-          new SquidModel<>(getEntityRendererContext().bakeLayer(ModelLayers.SQUID)));
+      this.squidRenderer =
+          new SquidRenderer<>(
+              getEntityRendererContext(),
+              new SquidModel<>(getEntityRendererContext().bakeLayer(ModelLayers.SQUID)));
     }
     return this.squidRenderer;
   }
@@ -556,8 +559,10 @@ public class RenderModels {
 
   public GlowSquidRenderer getGlowSquidRenderer() {
     if (this.glowSquidRenderer == null) {
-      this.glowSquidRenderer = new GlowSquidRenderer(getEntityRendererContext(),
-          new SquidModel<>(getEntityRendererContext().bakeLayer(ModelLayers.GLOW_SQUID)));
+      this.glowSquidRenderer =
+          new GlowSquidRenderer(
+              getEntityRendererContext(),
+              new SquidModel<>(getEntityRendererContext().bakeLayer(ModelLayers.GLOW_SQUID)));
     }
     return this.glowSquidRenderer;
   }
@@ -577,9 +582,13 @@ public class RenderModels {
   }
 
   public EntityRendererProvider.Context getEntityRendererContext() {
-    return new EntityRendererProvider.Context(minecraft.getEntityRenderDispatcher(),
-        minecraft.getItemRenderer(), minecraft.getBlockRenderer(), null, // minecraft.getItemInHandRenderer()
-        minecraft.getResourceManager(), minecraft.getEntityModels(), minecraft.font);
+    return new EntityRendererProvider.Context(
+        minecraft.getEntityRenderDispatcher(),
+        minecraft.getItemRenderer(),
+        minecraft.getBlockRenderer(),
+        null, // minecraft.getItemInHandRenderer()
+        minecraft.getResourceManager(),
+        minecraft.getEntityModels(),
+        minecraft.font);
   }
-
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -44,14 +44,6 @@ public class MessageRedstoneModeChange {
     this.redstoneMode = redstoneMode;
   }
 
-  public RedstoneMode getRedstoneMode() {
-    return this.redstoneMode;
-  }
-
-  public BlockPos getBlockPos() {
-    return this.blockPos;
-  }
-
   public static MessageRedstoneModeChange decode(final FriendlyByteBuf buffer) {
     BlockPos blockPos = buffer.readBlockPos();
     RedstoneMode redstoneMode = buffer.readEnum(RedstoneMode.class);
@@ -63,13 +55,13 @@ public class MessageRedstoneModeChange {
     buffer.writeEnum(message.getRedstoneMode());
   }
 
-  public static void handle(MessageRedstoneModeChange message,
-      CustomPayloadEvent.Context context) {
+  public static void handle(MessageRedstoneModeChange message, CustomPayloadEvent.Context context) {
     context.enqueueWork(() -> handlePacket(message, context));
     context.setPacketHandled(true);
   }
 
-  public static void handlePacket(MessageRedstoneModeChange message, CustomPayloadEvent.Context context) {
+  public static void handlePacket(
+      MessageRedstoneModeChange message, CustomPayloadEvent.Context context) {
     ServerPlayer serverPlayer = context.getSender();
     if (serverPlayer == null) {
       return;
@@ -108,4 +100,11 @@ public class MessageRedstoneModeChange {
     mobFarmBlockEntity.setRedstoneMode(redstoneMode);
   }
 
+  public RedstoneMode getRedstoneMode() {
+    return this.redstoneMode;
+  }
+
+  public BlockPos getBlockPos() {
+    return this.blockPos;
+  }
 }

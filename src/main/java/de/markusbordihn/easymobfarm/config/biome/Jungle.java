@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -30,9 +30,6 @@ import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
 
 public class Jungle {
 
-  // Ref: https://minecraft.fandom.com/wiki/Jungle
-  protected Jungle() {}
-
   public static final Set<String> Passive = new HashSet<>(Arrays.asList(
   // @formatter:off
     PassiveAnimal.CHICKEN,
@@ -43,7 +40,6 @@ public class Jungle {
     PassiveAnimal.SHEEP
   // @formatter:on
   ));
-
   public static final Set<String> Hostile = new HashSet<>(Arrays.asList(
   // @formatter:off
     HostileMonster.CREEPER,
@@ -56,8 +52,10 @@ public class Jungle {
     HostileMonster.ZOMBIE_VILLAGER
   // @formatter:on
   ));
-
   public static final Set<String> All =
       Stream.concat(Passive.stream(), Hostile.stream()).collect(Collectors.toSet());
+
+  // Ref: https://minecraft.fandom.com/wiki/Jungle
+  protected Jungle() {}
 
 }

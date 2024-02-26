@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2021 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -44,11 +44,12 @@ public class CommandManager {
   public static void handleRegisterCommandsEvent(RegisterCommandsEvent event) {
     log.info("Registering /{} commands for {} ...", Constants.MOD_COMMAND, Constants.MOD_NAME);
     CommandDispatcher<CommandSourceStack> commandDispatcher = event.getDispatcher();
-    commandDispatcher.register(Commands.literal(Constants.MOD_COMMAND)
-    // @formatter:off
-      .then(EntityOverviewCommand.register())
-      .then(ItemOverviewCommand.register())
-    // @formatter:on
-    );
+    commandDispatcher.register(
+        Commands.literal(Constants.MOD_COMMAND)
+            // @formatter:off
+            .then(EntityOverviewCommand.register())
+            .then(ItemOverviewCommand.register())
+        // @formatter:on
+        );
   }
 }
