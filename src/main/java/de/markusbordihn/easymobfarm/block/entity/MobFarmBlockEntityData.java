@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,8 +19,11 @@
 
 package de.markusbordihn.easymobfarm.block.entity;
 
+import de.markusbordihn.easymobfarm.data.FarmTier;
+import de.markusbordihn.easymobfarm.data.RedstoneMode;
+import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
+import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import java.util.UUID;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
@@ -47,11 +50,6 @@ import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
-
-import de.markusbordihn.easymobfarm.data.FarmTier;
-import de.markusbordihn.easymobfarm.data.RedstoneMode;
-import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
-import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
 public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
 
@@ -101,10 +99,6 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
   public boolean farmMobShearedStatus = false;
   public int farmMobSize = 1;
   public RedstoneMode farmRedstoneMode = RedstoneMode.DISABLED;
-
-  // Item Storage
-  public NonNullList<ItemStack> items = NonNullList.withSize(8, ItemStack.EMPTY);
-
   // Data container shared between all instances like GUI, Block, Entity.
   protected final ContainerData dataAccess = new ContainerData() {
 
@@ -162,6 +156,8 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
       return DATA_SIZE;
     }
   };
+  // Item Storage
+  public NonNullList<ItemStack> items = NonNullList.withSize(8, ItemStack.EMPTY);
 
   public MobFarmBlockEntityData(BlockEntityType<?> blockEntity, BlockPos blockPos,
       BlockState blockState) {
@@ -169,18 +165,13 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
     this.farmId = blockPos.hashCode();
   }
 
+  public UUID getOwner() {
+    return this.farmOwner;
+  }
+
   public void setOwner(LivingEntity livingEntity) {
     this.farmOwner = livingEntity.getUUID();
     this.setChanged();
-  }
-
-  public void setRedstoneMode(RedstoneMode redstoneMode) {
-    this.farmRedstoneMode = redstoneMode;
-    this.syncData();
-  }
-
-  public UUID getOwner() {
-    return this.farmOwner;
   }
 
   public int getFarmId() {
@@ -227,6 +218,11 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
     return this.farmRedstoneMode;
   }
 
+  public void setRedstoneMode(RedstoneMode redstoneMode) {
+    this.farmRedstoneMode = redstoneMode;
+    this.syncData();
+  }
+
   public boolean hasItem(int index) {
     return !this.items.get(index).isEmpty();
   }
@@ -264,7 +260,7 @@ public class MobFarmBlockEntityData extends BaseContainerBlockEntity {
     Level level = this.level;
     return (level != null && level.getBlockEntity(this.worldPosition) == this)
         && player.distanceToSqr(this.worldPosition.getX() + 0.5D, this.worldPosition.getY() + 0.5D,
-            this.worldPosition.getZ() + 0.5D) <= 64.0D;
+        this.worldPosition.getZ() + 0.5D) <= 64.0D;
   }
 
   @Override

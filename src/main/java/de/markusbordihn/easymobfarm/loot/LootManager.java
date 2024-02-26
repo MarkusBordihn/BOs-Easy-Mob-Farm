@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,19 +19,20 @@
 
 package de.markusbordihn.easymobfarm.loot;
 
+import com.google.common.collect.Lists;
+import com.mojang.authlib.GameProfile;
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.config.CommonConfig;
+import de.markusbordihn.easymobfarm.config.mobs.BeeAnimal;
+import de.markusbordihn.easymobfarm.config.mobs.NeutralMonster;
+import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
+import de.markusbordihn.easymobfarm.item.CapturedMob;
+import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import com.google.common.collect.Lists;
-
-import com.mojang.authlib.GameProfile;
-
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
@@ -46,20 +47,13 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.registries.ForgeRegistries;
-
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.config.CommonConfig;
-import de.markusbordihn.easymobfarm.config.mobs.BeeAnimal;
-import de.markusbordihn.easymobfarm.config.mobs.NeutralMonster;
-import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
-import de.markusbordihn.easymobfarm.item.CapturedMob;
-import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @EventBusSubscriber
 public class LootManager {
@@ -68,16 +62,8 @@ public class LootManager {
 
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
   private static final Random random = new Random();
-
-  // Fake Player
-  private static FakePlayer fakePlayer;
   private static final GameProfile GAME_PROFILE =
       new GameProfile(UUID.randomUUID(), "[BOs_Easy_Mob_Farm]");
-
-  // Loot Table Cache
-  private static Map<ResourceLocation, List<String>> lootTableDropListCache =
-      new ConcurrentHashMap<>();
-
   // Mod Items
   private static final String PRODUCTIVE_BEES_CONFIGURABLE_HONEYCOMB =
       "productivebees:configurable_honeycomb";
@@ -86,8 +72,14 @@ public class LootManager {
   private static final String PRODUCTIVE_BEES_HONEYCOMB_MILKY = "productivebees:honeycomb_milky";
   private static final String PRODUCTIVE_BEES_HONEYCOMB_POWDERY =
       "productivebees:honeycomb_powdery";
+  // Fake Player
+  private static FakePlayer fakePlayer;
+  // Loot Table Cache
+  private static Map<ResourceLocation, List<String>> lootTableDropListCache =
+      new ConcurrentHashMap<>();
 
-  protected LootManager() {}
+  protected LootManager() {
+  }
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
@@ -250,13 +242,13 @@ public class LootManager {
       // Ignore empty stacks and filter loot drop, if specific drop is disabled.
       if (lootDrop.isEmpty()
           || filter(COMMON.disableChickenDropRawChicken.get(), PassiveAnimal.CHICKEN, Items.CHICKEN,
-              mobType, lootDrop)
+          mobType, lootDrop)
           || filter(COMMON.disableCowDropRawBeef.get(), PassiveAnimal.COW, Items.BEEF, mobType,
-              lootDrop)
+          lootDrop)
           || filter(COMMON.disableSheepDropRawMutton.get(), PassiveAnimal.SHEEP, Items.MUTTON,
-              mobType, lootDrop)
+          mobType, lootDrop)
           || filter(COMMON.disableIronGolemDropPoppy.get(), NeutralMonster.IRON_GOLEM, Items.POPPY,
-              mobType, lootDrop)) {
+          mobType, lootDrop)) {
         continue;
       }
       filteredLootDrops.add(lootDrop);

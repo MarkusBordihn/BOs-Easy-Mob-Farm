@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -18,16 +18,6 @@
  */
 
 package de.markusbordihn.easymobfarm.block;
-
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.entity.BlockEntityType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.Material;
-
-import net.minecraftforge.registries.RegistryObject;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.farm.copper.CopperAnimalPlainsFarmEntity;
@@ -98,17 +88,21 @@ import de.markusbordihn.easymobfarm.block.farm.netherite.NetheriteOceanFarm;
 import de.markusbordihn.easymobfarm.block.farm.netherite.NetheriteSwampFarm;
 import de.markusbordihn.easymobfarm.block.farm.special.CreativeMobFarm;
 import de.markusbordihn.easymobfarm.block.farm.special.IronGolemFarm;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.material.Material;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 public class ModBlocks {
 
-  protected ModBlocks() {}
-
   public static final DeferredRegister<Block> BLOCKS =
       DeferredRegister.create(ForgeRegistries.BLOCKS, Constants.MOD_ID);
-
   public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES =
       DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, Constants.MOD_ID);
-
   // Mob Farm Templates
   public static final RegistryObject<Block> COPPER_MOB_FARM_TEMPLATE =
       BLOCKS.register("copper_mob_farm_template",
@@ -126,7 +120,6 @@ public class ModBlocks {
       BLOCKS.register("netherite_mob_farm_template",
           () -> new Block(BlockBehaviour.Properties.of(Material.STONE).requiresCorrectToolForDrops()
               .strength(3.0F, 6.0F).sound(SoundType.METAL).noOcclusion()));
-
   // Mob Farms - Tier Copper
   public static final RegistryObject<Block> COPPER_ANIMAL_PLAINS_FARM = BLOCKS.register(
       CopperAnimalPlainsFarm.NAME,
@@ -172,7 +165,6 @@ public class ModBlocks {
               () -> new CopperSwampFarm(BlockBehaviour.Properties.of(Material.STONE)
                   .requiresCorrectToolForDrops().strength(2.0F, 2.0F)
                   .lightLevel(CopperSwampFarm::getLightLevel).noOcclusion()));
-
   // Mob Farms - Tier Iron
   public static final RegistryObject<Block> IRON_ANIMAL_PLAINS_FARM = BLOCKS.register(
       IronAnimalPlainsFarm.NAME,
@@ -218,7 +210,6 @@ public class ModBlocks {
               () -> new IronSwampFarm(BlockBehaviour.Properties.of(Material.STONE)
                   .requiresCorrectToolForDrops().strength(2.0F, 2.0F)
                   .lightLevel(IronSwampFarm::getLightLevel).noOcclusion()));
-
   // Mob Farms - Tier Gold
   public static final RegistryObject<Block> GOLD_ANIMAL_PLAINS_FARM = BLOCKS.register(
       GoldAnimalPlainsFarm.NAME,
@@ -264,7 +255,6 @@ public class ModBlocks {
               () -> new GoldSwampFarm(BlockBehaviour.Properties.of(Material.STONE)
                   .requiresCorrectToolForDrops().strength(2.0F, 2.0F)
                   .lightLevel(GoldSwampFarm::getLightLevel).noOcclusion()));
-
   // Netherite Mob Farms
   public static final RegistryObject<Block> NETHERITE_ANIMAL_PLAINS_FARM =
       BLOCKS.register(NetheriteAnimalPlainsFarm.NAME,
@@ -307,7 +297,6 @@ public class ModBlocks {
           () -> new NetheriteSwampFarm(BlockBehaviour.Properties.of(Material.STONE)
               .requiresCorrectToolForDrops().strength(2.0F, 2.0F)
               .lightLevel(NetheriteSwampFarm::getLightLevel).noOcclusion()));
-
   // Special Mob Farms
   public static final RegistryObject<Block> CREATIVE_MOB_FARM =
       BLOCKS
@@ -321,6 +310,8 @@ public class ModBlocks {
               () -> new IronGolemFarm(BlockBehaviour.Properties.of(Material.STONE)
                   .requiresCorrectToolForDrops().strength(2.0F, 2.0F)
                   .lightLevel(IronGolemFarm::getLightLevel).noOcclusion()));
+  protected ModBlocks() {
+  }
 
   // Mob Farms Block Entity - Copper
   public static final RegistryObject<BlockEntityType<CopperAnimalPlainsFarmEntity>> COPPER_ANIMAL_PLAINS_FARM_ENTITY =

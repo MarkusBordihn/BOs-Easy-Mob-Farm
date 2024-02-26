@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,9 +19,8 @@
 
 package de.markusbordihn.easymobfarm.item.mobcatcher;
 
-import net.minecraft.world.item.Item;
-
 import de.markusbordihn.easymobfarm.item.MobCatcherItem;
+import net.minecraft.world.item.Item;
 
 public class CollarSmall extends MobCatcherItem {
 

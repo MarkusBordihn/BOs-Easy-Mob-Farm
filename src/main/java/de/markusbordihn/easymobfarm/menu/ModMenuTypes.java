@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -18,13 +18,6 @@
  */
 
 package de.markusbordihn.easymobfarm.menu;
-
-import net.minecraft.world.inventory.MenuType;
-
-import net.minecraftforge.common.extensions.IForgeMenuType;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.menu.farm.copper.CopperAnimalPlainsFarmMenu;
@@ -61,16 +54,16 @@ import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteOceanFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteSwampFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.special.CreativeMobFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.special.IronGolemFarmMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraftforge.common.extensions.IForgeMenuType;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
 public class ModMenuTypes {
 
-  protected ModMenuTypes() {
-
-  }
-
   public static final DeferredRegister<MenuType<?>> MENU_TYPES =
       DeferredRegister.create(ForgeRegistries.MENU_TYPES, Constants.MOD_ID);
-
   // Copper Mob Farm Container Menu
   public static final RegistryObject<MenuType<CopperAnimalPlainsFarmMenu>> COPPER_ANIMAL_PLAINS_FARM_MENU =
       MENU_TYPES.register(Constants.COPPER_ANIMAL_PLAINS_FARM, () -> IForgeMenuType.create(
@@ -98,7 +91,6 @@ public class ModMenuTypes {
   public static final RegistryObject<MenuType<CopperSwampFarmMenu>> COPPER_SWAMP_FARM_MENU =
       MENU_TYPES.register(Constants.COPPER_SWAMP_FARM, () -> IForgeMenuType
           .create((windowIdIn, inventory, data) -> new CopperSwampFarmMenu(windowIdIn, inventory)));
-
   // Gold Mob Farm Container Menu
   public static final RegistryObject<MenuType<GoldAnimalPlainsFarmMenu>> GOLD_ANIMAL_PLAINS_FARM_MENU =
       MENU_TYPES.register(Constants.GOLD_ANIMAL_PLAINS_FARM, () -> IForgeMenuType.create(
@@ -125,7 +117,6 @@ public class ModMenuTypes {
   public static final RegistryObject<MenuType<GoldSwampFarmMenu>> GOLD_SWAMP_FARM_MENU =
       MENU_TYPES.register(Constants.GOLD_SWAMP_FARM, () -> IForgeMenuType
           .create((windowIdIn, inventory, data) -> new GoldSwampFarmMenu(windowIdIn, inventory)));
-
   // Iron Mob Farm Container Menu
   public static final RegistryObject<MenuType<IronAnimalPlainsFarmMenu>> IRON_ANIMAL_PLAINS_FARM_MENU =
       MENU_TYPES.register(Constants.IRON_ANIMAL_PLAINS_FARM, () -> IForgeMenuType.create(
@@ -152,7 +143,6 @@ public class ModMenuTypes {
   public static final RegistryObject<MenuType<IronSwampFarmMenu>> IRON_SWAMP_FARM_MENU =
       MENU_TYPES.register(Constants.IRON_SWAMP_FARM, () -> IForgeMenuType
           .create((windowIdIn, inventory, data) -> new IronSwampFarmMenu(windowIdIn, inventory)));
-
   // Netherite Mob Farm Container Menu
   public static final RegistryObject<MenuType<NetheriteAnimalPlainsFarmMenu>> NETHERITE_ANIMAL_PLAINS_FARM_MENU =
       MENU_TYPES.register(Constants.NETHERITE_ANIMAL_PLAINS_FARM,
@@ -181,7 +171,6 @@ public class ModMenuTypes {
   public static final RegistryObject<MenuType<NetheriteSwampFarmMenu>> NETHERITE_SWAMP_FARM_MENU =
       MENU_TYPES.register(Constants.NETHERITE_SWAMP_FARM, () -> IForgeMenuType.create(
           (windowIdIn, inventory, data) -> new NetheriteSwampFarmMenu(windowIdIn, inventory)));
-
   // Special Mob Farm
   public static final RegistryObject<MenuType<CreativeMobFarmMenu>> CREATIVE_FARM_MENU =
       MENU_TYPES.register(Constants.CREATIVE_MOB_FARM, () -> IForgeMenuType
@@ -189,9 +178,12 @@ public class ModMenuTypes {
   public static final RegistryObject<MenuType<IronGolemFarmMenu>> IRON_GOLEM_FARM_MENU =
       MENU_TYPES.register(Constants.IRON_GOLEM_FARM, () -> IForgeMenuType
           .create((windowIdIn, inventory, data) -> new IronGolemFarmMenu(windowIdIn, inventory)));
-
   // Other
   public static final RegistryObject<MenuType<MobFarmMenu>> MOB_FARM_MENU =
       MENU_TYPES.register("mob_farm", () -> IForgeMenuType
           .create((windowIdIn, inventory, data) -> new MobFarmMenu(windowIdIn, inventory)));
+
+  protected ModMenuTypes() {
+
+  }
 }

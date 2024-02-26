@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -27,10 +27,8 @@ import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
 
 public class PlainsCave {
 
-  protected PlainsCave() {}
-
   public static final Set<String> Hostile = new HashSet<>(Arrays.asList(
-  // @formatter:off
+      // @formatter:off
     HostileMonster.CAVE_SPIDER,
     HostileMonster.CREEPER,
     HostileMonster.ENDERMAN,
@@ -41,7 +39,9 @@ public class PlainsCave {
     HostileMonster.ZOMBIE_VILLAGER
   // @formatter:on
   ));
-
   public static final Set<String> All = Hostile;
+
+  protected PlainsCave() {
+  }
 
 }

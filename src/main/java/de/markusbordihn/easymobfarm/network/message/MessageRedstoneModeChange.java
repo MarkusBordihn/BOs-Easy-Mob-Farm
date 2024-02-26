@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -45,14 +45,6 @@ public class MessageRedstoneModeChange {
     this.redstoneMode = redstoneMode;
   }
 
-  public RedstoneMode getRedstoneMode() {
-    return this.redstoneMode;
-  }
-
-  public BlockPos getBlockPos() {
-    return this.blockPos;
-  }
-
   public static void handle(MessageRedstoneModeChange message,
       Supplier<NetworkEvent.Context> contextSupplier) {
     NetworkEvent.Context context = contextSupplier.get();
@@ -97,6 +89,14 @@ public class MessageRedstoneModeChange {
     MobFarmBlockEntity mobFarmBlockEntity = (MobFarmBlockEntity) blockEntity;
     log.debug("Change redstone mode for {} to {}", mobFarmBlockEntity, redstoneMode);
     mobFarmBlockEntity.setRedstoneMode(redstoneMode);
+  }
+
+  public RedstoneMode getRedstoneMode() {
+    return this.redstoneMode;
+  }
+
+  public BlockPos getBlockPos() {
+    return this.blockPos;
   }
 
 }

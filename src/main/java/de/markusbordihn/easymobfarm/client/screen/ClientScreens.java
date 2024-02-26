@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,22 +19,16 @@
 
 package de.markusbordihn.easymobfarm.client.screen;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.client.screen.farm.AnimalPlainsFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.BeeHiveFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.CreativeMobFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.DesertFarmScreen;
-import de.markusbordihn.easymobfarm.client.screen.farm.SpecialFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.JungleFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.MonsterPlainsCaveFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.NetherFortressFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.OceanFarmScreen;
+import de.markusbordihn.easymobfarm.client.screen.farm.SpecialFarmScreen;
 import de.markusbordihn.easymobfarm.client.screen.farm.SwampFarmScreen;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
 import de.markusbordihn.easymobfarm.menu.farm.copper.CopperAnimalPlainsFarmMenu;
@@ -70,12 +64,17 @@ import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteNetherFortressF
 import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteOceanFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteSwampFarmMenu;
 import de.markusbordihn.easymobfarm.menu.farm.special.IronGolemFarmMenu;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ClientScreens {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  protected ClientScreens() {}
+  protected ClientScreens() {
+  }
 
   public static void registerScreens(final FMLClientSetupEvent event) {
     log.info("{} Client Screens ...", Constants.LOG_REGISTER_PREFIX);

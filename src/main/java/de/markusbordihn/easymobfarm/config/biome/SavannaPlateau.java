@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -27,11 +27,8 @@ import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
 
 public class SavannaPlateau {
 
-  // Ref: https://minecraft.fandom.com/wiki/Savanna#Savanna_Plateau
-  protected SavannaPlateau() {}
-
   public static final Set<String> Passive = new HashSet<>(Arrays.asList(
-  // @formatter:off
+      // @formatter:off
     PassiveAnimal.COW,
     PassiveAnimal.DONKEY,
     PassiveAnimal.HORSE,
@@ -41,6 +38,9 @@ public class SavannaPlateau {
     PassiveAnimal.SHEEP
   // @formatter:on
   ));
-
   public static final Set<String> All = Passive;
+
+  // Ref: https://minecraft.fandom.com/wiki/Savanna#Savanna_Plateau
+  protected SavannaPlateau() {
+  }
 }

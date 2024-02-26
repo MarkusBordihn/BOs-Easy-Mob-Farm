@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,11 +19,16 @@
 
 package de.markusbordihn.easymobfarm.block.farm.netherite;
 
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.block.MobFarmBlock;
+import de.markusbordihn.easymobfarm.block.ModBlocks;
+import de.markusbordihn.easymobfarm.block.entity.farm.netherite.NetheriteBeeHiveFarmEntity;
+import de.markusbordihn.easymobfarm.data.FarmTier;
+import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
+import de.markusbordihn.easymobfarm.text.TranslatableText;
 import java.util.List;
 import java.util.Set;
-
 import javax.annotation.Nullable;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -38,14 +43,6 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.MobFarmBlock;
-import de.markusbordihn.easymobfarm.block.ModBlocks;
-import de.markusbordihn.easymobfarm.block.entity.farm.netherite.NetheriteBeeHiveFarmEntity;
-import de.markusbordihn.easymobfarm.data.FarmTier;
-import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
-import de.markusbordihn.easymobfarm.text.TranslatableText;
 
 public class NetheriteBeeHiveFarm extends MobFarmBlock {
 
@@ -122,7 +119,7 @@ public class NetheriteBeeHiveFarm extends MobFarmBlock {
         // productive bees
         if (!((!Constants.PRODUCTIVE_BEES_LOADED && acceptedMob.startsWith("productivebees:"))
             || (acceptedMobTypes.size() >= 16 && Constants.PRODUCTIVE_BEES_LOADED
-                && acceptedMob.startsWith("productivebees:")))) {
+            && acceptedMob.startsWith("productivebees:")))) {
           Component acceptedMobName = TranslatableText.getEntityName(acceptedMob);
           if (!acceptedMobName.getString().isBlank()) {
             mobTypeOverview.append(acceptedMobName).append(", ")

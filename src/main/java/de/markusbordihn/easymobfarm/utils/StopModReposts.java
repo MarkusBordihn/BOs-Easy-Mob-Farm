@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,18 +19,15 @@
 
 package de.markusbordihn.easymobfarm.utils;
 
+import cpw.mods.modlauncher.Launcher;
+import cpw.mods.modlauncher.api.IEnvironment;
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.EasyMobFarm;
 import java.net.URISyntaxException;
 import java.util.Optional;
 import java.util.regex.Pattern;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import cpw.mods.modlauncher.Launcher;
-import cpw.mods.modlauncher.api.IEnvironment;
-
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.EasyMobFarm;
 
 public class StopModReposts {
 
@@ -48,7 +45,8 @@ public class StopModReposts {
 
   private static Pattern expectedFilePattern = Pattern.compile(modFileFormatRegEx);
 
-  protected StopModReposts() {}
+  protected StopModReposts() {
+  }
 
   public static void checkStopModReposts() {
     if (isDevEnvironment) {

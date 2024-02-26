@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -96,7 +96,8 @@ public class MobTypeManager {
   private static Set<String> generalAllowedMobTypesSet = Collections.emptySet();
   private static Set<String> generalDeniedMobTypesSet = Collections.emptySet();
 
-  protected MobTypeManager() {}
+  protected MobTypeManager() {
+  }
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {

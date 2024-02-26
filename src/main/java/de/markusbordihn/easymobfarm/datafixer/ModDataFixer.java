@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -118,7 +118,8 @@ public class ModDataFixer {
       if (itemReplacement == null) {
         continue;
       }
-      Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(Constants.MOD_ID, itemReplacement));
+      Item item = ForgeRegistries.ITEMS.getValue(
+          new ResourceLocation(Constants.MOD_ID, itemReplacement));
       if (item != null) {
         log.info("Remapped missing item {} to {}", missingItem.getRegistry(), item);
         missingItem.remap(item);

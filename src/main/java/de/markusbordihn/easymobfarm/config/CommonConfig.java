@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -55,11 +55,9 @@ import de.markusbordihn.easymobfarm.config.structure.NetherFortress;
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
 public class CommonConfig {
 
-  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
-
   public static final ForgeConfigSpec commonSpec;
   public static final Config COMMON;
-
+  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final String MOB_CATCHING_LUCK_TEXT =
       "Defines the luck of capturing the mob e.g. luck of 3 means a change of 1 to 3 to capture a mob. Higher numbers requires more luck. 0 = disable luck.";
   private static final String PROCESS_TIME_TEXT =
@@ -93,9 +91,6 @@ public class CommonConfig {
       "Supported Mobs for the swamp farm. (Use empty list to allow all mobs.)";
   private static final String DENIED_MOBS_SWAMP_FARM = "Denied Mobs for the swamp farm.";
 
-
-  protected CommonConfig() {}
-
   static {
     com.electronwill.nightconfig.core.Config.setInsertionOrderPreserved(true);
     final Pair<Config, ForgeConfigSpec> specPair =
@@ -106,22 +101,10 @@ public class CommonConfig {
     ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, commonSpec);
   }
 
+  protected CommonConfig() {
+  }
+
   public static class Config {
-
-    private static final String getCatchableMobsText(String itemName) {
-      return "The following mobs can be catched with the " + itemName
-          + ". (Use empty list to allow all mobs!)";
-    }
-
-    private static final String getDeniedMobsText(String itemName) {
-      return "The following mobs are not catchable with the " + itemName
-          + ". (Use empty list to allow all mobs!)";
-    }
-
-    private static final String getForcedDropChanceText(String itemName, String mobName) {
-      return "Defines the forced drop change of " + itemName + " from " + mobName
-          + ". (0 = disabled, lower number = higher change, 1 = every drop)";
-    }
 
     // General config
     public final ForgeConfigSpec.BooleanValue informOwnerAboutFullStorage;
@@ -131,277 +114,214 @@ public class CommonConfig {
     public final ForgeConfigSpec.BooleanValue damageWeaponItem;
     public final ForgeConfigSpec.ConfigValue<List<String>> generalAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> generalDeniedMobs;
-
     // Experience Settings
     public final ForgeConfigSpec.IntValue experienceDropChanceNoWeapon;
     public final ForgeConfigSpec.IntValue experienceDropChanceWithWeapon;
     public final ForgeConfigSpec.IntValue experienceDropChanceWithEnchantedWeapon;
     public final ForgeConfigSpec.IntValue experienceDropMendingRepairAmount;
-
     // Copper Mob Farm
     public final ForgeConfigSpec.IntValue copperAnimalPlainsFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> copperAnimalPlainsFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> copperAnimalPlainsFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> copperAnimalPlainsFarmDeniedMobs;
-
     public final ForgeConfigSpec.IntValue copperBeeHiveFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> copperBeeHiveFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> copperBeeHiveFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> copperBeeHiveFarmDeniedMobs;
-
     public final ForgeConfigSpec.IntValue copperDesertFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> copperDesertFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> copperDesertFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> copperDesertFarmDeniedMobs;
-
     public final ForgeConfigSpec.IntValue copperJungleFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> copperJungleFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> copperJungleFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> copperJungleFarmDeniedMobs;
-
     public final ForgeConfigSpec.IntValue copperMonsterPlainsCaveFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> copperMonsterPlainsCaveFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> copperMonsterPlainsCaveFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> copperMonsterPlainsCaveFarmDeniedMobs;
-
     public final ForgeConfigSpec.IntValue copperNetherFortressFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> copperNetherFortressFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> copperNetherFortressFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> copperNetherFortressFarmDeniedMobs;
-
     public final ForgeConfigSpec.IntValue copperOceanFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> copperOceanFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> copperOceanFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> copperOceanFarmDeniedMobs;
-
     public final ForgeConfigSpec.IntValue copperSwampFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> copperSwampFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> copperSwampFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> copperSwampFarmDeniedMobs;
-
     // Iron Mob Farm
     public final ForgeConfigSpec.IntValue ironAnimalPlainsFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> ironAnimalPlainsFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> ironAnimalPlainsFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> ironAnimalPlainsFarmDeniedMobs;
-
     public final ForgeConfigSpec.IntValue ironBeeHiveFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> ironBeeHiveFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> ironBeeHiveFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> ironBeeHiveFarmDeniedMobs;
-
     public final ForgeConfigSpec.IntValue ironDesertFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> ironDesertFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> ironDesertFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> ironDesertFarmDeniedMobs;
-
     public final ForgeConfigSpec.IntValue ironJungleFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> ironJungleFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> ironJungleFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> ironJungleFarmDeniedMobs;
-
     public final ForgeConfigSpec.IntValue ironMonsterPlainsCaveFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> ironMonsterPlainsCaveFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> ironMonsterPlainsCaveFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> ironMonsterPlainsCaveFarmDeniedMobs;
-
     public final ForgeConfigSpec.IntValue ironNetherFortressFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> ironNetherFortressFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> ironNetherFortressFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> ironNetherFortressFarmDeniedMobs;
-
     public final ForgeConfigSpec.IntValue ironOceanFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> ironOceanFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> ironOceanFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> ironOceanFarmDeniedMobs;
-
     public final ForgeConfigSpec.IntValue ironSwampFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> ironSwampFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> ironSwampFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> ironSwampFarmDeniedMobs;
-
     // Gold Mob Farm
     public final ForgeConfigSpec.IntValue goldAnimalPlainsFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> goldAnimalPlainsFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> goldAnimalPlainsFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> goldAnimalPlainsFarmDeniedMobs;
-
     public final ForgeConfigSpec.IntValue goldBeeHiveFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> goldBeeHiveFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> goldBeeHiveFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> goldBeeHiveFarmDeniedMobs;
-
     public final ForgeConfigSpec.IntValue goldDesertFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> goldDesertFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> goldDesertFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> goldDesertFarmDeniedMobs;
-
     public final ForgeConfigSpec.IntValue goldJungleFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> goldJungleFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> goldJungleFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> goldJungleFarmDeniedMobs;
-
     public final ForgeConfigSpec.IntValue goldMonsterPlainsCaveFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> goldMonsterPlainsCaveFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> goldMonsterPlainsCaveFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> goldMonsterPlainsCaveFarmDeniedMobs;
-
     public final ForgeConfigSpec.IntValue goldNetherFortressFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> goldNetherFortressFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> goldNetherFortressFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> goldNetherFortressFarmDeniedMobs;
-
     public final ForgeConfigSpec.IntValue goldOceanFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> goldOceanFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> goldOceanFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> goldOceanFarmDeniedMobs;
-
     public final ForgeConfigSpec.IntValue goldSwampFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> goldSwampFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> goldSwampFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> goldSwampFarmDeniedMobs;
-
     // Netherite Mob Farm
     public final ForgeConfigSpec.IntValue netheriteAnimalPlainsFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> netheriteAnimalPlainsFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> netheriteAnimalPlainsFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> netheriteAnimalPlainsFarmDeniedMobs;
-
     public final ForgeConfigSpec.IntValue netheriteBeeHiveFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> netheriteBeeHiveFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> netheriteBeeHiveFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> netheriteBeeHiveFarmDeniedMobs;
-
     public final ForgeConfigSpec.IntValue netheriteDesertFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> netheriteDesertFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> netheriteDesertFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> netheriteDesertFarmDeniedMobs;
-
     public final ForgeConfigSpec.IntValue netheriteJungleFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> netheriteJungleFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> netheriteJungleFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> netheriteJungleFarmDeniedMobs;
-
     public final ForgeConfigSpec.IntValue netheriteMonsterPlainsCaveFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> netheriteMonsterPlainsCaveFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> netheriteMonsterPlainsCaveFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> netheriteMonsterPlainsCaveFarmDeniedMobs;
-
     public final ForgeConfigSpec.IntValue netheriteNetherFortressFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> netheriteNetherFortressFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> netheriteNetherFortressFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> netheriteNetherFortressFarmDeniedMobs;
-
     public final ForgeConfigSpec.IntValue netheriteOceanFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> netheriteOceanFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> netheriteOceanFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> netheriteOceanFarmDeniedMobs;
-
     public final ForgeConfigSpec.IntValue netheriteSwampFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> netheriteSwampFarmDropSound;
     public final ForgeConfigSpec.ConfigValue<List<String>> netheriteSwampFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> netheriteSwampFarmDeniedMobs;
-
     // Creative Mob Farm
     public final ForgeConfigSpec.IntValue creativeMobFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> creativeMobFarmDropSound;
-
     // Iron Golem Mob Farm
     public final ForgeConfigSpec.IntValue ironGolemFarmProcessTime;
     public final ForgeConfigSpec.ConfigValue<String> ironGolemFarmDropSound;
     public final ForgeConfigSpec.BooleanValue ironGolemFarmFilterPoppy;
     public final ForgeConfigSpec.ConfigValue<List<String>> ironGolemFarmAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> ironGolemFarmDeniedMobs;
-
     // Mob Catcher
     public final ForgeConfigSpec.IntValue catchCageMobCatchingLuck;
     public final ForgeConfigSpec.ConfigValue<List<String>> catchCageAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> catchCageDeniedMobs;
-
     public final ForgeConfigSpec.IntValue catchCageSmallMobCatchingLuck;
     public final ForgeConfigSpec.ConfigValue<List<String>> catchCageSmallAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> catchCageSmallDeniedMobs;
-
     public final ForgeConfigSpec.IntValue collarSmallMobCatchingLuck;
     public final ForgeConfigSpec.ConfigValue<List<String>> collarSmallAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> collarSmallDeniedMobs;
-
     public final ForgeConfigSpec.IntValue enderLassoMobCatchingLuck;
     public final ForgeConfigSpec.ConfigValue<List<String>> enderLassoAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> enderLassoDeniedMobs;
-
     public final ForgeConfigSpec.IntValue fishingBowlMobCatchingLuck;
     public final ForgeConfigSpec.ConfigValue<List<String>> fishingBowlAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> fishingBowlDeniedMobs;
-
     public final ForgeConfigSpec.IntValue fishingNetSmallMobCatchingLuck;
     public final ForgeConfigSpec.ConfigValue<List<String>> fishingNetSmallAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> fishingNetSmallDeniedMobs;
-
     public final ForgeConfigSpec.IntValue goldenLassoMobCatchingLuck;
     public final ForgeConfigSpec.ConfigValue<List<String>> goldenLassoAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> goldenLassoDeniedMobs;
-
     public final ForgeConfigSpec.IntValue insectNetMobCatchingLuck;
     public final ForgeConfigSpec.ConfigValue<List<String>> insectNetAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> insectNetDeniedMobs;
-
     public final ForgeConfigSpec.IntValue netheriteLassoMobCatchingLuck;
     public final ForgeConfigSpec.ConfigValue<List<String>> netheriteLassoAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> netheriteLassoDeniedMobs;
-
     public final ForgeConfigSpec.IntValue poppyBouquetMobCatchingLuck;
     public final ForgeConfigSpec.ConfigValue<List<String>> poppyBouquetAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> poppyBouquetDeniedMobs;
-
     public final ForgeConfigSpec.IntValue urnSmallMobCatchingLuck;
     public final ForgeConfigSpec.ConfigValue<List<String>> urnSmallAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> urnSmallDeniedMobs;
-
     public final ForgeConfigSpec.IntValue witchBottleMobCatchingLuck;
     public final ForgeConfigSpec.ConfigValue<List<String>> witchBottleAllowedMobs;
     public final ForgeConfigSpec.ConfigValue<List<String>> witchBottleDeniedMobs;
-
     // Drop Settings
     public final ForgeConfigSpec.IntValue forceBeeDropHoneycombChance;
-
     public final ForgeConfigSpec.IntValue forceBlazeDropBlazeRodChance;
-
     public final ForgeConfigSpec.IntValue forceChickenDropEggChance;
     public final ForgeConfigSpec.BooleanValue disableChickenDropRawChicken;
-
     public final ForgeConfigSpec.BooleanValue disableCowDropRawBeef;
-
     public final ForgeConfigSpec.IntValue forceDrownedDropArmorChance;
     public final ForgeConfigSpec.IntValue forceDrownedDropCopperIngotChance;
     public final ForgeConfigSpec.IntValue forceDrownedDropTridentChance;
     public final ForgeConfigSpec.IntValue forceDrownedDropNautilusShellChance;
-
     public final ForgeConfigSpec.IntValue forceEndermanDropEnderPearlChance;
-
     public final ForgeConfigSpec.BooleanValue disableIronGolemDropPoppy;
-
     public final ForgeConfigSpec.BooleanValue disableSheepDropRawMutton;
-
     public final ForgeConfigSpec.IntValue forceSlimeDropSlimeBallChance;
-
     public final ForgeConfigSpec.IntValue forceMagmaCubeDropMagmaCreamChance;
-
     public final ForgeConfigSpec.IntValue forcePiglinDropArmorChance;
     public final ForgeConfigSpec.IntValue forcePiglinDropWeaponChance;
-
     public final ForgeConfigSpec.IntValue forcePillagerDropArmorChance;
     public final ForgeConfigSpec.IntValue forcePillagerDropEmeraldChance;
     public final ForgeConfigSpec.IntValue forcePillagerDropEnchantedBookChance;
     public final ForgeConfigSpec.IntValue forcePillagerDropWeaponChance;
-
     public final ForgeConfigSpec.IntValue forceWitherDropNetherStarChance;
-
     public final ForgeConfigSpec.IntValue forceWitherSkeletonDropWitherSkeletonSkullChance;
-
     public final ForgeConfigSpec.IntValue forceZombieDropArmorChance;
     public final ForgeConfigSpec.IntValue forceZombieDropWeaponChance;
-
     public final ForgeConfigSpec.IntValue forceZombifiedPiglinDropGoldIngotChance;
     public final ForgeConfigSpec.IntValue forceZombifiedPiglinDropGoldNuggetChance;
     public final ForgeConfigSpec.IntValue forceZombifiedPiglinDropWeaponChance;
@@ -417,7 +337,7 @@ public class CommonConfig {
           builder.comment("Enable/Disable full storage log messages for the server logs.")
               .define("logFullStorage", true);
       lootPreviewRolls = builder.comment(
-          "Number of roll's to get the loot preview for a captured mob. Higher numbers require more server load, but giving a more completed overview.")
+              "Number of roll's to get the loot preview for a captured mob. Higher numbers require more server load, but giving a more completed overview.")
           .defineInRange("lootPreviewRolls", 2, 1, 5);
       playDropSound = builder.comment("Enable/Disable the drop sound for the loot drops.")
           .define("playDropSound", true);
@@ -426,25 +346,25 @@ public class CommonConfig {
               "Enable/Disable the damage of the weapon item which is used for player killed drops.")
           .define("damageWeaponItem", true);
       generalAllowedMobs = builder.comment(
-          "The following mobs are allowed to be captured with any mob catcher and all mob farms. (Use empty list to disable!)")
+              "The following mobs are allowed to be captured with any mob catcher and all mob farms. (Use empty list to disable!)")
           .define("generalAllowedMobs", new ArrayList<String>());
       generalDeniedMobs = builder.comment(
-          "The following mobs are not allowed to be captured with any mob catcher and all mob farms. (Use empty list to allow all mobs!)")
+              "The following mobs are not allowed to be captured with any mob catcher and all mob farms. (Use empty list to allow all mobs!)")
           .define("generalDeniedMobs", new ArrayList<String>(BossMonster.All));
       builder.pop();
 
       builder.push("Experience Dropping");
       experienceDropChanceNoWeapon = builder.comment(
-          "Defines the change of dropping experience without a weapon. (lower number = higher change)")
+              "Defines the change of dropping experience without a weapon. (lower number = higher change)")
           .defineInRange("experienceDropChanceNoWeapon", 10, 1, 100);
       experienceDropChanceWithWeapon = builder.comment(
-          "Defines the change of dropping experience with a weapon. (lower number = higher change)")
+              "Defines the change of dropping experience with a weapon. (lower number = higher change)")
           .defineInRange("experienceDropChanceWithWeapon", 5, 1, 100);
       experienceDropChanceWithEnchantedWeapon = builder.comment(
-          "Defines the change of dropping experience with an enchanted weapon. (lower number = higher change)")
+              "Defines the change of dropping experience with an enchanted weapon. (lower number = higher change)")
           .defineInRange("experienceDropChanceWithEnchantedWeapon", 3, 1, 100);
       experienceDropMendingRepairAmount = builder.comment(
-          "Defines the max amount to repair a mending weapon with experience points. (higher number = more repair)")
+              "Defines the max amount to repair a mending weapon with experience points. (higher number = more repair)")
           .defineInRange("experienceDropMendingRepairAmount", 10, 1, 100);
       builder.pop();
 
@@ -1118,6 +1038,21 @@ public class CommonConfig {
       builder.pop();
 
       builder.pop();
+    }
+
+    private static final String getCatchableMobsText(String itemName) {
+      return "The following mobs can be catched with the " + itemName
+          + ". (Use empty list to allow all mobs!)";
+    }
+
+    private static final String getDeniedMobsText(String itemName) {
+      return "The following mobs are not catchable with the " + itemName
+          + ". (Use empty list to allow all mobs!)";
+    }
+
+    private static final String getForcedDropChanceText(String itemName, String mobName) {
+      return "Defines the forced drop change of " + itemName + " from " + mobName
+          + ". (0 = disabled, lower number = higher change, 1 = every drop)";
     }
   }
 }

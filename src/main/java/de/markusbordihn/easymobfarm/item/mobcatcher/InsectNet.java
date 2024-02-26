@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,17 +19,15 @@
 
 package de.markusbordihn.easymobfarm.item.mobcatcher;
 
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.item.MobCatcherItem;
+import de.markusbordihn.easymobfarm.text.TranslatableText;
 import java.util.List;
 import java.util.Set;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.Item;
-
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.item.MobCatcherItem;
-import de.markusbordihn.easymobfarm.text.TranslatableText;
 
 public class InsectNet extends MobCatcherItem {
 
@@ -62,7 +60,7 @@ public class InsectNet extends MobCatcherItem {
         // productive bees
         if (!((!Constants.PRODUCTIVE_BEES_LOADED && acceptedMob.startsWith("productivebees:"))
             || (acceptedMobTypes.size() >= 16 && Constants.PRODUCTIVE_BEES_LOADED
-                && acceptedMob.startsWith("productivebees:")))) {
+            && acceptedMob.startsWith("productivebees:")))) {
           Component acceptedMobName = TranslatableText.getEntityName(acceptedMob);
           if (!acceptedMobName.getString().isBlank()) {
             mobTypeOverview.append(acceptedMobName).append(", ")

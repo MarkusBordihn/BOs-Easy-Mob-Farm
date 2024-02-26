@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -40,7 +40,8 @@ public class EquipmentChange {
 
   public static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  protected EquipmentChange() {}
+  protected EquipmentChange() {
+  }
 
   @SubscribeEvent
   public static void handleLivingEquipmentChangeEvent(LivingEquipmentChangeEvent event) {

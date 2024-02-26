@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -30,20 +30,16 @@ import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
 
 public class Swamp {
 
-  // Ref: https://minecraft.fandom.com/wiki/Swamp
-  protected Swamp() {}
-
   public static final Set<String> Passive = new HashSet<>(Arrays.asList(
-  // @formatter:off
+      // @formatter:off
     PassiveAnimal.SHEEP,
     PassiveAnimal.PIG,
     PassiveAnimal.CHICKEN,
     PassiveAnimal.COW
   // @formatter:on
   ));
-
   public static final Set<String> Hostile = new HashSet<>(Arrays.asList(
-  // @formatter:off
+      // @formatter:off
     HostileMonster.SLIME,
     HostileMonster.SPIDER,
     HostileMonster.WITCH,
@@ -51,8 +47,11 @@ public class Swamp {
     HostileMonster.ZOMBIE_VILLAGER
   // @formatter:on
   ));
-
   public static final Set<String> All =
       Stream.concat(Passive.stream(), Hostile.stream()).collect(Collectors.toSet());
+
+  // Ref: https://minecraft.fandom.com/wiki/Swamp
+  protected Swamp() {
+  }
 
 }

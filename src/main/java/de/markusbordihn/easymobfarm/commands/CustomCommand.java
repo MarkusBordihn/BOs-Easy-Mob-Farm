@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2021 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -27,7 +27,8 @@ import net.minecraft.network.chat.Component;
 
 public abstract class CustomCommand implements Command<CommandSourceStack> {
 
-  protected CustomCommand() {}
+  protected CustomCommand() {
+  }
 
   public static void sendFeedback(CommandContext<CommandSourceStack> context, String feedback) {
     CommandSourceStack commandSource = context.getSource();

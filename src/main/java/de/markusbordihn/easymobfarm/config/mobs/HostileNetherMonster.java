@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -21,8 +21,6 @@ package de.markusbordihn.easymobfarm.config.mobs;
 
 public class HostileNetherMonster {
 
-  protected HostileNetherMonster() {}
-
   public static final String BLAZE = "minecraft:blaze";
   public static final String GHAST = "minecraft:ghast";
   public static final String HOGLIN = "minecraft:hoglin";
@@ -33,4 +31,6 @@ public class HostileNetherMonster {
   public static final String WITHER_SKELETON = "minecraft:wither_skeleton";
   public static final String ZOGLIN = "minecraft:zoglin";
   public static final String ZOMBIFIED_PIGLIN = "minecraft:zombified_piglin";
+  protected HostileNetherMonster() {
+  }
 }

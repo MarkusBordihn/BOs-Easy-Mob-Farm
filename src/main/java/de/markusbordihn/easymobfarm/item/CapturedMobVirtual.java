@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,9 +19,7 @@
 
 package de.markusbordihn.easymobfarm.item;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
+import de.markusbordihn.easymobfarm.Constants;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -30,7 +28,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.AirItem;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.BedItem;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BottleItem;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
@@ -41,8 +38,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SignItem;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.SwordItem;
-
-import de.markusbordihn.easymobfarm.Constants;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class CapturedMobVirtual {
 
@@ -72,7 +69,8 @@ public class CapturedMobVirtual {
   private static final String SPAWN_EGG_CONFIGURABLE_BEE =
       "productivebees:spawn_egg_configurable_bee";
 
-  protected CapturedMobVirtual() {}
+  protected CapturedMobVirtual() {
+  }
 
   public static boolean isSupported(ItemStack itemStack) {
     if (itemStack == null || itemStack.isEmpty()) {
@@ -117,9 +115,9 @@ public class CapturedMobVirtual {
       if (compoundTag.contains(BLOCK_ENTITY_TAG)
           && compoundTag.getCompound(BLOCK_ENTITY_TAG).contains(SPAWN_DATA_TAG)
           && compoundTag.getCompound(BLOCK_ENTITY_TAG).getCompound(SPAWN_DATA_TAG)
-              .contains(ENTITY_TAG)
+          .contains(ENTITY_TAG)
           && compoundTag.getCompound(BLOCK_ENTITY_TAG).getCompound(SPAWN_DATA_TAG)
-              .getCompound(ENTITY_TAG).contains(ID_TAG)) {
+          .getCompound(ENTITY_TAG).contains(ID_TAG)) {
         return !compoundTag.getCompound(BLOCK_ENTITY_TAG).getCompound(SPAWN_DATA_TAG)
             .getCompound(ENTITY_TAG).getString(ID_TAG).isEmpty();
       }

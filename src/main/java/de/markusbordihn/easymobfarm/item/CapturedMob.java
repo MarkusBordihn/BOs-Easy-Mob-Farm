@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,16 +19,13 @@
 
 package de.markusbordihn.easymobfarm.item;
 
-import java.util.List;
-import java.util.Random;
-
 import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.loot.LootManager;
+import java.util.List;
+import java.util.Random;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
@@ -36,9 +33,9 @@ import net.minecraft.nbt.DoubleTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Entity.RemovalReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Entity.RemovalReason;
 import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.item.DyeColor;
@@ -48,9 +45,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
-
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.loot.LootManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class CapturedMob extends Item {
 
@@ -89,7 +85,8 @@ public class CapturedMob extends Item {
     if (compoundTag.contains(ENTITY_POSSIBLE_LOOT_TAG)) {
       String possibleLootString = compoundTag.getString(ENTITY_POSSIBLE_LOOT_TAG);
       if (!possibleLootString.isBlank()) {
-        return gson.fromJson(possibleLootString, new TypeToken<List<String>>() {}.getType());
+        return gson.fromJson(possibleLootString, new TypeToken<List<String>>() {
+        }.getType());
       }
     }
     return Lists.newArrayList();

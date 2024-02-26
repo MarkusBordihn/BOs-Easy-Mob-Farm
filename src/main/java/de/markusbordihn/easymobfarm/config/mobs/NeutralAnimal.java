@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -21,7 +21,8 @@ package de.markusbordihn.easymobfarm.config.mobs;
 
 public final class NeutralAnimal {
 
-  protected NeutralAnimal() {}
-
   public static final String POLAR_BEAR = "minecraft:polar_bear";
+
+  protected NeutralAnimal() {
+  }
 }
