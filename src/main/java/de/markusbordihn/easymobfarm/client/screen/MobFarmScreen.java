@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,28 +19,8 @@
 
 package de.markusbordihn.easymobfarm.client.screen;
 
-import java.util.Set;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-
-import net.minecraft.ChatFormatting;
-import net.minecraft.client.StringSplitter;
-import net.minecraft.client.gui.GuiComponent;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityData;
 import de.markusbordihn.easymobfarm.client.renderer.helper.RenderModels;
@@ -54,20 +34,33 @@ import de.markusbordihn.easymobfarm.menu.slots.ExperienceSlot;
 import de.markusbordihn.easymobfarm.menu.slots.WeaponSlot;
 import de.markusbordihn.easymobfarm.network.NetworkMessage;
 import de.markusbordihn.easymobfarm.text.TranslatableText;
+import java.util.Set;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.StringSplitter;
+import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScreen<T> {
-
-  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
-
-  private static final ResourceLocation CUSTOM =
-      new ResourceLocation(Constants.MOD_ID, "textures/container/custom.png");
-  private static final ResourceLocation CUSTOM_SHADOW =
-      new ResourceLocation(Constants.MOD_ID, "textures/container/custom_shadow.png");
 
   public static final int SNAP_WITH = 34;
   public static final int SNAP_HEIGHT = 53;
   public static final int MAX_HELP_TEXT_WIDTH = 300;
-
+  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+  private static final ResourceLocation CUSTOM =
+      new ResourceLocation(Constants.MOD_ID, "textures/container/custom.png");
+  private static final ResourceLocation CUSTOM_SHADOW =
+      new ResourceLocation(Constants.MOD_ID, "textures/container/custom_shadow.png");
   private final MutableComponent warningDisabledText;
   private final MutableComponent warningFullText;
   private final T mobFarmMenu;
@@ -128,16 +121,16 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
           // Reposition entity for better view.
           switch (mobFarmType) {
             case PassiveAnimal.RABBIT:
-              MobFarmScreenHelper.renderEntity(leftPos + 33, topPos + 75, leftPos + 33f - x,
-                  topPos + 65f - y, 45, livingEntity);
+              MobFarmScreenHelper.renderEntity(
+                  leftPos + 33, topPos + 75, leftPos + 33f - x, topPos + 65f - y, 45, livingEntity);
               break;
             case NeutralMonster.IRON_GOLEM:
-              MobFarmScreenHelper.renderEntity(leftPos + 33, topPos + 75, leftPos + 33f - x,
-                  topPos + 65f - y, livingEntity);
+              MobFarmScreenHelper.renderEntity(
+                  leftPos + 33, topPos + 75, leftPos + 33f - x, topPos + 65f - y, livingEntity);
               break;
             default:
-              MobFarmScreenHelper.renderEntity(leftPos + 33, topPos + 65, leftPos + 33f - x,
-                  topPos + 65f - y, livingEntity);
+              MobFarmScreenHelper.renderEntity(
+                  leftPos + 33, topPos + 65, leftPos + 33f - x, topPos + 65f - y, livingEntity);
           }
 
         } else {
@@ -148,8 +141,11 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
   }
 
   protected void renderHelpText(PoseStack poseStack, int x, int y) {
-    if (this.menu.getCarried().isEmpty() && this.hoveredSlot != null && !this.hoveredSlot.hasItem()
-        && font != null && stringSplitter != null) {
+    if (this.menu.getCarried().isEmpty()
+        && this.hoveredSlot != null
+        && !this.hoveredSlot.hasItem()
+        && font != null
+        && stringSplitter != null) {
       if (this.hoveredSlot instanceof CapturedMobSlot) {
         Set<String> acceptedMobTypes =
             MobTypeManager.getAcceptedMobTypes(this.menu.getAcceptedMobTypeName());
@@ -159,36 +155,57 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
           for (String acceptedMob : acceptedMobTypes) {
             Component acceptedMobName = TranslatableText.getEntityName(acceptedMob);
             if (!acceptedMobName.getString().isBlank()) {
-              mobTypeOverview.append(acceptedMobName).append(", ")
+              mobTypeOverview
+                  .append(acceptedMobName)
+                  .append(", ")
                   .withStyle(ChatFormatting.DARK_GREEN);
             }
           }
           mobTypeOverview.append(Component.literal("..."));
-          this.renderComponentTooltip(poseStack,
-              stringSplitter.splitLines(Component
-                  .translatable(Constants.HELP_TEXT_PREFIX + "capture_slot", mobTypeOverview),
-                  MAX_HELP_TEXT_WIDTH, Style.EMPTY),
-              x, y, font);
+          this.renderComponentTooltip(
+              poseStack,
+              stringSplitter.splitLines(
+                  Component.translatable(
+                      Constants.HELP_TEXT_PREFIX + "capture_slot", mobTypeOverview),
+                  MAX_HELP_TEXT_WIDTH,
+                  Style.EMPTY),
+              x,
+              y,
+              font);
         } else {
-          this.renderComponentTooltip(poseStack,
+          this.renderComponentTooltip(
+              poseStack,
               stringSplitter.splitLines(
                   Component.translatable(Constants.HELP_TEXT_PREFIX + "capture_slot_all"),
-                  MAX_HELP_TEXT_WIDTH, Style.EMPTY),
-              x, y, font);
+                  MAX_HELP_TEXT_WIDTH,
+                  Style.EMPTY),
+              x,
+              y,
+              font);
         }
       } else if (this.hoveredSlot instanceof WeaponSlot) {
-        this.renderComponentTooltip(poseStack,
+        this.renderComponentTooltip(
+            poseStack,
             stringSplitter.splitLines(
                 Component.translatable(Constants.HELP_TEXT_PREFIX + "weapon_slot"),
-                MAX_HELP_TEXT_WIDTH, Style.EMPTY),
-            x, y, font);
+                MAX_HELP_TEXT_WIDTH,
+                Style.EMPTY),
+            x,
+            y,
+            font);
       } else if (this.hoveredSlot instanceof ExperienceSlot) {
-        this.renderComponentTooltip(poseStack,
+        this.renderComponentTooltip(
+            poseStack,
             stringSplitter.splitLines(
-                Component.translatable(Constants.HELP_TEXT_PREFIX + "experience_slot",
-                    Items.GLASS_BOTTLE.getDescription(), Items.EXPERIENCE_BOTTLE.getDescription()),
-                MAX_HELP_TEXT_WIDTH, Style.EMPTY),
-            x, y, font);
+                Component.translatable(
+                    Constants.HELP_TEXT_PREFIX + "experience_slot",
+                    Items.GLASS_BOTTLE.getDescription(),
+                    Items.EXPERIENCE_BOTTLE.getDescription()),
+                MAX_HELP_TEXT_WIDTH,
+                Style.EMPTY),
+            x,
+            y,
+            font);
       }
     }
   }
@@ -209,8 +226,13 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
     RenderSystem.setShader(GameRenderer::getPositionTexShader);
     RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     RenderSystem.setShaderTexture(0, Constants.TEXTURE_ICONS);
-    GuiComponent.blit(poseStack, leftPos + this.redstoneButtonX, topPos + this.redstoneButtonY,
-        redstoneButtonModeX, redstoneButtonModeY, this.redstoneButtonWidth,
+    GuiComponent.blit(
+        poseStack,
+        leftPos + this.redstoneButtonX,
+        topPos + this.redstoneButtonY,
+        redstoneButtonModeX,
+        redstoneButtonModeY,
+        this.redstoneButtonWidth,
         this.redstoneButtonHeight);
   }
 
@@ -218,29 +240,42 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
   protected void renderTooltip(PoseStack poseStack, int x, int y) {
     int hoverPositionX = x - leftPos;
     int hoverPositionY = y - topPos;
-    if (hoverPositionX > redstoneButtonX && hoverPositionX < redstoneButtonX + redstoneButtonWidth
+    if (hoverPositionX > redstoneButtonX
+        && hoverPositionX < redstoneButtonX + redstoneButtonWidth
         && hoverPositionY > redstoneButtonY
         && hoverPositionY < redstoneButtonY + redstoneButtonHeight) {
       if (hoverPositionY > redstoneButtonModeOnY && hoverPositionY < redstoneButtonModeOnY + 10) {
-        renderComponentTooltip(poseStack,
+        renderComponentTooltip(
+            poseStack,
             stringSplitter.splitLines(
                 Component.translatable(Constants.HELP_TEXT_PREFIX + "redstone_button_on"),
-                MAX_HELP_TEXT_WIDTH, Style.EMPTY),
-            x, y, ItemStack.EMPTY);
+                MAX_HELP_TEXT_WIDTH,
+                Style.EMPTY),
+            x,
+            y,
+            ItemStack.EMPTY);
       } else if (hoverPositionY > redstoneButtonModeDisabledY
           && hoverPositionY < redstoneButtonModeDisabledY + 9) {
-        renderComponentTooltip(poseStack,
+        renderComponentTooltip(
+            poseStack,
             stringSplitter.splitLines(
                 Component.translatable(Constants.HELP_TEXT_PREFIX + "redstone_button_disabled"),
-                MAX_HELP_TEXT_WIDTH, Style.EMPTY),
-            x, y, ItemStack.EMPTY);
+                MAX_HELP_TEXT_WIDTH,
+                Style.EMPTY),
+            x,
+            y,
+            ItemStack.EMPTY);
       } else if (hoverPositionY > redstoneButtonModeOffY
           && hoverPositionY < redstoneButtonModeOffY + 10) {
-        renderComponentTooltip(poseStack,
+        renderComponentTooltip(
+            poseStack,
             stringSplitter.splitLines(
                 Component.translatable(Constants.HELP_TEXT_PREFIX + "redstone_button_off"),
-                MAX_HELP_TEXT_WIDTH, Style.EMPTY),
-            x, y, ItemStack.EMPTY);
+                MAX_HELP_TEXT_WIDTH,
+                Style.EMPTY),
+            x,
+            y,
+            ItemStack.EMPTY);
       }
     } else {
       super.renderTooltip(poseStack, x, y);
@@ -253,22 +288,23 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
     double clickedPositionY = y - topPos;
 
     // Redstone switch button
-    if (button == 0 && clickedPositionX > redstoneButtonX
+    if (button == 0
+        && clickedPositionX > redstoneButtonX
         && clickedPositionX < redstoneButtonX + redstoneButtonWidth
         && clickedPositionY > redstoneButtonY
         && clickedPositionY < redstoneButtonY + redstoneButtonHeight) {
       if (clickedPositionY > redstoneButtonModeOnY
           && clickedPositionY < redstoneButtonModeOnY + 10) {
-        NetworkMessage.sendRedstoneModeChangeToServer(this.menu.getMobFarmPosition(),
-            RedstoneMode.ON);
+        NetworkMessage.sendRedstoneModeChangeToServer(
+            this.menu.getMobFarmPosition(), RedstoneMode.ON);
       } else if (clickedPositionY > redstoneButtonModeDisabledY
           && clickedPositionY < redstoneButtonModeDisabledY + 9) {
-        NetworkMessage.sendRedstoneModeChangeToServer(this.menu.getMobFarmPosition(),
-            RedstoneMode.DISABLED);
+        NetworkMessage.sendRedstoneModeChangeToServer(
+            this.menu.getMobFarmPosition(), RedstoneMode.DISABLED);
       } else if (clickedPositionY > redstoneButtonModeOffY
           && clickedPositionY < redstoneButtonModeOffY + 10) {
-        NetworkMessage.sendRedstoneModeChangeToServer(this.menu.getMobFarmPosition(),
-            RedstoneMode.OFF);
+        NetworkMessage.sendRedstoneModeChangeToServer(
+            this.menu.getMobFarmPosition(), RedstoneMode.OFF);
       }
     }
     return super.mouseReleased(x, y, button);
@@ -326,23 +362,31 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
         && mobFarmStatus != MobFarmBlockEntityData.FARM_STATUS_DISABLED) {
       poseStack.pushPose();
       poseStack.scale(dropTimeLabelScale, dropTimeLabelScale, dropTimeLabelScale);
-      font.draw(poseStack,
-          Component.translatable(Constants.TEXT_PREFIX + "drop_time_secs",
+      font.draw(
+          poseStack,
+          Component.translatable(
+              Constants.TEXT_PREFIX + "drop_time_secs",
               this.mobFarmMenu.getMobFarmTotalTime() / 20),
-          this.dropTimeLabelX, this.dropTimeLabelY, Constants.FONT_COLOR_GRAY);
+          this.dropTimeLabelX,
+          this.dropTimeLabelY,
+          Constants.FONT_COLOR_GRAY);
       poseStack.popPose();
     }
 
     // Show Mob Details like name and entity type, if available.
     if (mobFarmStatus != MobFarmBlockEntityData.FARM_STATUS_WAITING) {
       poseStack.pushPose();
-      font.draw(poseStack, this.mobFarmMenu.getMobFarmName(), 61, 18,
-          Constants.FONT_COLOR_DARK_GREEN);
+      font.draw(
+          poseStack, this.mobFarmMenu.getMobFarmName(), 61, 18, Constants.FONT_COLOR_DARK_GREEN);
       poseStack.popPose();
 
       poseStack.pushPose();
       poseStack.scale(0.65f, 0.65f, 0.65f);
-      font.draw(poseStack, this.mobFarmMenu.getMobFarmType(), 61 / 0.65f, 28 / 0.65f,
+      font.draw(
+          poseStack,
+          this.mobFarmMenu.getMobFarmType(),
+          61 / 0.65f,
+          28 / 0.65f,
           Constants.FONT_COLOR_GRAY);
       poseStack.popPose();
     }
@@ -353,23 +397,35 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
       case MobFarmBlockEntityData.FARM_STATUS_WORKING:
         poseStack.pushPose();
         poseStack.scale(nextDropTimeLabelScale, nextDropTimeLabelScale, nextDropTimeLabelScale);
-        font.draw(poseStack,
-            Component.translatable(Constants.TEXT_PREFIX + "next_drop_secs",
+        font.draw(
+            poseStack,
+            Component.translatable(
+                Constants.TEXT_PREFIX + "next_drop_secs",
                 this.mobFarmMenu.getMobFarmRemainingTime()),
-            nextDropTimeLabelX, nextDropTimeLabelY, Constants.FONT_COLOR_BLACK);
+            nextDropTimeLabelX,
+            nextDropTimeLabelY,
+            Constants.FONT_COLOR_BLACK);
         poseStack.popPose();
         break;
       case MobFarmBlockEntityData.FARM_STATUS_FULL:
         poseStack.pushPose();
         poseStack.scale(dropTimeLabelScale, dropTimeLabelScale, dropTimeLabelScale);
-        font.draw(poseStack, this.warningFullText, this.dropTimeLabelX, this.dropTimeLabelY,
+        font.draw(
+            poseStack,
+            this.warningFullText,
+            this.dropTimeLabelX,
+            this.dropTimeLabelY,
             Constants.FONT_COLOR_WARNING);
         poseStack.popPose();
         break;
       case MobFarmBlockEntityData.FARM_STATUS_DISABLED:
         poseStack.pushPose();
         poseStack.scale(dropTimeLabelScale, dropTimeLabelScale, dropTimeLabelScale);
-        font.draw(poseStack, this.warningDisabledText, this.dropTimeLabelX, this.dropTimeLabelY,
+        font.draw(
+            poseStack,
+            this.warningDisabledText,
+            this.dropTimeLabelX,
+            this.dropTimeLabelY,
             Constants.FONT_COLOR_WARNING);
         poseStack.popPose();
         break;
@@ -441,7 +497,13 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
       case MobFarmBlockEntityData.FARM_STATUS_DONE:
       case MobFarmBlockEntityData.FARM_STATUS_WORKING:
         // Hopper progress animation
-        GuiComponent.blit(poseStack, leftPos + 21, topPos + 100, 41, 26, 18,
+        GuiComponent.blit(
+            poseStack,
+            leftPos + 21,
+            topPos + 100,
+            41,
+            26,
+            18,
             this.mobFarmMenu.getMobFarmProgressImage());
         break;
       case MobFarmBlockEntityData.FARM_STATUS_FULL:
@@ -457,5 +519,4 @@ public class MobFarmScreen<T extends MobFarmMenu> extends AbstractContainerScree
       default:
     }
   }
-
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,18 +19,15 @@
 
 package de.markusbordihn.easymobfarm.utils;
 
+import cpw.mods.modlauncher.Launcher;
+import cpw.mods.modlauncher.api.IEnvironment;
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.EasyMobFarm;
 import java.net.URISyntaxException;
 import java.util.Optional;
 import java.util.regex.Pattern;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import cpw.mods.modlauncher.Launcher;
-import cpw.mods.modlauncher.api.IEnvironment;
-
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.EasyMobFarm;
 
 public class StopModReposts {
 
@@ -68,7 +65,9 @@ public class StopModReposts {
     }
 
     if (expectedFilePattern.matcher(jarFilePath).find()) {
-      log.info("Thanks for using {} ({}). I hope you enjoy the mod. :)", Constants.MOD_NAME,
+      log.info(
+          "Thanks for using {} ({}). I hope you enjoy the mod. :)",
+          Constants.MOD_NAME,
           Constants.MOD_URL);
     } else {
       log.error("");
@@ -81,13 +80,13 @@ public class StopModReposts {
       log.error("It's seems that the mod file you are using was modified!");
       log.error(
           "Please make sure to download the latest {} mod only from the original source at {}",
-          Constants.MOD_NAME, Constants.MOD_URL);
+          Constants.MOD_NAME,
+          Constants.MOD_URL);
       log.error(
           "If you downloaded this mod from other sources we could not make sure that it works as expected or does not includes any unwanted modification (e.g. adware, malware, ...).");
       log.error("");
       log.error("See the following page for more details: {}", STOP_MOD_REPOSTS_URL);
       log.error("");
     }
-
   }
 }

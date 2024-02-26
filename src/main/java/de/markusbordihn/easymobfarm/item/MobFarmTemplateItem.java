@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,9 +19,9 @@
 
 package de.markusbordihn.easymobfarm.item;
 
+import de.markusbordihn.easymobfarm.Constants;
 import java.util.List;
 import javax.annotation.Nullable;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
@@ -30,8 +30,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 
-import de.markusbordihn.easymobfarm.Constants;
-
 public class MobFarmTemplateItem extends BlockItem {
 
   public MobFarmTemplateItem(Block block, Properties properties) {
@@ -39,10 +37,13 @@ public class MobFarmTemplateItem extends BlockItem {
   }
 
   @Override
-  public void appendHoverText(ItemStack itemStack, @Nullable Level level,
-      List<Component> tooltipList, TooltipFlag tooltipFlag) {
-    tooltipList.add(Component.translatable(Constants.TEXT_PREFIX + "mob_farm_template")
-        .withStyle(ChatFormatting.YELLOW));
+  public void appendHoverText(
+      ItemStack itemStack,
+      @Nullable Level level,
+      List<Component> tooltipList,
+      TooltipFlag tooltipFlag) {
+    tooltipList.add(
+        Component.translatable(Constants.TEXT_PREFIX + "mob_farm_template")
+            .withStyle(ChatFormatting.YELLOW));
   }
-
 }

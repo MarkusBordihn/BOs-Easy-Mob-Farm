@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2021 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -21,7 +21,6 @@ package de.markusbordihn.easymobfarm.commands;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.context.CommandContext;
-
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
 
@@ -33,5 +32,4 @@ public abstract class CustomCommand implements Command<CommandSourceStack> {
     CommandSourceStack commandSource = context.getSource();
     commandSource.sendSuccess(Component.literal(feedback), false);
   }
-
 }

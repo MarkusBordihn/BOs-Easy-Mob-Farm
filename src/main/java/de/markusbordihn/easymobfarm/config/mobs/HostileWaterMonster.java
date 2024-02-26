@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -21,7 +21,7 @@ package de.markusbordihn.easymobfarm.config.mobs;
 
 public class HostileWaterMonster {
 
-  protected HostileWaterMonster() {}
-
   public static final String DROWNED = "minecraft:drowned";
+
+  protected HostileWaterMonster() {}
 }

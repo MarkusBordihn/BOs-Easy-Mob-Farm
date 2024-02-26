@@ -1,88 +1,88 @@
 {
-	"credit": "Made with Blockbench by Markus Bordihn",
-	"textures": {
-		"particle": "block/netherite_block",
-		"texture": "block/netherite_block",
-		"front": "block/respawn_anchor_top"
-	},
-	"elements": [
-		{
-			"from": [5, 9, 2],
-			"to": [11, 15, 15],
-			"faces": {
-				"east": {"uv": [0, 0, 16, 16], "texture": "#texture"},
-				"south": {"uv": [0, 0, 16, 16], "texture": "#texture"},
-				"west": {"uv": [0, 0, 16, 16], "texture": "#texture"},
-				"up": {"uv": [0, 0, 16, 16], "texture": "#texture"},
-				"down": {"uv": [0, 0, 16, 16], "texture": "#texture"}
-			}
-		},
-		{
-			"from": [7.5, 6, 8],
-			"to": [8.5, 9, 9],
-			"faces": {
-				"north": {"uv": [0, 0, 16, 16], "texture": "#texture"},
-				"east": {"uv": [0, 0, 16, 16], "texture": "#texture"},
-				"south": {"uv": [0, 0, 16, 16], "texture": "#texture"},
-				"west": {"uv": [0, 0, 16, 16], "texture": "#texture"},
-				"down": {"uv": [0, 0, 16, 16], "texture": "#texture"}
-			}
-		},
-		{
-			"from": [4, 8, 2],
-			"to": [12, 16, 3],
-			"faces": {
-				"north": {"uv": [0, 0, 16, 16], "texture": "#front"},
-				"east": {"uv": [0, 0, 2, 16], "texture": "#texture"},
-				"south": {"uv": [0, 0, 16, 16], "texture": "#texture"},
-				"west": {"uv": [2, 0, 0, 16], "texture": "#texture"},
-				"up": {"uv": [0, 2, 16, 0], "texture": "#texture"},
-				"down": {"uv": [0, 16, 16, 14], "texture": "#texture"}
-			}
-		},
-		{
-			"from": [4, 8, 2],
-			"to": [12, 16, 3],
-			"faces": {
-				"north": {"uv": [0, 0, 16, 16], "texture": "#front"},
-				"east": {"uv": [0, 0, 2, 16], "texture": "#texture"},
-				"south": {"uv": [0, 0, 16, 16], "texture": "#texture"},
-				"west": {"uv": [2, 0, 0, 16], "texture": "#texture"},
-				"up": {"uv": [0, 2, 16, 0], "texture": "#texture"},
-				"down": {"uv": [0, 16, 16, 14], "texture": "#texture"}
-			}
-		}
-	],
-	"display": {
-		"thirdperson_righthand": {
-			"scale": [0.5, 0.5, 1.5]
-		},
-		"thirdperson_lefthand": {
-			"scale": [0.5, 0.5, 1.5]
-		},
-		"firstperson_righthand": {
-			"rotation": [5, 0, 0],
-			"scale": [0.5, 0.5, 1]
-		},
-		"firstperson_lefthand": {
-			"rotation": [5, 0, 0],
-			"scale": [0.5, 0.5, 1]
-		},
-		"ground": {
-			"scale": [0.5, 0.5, 1.5]
-		},
-		"gui": {
-			"rotation": [45, 143, -45],
-			"translation": [0.75, -1.25, 0],
-			"scale": [0.4, 0.4, 1.4]
-		},
-		"head": {
-			"translation": [0, 7, 0]
-		},
-		"fixed": {
-			"rotation": [0, 90, 0],
-			"translation": [-0.75, -2, -2],
-			"scale": [0.5, 0.5, 1.4]
-		}
-	}
+  "credit": "Made with Blockbench by Markus Bordihn",
+  "textures": {
+    "particle": "block/netherite_block",
+    "texture": "block/netherite_block",
+    "front": "block/respawn_anchor_top"
+  },
+  "elements": [
+    {
+      "from": [5, 9, 2],
+      "to": [11, 15, 15],
+      "faces": {
+        "east": {"uv": [0, 0, 16, 16], "texture": "#texture"},
+        "south": {"uv": [0, 0, 16, 16], "texture": "#texture"},
+        "west": {"uv": [0, 0, 16, 16], "texture": "#texture"},
+        "up": {"uv": [0, 0, 16, 16], "texture": "#texture"},
+        "down": {"uv": [0, 0, 16, 16], "texture": "#texture"}
+      }
+    },
+    {
+      "from": [7.5, 6, 8],
+      "to": [8.5, 9, 9],
+      "faces": {
+        "north": {"uv": [0, 0, 16, 16], "texture": "#texture"},
+        "east": {"uv": [0, 0, 16, 16], "texture": "#texture"},
+        "south": {"uv": [0, 0, 16, 16], "texture": "#texture"},
+        "west": {"uv": [0, 0, 16, 16], "texture": "#texture"},
+        "down": {"uv": [0, 0, 16, 16], "texture": "#texture"}
+      }
+    },
+    {
+      "from": [4, 8, 2],
+      "to": [12, 16, 3],
+      "faces": {
+        "north": {"uv": [0, 0, 16, 16], "texture": "#front"},
+        "east": {"uv": [0, 0, 2, 16], "texture": "#texture"},
+        "south": {"uv": [0, 0, 16, 16], "texture": "#texture"},
+        "west": {"uv": [2, 0, 0, 16], "texture": "#texture"},
+        "up": {"uv": [0, 2, 16, 0], "texture": "#texture"},
+        "down": {"uv": [0, 16, 16, 14], "texture": "#texture"}
+      }
+    },
+    {
+      "from": [4, 8, 2],
+      "to": [12, 16, 3],
+      "faces": {
+        "north": {"uv": [0, 0, 16, 16], "texture": "#front"},
+        "east": {"uv": [0, 0, 2, 16], "texture": "#texture"},
+        "south": {"uv": [0, 0, 16, 16], "texture": "#texture"},
+        "west": {"uv": [2, 0, 0, 16], "texture": "#texture"},
+        "up": {"uv": [0, 2, 16, 0], "texture": "#texture"},
+        "down": {"uv": [0, 16, 16, 14], "texture": "#texture"}
+      }
+    }
+  ],
+  "display": {
+    "thirdperson_righthand": {
+      "scale": [0.5, 0.5, 1.5]
+    },
+    "thirdperson_lefthand": {
+      "scale": [0.5, 0.5, 1.5]
+    },
+    "firstperson_righthand": {
+      "rotation": [5, 0, 0],
+      "scale": [0.5, 0.5, 1]
+    },
+    "firstperson_lefthand": {
+      "rotation": [5, 0, 0],
+      "scale": [0.5, 0.5, 1]
+    },
+    "ground": {
+      "scale": [0.5, 0.5, 1.5]
+    },
+    "gui": {
+      "rotation": [45, 143, -45],
+      "translation": [0.75, -1.25, 0],
+      "scale": [0.4, 0.4, 1.4]
+    },
+    "head": {
+      "translation": [0, 7, 0]
+    },
+    "fixed": {
+      "rotation": [0, 90, 0],
+      "translation": [-0.75, -2, -2],
+      "scale": [0.5, 0.5, 1.4]
+    }
+  }
 }

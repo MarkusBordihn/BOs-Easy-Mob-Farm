@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -20,14 +20,12 @@
 package de.markusbordihn.easymobfarm.client.renderer;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
-import net.minecraft.world.entity.EntityType;
-
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.client.renderer.helper.RenderHelper;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.world.entity.EntityType;
 
 public class BeeFarmRenderer extends MobFarmRendererBase<MobFarmBlockEntity> {
 
@@ -36,8 +34,13 @@ public class BeeFarmRenderer extends MobFarmRendererBase<MobFarmBlockEntity> {
   }
 
   @Override
-  public void render(MobFarmBlockEntity blockEntity, float partialTicks, PoseStack poseStack,
-      MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+  public void render(
+      MobFarmBlockEntity blockEntity,
+      float partialTicks,
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      int combinedLight,
+      int combinedOverlay) {
     super.render(blockEntity, partialTicks, poseStack, buffer, combinedLight, combinedOverlay);
 
     // Get unique farm id for caching, the renderer itself is a single instance.
@@ -57,8 +60,8 @@ public class BeeFarmRenderer extends MobFarmRendererBase<MobFarmBlockEntity> {
 
     // Render individual mob types if possible, because custom entity renderer is not optimized.
     // This makes a huge different with up to 20% more fps with a larger farm.
-    if (renderHelper.renderBee(poseStack, buffer, combinedLight, farmMobType, farmMobSubType,
-        farmMobEntityType)) {
+    if (renderHelper.renderBee(
+        poseStack, buffer, combinedLight, farmMobType, farmMobSubType, farmMobEntityType)) {
       return;
     }
 
@@ -67,5 +70,4 @@ public class BeeFarmRenderer extends MobFarmRendererBase<MobFarmBlockEntity> {
       renderHelper.renderLivingEntity(poseStack, buffer, combinedLight, farmMobEntityType);
     }
   }
-
 }

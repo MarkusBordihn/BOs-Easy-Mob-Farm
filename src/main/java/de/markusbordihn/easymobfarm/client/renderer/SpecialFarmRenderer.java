@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -36,8 +36,13 @@ public class SpecialFarmRenderer extends MobFarmRendererBase<MobFarmBlockEntity>
   }
 
   @Override
-  public void render(MobFarmBlockEntity blockEntity, float partialTicks, PoseStack poseStack,
-      MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+  public void render(
+      MobFarmBlockEntity blockEntity,
+      float partialTicks,
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      int combinedLight,
+      int combinedOverlay) {
     super.render(blockEntity, partialTicks, poseStack, buffer, combinedLight, combinedOverlay);
 
     // Get unique farm id for caching, the renderer itself is a single instance.
@@ -65,5 +70,4 @@ public class SpecialFarmRenderer extends MobFarmRendererBase<MobFarmBlockEntity>
       renderHelper.renderLivingEntity(poseStack, buffer, combinedLight, entityType);
     }
   }
-
 }

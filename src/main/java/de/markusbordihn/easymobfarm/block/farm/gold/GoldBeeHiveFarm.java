@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,11 +19,16 @@
 
 package de.markusbordihn.easymobfarm.block.farm.gold;
 
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.block.MobFarmBlock;
+import de.markusbordihn.easymobfarm.block.ModBlocks;
+import de.markusbordihn.easymobfarm.block.entity.farm.gold.GoldBeeHiveFarmEntity;
+import de.markusbordihn.easymobfarm.data.FarmTier;
+import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
+import de.markusbordihn.easymobfarm.text.TranslatableText;
 import java.util.List;
 import java.util.Set;
-
 import javax.annotation.Nullable;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -38,14 +43,6 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.MobFarmBlock;
-import de.markusbordihn.easymobfarm.block.ModBlocks;
-import de.markusbordihn.easymobfarm.block.entity.farm.gold.GoldBeeHiveFarmEntity;
-import de.markusbordihn.easymobfarm.data.FarmTier;
-import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
-import de.markusbordihn.easymobfarm.text.TranslatableText;
 
 public class GoldBeeHiveFarm extends MobFarmBlock {
 
@@ -72,8 +69,8 @@ public class GoldBeeHiveFarm extends MobFarmBlock {
 
   @Override
   public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-    return new GoldBeeHiveFarmEntity(ModBlocks.GOLD_BEE_HIVE_FARM_ENTITY.get(), blockPos,
-        blockState);
+    return new GoldBeeHiveFarmEntity(
+        ModBlocks.GOLD_BEE_HIVE_FARM_ENTITY.get(), blockPos, blockState);
   }
 
   @Override
@@ -84,8 +81,13 @@ public class GoldBeeHiveFarm extends MobFarmBlock {
   }
 
   @Override
-  public InteractionResult consumeCapturedMob(Level level, BlockPos blockPos, BlockState blockState,
-      BlockEntity blockEntity, ItemStack itemStack, UseOnContext context) {
+  public InteractionResult consumeCapturedMob(
+      Level level,
+      BlockPos blockPos,
+      BlockState blockState,
+      BlockEntity blockEntity,
+      ItemStack itemStack,
+      UseOnContext context) {
     GoldBeeHiveFarmEntity beeHiveMobFarmEntity = (GoldBeeHiveFarmEntity) blockEntity;
     beeHiveMobFarmEntity.updateLevel(level);
     if (!beeHiveMobFarmEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
@@ -101,10 +103,13 @@ public class GoldBeeHiveFarm extends MobFarmBlock {
 
   @Override
   @Nullable
-  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState,
-      BlockEntityType<T> blockEntityType) {
-    return level.isClientSide ? null
-        : createTickerHelper(blockEntityType, ModBlocks.GOLD_BEE_HIVE_FARM_ENTITY.get(),
+  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+      Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
+    return level.isClientSide
+        ? null
+        : createTickerHelper(
+            blockEntityType,
+            ModBlocks.GOLD_BEE_HIVE_FARM_ENTITY.get(),
             GoldBeeHiveFarmEntity::serverTick);
   }
 
@@ -121,11 +126,14 @@ public class GoldBeeHiveFarm extends MobFarmBlock {
         // 2.) Accepted Mob Types Size > 16 and Productive Bees is loaded and entry starts with
         // productive bees
         if (!((!Constants.PRODUCTIVE_BEES_LOADED && acceptedMob.startsWith("productivebees:"))
-            || (acceptedMobTypes.size() >= 16 && Constants.PRODUCTIVE_BEES_LOADED
+            || (acceptedMobTypes.size() >= 16
+                && Constants.PRODUCTIVE_BEES_LOADED
                 && acceptedMob.startsWith("productivebees:")))) {
           Component acceptedMobName = TranslatableText.getEntityName(acceptedMob);
           if (!acceptedMobName.getString().isBlank()) {
-            mobTypeOverview.append(acceptedMobName).append(", ")
+            mobTypeOverview
+                .append(acceptedMobName)
+                .append(", ")
                 .withStyle(ChatFormatting.DARK_GREEN);
           }
         }
@@ -136,15 +144,16 @@ public class GoldBeeHiveFarm extends MobFarmBlock {
       }
       if (!mobTypeOverview.getString().isBlank()) {
         MutableComponent supportedMobsOverview =
-            Component.translatable(Constants.TEXT_PREFIX + getFarmDescriptionId()).append(" ")
+            Component.translatable(Constants.TEXT_PREFIX + getFarmDescriptionId())
+                .append(" ")
                 .withStyle(ChatFormatting.GREEN);
         supportedMobsOverview.append(mobTypeOverview).append("...");
         tooltipList.add(supportedMobsOverview);
       }
     } else {
-      tooltipList.add(Component.translatable(Constants.TEXT_PREFIX + "supported_all")
-          .withStyle(ChatFormatting.GREEN));
+      tooltipList.add(
+          Component.translatable(Constants.TEXT_PREFIX + "supported_all")
+              .withStyle(ChatFormatting.GREEN));
     }
   }
-
 }

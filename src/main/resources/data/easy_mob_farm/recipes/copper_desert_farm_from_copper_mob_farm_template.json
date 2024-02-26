@@ -3,7 +3,8 @@
   "pattern": [
     "CSD",
     "S#C",
-    "D-C"],
+    "D-C"
+  ],
   "key": {
     "#": {
       "item": "easy_mob_farm:copper_mob_farm_template"

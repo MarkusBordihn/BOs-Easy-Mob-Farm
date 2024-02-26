@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -33,14 +33,24 @@ import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
 public class CopperMonsterPlainsCaveFarmMenu extends MobFarmMenu {
 
   public CopperMonsterPlainsCaveFarmMenu(int windowIdIn, Inventory inventory) {
-    super(windowIdIn, inventory, new SimpleContainer(containerSize),
+    super(
+        windowIdIn,
+        inventory,
+        new SimpleContainer(containerSize),
         new SimpleContainerData(MobFarmBlockEntityData.DATA_SIZE),
         ModMenuTypes.COPPER_MONSTER_PLAINS_CAVE_FARM_MENU.get());
   }
 
-  public CopperMonsterPlainsCaveFarmMenu(final int windowId, final Inventory playerInventory,
-      final Container container, final ContainerData containerData) {
-    super(windowId, playerInventory, container, containerData,
+  public CopperMonsterPlainsCaveFarmMenu(
+      final int windowId,
+      final Inventory playerInventory,
+      final Container container,
+      final ContainerData containerData) {
+    super(
+        windowId,
+        playerInventory,
+        container,
+        containerData,
         ModMenuTypes.COPPER_MONSTER_PLAINS_CAVE_FARM_MENU.get());
   }
 
@@ -48,5 +58,4 @@ public class CopperMonsterPlainsCaveFarmMenu extends MobFarmMenu {
   public String getAcceptedMobTypeName() {
     return CopperMonsterPlainsCaveFarm.NAME;
   }
-
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,19 +19,16 @@
 
 package de.markusbordihn.easymobfarm.client.screen;
 
-import org.joml.Quaternionf;
-
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-
+import de.markusbordihn.easymobfarm.Constants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
-
-import de.markusbordihn.easymobfarm.Constants;
+import org.joml.Quaternionf;
 
 public class MobFarmScreenHelper {
 
@@ -39,8 +36,8 @@ public class MobFarmScreenHelper {
     renderEntity(x, y, yRot, xRot, 19, livingEntity);
   }
 
-  public static void renderEntity(int x, int y, float yRot, float xRot, int scale,
-      LivingEntity livingEntity) {
+  public static void renderEntity(
+      int x, int y, float yRot, float xRot, int scale, LivingEntity livingEntity) {
     float f = (float) Math.atan(yRot / 40.0F);
     float f1 = (float) Math.atan(xRot / 40.0F);
     PoseStack poseStack = RenderSystem.getModelViewStack();
@@ -74,8 +71,8 @@ public class MobFarmScreenHelper {
     entityRenderDispatcher.setRenderShadow(false);
     MultiBufferSource.BufferSource multiBuffer =
         Minecraft.getInstance().renderBuffers().bufferSource();
-    entityRenderDispatcher.render(livingEntity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, poseStack1,
-        multiBuffer, 15728880);
+    entityRenderDispatcher.render(
+        livingEntity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, poseStack1, multiBuffer, 15728880);
     multiBuffer.endBatch();
     entityRenderDispatcher.setRenderShadow(true);
     livingEntity.yBodyRot = entityYBodyRot;
@@ -88,5 +85,4 @@ public class MobFarmScreenHelper {
     RenderSystem.applyModelViewMatrix();
     Lighting.setupFor3DItems();
   }
-
 }
