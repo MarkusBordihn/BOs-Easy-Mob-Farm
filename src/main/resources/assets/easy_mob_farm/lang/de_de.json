@@ -1,7 +1,6 @@
 {
   "advancements.easy_mob_farm.crafting.root.description": "Baue deine Mob-Farm, um die Ressourcen, die du benötigst, einfach zu farmen.",
   "advancements.easy_mob_farm.crafting.root.title": "Einfache Mob-Farm",
-
   "advancements.easy_mob_farm.crafting.craft_animal_plains_farm.description": "Um sicherzustellen, dass sich die Tiere wohl fühlen, müssen wir Material von den Ebenen sammeln.",
   "advancements.easy_mob_farm.crafting.craft_animal_plains_farm.title": "Erstelle ein gemütliches Zuhause für Tiere der Ebenen.",
   "advancements.easy_mob_farm.crafting.craft_bee_hive_farm.description": "Für die Farm von Honigwaben benötigen wir eine Bienenstock-Farm.",
@@ -38,7 +37,6 @@
   "advancements.easy_mob_farm.crafting.craft_urn_small.title": "Wie fängt man Monster?",
   "advancements.easy_mob_farm.crafting.craft_witch_bottle.description": "Um eine Hexe einzufangen, benötigen wir eine Hexenflasche und etwas Glück.",
   "advancements.easy_mob_farm.crafting.craft_witch_bottle.title": "Wie fängt man eine Hexe?",
-
   "advancements.easy_mob_farm.crafting.craft_copper_mob_farm_template.description": "Baue zuerst eine Kupfer-Mob-Farm-Vorlage aus Kupfererz mit Glas.",
   "advancements.easy_mob_farm.crafting.craft_copper_mob_farm_template.title": "Lass uns eine Kupfer-Mob-Farm bauen.",
   "advancements.easy_mob_farm.crafting.craft_iron_mob_farm_template.description": "Baue zuerst eine Eisen-Mob-Farm-Vorlage aus Eisenerz mit Glas.",
@@ -47,7 +45,6 @@
   "advancements.easy_mob_farm.crafting.craft_gold_mob_farm_template.title": "Lass uns eine Gold-Mob-Farm bauen.",
   "advancements.easy_mob_farm.crafting.craft_netherite_mob_farm_template.description": "Baue zuerst eine Netherit-Mob-Farm-Vorlage aus Netheriterz mit Glas.",
   "advancements.easy_mob_farm.crafting.craft_netherite_mob_farm_template.title": "Lass uns eine Netherit-Mob-Farm bauen.",
-
   "text.easy_mob_farm.capture": "► Ziel-Mob anvisieren und Rechtsklick zum Fangen",
   "text.easy_mob_farm.catchable_mobs": "Fangbare Mobs:",
   "text.easy_mob_farm.catchable_mobs_all": "Kann alle Mobs fangen.",
@@ -67,7 +64,6 @@
   "text.easy_mob_farm.drop_time_secs": "Drop-Zeit: alle %ds",
   "text.easy_mob_farm.warning_full": "Ausgabeslots sind voll!",
   "text.easy_mob_farm.warning_disabled": "Mob-Farm ist deaktiviert!",
-
   "help_text.easy_mob_farm.capture_slot": "Platziere einen gefangenen Mob in diesem Slot.\nDiese Farm unterstützt die folgenden Mobs:\n%1$s",
   "help_text.easy_mob_farm.capture_slot_all": "Platziere einen gefangenen Mob in diesem Slot.\nAlle Mobs werden unterstützt.",
   "help_text.easy_mob_farm.weapon_slot": "Platziere eine Waffe in diesem Slot,\num bessere Mob-Drops zu erhalten.",
@@ -75,17 +71,13 @@
   "help_text.easy_mob_farm.redstone_button_on": "Aktiviere die Mob-Farm mit einem Redstone-Signal.",
   "help_text.easy_mob_farm.redstone_button_disabled": "Ignoriere das Redstone-Signal.",
   "help_text.easy_mob_farm.redstone_button_off": "Deaktiviere die Mob-Farm mit einem Redstone-Signal.",
-
   "message.easy_mob_farm.warning_full": "Deine Einfache Mob-Farm (%1$s) bei %2$s ist voll und kann nicht speichern: %3$s!",
-
   "block.easy_mob_farm.copper_mob_farm_template": "Kupfer-Mob-Farm-Vorlage",
   "block.easy_mob_farm.iron_mob_farm_template": "Eisen-Mob-Farm-Vorlage",
   "block.easy_mob_farm.gold_mob_farm_template": "Gold-Mob-Farm-Vorlage",
   "block.easy_mob_farm.netherite_mob_farm_template": "Netherit-Mob-Farm-Vorlage",
-
   "block.easy_mob_farm.creative_mob_farm": "Kreative Mob-Farm",
   "block.easy_mob_farm.iron_golem_farm": "Eisengolem-Farm",
-
   "block.easy_mob_farm.copper_animal_plains_farm": "Tierfarm der Ebenen (Kupfer)",
   "block.easy_mob_farm.copper_bee_hive_farm": "Bienenstock-Farm (Kupfer)",
   "block.easy_mob_farm.copper_desert_farm": "Wüstenfarm (Kupfer)",
@@ -94,7 +86,6 @@
   "block.easy_mob_farm.copper_nether_fortress_farm": "Netherfestungsfarm (Kupfer)",
   "block.easy_mob_farm.copper_ocean_farm": "Meeresfarm (Kupfer)",
   "block.easy_mob_farm.copper_swamp_farm": "Sumpffarm (Kupfer)",
-
   "block.easy_mob_farm.iron_animal_plains_farm": "Tierfarm der Ebenen (Eisen)",
   "block.easy_mob_farm.iron_bee_hive_farm": "Bienenstock-Farm (Eisen)",
   "block.easy_mob_farm.iron_desert_farm": "Wüstenfarm (Eisen)",
@@ -103,7 +94,6 @@
   "block.easy_mob_farm.iron_nether_fortress_farm": "Netherfestungsfarm (Eisen)",
   "block.easy_mob_farm.iron_ocean_farm": "Meeresfarm (Eisen)",
   "block.easy_mob_farm.iron_swamp_farm": "Sumpffarm (Eisen)",
-
   "block.easy_mob_farm.gold_animal_plains_farm": "Tierfarm der Ebenen (Gold)",
   "block.easy_mob_farm.gold_bee_hive_farm": "Bienenstock-Farm (Gold)",
   "block.easy_mob_farm.gold_desert_farm": "Wüstenfarm (Gold)",
@@ -112,7 +102,6 @@
   "block.easy_mob_farm.gold_nether_fortress_farm": "Netherfestungsfarm (Gold)",
   "block.easy_mob_farm.gold_ocean_farm": "Meeresfarm (Gold)",
   "block.easy_mob_farm.gold_swamp_farm": "Sumpffarm (Gold)",
-
   "block.easy_mob_farm.netherite_animal_plains_farm": "Tierfarm der Ebenen (Netherit)",
   "block.easy_mob_farm.netherite_bee_hive_farm": "Bienenstock-Farm (Netherit)",
   "block.easy_mob_farm.netherite_desert_farm": "Wüstenfarm (Netherit)",
@@ -121,7 +110,6 @@
   "block.easy_mob_farm.netherite_nether_fortress_farm": "Netherfestungsfarm (Netherit)",
   "block.easy_mob_farm.netherite_ocean_farm": "Meeresfarm (Netherit)",
   "block.easy_mob_farm.netherite_swamp_farm": "Sumpffarm (Netherit)",
-
   "container.easy_mob_farm.animal_plains_farm": "Tierfarm der Ebenen",
   "container.easy_mob_farm.bee_hive_farm": "Bienenstock-Farm",
   "container.easy_mob_farm.creative_mob_farm": "Kreative Mob-Farm",
@@ -132,7 +120,6 @@
   "container.easy_mob_farm.nether_fortress_farm": "Netherfestungsfarm",
   "container.easy_mob_farm.ocean_farm": "Meeresfarm",
   "container.easy_mob_farm.swamp_farm": "Sumpffarm",
-
   "item.easy_mob_farm.capture_net": "Kreatives Fangnetz",
   "item.easy_mob_farm.catch_cage": "Fangkäfig",
   "item.easy_mob_farm.catch_cage_small": "Fangkäfig (klein)",
@@ -147,8 +134,6 @@
   "item.easy_mob_farm.poppy_bouquet": "Mohnblumenstrauß",
   "item.easy_mob_farm.urn_small": "Urne (klein)",
   "item.easy_mob_farm.witch_bottle": "Hexenflasche",
-
   "itemGroup.easy_mob_farm": "Einfache Mob-Farm",
-
   "itemGroup.easy_mob_farm_tools": "Einfache Mob-Farm: Werkzeuge"
 }

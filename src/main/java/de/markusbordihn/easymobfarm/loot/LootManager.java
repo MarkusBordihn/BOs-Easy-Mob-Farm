@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -68,16 +68,8 @@ public class LootManager {
 
   private static final CommonConfig.Config COMMON = CommonConfig.COMMON;
   private static final Random random = new Random();
-
-  // Fake Player
-  private static FakePlayer fakePlayer;
   private static final GameProfile GAME_PROFILE =
       new GameProfile(UUID.randomUUID(), "[BOs_Easy_Mob_Farm]");
-
-  // Loot Table Cache
-  private static Map<ResourceLocation, List<String>> lootTableDropListCache =
-      new ConcurrentHashMap<>();
-
   // Mod Items
   private static final String PRODUCTIVE_BEES_CONFIGURABLE_HONEYCOMB =
       "productivebees:configurable_honeycomb";
@@ -86,6 +78,11 @@ public class LootManager {
   private static final String PRODUCTIVE_BEES_HONEYCOMB_MILKY = "productivebees:honeycomb_milky";
   private static final String PRODUCTIVE_BEES_HONEYCOMB_POWDERY =
       "productivebees:honeycomb_powdery";
+  // Fake Player
+  private static FakePlayer fakePlayer;
+  // Loot Table Cache
+  private static Map<ResourceLocation, List<String>> lootTableDropListCache =
+      new ConcurrentHashMap<>();
 
   protected LootManager() {}
 
@@ -94,8 +91,8 @@ public class LootManager {
     lootTableDropListCache = new ConcurrentHashMap<>();
   }
 
-  public static List<String> getRandomLootDropOverview(ResourceLocation lootTableLocation,
-      Level level, String mobType, String mobSubType) {
+  public static List<String> getRandomLootDropOverview(
+      ResourceLocation lootTableLocation, Level level, String mobType, String mobSubType) {
     // Roll's the loot a specific time (default: 2) to get more accurate results.
     List<String> lootDropList = Lists.newArrayList();
     for (int i = 0; i < COMMON.lootPreviewRolls.get(); i++) {
@@ -105,16 +102,26 @@ public class LootManager {
       // Use a internal cache to improve loot prediction over time.
       lootDropList = cacheLootDrops(lootTableLocation, lootDrops);
     }
-    log.debug(Constants.LOOT_MANAGER_PREFIX + "Loot for {} with {} roll {} result: {}", mobType,
-        lootTableLocation, COMMON.lootPreviewRolls.get(), lootDropList);
+    log.debug(
+        Constants.LOOT_MANAGER_PREFIX + "Loot for {} with {} roll {} result: {}",
+        mobType,
+        lootTableLocation,
+        COMMON.lootPreviewRolls.get(),
+        lootDropList);
     return lootDropList;
   }
 
-  public static List<ItemStack> getRandomLootDrops(ResourceLocation lootTableLocation,
-      ItemStack weaponItem, Level level, String mobType, String mobSubType) {
+  public static List<ItemStack> getRandomLootDrops(
+      ResourceLocation lootTableLocation,
+      ItemStack weaponItem,
+      Level level,
+      String mobType,
+      String mobSubType) {
     if (lootTableLocation == null || level == null || level.getServer() == null) {
-      log.error(Constants.LOOT_MANAGER_PREFIX + "Unable to get loot drops for {} and {}",
-          lootTableLocation, level);
+      log.error(
+          Constants.LOOT_MANAGER_PREFIX + "Unable to get loot drops for {} and {}",
+          lootTableLocation,
+          level);
       return Lists.newArrayList();
     }
     MinecraftServer server = level.getServer();
@@ -137,19 +144,23 @@ public class LootManager {
         } else if (weaponItem.getEnchantmentLevel(Enchantments.FISHING_LUCK) > 0) {
           dropLuck = dropLuck + (weaponItem.getEnchantmentLevel(Enchantments.FISHING_LUCK) * 0.3f);
         }
-        lootBuilder = new LootParams.Builder(serverLevel).withLuck(dropLuck)
-            .withParameter(LootContextParams.DAMAGE_SOURCE, damageSource)
-            .withParameter(LootContextParams.DIRECT_KILLER_ENTITY, player)
-            .withParameter(LootContextParams.KILLER_ENTITY, player)
-            .withParameter(LootContextParams.LAST_DAMAGE_PLAYER, player)
-            .withParameter(LootContextParams.ORIGIN, player.position())
-            .withParameter(LootContextParams.THIS_ENTITY, player)
-            .withParameter(LootContextParams.TOOL, weaponItem);
+        lootBuilder =
+            new LootParams.Builder(serverLevel)
+                .withLuck(dropLuck)
+                .withParameter(LootContextParams.DAMAGE_SOURCE, damageSource)
+                .withParameter(LootContextParams.DIRECT_KILLER_ENTITY, player)
+                .withParameter(LootContextParams.KILLER_ENTITY, player)
+                .withParameter(LootContextParams.LAST_DAMAGE_PLAYER, player)
+                .withParameter(LootContextParams.ORIGIN, player.position())
+                .withParameter(LootContextParams.THIS_ENTITY, player)
+                .withParameter(LootContextParams.TOOL, weaponItem);
       } else {
-        lootBuilder = new LootParams.Builder(serverLevel).withLuck(0.5F)
-            .withParameter(LootContextParams.DAMAGE_SOURCE, damageSource)
-            .withParameter(LootContextParams.ORIGIN, player.position())
-            .withParameter(LootContextParams.THIS_ENTITY, player);
+        lootBuilder =
+            new LootParams.Builder(serverLevel)
+                .withLuck(0.5F)
+                .withParameter(LootContextParams.DAMAGE_SOURCE, damageSource)
+                .withParameter(LootContextParams.ORIGIN, player.position())
+                .withParameter(LootContextParams.THIS_ENTITY, player);
       }
       LootTable lootTable = server.getLootData().getLootTable(lootTableLocation);
 
@@ -157,26 +168,31 @@ public class LootManager {
           lootTable.getRandomItems(lootBuilder.create(LootContextParamSets.ENTITY));
 
       // Add additional loot drops, if looting enchantment is used.
-      if (weaponItem != null && !weaponItem.isEmpty()
+      if (weaponItem != null
+          && !weaponItem.isEmpty()
           && weaponItem.getEnchantmentLevel(Enchantments.MOB_LOOTING) > 0) {
         for (int i = 0; i < weaponItem.getEnchantmentLevel(Enchantments.MOB_LOOTING); i++) {
-          lootDrops
-              .addAll(lootTable.getRandomItems(lootBuilder.create(LootContextParamSets.ENTITY)));
+          lootDrops.addAll(
+              lootTable.getRandomItems(lootBuilder.create(LootContextParamSets.ENTITY)));
         }
       }
 
       // Report empty loot drops for debugging purpose.
-      if (lootDrops.isEmpty() && !lootTableLocation.equals(new ResourceLocation("minecraft:empty"))
+      if (lootDrops.isEmpty()
+          && !lootTableLocation.equals(new ResourceLocation("minecraft:empty"))
           && !lootTableLocation.equals(new ResourceLocation("minecraft:entities/bee"))
           && !lootTableLocation.equals(new ResourceLocation("minecraft:entities/blaze"))
           && !"productivebees".equals(lootTableLocation.getNamespace())
           && !"alexsmobs".equals(lootTableLocation.getNamespace())) {
-        log.debug(Constants.LOOT_MANAGER_PREFIX + "Loot drop for {} with loot table {} was empty!",
-            player, lootTableLocation);
+        log.debug(
+            Constants.LOOT_MANAGER_PREFIX + "Loot drop for {} with loot table {} was empty!",
+            player,
+            lootTableLocation);
       }
 
       // Productive Bees support (1 out of 3)
-      if (lootDrops.isEmpty() && Constants.PRODUCTIVE_BEES_LOADED
+      if (lootDrops.isEmpty()
+          && Constants.PRODUCTIVE_BEES_LOADED
           && "productivebees:entities/configurable_bee".equals(lootTableLocation.toString())
           && random.nextInt(3) == 0) {
 
@@ -187,8 +203,9 @@ public class LootManager {
             ForgeRegistries.ITEMS.getValue(new ResourceLocation(PRODUCTIVE_BEES_HONEYCOMB_MILKY));
         Item honeyCombPowdery =
             ForgeRegistries.ITEMS.getValue(new ResourceLocation(PRODUCTIVE_BEES_HONEYCOMB_POWDERY));
-        Item configurableHoneycomb = ForgeRegistries.ITEMS
-            .getValue(new ResourceLocation(PRODUCTIVE_BEES_CONFIGURABLE_HONEYCOMB));
+        Item configurableHoneycomb =
+            ForgeRegistries.ITEMS.getValue(
+                new ResourceLocation(PRODUCTIVE_BEES_CONFIGURABLE_HONEYCOMB));
 
         // Productive bees honeycomb support.
         if (mobType.equals(BeeAnimal.GHOSTLY_BEE) && honeyCombGhostly != null) {
@@ -210,8 +227,8 @@ public class LootManager {
     return Lists.newArrayList();
   }
 
-  public static List<ItemStack> getFilteredRandomLootDrop(ItemStack capturedMob,
-      ItemStack weaponItem, Level level) {
+  public static List<ItemStack> getFilteredRandomLootDrop(
+      ItemStack capturedMob, ItemStack weaponItem, Level level) {
     // Load corresponding loot table for captured mob.
     ResourceLocation lootTable = getLootTable(capturedMob, level);
     if (lootTable == null) {
@@ -230,8 +247,12 @@ public class LootManager {
     }
   }
 
-  public static List<ItemStack> getFilteredRandomLootDrop(ResourceLocation lootTableLocation,
-      ItemStack weaponItem, Level level, String mobType, String mobSubType) {
+  public static List<ItemStack> getFilteredRandomLootDrop(
+      ResourceLocation lootTableLocation,
+      ItemStack weaponItem,
+      Level level,
+      String mobType,
+      String mobSubType) {
 
     List<ItemStack> lootDrops =
         getRandomLootDrops(lootTableLocation, weaponItem, level, mobType, mobSubType);
@@ -253,14 +274,26 @@ public class LootManager {
     for (ItemStack lootDrop : lootDrops) {
       // Ignore empty stacks and filter loot drop, if specific drop is disabled.
       if (lootDrop.isEmpty()
-          || filter(COMMON.disableChickenDropRawChicken.get(), PassiveAnimal.CHICKEN, Items.CHICKEN,
-              mobType, lootDrop)
-          || filter(COMMON.disableCowDropRawBeef.get(), PassiveAnimal.COW, Items.BEEF, mobType,
+          || filter(
+              COMMON.disableChickenDropRawChicken.get(),
+              PassiveAnimal.CHICKEN,
+              Items.CHICKEN,
+              mobType,
               lootDrop)
-          || filter(COMMON.disableSheepDropRawMutton.get(), PassiveAnimal.SHEEP, Items.MUTTON,
-              mobType, lootDrop)
-          || filter(COMMON.disableIronGolemDropPoppy.get(), NeutralMonster.IRON_GOLEM, Items.POPPY,
-              mobType, lootDrop)) {
+          || filter(
+              COMMON.disableCowDropRawBeef.get(), PassiveAnimal.COW, Items.BEEF, mobType, lootDrop)
+          || filter(
+              COMMON.disableSheepDropRawMutton.get(),
+              PassiveAnimal.SHEEP,
+              Items.MUTTON,
+              mobType,
+              lootDrop)
+          || filter(
+              COMMON.disableIronGolemDropPoppy.get(),
+              NeutralMonster.IRON_GOLEM,
+              Items.POPPY,
+              mobType,
+              lootDrop)) {
         continue;
       }
       filteredLootDrops.add(lootDrop);
@@ -295,14 +328,20 @@ public class LootManager {
         return new ResourceLocation(lootTableLocation);
       }
     } else {
-      log.error(Constants.LOOT_MANAGER_PREFIX + "Unable to get loot table for {} in {}", itemStack,
+      log.error(
+          Constants.LOOT_MANAGER_PREFIX + "Unable to get loot table for {} in {}",
+          itemStack,
           level);
     }
     return null;
   }
 
-  private static final boolean filter(boolean status, String blockedMobType, Item blockedLootDrop,
-      String mobType, ItemStack lootDrop) {
+  private static final boolean filter(
+      boolean status,
+      String blockedMobType,
+      Item blockedLootDrop,
+      String mobType,
+      ItemStack lootDrop) {
     // Filter only if loot drop is disabled (status = true).
     if (!status) {
       return false;
@@ -310,8 +349,8 @@ public class LootManager {
     return mobType.equals(blockedMobType) && lootDrop.is(blockedLootDrop);
   }
 
-  private static List<String> cacheLootDrops(ResourceLocation lootTableLocation,
-      List<ItemStack> lootDrops) {
+  private static List<String> cacheLootDrops(
+      ResourceLocation lootTableLocation, List<ItemStack> lootDrops) {
     List<String> lootDropList = Lists.newArrayList();
     if (lootTableLocation == null) {
       return lootDropList;
@@ -342,5 +381,4 @@ public class LootManager {
     lootTableDropListCache.put(lootTableLocation, sortedLootDropList);
     return sortedLootDropList;
   }
-
 }

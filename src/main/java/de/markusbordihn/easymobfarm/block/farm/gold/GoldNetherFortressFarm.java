@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,8 +19,12 @@
 
 package de.markusbordihn.easymobfarm.block.farm.gold;
 
+import de.markusbordihn.easymobfarm.block.MobFarmBlock;
+import de.markusbordihn.easymobfarm.block.ModBlocks;
+import de.markusbordihn.easymobfarm.block.entity.farm.gold.GoldNetherFortressFarmEntity;
+import de.markusbordihn.easymobfarm.data.FarmTier;
+import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import javax.annotation.Nullable;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -32,12 +36,6 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-
-import de.markusbordihn.easymobfarm.block.MobFarmBlock;
-import de.markusbordihn.easymobfarm.block.ModBlocks;
-import de.markusbordihn.easymobfarm.block.entity.farm.gold.GoldNetherFortressFarmEntity;
-import de.markusbordihn.easymobfarm.data.FarmTier;
-import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 
 public class GoldNetherFortressFarm extends MobFarmBlock {
 
@@ -59,21 +57,26 @@ public class GoldNetherFortressFarm extends MobFarmBlock {
 
   @Override
   public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-    return new GoldNetherFortressFarmEntity(ModBlocks.GOLD_NETHER_FORTRESS_FARM_ENTITY.get(),
-        blockPos, blockState);
+    return new GoldNetherFortressFarmEntity(
+        ModBlocks.GOLD_NETHER_FORTRESS_FARM_ENTITY.get(), blockPos, blockState);
   }
 
   @Override
   protected void openContainer(Level level, BlockPos blockPos, Player player) {
-    if (level.getBlockEntity(
-        blockPos) instanceof GoldNetherFortressFarmEntity netherFortressFarmEntity) {
+    if (level.getBlockEntity(blockPos)
+        instanceof GoldNetherFortressFarmEntity netherFortressFarmEntity) {
       player.openMenu(netherFortressFarmEntity);
     }
   }
 
   @Override
-  public InteractionResult consumeCapturedMob(Level level, BlockPos blockPos, BlockState blockState,
-      BlockEntity blockEntity, ItemStack itemStack, UseOnContext context) {
+  public InteractionResult consumeCapturedMob(
+      Level level,
+      BlockPos blockPos,
+      BlockState blockState,
+      BlockEntity blockEntity,
+      ItemStack itemStack,
+      UseOnContext context) {
     GoldNetherFortressFarmEntity netherFortressMobFarmEntity =
         (GoldNetherFortressFarmEntity) blockEntity;
     netherFortressMobFarmEntity.updateLevel(level);
@@ -90,11 +93,13 @@ public class GoldNetherFortressFarm extends MobFarmBlock {
 
   @Override
   @Nullable
-  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState,
-      BlockEntityType<T> blockEntityType) {
-    return level.isClientSide ? null
-        : createTickerHelper(blockEntityType, ModBlocks.GOLD_NETHER_FORTRESS_FARM_ENTITY.get(),
+  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+      Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
+    return level.isClientSide
+        ? null
+        : createTickerHelper(
+            blockEntityType,
+            ModBlocks.GOLD_NETHER_FORTRESS_FARM_ENTITY.get(),
             GoldNetherFortressFarmEntity::serverTick);
   }
-
 }

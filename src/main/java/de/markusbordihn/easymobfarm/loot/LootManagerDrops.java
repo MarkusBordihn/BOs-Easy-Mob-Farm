@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -16,7 +16,6 @@
  * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
 
 package de.markusbordihn.easymobfarm.loot;
 
@@ -49,13 +48,15 @@ public class LootManagerDrops {
     }
 
     // Bee drop support.
-    if (mobType.equals(BeeAnimal.BEE) && COMMON.forceBeeDropHoneycombChance.get() > 0
+    if (mobType.equals(BeeAnimal.BEE)
+        && COMMON.forceBeeDropHoneycombChance.get() > 0
         && random.nextInt(COMMON.forceBeeDropHoneycombChance.get()) == 0) {
       lootDrops.add(new ItemStack(Items.HONEYCOMB));
     }
 
     // Productive Bees drop support.
-    else if (Constants.PRODUCTIVE_BEES_LOADED && BeeAnimal.ProductiveBees.contains(mobType)
+    else if (Constants.PRODUCTIVE_BEES_LOADED
+        && BeeAnimal.ProductiveBees.contains(mobType)
         && COMMON.forceBeeDropHoneycombChance.get() > 0
         && random.nextInt(COMMON.forceBeeDropHoneycombChance.get()) == 0) {
       lootDrops.add(new ItemStack(Items.HONEYCOMB));
@@ -69,7 +70,8 @@ public class LootManagerDrops {
     }
 
     // Chicken drop support.
-    else if (mobType.equals(PassiveAnimal.CHICKEN) && COMMON.forceChickenDropEggChance.get() > 0
+    else if (mobType.equals(PassiveAnimal.CHICKEN)
+        && COMMON.forceChickenDropEggChance.get() > 0
         && random.nextInt(COMMON.forceChickenDropEggChance.get()) == 0) {
       lootDrops.add(new ItemStack(Items.EGG));
     }
@@ -102,7 +104,8 @@ public class LootManagerDrops {
     }
 
     // Slime drop support.
-    else if (mobType.equals(HostileMonster.SLIME) && COMMON.forceSlimeDropSlimeBallChance.get() > 0
+    else if (mobType.equals(HostileMonster.SLIME)
+        && COMMON.forceSlimeDropSlimeBallChance.get() > 0
         && random.nextInt(COMMON.forceSlimeDropSlimeBallChance.get()) == 0) {
       lootDrops.add(new ItemStack(Items.SLIME_BALL));
     }
@@ -147,7 +150,8 @@ public class LootManagerDrops {
     }
 
     // Wither drop support.
-    else if (mobType.equals(BossMonster.WITHER) && COMMON.forceWitherDropNetherStarChance.get() > 0
+    else if (mobType.equals(BossMonster.WITHER)
+        && COMMON.forceWitherDropNetherStarChance.get() > 0
         && random.nextInt(COMMON.forceWitherDropNetherStarChance.get()) == 0) {
       lootDrops.add(new ItemStack(Items.NETHER_STAR));
     }
@@ -180,5 +184,4 @@ public class LootManagerDrops {
       }
     }
   }
-
 }

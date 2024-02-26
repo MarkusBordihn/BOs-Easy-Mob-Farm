@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,11 +19,12 @@
 
 package de.markusbordihn.easymobfarm.block.farm.special;
 
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.block.MobFarmBlock;
+import de.markusbordihn.easymobfarm.block.ModBlocks;
+import de.markusbordihn.easymobfarm.block.entity.farm.special.CreativeMobFarmEntity;
+import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import javax.annotation.Nullable;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -35,12 +36,8 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.MobFarmBlock;
-import de.markusbordihn.easymobfarm.block.ModBlocks;
-import de.markusbordihn.easymobfarm.block.entity.farm.special.CreativeMobFarmEntity;
-import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class CreativeMobFarm extends MobFarmBlock {
 
@@ -68,8 +65,8 @@ public class CreativeMobFarm extends MobFarmBlock {
 
   @Override
   public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-    return new CreativeMobFarmEntity(ModBlocks.CREATIVE_MOB_FARM_ENTITY.get(), blockPos,
-        blockState);
+    return new CreativeMobFarmEntity(
+        ModBlocks.CREATIVE_MOB_FARM_ENTITY.get(), blockPos, blockState);
   }
 
   @Override
@@ -80,8 +77,13 @@ public class CreativeMobFarm extends MobFarmBlock {
   }
 
   @Override
-  public InteractionResult consumeCapturedMob(Level level, BlockPos blockPos, BlockState blockState,
-      BlockEntity blockEntity, ItemStack itemStack, UseOnContext context) {
+  public InteractionResult consumeCapturedMob(
+      Level level,
+      BlockPos blockPos,
+      BlockState blockState,
+      BlockEntity blockEntity,
+      ItemStack itemStack,
+      UseOnContext context) {
     CreativeMobFarmEntity creativeMobFarmEntity = (CreativeMobFarmEntity) blockEntity;
     creativeMobFarmEntity.updateLevel(level);
     if (!creativeMobFarmEntity.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)) {
@@ -97,11 +99,13 @@ public class CreativeMobFarm extends MobFarmBlock {
 
   @Override
   @Nullable
-  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState,
-      BlockEntityType<T> blockEntityType) {
-    return level.isClientSide ? null
-        : createTickerHelper(blockEntityType, ModBlocks.CREATIVE_MOB_FARM_ENTITY.get(),
+  public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+      Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
+    return level.isClientSide
+        ? null
+        : createTickerHelper(
+            blockEntityType,
+            ModBlocks.CREATIVE_MOB_FARM_ENTITY.get(),
             CreativeMobFarmEntity::serverTick);
   }
-
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,12 +19,11 @@
 
 package de.markusbordihn.easymobfarm.item.mobcatcher;
 
+import de.markusbordihn.easymobfarm.item.MobCatcherItem;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
-
-import de.markusbordihn.easymobfarm.item.MobCatcherItem;
 
 public class CreativeMobCatcher extends MobCatcherItem {
 
@@ -67,5 +66,4 @@ public class CreativeMobCatcher extends MobCatcherItem {
   public String getMobCatcherItemName() {
     return NAME;
   }
-
 }

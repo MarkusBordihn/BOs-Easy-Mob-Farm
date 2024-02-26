@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,40 +19,43 @@
 
 package de.markusbordihn.easymobfarm.tabs;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.item.ModItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
-
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
-
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.item.ModItems;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class EasyMobFarmTab {
 
+  public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS =
+      DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Constants.MOD_ID);
+  public static final RegistryObject<CreativeModeTab> MOB_FARM =
+      CREATIVE_TABS.register(
+          "mob_farm",
+          () ->
+              CreativeModeTab.builder()
+                  .icon(() -> ModItems.IRON_ANIMAL_PLAINS_FARM.get().getDefaultInstance())
+                  .displayItems(new MobFarmItems())
+                  .title(Component.translatable("itemGroup.easy_mob_farm.mob_farm"))
+                  .build());
+  public static final RegistryObject<CreativeModeTab> TOOLS =
+      CREATIVE_TABS.register(
+          "tools",
+          () ->
+              CreativeModeTab.builder()
+                  .icon(() -> ModItems.COLLAR_SMALL.get().getDefaultInstance())
+                  .displayItems(new MobCaptureItems())
+                  .title(Component.translatable("itemGroup.easy_mob_farm.tools"))
+                  .build());
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   protected EasyMobFarmTab() {}
-
-  public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS =
-      DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Constants.MOD_ID);
-
-  public static final RegistryObject<CreativeModeTab> MOB_FARM = CREATIVE_TABS.register("mob_farm",
-      () -> CreativeModeTab.builder()
-          .icon(() -> ModItems.IRON_ANIMAL_PLAINS_FARM.get().getDefaultInstance())
-          .displayItems(new MobFarmItems())
-          .title(Component.translatable("itemGroup.easy_mob_farm.mob_farm")).build());
-
-  public static final RegistryObject<CreativeModeTab> TOOLS = CREATIVE_TABS.register("tools",
-      () -> CreativeModeTab.builder().icon(() -> ModItems.COLLAR_SMALL.get().getDefaultInstance())
-          .displayItems(new MobCaptureItems())
-          .title(Component.translatable("itemGroup.easy_mob_farm.tools")).build());
 
   public static void handleCreativeModeTab(BuildCreativeModeTabContentsEvent event) {
     if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
@@ -63,5 +66,4 @@ public class EasyMobFarmTab {
       event.accept(ModItems.NETHERITE_MOB_FARM_TEMPLATE.get());
     }
   }
-
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,17 +19,15 @@
 
 package de.markusbordihn.easymobfarm.item.mobcatcher;
 
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.item.MobCatcherItem;
+import de.markusbordihn.easymobfarm.text.TranslatableText;
 import java.util.List;
 import java.util.Set;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.Item;
-
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.item.MobCatcherItem;
-import de.markusbordihn.easymobfarm.text.TranslatableText;
 
 public class InsectNet extends MobCatcherItem {
 
@@ -61,11 +59,14 @@ public class InsectNet extends MobCatcherItem {
         // 2.) Accepted Mob Types Size > 16 and Productive Bees is loaded and entry starts with
         // productive bees
         if (!((!Constants.PRODUCTIVE_BEES_LOADED && acceptedMob.startsWith("productivebees:"))
-            || (acceptedMobTypes.size() >= 16 && Constants.PRODUCTIVE_BEES_LOADED
+            || (acceptedMobTypes.size() >= 16
+                && Constants.PRODUCTIVE_BEES_LOADED
                 && acceptedMob.startsWith("productivebees:")))) {
           Component acceptedMobName = TranslatableText.getEntityName(acceptedMob);
           if (!acceptedMobName.getString().isBlank()) {
-            mobTypeOverview.append(acceptedMobName).append(", ")
+            mobTypeOverview
+                .append(acceptedMobName)
+                .append(", ")
                 .withStyle(ChatFormatting.DARK_GREEN);
           }
         }
@@ -76,7 +77,8 @@ public class InsectNet extends MobCatcherItem {
       }
       if (!mobTypeOverview.getString().isBlank()) {
         MutableComponent acceptedMobsOverview =
-            Component.translatable(Constants.TEXT_PREFIX + "catchable_mobs").append(" ")
+            Component.translatable(Constants.TEXT_PREFIX + "catchable_mobs")
+                .append(" ")
                 .withStyle(ChatFormatting.GREEN);
         acceptedMobsOverview.append(mobTypeOverview).append("...");
         tooltipList.add(acceptedMobsOverview);
@@ -85,10 +87,10 @@ public class InsectNet extends MobCatcherItem {
 
     // Display the catching luck.
     if (getMobCatchingLuckConfig() > 0) {
-      MutableComponent catchingLuck = Component
-          .translatable(Constants.TEXT_PREFIX + "mob_catching_luck", getMobCatchingLuckConfig());
+      MutableComponent catchingLuck =
+          Component.translatable(
+              Constants.TEXT_PREFIX + "mob_catching_luck", getMobCatchingLuckConfig());
       tooltipList.add(catchingLuck);
     }
   }
-
 }

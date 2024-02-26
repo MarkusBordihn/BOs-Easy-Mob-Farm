@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -49,24 +49,29 @@ public class CopperJungleFarmEntity extends MobFarmBlockEntity {
     this(ModBlocks.COPPER_JUNGLE_FARM_ENTITY.get(), blockPos, blockState);
   }
 
-  public CopperJungleFarmEntity(BlockEntityType<?> blockEntity, BlockPos blockPos,
-      BlockState blockState) {
+  public CopperJungleFarmEntity(
+      BlockEntityType<?> blockEntity, BlockPos blockPos, BlockState blockState) {
     super(blockEntity, blockPos, blockState);
   }
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
     farmProcessingTime = COMMON.copperJungleFarmProcessTime.get() * 20;
-    log.info("{}: Copper Jungle Farm Entity with drops every {}s", Constants.LOG_MOB_FARM_PREFIX,
+    log.info(
+        "{}: Copper Jungle Farm Entity with drops every {}s",
+        Constants.LOG_MOB_FARM_PREFIX,
         COMMON.copperJungleFarmProcessTime.get());
     String farmDropSoundName = COMMON.copperJungleFarmDropSound.get();
-    if (Boolean.TRUE.equals(COMMON.playDropSound.get()) && farmDropSoundName != null
+    if (Boolean.TRUE.equals(COMMON.playDropSound.get())
+        && farmDropSoundName != null
         && !farmDropSoundName.isEmpty()) {
       farmDropSound =
           ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(farmDropSoundName));
       if (farmDropSound != null) {
-        log.info("{}: Copper Jungle Farm Farm Entity will play drop sound: {}",
-            Constants.LOG_MOB_FARM_PREFIX, farmDropSound.getLocation());
+        log.info(
+            "{}: Copper Jungle Farm Farm Entity will play drop sound: {}",
+            Constants.LOG_MOB_FARM_PREFIX,
+            farmDropSound.getLocation());
       }
     }
   }
@@ -95,5 +100,4 @@ public class CopperJungleFarmEntity extends MobFarmBlockEntity {
   public FarmTier getFarmTier() {
     return FarmTier.COPPER;
   }
-
 }

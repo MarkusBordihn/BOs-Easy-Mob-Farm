@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -21,7 +21,7 @@ package de.markusbordihn.easymobfarm.config.mobs;
 
 public final class NeutralMonster {
 
-  protected NeutralMonster() {}
-
   public static final String IRON_GOLEM = "minecraft:iron_golem";
+
+  protected NeutralMonster() {}
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -20,7 +20,6 @@
 package de.markusbordihn.easymobfarm.client.renderer.farm;
 
 import de.markusbordihn.easymobfarm.client.renderer.UniversalFarmRenderer;
-
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 
 public class DesertFarmRenderer extends UniversalFarmRenderer {
@@ -28,5 +27,4 @@ public class DesertFarmRenderer extends UniversalFarmRenderer {
   public DesertFarmRenderer(BlockEntityRendererProvider.Context context) {
     super(context);
   }
-
 }

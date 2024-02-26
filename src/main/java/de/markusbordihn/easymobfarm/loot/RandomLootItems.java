@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -185,5 +185,4 @@ public class RandomLootItems {
         return new ItemStack(Items.IRON_SWORD);
     }
   }
-
 }

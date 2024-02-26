@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,6 +19,11 @@
 
 package de.markusbordihn.easymobfarm.block.entity.farm.netherite;
 
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.block.ModBlocks;
+import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
+import de.markusbordihn.easymobfarm.data.FarmTier;
+import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteOceanFarmMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -27,17 +32,10 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.registries.ForgeRegistries;
-
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.ModBlocks;
-import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
-import de.markusbordihn.easymobfarm.data.FarmTier;
-import de.markusbordihn.easymobfarm.menu.farm.netherite.NetheriteOceanFarmMenu;
 
 @EventBusSubscriber
 public class NetheriteOceanFarmEntity extends MobFarmBlockEntity {
@@ -49,24 +47,29 @@ public class NetheriteOceanFarmEntity extends MobFarmBlockEntity {
     this(ModBlocks.NETHERITE_OCEAN_FARM_ENTITY.get(), blockPos, blockState);
   }
 
-  public NetheriteOceanFarmEntity(BlockEntityType<?> blockEntity, BlockPos blockPos,
-      BlockState blockState) {
+  public NetheriteOceanFarmEntity(
+      BlockEntityType<?> blockEntity, BlockPos blockPos, BlockState blockState) {
     super(blockEntity, blockPos, blockState);
   }
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
     farmProcessingTime = COMMON.netheriteOceanFarmProcessTime.get() * 20;
-    log.info("{}: Netherite Ocean Farm Entity with drops every {}s", Constants.LOG_MOB_FARM_PREFIX,
+    log.info(
+        "{}: Netherite Ocean Farm Entity with drops every {}s",
+        Constants.LOG_MOB_FARM_PREFIX,
         COMMON.netheriteOceanFarmProcessTime.get());
     String farmDropSoundName = COMMON.netheriteOceanFarmDropSound.get();
-    if (Boolean.TRUE.equals(COMMON.playDropSound.get()) && farmDropSoundName != null
+    if (Boolean.TRUE.equals(COMMON.playDropSound.get())
+        && farmDropSoundName != null
         && !farmDropSoundName.isEmpty()) {
       farmDropSound =
           ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(farmDropSoundName));
       if (farmDropSound != null) {
-        log.info("{}: Netherite Ocean Farm Entity will play drop sound: {}",
-            Constants.LOG_MOB_FARM_PREFIX, farmDropSound.getLocation());
+        log.info(
+            "{}: Netherite Ocean Farm Entity will play drop sound: {}",
+            Constants.LOG_MOB_FARM_PREFIX,
+            farmDropSound.getLocation());
       }
     }
   }
@@ -95,5 +98,4 @@ public class NetheriteOceanFarmEntity extends MobFarmBlockEntity {
   public FarmTier getFarmTier() {
     return FarmTier.NETHERITE;
   }
-
 }

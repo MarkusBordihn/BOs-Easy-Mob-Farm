@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,9 +19,7 @@
 
 package de.markusbordihn.easymobfarm.item;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
+import de.markusbordihn.easymobfarm.Constants;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -39,10 +37,9 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SignItem;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.SwordItem;
-
 import net.minecraftforge.registries.ForgeRegistries;
-
-import de.markusbordihn.easymobfarm.Constants;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class CapturedMobVirtual {
 
@@ -83,10 +80,15 @@ public class CapturedMobVirtual {
     Item item = itemStack.getItem();
     if (item instanceof CapturedMob) {
       return true;
-    } else if (item instanceof AirItem || item instanceof ExperienceBottleItem
-        || item instanceof BottleItem || item instanceof MobFarmTemplateItem
-        || item instanceof ArmorItem || item instanceof SignItem || item instanceof DyeItem
-        || item instanceof BedItem || item instanceof SwordItem) {
+    } else if (item instanceof AirItem
+        || item instanceof ExperienceBottleItem
+        || item instanceof BottleItem
+        || item instanceof MobFarmTemplateItem
+        || item instanceof ArmorItem
+        || item instanceof SignItem
+        || item instanceof DyeItem
+        || item instanceof BedItem
+        || item instanceof SwordItem) {
       return false;
     }
 
@@ -94,7 +96,8 @@ public class CapturedMobVirtual {
     CompoundTag compoundTag = itemStack.copy().getOrCreateTag();
     ResourceLocation itemRegistryName = ForgeRegistries.ITEMS.getKey(item);
     String itemName =
-        itemRegistryName != ForgeRegistries.ITEMS.getDefaultKey() ? itemRegistryName.toString()
+        itemRegistryName != ForgeRegistries.ITEMS.getDefaultKey()
+            ? itemRegistryName.toString()
             : "";
     if (Constants.MOB_CATCHER_LOADED
         && (itemName.equals(MOB_CATCHER_DIAMOND) || itemName.equals(MOB_CATCHER_NETHERITE))) {
@@ -117,12 +120,21 @@ public class CapturedMobVirtual {
     } else if (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER)) {
       if (compoundTag.contains(BLOCK_ENTITY_TAG)
           && compoundTag.getCompound(BLOCK_ENTITY_TAG).contains(SPAWN_DATA_TAG)
-          && compoundTag.getCompound(BLOCK_ENTITY_TAG).getCompound(SPAWN_DATA_TAG)
+          && compoundTag
+              .getCompound(BLOCK_ENTITY_TAG)
+              .getCompound(SPAWN_DATA_TAG)
               .contains(ENTITY_TAG)
-          && compoundTag.getCompound(BLOCK_ENTITY_TAG).getCompound(SPAWN_DATA_TAG)
-              .getCompound(ENTITY_TAG).contains(ID_TAG)) {
-        return !compoundTag.getCompound(BLOCK_ENTITY_TAG).getCompound(SPAWN_DATA_TAG)
-            .getCompound(ENTITY_TAG).getString(ID_TAG).isEmpty();
+          && compoundTag
+              .getCompound(BLOCK_ENTITY_TAG)
+              .getCompound(SPAWN_DATA_TAG)
+              .getCompound(ENTITY_TAG)
+              .contains(ID_TAG)) {
+        return !compoundTag
+            .getCompound(BLOCK_ENTITY_TAG)
+            .getCompound(SPAWN_DATA_TAG)
+            .getCompound(ENTITY_TAG)
+            .getString(ID_TAG)
+            .isEmpty();
       }
     } else if (Constants.FORBIDDEN_ARCANUS_LOADED && itemName.equals(QUANTUM_CATCHER)) {
       if (compoundTag.contains(ENTITY_TAG)
@@ -156,7 +168,8 @@ public class CapturedMobVirtual {
     // Check for supported items from other mods.
     ResourceLocation itemRegistryName = ForgeRegistries.ITEMS.getKey(item);
     String itemName =
-        itemRegistryName != ForgeRegistries.ITEMS.getDefaultKey() ? itemRegistryName.toString()
+        itemRegistryName != ForgeRegistries.ITEMS.getDefaultKey()
+            ? itemRegistryName.toString()
             : "";
     if (Constants.MOB_CATCHER_LOADED
         && (itemName.equals(MOB_CATCHER_DIAMOND) || itemName.equals(MOB_CATCHER_NETHERITE))) {
@@ -194,7 +207,8 @@ public class CapturedMobVirtual {
     // Check for supported items from other mods.
     ResourceLocation itemRegistryName = ForgeRegistries.ITEMS.getKey(item);
     String itemName =
-        itemRegistryName != ForgeRegistries.ITEMS.getDefaultKey() ? itemRegistryName.toString()
+        itemRegistryName != ForgeRegistries.ITEMS.getDefaultKey()
+            ? itemRegistryName.toString()
             : "";
     if (Constants.MOB_CATCHER_LOADED
         && (itemName.equals(MOB_CATCHER_DIAMOND) || itemName.equals(MOB_CATCHER_NETHERITE))) {
@@ -211,7 +225,8 @@ public class CapturedMobVirtual {
         || (Constants.PRODUCTIVE_BEES_LOADED && itemName.equals(SPAWN_EGG_CONFIGURABLE_BEE))) {
       EntityType<?> entityType = getCapturedMobEntityType(itemStack);
       String descriptionId = entityType != null ? entityType.getDescriptionId() : "";
-      return !descriptionId.isBlank() ? Component.translatable(descriptionId).getString()
+      return !descriptionId.isBlank()
+          ? Component.translatable(descriptionId).getString()
           : descriptionId;
     }
     return "";
@@ -230,7 +245,8 @@ public class CapturedMobVirtual {
     // Check for supported items from other mods.
     ResourceLocation itemRegistryName = ForgeRegistries.ITEMS.getKey(item);
     String itemName =
-        itemRegistryName != ForgeRegistries.ITEMS.getDefaultKey() ? itemRegistryName.toString()
+        itemRegistryName != ForgeRegistries.ITEMS.getDefaultKey()
+            ? itemRegistryName.toString()
             : "";
     if (Constants.PRODUCTIVE_BEES_LOADED && itemName.equals(SPAWN_EGG_CONFIGURABLE_BEE)) {
       CompoundTag compoundTag = itemStack.getOrCreateTag();
@@ -258,10 +274,11 @@ public class CapturedMobVirtual {
     // Check for supported items from other mods.
     ResourceLocation itemRegistryName = ForgeRegistries.ITEMS.getKey(item);
     String itemName =
-        itemRegistryName != ForgeRegistries.ITEMS.getDefaultKey() ? itemRegistryName.toString()
+        itemRegistryName != ForgeRegistries.ITEMS.getDefaultKey()
+            ? itemRegistryName.toString()
             : "";
     if ((Constants.MOB_CATCHER_LOADED
-        && (itemName.equals(MOB_CATCHER_DIAMOND) || itemName.equals(MOB_CATCHER_NETHERITE)))
+            && (itemName.equals(MOB_CATCHER_DIAMOND) || itemName.equals(MOB_CATCHER_NETHERITE)))
         || (Constants.MOB_CAPTURING_TOOL_LOADED && itemName.equals(MOB_CAPTURING_TOOL))
         || (Constants.MOBCATCHER_LOADED && itemName.equals(MOBCATCHER_NET))
         || (Constants.CREATE_LOADED && itemName.equals(CREATE_BLAZE_BURNER))
@@ -296,7 +313,8 @@ public class CapturedMobVirtual {
     // Check for supported items from other mods.
     ResourceLocation itemRegistryName = ForgeRegistries.ITEMS.getKey(item);
     String itemName =
-        itemRegistryName != ForgeRegistries.ITEMS.getDefaultKey() ? itemRegistryName.toString()
+        itemRegistryName != ForgeRegistries.ITEMS.getDefaultKey()
+            ? itemRegistryName.toString()
             : "";
     CompoundTag compoundTag = itemStack.getOrCreateTag();
     if (Constants.MOB_CATCHER_LOADED
@@ -309,8 +327,11 @@ public class CapturedMobVirtual {
     } else if (Constants.MOBCATCHER_LOADED && itemName.equals(MOBCATCHER_NET)) {
       return compoundTag.getCompound(ENTITY_HOLDER_TAG).getString(ID_TAG);
     } else if (Constants.CORAIL_SPAWNERS_LOADED && item.equals(Items.SPAWNER)) {
-      return compoundTag.getCompound(BLOCK_ENTITY_TAG).getCompound(SPAWN_DATA_TAG)
-          .getCompound(ENTITY_TAG).getString(ID_TAG);
+      return compoundTag
+          .getCompound(BLOCK_ENTITY_TAG)
+          .getCompound(SPAWN_DATA_TAG)
+          .getCompound(ENTITY_TAG)
+          .getString(ID_TAG);
     } else if (Constants.FORBIDDEN_ARCANUS_LOADED && itemName.equals(QUANTUM_CATCHER)) {
       return compoundTag.getCompound(ENTITY_TAG).getString(ID_TAG);
     } else if (Constants.CYCLIC_LOADED && itemName.equals(MONSTER_BALL)) {
@@ -344,7 +365,8 @@ public class CapturedMobVirtual {
     // Check for supported items from other mods.
     ResourceLocation itemRegistryName = ForgeRegistries.ITEMS.getKey(item);
     String itemName =
-        itemRegistryName != ForgeRegistries.ITEMS.getDefaultKey() ? itemRegistryName.toString()
+        itemRegistryName != ForgeRegistries.ITEMS.getDefaultKey()
+            ? itemRegistryName.toString()
             : "";
     if (Constants.PRODUCTIVE_BEES_LOADED && itemName.equals(SPAWN_EGG_CONFIGURABLE_BEE)) {
       CompoundTag compoundTag = itemStack.getOrCreateTag();
@@ -368,10 +390,11 @@ public class CapturedMobVirtual {
     // Check for supported items from other mods.
     ResourceLocation itemRegistryName = ForgeRegistries.ITEMS.getKey(item);
     String itemName =
-        itemRegistryName != ForgeRegistries.ITEMS.getDefaultKey() ? itemRegistryName.toString()
+        itemRegistryName != ForgeRegistries.ITEMS.getDefaultKey()
+            ? itemRegistryName.toString()
             : "";
     if ((Constants.MOB_CATCHER_LOADED
-        && (itemName.equals(MOB_CATCHER_DIAMOND) || itemName.equals(MOB_CATCHER_NETHERITE)))
+            && (itemName.equals(MOB_CATCHER_DIAMOND) || itemName.equals(MOB_CATCHER_NETHERITE)))
         || (Constants.CREATE_LOADED && itemName.equals(CREATE_BLAZE_BURNER))
         || (Constants.MOB_CAPTURING_TOOL_LOADED && itemName.equals(MOB_CAPTURING_TOOL))
         || (Constants.MOBCATCHER_LOADED && itemName.equals(MOBCATCHER_NET))
@@ -430,5 +453,4 @@ public class CapturedMobVirtual {
     }
     return 1;
   }
-
 }

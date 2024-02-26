@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -39,10 +39,13 @@ public class MobFarmTemplateItem extends BlockItem {
   }
 
   @Override
-  public void appendHoverText(ItemStack itemStack, @Nullable Level level,
-      List<Component> tooltipList, TooltipFlag tooltipFlag) {
-    tooltipList.add(Component.translatable(Constants.TEXT_PREFIX + "mob_farm_template")
-        .withStyle(ChatFormatting.YELLOW));
+  public void appendHoverText(
+      ItemStack itemStack,
+      @Nullable Level level,
+      List<Component> tooltipList,
+      TooltipFlag tooltipFlag) {
+    tooltipList.add(
+        Component.translatable(Constants.TEXT_PREFIX + "mob_farm_template")
+            .withStyle(ChatFormatting.YELLOW));
   }
-
 }

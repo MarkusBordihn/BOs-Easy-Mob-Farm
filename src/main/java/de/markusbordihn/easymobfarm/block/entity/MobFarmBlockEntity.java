@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,16 +19,19 @@
 
 package de.markusbordihn.easymobfarm.block.entity;
 
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.block.MobFarmBlock;
+import de.markusbordihn.easymobfarm.config.CommonConfig;
+import de.markusbordihn.easymobfarm.data.RedstoneMode;
+import de.markusbordihn.easymobfarm.item.CapturedMob;
+import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
+import de.markusbordihn.easymobfarm.loot.LootManager;
+import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
-
 import javax.annotation.Nullable;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -38,7 +41,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.WorldlyContainer;
-
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ExperienceBottleItem;
@@ -49,20 +51,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
-
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.MobFarmBlock;
-import de.markusbordihn.easymobfarm.config.CommonConfig;
-import de.markusbordihn.easymobfarm.data.RedstoneMode;
-import de.markusbordihn.easymobfarm.item.CapturedMob;
-import de.markusbordihn.easymobfarm.item.CapturedMobVirtual;
-import de.markusbordihn.easymobfarm.loot.LootManager;
-import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Mod.EventBusSubscriber
 public class MobFarmBlockEntity extends MobFarmBlockEntityData implements WorldlyContainer {
@@ -70,66 +64,23 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   protected static final CommonConfig.Config COMMON = CommonConfig.COMMON;
-
-  protected final Random random = new Random();
-
   private static final int DEFAULT_FARM_PROCESSING_TIME = 6000;
+  protected final Random random = new Random();
+  LazyOptional<? extends net.minecraftforge.items.IItemHandler>[] handlers =
+      SidedInvWrapper.create(this, Direction.DOWN, Direction.SOUTH);
 
   public MobFarmBlockEntity(BlockPos blockPos, BlockState blockState) {
     super(null, blockPos, blockState);
   }
 
-  public MobFarmBlockEntity(BlockEntityType<?> blockEntity, BlockPos blockPos,
-      BlockState blockState) {
+  public MobFarmBlockEntity(
+      BlockEntityType<?> blockEntity, BlockPos blockPos, BlockState blockState) {
     super(blockEntity, blockPos, blockState);
   }
 
-  public void updateLevel(Level level) {
-    if (this.level == null && this.level != level && !level.isClientSide()) {
-      this.level = level;
-    }
-  }
-
-  public boolean allowLootDropItem(ItemStack itemStack) {
-    return itemStack != null && !itemStack.isEmpty();
-  }
-
-  public void givePlayerItem(int index, Level level, Player player, InteractionHand hand,
-      BlockPos blockPos) {
-    ItemStack itemStack = takeItem(index);
-    if (itemStack.isEmpty() || (itemStack.isDamageableItem()
-        && itemStack.getDamageValue() >= itemStack.getMaxDamage())) {
-      return;
-    }
-    ItemStack handItemStack = player.getItemInHand(hand);
-    if (handItemStack.isEmpty()) {
-      player.setItemInHand(hand, itemStack);
-    } else if (!player.getInventory().add(itemStack) && level != null) {
-      level.addFreshEntity(new ItemEntity(level, blockPos.getX() + 0.5D, blockPos.getY() + 0.5D,
-          blockPos.getZ() + 0.5D, itemStack));
-    }
-    syncData();
-  }
-
-  public void takePlayerItem(int index, Player player, InteractionHand hand) {
-    ItemStack handItemStack = player.getItemInHand(hand);
-    if (handItemStack.isEmpty() || (handItemStack.isDamageableItem()
-        && handItemStack.getDamageValue() >= handItemStack.getMaxDamage())) {
-      return;
-    }
-    if (CapturedMob.hasCapturedMob(handItemStack)
-        || CapturedMobVirtual.hasCapturedMob(handItemStack)) {
-      ItemStack itemStack = handItemStack.copy();
-      itemStack.setCount(1);
-      setItem(index, itemStack);
-      handItemStack.shrink(1);
-      syncData();
-    }
-  }
-
   @SuppressWarnings("java:S1172")
-  public static void serverTick(Level level, BlockPos blockPos, BlockState blockState,
-      MobFarmBlockEntity blockEntity) {
+  public static void serverTick(
+      Level level, BlockPos blockPos, BlockState blockState, MobFarmBlockEntity blockEntity) {
 
     // Check if there is something to progress...
     ItemStack capturedMob = blockEntity.items.get(MobFarmMenu.CAPTURED_MOB_SLOT);
@@ -141,7 +92,7 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
 
     // Check redstone mode and power state
     if ((blockEntity.getRedstoneMode() == RedstoneMode.ON
-        && !blockState.getValue(MobFarmBlock.POWERED))
+            && !blockState.getValue(MobFarmBlock.POWERED))
         || (blockEntity.getRedstoneMode() == RedstoneMode.OFF
             && blockState.getValue(MobFarmBlock.POWERED))) {
       blockEntity.farmProgress = 0;
@@ -183,13 +134,66 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
     }
   }
 
-  protected List<ItemStack> processLootDrop(ItemStack capturedMob, ItemStack weaponItem,
-      Level level) {
+  public void updateLevel(Level level) {
+    if (this.level == null && this.level != level && !level.isClientSide()) {
+      this.level = level;
+    }
+  }
+
+  public boolean allowLootDropItem(ItemStack itemStack) {
+    return itemStack != null && !itemStack.isEmpty();
+  }
+
+  public void givePlayerItem(
+      int index, Level level, Player player, InteractionHand hand, BlockPos blockPos) {
+    ItemStack itemStack = takeItem(index);
+    if (itemStack.isEmpty()
+        || (itemStack.isDamageableItem()
+            && itemStack.getDamageValue() >= itemStack.getMaxDamage())) {
+      return;
+    }
+    ItemStack handItemStack = player.getItemInHand(hand);
+    if (handItemStack.isEmpty()) {
+      player.setItemInHand(hand, itemStack);
+    } else if (!player.getInventory().add(itemStack) && level != null) {
+      level.addFreshEntity(
+          new ItemEntity(
+              level,
+              blockPos.getX() + 0.5D,
+              blockPos.getY() + 0.5D,
+              blockPos.getZ() + 0.5D,
+              itemStack));
+    }
+    syncData();
+  }
+
+  public void takePlayerItem(int index, Player player, InteractionHand hand) {
+    ItemStack handItemStack = player.getItemInHand(hand);
+    if (handItemStack.isEmpty()
+        || (handItemStack.isDamageableItem()
+            && handItemStack.getDamageValue() >= handItemStack.getMaxDamage())) {
+      return;
+    }
+    if (CapturedMob.hasCapturedMob(handItemStack)
+        || CapturedMobVirtual.hasCapturedMob(handItemStack)) {
+      ItemStack itemStack = handItemStack.copy();
+      itemStack.setCount(1);
+      setItem(index, itemStack);
+      handItemStack.shrink(1);
+      syncData();
+    }
+  }
+
+  protected List<ItemStack> processLootDrop(
+      ItemStack capturedMob, ItemStack weaponItem, Level level) {
     return LootManager.getFilteredRandomLootDrop(capturedMob, weaponItem, level);
   }
 
   @SuppressWarnings("java:S135")
-  private void processResult(ItemStack capturedMob, ItemStack weaponItem, ItemStack experienceItem,
+  private void processResult(
+      ItemStack capturedMob,
+      ItemStack weaponItem,
+      ItemStack experienceItem,
       MobFarmBlockEntity blockEntity) {
 
     // Get corresponding loot drops.
@@ -199,20 +203,23 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
 
     // Check if weapon should be damaged, if any.
     boolean hasWeaponItem = weaponItem != null && !weaponItem.isEmpty();
-    if (hasWeaponItem && weaponItem.isDamageableItem()
+    if (hasWeaponItem
+        && weaponItem.isDamageableItem()
         && Boolean.TRUE.equals(COMMON.damageWeaponItem.get())) {
+      int unbreakingLevel = weaponItem.getEnchantmentLevel(Enchantments.UNBREAKING);
       // Check if weapon has unbreaking enchantment and decrease damage value.
       // - Unbreaking 0: 0-10 damage
-      // - Unbreaking 1: 0-5 damage
+      // - Unbreaking 1: 0-6 damage
       // - Unbreaking 2: 0-3 damage
       // - Unbreaking 3: 0-2 damage
-      int unbreakingLevel = weaponItem.getEnchantmentLevel(Enchantments.UNBREAKING) + 1;
-      int damageValue = this.random.nextInt(Math.max(0, 10 / unbreakingLevel));
-
-      if (weaponItem.getDamageValue() + damageValue < weaponItem.getMaxDamage()) {
-        weaponItem.setDamageValue(weaponItem.getDamageValue() + damageValue);
-      } else {
-        blockEntity.items.set(MobFarmMenu.WEAPON_SLOT, ItemStack.EMPTY);
+      int randomDamageValue = this.random.nextInt(11);
+      int damageValue = Math.max(randomDamageValue - (unbreakingLevel * 2), 0);
+      if (damageValue > 0) {
+        if (weaponItem.getDamageValue() + damageValue < weaponItem.getMaxDamage()) {
+          weaponItem.setDamageValue(weaponItem.getDamageValue() + damageValue);
+        } else {
+          blockEntity.items.set(MobFarmMenu.WEAPON_SLOT, ItemStack.EMPTY);
+        }
       }
     }
 
@@ -239,7 +246,9 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
     if ((hasWeaponItem || hasExperienceItem) && experienceDropChance == 0) {
 
       // Repair mending items with experience, if damaged.
-      if (hasWeaponItem && weaponItem.isDamageableItem() && weaponItem.getDamageValue() > 0
+      if (hasWeaponItem
+          && weaponItem.isDamageableItem()
+          && weaponItem.getDamageValue() > 0
           && weaponItem.getEnchantmentLevel(Enchantments.MENDING) > 0) {
         int repairAmount = this.random.nextInt(COMMON.experienceDropMendingRepairAmount.get());
         if (repairAmount > 0) {
@@ -253,7 +262,8 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
       }
 
       // Increase experience bottle stack size, if possible.
-      else if (hasExperienceItem && experienceItem.getItem() instanceof ExperienceBottleItem
+      else if (hasExperienceItem
+          && experienceItem.getItem() instanceof ExperienceBottleItem
           && experienceItem.getCount() < experienceItem.getMaxStackSize()) {
         experienceItem.setCount(experienceItem.getCount() + 1);
         blockEntity.items.set(MobFarmMenu.EXPERIENCE_SLOT, experienceItem);
@@ -268,35 +278,40 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
 
       // Stack existing items and place new items in empty slots, if any.
       ItemStack resultItem1 = blockEntity.items.get(MobFarmMenu.RESULT_1_SLOT);
-      if (!resultItem1.isEmpty() && resultItem1.is(lootDrop.getItem())
+      if (!resultItem1.isEmpty()
+          && resultItem1.is(lootDrop.getItem())
           && resultItem1.getCount() + lootDrop.getCount() <= resultItem1.getMaxStackSize()) {
         resultItem1.grow(lootDrop.getCount());
         continue;
       }
 
       ItemStack resultItem2 = blockEntity.items.get(MobFarmMenu.RESULT_2_SLOT);
-      if (!resultItem2.isEmpty() && resultItem2.is(lootDrop.getItem())
+      if (!resultItem2.isEmpty()
+          && resultItem2.is(lootDrop.getItem())
           && resultItem2.getCount() + lootDrop.getCount() <= resultItem2.getMaxStackSize()) {
         resultItem2.grow(lootDrop.getCount());
         continue;
       }
 
       ItemStack resultItem3 = blockEntity.items.get(MobFarmMenu.RESULT_3_SLOT);
-      if (!resultItem3.isEmpty() && resultItem3.is(lootDrop.getItem())
+      if (!resultItem3.isEmpty()
+          && resultItem3.is(lootDrop.getItem())
           && resultItem3.getCount() + lootDrop.getCount() <= resultItem3.getMaxStackSize()) {
         resultItem3.grow(lootDrop.getCount());
         continue;
       }
 
       ItemStack resultItem4 = blockEntity.items.get(MobFarmMenu.RESULT_4_SLOT);
-      if (!resultItem4.isEmpty() && resultItem4.is(lootDrop.getItem())
+      if (!resultItem4.isEmpty()
+          && resultItem4.is(lootDrop.getItem())
           && resultItem4.getCount() + lootDrop.getCount() <= resultItem4.getMaxStackSize()) {
         resultItem4.grow(lootDrop.getCount());
         continue;
       }
 
       ItemStack resultItem5 = blockEntity.items.get(MobFarmMenu.RESULT_5_SLOT);
-      if (!resultItem5.isEmpty() && resultItem5.is(lootDrop.getItem())
+      if (!resultItem5.isEmpty()
+          && resultItem5.is(lootDrop.getItem())
           && resultItem5.getCount() + lootDrop.getCount() <= resultItem5.getMaxStackSize()) {
         resultItem5.grow(lootDrop.getCount());
         continue;
@@ -323,12 +338,15 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
     syncData();
   }
 
-  public void processAdditionalEffects(Level level, BlockPos blockPos,
-      MobFarmBlockEntity blockEntity, ItemStack capturedMob) {
+  public void processAdditionalEffects(
+      Level level, BlockPos blockPos, MobFarmBlockEntity blockEntity, ItemStack capturedMob) {
     // Additional effects like sound or particles on mob drop.
     SoundEvent farmDropSound = getFarmDropSound();
-    if (Boolean.TRUE.equals(COMMON.playDropSound.get()) && farmDropSound != null
-        && farmDropSound.getLocation() != null && level != null && blockPos != null) {
+    if (Boolean.TRUE.equals(COMMON.playDropSound.get())
+        && farmDropSound != null
+        && farmDropSound.getLocation() != null
+        && level != null
+        && blockPos != null) {
       level.playSound(null, blockPos, farmDropSound, SoundSource.BLOCKS, 1.0F, 1.0F);
     }
   }
@@ -342,16 +360,24 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
     BlockPos blockPos = blockEntity.getBlockPos();
 
     if (Boolean.TRUE.equals(COMMON.logFullStorage.get())) {
-      log.warn("Unable to store loot drop {} for mob farm {} at {} for owner {}!", lootDrop,
-          this.farmMobName, blockPos, ownerUUID);
+      log.warn(
+          "Unable to store loot drop {} for mob farm {} at {} for owner {}!",
+          lootDrop,
+          this.farmMobName,
+          blockPos,
+          ownerUUID);
     }
     Level level = blockEntity.level;
-    if (Boolean.TRUE.equals(COMMON.informOwnerAboutFullStorage.get()) && ownerUUID != null
-        && blockEntity.level != null && level != null) {
+    if (Boolean.TRUE.equals(COMMON.informOwnerAboutFullStorage.get())
+        && ownerUUID != null
+        && blockEntity.level != null
+        && level != null) {
       Player owner = level.getPlayerByUUID(ownerUUID);
       if (owner != null && owner.isAlive()) {
-        MutableComponent message = Component.translatable(Constants.MESSAGE_PREFIX + "warning_full",
-            this.farmMobName, blockPos, lootDrop).withStyle(ChatFormatting.YELLOW);
+        MutableComponent message =
+            Component.translatable(
+                    Constants.MESSAGE_PREFIX + "warning_full", this.farmMobName, blockPos, lootDrop)
+                .withStyle(ChatFormatting.YELLOW);
         owner.sendSystemMessage(message);
       }
     }
@@ -425,20 +451,26 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
   public int[] getSlotsForFace(Direction direction) {
     switch (direction) {
       case DOWN:
-        return new int[] {MobFarmMenu.RESULT_1_SLOT, MobFarmMenu.RESULT_2_SLOT,
-            MobFarmMenu.RESULT_3_SLOT, MobFarmMenu.RESULT_4_SLOT, MobFarmMenu.RESULT_5_SLOT,
-            MobFarmMenu.EXPERIENCE_SLOT};
+        return new int[] {
+          MobFarmMenu.RESULT_1_SLOT,
+          MobFarmMenu.RESULT_2_SLOT,
+          MobFarmMenu.RESULT_3_SLOT,
+          MobFarmMenu.RESULT_4_SLOT,
+          MobFarmMenu.RESULT_5_SLOT,
+          MobFarmMenu.EXPERIENCE_SLOT
+        };
       case SOUTH:
-        return new int[] {MobFarmMenu.CAPTURED_MOB_SLOT, MobFarmMenu.WEAPON_SLOT,
-            MobFarmMenu.EXPERIENCE_SLOT};
+        return new int[] {
+          MobFarmMenu.CAPTURED_MOB_SLOT, MobFarmMenu.WEAPON_SLOT, MobFarmMenu.EXPERIENCE_SLOT
+        };
       default:
         return new int[] {};
     }
   }
 
   @Override
-  public boolean canPlaceItemThroughFace(int slotIndex, ItemStack itemStack,
-      @Nullable Direction direction) {
+  public boolean canPlaceItemThroughFace(
+      int slotIndex, ItemStack itemStack, @Nullable Direction direction) {
     switch (slotIndex) {
       case MobFarmMenu.CAPTURED_MOB_SLOT:
         return !this.hasItem(MobFarmMenu.CAPTURED_MOB_SLOT)
@@ -474,9 +506,6 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
     }
   }
 
-  LazyOptional<? extends net.minecraftforge.items.IItemHandler>[] handlers =
-      SidedInvWrapper.create(this, Direction.DOWN, Direction.SOUTH);
-
   @Override
   public <T> net.minecraftforge.common.util.LazyOptional<T> getCapability(
       net.minecraftforge.common.capabilities.Capability<T> capability, @Nullable Direction facing) {
@@ -494,5 +523,4 @@ public class MobFarmBlockEntity extends MobFarmBlockEntityData implements Worldl
     }
     return super.getCapability(capability, facing);
   }
-
 }
