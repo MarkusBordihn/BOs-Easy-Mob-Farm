@@ -7,7 +7,8 @@ For the full changelog, please go to the [Git Hub History][history] instead.
 
 ### 2023.10.28
 
-- Added better and additional forced drop options for Bee, Blaze, Chicken, Drowned, Enderman, Slime, MagmaCube, Piglin, Pillager, Wither, Wither Skeleton, Zombie and Zombie Piglin.
+- Added better and additional forced drop options for Bee, Blaze, Chicken, Drowned, Enderman, Slime,
+  MagmaCube, Piglin, Pillager, Wither, Wither Skeleton, Zombie and Zombie Piglin.
 - Improved loot manager to support armor and weapon drops with configurable drop chances.
 
 ### 2023.10.23
@@ -47,20 +48,23 @@ Thanks a lot to cringoleg for all of the valuable and detailed bug reports. 👍
 
 ### 2023.09.13
 
-- Added config option to enable nether star drop for the wither and redstone control. (Thanks x-j0nnay-x)
+- Added config option to enable nether star drop for the wither and redstone control. (Thanks
+  x-j0nnay-x)
 - Added enchantment support for mending, unbreaking, sharpness and looting.
 - Improved import and export of items from/to slots for auto processing.
 
 ### 2023.08.22
 
 - Improved startup performance and general memory usage.
-- Adjusted mob catching luck and durability for new mob catching lassos to be more balanced with the rest of the mob catching items.
+- Adjusted mob catching luck and durability for new mob catching lassos to be more balanced with the
+  rest of the mob catching items.
 
 ### 2023.08.19
 
 Note: Please make sure to backup your world before updating to this version!
 The version tries automatically to convert existing mob farms to the new mob farms.
-It's recommended to backup your world before updating to make sure that nothing gets lost in the case of an error.
+It's recommended to backup your world before updating to make sure that nothing gets lost in the
+case of an error.
 
 - Added deny list for mob farms to allow better customization.
 - Moved documentation to wiki.
@@ -68,7 +72,9 @@ It's recommended to backup your world before updating to make sure that nothing 
 
 ### 2023.08.16
 
-- Added full support for [Productive Bees](https://www.curseforge.com/minecraft/mc-mods/productivebees) for the Bee Hive Farm.
+- Added full support
+  for [Productive Bees](https://www.curseforge.com/minecraft/mc-mods/productivebees) for the Bee
+  Hive Farm.
 - Added additional duplication checks for mob farms.
 - Added German translation.
 - Fixed issue with mixed mob farm tiers and limited mobs.
@@ -90,7 +96,9 @@ In some cases you might need to remove your config file to get an updated versio
 
 ### 2023.06.11
 
-- Added support for [Forbidden Arcanus](https://www.curseforge.com/minecraft/mc-mods/forbidden-arcanus) Quantum Catcher
+- Added support
+  for [Forbidden Arcanus](https://www.curseforge.com/minecraft/mc-mods/forbidden-arcanus) Quantum
+  Catcher
 - Improved Productive Bees support.
 
 ### 2023.06.08
@@ -113,7 +121,8 @@ In some cases you might need to remove your config file to get an updated versio
 ### 2022.12.30
 
 - Added `killed_by_player` loot drop support with sword item.
-- Added possible to collect experience by placing a empty or experience bottle into the experience slot.
+- Added possible to collect experience by placing a empty or experience bottle into the experience
+  slot.
 - Added additional animations and hits for the new weapon and experience slot.
 
 ### 2022.12.29
@@ -123,23 +132,25 @@ In some cases you might need to remove your config file to get an updated versio
 ### 2022.12.17
 
 - Added insect net capture item.
-- Added bee hive mob farm with experimental support for [Productive Bees](https://www.curseforge.com/minecraft/mc-mods/productivebees)
+- Added bee hive mob farm with experimental support
+  for [Productive Bees](https://www.curseforge.com/minecraft/mc-mods/productivebees)
 - Improved existing items.
 
 ### 2022.11.12
 
 - Optimized all mob farm models and fixed visual glitches for better performance.
 - Added experimental spawn egg support.
-- Added experimental support for [Corail Spawners](https://www.curseforge.com/minecraft/mc-mods/corail-spawners).
+- Added experimental support
+  for [Corail Spawners](https://www.curseforge.com/minecraft/mc-mods/corail-spawners).
 - Fixed potential null pointer errors.
 
 ### 2022.11.06
 
 - Added nether fortress farm
 - Added experimental support for mob catching items from other mods
-  - [Create](https://www.curseforge.com/minecraft/mc-mods/create): Blaze Burner
-  - [Mob Catcher](https://www.curseforge.com/minecraft/mc-mods/mob-catcher-fabric)
-  - [Mob Capturing Tool](https://www.curseforge.com/minecraft/mc-mods/mob-capturing-tool)
+    - [Create](https://www.curseforge.com/minecraft/mc-mods/create): Blaze Burner
+    - [Mob Catcher](https://www.curseforge.com/minecraft/mc-mods/mob-catcher-fabric)
+    - [Mob Capturing Tool](https://www.curseforge.com/minecraft/mc-mods/mob-capturing-tool)
 - Improved UI and UI elements
 - Fixed smaller issues
 

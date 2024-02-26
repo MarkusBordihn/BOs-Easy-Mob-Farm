@@ -3,7 +3,8 @@
   "pattern": [
     "LWS",
     "K#R",
-    "KGK"],
+    "KGK"
+  ],
   "key": {
     "#": {
       "item": "easy_mob_farm:gold_mob_farm_template"

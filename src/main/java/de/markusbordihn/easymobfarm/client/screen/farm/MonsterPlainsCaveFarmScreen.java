@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -33,8 +33,7 @@ public class MonsterPlainsCaveFarmScreen<T extends MobFarmMenu> extends MobFarmS
 
   public static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  public MonsterPlainsCaveFarmScreen(T menu, Inventory inventory,
-      Component component) {
+  public MonsterPlainsCaveFarmScreen(T menu, Inventory inventory, Component component) {
     super(menu, inventory, component);
   }
 }

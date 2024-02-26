@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -18,16 +18,6 @@
  */
 
 package de.markusbordihn.easymobfarm.config;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.farm.copper.CopperAnimalPlainsFarm;
@@ -75,11 +65,18 @@ import de.markusbordihn.easymobfarm.item.mobcatcher.NetheriteLasso;
 import de.markusbordihn.easymobfarm.item.mobcatcher.PoppyBouquet;
 import de.markusbordihn.easymobfarm.item.mobcatcher.UrnSmall;
 import de.markusbordihn.easymobfarm.item.mobcatcher.WitchBottle;
-
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @EventBusSubscriber
 public class MobTypeManager {
@@ -120,115 +117,179 @@ public class MobTypeManager {
     }
 
     // Mob Catcher Types
-    updateMobTypesForKey(CatchCage.NAME, COMMON.catchCageAllowedMobs.get(),
-        COMMON.catchCageDeniedMobs.get());
-    updateMobTypesForKey(CatchCageSmall.NAME, COMMON.catchCageSmallAllowedMobs.get(),
+    updateMobTypesForKey(
+        CatchCage.NAME, COMMON.catchCageAllowedMobs.get(), COMMON.catchCageDeniedMobs.get());
+    updateMobTypesForKey(
+        CatchCageSmall.NAME,
+        COMMON.catchCageSmallAllowedMobs.get(),
         COMMON.catchCageSmallDeniedMobs.get());
-    updateMobTypesForKey(CollarSmall.NAME, COMMON.collarSmallAllowedMobs.get(),
-        COMMON.collarSmallDeniedMobs.get());
-    updateMobTypesForKey(EnderLasso.NAME, COMMON.enderLassoAllowedMobs.get(),
-        COMMON.enderLassoDeniedMobs.get());
-    updateMobTypesForKey(FishingBowl.NAME, COMMON.fishingBowlAllowedMobs.get(),
-        COMMON.fishingBowlDeniedMobs.get());
-    updateMobTypesForKey(FishingNetSmall.NAME, COMMON.fishingNetSmallAllowedMobs.get(),
+    updateMobTypesForKey(
+        CollarSmall.NAME, COMMON.collarSmallAllowedMobs.get(), COMMON.collarSmallDeniedMobs.get());
+    updateMobTypesForKey(
+        EnderLasso.NAME, COMMON.enderLassoAllowedMobs.get(), COMMON.enderLassoDeniedMobs.get());
+    updateMobTypesForKey(
+        FishingBowl.NAME, COMMON.fishingBowlAllowedMobs.get(), COMMON.fishingBowlDeniedMobs.get());
+    updateMobTypesForKey(
+        FishingNetSmall.NAME,
+        COMMON.fishingNetSmallAllowedMobs.get(),
         COMMON.fishingNetSmallDeniedMobs.get());
-    updateMobTypesForKey(GoldenLasso.NAME, COMMON.goldenLassoAllowedMobs.get(),
-        COMMON.goldenLassoDeniedMobs.get());
-    updateMobTypesForKey(InsectNet.NAME, COMMON.insectNetAllowedMobs.get(),
-        COMMON.insectNetDeniedMobs.get());
-    updateMobTypesForKey(NetheriteLasso.NAME, COMMON.netheriteLassoAllowedMobs.get(),
+    updateMobTypesForKey(
+        GoldenLasso.NAME, COMMON.goldenLassoAllowedMobs.get(), COMMON.goldenLassoDeniedMobs.get());
+    updateMobTypesForKey(
+        InsectNet.NAME, COMMON.insectNetAllowedMobs.get(), COMMON.insectNetDeniedMobs.get());
+    updateMobTypesForKey(
+        NetheriteLasso.NAME,
+        COMMON.netheriteLassoAllowedMobs.get(),
         COMMON.netheriteLassoDeniedMobs.get());
-    updateMobTypesForKey(PoppyBouquet.NAME, COMMON.poppyBouquetAllowedMobs.get(),
+    updateMobTypesForKey(
+        PoppyBouquet.NAME,
+        COMMON.poppyBouquetAllowedMobs.get(),
         COMMON.poppyBouquetDeniedMobs.get());
-    updateMobTypesForKey(UrnSmall.NAME, COMMON.urnSmallAllowedMobs.get(),
-        COMMON.urnSmallDeniedMobs.get());
-    updateMobTypesForKey(WitchBottle.NAME, COMMON.witchBottleAllowedMobs.get(),
-        COMMON.witchBottleDeniedMobs.get());
+    updateMobTypesForKey(
+        UrnSmall.NAME, COMMON.urnSmallAllowedMobs.get(), COMMON.urnSmallDeniedMobs.get());
+    updateMobTypesForKey(
+        WitchBottle.NAME, COMMON.witchBottleAllowedMobs.get(), COMMON.witchBottleDeniedMobs.get());
 
     // Copper Mob Farm Types
-    updateMobTypesForKey(CopperAnimalPlainsFarm.NAME,
+    updateMobTypesForKey(
+        CopperAnimalPlainsFarm.NAME,
         COMMON.copperAnimalPlainsFarmAllowedMobs.get(),
         COMMON.copperAnimalPlainsFarmDeniedMobs.get());
-    updateMobTypesForKey(CopperBeeHiveFarm.NAME, COMMON.copperBeeHiveFarmAllowedMobs.get(),
+    updateMobTypesForKey(
+        CopperBeeHiveFarm.NAME,
+        COMMON.copperBeeHiveFarmAllowedMobs.get(),
         COMMON.copperBeeHiveFarmDeniedMobs.get());
-    updateMobTypesForKey(CopperDesertFarm.NAME, COMMON.copperDesertFarmAllowedMobs.get(),
+    updateMobTypesForKey(
+        CopperDesertFarm.NAME,
+        COMMON.copperDesertFarmAllowedMobs.get(),
         COMMON.copperDesertFarmDeniedMobs.get());
-    updateMobTypesForKey(CopperJungleFarm.NAME, COMMON.copperJungleFarmAllowedMobs.get(),
+    updateMobTypesForKey(
+        CopperJungleFarm.NAME,
+        COMMON.copperJungleFarmAllowedMobs.get(),
         COMMON.copperJungleFarmDeniedMobs.get());
-    updateMobTypesForKey(CopperMonsterPlainsCaveFarm.NAME,
+    updateMobTypesForKey(
+        CopperMonsterPlainsCaveFarm.NAME,
         COMMON.copperMonsterPlainsCaveFarmAllowedMobs.get(),
         COMMON.copperMonsterPlainsCaveFarmDeniedMobs.get());
-    updateMobTypesForKey(CopperNetherFortressFarm.NAME,
+    updateMobTypesForKey(
+        CopperNetherFortressFarm.NAME,
         COMMON.copperNetherFortressFarmAllowedMobs.get(),
         COMMON.copperNetherFortressFarmDeniedMobs.get());
-    updateMobTypesForKey(CopperOceanFarm.NAME, COMMON.copperOceanFarmAllowedMobs.get(),
+    updateMobTypesForKey(
+        CopperOceanFarm.NAME,
+        COMMON.copperOceanFarmAllowedMobs.get(),
         COMMON.copperOceanFarmDeniedMobs.get());
-    updateMobTypesForKey(CopperSwampFarm.NAME, COMMON.copperSwampFarmAllowedMobs.get(),
+    updateMobTypesForKey(
+        CopperSwampFarm.NAME,
+        COMMON.copperSwampFarmAllowedMobs.get(),
         COMMON.copperSwampFarmDeniedMobs.get());
 
     // Iron Mob Farm Types
-    updateMobTypesForKey(IronAnimalPlainsFarm.NAME, COMMON.ironAnimalPlainsFarmAllowedMobs.get(),
+    updateMobTypesForKey(
+        IronAnimalPlainsFarm.NAME,
+        COMMON.ironAnimalPlainsFarmAllowedMobs.get(),
         COMMON.ironAnimalPlainsFarmDeniedMobs.get());
-    updateMobTypesForKey(IronBeeHiveFarm.NAME, COMMON.ironBeeHiveFarmAllowedMobs.get(),
+    updateMobTypesForKey(
+        IronBeeHiveFarm.NAME,
+        COMMON.ironBeeHiveFarmAllowedMobs.get(),
         COMMON.ironBeeHiveFarmDeniedMobs.get());
-    updateMobTypesForKey(IronDesertFarm.NAME, COMMON.ironDesertFarmAllowedMobs.get(),
+    updateMobTypesForKey(
+        IronDesertFarm.NAME,
+        COMMON.ironDesertFarmAllowedMobs.get(),
         COMMON.ironDesertFarmDeniedMobs.get());
-    updateMobTypesForKey(IronJungleFarm.NAME, COMMON.ironJungleFarmAllowedMobs.get(),
+    updateMobTypesForKey(
+        IronJungleFarm.NAME,
+        COMMON.ironJungleFarmAllowedMobs.get(),
         COMMON.ironJungleFarmDeniedMobs.get());
-    updateMobTypesForKey(IronMonsterPlainsCaveFarm.NAME,
+    updateMobTypesForKey(
+        IronMonsterPlainsCaveFarm.NAME,
         COMMON.ironMonsterPlainsCaveFarmAllowedMobs.get(),
         COMMON.ironMonsterPlainsCaveFarmDeniedMobs.get());
-    updateMobTypesForKey(IronNetherFortressFarm.NAME,
+    updateMobTypesForKey(
+        IronNetherFortressFarm.NAME,
         COMMON.ironNetherFortressFarmAllowedMobs.get(),
         COMMON.ironNetherFortressFarmDeniedMobs.get());
-    updateMobTypesForKey(IronOceanFarm.NAME, COMMON.ironOceanFarmAllowedMobs.get(),
+    updateMobTypesForKey(
+        IronOceanFarm.NAME,
+        COMMON.ironOceanFarmAllowedMobs.get(),
         COMMON.ironOceanFarmDeniedMobs.get());
-    updateMobTypesForKey(IronSwampFarm.NAME, COMMON.ironSwampFarmAllowedMobs.get(),
+    updateMobTypesForKey(
+        IronSwampFarm.NAME,
+        COMMON.ironSwampFarmAllowedMobs.get(),
         COMMON.ironSwampFarmDeniedMobs.get());
 
     // Gold Mob Farm Types
-    updateMobTypesForKey(GoldAnimalPlainsFarm.NAME, COMMON.goldAnimalPlainsFarmAllowedMobs.get(),
+    updateMobTypesForKey(
+        GoldAnimalPlainsFarm.NAME,
+        COMMON.goldAnimalPlainsFarmAllowedMobs.get(),
         COMMON.goldAnimalPlainsFarmDeniedMobs.get());
-    updateMobTypesForKey(GoldBeeHiveFarm.NAME, COMMON.goldBeeHiveFarmAllowedMobs.get(),
+    updateMobTypesForKey(
+        GoldBeeHiveFarm.NAME,
+        COMMON.goldBeeHiveFarmAllowedMobs.get(),
         COMMON.goldBeeHiveFarmDeniedMobs.get());
-    updateMobTypesForKey(GoldDesertFarm.NAME, COMMON.goldDesertFarmAllowedMobs.get(),
+    updateMobTypesForKey(
+        GoldDesertFarm.NAME,
+        COMMON.goldDesertFarmAllowedMobs.get(),
         COMMON.goldDesertFarmDeniedMobs.get());
-    updateMobTypesForKey(GoldJungleFarm.NAME, COMMON.goldJungleFarmAllowedMobs.get(),
+    updateMobTypesForKey(
+        GoldJungleFarm.NAME,
+        COMMON.goldJungleFarmAllowedMobs.get(),
         COMMON.goldJungleFarmDeniedMobs.get());
-    updateMobTypesForKey(GoldMonsterPlainsCaveFarm.NAME,
+    updateMobTypesForKey(
+        GoldMonsterPlainsCaveFarm.NAME,
         COMMON.goldMonsterPlainsCaveFarmAllowedMobs.get(),
         COMMON.goldMonsterPlainsCaveFarmDeniedMobs.get());
-    updateMobTypesForKey(GoldNetherFortressFarm.NAME,
+    updateMobTypesForKey(
+        GoldNetherFortressFarm.NAME,
         COMMON.goldNetherFortressFarmAllowedMobs.get(),
         COMMON.goldNetherFortressFarmDeniedMobs.get());
-    updateMobTypesForKey(GoldOceanFarm.NAME, COMMON.goldOceanFarmAllowedMobs.get(),
+    updateMobTypesForKey(
+        GoldOceanFarm.NAME,
+        COMMON.goldOceanFarmAllowedMobs.get(),
         COMMON.goldOceanFarmDeniedMobs.get());
-    updateMobTypesForKey(GoldSwampFarm.NAME, COMMON.goldSwampFarmAllowedMobs.get(),
+    updateMobTypesForKey(
+        GoldSwampFarm.NAME,
+        COMMON.goldSwampFarmAllowedMobs.get(),
         COMMON.goldSwampFarmDeniedMobs.get());
 
     // Netherite Mob Farm Types
-    updateMobTypesForKey(NetheriteAnimalPlainsFarm.NAME,
+    updateMobTypesForKey(
+        NetheriteAnimalPlainsFarm.NAME,
         COMMON.netheriteAnimalPlainsFarmAllowedMobs.get(),
         COMMON.netheriteAnimalPlainsFarmDeniedMobs.get());
-    updateMobTypesForKey(NetheriteBeeHiveFarm.NAME, COMMON.netheriteBeeHiveFarmAllowedMobs.get(),
+    updateMobTypesForKey(
+        NetheriteBeeHiveFarm.NAME,
+        COMMON.netheriteBeeHiveFarmAllowedMobs.get(),
         COMMON.netheriteBeeHiveFarmDeniedMobs.get());
-    updateMobTypesForKey(NetheriteDesertFarm.NAME, COMMON.netheriteDesertFarmAllowedMobs.get(),
+    updateMobTypesForKey(
+        NetheriteDesertFarm.NAME,
+        COMMON.netheriteDesertFarmAllowedMobs.get(),
         COMMON.netheriteDesertFarmDeniedMobs.get());
-    updateMobTypesForKey(NetheriteJungleFarm.NAME, COMMON.netheriteJungleFarmAllowedMobs.get(),
+    updateMobTypesForKey(
+        NetheriteJungleFarm.NAME,
+        COMMON.netheriteJungleFarmAllowedMobs.get(),
         COMMON.netheriteJungleFarmDeniedMobs.get());
-    updateMobTypesForKey(NetheriteMonsterPlainsCaveFarm.NAME,
+    updateMobTypesForKey(
+        NetheriteMonsterPlainsCaveFarm.NAME,
         COMMON.netheriteMonsterPlainsCaveFarmAllowedMobs.get(),
         COMMON.netheriteMonsterPlainsCaveFarmDeniedMobs.get());
-    updateMobTypesForKey(NetheriteNetherFortressFarm.NAME,
+    updateMobTypesForKey(
+        NetheriteNetherFortressFarm.NAME,
         COMMON.netheriteNetherFortressFarmAllowedMobs.get(),
         COMMON.netheriteNetherFortressFarmDeniedMobs.get());
-    updateMobTypesForKey(NetheriteOceanFarm.NAME, COMMON.netheriteOceanFarmAllowedMobs.get(),
+    updateMobTypesForKey(
+        NetheriteOceanFarm.NAME,
+        COMMON.netheriteOceanFarmAllowedMobs.get(),
         COMMON.netheriteOceanFarmDeniedMobs.get());
-    updateMobTypesForKey(NetheriteSwampFarm.NAME, COMMON.netheriteSwampFarmAllowedMobs.get(),
+    updateMobTypesForKey(
+        NetheriteSwampFarm.NAME,
+        COMMON.netheriteSwampFarmAllowedMobs.get(),
         COMMON.netheriteSwampFarmDeniedMobs.get());
 
     // Special Mob Farm Types
-    updateMobTypesForKey(IronGolemFarm.NAME, COMMON.ironGolemFarmAllowedMobs.get(),
+    updateMobTypesForKey(
+        IronGolemFarm.NAME,
+        COMMON.ironGolemFarmAllowedMobs.get(),
         COMMON.ironGolemFarmDeniedMobs.get());
   }
 
@@ -266,8 +327,8 @@ public class MobTypeManager {
     return acceptedMobTypes.isEmpty() || acceptedMobTypes.contains(mobType);
   }
 
-  public static void updateMobTypesForKey(String key, List<String> acceptedMobs,
-      List<String> deniedMobs) {
+  public static void updateMobTypesForKey(
+      String key, List<String> acceptedMobs, List<String> deniedMobs) {
     if (key == null) {
       return;
     }
@@ -285,12 +346,14 @@ public class MobTypeManager {
     }
   }
 
-
-  public static void logSupportedMobs(String key, Set<String> acceptedMobTypes,
-      Set<String> deniedMobTypes) {
+  public static void logSupportedMobs(
+      String key, Set<String> acceptedMobTypes, Set<String> deniedMobTypes) {
     if (!acceptedMobTypes.isEmpty() && !deniedMobTypes.isEmpty()) {
-      log.info("The {} accepts the following mobs: {}, excluding the following mobs: {}", key,
-          deniedMobTypes, deniedMobTypes);
+      log.info(
+          "The {} accepts the following mobs: {}, excluding the following mobs: {}",
+          key,
+          deniedMobTypes,
+          deniedMobTypes);
     } else if (!acceptedMobTypes.isEmpty()) {
       log.info("The {} accepts the following mobs: {}", key, acceptedMobTypes);
     } else if (!deniedMobTypes.isEmpty()) {

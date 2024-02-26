@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,28 +19,23 @@
 
 package de.markusbordihn.easymobfarm.text;
 
+import de.markusbordihn.easymobfarm.Constants;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-
-import de.markusbordihn.easymobfarm.Constants;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @EventBusSubscriber
 public class TranslatableText {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
-
-  protected TranslatableText() {}
-
   private static Map<String, Component> entityNameCache = new ConcurrentHashMap<>();
   private static Map<String, Component> itemNameCache = new ConcurrentHashMap<>();
+  protected TranslatableText() {}
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
@@ -53,23 +48,26 @@ public class TranslatableText {
     if (!entityName.contains("entity.") && entityName.contains(":")) {
       entityName = "entity." + entityName.replace(':', '.');
     }
-    return entityNameCache.computeIfAbsent(entityName, key -> {
-      Component translatableComponent = Component.translatable(key);
-      if (!translatableComponent.getString().equals(key)) {
-        return translatableComponent;
-      }
-      return Component.translatable("");
-    });
+    return entityNameCache.computeIfAbsent(
+        entityName,
+        key -> {
+          Component translatableComponent = Component.translatable(key);
+          if (!translatableComponent.getString().equals(key)) {
+            return translatableComponent;
+          }
+          return Component.translatable("");
+        });
   }
 
   public static Component getItemName(String itemName) {
-    return itemNameCache.computeIfAbsent(itemName, key -> {
-      Component translatableComponent = Component.translatable(itemName);
-      if (!translatableComponent.getString().equals(itemName)) {
-        return translatableComponent;
-      }
-      return Component.translatable("");
-    });
+    return itemNameCache.computeIfAbsent(
+        itemName,
+        key -> {
+          Component translatableComponent = Component.translatable(itemName);
+          if (!translatableComponent.getString().equals(itemName)) {
+            return translatableComponent;
+          }
+          return Component.translatable("");
+        });
   }
-
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,14 +19,19 @@
 
 package de.markusbordihn.easymobfarm.client.renderer.helper;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import java.util.Random;
-import org.joml.Quaternionf;
-
 import com.mojang.blaze3d.vertex.PoseStack;
-
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.block.MobFarmBlock;
+import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
+import de.markusbordihn.easymobfarm.config.mobs.AmbientWaterAnimal;
+import de.markusbordihn.easymobfarm.config.mobs.BeeAnimal;
+import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
+import de.markusbordihn.easymobfarm.config.mobs.HostileNetherMonster;
+import de.markusbordihn.easymobfarm.config.mobs.HostileWaterMonster;
+import de.markusbordihn.easymobfarm.config.mobs.NeutralMonster;
+import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
+import de.markusbordihn.easymobfarm.config.mobs.PassiveWaterAnimal;
+import java.util.Random;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -39,18 +44,9 @@ import net.minecraft.world.entity.animal.Squid;
 import net.minecraft.world.entity.monster.Spider;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.entity.BlockEntity;
-
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.MobFarmBlock;
-import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
-import de.markusbordihn.easymobfarm.config.mobs.AmbientWaterAnimal;
-import de.markusbordihn.easymobfarm.config.mobs.BeeAnimal;
-import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
-import de.markusbordihn.easymobfarm.config.mobs.HostileNetherMonster;
-import de.markusbordihn.easymobfarm.config.mobs.HostileWaterMonster;
-import de.markusbordihn.easymobfarm.config.mobs.NeutralMonster;
-import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
-import de.markusbordihn.easymobfarm.config.mobs.PassiveWaterAnimal;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.joml.Quaternionf;
 
 public class RenderHelper {
 
@@ -82,9 +78,12 @@ public class RenderHelper {
 
   public Quaternionf getBlockRotation() {
     if (this.blockRotation == null) {
-      this.blockRotation = (new Quaternionf())
-          .rotateY((-this.blockEntity.getBlockState().getValue(MobFarmBlock.FACING).toYRot()
-              + this.bodyRotation) * Constants.PI_180DEG);
+      this.blockRotation =
+          (new Quaternionf())
+              .rotateY(
+                  (-this.blockEntity.getBlockState().getValue(MobFarmBlock.FACING).toYRot()
+                          + this.bodyRotation)
+                      * Constants.PI_180DEG);
     }
     return this.blockRotation;
   }
@@ -119,20 +118,22 @@ public class RenderHelper {
     return this.entitySize;
   }
 
-  public void renderCustomEntity(EntityType<?> entityType, PoseStack poseStack,
-      MultiBufferSource buffer, int combinedLight) {
+  public void renderCustomEntity(
+      EntityType<?> entityType, PoseStack poseStack, MultiBufferSource buffer, int combinedLight) {
     Entity entity = this.renderModels.getCustomEntity(entityType);
     if (entity != null) {
-      this.renderModels.getEntityRendererDispatcher().render(entity, 0, 0, 0, 1F, this.headRotation,
-          poseStack, buffer, combinedLight);
+      this.renderModels
+          .getEntityRendererDispatcher()
+          .render(entity, 0, 0, 0, 1F, this.headRotation, poseStack, buffer, combinedLight);
     }
   }
 
-  public void renderCustomEntity(Entity entity, PoseStack poseStack, MultiBufferSource buffer,
-      int combinedLight) {
+  public void renderCustomEntity(
+      Entity entity, PoseStack poseStack, MultiBufferSource buffer, int combinedLight) {
     if (entity != null) {
-      this.renderModels.getEntityRendererDispatcher().render(entity, 0, 0, 0, 1F, this.headRotation,
-          poseStack, buffer, combinedLight);
+      this.renderModels
+          .getEntityRendererDispatcher()
+          .render(entity, 0, 0, 0, 1F, this.headRotation, poseStack, buffer, combinedLight);
     }
   }
 
@@ -140,153 +141,474 @@ public class RenderHelper {
     return this.renderModels.getCustomEntityScale();
   }
 
-  public void renderBee(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
-      double y, double z, int combinedLight) {
-    renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
-        this.renderModels.getBeeRenderer(), this.renderModels.getBee());
+  public void renderBee(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      float scale,
+      double x,
+      double y,
+      double z,
+      int combinedLight) {
+    renderModel(
+        poseStack,
+        buffer,
+        scale,
+        x,
+        y,
+        z,
+        combinedLight,
+        this.renderModels.getBeeRenderer(),
+        this.renderModels.getBee());
   }
 
-  public void renderProductiveBee(PoseStack poseStack, MultiBufferSource buffer, float scale,
-      double x, double y, double z, int combinedLight, String beeType, EntityType<?> entityType) {
+  public void renderProductiveBee(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      float scale,
+      double x,
+      double y,
+      double z,
+      int combinedLight,
+      String beeType,
+      EntityType<?> entityType) {
     CompoundTag compoundTag = new CompoundTag();
     compoundTag.putString("type", beeType);
     Entity entity = this.renderModels.getCustomEntity(entityType, compoundTag);
     renderCustomModel(poseStack, buffer, scale, x, y, z, combinedLight, entity);
   }
 
-  public void renderBlaze(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
-      double y, double z, int combinedLight) {
-    renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
-        this.renderModels.getBlazeRenderer(), this.renderModels.getBlaze());
+  public void renderBlaze(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      float scale,
+      double x,
+      double y,
+      double z,
+      int combinedLight) {
+    renderModel(
+        poseStack,
+        buffer,
+        scale,
+        x,
+        y,
+        z,
+        combinedLight,
+        this.renderModels.getBlazeRenderer(),
+        this.renderModels.getBlaze());
   }
 
-  public void renderCaveSpider(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
-      double y, double z, int combinedLight) {
-    renderModel(poseStack, buffer, scale, -180, -180, x, y, z, combinedLight,
-        this.renderModels.getCaveSpiderRenderer(), this.renderModels.getCaveSpider());
+  public void renderCaveSpider(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      float scale,
+      double x,
+      double y,
+      double z,
+      int combinedLight) {
+    renderModel(
+        poseStack,
+        buffer,
+        scale,
+        -180,
+        -180,
+        x,
+        y,
+        z,
+        combinedLight,
+        this.renderModels.getCaveSpiderRenderer(),
+        this.renderModels.getCaveSpider());
   }
 
-  public void renderCod(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
-      double y, double z, int combinedLight) {
-    renderModel(poseStack, buffer, scale, -90, -90, x, y, z, combinedLight,
-        this.renderModels.getCodRenderer(), this.renderModels.getCod());
+  public void renderCod(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      float scale,
+      double x,
+      double y,
+      double z,
+      int combinedLight) {
+    renderModel(
+        poseStack,
+        buffer,
+        scale,
+        -90,
+        -90,
+        x,
+        y,
+        z,
+        combinedLight,
+        this.renderModels.getCodRenderer(),
+        this.renderModels.getCod());
   }
 
-  public void renderCow(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
-      double y, double z, int combinedLight) {
-    renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
-        this.renderModels.getCowRenderer(), this.renderModels.getCow());
+  public void renderCow(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      float scale,
+      double x,
+      double y,
+      double z,
+      int combinedLight) {
+    renderModel(
+        poseStack,
+        buffer,
+        scale,
+        x,
+        y,
+        z,
+        combinedLight,
+        this.renderModels.getCowRenderer(),
+        this.renderModels.getCow());
   }
 
-  public void renderCreeper(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
-      double y, double z, int combinedLight) {
-    renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
-        this.renderModels.getCreeperRenderer(), this.renderModels.getCreeper());
+  public void renderCreeper(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      float scale,
+      double x,
+      double y,
+      double z,
+      int combinedLight) {
+    renderModel(
+        poseStack,
+        buffer,
+        scale,
+        x,
+        y,
+        z,
+        combinedLight,
+        this.renderModels.getCreeperRenderer(),
+        this.renderModels.getCreeper());
   }
 
-  public void renderChicken(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
-      double y, double z, int combinedLight) {
-    renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
-        this.renderModels.getChickenRenderer(), this.renderModels.getChicken());
+  public void renderChicken(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      float scale,
+      double x,
+      double y,
+      double z,
+      int combinedLight) {
+    renderModel(
+        poseStack,
+        buffer,
+        scale,
+        x,
+        y,
+        z,
+        combinedLight,
+        this.renderModels.getChickenRenderer(),
+        this.renderModels.getChicken());
   }
 
-  public void renderDrowned(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
-      double y, double z, int combinedLight) {
-    renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
-        this.renderModels.getDrownedRenderer(), this.renderModels.getDrowned());
+  public void renderDrowned(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      float scale,
+      double x,
+      double y,
+      double z,
+      int combinedLight) {
+    renderModel(
+        poseStack,
+        buffer,
+        scale,
+        x,
+        y,
+        z,
+        combinedLight,
+        this.renderModels.getDrownedRenderer(),
+        this.renderModels.getDrowned());
   }
 
-  public void renderEnderman(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
-      double y, double z, int combinedLight) {
-    renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
-        this.renderModels.getEndermanRenderer(), this.renderModels.getEnderman());
+  public void renderEnderman(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      float scale,
+      double x,
+      double y,
+      double z,
+      int combinedLight) {
+    renderModel(
+        poseStack,
+        buffer,
+        scale,
+        x,
+        y,
+        z,
+        combinedLight,
+        this.renderModels.getEndermanRenderer(),
+        this.renderModels.getEnderman());
   }
 
-  public void renderIronGolem(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
-      double y, double z, int combinedLight) {
-    renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
-        this.renderModels.getIronGolemRenderer(), this.renderModels.getIronGolem());
+  public void renderIronGolem(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      float scale,
+      double x,
+      double y,
+      double z,
+      int combinedLight) {
+    renderModel(
+        poseStack,
+        buffer,
+        scale,
+        x,
+        y,
+        z,
+        combinedLight,
+        this.renderModels.getIronGolemRenderer(),
+        this.renderModels.getIronGolem());
   }
 
-  public void renderMagmaCube(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
-      double y, double z, int combinedLight) {
-    renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
-        this.renderModels.getMagmaCubeRenderer(), this.renderModels.getMagmaCube(getEntitySize()));
+  public void renderMagmaCube(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      float scale,
+      double x,
+      double y,
+      double z,
+      int combinedLight) {
+    renderModel(
+        poseStack,
+        buffer,
+        scale,
+        x,
+        y,
+        z,
+        combinedLight,
+        this.renderModels.getMagmaCubeRenderer(),
+        this.renderModels.getMagmaCube(getEntitySize()));
   }
 
-  public void renderPanda(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
-      double y, double z, int combinedLight) {
-    renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
-        this.renderModels.getPandaRenderer(), this.renderModels.getPanda());
+  public void renderPanda(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      float scale,
+      double x,
+      double y,
+      double z,
+      int combinedLight) {
+    renderModel(
+        poseStack,
+        buffer,
+        scale,
+        x,
+        y,
+        z,
+        combinedLight,
+        this.renderModels.getPandaRenderer(),
+        this.renderModels.getPanda());
   }
 
-  public void renderPig(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
-      double y, double z, int combinedLight) {
-    renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
-        this.renderModels.getPigRenderer(), this.renderModels.getPig());
+  public void renderPig(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      float scale,
+      double x,
+      double y,
+      double z,
+      int combinedLight) {
+    renderModel(
+        poseStack,
+        buffer,
+        scale,
+        x,
+        y,
+        z,
+        combinedLight,
+        this.renderModels.getPigRenderer(),
+        this.renderModels.getPig());
   }
 
-  public void renderRabbit(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
-      double y, double z, int combinedLight) {
-    renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
-        this.renderModels.getRabbitRenderer(), this.renderModels.getRabbit());
+  public void renderRabbit(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      float scale,
+      double x,
+      double y,
+      double z,
+      int combinedLight) {
+    renderModel(
+        poseStack,
+        buffer,
+        scale,
+        x,
+        y,
+        z,
+        combinedLight,
+        this.renderModels.getRabbitRenderer(),
+        this.renderModels.getRabbit());
   }
 
-  public void renderSalmon(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
-      double y, double z, int combinedLight) {
-    renderModel(poseStack, buffer, scale, -90, -90, x, y, z, combinedLight,
-        this.renderModels.getSalmonRenderer(), this.renderModels.getSalmon());
+  public void renderSalmon(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      float scale,
+      double x,
+      double y,
+      double z,
+      int combinedLight) {
+    renderModel(
+        poseStack,
+        buffer,
+        scale,
+        -90,
+        -90,
+        x,
+        y,
+        z,
+        combinedLight,
+        this.renderModels.getSalmonRenderer(),
+        this.renderModels.getSalmon());
   }
 
-  public void renderSheep(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
-      double y, double z, int combinedLight) {
-    renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
+  public void renderSheep(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      float scale,
+      double x,
+      double y,
+      double z,
+      int combinedLight) {
+    renderModel(
+        poseStack,
+        buffer,
+        scale,
+        x,
+        y,
+        z,
+        combinedLight,
         this.renderModels.getSheepRenderer(),
         this.renderModels.getSheep(getEntityColor(), getEntityShearedStatus()));
   }
 
-  public void renderSkeleton(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
-      double y, double z, int combinedLight) {
-    renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
-        this.renderModels.getSkeletonRenderer(), this.renderModels.getSkeleton());
+  public void renderSkeleton(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      float scale,
+      double x,
+      double y,
+      double z,
+      int combinedLight) {
+    renderModel(
+        poseStack,
+        buffer,
+        scale,
+        x,
+        y,
+        z,
+        combinedLight,
+        this.renderModels.getSkeletonRenderer(),
+        this.renderModels.getSkeleton());
   }
 
-  public void renderSlime(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
-      double y, double z, int combinedLight) {
-    renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
-        this.renderModels.getSlimeRenderer(), this.renderModels.getSlime(getEntitySize()));
+  public void renderSlime(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      float scale,
+      double x,
+      double y,
+      double z,
+      int combinedLight) {
+    renderModel(
+        poseStack,
+        buffer,
+        scale,
+        x,
+        y,
+        z,
+        combinedLight,
+        this.renderModels.getSlimeRenderer(),
+        this.renderModels.getSlime(getEntitySize()));
   }
 
   @SuppressWarnings("unchecked")
-  public void renderSpider(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
-      double y, double z, int combinedLight) {
-    renderModel(poseStack, buffer, scale, -180, -180, x, y, z, combinedLight,
+  public void renderSpider(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      float scale,
+      double x,
+      double y,
+      double z,
+      int combinedLight) {
+    renderModel(
+        poseStack,
+        buffer,
+        scale,
+        -180,
+        -180,
+        x,
+        y,
+        z,
+        combinedLight,
         (LivingEntityRenderer<? super Spider, ?>) this.renderModels.getSpiderRenderer(),
         this.renderModels.getSpider());
   }
 
   @SuppressWarnings("unchecked")
-  public void renderSquid(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
-      double y, double z, int combinedLight) {
-    renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
+  public void renderSquid(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      float scale,
+      double x,
+      double y,
+      double z,
+      int combinedLight) {
+    renderModel(
+        poseStack,
+        buffer,
+        scale,
+        x,
+        y,
+        z,
+        combinedLight,
         (LivingEntityRenderer<? super Squid, ?>) this.renderModels.getSquidRenderer(),
         this.renderModels.getSquid());
   }
 
-  public void renderGlowSquid(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
-      double y, double z, int combinedLight) {
-    renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
-        this.renderModels.getGlowSquidRenderer(), this.renderModels.getGlowSquid());
+  public void renderGlowSquid(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      float scale,
+      double x,
+      double y,
+      double z,
+      int combinedLight) {
+    renderModel(
+        poseStack,
+        buffer,
+        scale,
+        x,
+        y,
+        z,
+        combinedLight,
+        this.renderModels.getGlowSquidRenderer(),
+        this.renderModels.getGlowSquid());
   }
 
-  public void renderZombie(PoseStack poseStack, MultiBufferSource buffer, float scale, double x,
-      double y, double z, int combinedLight) {
-    renderModel(poseStack, buffer, scale, x, y, z, combinedLight,
-        this.renderModels.getZombieRenderer(), this.renderModels.getZombie());
+  public void renderZombie(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      float scale,
+      double x,
+      double y,
+      double z,
+      int combinedLight) {
+    renderModel(
+        poseStack,
+        buffer,
+        scale,
+        x,
+        y,
+        z,
+        combinedLight,
+        this.renderModels.getZombieRenderer(),
+        this.renderModels.getZombie());
   }
 
-  public boolean renderAnimal(PoseStack poseStack, MultiBufferSource buffer, int combinedLight,
-      String farmMobType) {
+  public boolean renderAnimal(
+      PoseStack poseStack, MultiBufferSource buffer, int combinedLight, String farmMobType) {
     // Render Animals using their specific Renderer and predefined scaling and position.
     switch (farmMobType) {
       case BeeAnimal.BEE:
@@ -316,16 +638,29 @@ public class RenderHelper {
     return true;
   }
 
-  public boolean renderBee(PoseStack poseStack, MultiBufferSource buffer, int combinedLight,
-      String farmMobType, String farmMobSubType, EntityType<?> entityType) {
+  public boolean renderBee(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      int combinedLight,
+      String farmMobType,
+      String farmMobSubType,
+      EntityType<?> entityType) {
     // Render Bee using their specific Renderer and predefined scaling and position.
     switch (farmMobType) {
       case BeeAnimal.BEE:
         renderBee(poseStack, buffer, 0.5F, 0D, 0.25D, 2D / 16D, combinedLight);
         break;
       case BeeAnimal.PRODUCTIVE_BEES_CONFIGURABLE:
-        renderProductiveBee(poseStack, buffer, 0.5F, 0D, 0.25D, 2D / 16D, combinedLight,
-            farmMobSubType, entityType);
+        renderProductiveBee(
+            poseStack,
+            buffer,
+            0.5F,
+            0D,
+            0.25D,
+            2D / 16D,
+            combinedLight,
+            farmMobSubType,
+            entityType);
         break;
       default:
         return false;
@@ -333,8 +668,8 @@ public class RenderHelper {
     return true;
   }
 
-  public boolean renderMonster(PoseStack poseStack, MultiBufferSource buffer, int combinedLight,
-      String farmMobType) {
+  public boolean renderMonster(
+      PoseStack poseStack, MultiBufferSource buffer, int combinedLight, String farmMobType) {
     // Render Monster using their specific Renderer and predefined scaling and position.
     switch (farmMobType) {
       case HostileNetherMonster.BLAZE:
@@ -370,8 +705,8 @@ public class RenderHelper {
     return true;
   }
 
-  public boolean renderSpecialEntity(PoseStack poseStack, MultiBufferSource buffer,
-      int combinedLight, String farmMobType) {
+  public boolean renderSpecialEntity(
+      PoseStack poseStack, MultiBufferSource buffer, int combinedLight, String farmMobType) {
     // Render Special Entity using their specific Renderer and predefined scaling and position.
     switch (farmMobType) {
       case NeutralMonster.IRON_GOLEM:
@@ -383,8 +718,8 @@ public class RenderHelper {
     return true;
   }
 
-  public boolean renderWaterEntity(PoseStack poseStack, MultiBufferSource buffer, int combinedLight,
-      String farmMobType) {
+  public boolean renderWaterEntity(
+      PoseStack poseStack, MultiBufferSource buffer, int combinedLight, String farmMobType) {
     // Render Water using their specific Renderer and predefined scaling and position.
     switch (farmMobType) {
       case AmbientWaterAnimal.COD:
@@ -408,8 +743,8 @@ public class RenderHelper {
     return true;
   }
 
-  public boolean renderLivingEntity(PoseStack poseStack, MultiBufferSource buffer,
-      int combinedLight, EntityType<?> entityType) {
+  public boolean renderLivingEntity(
+      PoseStack poseStack, MultiBufferSource buffer, int combinedLight, EntityType<?> entityType) {
     if (entityType != null) {
       renderCustomModel(poseStack, buffer, 0D, 0D, 1D / 16D, combinedLight, entityType);
     } else {
@@ -419,8 +754,15 @@ public class RenderHelper {
   }
 
   @SuppressWarnings("java:S107")
-  public boolean renderLivingEntity(PoseStack poseStack, MultiBufferSource buffer, float scale,
-      double x, double y, double z, int combinedLight, EntityType<?> entityType) {
+  public boolean renderLivingEntity(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      float scale,
+      double x,
+      double y,
+      double z,
+      int combinedLight,
+      EntityType<?> entityType) {
     if (entityType != null) {
       poseStack.pushPose();
       poseStack.scale(scale, scale, scale);
@@ -433,9 +775,18 @@ public class RenderHelper {
   }
 
   @SuppressWarnings("java:S107")
-  public <T extends LivingEntity, M extends EntityModel<T>> void renderModel(PoseStack poseStack,
-      MultiBufferSource buffer, float scale, float rotationX, float rotationY, double x, double y,
-      double z, int combinedLight, LivingEntityRenderer<T, M> renderer, T livingEntity) {
+  public <T extends LivingEntity, M extends EntityModel<T>> void renderModel(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      float scale,
+      float rotationX,
+      float rotationY,
+      double x,
+      double y,
+      double z,
+      int combinedLight,
+      LivingEntityRenderer<T, M> renderer,
+      T livingEntity) {
     poseStack.pushPose();
     poseStack.translate(0.5D, 1D / 16D, 0.5D);
     poseStack.mulPose(getBlockRotation());
@@ -448,9 +799,16 @@ public class RenderHelper {
   }
 
   @SuppressWarnings("java:S107")
-  public <T extends LivingEntity, M extends EntityModel<T>> void renderModel(PoseStack poseStack,
-      MultiBufferSource buffer, float scale, double x, double y, double z, int combinedLight,
-      LivingEntityRenderer<T, M> renderer, T livingEntity) {
+  public <T extends LivingEntity, M extends EntityModel<T>> void renderModel(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      float scale,
+      double x,
+      double y,
+      double z,
+      int combinedLight,
+      LivingEntityRenderer<T, M> renderer,
+      T livingEntity) {
     poseStack.pushPose();
     poseStack.translate(0.5D, 1D / 16D, 0.5D);
     poseStack.mulPose(getBlockRotation());
@@ -461,8 +819,16 @@ public class RenderHelper {
   }
 
   @SuppressWarnings("java:S107")
-  public void renderCustomModel(PoseStack poseStack, MultiBufferSource buffer, float scale,
-      float rotationX, float rotationY, double x, double y, double z, int combinedLight,
+  public void renderCustomModel(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      float scale,
+      float rotationX,
+      float rotationY,
+      double x,
+      double y,
+      double z,
+      int combinedLight,
       EntityType<?> entityType) {
     if (entityType != null) {
       poseStack.pushPose();
@@ -478,8 +844,15 @@ public class RenderHelper {
   }
 
   @SuppressWarnings("java:S107")
-  public void renderCustomModel(PoseStack poseStack, MultiBufferSource buffer, float scale,
-      double x, double y, double z, int combinedLight, Entity entity) {
+  public void renderCustomModel(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      float scale,
+      double x,
+      double y,
+      double z,
+      int combinedLight,
+      Entity entity) {
     if (entity != null) {
       poseStack.pushPose();
       poseStack.translate(0.5D, 1D / 16D, 0.5D);
@@ -492,8 +865,15 @@ public class RenderHelper {
   }
 
   @SuppressWarnings("java:S107")
-  public void renderCustomModel(PoseStack poseStack, MultiBufferSource buffer, float scale,
-      double x, double y, double z, int combinedLight, EntityType<?> entityType) {
+  public void renderCustomModel(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      float scale,
+      double x,
+      double y,
+      double z,
+      int combinedLight,
+      EntityType<?> entityType) {
     if (entityType != null) {
       poseStack.pushPose();
       poseStack.translate(0.5D, 1D / 16D, 0.5D);
@@ -505,10 +885,15 @@ public class RenderHelper {
     }
   }
 
-  public void renderCustomModel(PoseStack poseStack, MultiBufferSource buffer, double x, double y,
-      double z, int combinedLight, EntityType<?> entityType) {
+  public void renderCustomModel(
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      double x,
+      double y,
+      double z,
+      int combinedLight,
+      EntityType<?> entityType) {
     float customEntityScale = getCustomEntityScale();
     renderCustomModel(poseStack, buffer, customEntityScale, x, y, z, combinedLight, entityType);
   }
-
 }

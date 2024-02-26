@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,40 +19,40 @@
 
 package de.markusbordihn.easymobfarm.config.biome;
 
+import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
+import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
-import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
-
 public class Desert {
 
-  // Ref: https://minecraft.fandom.com/wiki/Desert
-  protected Desert() {}
-
-  public static final Set<String> Passive = new HashSet<>(Arrays.asList(
-  // @formatter:off
-    PassiveAnimal.RABBIT
-  // @formatter:on
-  ));
-
-  public static final Set<String> Hostile = new HashSet<>(Arrays.asList(
-  // @formatter:off
-    HostileMonster.CREEPER,
-    HostileMonster.ENDERMAN,
-    HostileMonster.HUSK,
-    HostileMonster.SKELETON,
-    HostileMonster.SPIDER,
-    HostileMonster.WITCH,
-    HostileMonster.ZOMBIE,
-    HostileMonster.ZOMBIE_VILLAGER
-  // @formatter:on
-  ));
-
+  public static final Set<String> Passive =
+      new HashSet<>(
+          Arrays.asList(
+              // @formatter:off
+              PassiveAnimal.RABBIT
+              // @formatter:on
+              ));
+  public static final Set<String> Hostile =
+      new HashSet<>(
+          Arrays.asList(
+              // @formatter:off
+              HostileMonster.CREEPER,
+              HostileMonster.ENDERMAN,
+              HostileMonster.HUSK,
+              HostileMonster.SKELETON,
+              HostileMonster.SPIDER,
+              HostileMonster.WITCH,
+              HostileMonster.ZOMBIE,
+              HostileMonster.ZOMBIE_VILLAGER
+              // @formatter:on
+              ));
   public static final Set<String> All =
       Stream.concat(Passive.stream(), Hostile.stream()).collect(Collectors.toSet());
 
+  // Ref: https://minecraft.fandom.com/wiki/Desert
+  protected Desert() {}
 }

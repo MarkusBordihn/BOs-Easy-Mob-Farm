@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -33,14 +33,24 @@ import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
 public class GoldJungleFarmMenu extends MobFarmMenu {
 
   public GoldJungleFarmMenu(int windowIdIn, Inventory inventory) {
-    super(windowIdIn, inventory, new SimpleContainer(containerSize),
+    super(
+        windowIdIn,
+        inventory,
+        new SimpleContainer(containerSize),
         new SimpleContainerData(MobFarmBlockEntityData.DATA_SIZE),
         ModMenuTypes.GOLD_JUNGLE_FARM_MENU.get());
   }
 
-  public GoldJungleFarmMenu(final int windowId, final Inventory playerInventory,
-      final Container container, final ContainerData containerData) {
-    super(windowId, playerInventory, container, containerData,
+  public GoldJungleFarmMenu(
+      final int windowId,
+      final Inventory playerInventory,
+      final Container container,
+      final ContainerData containerData) {
+    super(
+        windowId,
+        playerInventory,
+        container,
+        containerData,
         ModMenuTypes.GOLD_JUNGLE_FARM_MENU.get());
   }
 
@@ -48,5 +58,4 @@ public class GoldJungleFarmMenu extends MobFarmMenu {
   public String getAcceptedMobTypeName() {
     return GoldJungleFarm.NAME;
   }
-
 }

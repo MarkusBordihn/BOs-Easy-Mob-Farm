@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,49 +19,52 @@
 
 package de.markusbordihn.easymobfarm.tabs;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.item.ModItems;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTab.Output;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.CreativeModeTab.Output;
-
 import net.minecraftforge.event.CreativeModeTabEvent;
-
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.item.ModItems;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class EasyMobFarmTab {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+  protected static CreativeModeTab MOB_FARM;
+  protected static CreativeModeTab TOOLS;
 
   protected EasyMobFarmTab() {}
-
-  protected static CreativeModeTab MOB_FARM;
-
-  protected static CreativeModeTab TOOLS;
 
   public static void handleCreativeModeTabRegister(CreativeModeTabEvent.Register event) {
 
     log.info("{} creative mod tabs ...", Constants.LOG_REGISTER_PREFIX);
 
-    MOB_FARM = event.registerCreativeModeTab(new ResourceLocation(Constants.MOD_ID, "mob_farm"),
-        builder -> {
-          builder.icon(() -> new ItemStack(ModItems.IRON_ANIMAL_PLAINS_FARM.get()))
-              .displayItems(EasyMobFarmTab::addMobFarmTabItems)
-              .title(Component.translatable("itemGroup.easy_mob_farm.mob_farm")).build();
-        });
+    MOB_FARM =
+        event.registerCreativeModeTab(
+            new ResourceLocation(Constants.MOD_ID, "mob_farm"),
+            builder -> {
+              builder
+                  .icon(() -> new ItemStack(ModItems.IRON_ANIMAL_PLAINS_FARM.get()))
+                  .displayItems(EasyMobFarmTab::addMobFarmTabItems)
+                  .title(Component.translatable("itemGroup.easy_mob_farm.mob_farm"))
+                  .build();
+            });
 
     TOOLS =
-        event.registerCreativeModeTab(new ResourceLocation(Constants.MOD_ID, "tools"), builder -> {
-          builder.icon(() -> new ItemStack(ModItems.COLLAR_SMALL.get()))
-              .displayItems(EasyMobFarmTab::addToolsTabItems)
-              .title(Component.translatable("itemGroup.easy_mob_farm.tools")).build();
-        });
+        event.registerCreativeModeTab(
+            new ResourceLocation(Constants.MOD_ID, "tools"),
+            builder -> {
+              builder
+                  .icon(() -> new ItemStack(ModItems.COLLAR_SMALL.get()))
+                  .displayItems(EasyMobFarmTab::addToolsTabItems)
+                  .title(Component.translatable("itemGroup.easy_mob_farm.tools"))
+                  .build();
+            });
   }
 
   public static void handleCreativeModeTab(CreativeModeTabEvent.BuildContents event) {
@@ -74,8 +77,8 @@ public class EasyMobFarmTab {
     }
   }
 
-  private static void addMobFarmTabItems(FeatureFlagSet featureFlagSet, Output outputTab,
-      boolean hasPermissions) {
+  private static void addMobFarmTabItems(
+      FeatureFlagSet featureFlagSet, Output outputTab, boolean hasPermissions) {
     // Mob Farms - Tier Copper
     outputTab.accept(ModItems.COPPER_ANIMAL_PLAINS_FARM.get());
     outputTab.accept(ModItems.COPPER_BEE_HIVE_FARM.get());
@@ -121,8 +124,8 @@ public class EasyMobFarmTab {
     outputTab.accept(ModItems.IRON_GOLEM_FARM.get());
   }
 
-  private static void addToolsTabItems(FeatureFlagSet featureFlagSet, Output outputTab,
-      boolean hasPermissions) {
+  private static void addToolsTabItems(
+      FeatureFlagSet featureFlagSet, Output outputTab, boolean hasPermissions) {
     // Mob Capture Items
     outputTab.accept(ModItems.CAPTURE_NET.get());
     outputTab.accept(ModItems.CATCH_CAGE.get());

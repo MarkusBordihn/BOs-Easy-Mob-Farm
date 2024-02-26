@@ -3,7 +3,8 @@
   "pattern": [
     "LWG",
     "C#-",
-    "C--"],
+    "C--"
+  ],
   "key": {
     "#": {
       "item": "easy_mob_farm:netherite_mob_farm_template"

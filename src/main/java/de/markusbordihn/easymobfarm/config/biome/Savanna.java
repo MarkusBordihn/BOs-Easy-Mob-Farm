@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,44 +19,45 @@
 
 package de.markusbordihn.easymobfarm.config.biome;
 
+import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
+import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
-import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
 
 public class Savanna {
 
-  // Ref: https://minecraft.fandom.com/wiki/Savanna
-  protected Savanna() {}
-
-  public static final Set<String> Passive = new HashSet<>(Arrays.asList(
-  // @formatter:off
-    PassiveAnimal.CHICKEN,
-    PassiveAnimal.COW,
-    PassiveAnimal.DONKEY,
-    PassiveAnimal.HORSE,
-    PassiveAnimal.PIG,
-    PassiveAnimal.SHEEP
-  // @formatter:on
-  ));
-
-  public static final Set<String> Hostile = new HashSet<>(Arrays.asList(
-  // @formatter:off
-    HostileMonster.CREEPER,
-    HostileMonster.ENDERMAN,
-    HostileMonster.SKELETON,
-    HostileMonster.SLIME,
-    HostileMonster.SPIDER,
-    HostileMonster.WITCH,
-    HostileMonster.ZOMBIE,
-    HostileMonster.ZOMBIE_VILLAGER
-  // @formatter:on
-  ));
-
+  public static final Set<String> Passive =
+      new HashSet<>(
+          Arrays.asList(
+              // @formatter:off
+              PassiveAnimal.CHICKEN,
+              PassiveAnimal.COW,
+              PassiveAnimal.DONKEY,
+              PassiveAnimal.HORSE,
+              PassiveAnimal.PIG,
+              PassiveAnimal.SHEEP
+              // @formatter:on
+              ));
+  public static final Set<String> Hostile =
+      new HashSet<>(
+          Arrays.asList(
+              // @formatter:off
+              HostileMonster.CREEPER,
+              HostileMonster.ENDERMAN,
+              HostileMonster.SKELETON,
+              HostileMonster.SLIME,
+              HostileMonster.SPIDER,
+              HostileMonster.WITCH,
+              HostileMonster.ZOMBIE,
+              HostileMonster.ZOMBIE_VILLAGER
+              // @formatter:on
+              ));
   public static final Set<String> All =
       Stream.concat(Passive.stream(), Hostile.stream()).collect(Collectors.toSet());
 
+  // Ref: https://minecraft.fandom.com/wiki/Savanna
+  protected Savanna() {}
 }

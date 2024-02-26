@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,19 +19,16 @@
 
 package de.markusbordihn.easymobfarm.network.message;
 
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
+import de.markusbordihn.easymobfarm.data.RedstoneMode;
 import java.util.function.Supplier;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.network.NetworkEvent;
-
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
-import de.markusbordihn.easymobfarm.data.RedstoneMode;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class MessageRedstoneModeChange {
 
@@ -45,16 +42,8 @@ public class MessageRedstoneModeChange {
     this.redstoneMode = redstoneMode;
   }
 
-  public RedstoneMode getRedstoneMode() {
-    return this.redstoneMode;
-  }
-
-  public BlockPos getBlockPos() {
-    return this.blockPos;
-  }
-
-  public static void handle(MessageRedstoneModeChange message,
-      Supplier<NetworkEvent.Context> contextSupplier) {
+  public static void handle(
+      MessageRedstoneModeChange message, Supplier<NetworkEvent.Context> contextSupplier) {
     NetworkEvent.Context context = contextSupplier.get();
     context.enqueueWork(() -> handlePacket(message, context));
     context.setPacketHandled(true);
@@ -99,4 +88,11 @@ public class MessageRedstoneModeChange {
     mobFarmBlockEntity.setRedstoneMode(redstoneMode);
   }
 
+  public RedstoneMode getRedstoneMode() {
+    return this.redstoneMode;
+  }
+
+  public BlockPos getBlockPos() {
+    return this.blockPos;
+  }
 }

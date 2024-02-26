@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,8 +19,12 @@
 
 package de.markusbordihn.easymobfarm.block.entity.farm.special;
 
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.block.ModBlocks;
+import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
+import de.markusbordihn.easymobfarm.data.FarmTier;
+import de.markusbordihn.easymobfarm.menu.farm.special.IronGolemFarmMenu;
 import java.util.List;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -32,17 +36,10 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.registries.ForgeRegistries;
-
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.ModBlocks;
-import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
-import de.markusbordihn.easymobfarm.data.FarmTier;
-import de.markusbordihn.easymobfarm.menu.farm.special.IronGolemFarmMenu;
 
 @EventBusSubscriber
 public class IronGolemFarmEntity extends MobFarmBlockEntity {
@@ -54,31 +51,36 @@ public class IronGolemFarmEntity extends MobFarmBlockEntity {
     this(ModBlocks.IRON_GOLEM_FARM_ENTITY.get(), blockPos, blockState);
   }
 
-  public IronGolemFarmEntity(BlockEntityType<?> blockEntity, BlockPos blockPos,
-      BlockState blockState) {
+  public IronGolemFarmEntity(
+      BlockEntityType<?> blockEntity, BlockPos blockPos, BlockState blockState) {
     super(blockEntity, blockPos, blockState);
   }
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
     farmProcessingTime = COMMON.ironGolemFarmProcessTime.get() * 20;
-    log.info("{}: Iron Golem Plains Farm Entity with drops every {}s",
-        Constants.LOG_MOB_FARM_PREFIX, COMMON.ironGolemFarmProcessTime.get());
+    log.info(
+        "{}: Iron Golem Plains Farm Entity with drops every {}s",
+        Constants.LOG_MOB_FARM_PREFIX,
+        COMMON.ironGolemFarmProcessTime.get());
     String farmDropSoundName = COMMON.ironGolemFarmDropSound.get();
-    if (Boolean.TRUE.equals(COMMON.playDropSound.get()) && farmDropSoundName != null
+    if (Boolean.TRUE.equals(COMMON.playDropSound.get())
+        && farmDropSoundName != null
         && !farmDropSoundName.isEmpty()) {
       farmDropSound =
           ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(farmDropSoundName));
       if (farmDropSound != null) {
-        log.info("{}: Iron Golem Plains Farm Entity will play drop sound: {}",
-            Constants.LOG_MOB_FARM_PREFIX, farmDropSound.getLocation());
+        log.info(
+            "{}: Iron Golem Plains Farm Entity will play drop sound: {}",
+            Constants.LOG_MOB_FARM_PREFIX,
+            farmDropSound.getLocation());
       }
     }
   }
 
   @Override
-  protected List<ItemStack> processLootDrop(ItemStack capturedMob, ItemStack weaponItem,
-      Level level) {
+  protected List<ItemStack> processLootDrop(
+      ItemStack capturedMob, ItemStack weaponItem, Level level) {
     List<ItemStack> lootDrops = super.processLootDrop(capturedMob, weaponItem, level);
     if (Boolean.TRUE.equals(COMMON.ironGolemFarmFilterPoppy.get())) {
       lootDrops.removeIf(itemStack -> itemStack.getItem().equals(Items.POPPY));
@@ -110,5 +112,4 @@ public class IronGolemFarmEntity extends MobFarmBlockEntity {
   public FarmTier getFarmTier() {
     return FarmTier.IRON;
   }
-
 }

@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -19,55 +19,66 @@
 
 package de.markusbordihn.easymobfarm.client.screen;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import net.minecraft.resources.ResourceLocation;
-
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.config.mobs.HostileMonster;
 import de.markusbordihn.easymobfarm.config.mobs.HostileWaterMonster;
 import de.markusbordihn.easymobfarm.config.mobs.PassiveAnimal;
 import de.markusbordihn.easymobfarm.config.mobs.PassiveWaterAnimal;
+import java.util.HashMap;
+import java.util.Map;
+import net.minecraft.resources.ResourceLocation;
 
 public class Snapshots {
 
-  protected Snapshots() {}
-
   private static final String SNAPSHOT_PATH = "textures/container/snaps/";
-
   protected static final Map<String, ResourceLocation> SnapshotsMap = createSnapshotMap();
+
+  protected Snapshots() {}
 
   // This way allows a cpu and memory optimized may to create a static map.
   private static Map<String, ResourceLocation> createSnapshotMap() {
     Map<String, ResourceLocation> hashMap = new HashMap<>();
-    hashMap.put(HostileMonster.CAVE_SPIDER,
+    hashMap.put(
+        HostileMonster.CAVE_SPIDER,
         new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_cave_spider.png"));
-    hashMap.put(HostileMonster.CREEPER,
+    hashMap.put(
+        HostileMonster.CREEPER,
         new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_creeper.png"));
-    hashMap.put(HostileMonster.ENDERMAN,
+    hashMap.put(
+        HostileMonster.ENDERMAN,
         new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_enderman.png"));
-    hashMap.put(HostileMonster.SKELETON,
+    hashMap.put(
+        HostileMonster.SKELETON,
         new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_skeleton.png"));
-    hashMap.put(HostileMonster.SPIDER,
+    hashMap.put(
+        HostileMonster.SPIDER,
         new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_spider.png"));
-    hashMap.put(HostileMonster.SLIME,
+    hashMap.put(
+        HostileMonster.SLIME,
         new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_slime.png"));
-    hashMap.put(HostileMonster.WITCH,
+    hashMap.put(
+        HostileMonster.WITCH,
         new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_witch.png"));
-    hashMap.put(HostileMonster.ZOMBIE,
+    hashMap.put(
+        HostileMonster.ZOMBIE,
         new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_zombie.png"));
-    hashMap.put(HostileWaterMonster.DROWNED,
+    hashMap.put(
+        HostileWaterMonster.DROWNED,
         new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_drowned.png"));
-    hashMap.put(PassiveAnimal.CHICKEN,
+    hashMap.put(
+        PassiveAnimal.CHICKEN,
         new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_chicken.png"));
-    hashMap.put(PassiveAnimal.COW,
+    hashMap.put(
+        PassiveAnimal.COW,
         new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_cow.png"));
-    hashMap.put(PassiveAnimal.PIG,
+    hashMap.put(
+        PassiveAnimal.PIG,
         new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_pig.png"));
-    hashMap.put(PassiveAnimal.SHEEP,
+    hashMap.put(
+        PassiveAnimal.SHEEP,
         new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_sheep.png"));
-    hashMap.put(PassiveWaterAnimal.SQUID,
+    hashMap.put(
+        PassiveWaterAnimal.SQUID,
         new ResourceLocation(Constants.MOD_ID, SNAPSHOT_PATH + "minecraft_squid.png"));
     return hashMap;
   }

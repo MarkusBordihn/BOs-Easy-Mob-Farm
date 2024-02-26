@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
@@ -49,24 +49,29 @@ public class NetheriteAnimalPlainsFarmEntity extends MobFarmBlockEntity {
     this(ModBlocks.NETHERITE_ANIMAL_PLAINS_FARM_ENTITY.get(), blockPos, blockState);
   }
 
-  public NetheriteAnimalPlainsFarmEntity(BlockEntityType<?> blockEntity, BlockPos blockPos,
-      BlockState blockState) {
+  public NetheriteAnimalPlainsFarmEntity(
+      BlockEntityType<?> blockEntity, BlockPos blockPos, BlockState blockState) {
     super(blockEntity, blockPos, blockState);
   }
 
   @SubscribeEvent
   public static void handleServerAboutToStartEvent(ServerAboutToStartEvent event) {
     farmProcessingTime = COMMON.netheriteAnimalPlainsFarmProcessTime.get() * 20;
-    log.info("{}: Netherite Animal Plains Farm Entity with drops every {}s",
-        Constants.LOG_MOB_FARM_PREFIX, COMMON.netheriteAnimalPlainsFarmProcessTime.get());
+    log.info(
+        "{}: Netherite Animal Plains Farm Entity with drops every {}s",
+        Constants.LOG_MOB_FARM_PREFIX,
+        COMMON.netheriteAnimalPlainsFarmProcessTime.get());
     String farmDropSoundName = COMMON.netheriteAnimalPlainsFarmDropSound.get();
-    if (Boolean.TRUE.equals(COMMON.playDropSound.get()) && farmDropSoundName != null
+    if (Boolean.TRUE.equals(COMMON.playDropSound.get())
+        && farmDropSoundName != null
         && !farmDropSoundName.isEmpty()) {
       farmDropSound =
           ForgeRegistries.SOUND_EVENTS.getValue(new ResourceLocation(farmDropSoundName));
       if (farmDropSound != null) {
-        log.info("{}: Netherite Animal Plains Farm Entity will play drop sound: {}",
-            Constants.LOG_MOB_FARM_PREFIX, farmDropSound.getLocation());
+        log.info(
+            "{}: Netherite Animal Plains Farm Entity will play drop sound: {}",
+            Constants.LOG_MOB_FARM_PREFIX,
+            farmDropSound.getLocation());
       }
     }
   }
@@ -95,5 +100,4 @@ public class NetheriteAnimalPlainsFarmEntity extends MobFarmBlockEntity {
   public FarmTier getFarmTier() {
     return FarmTier.NETHERITE;
   }
-
 }

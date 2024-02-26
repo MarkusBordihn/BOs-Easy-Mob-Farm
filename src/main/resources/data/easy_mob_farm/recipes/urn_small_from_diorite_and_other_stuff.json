@@ -3,7 +3,8 @@
   "pattern": [
     "#G#",
     "#O#",
-    "###"],
+    "###"
+  ],
   "key": {
     "#": {
       "item": "minecraft:polished_diorite"
