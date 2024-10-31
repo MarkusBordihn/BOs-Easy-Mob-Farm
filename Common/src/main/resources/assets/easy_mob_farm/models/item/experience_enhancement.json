@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "easy_mob_farm:item/upgrade/enhancement/experience_enhancement"
+  }
+}

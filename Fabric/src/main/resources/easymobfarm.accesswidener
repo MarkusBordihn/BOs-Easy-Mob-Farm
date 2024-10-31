@@ -1,0 +1,3 @@
+accessWidener	v2 named
+accessible field net/minecraft/world/entity/Entity random Ljava/util/Random;
+accessible field net/minecraft/world/entity/projectile/FishingHook luck I
