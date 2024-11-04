@@ -36,6 +36,7 @@ public class ModTabs {
   public static CreativeModeTab TAB_MOB_CAPTURE_CARDS;
   public static CreativeModeTab TAB_MOB_FARMS;
   public static CreativeModeTab TAB_MOB_FARM_UPGRADES;
+  public static CreativeModeTab TAB_MOB_CATCHER;
 
   private ModTabs() {}
 
@@ -92,6 +93,19 @@ public class ModTabs {
                   stack.add(Items.NO_MEAT_FILTER.getDefaultInstance());
                   stack.add(Items.SMALL_SLOT_UPGRADE.getDefaultInstance());
                   stack.add(Items.BIG_SLOT_UPGRADE.getDefaultInstance());
+                })
+            .build();
+
+    TAB_MOB_CATCHER =
+        FabricItemGroupBuilder.create(new ResourceLocation(Constants.MOD_ID, "mob_catcher"))
+            .icon(Items.CREATIVE_MOB_CATCHER::getDefaultInstance)
+            .appendItems(
+                stack -> {
+                  // Default mob capture
+                  stack.add(Items.CREATIVE_MOB_CATCHER.getDefaultInstance());
+                  stack.add(Items.ENDURING_CAPTURE_NET.getDefaultInstance());
+                  stack.add(Items.IRONBOUND_CONTAINMENT_CAGE.getDefaultInstance());
+                  stack.add(Items.MYSTIC_BINDING_CRYSTAL.getDefaultInstance());
                 })
             .build();
   }

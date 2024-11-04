@@ -42,6 +42,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.Sheep;
+import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
@@ -132,11 +133,24 @@ public class LootManager {
       lootTable.getRandomItems(lootContext).stream()
           .filter(itemStack -> !itemStack.isEmpty())
           .forEach(drops::add);
+      handleSpecialEntityDrops(livingEntity, drops);
     }
 
     handlePostEnhancements(enhancements, livingEntity, fakePlayer, drops);
 
     return drops;
+  }
+
+  private static void handleSpecialEntityDrops(
+      final LivingEntity livingEntity, final NonNullList<ItemStack> drops) {
+    if (livingEntity instanceof WitherBoss) {
+      if (random.nextInt(2) == 0) {
+        drops.add(new ItemStack(Items.NETHER_STAR));
+      }
+      if (random.nextInt(2) == 0) {
+        drops.add(new ItemStack(Items.WITHER_ROSE));
+      }
+    }
   }
 
   private static LootContext.Builder createLootContextBuilder(

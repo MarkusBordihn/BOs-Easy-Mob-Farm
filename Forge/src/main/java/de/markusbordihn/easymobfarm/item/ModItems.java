@@ -26,6 +26,10 @@ import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.BlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.CreativeBlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
+import de.markusbordihn.easymobfarm.item.mobcatcher.CreativeMobCatcherItem;
+import de.markusbordihn.easymobfarm.item.mobcatcher.EnduringCaptureNetItem;
+import de.markusbordihn.easymobfarm.item.mobcatcher.IronboundContainmentCageItem;
+import de.markusbordihn.easymobfarm.item.mobcatcher.MysticBindingCrystalItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LootEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LuckEnhancementItem;
@@ -117,6 +121,26 @@ public class ModItems {
       ITEMS.register(
           SmallSlotUpgradeItem.ID,
           () -> new SmallSlotUpgradeItem(new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
+
+  public static final RegistryObject<Item> CREATIVE_MOB_CATCHER =
+      ITEMS.register(
+          CreativeMobCatcherItem.ID,
+          () ->
+              new CreativeMobCatcherItem(
+                  new Item.Properties().tab(ModTabs.TAB_MOB_CATCHER).stacksTo(1)));
+  public static final RegistryObject<Item> ENDURING_CAPTURE_NET =
+      ITEMS.register(
+          EnduringCaptureNetItem.ID,
+          () -> new EnduringCaptureNetItem(new Item.Properties().tab(ModTabs.TAB_MOB_CATCHER)));
+  public static final RegistryObject<Item> IRONBOUND_CONTAINMENT_CAGE =
+      ITEMS.register(
+          IronboundContainmentCageItem.ID,
+          () ->
+              new IronboundContainmentCageItem(new Item.Properties().tab(ModTabs.TAB_MOB_CATCHER)));
+  public static final RegistryObject<Item> MYSTIC_BINDING_CRYSTAL =
+      ITEMS.register(
+          MysticBindingCrystalItem.ID,
+          () -> new MysticBindingCrystalItem(new Item.Properties().tab(ModTabs.TAB_MOB_CATCHER)));
 
   public static final RegistryObject<Item> TIER_0_MOB_FARM_TEMPLATE =
       ITEMS.register(

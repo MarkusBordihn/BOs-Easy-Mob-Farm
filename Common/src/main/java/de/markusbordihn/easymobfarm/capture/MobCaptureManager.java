@@ -23,7 +23,9 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.data.capture.MobVariantData;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -32,6 +34,8 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -102,6 +106,65 @@ public class MobCaptureManager {
         mobCaptureData.entityType(),
         mobCaptureData.data());
     return itemStack;
+  }
+
+  public static boolean releaseMob(
+      MobCaptureData mobCaptureData, BlockPos blockPos, ServerLevel serverLevel) {
+    if (mobCaptureData == null || mobCaptureData.entityType() == null) {
+      return false;
+    }
+
+    // Validate EntityType
+    EntityType<?> entityType = mobCaptureData.entityType();
+    if (entityType == null) {
+      return false;
+    }
+
+    // Create entity from EntityType
+    Entity entity = entityType.create(serverLevel);
+    if (entity == null) {
+      log.error("{} Unable to create entity {}!", LOG_PREFIX, entityType);
+      return false;
+    }
+
+    // Copy data from mobCaptureData to entity
+    if (entity instanceof LivingEntity livingEntity) {
+      livingEntity.readAdditionalSaveData(mobCaptureData.data());
+    }
+
+    // Check if entity could be spawned at block position or above
+    BlockState blockState = serverLevel.getBlockState(blockPos);
+    BlockPos finalBlockPos = null;
+    if ((blockState.is(Blocks.GRASS) || blockState.is(Blocks.SEAGRASS))) {
+      finalBlockPos = blockPos;
+    } else {
+      BlockState blockStateBlockAbove = serverLevel.getBlockState(blockPos.above());
+      if ((blockStateBlockAbove.isAir() || blockStateBlockAbove.is(Blocks.WATER))) {
+        finalBlockPos = blockPos.above();
+      }
+    }
+
+    // Spawn entity at block position if possible
+    if (finalBlockPos != null) {
+      entity.moveTo(
+          blockPos.getX() + 0.5D, blockPos.getY() + 1.0D, blockPos.getZ() + 0.5D, 0.0F, 0.0F);
+      serverLevel.addFreshEntity(entity);
+      log.debug(
+          "{} Released mob {} with data:{} at block position {}.",
+          LOG_PREFIX,
+          entityType,
+          mobCaptureData.data(),
+          blockPos);
+      return true;
+    }
+
+    log.warn(
+        "{} Unable to release mob {} with data:{} at block position {}.",
+        LOG_PREFIX,
+        entityType,
+        mobCaptureData.data(),
+        blockPos);
+    return true;
   }
 
   public static ItemStack createMobCaptureCard(

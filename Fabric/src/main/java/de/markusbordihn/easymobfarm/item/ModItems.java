@@ -26,6 +26,10 @@ import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.BlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.CreativeBlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
+import de.markusbordihn.easymobfarm.item.mobcatcher.CreativeMobCatcherItem;
+import de.markusbordihn.easymobfarm.item.mobcatcher.EnduringCaptureNetItem;
+import de.markusbordihn.easymobfarm.item.mobcatcher.IronboundContainmentCageItem;
+import de.markusbordihn.easymobfarm.item.mobcatcher.MysticBindingCrystalItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LootEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LuckEnhancementItem;
@@ -129,6 +133,12 @@ public class ModItems {
     registerItem(MobFarmBlock.ID_NETHER_FORTRESS_FARM, NETHER_FORTRESS_FARM);
     registerItem(MobFarmBlock.ID_OCEAN_FARM, OCEAN_FARM);
     registerItem(MobFarmBlock.ID_SWAMP_FARM, SWAMP_FARM);
+
+    log.info("{} Mob Catcher items ...", Constants.LOG_REGISTER_PREFIX);
+    registerItem(CreativeMobCatcherItem.ID, Items.CREATIVE_MOB_CATCHER);
+    registerItem(EnduringCaptureNetItem.ID, Items.ENDURING_CAPTURE_NET);
+    registerItem(IronboundContainmentCageItem.ID, Items.IRONBOUND_CONTAINMENT_CAGE);
+    registerItem(MysticBindingCrystalItem.ID, Items.MYSTIC_BINDING_CRYSTAL);
   }
 
   private static void registerItem(final String id, final Item item) {

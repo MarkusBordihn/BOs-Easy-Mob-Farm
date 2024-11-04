@@ -47,5 +47,12 @@ public class ModTabs {
         }
       };
 
+  public static final CreativeModeTab TAB_MOB_CATCHER =
+      new CreativeModeTab(Constants.MOD_PREFIX + "mob_catcher") {
+        public ItemStack makeIcon() {
+          return ModItems.CREATIVE_MOB_CATCHER.get().getDefaultInstance();
+        }
+      };
+
   private ModTabs() {}
 }

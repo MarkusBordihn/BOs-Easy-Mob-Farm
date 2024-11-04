@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.menu.slots;
 
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
+import de.markusbordihn.easymobfarm.item.mobcatcher.MobCatcherItem;
 import de.markusbordihn.easymobfarm.menu.MobFarmSlot;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import net.minecraft.network.chat.Component;
@@ -42,7 +43,9 @@ public class CapturedMobSlot extends MobFarmSlot {
 
     // Early return for default mob capture items.
     Item item = itemStack.getItem();
-    if (item instanceof MobCaptureCardItem || item instanceof SpawnEggItem) {
+    if (item instanceof MobCaptureCardItem
+        || item instanceof SpawnEggItem
+        || item instanceof MobCatcherItem) {
       return true;
     }
 

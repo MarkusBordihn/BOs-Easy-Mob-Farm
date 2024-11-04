@@ -22,6 +22,10 @@ package de.markusbordihn.easymobfarm.item;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.BlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.CreativeBlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
+import de.markusbordihn.easymobfarm.item.mobcatcher.CreativeMobCatcherItem;
+import de.markusbordihn.easymobfarm.item.mobcatcher.EnduringCaptureNetItem;
+import de.markusbordihn.easymobfarm.item.mobcatcher.IronboundContainmentCageItem;
+import de.markusbordihn.easymobfarm.item.mobcatcher.MysticBindingCrystalItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LootEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LuckEnhancementItem;
@@ -52,6 +56,11 @@ public class Items {
 
   public static final Item BIG_SLOT_UPGRADE = new BigSlotUpgradeItem();
   public static final Item SMALL_SLOT_UPGRADE = new SmallSlotUpgradeItem();
+
+  public static final Item CREATIVE_MOB_CATCHER = new CreativeMobCatcherItem();
+  public static final Item ENDURING_CAPTURE_NET = new EnduringCaptureNetItem();
+  public static final Item IRONBOUND_CONTAINMENT_CAGE = new IronboundContainmentCageItem();
+  public static final Item MYSTIC_BINDING_CRYSTAL = new MysticBindingCrystalItem();
 
   private Items() {}
 }

@@ -19,10 +19,14 @@
 
 package de.markusbordihn.easymobfarm;
 
+import cpw.mods.modlauncher.Launcher;
+import cpw.mods.modlauncher.api.IEnvironment;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.config.Config;
+import de.markusbordihn.easymobfarm.debug.DebugManager;
 import de.markusbordihn.easymobfarm.item.ModItems;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
+import java.util.Optional;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
@@ -44,6 +48,14 @@ public class EasyMobFarm {
     final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
     log.info("Initializing {} (Forge) ...", Constants.MOD_NAME);
+
+    log.info("{} Debug Manager ...", Constants.LOG_REGISTER_PREFIX);
+    Optional<String> version =
+        Launcher.INSTANCE.environment().getProperty(IEnvironment.Keys.VERSION.get());
+    if (version.isPresent() && "MOD_DEV".equals(version.get())) {
+      DebugManager.setDevelopmentEnvironment(true);
+    }
+    DebugManager.checkForDebugLogging(Constants.LOG_NAME);
 
     log.info("{} Constants ...", Constants.LOG_REGISTER_PREFIX);
     Constants.GAME_DIR = FMLPaths.GAMEDIR.get();

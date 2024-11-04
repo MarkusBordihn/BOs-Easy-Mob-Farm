@@ -163,13 +163,12 @@ public class MobFarmBlock extends BaseEntityBlock {
 
     // Check if item in hand could be consumed
     ItemStack itemStack = player.getItemInHand(interactionHand);
-    if (!itemStack.isEmpty()) {
-      if (mobFarmBlockEntity.takeMobCaptureItem(player, interactionHand)
-          || mobFarmBlockEntity.takeEnhancementItem(player, interactionHand)
-          || mobFarmBlockEntity.takeSlotUpgradeItem(player, interactionHand)
-          || mobFarmBlockEntity.takeFilterItem(player, interactionHand)) {
-        return InteractionResult.CONSUME;
-      }
+    if (!itemStack.isEmpty()
+        && (mobFarmBlockEntity.takeMobCaptureItem(player, interactionHand)
+            || mobFarmBlockEntity.takeEnhancementItem(player, interactionHand)
+            || mobFarmBlockEntity.takeSlotUpgradeItem(player, interactionHand)
+            || mobFarmBlockEntity.takeFilterItem(player, interactionHand))) {
+      return InteractionResult.CONSUME;
     }
 
     // Check if mob capture items could be extracted

@@ -29,6 +29,7 @@ import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmSlot;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmSlots;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmStatus;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
+import de.markusbordihn.easymobfarm.item.mobcatcher.MobCatcherItem;
 import de.markusbordihn.easymobfarm.item.upgrade.EnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.FilterItem;
 import de.markusbordihn.easymobfarm.item.upgrade.SlotUpgradeItem;
@@ -356,7 +357,9 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     }
 
     Item handItem = handItemStack.getItem();
-    if ((handItem instanceof MobCaptureCardItem || handItem instanceof SpawnEggItem)
+    if ((handItem instanceof MobCaptureCardItem
+            || handItem instanceof SpawnEggItem
+            || handItem instanceof MobCatcherItem)
         && this.getItem(MobFarmSlot.CAPTURED_MOB).isEmpty()) {
       return takePlayerItem(MobFarmSlot.CAPTURED_MOB.index(), player, hand);
     }

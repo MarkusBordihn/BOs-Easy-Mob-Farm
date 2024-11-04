@@ -20,11 +20,14 @@
 package de.markusbordihn.easymobfarm;
 
 import de.markusbordihn.easymobfarm.block.ModBlocks;
+import de.markusbordihn.easymobfarm.commands.manager.CommandManager;
 import de.markusbordihn.easymobfarm.config.Config;
+import de.markusbordihn.easymobfarm.debug.DebugManager;
 import de.markusbordihn.easymobfarm.item.ModItems;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -36,6 +39,12 @@ public class EasyMobFarm implements ModInitializer {
   @Override
   public void onInitialize() {
     log.info("Initializing {} (Fabric) ...", Constants.MOD_NAME);
+
+    log.info("{} Debug Manager ...", Constants.LOG_REGISTER_PREFIX);
+    if (System.getProperty("fabric.development") != null) {
+      DebugManager.setDevelopmentEnvironment(true);
+    }
+    DebugManager.checkForDebugLogging(Constants.LOG_NAME);
 
     log.info("{} Constants ...", Constants.LOG_REGISTER_PREFIX);
     Constants.GAME_DIR = FabricLoader.getInstance().getGameDir();
@@ -52,6 +61,10 @@ public class EasyMobFarm implements ModInitializer {
 
     log.info("{} Items ...", Constants.LOG_REGISTER_PREFIX);
     ModItems.registerModItems();
+
+    log.info("{} Command register event ...", Constants.LOG_REGISTER_PREFIX);
+    CommandRegistrationCallback.EVENT.register(
+        (dispatcher, dedicated) -> CommandManager.registerCommands(dispatcher));
 
     log.info("{} Menu Types ...", Constants.LOG_REGISTER_PREFIX);
     ModMenuTypes.register();
