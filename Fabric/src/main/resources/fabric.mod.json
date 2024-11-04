@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "easy_mob_farm",
+  "version": "${version}",
+  "name": "Easy Mob Farm",
+  "description": "The Easy Mob Farm offers a server-friendly solution for capturing various animals and mobs to\nharvest their valuable loot.",
+  "authors": [
+    "Markus Bordihn"
+  ],
+  "contact": {
+    "homepage": "https://curseforge.com/minecraft/mc-mods/easy_mob_farm",
+    "issues": "https://github.com/MarkusBordihn/Easy-Mob-Farm/issues"
+  },
+  "license": "MIT",
+  "icon": "logo.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "de.markusbordihn.easymobfarm.EasyMobFarm"
+    ],
+    "client": [
+      "de.markusbordihn.easymobfarm.EasyMobFarmClient"
+    ],
+    "fabric-gametest": [
+      "de.markusbordihn.easymobfarm.gametest.SmokeTest"
+    ]
+  },
+  "mixins": [
+    "easymobfarm.mixins.json"
+  ],
+  "accessWidener": "easymobfarm.accesswidener",
+  "depends": {
+    "fabricloader": ">=0.15",
+    "fabric": "*",
+    "minecraft": "1.19.2",
+    "java": ">=17"
+  },
+  "suggests": {
+    "tooltipfix": "*"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_tier2_mob_farm_template": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["easy_mob_farm:tier2_mob_farm_template"]
+          }
+        ]
+      }
+    },
+    "has_iron_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:iron_ingot"]
+          }
+        ]
+      }
+    },
+    "has_glass": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:glass"]
+          }
+        ]
+      }
+    },
+    "has_hopper": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:hopper"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_tier2_mob_farm_template",
+      "has_iron_ingot",
+      "has_glass",
+      "has_hopper"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "easy_mob_farm:mob_farm_template/tier2_mob_farm_template"
+    ]
+  }
+}

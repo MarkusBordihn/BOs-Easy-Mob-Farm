@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " E ",
+    "GLG",
+    " Q "
+  ],
+  "key": {
+    "E": {"item": "minecraft:ender_pearl"},
+    "G": {"item": "minecraft:ghast_tear"},
+    "L": {"item": "minecraft:lead"},
+    "Q": {"item": "minecraft:quartz"}
+  },
+  "result": {
+    "item": "easy_mob_farm:mystic_binding_crystal"
+  }
+}

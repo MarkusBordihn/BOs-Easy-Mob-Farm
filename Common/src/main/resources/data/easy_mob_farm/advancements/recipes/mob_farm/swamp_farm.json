@@ -1,0 +1,61 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_swamp_farm": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["easy_mob_farm:swamp_farm"]
+          }
+        ]
+      }
+    },
+    "has_mob_farm_template": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "easy_mob_farm:mob_farm_templates"
+          }
+        ]
+      }
+    },
+    "has_oak_log": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:oak_log"]
+          }
+        ]
+      }
+    },
+    "has_brown_mushroom": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:brown_mushroom"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_swamp_farm",
+      "has_mob_farm_template",
+      "has_oak_log",
+      "has_brown_mushroom"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "easy_mob_farm:mob_farm/swamp_farm/tier0_swamp_farm",
+      "easy_mob_farm:mob_farm/swamp_farm/tier1_swamp_farm",
+      "easy_mob_farm:mob_farm/swamp_farm/tier2_swamp_farm",
+      "easy_mob_farm:mob_farm/swamp_farm/tier3_swamp_farm"
+    ]
+  }
+}

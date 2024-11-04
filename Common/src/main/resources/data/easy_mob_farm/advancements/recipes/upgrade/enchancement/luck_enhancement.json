@@ -1,0 +1,47 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_luck_enhancement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["easy_mob_farm:luck_enhancement"]
+          }
+        ]
+      }
+    },
+    "has_emerald": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:emerald"]
+          }
+        ]
+      }
+    },
+    "has_quartz": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:quartz"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_luck_enhancement",
+      "has_emerald",
+      "has_quartz"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "easy_mob_farm:upgrade/enhancement/luck_enhancement"
+    ]
+  }
+}
