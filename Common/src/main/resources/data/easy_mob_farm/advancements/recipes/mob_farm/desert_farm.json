@@ -1,0 +1,61 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_desert_farm": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["easy_mob_farm:desert_farm"]
+          }
+        ]
+      }
+    },
+    "has_mob_farm_template": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "easy_mob_farm:mob_farm_templates"
+          }
+        ]
+      }
+    },
+    "has_cactus": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:cactus"]
+          }
+        ]
+      }
+    },
+    "has_sandstone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:sandstone"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_desert_farm",
+      "has_mob_farm_template",
+      "has_cactus",
+      "has_sandstone"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "easy_mob_farm:mob_farm/desert_farm/tier0_desert_farm",
+      "easy_mob_farm:mob_farm/desert_farm/tier1_desert_farm",
+      "easy_mob_farm:mob_farm/desert_farm/tier2_desert_farm",
+      "easy_mob_farm:mob_farm/desert_farm/tier3_desert_farm"
+    ]
+  }
+}

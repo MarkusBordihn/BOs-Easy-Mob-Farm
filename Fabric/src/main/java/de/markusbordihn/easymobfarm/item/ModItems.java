@@ -1,0 +1,144 @@
+/*
+ * Copyright 2024 Markus Bordihn
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+package de.markusbordihn.easymobfarm.item;
+
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.block.CreativeMobFarmBlock;
+import de.markusbordihn.easymobfarm.block.MobFarmBlock;
+import de.markusbordihn.easymobfarm.block.ModBlocks;
+import de.markusbordihn.easymobfarm.item.mobcapturecard.BlankMobCaptureCardItem;
+import de.markusbordihn.easymobfarm.item.mobcapturecard.CreativeBlankMobCaptureCardItem;
+import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
+import de.markusbordihn.easymobfarm.item.mobcatcher.CreativeMobCatcherItem;
+import de.markusbordihn.easymobfarm.item.mobcatcher.EnduringCaptureNetItem;
+import de.markusbordihn.easymobfarm.item.mobcatcher.IronboundContainmentCageItem;
+import de.markusbordihn.easymobfarm.item.mobcatcher.MysticBindingCrystalItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LootEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LuckEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SheepEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SpeedEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SwordEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.filter.NoFlowersFilterItem;
+import de.markusbordihn.easymobfarm.item.upgrade.filter.NoMeatFilterItem;
+import de.markusbordihn.easymobfarm.item.upgrade.slot.BigSlotUpgradeItem;
+import de.markusbordihn.easymobfarm.item.upgrade.slot.SmallSlotUpgradeItem;
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+public class ModItems {
+
+  public static final Item TIER_0_MOB_FARM_TEMPLATE =
+      new MobFarmTemplateItem(MobFarmTemplateItem.ID_TIER_0, ModBlocks.TIER_0_MOB_FARM_TEMPLATE);
+  public static final Item TIER_1_MOB_FARM_TEMPLATE =
+      new MobFarmTemplateItem(MobFarmTemplateItem.ID_TIER_1, ModBlocks.TIER_1_MOB_FARM_TEMPLATE);
+  public static final Item TIER_2_MOB_FARM_TEMPLATE =
+      new MobFarmTemplateItem(MobFarmTemplateItem.ID_TIER_2, ModBlocks.TIER_2_MOB_FARM_TEMPLATE);
+  public static final Item TIER_3_MOB_FARM_TEMPLATE =
+      new MobFarmTemplateItem(MobFarmTemplateItem.ID_TIER_3, ModBlocks.TIER_3_MOB_FARM_TEMPLATE);
+
+  public static final Item CREATIVE_MOB_FARM =
+      new BlockItem(ModBlocks.CREATIVE_MOB_FARM, new Item.Properties());
+  public static final Item ANIMAL_PLAINS_FARM =
+      new MobFarmBlockItem(MobFarmBlock.ID_ANIMAL_PLAINS_FARM, ModBlocks.ANIMAL_PLAINS_FARM);
+  public static final Item BEE_HIVE_FARM =
+      new MobFarmBlockItem(MobFarmBlock.ID_BEE_HIVE_FARM, ModBlocks.BEE_HIVE_FARM);
+  public static final Item DESERT_FARM =
+      new MobFarmBlockItem(MobFarmBlock.ID_DESERT_FARM, ModBlocks.DESERT_FARM);
+  public static final Item JUNGLE_FARM =
+      new MobFarmBlockItem(MobFarmBlock.ID_JUNGLE_FARM, ModBlocks.JUNGLE_FARM);
+  public static final Item MONSTER_PLAINS_CAVE_FARM =
+      new MobFarmBlockItem(
+          MobFarmBlock.ID_MONSTER_PLAINS_CAVE_FARM, ModBlocks.MONSTER_PLAINS_CAVE_FARM);
+  public static final Item NETHER_FORTRESS_FARM =
+      new MobFarmBlockItem(MobFarmBlock.ID_NETHER_FORTRESS_FARM, ModBlocks.NETHER_FORTRESS_FARM);
+  public static final Item OCEAN_FARM =
+      new MobFarmBlockItem(MobFarmBlock.ID_OCEAN_FARM, ModBlocks.OCEAN_FARM);
+  public static final Item SWAMP_FARM =
+      new MobFarmBlockItem(MobFarmBlock.ID_SWAMP_FARM, ModBlocks.SWAMP_FARM);
+
+  private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+
+  private ModItems() {}
+
+  public static void registerModItems() {
+    log.info("{} Mob Capture Card items ...", Constants.LOG_REGISTER_PREFIX);
+    registerItem(BlankMobCaptureCardItem.ID, Items.BLANK_MOB_CAPTURE_CARD);
+    registerItem(CreativeBlankMobCaptureCardItem.ID, Items.CREATIVE_MOB_CAPTURE_CARD);
+    registerItem(MobCaptureCardItem.ID, Items.MOB_CAPTURE_CARD);
+
+    log.info("{} Enhancement items ...", Constants.LOG_REGISTER_PREFIX);
+    registerItem(ExperienceEnhancementItem.ID, Items.EXPERIENCE_ENHANCEMENT);
+    registerItem(LootEnhancementItem.ID, Items.LOOT_ENHANCEMENT);
+    registerItem(LuckEnhancementItem.ID, Items.LUCK_ENHANCEMENT);
+    registerItem(SheepEnhancementItem.ID, Items.SHEEP_ENHANCEMENT);
+    registerItem(SpeedEnhancementItem.ID, Items.SPEED_ENHANCEMENT);
+    registerItem(SwordEnhancementItem.ID, Items.SWORD_ENHANCEMENT);
+
+    log.info("{} Filter items ...", Constants.LOG_REGISTER_PREFIX);
+    registerItem(NoFlowersFilterItem.ID, Items.NO_FLOWERS_FILTER);
+    registerItem(NoMeatFilterItem.ID, Items.NO_MEAT_FILTER);
+
+    log.info("{} Slot upgrade items ...", Constants.LOG_REGISTER_PREFIX);
+    registerItem(BigSlotUpgradeItem.ID, Items.BIG_SLOT_UPGRADE);
+    registerItem(SmallSlotUpgradeItem.ID, Items.SMALL_SLOT_UPGRADE);
+
+    log.info("{} Mob Farm Templates items ...", Constants.LOG_REGISTER_PREFIX);
+    registerItem(MobFarmTemplateItem.ID_TIER_0, TIER_0_MOB_FARM_TEMPLATE);
+    registerItem(MobFarmTemplateItem.ID_TIER_1, TIER_1_MOB_FARM_TEMPLATE);
+    registerItem(MobFarmTemplateItem.ID_TIER_2, TIER_2_MOB_FARM_TEMPLATE);
+    registerItem(MobFarmTemplateItem.ID_TIER_3, TIER_3_MOB_FARM_TEMPLATE);
+    ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.BUILDING_BLOCKS)
+        .register(
+            entries -> {
+              entries.accept(TIER_0_MOB_FARM_TEMPLATE);
+              entries.accept(TIER_1_MOB_FARM_TEMPLATE);
+              entries.accept(TIER_2_MOB_FARM_TEMPLATE);
+              entries.accept(TIER_3_MOB_FARM_TEMPLATE);
+            });
+
+    log.info("{} Mob Farms items ...", Constants.LOG_REGISTER_PREFIX);
+    registerItem(CreativeMobFarmBlock.ID, CREATIVE_MOB_FARM);
+    registerItem(MobFarmBlock.ID_ANIMAL_PLAINS_FARM, ANIMAL_PLAINS_FARM);
+    registerItem(MobFarmBlock.ID_BEE_HIVE_FARM, BEE_HIVE_FARM);
+    registerItem(MobFarmBlock.ID_DESERT_FARM, DESERT_FARM);
+    registerItem(MobFarmBlock.ID_JUNGLE_FARM, JUNGLE_FARM);
+    registerItem(MobFarmBlock.ID_MONSTER_PLAINS_CAVE_FARM, MONSTER_PLAINS_CAVE_FARM);
+    registerItem(MobFarmBlock.ID_NETHER_FORTRESS_FARM, NETHER_FORTRESS_FARM);
+    registerItem(MobFarmBlock.ID_OCEAN_FARM, OCEAN_FARM);
+    registerItem(MobFarmBlock.ID_SWAMP_FARM, SWAMP_FARM);
+
+    log.info("{} Mob Catcher items ...", Constants.LOG_REGISTER_PREFIX);
+    registerItem(CreativeMobCatcherItem.ID, Items.CREATIVE_MOB_CATCHER);
+    registerItem(EnduringCaptureNetItem.ID, Items.ENDURING_CAPTURE_NET);
+    registerItem(IronboundContainmentCageItem.ID, Items.IRONBOUND_CONTAINMENT_CAGE);
+    registerItem(MysticBindingCrystalItem.ID, Items.MYSTIC_BINDING_CRYSTAL);
+  }
+
+  private static void registerItem(final String id, final Item item) {
+    Registry.register(BuiltInRegistries.ITEM, Constants.MOD_ID + ":" + id, item);
+  }
+}

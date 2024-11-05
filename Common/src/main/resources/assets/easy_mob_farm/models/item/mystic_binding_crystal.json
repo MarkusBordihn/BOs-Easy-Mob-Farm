@@ -1,0 +1,20 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "easy_mob_farm:item/mob_catcher/mystic_binding_crystal"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 0
+      },
+      "model": "easy_mob_farm:item/mob_catcher/mystic_binding_crystal_inactive"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1
+      },
+      "model": "easy_mob_farm:item/mob_catcher/mystic_binding_crystal_active"
+    }
+  ]
+}

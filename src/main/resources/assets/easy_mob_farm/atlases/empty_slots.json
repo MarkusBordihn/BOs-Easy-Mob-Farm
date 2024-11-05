@@ -1,9 +1,0 @@
-{
-  "sources": [
-    {
-      "type": "directory",
-      "source": "item/empty_slot",
-      "prefix": "item/empty_slot/"
-    }
-  ]
-}

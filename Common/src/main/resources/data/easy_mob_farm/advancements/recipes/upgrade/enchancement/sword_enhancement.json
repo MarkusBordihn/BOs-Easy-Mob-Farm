@@ -1,0 +1,47 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_sword_enhancement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["easy_mob_farm:sword_enhancement"]
+          }
+        ]
+      }
+    },
+    "has_quartz": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:quartz"]
+          }
+        ]
+      }
+    },
+    "has_iron_sword": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:iron_sword"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_sword_enhancement",
+      "has_quartz",
+      "has_iron_sword"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "easy_mob_farm:upgrade/enhancement/sword_enhancement"
+    ]
+  }
+}

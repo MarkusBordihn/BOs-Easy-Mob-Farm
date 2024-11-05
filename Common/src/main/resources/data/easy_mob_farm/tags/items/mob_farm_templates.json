@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "easy_mob_farm:tier0_mob_farm_template",
+    "easy_mob_farm:tier1_mob_farm_template",
+    "easy_mob_farm:tier2_mob_farm_template",
+    "easy_mob_farm:tier3_mob_farm_template"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "display": {
+    "icon": {"item": "easy_mob_farm:tier0_mob_farm_template"},
+    "title": {"translate": "advancement.easy_mob_farm.root.title"},
+    "description": {"translate": "advancement.easy_mob_farm.root.description"},
+    "background": "minecraft:textures/block/stone.png",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "create_tier0_template": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [{"items": ["easy_mob_farm:tier0_mob_farm_template"]}]
+      }
+    }
+  }
+}

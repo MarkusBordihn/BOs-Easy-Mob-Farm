@@ -1,0 +1,29 @@
+{
+  "parent": "easy_mob_farm:block/mob_farm/template/monster_plains_cave_farm",
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 0
+      },
+      "model": "easy_mob_farm:block/mob_farm/tier0/monster_plains_cave_farm"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 1
+      },
+      "model": "easy_mob_farm:block/mob_farm/tier1/monster_plains_cave_farm"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2
+      },
+      "model": "easy_mob_farm:block/mob_farm/tier2/monster_plains_cave_farm"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3
+      },
+      "model": "easy_mob_farm:block/mob_farm/tier3/monster_plains_cave_farm"
+    }
+  ]
+}

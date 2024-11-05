@@ -1,0 +1,16 @@
+{
+  "config_version": "1.0.0",
+  "game_version": "1.20.1",
+  "author": "Markus Bordihn",
+  "mod_name": "Easy Mob Farm",
+  "license": "MIT",
+  "description": "Description for Easy Mob Farm ...",
+  "mod_id": "easy_mob_farm",
+  "class_name": "EasyMobFarm",
+  "class_namespace": "de.markusbordihn.easymobfarm",
+  "class_package_name": "easymobfarm",
+  "vendor_name": "markusbordihn",
+  "display_url": "https://curseforge.com/minecraft/mc-mods/easy_mob_farm",
+  "issue_tracker_url": "https://github.com/MarkusBordihn/Easy-Mob-Farm/issues",
+  "confirmed": true
+}
