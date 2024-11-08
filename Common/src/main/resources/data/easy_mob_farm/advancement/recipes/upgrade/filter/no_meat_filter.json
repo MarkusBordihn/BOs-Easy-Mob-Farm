@@ -1,0 +1,58 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_no_meat_filter": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "easy_mob_farm:no_meat_filter"
+          }
+        ]
+      }
+    },
+    "has_porkchop": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:porkchop"
+          }
+        ]
+      }
+    },
+    "has_hopper": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:hopper"
+          }
+        ]
+      }
+    },
+    "has_beef": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:beef"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_no_meat_filter",
+      "has_porkchop",
+      "has_hopper",
+      "has_beef"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "easy_mob_farm:upgrade/filter/no_meat_filter"
+    ]
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_speed_enhancement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "easy_mob_farm:speed_enhancement"
+          }
+        ]
+      }
+    },
+    "has_repeater": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:repeater"
+          }
+        ]
+      }
+    },
+    "has_quartz": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:quartz"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_speed_enhancement",
+      "has_repeater",
+      "has_quartz"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "easy_mob_farm:upgrade/enhancement/speed_enhancement"
+    ]
+  }
+}

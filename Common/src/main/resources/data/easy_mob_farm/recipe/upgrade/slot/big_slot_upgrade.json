@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " G ",
+    "ICI",
+    " G "
+  ],
+  "key": {
+    "G": {"item": "minecraft:gold_ingot"},
+    "I": {"item": "minecraft:iron_ingot"},
+    "C": {"item": "minecraft:chest"}
+  },
+  "result": {
+    "id": "easy_mob_farm:big_slot_upgrade"
+  }
+}

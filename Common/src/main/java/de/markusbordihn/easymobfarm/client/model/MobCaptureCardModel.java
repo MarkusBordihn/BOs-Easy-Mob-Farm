@@ -31,7 +31,6 @@ import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelBaker;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -40,38 +39,17 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class MobCaptureCardModel implements BakedModel {
 
-  public static final String INVENTORY_LOCATION = "inventory";
-  public static final ModelResourceLocation DEFAULT_MODEL =
-      new ModelResourceLocation(
-          new ResourceLocation(Constants.MOD_ID, "mob_capture_card/default"), INVENTORY_LOCATION);
-  public static final ModelResourceLocation DEFAULT_UNCOMMON_MODEL =
-      new ModelResourceLocation(
-          new ResourceLocation(Constants.MOD_ID, "mob_capture_card/default_uncommon"),
-          INVENTORY_LOCATION);
-  public static final ModelResourceLocation DEFAULT_RARE_MODEL =
-      new ModelResourceLocation(
-          new ResourceLocation(Constants.MOD_ID, "mob_capture_card/default_rare"),
-          INVENTORY_LOCATION);
-  public static final ModelResourceLocation DEFAULT_EPIC_MODEL =
-      new ModelResourceLocation(
-          new ResourceLocation(Constants.MOD_ID, "mob_capture_card/default_epic"),
-          INVENTORY_LOCATION);
-  public static final ModelResourceLocation DEFAULT_FISH_MODEL =
-      new ModelResourceLocation(
-          new ResourceLocation(Constants.MOD_ID, "mob_capture_card/default_fish"),
-          INVENTORY_LOCATION);
   private final BakedModel originalModel;
   private final MobCaptureCardOverrides overrides;
 
   public MobCaptureCardModel(
       BakedModel originalModel,
       ModelBaker modelBaker,
-      Function<ResourceLocation, UnbakedModel> modelFunction,
-      ResourceLocation resourceLocation) {
+      Function<ResourceLocation, UnbakedModel> modelFunction) {
     this.originalModel = originalModel;
     BlockModel blockModel =
         new BlockModel(
-            resourceLocation,
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "mob_capture_card"),
             List.of(),
             Map.of(),
             false,
@@ -81,9 +59,8 @@ public class MobCaptureCardModel implements BakedModel {
     this.overrides = new MobCaptureCardOverrides(modelBaker, blockModel, List.of());
   }
 
-  public MobCaptureCardModel(
-      BakedModel originalModel, ModelBaker modelBaker, ResourceLocation resourceLocation) {
-    this(originalModel, modelBaker, null, resourceLocation);
+  public MobCaptureCardModel(BakedModel originalModel, ModelBaker modelBaker) {
+    this(originalModel, modelBaker, null);
   }
 
   @Override

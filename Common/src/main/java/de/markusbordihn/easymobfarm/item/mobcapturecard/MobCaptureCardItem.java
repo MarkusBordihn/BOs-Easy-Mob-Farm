@@ -41,7 +41,7 @@ public class MobCaptureCardItem extends Item {
 
   public static final String ID = "mob_capture_card";
   public static final ResourceLocation RESOURCE_LOCATION =
-      new ResourceLocation(Constants.MOD_ID, ID);
+      ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, ID);
   public static final String TOOLTIP_PREFIX = Constants.TOOLTIP_PREFIX + ID + ".";
 
   public MobCaptureCardItem() {
@@ -49,7 +49,7 @@ public class MobCaptureCardItem extends Item {
   }
 
   public MobCaptureCardItem(Properties properties) {
-    super(properties.stacksTo(64));
+    super(properties.stacksTo(64).fireResistant());
   }
 
   public static MobCaptureCardItem getMobCaptureCardItem() {
@@ -63,11 +63,6 @@ public class MobCaptureCardItem extends Item {
   @Override
   public boolean isEnchantable(ItemStack itemStack) {
     return false;
-  }
-
-  @Override
-  public boolean isFireResistant() {
-    return true;
   }
 
   @Override
@@ -90,20 +85,23 @@ public class MobCaptureCardItem extends Item {
             && !mobCaptureData.name().equalsIgnoreCase(mobCaptureData.variant()))
         && mobCaptureData.color() != null) {
       key += "_variant_color";
-      args = new Object[] {mobCaptureData.name(), mobCaptureData.variant(), mobCaptureData.color()};
+      args =
+          new Object[] {
+            mobCaptureData.name(), mobCaptureData.variant(), mobCaptureData.color().getName()
+          };
     } else if (mobCaptureData.variant() != null
         && !mobCaptureData.name().equalsIgnoreCase(mobCaptureData.variant())) {
       key += "_variant";
       args = new Object[] {mobCaptureData.name(), mobCaptureData.variant()};
     } else if (mobCaptureData.color() != null) {
       key += "_color";
-      args = new Object[] {mobCaptureData.name(), mobCaptureData.color()};
+      args = new Object[] {mobCaptureData.name(), mobCaptureData.color().getName()};
     }
 
     return TextComponent.getTranslatedTextRaw(key, args);
   }
 
-  @Override
+  // @Override
   public Rarity getRarity(ItemStack itemStack) {
     MobCaptureData mobCaptureData = MobCaptureManager.getMobCaptureData(itemStack);
     return mobCaptureData != null ? mobCaptureData.rarity() : Rarity.COMMON;
@@ -117,7 +115,10 @@ public class MobCaptureCardItem extends Item {
 
   @Override
   public void appendHoverText(
-      ItemStack itemStack, Level world, List<Component> tooltip, TooltipFlag flag) {
+      ItemStack itemStack,
+      TooltipContext tooltipContext,
+      List<Component> tooltip,
+      TooltipFlag flag) {
     MobCaptureData mobCaptureData = MobCaptureManager.getMobCaptureData(itemStack);
     if (mobCaptureData == null) {
       tooltip.add(TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "empty"));

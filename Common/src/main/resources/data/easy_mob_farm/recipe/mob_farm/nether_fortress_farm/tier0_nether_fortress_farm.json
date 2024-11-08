@@ -1,0 +1,35 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["MFF", "S#D", "-L-"],
+  "key": {
+    "#": {
+      "item": "easy_mob_farm:tier0_mob_farm_template"
+    },
+    "L": {
+      "item": "minecraft:lava_bucket"
+    },
+    "-": {
+      "item": "minecraft:netherrack"
+    },
+    "D": {
+      "item": "minecraft:nether_bricks"
+    },
+    "S": {
+      "item": "minecraft:soul_sand"
+    },
+    "F": {
+      "item": "minecraft:nether_brick_fence"
+    },
+    "M": {
+      "item": "minecraft:nether_wart"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "easy_mob_farm:nether_fortress_farm",
+    "components": {
+      "minecraft:custom_data": {"TierLevel": 0},
+      "minecraft:custom_model_data": 0
+    }
+  }
+}

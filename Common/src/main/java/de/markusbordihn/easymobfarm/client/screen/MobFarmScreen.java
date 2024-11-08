@@ -42,11 +42,11 @@ import net.minecraft.world.inventory.Slot;
 public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
 
   private static final ResourceLocation TEXTURE_UI =
-      new ResourceLocation(Constants.MOD_ID, "textures/gui/mob_farm.png");
+      ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "textures/gui/mob_farm.png");
   private static final ResourceLocation TEXTURE_UI_IDLE =
-      new ResourceLocation(Constants.MOD_ID, "textures/gui/mob_farm_idle.png");
+      ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "textures/gui/mob_farm_idle.png");
   private static final ResourceLocation TEXTURE_ELEMENTS =
-      new ResourceLocation(Constants.MOD_ID, "textures/gui/mob_farm_elements.png");
+      ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "textures/gui/mob_farm_elements.png");
   protected float xMouse;
   protected float yMouse;
 
@@ -71,7 +71,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
   public void render(GuiGraphics guiGraphics, int x, int y, float partialTicks) {
     this.xMouse = x;
     this.yMouse = y;
-    this.renderBackground(guiGraphics);
+    this.renderBackground(guiGraphics, x, y, partialTicks);
     super.render(guiGraphics, x, y, partialTicks);
     this.renderLockedSlot(guiGraphics, x, y);
     this.renderEntityType(guiGraphics, x, y);
@@ -144,6 +144,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
     Entity entity = RendererManager.getEntity(blockPos);
     if (entity != null) {
       ScreenHelper.renderEntity(
+          guiGraphics,
           this.leftPos + 72,
           this.topPos + 80,
           this.leftPos + 70 - this.xMouse,

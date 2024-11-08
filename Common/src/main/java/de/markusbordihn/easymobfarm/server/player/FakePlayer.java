@@ -23,6 +23,7 @@ import com.mojang.authlib.GameProfile;
 import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ClientInformation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stat;
@@ -30,7 +31,11 @@ import net.minecraft.stats.Stat;
 public class FakePlayer extends ServerPlayer {
 
   public FakePlayer(final ServerLevel level, final BlockPos blockPos) {
-    super(level.getServer(), level, new GameProfile(UUID.randomUUID(), "FakePlayer"));
+    super(
+        level.getServer(),
+        level,
+        new GameProfile(UUID.randomUUID(), "FakePlayer"),
+        ClientInformation.createDefault());
     this.getAdvancements().stopListening();
     this.setPos(blockPos.getX(), blockPos.getY(), blockPos.getZ());
   }

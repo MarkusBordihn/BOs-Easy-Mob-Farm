@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["EGW", "T#G", "S-F"],
+  "key": {
+    "#": {
+      "item": "easy_mob_farm:tier2_mob_farm_template"
+    },
+    "G": {
+      "item": "minecraft:short_grass"
+    },
+    "W": {
+      "item": "minecraft:wheat"
+    },
+    "S": {
+      "item": "minecraft:wheat_seeds"
+    },
+    "E": {
+      "item": "minecraft:egg"
+    },
+    "T": {
+      "item": "minecraft:white_tulip"
+    },
+    "-": {
+      "item": "minecraft:dirt"
+    },
+    "F": {
+      "item": "minecraft:feather"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "easy_mob_farm:animal_plains_farm",
+    "components": {
+      "minecraft:custom_data": {"TierLevel": 2},
+      "minecraft:custom_model_data": 2
+    }
+  }
+}

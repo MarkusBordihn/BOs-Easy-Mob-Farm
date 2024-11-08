@@ -47,7 +47,7 @@ public class MobCaptureCardResourceManager {
 
   public static void loadMobCaptureCardData(ResourceManager resourceManager) {
     ResourceLocation mobCaptureCardLocation =
-        new ResourceLocation(
+        ResourceLocation.fromNamespaceAndPath(
             Constants.MOD_ID, "models/item/mob_capture_card/mob_capture_cards.json");
     MOB_CAPTURE_CARD_MODELS.clear();
 
@@ -114,7 +114,7 @@ public class MobCaptureCardResourceManager {
   }
 
   public static ResourceLocation getResourceLocationForCardId(int cardID) {
-    return new ResourceLocation(getModelForCustomModelData(cardID));
+    return ResourceLocation.parse(getModelForCustomModelData(cardID));
   }
 
   public static ModelResourceLocation getModelResourceLocationForCardId(int cardID) {
@@ -122,7 +122,7 @@ public class MobCaptureCardResourceManager {
     if (modelPath.contains(":item/")) {
       modelPath = modelPath.replace(":item/", ":");
     }
-    return new ModelResourceLocation(new ResourceLocation(modelPath), "inventory");
+    return new ModelResourceLocation(ResourceLocation.parse(modelPath), "inventory");
   }
 
   public static Collection<String> getCustomModelPaths() {

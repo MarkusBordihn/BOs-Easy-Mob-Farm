@@ -1,6 +1,6 @@
 plugins {
   id 'maven-publish'
-  id 'net.minecraftforge.gradle' version '6.+'
+  id 'net.minecraftforge.gradle' version '[6.0.24,6.2)'
   id 'com.matthewprenger.cursegradle' version '1.4.0'
   id 'nu.studer.credentials' version '3.0'
   id "com.modrinth.minotaur" version "2.+"
@@ -13,7 +13,9 @@ archivesBaseName = "${mod_id}-forge-${minecraft_version}"
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
   mappings channel: 'official', version: "${project.minecraft_version}"
-  // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+
+  reobf = false
+  copyIdeResources = true
 
   // Access Transformer
   accessTransformer = file("src/main/resources/META-INF/accesstransformer.cfg")
@@ -21,7 +23,6 @@ minecraft {
   // Run configurations
   runs {
     client {
-      jvmArgs "-XX:+AllowEnhancedClassRedefinition"
       workingDirectory project.file('run/client')
       property 'forge.logging.markers', 'REGISTRIES'
       property 'forge.logging.console.level', 'debug'
@@ -45,7 +46,6 @@ minecraft {
     }
 
     server {
-      jvmArgs "-XX:+AllowEnhancedClassRedefinition"
       workingDirectory project.file('run/server')
       property 'forge.logging.markers', 'REGISTRIES'
       property 'forge.logging.console.level', 'debug'
@@ -114,6 +114,9 @@ dependencies {
   if (project.hasProperty('forge_xaeros_minimap_mod') && project.forge_xaeros_minimap_mod) {
     runtimeOnly fg.deobf("curse.maven:xaeros_minimap-263420:${project.forge_xaeros_minimap_mod}")
   }
+
+  // Hack fix for now, force jopt-simple to be exactly 5.0.4 because Mojang ships that version, but some transitive dependencies request 6.0+
+  implementation('net.sf.jopt-simple:jopt-simple:5.0.4') { version { strictly '5.0.4' } }
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -139,12 +142,6 @@ jar {
   }
 }
 
-// Example configuration to allow publishing using the maven-publish task
-// This is the preferred method to reobfuscate your jar file
-jar.finalizedBy('reobfJar')
-// However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
-//publish.dependsOn('reobfJar')
-
 publishing {
   publications {
     mavenJava(MavenPublication) {
@@ -164,7 +161,6 @@ if (project.hasProperty('curseforge_project_id') && project.curseforge_project_i
       releaseType = "${project.curseforge_release_type}"
       addGameVersion("${project.minecraft_version}")
       addGameVersion("Forge")
-      addGameVersion("NeoForge")
       mainArtifact(jar)
     }
   }
@@ -181,6 +177,16 @@ if (project.hasProperty('modrinth_project_id') && project.modrinth_project_id) {
     changelog = rootProject.file("CHANGELOG.md").text
     uploadFile = jar
     gameVersions = ["${project.minecraft_version}"]
-    loaders = ["forge", "neoforge"]
+    loaders = ["forge"]
   }
+}
+
+// Merge the resources and classes into the same directory.
+// This is done because java expects modules to be in a single directory.
+// And if we have it in multiple we have to do performance intensive hacks like having the UnionFileSystem
+// This will eventually be migrated to ForgeGradle so modders don't need to manually do it. But that is later.
+sourceSets.each {
+  def dir = layout.buildDirectory.dir("sourcesSets/$it.name")
+  it.output.resourcesDir = dir
+  it.java.destinationDirectory = dir
 }

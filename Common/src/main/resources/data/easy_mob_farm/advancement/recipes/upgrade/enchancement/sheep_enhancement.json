@@ -1,0 +1,47 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_sheep_enhancement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "easy_mob_farm:sheep_enhancement"
+          }
+        ]
+      }
+    },
+    "has_quartz": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:quartz"
+          }
+        ]
+      }
+    },
+    "has_shears": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:shears"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_sheep_enhancement",
+      "has_quartz",
+      "has_shears"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "easy_mob_farm:upgrade/enhancement/sheep_enhancement"
+    ]
+  }
+}

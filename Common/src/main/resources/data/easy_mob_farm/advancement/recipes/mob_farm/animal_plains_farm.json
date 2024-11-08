@@ -1,0 +1,61 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_animal_plains_farm": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "easy_mob_farm:animal_plains_farm"
+          }
+        ]
+      }
+    },
+    "has_mob_farm_template": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "easy_mob_farm:mob_farm_templates"
+          }
+        ]
+      }
+    },
+    "has_grass": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:short_grass"
+          }
+        ]
+      }
+    },
+    "has_egg": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:egg"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_animal_plains_farm",
+      "has_mob_farm_template",
+      "has_grass",
+      "has_egg"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "easy_mob_farm:mob_farm/animal_plains_farm/tier0_animal_plains_farm",
+      "easy_mob_farm:mob_farm/animal_plains_farm/tier1_animal_plains_farm",
+      "easy_mob_farm:mob_farm/animal_plains_farm/tier2_animal_plains_farm",
+      "easy_mob_farm:mob_farm/animal_plains_farm/tier3_animal_plains_farm"
+    ]
+  }
+}

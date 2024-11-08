@@ -20,46 +20,45 @@
 package de.markusbordihn.easymobfarm.client.screen;
 
 import com.mojang.blaze3d.platform.Lighting;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
+import net.minecraft.world.scores.PlayerTeam;
+import net.minecraft.world.scores.Team;
 import org.joml.Quaternionf;
 
 public class ScreenHelper {
 
   private ScreenHelper() {}
 
-  public static void renderEntity(int x, int y, float yRot, float xRot, int scale, Entity entity) {
+  public static void renderEntity(
+      GuiGraphics guiGraphics, int x, int y, float yRot, float xRot, int scale, Entity entity) {
     if (entity instanceof LivingEntity livingEntity) {
-      renderEntity(x, y, yRot, xRot, scale, livingEntity);
+      renderEntity(guiGraphics, x, y, yRot, xRot, scale, livingEntity);
     }
   }
 
   public static void renderEntity(
-      int x, int y, float yRot, float xRot, int scale, LivingEntity livingEntity) {
+      GuiGraphics guiGraphics,
+      int x,
+      int y,
+      float yRot,
+      float xRot,
+      int scale,
+      LivingEntity livingEntity) {
     // Prepare Renderer
+    boolean isDead = livingEntity.isDeadOrDying();
     Minecraft minecraft = Minecraft.getInstance();
-    float f = (float) Math.atan(yRot / 40.0F);
-    float f1 = (float) Math.atan(xRot / 40.0F);
-    PoseStack poseStack = RenderSystem.getModelViewStack();
-    poseStack.pushPose();
-    poseStack.translate(x, y, 1050.0D);
-    poseStack.scale(1.0F, 1.0F, -1.0F);
-    RenderSystem.applyModelViewMatrix();
-    PoseStack poseStack1 = new PoseStack();
-    poseStack1.translate(0.0D, 0.0D, 1000.0D);
-    poseStack1.scale(scale, scale, scale);
-    Quaternionf quaternion = Axis.ZP.rotationDegrees(180.0F);
-    Quaternionf quaternion1 = Axis.XP.rotationDegrees(f1 * 20.0F);
-    quaternion.mul(quaternion1);
-    poseStack1.mulPose(quaternion);
+    float rotationY = (float) Math.atan((isDead ? 25F : yRot) / 40.0F);
+    float rotationX = (float) Math.atan((isDead ? -25F : xRot) / 40.0F);
+    Quaternionf quaternionfZ = (new Quaternionf()).rotateZ(3.1415927F);
+    Quaternionf quaternionfX = (new Quaternionf()).rotateX(rotationX * 20.0F * 0.017453292F);
+    quaternionfZ.mul(quaternionfX);
 
     // Backup entity information
     Component entityCustomName = livingEntity.getCustomName();
@@ -70,20 +69,20 @@ public class ScreenHelper {
     float entityYHeadRotO = livingEntity.yHeadRotO;
     float entityYRot = livingEntity.getYRot();
     boolean entityInvisible = livingEntity.isInvisible();
+    Team entityTeam = livingEntity.getTeam();
 
     // Adjust entity information for rendering
     livingEntity.setInvisible(false);
-    livingEntity.yBodyRot = 180.0F + f * 20.0F;
-    livingEntity.setYRot(180.0F + f * 40.0F);
-    livingEntity.setXRot(-f1 * 20.0F);
+    livingEntity.yBodyRot = 180.0F + rotationY * 20.0F;
+    livingEntity.setYRot(180.0F + rotationY * 40.0F);
+    livingEntity.setXRot(-rotationX * 20.0F);
     livingEntity.yHeadRot = livingEntity.getYRot();
-
-    // Rotate entity based on entity type.
-    if (livingEntity instanceof AbstractSchoolingFish) {
-      poseStack1.translate(-0.1, 0.5, 0.1);
-      poseStack1.mulPose(Axis.XP.rotationDegrees(2.0F));
-      poseStack1.mulPose(Axis.YP.rotationDegrees(15.0F));
-      poseStack1.mulPose(Axis.ZP.rotationDegrees(-90.0F));
+    livingEntity.yHeadRotO = livingEntity.getYRot();
+    if (entityTeam instanceof PlayerTeam playerTeam) {
+      livingEntity
+          .level()
+          .getScoreboard()
+          .removePlayerFromTeam(livingEntity.getScoreboardName(), playerTeam);
     }
 
     // Hide gui elements or remove custom name
@@ -97,18 +96,36 @@ public class ScreenHelper {
     }
 
     // Render Entity
+    guiGraphics.pose().pushPose();
+    guiGraphics.pose().translate(x, y, 1050.0D);
+    guiGraphics.pose().scale(scale, scale, -scale);
+    guiGraphics.pose().mulPose(quaternionfZ);
+    if (livingEntity instanceof AbstractSchoolingFish) {
+      guiGraphics.pose().translate(-0.1, 0.5, 0.1);
+      guiGraphics.pose().mulPose(Axis.XP.rotationDegrees(2.0F));
+      guiGraphics.pose().mulPose(Axis.YP.rotationDegrees(15.0F));
+      guiGraphics.pose().mulPose(Axis.ZP.rotationDegrees(-90.0F));
+    }
     Lighting.setupForEntityInInventory();
     EntityRenderDispatcher entityRenderDispatcher =
         Minecraft.getInstance().getEntityRenderDispatcher();
-    quaternion1.conjugate();
-    entityRenderDispatcher.overrideCameraOrientation(quaternion1);
+    quaternionfX.conjugate();
+    entityRenderDispatcher.overrideCameraOrientation(quaternionfX);
     entityRenderDispatcher.setRenderShadow(false);
-    MultiBufferSource.BufferSource multiBuffer =
-        Minecraft.getInstance().renderBuffers().bufferSource();
     entityRenderDispatcher.render(
-        livingEntity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, poseStack1, multiBuffer, 15728880);
-    multiBuffer.endBatch();
+        livingEntity,
+        0.0D,
+        0.0D,
+        0.0D,
+        0.0F,
+        1.0F,
+        guiGraphics.pose(),
+        guiGraphics.bufferSource(),
+        15728880);
+    guiGraphics.flush();
     entityRenderDispatcher.setRenderShadow(true);
+    guiGraphics.pose().popPose();
+    Lighting.setupFor3DItems();
 
     // Restore entity information
     livingEntity.setInvisible(entityInvisible);
@@ -117,6 +134,12 @@ public class ScreenHelper {
     livingEntity.setXRot(entityXRot);
     livingEntity.yHeadRot = entityYHeadRot;
     livingEntity.yHeadRotO = entityYHeadRotO;
+    if (entityTeam instanceof PlayerTeam playerTeam) {
+      livingEntity
+          .level()
+          .getScoreboard()
+          .addPlayerToTeam(livingEntity.getScoreboardName(), playerTeam);
+    }
 
     // Restore gui elements or custom name
     if (minecraft != null) {
@@ -125,9 +148,5 @@ public class ScreenHelper {
       livingEntity.setCustomName(entityCustomName);
       livingEntity.setCustomNameVisible(entityShouldShowName);
     }
-
-    poseStack.popPose();
-    RenderSystem.applyModelViewMatrix();
-    Lighting.setupFor3DItems();
   }
 }

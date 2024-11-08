@@ -31,12 +31,11 @@ import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.Nullable;
 
 public class UnbakedMobCaptureCardModel implements UnbakedModel {
 
   public static final ResourceLocation MODEL =
-      new ResourceLocation(Constants.MOD_ID, "item/mob_capture_card/dynamic");
+      ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "item/mob_capture_card/dynamic");
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private final UnbakedModel originalUnbakedModel;
 
@@ -55,17 +54,16 @@ public class UnbakedMobCaptureCardModel implements UnbakedModel {
   }
 
   @Override
-  public @Nullable BakedModel bake(
+  public BakedModel bake(
       ModelBaker modelBaker,
       Function<Material, TextureAtlasSprite> textureGetter,
-      ModelState modelState,
-      ResourceLocation resourceLocation) {
+      ModelState modelState) {
     BakedModel originalBakedModel =
-        originalUnbakedModel.bake(modelBaker, textureGetter, modelState, resourceLocation);
+        originalUnbakedModel.bake(modelBaker, textureGetter, modelState);
     if (originalBakedModel == null) {
-      log.error("Unable to bake original model for resource location {}", resourceLocation);
+      log.error("Unable to bake original model for {}", this);
       return null;
     }
-    return new MobCaptureCardModel(originalBakedModel, modelBaker, resourceLocation);
+    return new MobCaptureCardModel(originalBakedModel, modelBaker);
   }
 }

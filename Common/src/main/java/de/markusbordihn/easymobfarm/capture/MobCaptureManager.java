@@ -23,6 +23,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -31,6 +32,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -136,7 +138,10 @@ public class MobCaptureManager {
     // Check if entity could be spawned at block position or above
     BlockState blockState = serverLevel.getBlockState(blockPos);
     BlockPos finalBlockPos = null;
-    if ((blockState.is(Blocks.GRASS) || blockState.is(Blocks.SEAGRASS))) {
+    if (blockState.is(Blocks.SHORT_GRASS)
+        || blockState.is(Blocks.TALL_GRASS)
+        || blockState.is(Blocks.SEAGRASS)
+        || blockState.is(Blocks.TALL_SEAGRASS)) {
       finalBlockPos = blockPos;
     } else {
       BlockState blockStateBlockAbove = serverLevel.getBlockState(blockPos.above());
@@ -199,16 +204,19 @@ public class MobCaptureManager {
     if (itemStack == null || itemStack.isEmpty() || mobCaptureData == null) {
       return;
     }
-    CompoundTag compoundTag = itemStack.getOrCreateTag();
+    CompoundTag compoundTag =
+        itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).getUnsafe();
     compoundTag.put(MOB_CAPTURE_DATA_TAG, mobCaptureData.createTag());
-    itemStack.setTag(compoundTag);
+    CustomData.set(DataComponents.CUSTOM_DATA, itemStack, compoundTag);
   }
 
   public static boolean hasMobCaptureData(ItemStack itemStack) {
     return itemStack != null
         && !itemStack.isEmpty()
-        && itemStack.hasTag()
-        && itemStack.getTag().contains(MOB_CAPTURE_DATA_TAG);
+        && itemStack.has(DataComponents.CUSTOM_DATA)
+        && itemStack
+            .getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY)
+            .contains(MOB_CAPTURE_DATA_TAG);
   }
 
   public static MobCaptureData getMobCaptureData(ItemStack itemStack) {
@@ -217,14 +225,15 @@ public class MobCaptureManager {
     }
 
     // Get mob capture data from item stack.
-    CompoundTag tag = itemStack.getTag();
+    CompoundTag compoundTag =
+        itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).getUnsafe();
 
     // Mob capture card compatible data.
-    if (tag != null && tag.contains(MOB_CAPTURE_DATA_TAG)) {
-      return new MobCaptureData(tag.getCompound(MOB_CAPTURE_DATA_TAG));
+    if (compoundTag != null && compoundTag.contains(MOB_CAPTURE_DATA_TAG)) {
+      return new MobCaptureData(compoundTag.getCompound(MOB_CAPTURE_DATA_TAG));
     }
 
     // Try to get mob capture data from item stack.
-    return new MobCaptureData(itemStack, tag);
+    return new MobCaptureData(itemStack, compoundTag);
   }
 }

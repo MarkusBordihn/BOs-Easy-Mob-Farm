@@ -68,7 +68,11 @@ public class FishingHookMixin {
             .withLuck(fishingHook.luck + serverPlayer.getLuck());
 
     LootTable lootTable =
-        fishingHook.level().getServer().getLootData().getLootTable(BuiltInLootTables.FISHING);
+        fishingHook
+            .level()
+            .getServer()
+            .reloadableRegistries()
+            .getLootTable(BuiltInLootTables.FISHING);
     List<ItemStack> reproducedLoot =
         lootTable.getRandomItems(builder.create(LootContextParamSets.FISHING));
     if (!reproducedLoot.isEmpty()) {

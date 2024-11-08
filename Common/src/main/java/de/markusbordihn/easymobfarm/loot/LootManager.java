@@ -34,6 +34,8 @@ import java.util.Random;
 import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -67,6 +69,10 @@ public class LootManager {
       final Set<EnhancementItem> enhancements,
       final Level level) {
     EntityType<?> entityType = mobCaptureData.entityType();
+    if (entityType == null) {
+      log.error("Unable to get entity type from Mob Capture data: {}", mobCaptureData);
+      return NonNullList.create();
+    }
     Entity entity = entityType.create(level);
     if (entity == null) {
       log.error("Unable to create entity {}!", entityType);
@@ -100,7 +106,7 @@ public class LootManager {
 
     FakePlayer fakePlayer = getFakePlayer(serverLevel, entity.blockPosition());
     LootParams.Builder lootContextBuilder = createLootContextBuilder(serverLevel, livingEntity);
-    ResourceLocation lootTableLocation = getLootTableLocation(livingEntity, enhancements);
+    ResourceKey lootTableLocation = getLootTableLocation(livingEntity, enhancements);
 
     // Add enhancements to loot context.
     float additionalLuck = 0;
@@ -125,7 +131,8 @@ public class LootManager {
 
     // Define loot context and loot table.
     LootParams lootContext = lootContextBuilder.create(LootContextParamSets.ENTITY);
-    LootTable lootTable = serverLevel.getServer().getLootData().getLootTable(lootTableLocation);
+    LootTable lootTable =
+        serverLevel.getServer().reloadableRegistries().getLootTable(lootTableLocation);
 
     // Get loot items from loot table.
     for (int i = 0; i <= additionalRolls; i++) {
@@ -160,13 +167,17 @@ public class LootManager {
         .withParameter(LootContextParams.THIS_ENTITY, livingEntity);
   }
 
-  private static ResourceLocation getLootTableLocation(
+  private static ResourceKey<?> getLootTableLocation(
       LivingEntity livingEntity, Set<EnhancementItem> enhancements) {
-    ResourceLocation lootTableLocation = livingEntity.getType().getDefaultLootTable();
+    ResourceKey<?> lootTableLocation = livingEntity.getType().getDefaultLootTable();
     for (EnhancementItem enhancement : enhancements) {
       if (enhancement instanceof SheepEnhancementItem && livingEntity instanceof Sheep sheep) {
         DyeColor color = sheep.getColor();
-        lootTableLocation = new ResourceLocation("minecraft", "entities/sheep/" + color.getName());
+        lootTableLocation =
+            ResourceKey.create(
+                Registries.LOOT_TABLE,
+                ResourceLocation.fromNamespaceAndPath(
+                    "minecraft", "entities/sheep/" + color.getName()));
       }
     }
     return lootTableLocation;
@@ -178,8 +189,8 @@ public class LootManager {
         .withParameter(
             LootContextParams.DAMAGE_SOURCE, serverLevel.damageSources().playerAttack(fakePlayer))
         .withParameter(LootContextParams.LAST_DAMAGE_PLAYER, fakePlayer)
-        .withParameter(LootContextParams.KILLER_ENTITY, fakePlayer)
-        .withParameter(LootContextParams.DIRECT_KILLER_ENTITY, fakePlayer);
+        .withParameter(LootContextParams.ATTACKING_ENTITY, fakePlayer)
+        .withParameter(LootContextParams.DIRECT_ATTACKING_ENTITY, fakePlayer);
   }
 
   private static void handlePostEnhancements(

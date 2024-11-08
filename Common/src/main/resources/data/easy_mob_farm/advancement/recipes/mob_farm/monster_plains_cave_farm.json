@@ -1,0 +1,61 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_monster_plains_cave_farm": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "easy_mob_farm:monster_plains_cave_farm"
+          }
+        ]
+      }
+    },
+    "has_mob_farm_template": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "easy_mob_farm:mob_farm_templates"
+          }
+        ]
+      }
+    },
+    "has_gold_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:gold_ingot"
+          }
+        ]
+      }
+    },
+    "has_clay": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:clay"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_monster_plains_cave_farm",
+      "has_mob_farm_template",
+      "has_gold_ingot",
+      "has_clay"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "easy_mob_farm:mob_farm/monster_plains_cave_farm/tier0_monster_plains_cave_farm",
+      "easy_mob_farm:mob_farm/monster_plains_cave_farm/tier1_monster_plains_cave_farm",
+      "easy_mob_farm:mob_farm/monster_plains_cave_farm/tier2_monster_plains_cave_farm",
+      "easy_mob_farm:mob_farm/monster_plains_cave_farm/tier3_monster_plains_cave_farm"
+    ]
+  }
+}

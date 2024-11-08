@@ -1,0 +1,61 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_jungle_farm": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "easy_mob_farm:jungle_farm"
+          }
+        ]
+      }
+    },
+    "has_mob_farm_template": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "easy_mob_farm:mob_farm_templates"
+          }
+        ]
+      }
+    },
+    "has_jungle_log": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:jungle_log"
+          }
+        ]
+      }
+    },
+    "has_bamboo": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:bamboo"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_jungle_farm",
+      "has_mob_farm_template",
+      "has_jungle_log",
+      "has_bamboo"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "easy_mob_farm:mob_farm/jungle_farm/tier0_jungle_farm",
+      "easy_mob_farm:mob_farm/jungle_farm/tier1_jungle_farm",
+      "easy_mob_farm:mob_farm/jungle_farm/tier2_jungle_farm",
+      "easy_mob_farm:mob_farm/jungle_farm/tier3_jungle_farm"
+    ]
+  }
+}

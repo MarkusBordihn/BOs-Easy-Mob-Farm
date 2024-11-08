@@ -23,18 +23,19 @@ import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.List;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.item.component.CustomModelData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 
 public class MobFarmBlockItem extends BlockItem {
-
-  public static final String CUSTOM_MODEL_DATA_TAG = "CustomModelData";
 
   private final String farmName;
 
@@ -48,18 +49,19 @@ public class MobFarmBlockItem extends BlockItem {
   }
 
   private void setCustomModelData(ItemStack itemStack) {
-    var tag = itemStack.getOrCreateTag();
-    if (tag.contains(MobFarmBlockEntity.TIER_LEVEL_TAG) && !tag.contains(CUSTOM_MODEL_DATA_TAG)) {
+    var tag = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).getUnsafe();
+    if (tag.contains(MobFarmBlockEntity.TIER_LEVEL_TAG)) {
       int tierLevel = tag.getInt(MobFarmBlockEntity.TIER_LEVEL_TAG);
       if (tierLevel > 0) {
-        tag.putInt(CUSTOM_MODEL_DATA_TAG, tierLevel);
+        itemStack.set(DataComponents.CUSTOM_MODEL_DATA, new CustomModelData(tierLevel));
       }
     }
   }
 
   @Override
-  public Component getName(ItemStack stack) {
-    int tierLevel = stack.getOrCreateTag().getInt(MobFarmBlockEntity.TIER_LEVEL_TAG);
+  public Component getName(ItemStack itemStack) {
+    CustomData customData = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+    int tierLevel = customData.getUnsafe().getInt(MobFarmBlockEntity.TIER_LEVEL_TAG);
     return TextComponent.getTranslatedBlockText(this.farmName, tierLevel);
   }
 
@@ -71,14 +73,18 @@ public class MobFarmBlockItem extends BlockItem {
 
   @Override
   public void appendHoverText(
-      ItemStack itemStack, Level level, List<Component> tooltip, TooltipFlag flag) {
-    super.appendHoverText(itemStack, level, tooltip, flag);
+      ItemStack itemStack,
+      TooltipContext tooltipContext,
+      List<Component> tooltip,
+      TooltipFlag flag) {
+    super.appendHoverText(itemStack, tooltipContext, tooltip, flag);
 
     // Add farm description
     tooltip.add(TextComponent.getTranslatedText(this.farmName).withStyle(ChatFormatting.GRAY));
 
     // Add tier level
-    int tierLevel = itemStack.getOrCreateTag().getInt(MobFarmBlockEntity.TIER_LEVEL_TAG);
+    CustomData customData = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+    int tierLevel = customData.getUnsafe().getInt(MobFarmBlockEntity.TIER_LEVEL_TAG);
     Component tierLevelText =
         switch (tierLevel) {
           case 1 -> TextComponent.getTranslatedText("tier_level", tierLevel, ChatFormatting.GREEN);

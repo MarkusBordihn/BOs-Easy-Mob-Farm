@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "IBI",
+    "CLC",
+    "IBI"
+  ],
+  "key": {
+    "I": {"item": "minecraft:iron_ingot"},
+    "B": {"item": "minecraft:iron_bars"},
+    "L": {"item": "minecraft:lead"},
+    "C": {"item": "minecraft:chain"}
+  },
+  "result": {
+    "id": "easy_mob_farm:ironbound_containment_cage"
+  }
+}

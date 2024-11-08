@@ -35,9 +35,8 @@ public final class Constants {
   public static final String TOOLTIP_PREFIX = "tooltip." + MOD_ID + ".";
   public static final String LOG_NAME = MOD_NAME;
   public static final String LOG_REGISTER_PREFIX = "Register " + MOD_NAME;
-  public static final String MINECRAFT_PREFIX = "minecraft";
   public static final ResourceLocation TEXTURE_DEMO_BACKGROUND =
-      new ResourceLocation(MINECRAFT_PREFIX, "textures/gui/demo_background.png");
+      ResourceLocation.withDefaultNamespace("textures/gui/demo_background.png");
   public static final int FONT_COLOR_DEFAULT = 4210752;
   public static final int FONT_COLOR_RED = 16733525;
 

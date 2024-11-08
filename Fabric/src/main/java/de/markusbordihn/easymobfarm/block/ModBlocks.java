@@ -75,16 +75,19 @@ public class ModBlocks {
     log.info("{} Mob Farm block entities ...", Constants.LOG_REGISTER_PREFIX);
     Registry.register(
         BuiltInRegistries.BLOCK_ENTITY_TYPE,
-        new ResourceLocation(Constants.MOD_ID, CreativeMobFarmBlockEntity.ID),
+        ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, CreativeMobFarmBlockEntity.ID),
         CREATIVE_MOB_FARM_ENTITY);
     Registry.register(
         BuiltInRegistries.BLOCK_ENTITY_TYPE,
-        new ResourceLocation(Constants.MOD_ID, MobFarmBlockEntity.ID),
+        ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, MobFarmBlockEntity.ID),
         MOB_FARM_ENTITY);
   }
 
   private static void registerBlock(String id, Block block) {
-    Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(Constants.MOD_ID, id), block);
+    Registry.register(
+        BuiltInRegistries.BLOCK,
+        ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, id),
+        block);
   }
 
   public static final BlockEntityType<CreativeMobFarmBlockEntityWrapper> CREATIVE_MOB_FARM_ENTITY =

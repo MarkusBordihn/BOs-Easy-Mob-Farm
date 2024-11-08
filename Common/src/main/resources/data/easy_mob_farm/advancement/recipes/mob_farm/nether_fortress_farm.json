@@ -1,0 +1,61 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_nether_fortress_farm": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "easy_mob_farm:nether_fortress_farm"
+          }
+        ]
+      }
+    },
+    "has_mob_farm_template": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "easy_mob_farm:mob_farm_templates"
+          }
+        ]
+      }
+    },
+    "has_nether_wart": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:nether_wart"
+          }
+        ]
+      }
+    },
+    "has_soul_sand": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:soul_sand"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_nether_fortress_farm",
+      "has_mob_farm_template",
+      "has_nether_wart",
+      "has_soul_sand"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "easy_mob_farm:mob_farm/nether_fortress_farm/tier0_nether_fortress_farm",
+      "easy_mob_farm:mob_farm/nether_fortress_farm/tier1_nether_fortress_farm",
+      "easy_mob_farm:mob_farm/nether_fortress_farm/tier2_nether_fortress_farm",
+      "easy_mob_farm:mob_farm/nether_fortress_farm/tier3_nether_fortress_farm"
+    ]
+  }
+}

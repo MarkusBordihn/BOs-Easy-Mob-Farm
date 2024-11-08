@@ -34,7 +34,7 @@ public class IronboundContainmentCageItem extends MobCatcherItem {
   }
 
   public IronboundContainmentCageItem(Item.Properties properties) {
-    super(properties.defaultDurability(MAX_DURABILITY));
+    super(properties.durability(MAX_DURABILITY));
   }
 
   @Override

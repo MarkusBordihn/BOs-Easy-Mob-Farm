@@ -20,12 +20,13 @@
 package de.markusbordihn.easymobfarm.client.event;
 
 import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.client.model.MobCaptureCardModel;
+import de.markusbordihn.easymobfarm.client.model.ModelManager;
 import de.markusbordihn.easymobfarm.client.model.UnbakedMobCaptureCardModel;
 import de.markusbordihn.easymobfarm.config.MobCaptureCardModelsConfig;
-import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
+import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.model.UnbakedModel;
+import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -37,58 +38,68 @@ public class ModelEventHandler {
 
   public static void registerModelEventHandler() {
 
-    ModelLoadingRegistry.INSTANCE.registerModelProvider(
-        (resourceManager, consumer) -> {
+    ModelLoadingPlugin.register(
+        pluginContext -> {
           log.info("Registering custom models ...");
 
           // Pre-Loading default models for Mob Capture Card.
-          consumer.accept(UnbakedMobCaptureCardModel.MODEL);
-          consumer.accept(MobCaptureCardModel.DEFAULT_MODEL);
-          consumer.accept(MobCaptureCardModel.DEFAULT_UNCOMMON_MODEL);
-          consumer.accept(MobCaptureCardModel.DEFAULT_RARE_MODEL);
-          consumer.accept(MobCaptureCardModel.DEFAULT_EPIC_MODEL);
-          consumer.accept(MobCaptureCardModel.DEFAULT_FISH_MODEL);
+          pluginContext.addModels(
+              UnbakedMobCaptureCardModel.MODEL,
+              ModelManager.getModelManager().getDefaultModelLocation(),
+              ModelManager.getModelManager().getDefaultUncommonModelLocation(),
+              ModelManager.getModelManager().getDefaultRareModelLocation(),
+              ModelManager.getModelManager().getDefaultEpicModelLocation(),
+              ModelManager.getModelManager().getDefaultFishModelLocation());
 
           // Pre-Loading additional models for Mob Capture Card from config file.
           MobCaptureCardModelsConfig.getMobCaptureCardModels()
               .forEach(
                   entityName -> {
-                    ModelResourceLocation modelResourceLocation =
-                        MobCaptureCardModelsConfig.getModelResourceLocation(entityName);
-                    if (modelResourceLocation == null) {
+                    ResourceLocation resourceLocation =
+                        MobCaptureCardModelsConfig.getResourceLocation(entityName);
+                    if (resourceLocation == null) {
                       log.error(
                           "Skipping model for entity {} because of invalid resource locations.",
                           entityName);
                       return;
                     }
                     log.info(
-                        "Registering custom model {} for {} ...",
-                        modelResourceLocation,
-                        entityName);
-                    consumer.accept(modelResourceLocation);
+                        "Registering custom model {} for {} ...", resourceLocation, entityName);
+                    pluginContext.addModels(resourceLocation);
+                  });
+
+          // Register custom model for Mob Capture Card.
+          pluginContext
+              .modifyModelOnLoad()
+              .register(
+                  (originalModel, onLoadContext) -> {
+                    ModelResourceLocation modelResourceLocation = onLoadContext.topLevelId();
+                    if (modelResourceLocation == null) {
+                      return originalModel;
+                    }
+                    ResourceLocation resourceLocation = modelResourceLocation.id();
+                    if (resourceLocation.getNamespace().equals(Constants.MOD_ID)) {
+                      log.info(
+                          "Found unbaked model: {} ({})",
+                          modelResourceLocation,
+                          resourceLocation.getPath());
+                      if (resourceLocation.getPath().equals("mob_capture_card")) {
+                        log.info("Adjusting baked model for {} ...", modelResourceLocation);
+                        UnbakedModel unbakedModel =
+                            onLoadContext.getOrLoadModel(UnbakedMobCaptureCardModel.MODEL);
+                        if (unbakedModel == null) {
+                          log.error(
+                              "Unable to load unbaked model for resource location {} from {}",
+                              modelResourceLocation,
+                              UnbakedMobCaptureCardModel.MODEL);
+                          return originalModel;
+                        }
+                        log.info("Baking unbaked model for {} ...", modelResourceLocation);
+                        return new UnbakedMobCaptureCardModel(unbakedModel);
+                      }
+                    }
+                    return originalModel;
                   });
         });
-
-    ModelLoadingRegistry.INSTANCE.registerResourceProvider(
-        resourceManager ->
-            (location, context) -> {
-              if (location.getNamespace().equals(Constants.MOD_ID)) {
-                log.info("Found unbaked model: {} ({})", location, location.getPath());
-                if (location.getPath().equals("item/mob_capture_card")) {
-                  log.info("Adjusting baked model for {} ...", location);
-                  UnbakedModel unbakedModel = context.loadModel(UnbakedMobCaptureCardModel.MODEL);
-                  if (unbakedModel == null) {
-                    log.error(
-                        "Unable to load unbaked model for resource location {} from {}",
-                        location,
-                        UnbakedMobCaptureCardModel.MODEL);
-                    return null;
-                  }
-                  log.info("Baking unbaked model for {} ...", location);
-                  return new UnbakedMobCaptureCardModel(unbakedModel);
-                }
-              }
-              return null;
-            });
   }
 }

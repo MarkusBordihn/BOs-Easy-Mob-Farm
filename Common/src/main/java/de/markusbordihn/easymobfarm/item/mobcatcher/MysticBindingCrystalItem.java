@@ -34,7 +34,7 @@ public class MysticBindingCrystalItem extends MobCatcherItem {
   }
 
   public MysticBindingCrystalItem(Item.Properties properties) {
-    super(properties.defaultDurability(MAX_DURABILITY));
+    super(properties.durability(MAX_DURABILITY));
   }
 
   @Override

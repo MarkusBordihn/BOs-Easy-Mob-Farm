@@ -51,7 +51,8 @@ public class CustomMobCaptureCards {
                 return;
               }
               EntityType<?> entityType =
-                  BuiltInRegistries.ENTITY_TYPE.get(new ResourceLocation((String) modelKeyData[0]));
+                  BuiltInRegistries.ENTITY_TYPE.get(
+                      ResourceLocation.parse((String) modelKeyData[0]));
               ItemStack itemStack =
                   MobCaptureManager.createMobCaptureCard(
                       mobCaptureCardItem,

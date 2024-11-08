@@ -34,7 +34,7 @@ public class EnduringCaptureNetItem extends MobCatcherItem {
   }
 
   public EnduringCaptureNetItem(Item.Properties properties) {
-    super(properties.defaultDurability(MAX_DURABILITY));
+    super(properties.durability(MAX_DURABILITY));
   }
 
   @Override

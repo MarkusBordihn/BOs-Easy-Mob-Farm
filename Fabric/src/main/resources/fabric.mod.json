@@ -8,8 +8,8 @@
     "Markus Bordihn"
   ],
   "contact": {
-    "homepage": "https://curseforge.com/minecraft/mc-mods/easy_mob_farm",
-    "issues": "https://github.com/MarkusBordihn/Easy-Mob-Farm/issues"
+    "homepage": "https://curseforge.com/minecraft/mc-mods/easy-mob-farm",
+    "issues": "https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/issues"
   },
   "license": "MIT",
   "icon": "logo.png",
@@ -32,8 +32,8 @@
   "depends": {
     "fabricloader": ">=0.15",
     "fabric": "*",
-    "minecraft": "1.20.1",
-    "java": ">=17"
+    "minecraft": "1.21.1",
+    "java": ">=21"
   },
   "suggests": {
     "tooltipfix": "*"

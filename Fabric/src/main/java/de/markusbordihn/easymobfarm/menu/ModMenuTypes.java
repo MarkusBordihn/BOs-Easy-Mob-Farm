@@ -20,8 +20,10 @@
 package de.markusbordihn.easymobfarm.menu;
 
 import de.markusbordihn.easymobfarm.Constants;
-import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.inventory.MenuType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,6 +39,8 @@ public class ModMenuTypes {
   }
 
   public static final MenuType<MobFarmMenuWrapper> MOB_FARM_MENU =
-      ScreenHandlerRegistry.registerSimple(
-          new ResourceLocation(Constants.MOD_ID, MobFarmMenu.ID), MobFarmMenuWrapper::new);
+      Registry.register(
+          BuiltInRegistries.MENU,
+          ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, MobFarmMenu.ID),
+          new MenuType<>(MobFarmMenuWrapper::new, FeatureFlagSet.of()));
 }

@@ -50,7 +50,7 @@ public class MobEntityTypeData {
 
     Item item = itemStack.getItem();
     if (item instanceof SpawnEggItem spawnEggItem) {
-      return getEntityTypeName(spawnEggItem.getType(itemStack.getOrCreateTag()));
+      return getEntityTypeName(spawnEggItem.getType(itemStack));
     }
 
     return getEntityTypeName(compoundTag);
@@ -80,7 +80,7 @@ public class MobEntityTypeData {
 
     Item item = itemStack.getItem();
     if (item instanceof SpawnEggItem spawnEggItem) {
-      return getEntityType(spawnEggItem.getType(itemStack.getOrCreateTag()));
+      return getEntityType(spawnEggItem.getType(itemStack));
     }
 
     return getEntityType(compoundTag);

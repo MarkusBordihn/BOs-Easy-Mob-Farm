@@ -44,6 +44,7 @@ import java.util.HashSet;
 import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -75,13 +76,14 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final int[] RESULT_SLOTS =
       MobFarmSlots.RESULT_SLOTS.stream().mapToInt(MobFarmSlot::index).toArray();
-  protected final NonNullList<ItemStack> items =
-      NonNullList.withSize(MobFarmMenu.CONTAINER_SIZE, ItemStack.EMPTY);
   private final ContainerData dataAccess;
+  protected NonNullList<ItemStack> items =
+      NonNullList.withSize(MobFarmMenu.CONTAINER_SIZE, ItemStack.EMPTY);
   private int numberOfOutputSlots = MobFarmMenu.MIN_NUMBER_OF_OUTPUT_SLOTS;
   private int farmProgress = 0;
   private int farmStatus = MobFarmStatus.IDLE;
   private int farmTierLevel = 0;
+  private HolderLookup.Provider provider;
 
   public MobFarmBlockEntity(
       final BlockEntityType<?> blockEntityType,
@@ -89,7 +91,6 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
       final BlockState blockState) {
     super(blockEntityType, blockPos, blockState);
     this.dataAccess = new MobFarmContainerData(this);
-    this.setMobFarmBlockPos(blockPos);
     int tierLevel = MobFarmBlock.getTierLevel(blockState);
     if (tierLevel > 0) {
       this.setMobTierLevel(farmTierLevel);
@@ -278,13 +279,6 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
         Math.min(itemStack.getCount(), outputSlot.getMaxStackSize() - outputSlot.getCount());
     outputSlot.grow(amountToGrow);
     itemStack.shrink(amountToGrow);
-  }
-
-  public void setMobFarmBlockPos(BlockPos blockPos) {
-    log.info("Set mob farm block position to {}", blockPos);
-    this.dataAccess.set(MobFarmDataEntry.BLOCK_POS_X, blockPos.getX());
-    this.dataAccess.set(MobFarmDataEntry.BLOCK_POS_Y, blockPos.getY());
-    this.dataAccess.set(MobFarmDataEntry.BLOCK_POS_Z, blockPos.getZ());
   }
 
   public void setMobTierLevel(int farmTierLevel) {
@@ -541,25 +535,33 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
 
   @Override
   public void setItem(final int index, final ItemStack itemStack) {
-    ItemStack itemStackFromIndex = this.items.get(index);
-    if (itemStack.is(itemStackFromIndex.getItem())) {
-      return;
-    }
     this.items.set(index, itemStack);
     this.syncChanges();
   }
 
   @Override
-  public CompoundTag getUpdateTag() {
-    CompoundTag tag = super.getUpdateTag();
-    ContainerHelper.saveAllItems(tag, this.items);
+  protected NonNullList<ItemStack> getItems() {
+    return this.items;
+  }
+
+  @Override
+  protected void setItems(NonNullList<ItemStack> items) {
+    this.items = items;
+  }
+
+  @Override
+  public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
+    CompoundTag tag = super.getUpdateTag(provider);
+    ContainerHelper.saveAllItems(tag, this.items, provider);
     return tag;
   }
 
   @Override
   public ClientboundBlockEntityDataPacket getUpdatePacket() {
-    CompoundTag tag = new CompoundTag();
-    this.saveAdditional(tag);
+    if (this.provider != null) {
+      CompoundTag tag = new CompoundTag();
+      this.saveAdditional(tag, this.provider);
+    }
     return ClientboundBlockEntityDataPacket.create(this);
   }
 
@@ -604,25 +606,28 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
   }
 
   @Override
-  public void load(final CompoundTag compoundTag) {
-    super.load(compoundTag);
+  public void loadAdditional(final CompoundTag compoundTag, HolderLookup.Provider provider) {
+    super.loadAdditional(compoundTag, provider);
 
     // Load items
     this.items.clear();
-    ContainerHelper.loadAllItems(compoundTag, this.items);
+    ContainerHelper.loadAllItems(compoundTag, this.items, provider);
 
     // Load additional data
     if (compoundTag.contains(TIER_LEVEL_TAG)) {
       this.farmTierLevel = compoundTag.getInt(TIER_LEVEL_TAG);
     }
+
+    // Cache provider
+    this.provider = provider;
   }
 
   @Override
-  public void saveAdditional(final CompoundTag compoundTag) {
-    super.saveAdditional(compoundTag);
+  public void saveAdditional(final CompoundTag compoundTag, HolderLookup.Provider provider) {
+    super.saveAdditional(compoundTag, provider);
 
     // Save items
-    ContainerHelper.saveAllItems(compoundTag, this.items);
+    ContainerHelper.saveAllItems(compoundTag, this.items, provider);
 
     // Save additional data
     compoundTag.putInt(TIER_LEVEL_TAG, this.farmTierLevel);

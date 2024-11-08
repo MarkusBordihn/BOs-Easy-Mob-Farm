@@ -26,7 +26,6 @@ import java.util.List;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
 
 public class SwordEnhancementItem extends EnhancementItem {
 
@@ -42,7 +41,10 @@ public class SwordEnhancementItem extends EnhancementItem {
 
   @Override
   public void appendHoverText(
-      ItemStack itemStack, Level level, List<Component> tooltip, TooltipFlag flag) {
+      ItemStack itemStack,
+      TooltipContext tooltipContext,
+      List<Component> tooltip,
+      TooltipFlag flag) {
     tooltip.add(TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_PREFIX + ID));
   }
 }

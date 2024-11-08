@@ -19,11 +19,12 @@
 
 package de.markusbordihn.easymobfarm.data.capture;
 
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Cat;
+import net.minecraft.world.entity.animal.CatVariant;
 import net.minecraft.world.entity.npc.Villager;
 
 public class MobVariantData {
@@ -38,8 +39,8 @@ public class MobVariantData {
 
   public static String getVariant(final LivingEntity livingEntity) {
     if (livingEntity instanceof Cat cat) {
-      return BuiltInRegistries.CAT_VARIANT
-          .getKey(cat.getVariant())
+      return ((ResourceKey) cat.getVariant().unwrapKey().orElse(CatVariant.BLACK))
+          .location()
           .toString()
           .replace("minecraft:", "");
     } else if (livingEntity instanceof Villager villager) {

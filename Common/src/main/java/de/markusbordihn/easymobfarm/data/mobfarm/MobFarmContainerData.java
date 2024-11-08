@@ -53,6 +53,11 @@ public class MobFarmContainerData implements ContainerData {
   @Override
   public void set(int index, int value) {
     switch (index) {
+      case MobFarmDataEntry.BLOCK_POS_X,
+          MobFarmDataEntry.BLOCK_POS_Y,
+          MobFarmDataEntry.BLOCK_POS_Z -> {
+        log.info("Block position is read-only and can not be changed.");
+      }
       case MobFarmDataEntry.NUMBER_OF_OUTPUT_SLOTS -> mobFarmEntity.setNumberOfOutputSlots(value);
       case MobFarmDataEntry.FARM_PROGRESS -> mobFarmEntity.setFarmProgress(value);
       case MobFarmDataEntry.FARM_STATUS -> mobFarmEntity.setFarmStatus(value);

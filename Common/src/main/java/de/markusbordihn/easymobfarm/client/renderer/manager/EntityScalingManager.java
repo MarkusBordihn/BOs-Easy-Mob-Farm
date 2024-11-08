@@ -42,12 +42,12 @@ public class EntityScalingManager {
         entity.getClass(),
         cls -> {
           EntityDimensions dimensions = entity.getDimensions(entity.getPose());
-          if ((dimensions.width < MAX_BLOCK_SCALE && dimensions.height < MAX_BLOCK_SCALE)
-              || (dimensions.width * DEFAULT_SCALE_BLOCK < MAX_BLOCK_SCALE
-                  && dimensions.height * DEFAULT_SCALE_BLOCK < MAX_BLOCK_SCALE)) {
+          if ((dimensions.width() < MAX_BLOCK_SCALE && dimensions.height() < MAX_BLOCK_SCALE)
+              || (dimensions.width() * DEFAULT_SCALE_BLOCK < MAX_BLOCK_SCALE
+                  && dimensions.height() * DEFAULT_SCALE_BLOCK < MAX_BLOCK_SCALE)) {
             return DEFAULT_SCALE_BLOCK;
           }
-          float scaleFactor = Math.max(dimensions.width, dimensions.height) / MAX_BLOCK_SCALE;
+          float scaleFactor = Math.max(dimensions.width(), dimensions.height()) / MAX_BLOCK_SCALE;
           return scaleFactor > 1.0f ? MAX_BLOCK_SCALE / scaleFactor : MAX_BLOCK_SCALE;
         });
   }
@@ -57,15 +57,16 @@ public class EntityScalingManager {
         entity.getClass(),
         cls -> {
           EntityDimensions dimensions = entity.getDimensions(entity.getPose());
-          if ((dimensions.width < MAX_UI_WIDTH_PIXELS && dimensions.height < MAX_UI_HEIGHT_PIXELS)
-              || (dimensions.width * DEFAULT_SCALE_UI < MAX_UI_WIDTH_PIXELS
-                  && dimensions.height * DEFAULT_SCALE_UI < MAX_UI_HEIGHT_PIXELS)) {
+          if ((dimensions.width() < MAX_UI_WIDTH_PIXELS
+                  && dimensions.height() < MAX_UI_HEIGHT_PIXELS)
+              || (dimensions.width() * DEFAULT_SCALE_UI < MAX_UI_WIDTH_PIXELS
+                  && dimensions.height() * DEFAULT_SCALE_UI < MAX_UI_HEIGHT_PIXELS)) {
             return (int) (DEFAULT_SCALE_UI * Math.min(MAX_UI_WIDTH_PIXELS, MAX_UI_HEIGHT_PIXELS));
           }
           float scaleFactor =
               Math.min(
-                  MAX_UI_WIDTH_PIXELS / (dimensions.width * 16),
-                  MAX_UI_HEIGHT_PIXELS / (dimensions.height * 16));
+                  MAX_UI_WIDTH_PIXELS / (dimensions.width() * 16),
+                  MAX_UI_HEIGHT_PIXELS / (dimensions.height() * 16));
           return Math.round(scaleFactor * 10);
         });
   }

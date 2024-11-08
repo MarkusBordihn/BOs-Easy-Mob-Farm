@@ -19,16 +19,20 @@
 
 package de.markusbordihn.easymobfarm.block;
 
+import com.mojang.serialization.MapCodec;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -61,6 +65,7 @@ public class MobFarmBlock extends BaseEntityBlock {
   public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
   public static final BooleanProperty WORKING = BooleanProperty.create("working");
   public static final IntegerProperty TIER_LEVEL = IntegerProperty.create("tier_level", 0, 3);
+  public static final MapCodec<MobFarmBlock> CODEC = simpleCodec(MobFarmBlock::new);
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   public MobFarmBlock() {
@@ -101,6 +106,11 @@ public class MobFarmBlock extends BaseEntityBlock {
   }
 
   @Override
+  protected MapCodec<? extends BaseEntityBlock> codec() {
+    return CODEC;
+  }
+
+  @Override
   public BlockEntity newBlockEntity(final BlockPos blockPos, final BlockState blockState) {
     return new MobFarmBlockEntity(null, blockPos, blockState);
   }
@@ -134,7 +144,8 @@ public class MobFarmBlock extends BaseEntityBlock {
     if (blockEntity instanceof MobFarmBlockEntity blockEntityInstance
         && livingEntity instanceof ServerPlayer serverPlayer) {
       blockEntityInstance.setOwner(serverPlayer);
-      int tierLevel = itemStack.getOrCreateTag().getInt(MobFarmBlockEntity.TIER_LEVEL_TAG);
+      CustomData customData = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+      int tierLevel = customData.getUnsafe().getInt(MobFarmBlockEntity.TIER_LEVEL_TAG);
       if (tierLevel >= 0) {
         BlockState newBlockState = blockState.setValue(TIER_LEVEL, tierLevel);
         level.setBlock(blockPos, newBlockState, 3);
@@ -145,7 +156,24 @@ public class MobFarmBlock extends BaseEntityBlock {
   }
 
   @Override
-  public InteractionResult use(
+  protected InteractionResult useWithoutItem(
+      BlockState blockState,
+      Level level,
+      BlockPos blockPos,
+      Player player,
+      BlockHitResult hitResult) {
+    if (level.isClientSide) {
+      return InteractionResult.SUCCESS;
+    }
+
+    // Open Mob Farm GUI
+    this.openMenu(level, blockPos, player);
+    return InteractionResult.CONSUME;
+  }
+
+  @Override
+  public ItemInteractionResult useItemOn(
+      ItemStack itemStack,
       final BlockState blockState,
       final Level level,
       final BlockPos blockPos,
@@ -153,34 +181,33 @@ public class MobFarmBlock extends BaseEntityBlock {
       final InteractionHand interactionHand,
       final BlockHitResult blockHitResult) {
     if (level.isClientSide) {
-      return InteractionResult.SUCCESS;
+      return ItemInteractionResult.SUCCESS;
     }
 
     // Confirm that block is a mob farm block entity
     BlockEntity blockEntity = level.getBlockEntity(blockPos);
     if (!(blockEntity instanceof MobFarmBlockEntity mobFarmBlockEntity)) {
-      return InteractionResult.FAIL;
+      return ItemInteractionResult.FAIL;
     }
 
     // Check if item in hand could be consumed
-    ItemStack itemStack = player.getItemInHand(interactionHand);
     if (!itemStack.isEmpty()
         && (mobFarmBlockEntity.takeMobCaptureItem(player, interactionHand)
             || mobFarmBlockEntity.takeEnhancementItem(player, interactionHand)
             || mobFarmBlockEntity.takeSlotUpgradeItem(player, interactionHand)
             || mobFarmBlockEntity.takeFilterItem(player, interactionHand))) {
-      return InteractionResult.CONSUME;
+      return ItemInteractionResult.CONSUME;
     }
 
     // Check if mob capture items could be extracted
     if (player.isShiftKeyDown() && mobFarmBlockEntity.hasCapturedMob()) {
       mobFarmBlockEntity.giveMobCaptureItem(player, interactionHand);
-      return InteractionResult.CONSUME;
+      return ItemInteractionResult.CONSUME;
     }
 
     // Open Mob Farm GUI
     this.openMenu(level, blockPos, player);
-    return InteractionResult.CONSUME;
+    return ItemInteractionResult.CONSUME;
   }
 
   protected void openMenu(final Level level, final BlockPos blockPos, final Player player) {
