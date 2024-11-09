@@ -59,7 +59,7 @@ public class MobCaptureCardResourceManager {
                   != null) {
                 processMobCaptureCardData(packResources, mobCaptureCardLocation);
               } else {
-                log.info(
+                log.debug(
                     "{} Skipping pack {} because it does not contain {}",
                     LOG_PREFIX,
                     packResources.packId(),

@@ -67,14 +67,30 @@ public class MobCaptureCardModelsConfig extends Config {
 
   static {
     // Minecraft default models
-    defaultModels.put("minecraft:cat::all_black", MOB_CAPTURE_CARD_PREFIX + "cat_black");
+    defaultModels.put("minecraft:blaze", MOB_CAPTURE_CARD_PREFIX + "blaze");
+    defaultModels.put("minecraft:cat::all_black", MOB_CAPTURE_CARD_PREFIX + "cat_all_black");
+    defaultModels.put("minecraft:cat::black", MOB_CAPTURE_CARD_PREFIX + "cat_black");
+    defaultModels.put(
+        "minecraft:cat::british_shorthair", MOB_CAPTURE_CARD_PREFIX + "cat_british_shorthair");
+    defaultModels.put("minecraft:cat::calico", MOB_CAPTURE_CARD_PREFIX + "cat_calico");
+    defaultModels.put("minecraft:cat::jellie", MOB_CAPTURE_CARD_PREFIX + "cat_jellie");
+    defaultModels.put("minecraft:cat::persian", MOB_CAPTURE_CARD_PREFIX + "cat_persian");
+    defaultModels.put("minecraft:cat::ragdoll", MOB_CAPTURE_CARD_PREFIX + "cat_ragdoll");
+    defaultModels.put("minecraft:cat::red", MOB_CAPTURE_CARD_PREFIX + "cat_red");
+    defaultModels.put("minecraft:cat::siamese", MOB_CAPTURE_CARD_PREFIX + "cat_siamese");
+    defaultModels.put("minecraft:cat::tabby", MOB_CAPTURE_CARD_PREFIX + "cat_tabby");
     defaultModels.put("minecraft:cat::white", MOB_CAPTURE_CARD_PREFIX + "cat_white");
     defaultModels.put("minecraft:chicken", MOB_CAPTURE_CARD_PREFIX + "chicken");
     defaultModels.put("minecraft:cod", MOB_CAPTURE_CARD_PREFIX + "cod");
     defaultModels.put("minecraft:cow", MOB_CAPTURE_CARD_PREFIX + "cow");
+    defaultModels.put("minecraft:creeper", MOB_CAPTURE_CARD_PREFIX + "creeper");
     defaultModels.put("minecraft:drowned", MOB_CAPTURE_CARD_PREFIX + "drowned");
+    defaultModels.put("minecraft:enderman", MOB_CAPTURE_CARD_PREFIX + "enderman");
+    defaultModels.put("minecraft:husk", MOB_CAPTURE_CARD_PREFIX + "husk");
     defaultModels.put("minecraft:iron_golem", MOB_CAPTURE_CARD_PREFIX + "iron_golem");
+    defaultModels.put("minecraft:phantom", MOB_CAPTURE_CARD_PREFIX + "phantom");
     defaultModels.put("minecraft:pig", MOB_CAPTURE_CARD_PREFIX + "pig");
+    defaultModels.put("minecraft:pillager", MOB_CAPTURE_CARD_PREFIX + "pillager");
     defaultModels.put("minecraft:sheep", MOB_CAPTURE_CARD_PREFIX + "sheep");
     defaultModels.put("minecraft:sheep::black", MOB_CAPTURE_CARD_PREFIX + "sheep_black");
     defaultModels.put("minecraft:sheep::blue", MOB_CAPTURE_CARD_PREFIX + "sheep_blue");
@@ -86,8 +102,11 @@ public class MobCaptureCardModelsConfig extends Config {
     defaultModels.put("minecraft:sheep::white", MOB_CAPTURE_CARD_PREFIX + "sheep_white");
     defaultModels.put("minecraft:skeleton", MOB_CAPTURE_CARD_PREFIX + "skeleton");
     defaultModels.put("minecraft:slime", MOB_CAPTURE_CARD_PREFIX + "slime");
+    defaultModels.put("minecraft:spider", MOB_CAPTURE_CARD_PREFIX + "spider");
     defaultModels.put("minecraft:villager", MOB_CAPTURE_CARD_PREFIX + "villager");
+    defaultModels.put("minecraft:witch", MOB_CAPTURE_CARD_PREFIX + "witch");
     defaultModels.put("minecraft:zombie", MOB_CAPTURE_CARD_PREFIX + "zombie");
+    defaultModels.put("minecraft:zombie_villager", MOB_CAPTURE_CARD_PREFIX + "zombie_villager");
   }
 
   public static void registerConfig() {

@@ -22,10 +22,12 @@ package de.markusbordihn.easymobfarm.menu.slots;
 import de.markusbordihn.easymobfarm.item.upgrade.EnhancementItem;
 import de.markusbordihn.easymobfarm.menu.MobFarmSlot;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 
 public class EnhancementSlot extends MobFarmSlot {
 
@@ -44,6 +46,10 @@ public class EnhancementSlot extends MobFarmSlot {
       return true;
     }
 
+    log.debug(
+        "Item {} ({}) is not supported for enhancement slot.",
+        itemStack,
+        itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY));
     return false;
   }
 

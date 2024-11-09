@@ -37,6 +37,6 @@ public class CreativeMobFarmBlock extends MobFarmBlock {
   }
 
   public CreativeMobFarmBlock(final Properties properties) {
-    super(properties);
+    super(properties, 3);
   }
 }

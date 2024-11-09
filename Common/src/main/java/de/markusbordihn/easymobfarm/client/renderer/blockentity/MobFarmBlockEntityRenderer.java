@@ -21,13 +21,10 @@ package de.markusbordihn.easymobfarm.client.renderer.blockentity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.MobFarmBlock;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.client.renderer.manager.EntityScalingManager;
 import de.markusbordihn.easymobfarm.client.renderer.manager.RendererManager;
-import java.util.HashMap;
-import java.util.Map;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -35,23 +32,12 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
     implements BlockEntityRenderer<T> {
 
-  private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
-  protected final Minecraft minecraft;
-  private final Map<EntityType<?>, Entity> entityCache = new HashMap<>();
-  protected BlockEntityRendererProvider.Context context = null;
-
-  public MobFarmBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
-    this.context = context;
-    this.minecraft = Minecraft.getInstance();
-  }
+  public MobFarmBlockEntityRenderer(BlockEntityRendererProvider.Context context) {}
 
   @Override
   public void render(
