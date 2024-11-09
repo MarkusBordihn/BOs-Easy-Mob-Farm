@@ -19,8 +19,8 @@
 
 package de.markusbordihn.easymobfarm.data.capture;
 
+import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 
@@ -31,7 +31,7 @@ public class MobNameData {
   private MobNameData() {}
 
   public static String getName(final EntityType<?> entityType) {
-    return new TranslatableComponent(entityType.getDescriptionId()).getString();
+    return TextComponent.getTranslatedTextRaw(entityType.getDescriptionId()).getString();
   }
 
   public static String getName(final LivingEntity livingEntity) {

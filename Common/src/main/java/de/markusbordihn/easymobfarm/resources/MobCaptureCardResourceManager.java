@@ -58,7 +58,7 @@ public class MobCaptureCardResourceManager {
               if (packResources.hasResource(PackType.CLIENT_RESOURCES, mobCaptureCardLocation)) {
                 processMobCaptureCardData(packResources, mobCaptureCardLocation);
               } else {
-                log.info(
+                log.debug(
                     "{} Skipping pack {} because it does not contain {}",
                     LOG_PREFIX,
                     packResources.getName(),

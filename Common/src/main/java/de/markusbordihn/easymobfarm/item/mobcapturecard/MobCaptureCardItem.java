@@ -28,7 +28,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -90,14 +89,17 @@ public class MobCaptureCardItem extends Item {
             && !mobCaptureData.name().equalsIgnoreCase(mobCaptureData.variant()))
         && mobCaptureData.color() != null) {
       key += "_variant_color";
-      args = new Object[] {mobCaptureData.name(), mobCaptureData.variant(), mobCaptureData.color()};
+      args =
+          new Object[] {
+            mobCaptureData.name(), mobCaptureData.variant(), mobCaptureData.color().getName()
+          };
     } else if (mobCaptureData.variant() != null
         && !mobCaptureData.name().equalsIgnoreCase(mobCaptureData.variant())) {
       key += "_variant";
       args = new Object[] {mobCaptureData.name(), mobCaptureData.variant()};
     } else if (mobCaptureData.color() != null) {
       key += "_color";
-      args = new Object[] {mobCaptureData.name(), mobCaptureData.color()};
+      args = new Object[] {mobCaptureData.name(), mobCaptureData.color().getName()};
     }
 
     return TextComponent.getTranslatedTextRaw(key, args);
@@ -120,7 +122,7 @@ public class MobCaptureCardItem extends Item {
       ItemStack itemStack, Level world, List<Component> tooltip, TooltipFlag flag) {
     MobCaptureData mobCaptureData = MobCaptureManager.getMobCaptureData(itemStack);
     if (mobCaptureData == null) {
-      tooltip.add(new TranslatableComponent(TOOLTIP_PREFIX + "empty"));
+      tooltip.add(TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "empty"));
       return;
     }
 

@@ -44,6 +44,10 @@ public class EnhancementSlot extends MobFarmSlot {
       return true;
     }
 
+    log.debug(
+        "Item {} ({}) is not supported for enhancement slot.",
+        itemStack,
+        itemStack.getOrCreateTag());
     return false;
   }
 

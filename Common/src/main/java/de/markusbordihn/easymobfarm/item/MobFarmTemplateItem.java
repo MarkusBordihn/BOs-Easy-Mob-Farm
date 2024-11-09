@@ -19,12 +19,10 @@
 
 package de.markusbordihn.easymobfarm.item;
 
-import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -52,8 +50,7 @@ public class MobFarmTemplateItem extends BlockItem {
   public void appendHoverText(
       ItemStack itemStack, Level level, List<Component> tooltip, TooltipFlag flag) {
     tooltip.add(
-        new TranslatableComponent(Constants.TEXT_PREFIX + "mob_farm_template")
-            .withStyle(ChatFormatting.YELLOW));
+        TextComponent.getTranslatedText("mob_farm_template").withStyle(ChatFormatting.YELLOW));
 
     // Add Tier Level to tooltip
     Component tierLevelText =

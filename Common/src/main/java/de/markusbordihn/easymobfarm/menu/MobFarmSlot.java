@@ -19,11 +19,16 @@
 
 package de.markusbordihn.easymobfarm.menu;
 
+import de.markusbordihn.easymobfarm.Constants;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.Slot;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class MobFarmSlot extends Slot {
+
+  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   public MobFarmSlot(Container container, int index, int x, int y) {
     super(container, index, x, y);

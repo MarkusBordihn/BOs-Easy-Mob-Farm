@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file.
 
+# v8.2.0
+
+- Fixed #70 and added support for the latest version of Minecraft.
+- Fixed #68, #69 by adding enchantment items for experience bottle drops.
+- Fixed #67 by moving most of the logging to debug mode.
+- Fixed #65 by removing player specific messages.
+- Fixed #63 by reworked mob capture data.
+- Fixed #61 by providing specific enchantment items for the mob farm.
+- Fixed #57 by allow item extraction from the bottom and sides.
+- Fixed #55 by adding support for Supplementaries `Jar` and `Cage`.
+- Fixed #53 by only requiring iron pickaxe for breaking the mob farm.
+- Fixed #52 by adding sword enchantment item for player based drops.
+- Fixed #50, #64 by remove any restrictions for the mob farm.
+- Fixed #47 by adding slot upgrades for the output slots.
+- Added additional mob capture cards.
+- Added support for Create `Blaze Burner`.
+- Added support for Mob Capturing Tool.
+- Added support for Mob Catcher.
+- Added support for Productive Bees `Bee Cage` and `Bee Jar`.
+- Added support for Storage Drawers.
+- Added Model Manager for easier model management across platforms.
+- Distributed processing ticks for better performance and less lag.
+- Improved text and translation support.
+- Improved logging and move messages to debug mode only.
+
 # v8.1.0
 
 - Added debug mode to help with troubleshooting and lower logging outputs.

@@ -19,15 +19,12 @@
 
 package de.markusbordihn.easymobfarm.menu.slots;
 
-import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
-import de.markusbordihn.easymobfarm.item.mobcatcher.MobCatcherItem;
+import de.markusbordihn.easymobfarm.data.capture.MobCaptureDataSupport;
 import de.markusbordihn.easymobfarm.menu.MobFarmSlot;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SpawnEggItem;
 
 public class CapturedMobSlot extends MobFarmSlot {
 
@@ -37,19 +34,18 @@ public class CapturedMobSlot extends MobFarmSlot {
 
   @Override
   public boolean mayPlace(ItemStack itemStack) {
-    if (itemStack.isEmpty() || hasItem() || itemStack.getCount() > 1) {
+    if (hasItem()) {
       return false;
     }
 
-    // Early return for default mob capture items.
-    Item item = itemStack.getItem();
-    if (item instanceof MobCaptureCardItem
-        || item instanceof SpawnEggItem
-        || item instanceof MobCatcherItem) {
+    if (MobCaptureDataSupport.isSupported(itemStack)) {
       return true;
     }
 
-    // More complex check for custom items.
+    log.debug(
+        "Item {} ({}) is not supported for captured mob slot.",
+        itemStack,
+        itemStack.getOrCreateTag());
     return false;
   }
 

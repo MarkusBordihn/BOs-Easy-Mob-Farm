@@ -32,7 +32,7 @@ public class OutputSlot extends MobFarmSlot {
   }
 
   @Override
-  public boolean mayPlace(ItemStack stack) {
+  public boolean mayPlace(ItemStack itemStack) {
     return false;
   }
 

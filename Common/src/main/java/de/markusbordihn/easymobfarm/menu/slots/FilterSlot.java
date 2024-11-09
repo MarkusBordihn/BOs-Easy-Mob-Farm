@@ -19,7 +19,7 @@
 
 package de.markusbordihn.easymobfarm.menu.slots;
 
-import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
+import de.markusbordihn.easymobfarm.data.capture.MobCaptureDataSupport;
 import de.markusbordihn.easymobfarm.item.upgrade.EnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.SlotUpgradeItem;
 import de.markusbordihn.easymobfarm.menu.MobFarmSlot;
@@ -28,7 +28,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SpawnEggItem;
 
 public class FilterSlot extends MobFarmSlot {
 
@@ -43,8 +42,7 @@ public class FilterSlot extends MobFarmSlot {
     }
 
     Item item = itemStack.getItem();
-    if (item instanceof MobCaptureCardItem
-        || item instanceof SpawnEggItem
+    if (MobCaptureDataSupport.isSupported(itemStack)
         || item instanceof EnhancementItem
         || item instanceof SlotUpgradeItem) {
       return false;

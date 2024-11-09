@@ -20,7 +20,7 @@
 package de.markusbordihn.easymobfarm.client.event;
 
 import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.client.model.MobCaptureCardModel;
+import de.markusbordihn.easymobfarm.client.model.ModelManager;
 import de.markusbordihn.easymobfarm.client.model.UnbakedMobCaptureCardModel;
 import de.markusbordihn.easymobfarm.config.MobCaptureCardModelsConfig;
 import net.minecraft.client.resources.model.BakedModel;
@@ -52,11 +52,16 @@ public class ModelEventHandler {
 
     // Pre-Loading default models for Mob Capture Card.
     ForgeModelBakery.addSpecialModel(UnbakedMobCaptureCardModel.MODEL);
-    ForgeModelBakery.addSpecialModel(MobCaptureCardModel.DEFAULT_MODEL);
-    ForgeModelBakery.addSpecialModel(MobCaptureCardModel.DEFAULT_UNCOMMON_MODEL);
-    ForgeModelBakery.addSpecialModel(MobCaptureCardModel.DEFAULT_RARE_MODEL);
-    ForgeModelBakery.addSpecialModel(MobCaptureCardModel.DEFAULT_EPIC_MODEL);
-    ForgeModelBakery.addSpecialModel(MobCaptureCardModel.DEFAULT_FISH_MODEL);
+    ForgeModelBakery.addSpecialModel(
+        ModelManager.getModelManager().getDefaultModelResourceLocation());
+    ForgeModelBakery.addSpecialModel(
+        ModelManager.getModelManager().getDefaultUncommonModelResourceLocation());
+    ForgeModelBakery.addSpecialModel(
+        ModelManager.getModelManager().getDefaultRareModelResourceLocation());
+    ForgeModelBakery.addSpecialModel(
+        ModelManager.getModelManager().getDefaultEpicModelResourceLocation());
+    ForgeModelBakery.addSpecialModel(
+        ModelManager.getModelManager().getDefaultFishModelResourceLocation());
 
     // Pre-Loading additional models for Mob Capture Card from config file.
     MobCaptureCardModelsConfig.getMobCaptureCardModels()
@@ -89,6 +94,12 @@ public class ModelEventHandler {
           mobCaptureCardItemLocation = location;
         }
       }
+    }
+
+    // Verify if Mob Capture Card model is available.
+    if (mobCaptureCardItemLocation == null) {
+      log.error("Unable to find baked model for Mob Capture Card.");
+      return;
     }
 
     // Getting unbaked model for Mob Capture Card.
