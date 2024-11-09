@@ -107,15 +107,18 @@ public class MobFarmMenu extends AbstractContainerMenu {
     if (this.container instanceof MobFarmBlockEntity mobFarmBlockEntity) {
       // Update block position
       BlockPos blockPos = mobFarmBlockEntity.getBlockPos();
-      log.debug("Update Block pose {} for {}", blockPos, mobFarmBlockEntity);
-      setMobFarmBlockPos(blockPos);
+      if (getMobFarmBlockPos() == null || !getMobFarmBlockPos().equals(blockPos)) {
+        log.debug("Update Block pose {} for {}", blockPos, mobFarmBlockEntity);
+        setMobFarmBlockPos(blockPos);
+      }
 
       // Update number of output slots
-      updateNumberOfOutputSlots();
-      log.debug(
-          "Update number of output slots {} for {}",
-          getMobFarmNumberOfOutputSlots(),
-          mobFarmBlockEntity);
+      if (updateNumberOfOutputSlots()) {
+        log.debug(
+            "Update number of output slots {} for {}",
+            getMobFarmNumberOfOutputSlots(),
+            mobFarmBlockEntity);
+      }
     }
 
     // Define container data
@@ -245,7 +248,7 @@ public class MobFarmMenu extends AbstractContainerMenu {
     }
   }
 
-  private void updateNumberOfOutputSlots() {
+  private boolean updateNumberOfOutputSlots() {
     int numberOfOutputSlots = MIN_NUMBER_OF_OUTPUT_SLOTS;
     for (Slot slot : this.slots) {
       if (slot instanceof SlotUpgradeSlot && slot.hasItem() && !slot.getItem().isEmpty()) {
@@ -256,10 +259,16 @@ public class MobFarmMenu extends AbstractContainerMenu {
         }
       }
     }
-    this.setMobFarmNumberOfOutputSlots(
+    int currentNumberOfOutputSlots = this.getMobFarmNumberOfOutputSlots();
+    int newNumberOfOutputSlots =
         Math.min(
-            Math.max(MIN_NUMBER_OF_OUTPUT_SLOTS, numberOfOutputSlots), MAX_NUMBER_OF_OUTPUT_SLOTS));
-    this.adjustOutputSlots(this.getMobFarmNumberOfOutputSlots());
+            Math.max(MIN_NUMBER_OF_OUTPUT_SLOTS, numberOfOutputSlots), MAX_NUMBER_OF_OUTPUT_SLOTS);
+    if (currentNumberOfOutputSlots != newNumberOfOutputSlots) {
+      this.setMobFarmNumberOfOutputSlots(newNumberOfOutputSlots);
+      this.adjustOutputSlots(newNumberOfOutputSlots);
+      return true;
+    }
+    return false;
   }
 
   private void adjustOutputSlots(int maxNumberOfOutputSlots) {

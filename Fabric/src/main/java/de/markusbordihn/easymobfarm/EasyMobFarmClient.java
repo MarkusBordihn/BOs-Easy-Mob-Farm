@@ -20,6 +20,8 @@
 package de.markusbordihn.easymobfarm;
 
 import de.markusbordihn.easymobfarm.client.event.ModelEventHandler;
+import de.markusbordihn.easymobfarm.client.model.ModModelManager;
+import de.markusbordihn.easymobfarm.client.model.ModelManager;
 import de.markusbordihn.easymobfarm.client.renderer.ClientRenderer;
 import de.markusbordihn.easymobfarm.client.screen.ClientScreens;
 import de.markusbordihn.easymobfarm.tabs.ModTabs;
@@ -37,6 +39,9 @@ public class EasyMobFarmClient implements ClientModInitializer {
 
     log.info("{} Tabs ...", Constants.LOG_REGISTER_PREFIX);
     ModTabs.registerModTabs();
+
+    log.info("{} Model Manager ...", Constants.LOG_REGISTER_PREFIX);
+    ModelManager.registerModelManager(new ModModelManager());
 
     log.info("{} Custom Models ...", Constants.LOG_REGISTER_PREFIX);
     ModelEventHandler.registerModelEventHandler();

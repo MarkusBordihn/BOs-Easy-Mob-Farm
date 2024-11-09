@@ -23,13 +23,12 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.MobFarmBlock;
 import de.markusbordihn.easymobfarm.capture.MobCaptureManager;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
+import de.markusbordihn.easymobfarm.data.capture.MobCaptureDataSupport;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmContainerData;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmDataEntry;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmSlot;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmSlots;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmStatus;
-import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
-import de.markusbordihn.easymobfarm.item.mobcatcher.MobCatcherItem;
 import de.markusbordihn.easymobfarm.item.upgrade.EnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.FilterItem;
 import de.markusbordihn.easymobfarm.item.upgrade.SlotUpgradeItem;
@@ -41,6 +40,7 @@ import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import de.markusbordihn.easymobfarm.tags.ModItemTags;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -58,7 +58,6 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -71,6 +70,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
   public static final String ID = "mob_farm_entity";
   public static final int DEFAULT_FARM_PROCESSING_TIME = 6000;
   public static final int DEFAULT_PROCESSING_TICKS = 20;
+  public static final int DEFAULT_RECHECK_TICKS = 200;
   public static final String TIER_LEVEL_TAG = "TierLevel";
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final int[] RESULT_SLOTS =
@@ -78,6 +78,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
   protected final NonNullList<ItemStack> items =
       NonNullList.withSize(MobFarmMenu.CONTAINER_SIZE, ItemStack.EMPTY);
   private final ContainerData dataAccess;
+  private final int processingDelay;
   private int numberOfOutputSlots = MobFarmMenu.MIN_NUMBER_OF_OUTPUT_SLOTS;
   private int farmProgress = 0;
   private int farmStatus = MobFarmStatus.IDLE;
@@ -89,11 +90,20 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
       final BlockState blockState) {
     super(blockEntityType, blockPos, blockState);
     this.dataAccess = new MobFarmContainerData(this);
-    this.setMobFarmBlockPos(blockPos);
     int tierLevel = MobFarmBlock.getTierLevel(blockState);
     if (tierLevel > 0) {
       this.setMobTierLevel(farmTierLevel);
     }
+
+    // Add random delay (0 - DEFAULT_PROCESSING_TICKS) to avoid processing at the same time.
+    this.processingDelay =
+        Math.min(
+            Math.max(
+                (Math.abs(blockPos.getX() * 31 + blockPos.getZ() * 17) % DEFAULT_PROCESSING_TICKS)
+                    + new Random().nextInt(5),
+                0),
+            DEFAULT_PROCESSING_TICKS - 1);
+
     this.setChanged();
   }
 
@@ -110,15 +120,27 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
       return;
     }
 
+    // If farm was full, check if it can process again normally after 200 ticks.
+    if (blockEntity.farmStatus == MobFarmStatus.FULL) {
+      if (level.getGameTime() % DEFAULT_RECHECK_TICKS == 0 && blockEntity.canProcessingResults()) {
+        log.debug(
+            "Mob farm block entity at {} is no longer full and can process results again",
+            blockEntity.getBlockPos());
+        blockEntity.farmStatus = MobFarmStatus.IDLE;
+      } else {
+        return;
+      }
+    }
+
     // Checks only run every 20 ticks, for performance reasons.
-    if (level.getGameTime() % DEFAULT_PROCESSING_TICKS != 0) {
+    if (level.getGameTime() % DEFAULT_PROCESSING_TICKS != blockEntity.processingDelay) {
       return;
     }
 
     // Increase farm progress
     if (blockEntity.farmProgress < DEFAULT_FARM_PROCESSING_TIME) {
       if (blockEntity.farmProgress % 200 == 0) {
-        log.info(
+        log.debug(
             "Mob farm block entity at {} with farm progress {} / {}",
             blockPos,
             blockEntity.farmProgress,
@@ -134,7 +156,14 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     }
 
     // Processing results
-    blockEntity.processingResults();
+    if (blockEntity.canProcessingResults()) {
+      blockEntity.processingResults();
+    } else {
+      log.warn(
+          "Mob farm block entity at {} is full and can't process results",
+          blockEntity.getBlockPos());
+      blockEntity.farmStatus = MobFarmStatus.FULL;
+    }
 
     // Reset farm progress
     blockEntity.farmProgress = 0;
@@ -191,6 +220,19 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     return slotUpgradeItems;
   }
 
+  public boolean canProcessingResults() {
+    int startSlotIndex = MobFarmSlots.RESULT_SLOTS.get(0).index();
+    for (int slotIndex = startSlotIndex;
+        slotIndex < startSlotIndex + numberOfOutputSlots;
+        slotIndex++) {
+      if (this.getItem(slotIndex).isEmpty()
+          || this.getItem(slotIndex).getCount() < this.getItem(slotIndex).getMaxStackSize()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   public void processingResults() {
     MobCaptureData mobCaptureData = this.getMobCaptureData();
     if (mobCaptureData == null) {
@@ -206,7 +248,10 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     if (lootDrops == null || lootDrops.isEmpty()) {
       return;
     }
-    log.info("Mob farm block entity at {} with {}", this, lootDrops);
+    log.debug(
+        "Processing loot drops for mob farm block entity at {} with {} loot drops",
+        this.getBlockPos(),
+        lootDrops);
 
     // Handle loot drops
     for (ItemStack lootDrop : lootDrops) {
@@ -280,15 +325,11 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     itemStack.shrink(amountToGrow);
   }
 
-  public void setMobFarmBlockPos(BlockPos blockPos) {
-    log.info("Set mob farm block position to {}", blockPos);
-    this.dataAccess.set(MobFarmDataEntry.BLOCK_POS_X, blockPos.getX());
-    this.dataAccess.set(MobFarmDataEntry.BLOCK_POS_Y, blockPos.getY());
-    this.dataAccess.set(MobFarmDataEntry.BLOCK_POS_Z, blockPos.getZ());
-  }
-
   public void setMobTierLevel(int farmTierLevel) {
-    log.info("Set mob farm tier level to {}", farmTierLevel);
+    if (this.dataAccess.get(MobFarmDataEntry.FARM_TIER_LEVEL) == farmTierLevel) {
+      return;
+    }
+    log.debug("Set mob farm tier level to {}", farmTierLevel);
     this.dataAccess.set(MobFarmDataEntry.FARM_TIER_LEVEL, farmTierLevel);
   }
 
@@ -357,10 +398,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
       return false;
     }
 
-    Item handItem = handItemStack.getItem();
-    if ((handItem instanceof MobCaptureCardItem
-            || handItem instanceof SpawnEggItem
-            || handItem instanceof MobCatcherItem)
+    if (MobCaptureDataSupport.isSupported(handItemStack)
         && this.getItem(MobFarmSlot.CAPTURED_MOB).isEmpty()) {
       return takePlayerItem(MobFarmSlot.CAPTURED_MOB.index(), player, hand);
     }
@@ -575,8 +613,14 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
 
   @Override
   public int[] getSlotsForFace(final Direction direction) {
-    if (direction == Direction.DOWN) {
+    if (direction == Direction.DOWN
+        || direction == Direction.NORTH
+        || direction == Direction.EAST
+        || direction == Direction.SOUTH
+        || direction == Direction.WEST) {
       return RESULT_SLOTS;
+    } else if (direction == Direction.UP) {
+      return new int[] {};
     } else {
       return new int[] {};
     }
@@ -585,13 +629,13 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
   @Override
   public boolean canPlaceItemThroughFace(
       final int face, final ItemStack itemStack, final Direction direction) {
-    return false;
+    return direction == Direction.UP;
   }
 
   @Override
   public boolean canTakeItemThroughFace(
       final int slot, final ItemStack itemStack, final Direction direction) {
-    if (direction != Direction.DOWN) {
+    if (direction == Direction.UP) {
       return false;
     }
 

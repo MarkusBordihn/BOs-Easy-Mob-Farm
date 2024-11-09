@@ -20,7 +20,7 @@
 package de.markusbordihn.easymobfarm.client.event;
 
 import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.client.model.MobCaptureCardModel;
+import de.markusbordihn.easymobfarm.client.model.ModelManager;
 import de.markusbordihn.easymobfarm.client.model.UnbakedMobCaptureCardModel;
 import de.markusbordihn.easymobfarm.config.MobCaptureCardModelsConfig;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
@@ -43,11 +43,11 @@ public class ModelEventHandler {
 
           // Pre-Loading default models for Mob Capture Card.
           consumer.accept(UnbakedMobCaptureCardModel.MODEL);
-          consumer.accept(MobCaptureCardModel.DEFAULT_MODEL);
-          consumer.accept(MobCaptureCardModel.DEFAULT_UNCOMMON_MODEL);
-          consumer.accept(MobCaptureCardModel.DEFAULT_RARE_MODEL);
-          consumer.accept(MobCaptureCardModel.DEFAULT_EPIC_MODEL);
-          consumer.accept(MobCaptureCardModel.DEFAULT_FISH_MODEL);
+          consumer.accept(ModelManager.getModelManager().getDefaultModelResourceLocation());
+          consumer.accept(ModelManager.getModelManager().getDefaultUncommonModelResourceLocation());
+          consumer.accept(ModelManager.getModelManager().getDefaultRareModelResourceLocation());
+          consumer.accept(ModelManager.getModelManager().getDefaultEpicModelResourceLocation());
+          consumer.accept(ModelManager.getModelManager().getDefaultFishModelResourceLocation());
 
           // Pre-Loading additional models for Mob Capture Card from config file.
           MobCaptureCardModelsConfig.getMobCaptureCardModels()

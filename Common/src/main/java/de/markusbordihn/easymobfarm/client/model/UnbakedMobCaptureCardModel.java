@@ -31,7 +31,6 @@ import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.Nullable;
 
 public class UnbakedMobCaptureCardModel implements UnbakedModel {
 
@@ -55,7 +54,7 @@ public class UnbakedMobCaptureCardModel implements UnbakedModel {
   }
 
   @Override
-  public @Nullable BakedModel bake(
+  public BakedModel bake(
       ModelBaker modelBaker,
       Function<Material, TextureAtlasSprite> textureGetter,
       ModelState modelState,

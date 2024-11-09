@@ -20,7 +20,7 @@
 package de.markusbordihn.easymobfarm.client.event;
 
 import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.client.model.MobCaptureCardModel;
+import de.markusbordihn.easymobfarm.client.model.ModelManager;
 import de.markusbordihn.easymobfarm.client.model.UnbakedMobCaptureCardModel;
 import de.markusbordihn.easymobfarm.config.MobCaptureCardModelsConfig;
 import net.minecraft.client.resources.model.BakedModel;
@@ -53,11 +53,11 @@ public class ModelEventHandler {
 
     // Pre-Loading default models for Mob Capture Card.
     event.register(UnbakedMobCaptureCardModel.MODEL);
-    event.register(MobCaptureCardModel.DEFAULT_MODEL);
-    event.register(MobCaptureCardModel.DEFAULT_UNCOMMON_MODEL);
-    event.register(MobCaptureCardModel.DEFAULT_RARE_MODEL);
-    event.register(MobCaptureCardModel.DEFAULT_EPIC_MODEL);
-    event.register(MobCaptureCardModel.DEFAULT_FISH_MODEL);
+    event.register(ModelManager.getModelManager().getDefaultModelResourceLocation());
+    event.register(ModelManager.getModelManager().getDefaultUncommonModelResourceLocation());
+    event.register(ModelManager.getModelManager().getDefaultRareModelResourceLocation());
+    event.register(ModelManager.getModelManager().getDefaultEpicModelResourceLocation());
+    event.register(ModelManager.getModelManager().getDefaultFishModelResourceLocation());
 
     // Pre-Loading additional models for Mob Capture Card from config file.
     MobCaptureCardModelsConfig.getMobCaptureCardModels()

@@ -1,13 +1,13 @@
 modLoader = "javafml"
 loaderVersion = "[47,)"
 license = "MIT"
-issueTrackerURL = "https://github.com/MarkusBordihn/Easy-Mob-Farm/issues"
+issueTrackerURL = "https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/issues"
 
 [[mods]]
 modId = "easy_mob_farm"
 version = "${file.jarVersion}"
 displayName = "Easy Mob Farm"
-displayURL = "https://curseforge.com/minecraft/mc-mods/easy_mob_farm"
+displayURL = "https://curseforge.com/minecraft/mc-mods/easy-mob-farm"
 logoFile = "logo.png"
 credits = ""
 authors = "Markus Bordihn"

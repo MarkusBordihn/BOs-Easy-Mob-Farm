@@ -114,6 +114,36 @@ dependencies {
   if (project.hasProperty('forge_xaeros_minimap_mod') && project.forge_xaeros_minimap_mod) {
     runtimeOnly fg.deobf("curse.maven:xaeros_minimap-263420:${project.forge_xaeros_minimap_mod}")
   }
+
+  // Mob Catcher: Integration
+  // compileOnly fg.deobf("curse.maven:mob-catcher-498389:4026567")
+  // runtimeOnly fg.deobf("curse.maven:mob-catcher-498389:4026567")
+
+  // MobCatcher: Integration
+  // compileOnly fg.deobf("curse.maven:mobcatcher-324347:4083095")
+  // runtimeOnly fg.deobf("curse.maven:mobcatcher-324347:4083095")
+
+  // Create: Integration
+  // compileOnly fg.deobf("curse.maven:create-328085:4550986")
+  // runtimeOnly fg.deobf("curse.maven:create-328085:4550986")
+
+  // Mob Capturing Tool: Integration
+  // compileOnly fg.deobf("curse.maven:mob-capturing-tool-630272:3834440")
+  // runtimeOnly fg.deobf("curse.maven:mob-capturing-tool-630272:3834440")
+
+  // Storage Drawer: Integration
+  // compileOnly fg.deobf("curse.maven:storage-drawers-223852:3807626")
+  // runtimeOnly fg.deobf("curse.maven:storage-drawers-223852:3807626")
+
+  // Productive Bees: Integration
+  // compileOnly fg.deobf("curse.maven:productivebees-377897:4257307")
+  // runtimeOnly fg.deobf("curse.maven:productivebees-377897:4257307")
+
+  // Supplementaries: Integration
+  // compileOnly fg.deobf("curse.maven:selene-499980:5660287")
+  // runtimeOnly fg.deobf("curse.maven:selene-499980:5660287")
+  // compileOnly fg.deobf("curse.maven:supplementaries-412082:4548315")
+  // runtimeOnly fg.deobf("curse.maven:supplementaries-412082:4548315")
 }
 
 tasks.withType(JavaCompile).configureEach {

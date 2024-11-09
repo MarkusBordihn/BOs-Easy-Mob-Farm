@@ -67,6 +67,10 @@ public class LootManager {
       final Set<EnhancementItem> enhancements,
       final Level level) {
     EntityType<?> entityType = mobCaptureData.entityType();
+    if (entityType == null) {
+      log.error("Unable to get entity type from Mob Capture data: {}", mobCaptureData);
+      return NonNullList.create();
+    }
     Entity entity = entityType.create(level);
     if (entity == null) {
       log.error("Unable to create entity {}!", entityType);
