@@ -26,7 +26,7 @@ import net.minecraft.world.entity.EntityDimensions;
 
 public class EntityScalingManager {
 
-  private static final float MAX_BLOCK_SCALE = 0.92f;
+  private static final float MAX_BLOCK_SCALE = 0.90f;
   private static final float MAX_UI_WIDTH_PIXELS = 50.0f;
   private static final float MAX_UI_HEIGHT_PIXELS = 80.0f;
   private static final float DEFAULT_SCALE_BLOCK = 0.40f;
@@ -66,7 +66,7 @@ public class EntityScalingManager {
               Math.min(
                   MAX_UI_WIDTH_PIXELS / (dimensions.width * 16),
                   MAX_UI_HEIGHT_PIXELS / (dimensions.height * 16));
-          return Math.round(scaleFactor * 10);
+          return Math.round(scaleFactor * 9);
         });
   }
 }

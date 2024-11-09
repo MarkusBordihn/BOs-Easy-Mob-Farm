@@ -19,6 +19,8 @@
 
 package de.markusbordihn.easymobfarm;
 
+import de.markusbordihn.easymobfarm.client.model.ModModelManager;
+import de.markusbordihn.easymobfarm.client.model.ModelManager;
 import de.markusbordihn.easymobfarm.client.renderer.ClientRenderer;
 import de.markusbordihn.easymobfarm.client.screen.ClientScreens;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -33,6 +35,9 @@ public class EasyMobFarmClient {
   @SuppressWarnings("java:S1118")
   public EasyMobFarmClient(IEventBus modEventBus) {
     log.info("Initializing {} (Forge-Client) ...", Constants.MOD_NAME);
+
+    log.info("{} Model Manager ...", Constants.LOG_REGISTER_PREFIX);
+    ModelManager.registerModelManager(new ModModelManager());
 
     modEventBus.addListener(ClientRenderer::registerBlockEntityRenderers);
     modEventBus.addListener(ClientRenderer::registerRenderLayers);

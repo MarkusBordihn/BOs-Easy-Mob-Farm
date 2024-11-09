@@ -1,28 +1,38 @@
+/*
+ * Copyright 2024 Markus Bordihn
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+ * associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute,
+ * sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or
+ * substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+ * NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+ * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
 package de.markusbordihn.easymobfarm.client.renderer.block.model;
 
 import de.markusbordihn.easymobfarm.capture.MobCaptureManager;
-import de.markusbordihn.easymobfarm.client.model.MobCaptureCardModel;
-import de.markusbordihn.easymobfarm.config.MobCaptureCardModelsConfig;
-import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
+import de.markusbordihn.easymobfarm.client.model.ModelManager;
 import java.util.List;
 import java.util.function.Function;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.block.model.BlockModel;
 import net.minecraft.client.renderer.block.model.ItemOverride;
 import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelBakery;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.model.UnbakedModel;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 
 public class MobCaptureCardOverrides extends ItemOverrides {
 
@@ -32,13 +42,6 @@ public class MobCaptureCardOverrides extends ItemOverrides {
       Function<ResourceLocation, UnbakedModel> modelFunction,
       List<ItemOverride> itemOverrides) {
     super(modelBakery, blockModel, modelFunction, itemOverrides);
-  }
-
-  private static boolean isFish(EntityType<?> entityType) {
-    ResourceLocation entityId = EntityType.getKey(entityType);
-    Item correspondingItem = Registry.ITEM.get(entityId);
-    return correspondingItem != Items.AIR
-        && correspondingItem.builtInRegistryHolder().is(ItemTags.FISHES);
   }
 
   @Override
@@ -52,60 +55,7 @@ public class MobCaptureCardOverrides extends ItemOverrides {
       return originalModel;
     }
 
-    // Try to find the best matching model for the mob type.
-    MobCaptureData mobCaptureData = MobCaptureManager.getMobCaptureData(itemStack);
-    ModelResourceLocation modelResourceLocation =
-        MobCaptureCardModelsConfig.getModelResourceLocation(mobCaptureData.type());
-    if (mobCaptureData.hasColor() || mobCaptureData.hasVariant()) {
-      modelResourceLocation =
-          MobCaptureCardModelsConfig.getModelResourceLocation(
-              mobCaptureData.type(), mobCaptureData.variant(), mobCaptureData.color());
-    }
-
-    // Use the custom model if available, otherwise use the original default model.
-    if (modelResourceLocation != null) {
-      BakedModel bakedModel =
-          Minecraft.getInstance().getModelManager().getModel(modelResourceLocation);
-      if (bakedModel != Minecraft.getInstance().getModelManager().getMissingModel()) {
-        return bakedModel;
-      }
-    }
-
-    // Use rarity based model if available.
-    if (mobCaptureData.hasRarity()) {
-      switch (mobCaptureData.rarity()) {
-        case UNCOMMON:
-          return Minecraft.getInstance()
-              .getModelManager()
-              .getModel(MobCaptureCardModel.DEFAULT_UNCOMMON_MODEL);
-        case RARE:
-          return Minecraft.getInstance()
-              .getModelManager()
-              .getModel(MobCaptureCardModel.DEFAULT_RARE_MODEL);
-        case EPIC:
-          return Minecraft.getInstance()
-              .getModelManager()
-              .getModel(MobCaptureCardModel.DEFAULT_EPIC_MODEL);
-        default:
-          break;
-      }
-    }
-
-    // Check for specify tags and use the model if available.
-    if (isFish(mobCaptureData.entityType())) {
-      return Minecraft.getInstance()
-          .getModelManager()
-          .getModel(MobCaptureCardModel.DEFAULT_FISH_MODEL);
-    }
-
-    // Check if we have a valid original model to return.
-    if (originalModel != Minecraft.getInstance().getModelManager().getMissingModel()
-        && originalModel.getParticleIcon()
-            != Minecraft.getInstance().getModelManager().getMissingModel().getParticleIcon()) {
-      return originalModel;
-    }
-
-    // Return default model if nothing else is available.
-    return Minecraft.getInstance().getModelManager().getModel(MobCaptureCardModel.DEFAULT_MODEL);
+    // Get the model manager to resolve the model for the mob capture card.
+    return ModelManager.getModel(MobCaptureManager.getMobCaptureData(itemStack), originalModel);
   }
 }

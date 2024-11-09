@@ -54,6 +54,10 @@ public class SlotUpgradeSlot extends MobFarmSlot {
       return true;
     }
 
+    log.debug(
+        "Item {} ({}) is not supported for slot upgrade slot.",
+        itemStack,
+        itemStack.getOrCreateTag());
     return false;
   }
 

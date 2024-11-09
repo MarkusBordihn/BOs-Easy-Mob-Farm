@@ -65,8 +65,14 @@ public class MobVariantData {
   }
 
   public static String getVariant(final CompoundTag compoundTag) {
-    if (compoundTag != null && compoundTag.contains(VARIANT_TAG)) {
+    if (compoundTag == null) {
+      return null;
+    }
+    if (compoundTag.contains(VARIANT_TAG)) {
       return compoundTag.getString(VARIANT_TAG);
+    }
+    if (compoundTag.contains(VARIANT_TAG.toLowerCase())) {
+      return compoundTag.getString(VARIANT_TAG.toLowerCase());
     }
     return null;
   }
