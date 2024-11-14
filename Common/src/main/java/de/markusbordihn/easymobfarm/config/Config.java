@@ -155,6 +155,8 @@ public class Config {
             configFile,
             properties);
       }
+    } else if (properties.isEmpty()) {
+      log.warn("{} Configuration file {} is empty: {}", LOG_PREFIX, configFile, properties);
     } else {
       log.info("{} {} is up to date: {}", LOG_PREFIX, configFileHeader, properties);
     }
@@ -196,6 +198,19 @@ public class Config {
       }
     }
     properties.setProperty(key, Integer.toString(defaultValue));
+    return defaultValue;
+  }
+
+  protected static float parseConfigValue(
+      final Properties properties, final String key, final float defaultValue) {
+    if (properties.containsKey(key)) {
+      try {
+        return Float.parseFloat(properties.getProperty(key).trim());
+      } catch (Exception e) {
+        log.error("{} Failed to parse Float value for key {}:", LOG_PREFIX, key, e);
+      }
+    }
+    properties.setProperty(key, Float.toString(defaultValue));
     return defaultValue;
   }
 

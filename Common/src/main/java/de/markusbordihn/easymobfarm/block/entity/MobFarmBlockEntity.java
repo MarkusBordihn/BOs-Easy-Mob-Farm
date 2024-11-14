@@ -97,10 +97,12 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
 
     // Add random delay (0 - DEFAULT_PROCESSING_TICKS) to avoid processing at the same time.
     this.processingDelay =
-        (((blockPos.getX() * 31 + blockPos.getZ() * 17) % DEFAULT_PROCESSING_TICKS
-                    + DEFAULT_PROCESSING_TICKS)
-                % DEFAULT_PROCESSING_TICKS)
-            + new Random().nextInt(5);
+        Math.min(
+            Math.max(
+                (Math.abs(blockPos.getX() * 31 + blockPos.getZ() * 17) % DEFAULT_PROCESSING_TICKS)
+                    + new Random().nextInt(5),
+                0),
+            DEFAULT_PROCESSING_TICKS - 1);
 
     this.setChanged();
   }

@@ -40,14 +40,14 @@ public class MobCaptureCardModelsConfig extends Config {
 
  The format is as follows:
  - <entity_name> = <resource_location>
- - <entity_name>:<variant> = <resource_location>
- - <entity_name>:<color> = <resource_location>
- - <entity_name>:<variant>:<color> = <resource_location>
+ - <entity_name>::<variant> = <resource_location>
+ - <entity_name>::<color> = <resource_location>
+ - <entity_name>::<variant>::<color> = <resource_location>
 
  Example:
  - minecraft:zombie = easy_mob_farm:item/mob_capture_card/minecraft/zombie
- - minecraft:zombie:blue = easy_mob_farm:item/mob_capture_card/minecraft/zombie_blue
- - minecraft:zombie:old:blue = easy_mob_farm:item/mob_capture_card/minecraft/zombie_old_blue
+ - minecraft:zombie::blue = easy_mob_farm:item/mob_capture_card/minecraft/zombie_blue
+ - minecraft:zombie::old::blue = easy_mob_farm:item/mob_capture_card/minecraft/zombie_old_blue
 
  The mods tries to load and bake the models for the Mob Capture Cards based on the configuration.
  However, if the model is not found, the default model will be used.

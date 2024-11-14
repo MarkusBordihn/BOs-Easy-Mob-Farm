@@ -53,30 +53,19 @@ public class MobCaptureCardConfig extends Config {
 
     // Config entries
     dropMobCaptureCardOnKill =
-        Boolean.parseBoolean(
-            properties.getProperty(
-                "dropMobCaptureCardOnKill", Boolean.toString(dropMobCaptureCardOnKill)));
+        parseConfigValue(properties, "dropMobCaptureCardOnKill", dropMobCaptureCardOnKill);
     dropMobCaptureCardOnFishing =
-        Boolean.parseBoolean(
-            properties.getProperty(
-                "dropMobCaptureCardOnFishing", Boolean.toString(dropMobCaptureCardOnFishing)));
+        parseConfigValue(properties, "dropMobCaptureCardOnFishing", dropMobCaptureCardOnFishing);
 
-    requirePlayerKill =
-        Boolean.parseBoolean(
-            properties.getProperty("requirePlayerKill", Boolean.toString(requirePlayerKill)));
+    requirePlayerKill = parseConfigValue(properties, "requirePlayerKill", requirePlayerKill);
     mobCaptureCardKillDropChance =
-        Float.parseFloat(
-            properties.getProperty(
-                "mobCaptureCardKillDropChance", Float.toString(mobCaptureCardKillDropChance)));
+        parseConfigValue(properties, "mobCaptureCardKillDropChance", mobCaptureCardKillDropChance);
+
     mobCaptureCardFishingDropChance =
-        Float.parseFloat(
-            properties.getProperty(
-                "mobCaptureCardFishingDropChance",
-                Float.toString(mobCaptureCardFishingDropChance)));
+        parseConfigValue(
+            properties, "mobCaptureCardFishingDropChance", mobCaptureCardFishingDropChance);
     mobCaptureCardFoilDropChance =
-        Float.parseFloat(
-            properties.getProperty(
-                "mobCaptureCardFoilDropChance", Float.toString(mobCaptureCardFoilDropChance)));
+        parseConfigValue(properties, "mobCaptureCardFoilDropChance", mobCaptureCardFoilDropChance);
 
     // Update config file if needed
     updateConfigFileIfChanged(configFile, CONFIG_FILE_HEADER, properties, unmodifiedProperties);
