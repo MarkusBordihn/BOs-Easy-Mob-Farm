@@ -23,7 +23,9 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.capture.MobCaptureManager;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -60,6 +62,15 @@ public class MobCaptureCardItem extends Item {
     return null;
   }
 
+  private static String getVariantName(String variant) {
+    if (variant == null || variant.isEmpty()) {
+      return "";
+    }
+    return Arrays.stream(variant.split("_"))
+        .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase())
+        .collect(Collectors.joining(" "));
+  }
+
   @Override
   public boolean isEnchantable(ItemStack itemStack) {
     return false;
@@ -87,18 +98,24 @@ public class MobCaptureCardItem extends Item {
       key += "_variant_color";
       args =
           new Object[] {
-            mobCaptureData.name(), mobCaptureData.variant(), mobCaptureData.color().getName()
+            mobCaptureData.name(),
+            getVariantName(mobCaptureData.variant()),
+            mobCaptureData.color().getName()
           };
     } else if (mobCaptureData.variant() != null
         && !mobCaptureData.name().equalsIgnoreCase(mobCaptureData.variant())) {
       key += "_variant";
-      args = new Object[] {mobCaptureData.name(), mobCaptureData.variant()};
+      args = new Object[] {mobCaptureData.name(), getVariantName(mobCaptureData.variant())};
     } else if (mobCaptureData.color() != null) {
       key += "_color";
       args = new Object[] {mobCaptureData.name(), mobCaptureData.color().getName()};
     }
 
-    return TextComponent.getTranslatedTextRaw(key, args);
+    return TextComponent.getTranslatedTextRaw(key, args)
+        .append(" ")
+        .append(
+            TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_PREFIX + ID)
+                .withStyle(ChatFormatting.GRAY));
   }
 
   // @Override

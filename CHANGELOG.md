@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+# v8.3.0
+
+- Fixed Mob Capture Card config not working.
+- Fixed issue with distributed processing ticks are negative.
+- Fixed Tabby Card Mob Card.
+- Improved text formatting for Mob Cards.
+- Smaller bug fixes and improvements.
+
 # v8.2.0
 
 - Fixed #70 and added support for the latest version of Minecraft.

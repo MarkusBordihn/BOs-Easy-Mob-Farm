@@ -24,11 +24,11 @@ import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.client.renderer.manager.EntityScalingManager;
 import de.markusbordihn.easymobfarm.client.renderer.manager.RendererManager;
 import de.markusbordihn.easymobfarm.client.screen.components.Graphics;
-import de.markusbordihn.easymobfarm.client.screen.components.Text;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmStatus;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import de.markusbordihn.easymobfarm.menu.MobFarmSlot;
 import de.markusbordihn.easymobfarm.menu.slots.OutputSlot;
+import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.List;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
@@ -47,6 +47,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
       ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "textures/gui/mob_farm_idle.png");
   private static final ResourceLocation TEXTURE_ELEMENTS =
       ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "textures/gui/mob_farm_elements.png");
+  private static final String TOOLTIP_PREFIX = Constants.TOOLTIP_PREFIX + "farm.";
   protected float xMouse;
   protected float yMouse;
 
@@ -75,7 +76,6 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
     super.render(guiGraphics, x, y, partialTicks);
     this.renderLockedSlot(guiGraphics, x, y);
     this.renderEntityType(guiGraphics, x, y);
-    this.renderNumberOfOutputSlot(guiGraphics, x, y);
     this.renderMobFarmProgress(guiGraphics, x, y);
     this.renderTooltip(guiGraphics, x, y);
   }
@@ -97,34 +97,6 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
         36,
         currentWidth,
         16);
-  }
-
-  private void renderNumberOfOutputSlot(GuiGraphics guiGraphics, int x, int y) {
-    // Get number of output slots.
-    int numberOfOutputSlots = this.getMenu().getMobFarmNumberOfOutputSlots();
-    if (numberOfOutputSlots == 0) {
-      return;
-    }
-
-    int mobFarmTierLevel = this.getMenu().getMobFarmTierLevel();
-    if (mobFarmTierLevel >= 0) {
-      Text.drawString(
-          guiGraphics,
-          this.font,
-          "t" + mobFarmTierLevel,
-          this.leftPos + 20,
-          this.topPos + 55,
-          0x404040);
-    }
-
-    // Render number of output slots on the screen.
-    Text.drawString(
-        guiGraphics,
-        this.font,
-        numberOfOutputSlots + "s",
-        this.leftPos + 20,
-        this.topPos + 70,
-        0x404040);
   }
 
   private void renderEntityType(GuiGraphics guiGraphics, int x, int y) {
@@ -174,6 +146,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
   public void renderTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
     super.renderTooltip(guiGraphics, mouseX, mouseY);
 
+    // Render tooltip for different kind of slots.
     for (Slot slot : this.menu.slots) {
       if (slot instanceof MobFarmSlot mobFarmSlot
           && mobFarmSlot.getTooltip() != null
@@ -181,6 +154,29 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
           && !slot.hasItem()) {
         renderSlotTooltip(guiGraphics, mobFarmSlot, mouseX, mouseY);
       }
+    }
+
+    // Render tooltip for the "info" button.
+    if (isHovering(24, 17, 10, 13, mouseX, mouseY)) {
+      List<Component> infoText = new java.util.ArrayList<>(List.of());
+      infoText.add(TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "mob_farm"));
+      infoText.add(
+          TextComponent.getTranslatedTextRaw(
+              TOOLTIP_PREFIX + "tier", new Object[] {this.getMenu().getMobFarmTierLevel()}));
+      infoText.add(
+          TextComponent.getTranslatedTextRaw(
+              TOOLTIP_PREFIX + "status", new Object[] {this.getMenu().getMobFarmStatus()}));
+      infoText.add(
+          TextComponent.getTranslatedTextRaw(
+              TOOLTIP_PREFIX + "progress",
+              new Object[] {
+                this.getMenu().getMobFarmProgress(), MobFarmBlockEntity.DEFAULT_FARM_PROCESSING_TIME
+              }));
+      infoText.add(
+          TextComponent.getTranslatedTextRaw(
+              TOOLTIP_PREFIX + "output_slots",
+              new Object[] {this.getMenu().getMobFarmNumberOfOutputSlots()}));
+      guiGraphics.renderComponentTooltip(this.font, infoText, mouseX, mouseY);
     }
   }
 

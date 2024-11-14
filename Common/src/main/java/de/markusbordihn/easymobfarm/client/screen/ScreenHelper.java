@@ -97,7 +97,7 @@ public class ScreenHelper {
 
     // Render Entity
     guiGraphics.pose().pushPose();
-    guiGraphics.pose().translate(x, y, 1050.0D);
+    guiGraphics.pose().translate(x, y, 300.0D);
     guiGraphics.pose().scale(scale, scale, -scale);
     guiGraphics.pose().mulPose(quaternionfZ);
     if (livingEntity instanceof AbstractSchoolingFish) {
