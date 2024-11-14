@@ -21,7 +21,6 @@ package de.markusbordihn.easymobfarm.data.capture;
 
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.MobCatcherItem;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
