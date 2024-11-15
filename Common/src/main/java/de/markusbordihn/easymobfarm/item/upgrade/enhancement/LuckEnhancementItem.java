@@ -45,6 +45,6 @@ public class LuckEnhancementItem extends EnhancementItem {
       TooltipContext tooltipContext,
       List<Component> tooltip,
       TooltipFlag flag) {
-    tooltip.add(TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_PREFIX + ID));
+    addTooltip(tooltip, TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_PREFIX + ID));
   }
 }

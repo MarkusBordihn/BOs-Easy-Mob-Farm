@@ -19,9 +19,9 @@
 
 package de.markusbordihn.easymobfarm.item.upgrade;
 
-import net.minecraft.world.item.Item;
+import de.markusbordihn.easymobfarm.item.MobFarmItem;
 
-public class FilterItem extends Item {
+public class FilterItem extends MobFarmItem {
 
   public static final String ID_POSTFIX = "_filter";
 

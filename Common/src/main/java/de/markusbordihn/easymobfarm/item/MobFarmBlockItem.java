@@ -20,11 +20,15 @@
 package de.markusbordihn.easymobfarm.item;
 
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
+import de.markusbordihn.easymobfarm.config.MobFarmConfig;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.List;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -80,18 +84,62 @@ public class MobFarmBlockItem extends BlockItem {
     super.appendHoverText(itemStack, tooltipContext, tooltip, flag);
 
     // Add farm description
-    tooltip.add(TextComponent.getTranslatedText(this.farmName).withStyle(ChatFormatting.GRAY));
+    Component farmDescription = TextComponent.getTranslatedText(this.farmName);
+    List<FormattedText> lines =
+        Minecraft.getInstance()
+            .font
+            .getSplitter()
+            .splitLines(farmDescription.getString(), 200, Style.EMPTY);
+    for (FormattedText line : lines) {
+      tooltip.add(TextComponent.getText(line.getString()).withStyle(ChatFormatting.GRAY));
+    }
 
     // Add tier level
     CustomData customData = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
     int tierLevel = customData.getUnsafe().getInt(MobFarmBlockEntity.TIER_LEVEL_TAG);
     Component tierLevelText =
         switch (tierLevel) {
+          case 0 -> TextComponent.getTranslatedText("tier_level", tierLevel, ChatFormatting.WHITE);
           case 1 -> TextComponent.getTranslatedText("tier_level", tierLevel, ChatFormatting.GREEN);
           case 2 -> TextComponent.getTranslatedText("tier_level", tierLevel, ChatFormatting.YELLOW);
           case 3 -> TextComponent.getTranslatedText("tier_level", tierLevel, ChatFormatting.RED);
-          default -> TextComponent.getTranslatedText("tier_level", tierLevel, ChatFormatting.WHITE);
+          default -> null;
         };
-    tooltip.add(tierLevelText);
+    if (tierLevelText != null) {
+      tooltip.add(tierLevelText);
+    }
+
+    // Add processing speed
+    Component processingSpeedText =
+        switch (tierLevel) {
+          case 0 ->
+              TextComponent.getTranslatedText(
+                  "tier_level_processing_speed",
+                  MobFarmBlockEntity.DEFAULT_PROCESSING_TICKS
+                      + MobFarmConfig.tier0progressionUpgradeSpeed,
+                  ChatFormatting.WHITE);
+          case 1 ->
+              TextComponent.getTranslatedText(
+                  "tier_level_processing_speed",
+                  MobFarmBlockEntity.DEFAULT_PROCESSING_TICKS
+                      + MobFarmConfig.tier1progressionUpgradeSpeed,
+                  ChatFormatting.GREEN);
+          case 2 ->
+              TextComponent.getTranslatedText(
+                  "tier_level_processing_speed",
+                  MobFarmBlockEntity.DEFAULT_PROCESSING_TICKS
+                      + MobFarmConfig.tier2progressionUpgradeSpeed,
+                  ChatFormatting.YELLOW);
+          case 3 ->
+              TextComponent.getTranslatedText(
+                  "tier_level_processing_speed",
+                  MobFarmBlockEntity.DEFAULT_PROCESSING_TICKS
+                      + MobFarmConfig.tier3progressionUpgradeSpeed,
+                  ChatFormatting.RED);
+          default -> null;
+        };
+    if (processingSpeedText != null) {
+      tooltip.add(processingSpeedText);
+    }
   }
 }

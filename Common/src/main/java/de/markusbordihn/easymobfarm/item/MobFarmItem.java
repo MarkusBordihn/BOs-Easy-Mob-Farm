@@ -17,34 +17,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.item.upgrade.enhancement;
+package de.markusbordihn.easymobfarm.item;
 
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.item.upgrade.EnhancementItem;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.List;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.Style;
+import net.minecraft.world.item.Item;
 
-public class SwordEnhancementItem extends EnhancementItem {
+public class MobFarmItem extends Item {
 
-  public static final String ID = "sword" + ID_POSTFIX;
-
-  public SwordEnhancementItem() {
-    this(new Properties());
+  public MobFarmItem(Properties properties) {
+    super(properties);
   }
 
-  public SwordEnhancementItem(Properties properties) {
-    super(properties.stacksTo(1));
+  public void addTooltip(List<Component> tooltip, final Component component) {
+    addTooltip(tooltip, component, ChatFormatting.GRAY);
   }
 
-  @Override
-  public void appendHoverText(
-      ItemStack itemStack,
-      TooltipContext tooltipContext,
-      List<Component> tooltip,
-      TooltipFlag flag) {
-    addTooltip(tooltip, TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_PREFIX + ID));
+  public void addTooltip(
+      List<Component> tooltip, final Component component, final ChatFormatting formatting) {
+    String componentString = component.getString();
+    List<FormattedText> lines =
+        Minecraft.getInstance().font.getSplitter().splitLines(componentString, 200, Style.EMPTY);
+    for (FormattedText line : lines) {
+      tooltip.add(TextComponent.getText(line.getString()).withStyle(formatting));
+    }
   }
 }
