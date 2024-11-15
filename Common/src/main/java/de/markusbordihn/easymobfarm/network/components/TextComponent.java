@@ -91,6 +91,10 @@ public class TextComponent {
     return Component.translatable(translationKey, data);
   }
 
+  public static MutableComponent getTranslatedTextRaw(final String translationKey, final int data) {
+    return Component.translatable(translationKey, String.valueOf(data));
+  }
+
   public static MutableComponent getTranslatedTextRaw(
       final String translationKey, final String data, final String data2) {
     return Component.translatable(translationKey, data, data2);
