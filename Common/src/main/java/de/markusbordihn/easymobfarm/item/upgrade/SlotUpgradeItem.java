@@ -19,13 +19,17 @@
 
 package de.markusbordihn.easymobfarm.item.upgrade;
 
-import net.minecraft.world.item.Item;
+import de.markusbordihn.easymobfarm.item.MobFarmItem;
 
-public class SlotUpgradeItem extends Item {
+public class SlotUpgradeItem extends MobFarmItem {
 
   public static final String ID_POSTFIX = "_slot_upgrade";
 
   public SlotUpgradeItem(Properties properties) {
     super(properties);
+  }
+
+  public int numberOfUpgradeSlots() {
+    return 3;
   }
 }

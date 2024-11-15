@@ -20,9 +20,11 @@
 package de.markusbordihn.easymobfarm.item.upgrade.enhancement;
 
 import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.config.MobFarmConfig;
 import de.markusbordihn.easymobfarm.item.upgrade.EnhancementItem;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.List;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -45,12 +47,22 @@ public class ExperienceEnhancementItem extends EnhancementItem {
   }
 
   public int experienceDropChance() {
-    return 10;
+    return MobFarmConfig.experienceDropChance;
   }
 
   @Override
   public void appendHoverText(
       ItemStack itemStack, Level level, List<Component> tooltip, TooltipFlag flag) {
-    tooltip.add(TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_PREFIX + ID));
+    addTooltip(tooltip, TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_PREFIX + ID));
+    addTooltip(
+        tooltip,
+        TextComponent.getTranslatedTextRaw(
+            Constants.TOOLTIP_PREFIX + ID + ".note", this.minExperienceForDrop()),
+        ChatFormatting.YELLOW);
+    addTooltip(
+        tooltip,
+        TextComponent.getTranslatedTextRaw(
+            Constants.TOOLTIP_PREFIX + ID + ".drop_change", this.experienceDropChance()),
+        ChatFormatting.GREEN);
   }
 }

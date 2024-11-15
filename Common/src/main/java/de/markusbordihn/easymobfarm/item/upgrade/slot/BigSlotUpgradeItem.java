@@ -41,8 +41,16 @@ public class BigSlotUpgradeItem extends SlotUpgradeItem {
   }
 
   @Override
+  public int numberOfUpgradeSlots() {
+    return 7;
+  }
+
+  @Override
   public void appendHoverText(
       ItemStack itemStack, Level level, List<Component> tooltip, TooltipFlag flag) {
-    tooltip.add(TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_PREFIX + ID));
+    addTooltip(
+        tooltip,
+        TextComponent.getTranslatedTextRaw(
+            Constants.TOOLTIP_PREFIX + ID, this.numberOfUpgradeSlots()));
   }
 }

@@ -19,9 +19,9 @@
 
 package de.markusbordihn.easymobfarm.item.upgrade;
 
-import net.minecraft.world.item.Item;
+import de.markusbordihn.easymobfarm.item.MobFarmItem;
 
-public class EnhancementItem extends Item {
+public class EnhancementItem extends MobFarmItem {
 
   public static final String ID_POSTFIX = "_enhancement";
 

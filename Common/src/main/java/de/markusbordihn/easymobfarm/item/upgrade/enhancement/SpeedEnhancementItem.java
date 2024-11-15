@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.item.upgrade.enhancement;
 
 import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.config.MobFarmConfig;
 import de.markusbordihn.easymobfarm.item.upgrade.EnhancementItem;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.List;
@@ -41,12 +42,14 @@ public class SpeedEnhancementItem extends EnhancementItem {
   }
 
   public int getUpgradeSpeed() {
-    return 6;
+    return MobFarmConfig.speedEnhancementUpgradeSpeed;
   }
 
   @Override
   public void appendHoverText(
       ItemStack itemStack, Level level, List<Component> tooltip, TooltipFlag flag) {
-    tooltip.add(TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_PREFIX + ID));
+    addTooltip(
+        tooltip,
+        TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_PREFIX + ID, this.getUpgradeSpeed()));
   }
 }

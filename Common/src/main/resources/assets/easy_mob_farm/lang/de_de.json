@@ -15,7 +15,7 @@
   "block.easy_mob_farm.desert_farm": "Wüstenfarm (Stufe %s)",
   "block.easy_mob_farm.jungle_farm": "Dschungelfarm (Stufe %s)",
   "block.easy_mob_farm.mob_farm_template": "Mobfarm-Vorlage",
-  "block.easy_mob_farm.monster_plains_farm": "Monsterfarm Ebenen (Stufe %s)",
+  "block.easy_mob_farm.monster_plains_cave_farm": "Monster-Ebenen-Höhlenfarm (Stufe %s)",
   "block.easy_mob_farm.nether_fortress_farm": "Nether-Festung-Farm (Stufe %s)",
   "block.easy_mob_farm.ocean_farm": "Ozeanfarm (Stufe %s)",
   "block.easy_mob_farm.swamp_farm": "Sumpfarm (Stufe %s)",
@@ -57,6 +57,9 @@
   "text.easy_mob_farm.ocean_farm": "Geeignet für ozeanische Kreaturen und wasserbasierte Mobs.",
   "text.easy_mob_farm.swamp_farm": "Perfekt für Sumpfbewohner, unterstützt marschbewohnende Mobs.",
   "text.easy_mob_farm.tier_level": "Stufenlevel: %s",
+  "text.easy_mob_farm.tier_level_processing_speed": "Verarbeitungsgeschwindigkeit: %s t/sec",
+  "tooltip.easy_mob_farm.experience_enhancement.note": "Benötigt ein Wesen, das mindestens %s Erfahrungspunkte gewährt.",
+  "tooltip.easy_mob_farm.experience_enhancement.drop_change": "Drop-Änderung: %s",
   "text.easy_mob_farm.too_large_to_capture": "Das Mob %s ist zu groß, um mit diesem Gegenstand gefangen zu werden.",
   "text.easy_mob_farm.too_strong_to_capture": "Das Mob %s ist zu stark, um gefangen zu werden, versuche es zu schwächen.",
   "tooltip.easy_mob_farm.big_slot_upgrade": "Erhöht die Speicherkapazität für Mobs im Farm um %s.",
@@ -98,6 +101,6 @@
   "tooltip.easy_mob_farm.sheep_enhancement": "Schert Schafe in der Mob-Farm automatisch.",
   "tooltip.easy_mob_farm.slot_upgrade_slot": "Verwende diesen Slot, um die Ausgabeslots der Mob-Farm zu erweitern.",
   "tooltip.easy_mob_farm.small_slot_upgrade": "Fügt zusätzliche Speicherkapazität für Mobs im Farm um %s hinzu.",
-  "tooltip.easy_mob_farm.speed_enhancement": "Erhöht die Geschwindigkeit, mit der Gegenstände gesammelt werden.",
+  "tooltip.easy_mob_farm.speed_enhancement": "Erhöht die Geschwindigkeit um +%s ticks/sec, mit der Gegenstände gesammelt werden.",
   "tooltip.easy_mob_farm.sword_enhancement": "Erzeugt Beute, als ob sie von einem Spieler mit einem Schwert getötet wurde."
 }
