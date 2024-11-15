@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+# v8.4.0
+
+- Fixed #73 with better description for the Enchantment Items.
+- Fixed #72 by adding missing loot tables for the mob farms.
+- Fixed missing translation for the Monster Plains Cave Farm.
+- Added automatic ejecting of items from the mob farm when breaking it.
+- Improved automatic description text split for Fabric.
+- Added Mob Farm Configuration to adjust the mob farm settings.
+- Updated wiki and documentation.
+
 # v8.3.0
 
 - Fixed Mob Capture Card config not working.

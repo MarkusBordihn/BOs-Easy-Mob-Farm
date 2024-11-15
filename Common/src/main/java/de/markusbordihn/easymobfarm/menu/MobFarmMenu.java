@@ -24,7 +24,7 @@ import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmDataEntry;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmSlot;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmSlots;
-import de.markusbordihn.easymobfarm.item.upgrade.SlotUpgradeItem;
+import de.markusbordihn.easymobfarm.item.upgrade.slot.BigSlotUpgradeItem;
 import de.markusbordihn.easymobfarm.item.upgrade.slot.SmallSlotUpgradeItem;
 import de.markusbordihn.easymobfarm.menu.slots.CapturedMobSlot;
 import de.markusbordihn.easymobfarm.menu.slots.EnhancementSlot;
@@ -34,7 +34,6 @@ import de.markusbordihn.easymobfarm.menu.slots.SlotUpgradeSlot;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -253,10 +252,10 @@ public class MobFarmMenu extends AbstractContainerMenu {
     int numberOfOutputSlots = MIN_NUMBER_OF_OUTPUT_SLOTS;
     for (Slot slot : this.slots) {
       if (slot instanceof SlotUpgradeSlot && slot.hasItem() && !slot.getItem().isEmpty()) {
-        if (slot.getItem().getItem() instanceof SmallSlotUpgradeItem) {
-          numberOfOutputSlots += 3;
-        } else if (slot.getItem().getItem() instanceof SlotUpgradeItem) {
-          numberOfOutputSlots += 7;
+        if (slot.getItem().getItem() instanceof SmallSlotUpgradeItem smallSlotUpgradeItem) {
+          numberOfOutputSlots += smallSlotUpgradeItem.numberOfUpgradeSlots();
+        } else if (slot.getItem().getItem() instanceof BigSlotUpgradeItem bigSlotUpgradeItem) {
+          numberOfOutputSlots += bigSlotUpgradeItem.numberOfUpgradeSlots();
         }
       }
     }

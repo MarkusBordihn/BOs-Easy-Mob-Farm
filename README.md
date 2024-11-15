@@ -63,7 +63,7 @@ the [MobCaptureCard wiki page](https://github.com/MarkusBordihn/BOs-Easy-Mob-Far
 
 ![Mob Catcher][mob_catcher]
 
-The Mob Catcher is a special item that enables you to safely and efficiently capture mobs. 
+The Mob Catcher is a special item that enables you to safely and efficiently capture mobs.
 Once captured, mobs can be stored in Mob Capture Cards, ready to be processed in the Mob Farm.
 
 - **Simple to Use**: Just aim and catch!

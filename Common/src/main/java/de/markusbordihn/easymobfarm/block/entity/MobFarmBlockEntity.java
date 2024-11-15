@@ -22,6 +22,7 @@ package de.markusbordihn.easymobfarm.block.entity;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.MobFarmBlock;
 import de.markusbordihn.easymobfarm.capture.MobCaptureManager;
+import de.markusbordihn.easymobfarm.config.MobFarmConfig;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureDataSupport;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmContainerData;
@@ -49,6 +50,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -173,10 +175,8 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     int farmProgressionSpeed = DEFAULT_PROCESSING_TICKS;
 
     // Handle tier upgrades
-    int farmTierLevel = blockEntity.farmTierLevel;
-    if (farmTierLevel > 0) {
-      farmProgressionSpeed += 3 * farmTierLevel;
-    }
+    farmProgressionSpeed +=
+        MobFarmConfig.getFarmTierProgressionUpgradeSpeed(blockEntity.getFarmTierLevel());
 
     // Handle speed upgrades
     for (EnhancementItem enhancementItem : blockEntity.getEnchantmentItems()) {
@@ -534,6 +534,21 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
 
   public ContainerData getContainerData() {
     return this.dataAccess;
+  }
+
+  public void dropInventoryContents() {
+    if (!this.level.isClientSide && !this.items.isEmpty()) {
+      for (ItemStack stack : this.items) {
+        if (!stack.isEmpty()) {
+          Containers.dropItemStack(
+              this.level,
+              this.worldPosition.getX(),
+              this.worldPosition.getY(),
+              this.worldPosition.getZ(),
+              stack);
+        }
+      }
+    }
   }
 
   @Override
