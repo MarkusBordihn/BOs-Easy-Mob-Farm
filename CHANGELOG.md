@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+# v8.5.0
+
+- Fixed #78 by using more universal approach for getting relevant experience.
+- Fixed #77 typo in the experience enhancement item description.
+- Fixed #76 by adding Honey Extractor Enhancement, Harvester Frame Enhancement and Pollen Trap
+  Enhancement for bee farms.
+- Fixed #75 by making less restrictive requirements for experience drops.
+- Fixed mob card model issue with other mods which manipulate / breaking the model baking process.
+- Added entity_type and experience to mob farm info for better usability.
+- Added bee, guardian and wither skeleton custom mob cards.
+- Increased the drop change for the experience enhancement item.
+- Improved Loot Manager for better handling of loot tables.
+
 # v8.4.0
 
 - Fixed #73 with better description for the Enchantment Items.

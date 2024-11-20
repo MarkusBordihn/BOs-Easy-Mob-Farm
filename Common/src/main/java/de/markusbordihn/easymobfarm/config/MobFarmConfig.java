@@ -38,7 +38,7 @@ public class MobFarmConfig extends Config {
   public static int tier2progressionUpgradeSpeed = 6;
   public static int tier3progressionUpgradeSpeed = 9;
 
-  public static int experienceDropChance = 10;
+  public static int experienceDropChance = 5;
   public static int speedEnhancementUpgradeSpeed = 6;
 
   public static void registerConfig() {

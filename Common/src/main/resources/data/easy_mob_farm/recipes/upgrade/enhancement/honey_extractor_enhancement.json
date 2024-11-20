@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " I ",
+    "GCG",
+    "BIB"
+  ],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "C": {
+      "item": "minecraft:honeycomb"
+    },
+    "B": {
+      "item": "minecraft:honey_bottle"
+    }
+  },
+  "result": {
+    "item": "easy_mob_farm:honey_extractor_enhancement",
+    "count": 1
+  }
+}

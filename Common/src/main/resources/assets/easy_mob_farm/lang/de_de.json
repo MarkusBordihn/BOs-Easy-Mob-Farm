@@ -59,7 +59,7 @@
   "text.easy_mob_farm.tier_level": "Stufenlevel: %s",
   "text.easy_mob_farm.tier_level_processing_speed": "Verarbeitungsgeschwindigkeit: %s t/sec",
   "tooltip.easy_mob_farm.experience_enhancement.note": "Benötigt ein Wesen, das mindestens %s Erfahrungspunkte gewährt.",
-  "tooltip.easy_mob_farm.experience_enhancement.drop_change": "Drop-Änderung: %s",
+  "tooltip.easy_mob_farm.experience_enhancement.drop_chance": "Drop-Änderung: %s",
   "text.easy_mob_farm.too_large_to_capture": "Das Mob %s ist zu groß, um mit diesem Gegenstand gefangen zu werden.",
   "text.easy_mob_farm.too_strong_to_capture": "Das Mob %s ist zu stark, um gefangen zu werden, versuche es zu schwächen.",
   "tooltip.easy_mob_farm.big_slot_upgrade": "Erhöht die Speicherkapazität für Mobs im Farm um %s.",
@@ -71,6 +71,10 @@
   "tooltip.easy_mob_farm.farm.progress": "Fortschritt: %s/%s",
   "tooltip.easy_mob_farm.farm.status": "Status: %s",
   "tooltip.easy_mob_farm.farm.tier": "Stufe: %s",
+  "tooltip.easy_mob_farm.farm.entity_type": "Wesenstyp: %s",
+  "tooltip.easy_mob_farm.farm.experience": "Erfahrung: %s",
+  "tooltip.easy_mob_farm.farm.low_experience": "Zu niedrige Erfahrung: %s",
+  "tooltip.easy_mob_farm.farm.no_experience": "Keine Erfahrung",
   "tooltip.easy_mob_farm.filter_slot": "Verwende diesen Slot, um Items aus der Ausgabe der Mob-Farm zu filtern.",
   "tooltip.easy_mob_farm.loot_enhancement": "Verbessert die Qualität der Beute, die von der Mob-Farm gesammelt wird.",
   "tooltip.easy_mob_farm.luck_enhancement": "Erhöht die Chance auf seltene Gegenstandsdrops.",
@@ -102,5 +106,11 @@
   "tooltip.easy_mob_farm.slot_upgrade_slot": "Verwende diesen Slot, um die Ausgabeslots der Mob-Farm zu erweitern.",
   "tooltip.easy_mob_farm.small_slot_upgrade": "Fügt zusätzliche Speicherkapazität für Mobs im Farm um %s hinzu.",
   "tooltip.easy_mob_farm.speed_enhancement": "Erhöht die Geschwindigkeit um +%s ticks/sec, mit der Gegenstände gesammelt werden.",
-  "tooltip.easy_mob_farm.sword_enhancement": "Erzeugt Beute, als ob sie von einem Spieler mit einem Schwert getötet wurde."
+  "tooltip.easy_mob_farm.sword_enhancement": "Erzeugt Beute, als ob sie von einem Spieler mit einem Schwert getötet wurde.",
+  "item.easy_mob_farm.honey_harvester_frame_enhancement": "Honigernte-Rahmen",
+  "tooltip.easy_mob_farm.honey_harvester_frame_enhancement": "Sammelt Honigwaben von verarbeiteten Bienen.",
+  "item.easy_mob_farm.honey_extractor_enhancement": "Honigschleuder",
+  "tooltip.easy_mob_farm.honey_extractor_enhancement": "Extrahiert Honigflaschen aus verarbeiteten Bienen.",
+  "item.easy_mob_farm.pollen_trap_enhancement": "Pollenfalle",
+  "tooltip.easy_mob_farm.pollen_trap_enhancement": "Sammelt Pollen, um Blumen oder Farbstoffe zu erzeugen."
 }
