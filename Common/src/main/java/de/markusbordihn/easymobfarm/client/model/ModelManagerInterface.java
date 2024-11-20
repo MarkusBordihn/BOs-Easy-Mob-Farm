@@ -53,23 +53,23 @@ public interface ModelManagerInterface {
 
   ModelResourceLocation DEFAULT_MODEL =
       new ModelResourceLocation(
-          new ResourceLocation(Constants.MOD_ID, "item/mob_capture_card/default"), "standalone");
+          new ResourceLocation(Constants.MOD_ID, "item/mob_capture_card/default"), "inventory");
   ModelResourceLocation DEFAULT_UNCOMMON_MODEL =
       new ModelResourceLocation(
           new ResourceLocation(Constants.MOD_ID, "item/mob_capture_card/default_uncommon"),
-          "standalone");
+          "inventory");
   ModelResourceLocation DEFAULT_RARE_MODEL =
       new ModelResourceLocation(
           new ResourceLocation(Constants.MOD_ID, "item/mob_capture_card/default_rare"),
-          "standalone");
+          "inventory");
   ModelResourceLocation DEFAULT_EPIC_MODEL =
       new ModelResourceLocation(
           new ResourceLocation(Constants.MOD_ID, "item/mob_capture_card/default_epic"),
-          "standalone");
+          "inventory");
   ModelResourceLocation DEFAULT_FISH_MODEL =
       new ModelResourceLocation(
           new ResourceLocation(Constants.MOD_ID, "item/mob_capture_card/default_fish"),
-          "standalone");
+          "inventory");
 
   private static boolean isFish(EntityType<?> entityType) {
     ResourceLocation entityId = EntityType.getKey(entityType);

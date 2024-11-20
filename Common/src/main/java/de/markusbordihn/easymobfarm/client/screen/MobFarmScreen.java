@@ -26,16 +26,20 @@ import de.markusbordihn.easymobfarm.client.renderer.manager.EntityScalingManager
 import de.markusbordihn.easymobfarm.client.renderer.manager.RendererManager;
 import de.markusbordihn.easymobfarm.client.screen.components.Graphics;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmStatus;
+import de.markusbordihn.easymobfarm.experience.ExperienceManager;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import de.markusbordihn.easymobfarm.menu.MobFarmSlot;
 import de.markusbordihn.easymobfarm.menu.slots.OutputSlot;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.List;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 
@@ -50,6 +54,8 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
   private static final String TOOLTIP_PREFIX = Constants.TOOLTIP_PREFIX + "farm.";
   protected float xMouse;
   protected float yMouse;
+  protected Entity entity;
+  protected int entityExperience;
 
   public MobFarmScreen(T menu, Inventory inventory, Component component) {
     super(menu, inventory, component);
@@ -106,15 +112,19 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
     }
 
     // Get entity from block position and render it on the screen.
-    Entity entity = RendererManager.getEntity(blockPos);
-    if (entity != null) {
+    this.entity = RendererManager.getEntity(blockPos);
+    if (this.entity != null) {
       ScreenHelper.renderEntity(
           this.leftPos + 72,
           this.topPos + 80,
           this.leftPos + 70 - this.xMouse,
           this.topPos + 40 - this.yMouse,
-          EntityScalingManager.getUIScale(entity),
-          entity);
+          EntityScalingManager.getUIScale(this.entity),
+          this.entity);
+    } else {
+      if (this.entityExperience > 0) {
+        this.entityExperience = 0;
+      }
     }
   }
 
@@ -168,6 +178,34 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
           TextComponent.getTranslatedTextRaw(
               TOOLTIP_PREFIX + "output_slots",
               new Object[] {this.getMenu().getMobFarmNumberOfOutputSlots()}));
+
+      // Add entity information to the tooltip, if available.
+      if (this.entity != null) {
+        infoText.add(
+            TextComponent.getTranslatedTextRaw(
+                TOOLTIP_PREFIX + "entity_type", new Object[] {this.entity.getType()}));
+        if (this.entity instanceof LivingEntity livingEntity
+            && ExperienceManager.shouldDropExperience(livingEntity)) {
+          if (this.entityExperience == 0) {
+            this.entityExperience = ExperienceManager.getExperienceReward(livingEntity, null);
+          }
+          if (this.entityExperience >= ExperienceEnhancementItem.MIN_EXPERIENCE_FOR_DROP) {
+            infoText.add(
+                TextComponent.getTranslatedTextRaw(
+                        TOOLTIP_PREFIX + "experience", new Object[] {this.entityExperience})
+                    .withStyle(ChatFormatting.GREEN));
+          } else {
+            infoText.add(
+                TextComponent.getTranslatedTextRaw(
+                        TOOLTIP_PREFIX + "low_experience", new Object[] {this.entityExperience})
+                    .withStyle(ChatFormatting.YELLOW));
+          }
+        } else {
+          infoText.add(
+              TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "no_experience")
+                  .withStyle(ChatFormatting.RED));
+        }
+      }
       renderComponentTooltip(poseStack, infoText, mouseX, mouseY);
     }
   }

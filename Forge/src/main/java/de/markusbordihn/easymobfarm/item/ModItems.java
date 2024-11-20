@@ -31,8 +31,11 @@ import de.markusbordihn.easymobfarm.item.mobcatcher.EnduringCaptureNetItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.IronboundContainmentCageItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.MysticBindingCrystalItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyHarvesterFrameEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LootEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LuckEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.PollenTrapEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SheepEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SpeedEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SwordEnhancementItem;
@@ -77,6 +80,20 @@ public class ModItems {
               new ExperienceEnhancementItem(
                   new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
 
+  public static final RegistryObject<Item> HONEY_EXTRACTION_ENHANCEMENT =
+      ITEMS.register(
+          HoneyExtractorEnhancementItem.ID,
+          () ->
+              new HoneyExtractorEnhancementItem(
+                  new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
+
+  public static final RegistryObject<Item> HONEY_HARVESTER_FRAME_ENHANCEMENT =
+      ITEMS.register(
+          HoneyHarvesterFrameEnhancementItem.ID,
+          () ->
+              new HoneyHarvesterFrameEnhancementItem(
+                  new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
+
   public static final RegistryObject<Item> LOOT_ENHANCEMENT =
       ITEMS.register(
           LootEnhancementItem.ID,
@@ -86,6 +103,13 @@ public class ModItems {
       ITEMS.register(
           LuckEnhancementItem.ID,
           () -> new LuckEnhancementItem(new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
+
+  public static final RegistryObject<Item> POLLEN_TRAP_ENHANCEMENT =
+      ITEMS.register(
+          PollenTrapEnhancementItem.ID,
+          () ->
+              new PollenTrapEnhancementItem(
+                  new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
 
   public static final RegistryObject<Item> SHEEP_ENHANCEMENT =
       ITEMS.register(

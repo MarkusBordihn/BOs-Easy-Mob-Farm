@@ -1,3 +1,9 @@
 accessWidener	v2 named
 accessible field net/minecraft/world/entity/Entity random Ljava/util/Random;
 accessible field net/minecraft/world/entity/projectile/FishingHook luck I
+
+accessible method net/minecraft/world/entity/animal/Animal getExperienceReward (Lnet/minecraft/world/entity/player/Player;)I
+accessible method net/minecraft/world/entity/Mob getExperienceReward (Lnet/minecraft/world/entity/player/Player;)I
+accessible method net/minecraft/world/entity/LivingEntity getExperienceReward (Lnet/minecraft/world/entity/player/Player;)I
+
+accessible method net/minecraft/world/entity/LivingEntity shouldDropExperience ()Z

@@ -84,8 +84,11 @@ public class ModTabs {
                 stack -> {
                   // Default mob farm upgrades
                   stack.add(Items.EXPERIENCE_ENHANCEMENT.getDefaultInstance());
+                  stack.add(Items.HONEY_EXTRACTOR_ENHANCEMENT.getDefaultInstance());
+                  stack.add(Items.HONEY_HARVESTER_FRAME_ENHANCEMENT.getDefaultInstance());
                   stack.add(Items.LOOT_ENHANCEMENT.getDefaultInstance());
                   stack.add(Items.LUCK_ENHANCEMENT.getDefaultInstance());
+                  stack.add(Items.POLLEN_TRAP_ENHANCEMENT.getDefaultInstance());
                   stack.add(Items.SHEEP_ENHANCEMENT.getDefaultInstance());
                   stack.add(Items.SPEED_ENHANCEMENT.getDefaultInstance());
                   stack.add(Items.SWORD_ENHANCEMENT.getDefaultInstance());
