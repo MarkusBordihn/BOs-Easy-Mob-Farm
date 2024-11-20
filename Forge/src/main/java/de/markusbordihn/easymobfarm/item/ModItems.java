@@ -31,8 +31,11 @@ import de.markusbordihn.easymobfarm.item.mobcatcher.EnduringCaptureNetItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.IronboundContainmentCageItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.MysticBindingCrystalItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyHarvesterFrameEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LootEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LuckEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.PollenTrapEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SheepEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SpeedEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SwordEnhancementItem;
@@ -63,11 +66,21 @@ public class ModItems {
   public static final RegistryObject<Item> EXPERIENCE_ENHANCEMENT =
       ITEMS.register(ExperienceEnhancementItem.ID, () -> Items.EXPERIENCE_ENHANCEMENT);
 
+  public static final RegistryObject<Item> HONEY_EXTRACTOR_ENHANCEMENT =
+      ITEMS.register(HoneyExtractorEnhancementItem.ID, () -> Items.HONEY_EXTRACTOR_ENHANCEMENT);
+
+  public static final RegistryObject<Item> HONEY_HARVESTER_FRAME_ENHANCEMENT =
+      ITEMS.register(
+          HoneyHarvesterFrameEnhancementItem.ID, () -> Items.HONEY_HARVESTER_FRAME_ENHANCEMENT);
+
   public static final RegistryObject<Item> LOOT_ENHANCEMENT =
       ITEMS.register(LootEnhancementItem.ID, () -> Items.LOOT_ENHANCEMENT);
 
   public static final RegistryObject<Item> LUCK_ENHANCEMENT =
       ITEMS.register(LuckEnhancementItem.ID, () -> Items.LUCK_ENHANCEMENT);
+
+  public static final RegistryObject<Item> POLLEN_TRAP_ENHANCEMENT =
+      ITEMS.register(PollenTrapEnhancementItem.ID, () -> Items.POLLEN_TRAP_ENHANCEMENT);
 
   public static final RegistryObject<Item> SHEEP_ENHANCEMENT =
       ITEMS.register(SheepEnhancementItem.ID, () -> Items.SHEEP_ENHANCEMENT);

@@ -23,6 +23,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.client.model.ModelManager;
 import de.markusbordihn.easymobfarm.client.model.UnbakedMobCaptureCardModel;
 import de.markusbordihn.easymobfarm.config.MobCaptureCardModelsConfig;
+import java.util.Set;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.BlockModelRotation;
 import net.minecraft.client.resources.model.Material;
@@ -49,15 +50,25 @@ public class ModelEventHandler {
   @SuppressWarnings("unused")
   @SubscribeEvent
   public static void onModelRegistry(ModelEvent.RegisterAdditional event) {
-    log.info("Registering custom models ...");
+    log.info("Registering card models ...");
 
     // Pre-Loading default models for Mob Capture Card.
-    event.register(UnbakedMobCaptureCardModel.MODEL);
-    event.register(ModelManager.getModelManager().getDefaultModelResourceLocation());
-    event.register(ModelManager.getModelManager().getDefaultUncommonModelResourceLocation());
-    event.register(ModelManager.getModelManager().getDefaultRareModelResourceLocation());
-    event.register(ModelManager.getModelManager().getDefaultEpicModelResourceLocation());
-    event.register(ModelManager.getModelManager().getDefaultFishModelResourceLocation());
+    Set.of(
+            UnbakedMobCaptureCardModel.MODEL,
+            ModelManager.getModelManager().getDefaultModelResourceLocation(),
+            ModelManager.getModelManager().getDefaultUncommonModelResourceLocation(),
+            ModelManager.getModelManager().getDefaultRareModelResourceLocation(),
+            ModelManager.getModelManager().getDefaultEpicModelResourceLocation(),
+            ModelManager.getModelManager().getDefaultFishModelResourceLocation())
+        .forEach(
+            resourceLocation -> {
+              if (resourceLocation instanceof ModelResourceLocation modelResourceLocation) {
+                resourceLocation =
+                    ModelManager.getRegistrationModelResourceLocation(modelResourceLocation);
+              }
+              log.info("Registering default model {} ...", resourceLocation);
+              event.register(resourceLocation);
+            });
 
     // Pre-Loading additional models for Mob Capture Card from config file.
     MobCaptureCardModelsConfig.getMobCaptureCardModels()
@@ -79,23 +90,18 @@ public class ModelEventHandler {
   @SuppressWarnings("unused")
   @SubscribeEvent
   public static void onModelBake(ModelEvent.BakingCompleted event) {
+
     // Checking for existing models.
-    log.info("Adjusting {} models ...", Constants.MOD_ID);
-    ResourceLocation mobCaptureCardItemLocation = null;
     for (ResourceLocation location : event.getModels().keySet()) {
       if (location.getNamespace().equals(Constants.MOD_ID)) {
-        log.info("Found baked model: {} ({})", location, location.getPath());
-        if (location.getPath().equals("mob_capture_card")) {
-          mobCaptureCardItemLocation = location;
-        }
+        log.debug("Found baked model: {} ({})", location, location.getPath());
       }
     }
 
     // Verify if Mob Capture Card model is available.
-    if (mobCaptureCardItemLocation == null) {
-      log.error("Unable to find baked model for Mob Capture Card.");
-      return;
-    }
+    ResourceLocation mobCaptureCardModelResourceLocation =
+        new ModelResourceLocation(
+            new ResourceLocation(Constants.MOD_ID, "mob_capture_card"), "inventory");
 
     // Getting unbaked model for Mob Capture Card.
     UnbakedModel unbakedModel =
@@ -103,14 +109,17 @@ public class ModelEventHandler {
             event.getModelBakery().getModel(UnbakedMobCaptureCardModel.MODEL));
 
     // Bake unbaked model for Mob Capture Card.
-    log.info("Baking unbaked model for {} ...", mobCaptureCardItemLocation);
+    log.info("Baking unbaked model for {} ...", mobCaptureCardModelResourceLocation);
     ModelBaker baker =
         event.getModelBakery()
         .new ModelBakerImpl(
-            (modelLocation, material) -> material.sprite(), mobCaptureCardItemLocation);
+            (modelLocation, material) -> material.sprite(), mobCaptureCardModelResourceLocation);
     BakedModel bakedModel =
         unbakedModel.bake(
-            baker, Material::sprite, BlockModelRotation.X0_Y0, mobCaptureCardItemLocation);
-    event.getModelBakery().getBakedTopLevelModels().put(mobCaptureCardItemLocation, bakedModel);
+            baker, Material::sprite, BlockModelRotation.X0_Y0, mobCaptureCardModelResourceLocation);
+    event
+        .getModelBakery()
+        .getBakedTopLevelModels()
+        .put(mobCaptureCardModelResourceLocation, bakedModel);
   }
 }

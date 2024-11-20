@@ -1,0 +1,47 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_pollen_trap_enhancement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["easy_mob_farm:pollen_trap_enhancement"]
+          }
+        ]
+      }
+    },
+    "has_flowering_azalea": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:flowering_azalea"]
+          }
+        ]
+      }
+    },
+    "has_iron_bars": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:iron_bars"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_pollen_trap_enhancement",
+      "has_flowering_azalea",
+      "has_iron_bars"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "easy_mob_farm:upgrade/enhancement/pollen_trap_enhancement"
+    ]
+  }
+}

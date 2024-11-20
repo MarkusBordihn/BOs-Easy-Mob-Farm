@@ -23,6 +23,8 @@ import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.commands.manager.CommandManager;
 import de.markusbordihn.easymobfarm.config.Config;
 import de.markusbordihn.easymobfarm.debug.DebugManager;
+import de.markusbordihn.easymobfarm.experience.ExperienceManager;
+import de.markusbordihn.easymobfarm.experience.ModExperienceManager;
 import de.markusbordihn.easymobfarm.item.ModItems;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
 import net.fabricmc.api.EnvType;
@@ -52,6 +54,9 @@ public class EasyMobFarm implements ModInitializer {
 
     log.info("{} Configuration ...", Constants.LOG_REGISTER_PREFIX);
     Config.register(FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER);
+
+    log.info("{} Experience Manager ...", Constants.LOG_REGISTER_PREFIX);
+    ExperienceManager.registerExperienceManager(new ModExperienceManager());
 
     log.info("{} Blocks ...", Constants.LOG_REGISTER_PREFIX);
     ModBlocks.registerModBlocks();

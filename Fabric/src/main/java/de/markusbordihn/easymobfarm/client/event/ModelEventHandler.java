@@ -23,6 +23,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.client.model.ModelManager;
 import de.markusbordihn.easymobfarm.client.model.UnbakedMobCaptureCardModel;
 import de.markusbordihn.easymobfarm.config.MobCaptureCardModelsConfig;
+import java.util.Set;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.model.UnbakedModel;
@@ -39,15 +40,25 @@ public class ModelEventHandler {
 
     ModelLoadingRegistry.INSTANCE.registerModelProvider(
         (resourceManager, consumer) -> {
-          log.info("Registering custom models ...");
+          log.info("Registering card models ...");
 
           // Pre-Loading default models for Mob Capture Card.
-          consumer.accept(UnbakedMobCaptureCardModel.MODEL);
-          consumer.accept(ModelManager.getModelManager().getDefaultModelResourceLocation());
-          consumer.accept(ModelManager.getModelManager().getDefaultUncommonModelResourceLocation());
-          consumer.accept(ModelManager.getModelManager().getDefaultRareModelResourceLocation());
-          consumer.accept(ModelManager.getModelManager().getDefaultEpicModelResourceLocation());
-          consumer.accept(ModelManager.getModelManager().getDefaultFishModelResourceLocation());
+          Set.of(
+                  UnbakedMobCaptureCardModel.MODEL,
+                  ModelManager.getModelManager().getDefaultModelResourceLocation(),
+                  ModelManager.getModelManager().getDefaultUncommonModelResourceLocation(),
+                  ModelManager.getModelManager().getDefaultRareModelResourceLocation(),
+                  ModelManager.getModelManager().getDefaultEpicModelResourceLocation(),
+                  ModelManager.getModelManager().getDefaultFishModelResourceLocation())
+              .forEach(
+                  resourceLocation -> {
+                    if (resourceLocation instanceof ModelResourceLocation modelResourceLocation) {
+                      resourceLocation =
+                          ModelManager.getRegistrationModelResourceLocation(modelResourceLocation);
+                    }
+                    log.info("Registering default model {} ...", resourceLocation);
+                    consumer.accept(resourceLocation);
+                  });
 
           // Pre-Loading additional models for Mob Capture Card from config file.
           MobCaptureCardModelsConfig.getMobCaptureCardModels()
@@ -73,7 +84,7 @@ public class ModelEventHandler {
         resourceManager ->
             (location, context) -> {
               if (location.getNamespace().equals(Constants.MOD_ID)) {
-                log.info("Found unbaked model: {} ({})", location, location.getPath());
+                log.debug("Found unbaked model: {} ({})", location, location.getPath());
                 if (location.getPath().equals("item/mob_capture_card")) {
                   log.info("Adjusting baked model for {} ...", location);
                   UnbakedModel unbakedModel = context.loadModel(UnbakedMobCaptureCardModel.MODEL);

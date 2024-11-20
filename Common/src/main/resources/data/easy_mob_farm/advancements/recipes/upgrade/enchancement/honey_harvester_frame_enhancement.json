@@ -1,0 +1,47 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_honey_harvester_frame_enhancement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["easy_mob_farm:honey_harvester_frame_enhancement"]
+          }
+        ]
+      }
+    },
+    "has_honeycomb": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:honeycomb"]
+          }
+        ]
+      }
+    },
+    "has_hopper": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:hopper"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_honey_harvester_frame_enhancement",
+      "has_honeycomb",
+      "has_hopper"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "easy_mob_farm:upgrade/enhancement/honey_harvester_frame_enhancement"
+    ]
+  }
+}
