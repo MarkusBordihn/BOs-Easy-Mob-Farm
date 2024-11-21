@@ -21,15 +21,18 @@ package de.markusbordihn.easymobfarm.loot;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
+import de.markusbordihn.easymobfarm.experience.ExperienceManager;
 import de.markusbordihn.easymobfarm.item.upgrade.EnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyHarvesterFrameEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LootEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LuckEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.PollenTrapEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SheepEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SwordEnhancementItem;
 import de.markusbordihn.easymobfarm.server.player.FakePlayer;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import net.minecraft.core.BlockPos;
@@ -41,11 +44,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -142,7 +145,7 @@ public class LootManager {
       handleSpecialEntityDrops(livingEntity, drops);
     }
 
-    handlePostEnhancements(enhancements, livingEntity, fakePlayer, drops);
+    handlePostEnhancements(enhancements, livingEntity, serverLevel, fakePlayer, drops);
 
     return drops;
   }
@@ -196,37 +199,43 @@ public class LootManager {
   private static void handlePostEnhancements(
       Set<EnhancementItem> enhancements,
       LivingEntity livingEntity,
+      ServerLevel serverLevel,
       FakePlayer fakePlayer,
       NonNullList<ItemStack> drops) {
     for (EnhancementItem enhancement : enhancements) {
+
+      // Handle Experience enhancement
       if (enhancement instanceof ExperienceEnhancementItem experienceEnhancementItem
-          && random.nextInt(experienceEnhancementItem.experienceDropChance()) == 0) {
-        int experience = getExperienceReward(livingEntity, fakePlayer);
+          && random.nextInt(experienceEnhancementItem.experienceDropChance()) == 0
+          && ExperienceManager.shouldDropExperience(livingEntity)) {
+        int experience = ExperienceManager.getExperienceReward(serverLevel, livingEntity);
         if (experience >= experienceEnhancementItem.minExperienceForDrop()) {
           drops.add(new ItemStack(Items.EXPERIENCE_BOTTLE));
+        } else {
+          log.debug(
+              "Experience drop of {} is below minimum threshold of {} for {}",
+              experience,
+              experienceEnhancementItem.minExperienceForDrop(),
+              livingEntity);
+        }
+      }
+
+      // Handle Bee specific enhancements
+      if (livingEntity instanceof Bee) {
+        if (enhancement instanceof HoneyHarvesterFrameEnhancementItem && random.nextInt(4) == 0) {
+          drops.add(new ItemStack(Items.HONEYCOMB));
+        } else if (enhancement instanceof HoneyExtractorEnhancementItem
+            && random.nextInt(10) == 0) {
+          drops.add(new ItemStack(Items.HONEY_BOTTLE));
+        } else if (enhancement instanceof PollenTrapEnhancementItem && random.nextInt(5) == 0) {
+          if (random.nextFloat() < 0.3f) {
+            drops.add(getRandomFlower());
+          } else {
+            drops.add(getRandomDye());
+          }
         }
       }
     }
-  }
-
-  private static int getExperienceReward(LivingEntity livingEntity, FakePlayer fakePlayer) {
-    if (livingEntity == null || fakePlayer == null) {
-      return 0;
-    }
-    for (String valueName : new String[] {"getExperienceReward", "method_6110", "m_6552_"}) {
-      try {
-        Method getExperienceRewardMethod = Mob.class.getDeclaredMethod(valueName, Player.class);
-        getExperienceRewardMethod.setAccessible(true);
-        return (int) getExperienceRewardMethod.invoke(livingEntity, fakePlayer);
-      } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-        log.error(
-            "Unable to get experience reward {} for entity {} due to {}!",
-            valueName,
-            livingEntity.getType(),
-            e.getMessage());
-      }
-    }
-    return 0;
   }
 
   private static FakePlayer getFakePlayer(ServerLevel level, BlockPos blockPos) {
@@ -235,5 +244,36 @@ public class LootManager {
       return fakePlayer;
     }
     return fakePlayer.updatePosition(level, blockPos);
+  }
+
+  private static ItemStack getRandomFlower() {
+    List<Item> flowers =
+        List.of(
+            Items.DANDELION,
+            Items.POPPY,
+            Items.BLUE_ORCHID,
+            Items.ALLIUM,
+            Items.AZURE_BLUET,
+            Items.RED_TULIP,
+            Items.ORANGE_TULIP,
+            Items.WHITE_TULIP,
+            Items.PINK_TULIP,
+            Items.OXEYE_DAISY,
+            Items.CORNFLOWER,
+            Items.LILY_OF_THE_VALLEY);
+    return new ItemStack(flowers.get(new Random().nextInt(flowers.size())));
+  }
+
+  private static ItemStack getRandomDye() {
+    List<Item> dyes =
+        List.of(
+            Items.YELLOW_DYE,
+            Items.RED_DYE,
+            Items.BLUE_DYE,
+            Items.ORANGE_DYE,
+            Items.PINK_DYE,
+            Items.WHITE_DYE,
+            Items.BLACK_DYE);
+    return new ItemStack(dyes.get(new Random().nextInt(dyes.size())));
   }
 }

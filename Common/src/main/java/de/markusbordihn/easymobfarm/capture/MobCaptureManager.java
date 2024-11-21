@@ -32,6 +32,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
@@ -229,7 +230,9 @@ public class MobCaptureManager {
         itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).getUnsafe();
 
     // Mob capture card compatible data.
-    if (compoundTag != null && compoundTag.contains(MOB_CAPTURE_DATA_TAG)) {
+    if (compoundTag != null
+        && compoundTag.contains(MOB_CAPTURE_DATA_TAG)
+        && !(itemStack.getItem() instanceof SpawnEggItem)) {
       return new MobCaptureData(compoundTag.getCompound(MOB_CAPTURE_DATA_TAG));
     }
 

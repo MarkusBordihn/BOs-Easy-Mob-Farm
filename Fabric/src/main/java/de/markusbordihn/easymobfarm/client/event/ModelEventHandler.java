@@ -23,6 +23,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.client.model.ModelManager;
 import de.markusbordihn.easymobfarm.client.model.UnbakedMobCaptureCardModel;
 import de.markusbordihn.easymobfarm.config.MobCaptureCardModelsConfig;
+import java.util.Set;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.model.UnbakedModel;
@@ -40,16 +41,20 @@ public class ModelEventHandler {
 
     ModelLoadingPlugin.register(
         pluginContext -> {
-          log.info("Registering custom models ...");
+          log.info("Registering card models ...");
 
           // Pre-Loading default models for Mob Capture Card.
-          pluginContext.addModels(
-              UnbakedMobCaptureCardModel.MODEL,
-              ModelManager.getModelManager().getDefaultModelLocation(),
-              ModelManager.getModelManager().getDefaultUncommonModelLocation(),
-              ModelManager.getModelManager().getDefaultRareModelLocation(),
-              ModelManager.getModelManager().getDefaultEpicModelLocation(),
-              ModelManager.getModelManager().getDefaultFishModelLocation());
+          Set.of(
+                  ModelManager.getModelManager().getDefaultModelLocation(),
+                  ModelManager.getModelManager().getDefaultUncommonModelLocation(),
+                  ModelManager.getModelManager().getDefaultRareModelLocation(),
+                  ModelManager.getModelManager().getDefaultEpicModelLocation(),
+                  ModelManager.getModelManager().getDefaultFishModelLocation())
+              .forEach(
+                  resourceLocation -> {
+                    log.info("Registering default model {} ...", resourceLocation);
+                    pluginContext.addModels(resourceLocation);
+                  });
 
           // Pre-Loading additional models for Mob Capture Card from config file.
           MobCaptureCardModelsConfig.getMobCaptureCardModels()
@@ -79,7 +84,7 @@ public class ModelEventHandler {
                     }
                     ResourceLocation resourceLocation = modelResourceLocation.id();
                     if (resourceLocation.getNamespace().equals(Constants.MOD_ID)) {
-                      log.info(
+                      log.debug(
                           "Found unbaked model: {} ({})",
                           modelResourceLocation,
                           resourceLocation.getPath());

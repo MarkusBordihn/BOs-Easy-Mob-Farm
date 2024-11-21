@@ -586,7 +586,9 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
 
   @Override
   public ItemStack removeItem(final int index, final int count) {
-    return ContainerHelper.removeItem(this.items, index, count);
+    ItemStack itemStack = ContainerHelper.removeItem(this.items, index, count);
+    this.syncChanges();
+    return itemStack;
   }
 
   @Override

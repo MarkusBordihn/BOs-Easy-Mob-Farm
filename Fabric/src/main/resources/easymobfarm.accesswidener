@@ -1,3 +1,7 @@
 accessWidener	v2 named
 accessible field net/minecraft/world/entity/Entity random Lnet/minecraft/util/RandomSource;
 accessible field net/minecraft/world/entity/projectile/FishingHook luck I
+
+accessible method net/minecraft/world/entity/animal/Animal getBaseExperienceReward ()I
+accessible method net/minecraft/world/entity/Mob getBaseExperienceReward ()I
+accessible method net/minecraft/world/entity/LivingEntity getBaseExperienceReward ()I

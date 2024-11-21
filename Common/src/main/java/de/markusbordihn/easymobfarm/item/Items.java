@@ -27,8 +27,11 @@ import de.markusbordihn.easymobfarm.item.mobcatcher.EnduringCaptureNetItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.IronboundContainmentCageItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.MysticBindingCrystalItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyHarvesterFrameEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LootEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LuckEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.PollenTrapEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SheepEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SpeedEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SwordEnhancementItem;
@@ -45,8 +48,12 @@ public class Items {
   public static final Item MOB_CAPTURE_CARD = new MobCaptureCardItem();
 
   public static final Item EXPERIENCE_ENHANCEMENT = new ExperienceEnhancementItem();
+  public static final Item HONEY_EXTRACTOR_ENHANCEMENT = new HoneyExtractorEnhancementItem();
+  public static final Item HONEY_HARVESTER_FRAME_ENHANCEMENT =
+      new HoneyHarvesterFrameEnhancementItem();
   public static final Item LOOT_ENHANCEMENT = new LootEnhancementItem();
   public static final Item LUCK_ENHANCEMENT = new LuckEnhancementItem();
+  public static final Item POLLEN_TRAP_ENHANCEMENT = new PollenTrapEnhancementItem();
   public static final Item SHEEP_ENHANCEMENT = new SheepEnhancementItem();
   public static final Item SPEED_ENHANCEMENT = new SpeedEnhancementItem();
   public static final Item SWORD_ENHANCEMENT = new SwordEnhancementItem();

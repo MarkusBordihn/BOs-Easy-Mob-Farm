@@ -20,34 +20,23 @@
 package de.markusbordihn.easymobfarm.item.upgrade.enhancement;
 
 import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.config.MobFarmConfig;
 import de.markusbordihn.easymobfarm.item.upgrade.EnhancementItem;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.List;
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 
-public class ExperienceEnhancementItem extends EnhancementItem {
+public class HoneyExtractorEnhancementItem extends EnhancementItem {
 
-  public static final String ID = "experience" + ID_POSTFIX;
-  public static final int MIN_EXPERIENCE_FOR_DROP = 3;
+  public static final String ID = "honey_extractor" + ID_POSTFIX;
 
-  public ExperienceEnhancementItem() {
+  public HoneyExtractorEnhancementItem() {
     this(new Properties());
   }
 
-  public ExperienceEnhancementItem(Properties properties) {
+  public HoneyExtractorEnhancementItem(Properties properties) {
     super(properties.stacksTo(1));
-  }
-
-  public int minExperienceForDrop() {
-    return MIN_EXPERIENCE_FOR_DROP;
-  }
-
-  public int experienceDropChance() {
-    return MobFarmConfig.experienceDropChance;
   }
 
   @Override
@@ -57,15 +46,5 @@ public class ExperienceEnhancementItem extends EnhancementItem {
       List<Component> tooltip,
       TooltipFlag flag) {
     addTooltip(tooltip, TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_PREFIX + ID));
-    addTooltip(
-        tooltip,
-        TextComponent.getTranslatedTextRaw(
-            Constants.TOOLTIP_PREFIX + ID + ".note", this.minExperienceForDrop()),
-        ChatFormatting.YELLOW);
-    addTooltip(
-        tooltip,
-        TextComponent.getTranslatedTextRaw(
-            Constants.TOOLTIP_PREFIX + ID + ".drop_chance", this.experienceDropChance()),
-        ChatFormatting.GREEN);
   }
 }

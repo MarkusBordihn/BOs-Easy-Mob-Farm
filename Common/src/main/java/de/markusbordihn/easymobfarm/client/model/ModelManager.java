@@ -23,6 +23,8 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -92,5 +94,14 @@ public class ModelManager {
 
     // Return default model if nothing else is available.
     return modelManager.getDefaultModel();
+  }
+
+  public static ModelResourceLocation getRegistrationModelResourceLocation(
+      final ModelResourceLocation modelResourceLocation) {
+    return new ModelResourceLocation(
+        ResourceLocation.fromNamespaceAndPath(
+            modelResourceLocation.id().getNamespace(),
+            modelResourceLocation.id().getPath().replace("item/", "")),
+        modelResourceLocation.getVariant());
   }
 }

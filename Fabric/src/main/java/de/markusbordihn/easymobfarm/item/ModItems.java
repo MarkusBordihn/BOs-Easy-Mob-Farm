@@ -31,8 +31,11 @@ import de.markusbordihn.easymobfarm.item.mobcatcher.EnduringCaptureNetItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.IronboundContainmentCageItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.MysticBindingCrystalItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyHarvesterFrameEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LootEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LuckEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.PollenTrapEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SheepEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SpeedEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SwordEnhancementItem;
@@ -92,8 +95,11 @@ public class ModItems {
 
     log.info("{} Enhancement items ...", Constants.LOG_REGISTER_PREFIX);
     registerItem(ExperienceEnhancementItem.ID, Items.EXPERIENCE_ENHANCEMENT);
+    registerItem(HoneyExtractorEnhancementItem.ID, Items.HONEY_EXTRACTOR_ENHANCEMENT);
+    registerItem(HoneyHarvesterFrameEnhancementItem.ID, Items.HONEY_HARVESTER_FRAME_ENHANCEMENT);
     registerItem(LootEnhancementItem.ID, Items.LOOT_ENHANCEMENT);
     registerItem(LuckEnhancementItem.ID, Items.LUCK_ENHANCEMENT);
+    registerItem(PollenTrapEnhancementItem.ID, Items.POLLEN_TRAP_ENHANCEMENT);
     registerItem(SheepEnhancementItem.ID, Items.SHEEP_ENHANCEMENT);
     registerItem(SpeedEnhancementItem.ID, Items.SPEED_ENHANCEMENT);
     registerItem(SwordEnhancementItem.ID, Items.SWORD_ENHANCEMENT);
