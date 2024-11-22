@@ -21,6 +21,8 @@ package de.markusbordihn.easymobfarm.client.model;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.config.MobCaptureCardModelsConfig;
+import java.util.HashSet;
+import java.util.Set;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
@@ -38,38 +40,24 @@ import org.apache.logging.log4j.Logger;
 public interface ModelManagerInterface {
 
   Logger log = LogManager.getLogger(Constants.LOG_NAME);
-  String LOG_PREFIX = "[ModelManager]";
-
-  ResourceLocation DEFAULT_MODEL_LOCATION =
-      new ResourceLocation(Constants.MOD_ID, "item/mob_capture_card/default");
-  ResourceLocation DEFAULT_UNCOMMON_MODEL_LOCATION =
-      new ResourceLocation(Constants.MOD_ID, "item/mob_capture_card/default_uncommon");
-  ResourceLocation DEFAULT_RARE_MODEL_LOCATION =
-      new ResourceLocation(Constants.MOD_ID, "item/mob_capture_card/default_rare");
-  ResourceLocation DEFAULT_EPIC_MODEL_LOCATION =
-      new ResourceLocation(Constants.MOD_ID, "item/mob_capture_card/default_epic");
-  ResourceLocation DEFAULT_FISH_MODEL_LOCATION =
-      new ResourceLocation(Constants.MOD_ID, "item/mob_capture_card/default_fish");
+  Set<String> KNOWN_MISSING_MODELS = new HashSet<>();
+  String LOG_PREFIX = "[Model Manager]";
 
   ModelResourceLocation DEFAULT_MODEL =
       new ModelResourceLocation(
-          new ResourceLocation(Constants.MOD_ID, "item/mob_capture_card/default"), "inventory");
+          new ResourceLocation(Constants.MOD_ID, "mob_capture_card/default"), "inventory");
   ModelResourceLocation DEFAULT_UNCOMMON_MODEL =
       new ModelResourceLocation(
-          new ResourceLocation(Constants.MOD_ID, "item/mob_capture_card/default_uncommon"),
-          "inventory");
+          new ResourceLocation(Constants.MOD_ID, "mob_capture_card/default_uncommon"), "inventory");
   ModelResourceLocation DEFAULT_RARE_MODEL =
       new ModelResourceLocation(
-          new ResourceLocation(Constants.MOD_ID, "item/mob_capture_card/default_rare"),
-          "inventory");
+          new ResourceLocation(Constants.MOD_ID, "mob_capture_card/default_rare"), "inventory");
   ModelResourceLocation DEFAULT_EPIC_MODEL =
       new ModelResourceLocation(
-          new ResourceLocation(Constants.MOD_ID, "item/mob_capture_card/default_epic"),
-          "inventory");
+          new ResourceLocation(Constants.MOD_ID, "mob_capture_card/default_epic"), "inventory");
   ModelResourceLocation DEFAULT_FISH_MODEL =
       new ModelResourceLocation(
-          new ResourceLocation(Constants.MOD_ID, "item/mob_capture_card/default_fish"),
-          "inventory");
+          new ResourceLocation(Constants.MOD_ID, "mob_capture_card/default_fish"), "inventory");
 
   private static boolean isFish(EntityType<?> entityType) {
     ResourceLocation entityId = EntityType.getKey(entityType);
@@ -78,99 +66,74 @@ public interface ModelManagerInterface {
         && correspondingItem.builtInRegistryHolder().is(ItemTags.FISHES);
   }
 
-  default ResourceLocation getDefaultModelLocation() {
-    return DEFAULT_MODEL_LOCATION;
-  }
-
-  default ResourceLocation getDefaultUncommonModelLocation() {
-    return DEFAULT_UNCOMMON_MODEL_LOCATION;
-  }
-
-  default ResourceLocation getDefaultRareModelLocation() {
-    return DEFAULT_RARE_MODEL_LOCATION;
-  }
-
-  default ResourceLocation getDefaultEpicModelLocation() {
-    return DEFAULT_EPIC_MODEL_LOCATION;
-  }
-
-  default ResourceLocation getDefaultFishModelLocation() {
-    return DEFAULT_FISH_MODEL_LOCATION;
-  }
-
-  default ModelResourceLocation getDefaultModelResourceLocation() {
-    return DEFAULT_MODEL;
-  }
-
-  default ModelResourceLocation getDefaultUncommonModelResourceLocation() {
-    return DEFAULT_UNCOMMON_MODEL;
-  }
-
-  default ModelResourceLocation getDefaultRareModelResourceLocation() {
-    return DEFAULT_RARE_MODEL;
-  }
-
-  default ModelResourceLocation getDefaultEpicModelResourceLocation() {
-    return DEFAULT_EPIC_MODEL;
-  }
-
-  default ModelResourceLocation getDefaultFishModelResourceLocation() {
-    return DEFAULT_FISH_MODEL;
+  default BakedModel getModel(ModelResourceLocation modelResourceLocation) {
+    if (modelResourceLocation == null) {
+      return null;
+    }
+    BakedModel bakedModel =
+        Minecraft.getInstance().getModelManager().getModel(modelResourceLocation);
+    if (bakedModel == Minecraft.getInstance().getModelManager().getMissingModel()) {
+      if (KNOWN_MISSING_MODELS.add(modelResourceLocation.toString())) {
+        log.error("{} Missing model for '{}'", LOG_PREFIX, modelResourceLocation);
+      }
+      return null;
+    }
+    return bakedModel != Minecraft.getInstance().getModelManager().getMissingModel()
+        ? bakedModel
+        : null;
   }
 
   default BakedModel getModel(String type, String variant, DyeColor color) {
-    BakedModel bakedModel =
-        Minecraft.getInstance()
-            .getModelManager()
-            .getModel(MobCaptureCardModelsConfig.getModelResourceLocation(type, variant, color));
-    return bakedModel != Minecraft.getInstance().getModelManager().getMissingModel()
-        ? bakedModel
-        : null;
+    ModelResourceLocation modelResourceLocation =
+        MobCaptureCardModelsConfig.getModelResourceLocation(type, variant, color);
+    if (modelResourceLocation == null) {
+      if (KNOWN_MISSING_MODELS.add(type)) {
+        log.warn(
+            "{} Missing custom model for type '{}', variant '{}' with color '{}'",
+            LOG_PREFIX,
+            type,
+            variant,
+            color);
+      }
+      return null;
+    }
+    return this.getModel(modelResourceLocation);
   }
 
   default BakedModel getModel(String type) {
-    BakedModel bakedModel =
-        Minecraft.getInstance()
-            .getModelManager()
-            .getModel(MobCaptureCardModelsConfig.getModelResourceLocation(type));
-    return bakedModel != Minecraft.getInstance().getModelManager().getMissingModel()
-        ? bakedModel
-        : null;
+    ModelResourceLocation modelResourceLocation =
+        MobCaptureCardModelsConfig.getModelResourceLocation(type);
+    if (modelResourceLocation == null) {
+      if (KNOWN_MISSING_MODELS.add(type)) {
+        log.warn("{} Missing custom model for type '{}'", LOG_PREFIX, type);
+      }
+      return null;
+    }
+    return this.getModel(modelResourceLocation);
   }
 
   default BakedModel getModel(Rarity rarity) {
-    BakedModel bakedModel =
+    if (rarity == null) {
+      return null;
+    }
+    ModelResourceLocation modelResourceLocation =
         switch (rarity) {
-          case COMMON -> null;
-          case UNCOMMON ->
-              Minecraft.getInstance()
-                  .getModelManager()
-                  .getModel(getDefaultUncommonModelResourceLocation());
-          case RARE ->
-              Minecraft.getInstance()
-                  .getModelManager()
-                  .getModel(getDefaultRareModelResourceLocation());
-          case EPIC ->
-              Minecraft.getInstance()
-                  .getModelManager()
-                  .getModel(getDefaultEpicModelResourceLocation());
+          case COMMON -> DEFAULT_MODEL;
+          case UNCOMMON -> DEFAULT_UNCOMMON_MODEL;
+          case RARE -> DEFAULT_RARE_MODEL;
+          case EPIC -> DEFAULT_EPIC_MODEL;
         };
-    return bakedModel != Minecraft.getInstance().getModelManager().getMissingModel()
-        ? bakedModel
-        : null;
+    return this.getModel(modelResourceLocation);
   }
 
   default BakedModel getModel(EntityType<?> entityType) {
-    return isFish(entityType)
-        ? Minecraft.getInstance().getModelManager().getModel(getDefaultFishModelResourceLocation())
-        : null;
+    if (entityType == null || !isFish(entityType)) {
+      return null;
+    }
+    return this.getModel(DEFAULT_FISH_MODEL);
   }
 
   default BakedModel getDefaultModel() {
-    BakedModel bakedModel =
-        Minecraft.getInstance().getModelManager().getModel(getDefaultModelResourceLocation());
-    return bakedModel != Minecraft.getInstance().getModelManager().getMissingModel()
-        ? bakedModel
-        : null;
+    return this.getModel(DEFAULT_MODEL);
   }
 }

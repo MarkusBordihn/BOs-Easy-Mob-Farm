@@ -21,15 +21,17 @@ package de.markusbordihn.easymobfarm.tabs;
 
 import de.markusbordihn.easymobfarm.capture.MobCaptureManager;
 import de.markusbordihn.easymobfarm.config.MobCaptureCardModelsConfig;
+import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
 import java.util.Collections;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.ItemLike;
 
 public class CustomMobCaptureCards {
@@ -40,9 +42,27 @@ public class CustomMobCaptureCards {
     if (!(mobCaptureCardItem instanceof MobCaptureCardItem)) {
       return Collections.emptySet();
     }
+    Set<ItemStack> result = new LinkedHashSet<>();
+
+    // Add default mob capture cards.
+    result.add(
+        MobCaptureManager.createMobCaptureCard(
+            mobCaptureCardItem,
+            new MobCaptureData("Common Card", EntityType.ARMOR_STAND, Rarity.COMMON)));
+    result.add(
+        MobCaptureManager.createMobCaptureCard(
+            mobCaptureCardItem,
+            new MobCaptureData("Uncommon Card", EntityType.ARMOR_STAND, Rarity.UNCOMMON)));
+    result.add(
+        MobCaptureManager.createMobCaptureCard(
+            mobCaptureCardItem,
+            new MobCaptureData("Rare Card", EntityType.ARMOR_STAND, Rarity.RARE)));
+    result.add(
+        MobCaptureManager.createMobCaptureCard(
+            mobCaptureCardItem,
+            new MobCaptureData("Epic Card", EntityType.ARMOR_STAND, Rarity.EPIC)));
 
     // Extract custom mob capture cards from configuration.
-    Set<ItemStack> result = new HashSet<>();
     MobCaptureCardModelsConfig.getMobCaptureCardModels()
         .forEach(
             modelKey -> {

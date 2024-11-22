@@ -39,6 +39,18 @@ public record MobCaptureData(
 
   private static final int MAX_ID_LIMIT = 16777216;
 
+  public MobCaptureData(final String name, final EntityType<?> entityType, final Rarity rarity) {
+    this(
+        name,
+        MobEntityTypeData.getEntityTypeName(entityType),
+        MobEntityTypeData.getEntityType(entityType),
+        MobEntityData.getMobEntityData(entityType),
+        MobColorData.getColor(entityType),
+        MobVariantData.getVariant(entityType),
+        rarity,
+        MobFoilData.getRandomFoil());
+  }
+
   public MobCaptureData(final EntityType<?> entityType) {
     this(
         MobNameData.getName(entityType),
@@ -63,7 +75,7 @@ public record MobCaptureData(
         MobFoilData.getRandomFoil());
   }
 
-  public MobCaptureData(ItemStack itemStack, final CompoundTag compoundTag) {
+  public MobCaptureData(final ItemStack itemStack, final CompoundTag compoundTag) {
     this(
         MobNameData.getName(compoundTag),
         MobEntityTypeData.getEntityTypeName(itemStack, compoundTag),
