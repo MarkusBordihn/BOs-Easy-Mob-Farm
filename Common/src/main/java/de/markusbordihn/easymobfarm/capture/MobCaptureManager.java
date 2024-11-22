@@ -174,12 +174,20 @@ public class MobCaptureManager {
     return true;
   }
 
+  public static ItemStack createMobCaptureCard(ItemLike itemLike, MobCaptureData mobCaptureData) {
+    if (itemLike == null) {
+      return null;
+    }
+    ItemStack itemStack = new ItemStack(itemLike);
+    writeMobCaptureData(itemStack, mobCaptureData);
+    return itemStack;
+  }
+
   public static ItemStack createMobCaptureCard(
       ItemLike itemLike, EntityType<?> entityType, String variant, DyeColor dyeColor) {
     if (itemLike == null || entityType == null) {
       return null;
     }
-    ItemStack itemStack = new ItemStack(itemLike);
     MobCaptureData mobCaptureData = new MobCaptureData(entityType).withFoil(false);
     CompoundTag compoundTag = new CompoundTag();
 
@@ -197,8 +205,8 @@ public class MobCaptureManager {
       compoundTag.putInt(COLOR_TAG, dyeColor.getId());
     }
 
-    writeMobCaptureData(itemStack, mobCaptureData.withData(compoundTag));
-    return itemStack;
+    // Return item stack with mob capture data.
+    return createMobCaptureCard(itemLike, mobCaptureData.withData(compoundTag));
   }
 
   public static void writeMobCaptureData(ItemStack itemStack, MobCaptureData mobCaptureData) {

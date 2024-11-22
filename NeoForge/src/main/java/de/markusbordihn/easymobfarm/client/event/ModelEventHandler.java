@@ -20,7 +20,7 @@
 package de.markusbordihn.easymobfarm.client.event;
 
 import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.client.model.ModelManager;
+import de.markusbordihn.easymobfarm.client.model.ModelManagerInterface;
 import de.markusbordihn.easymobfarm.client.model.UnbakedMobCaptureCardModel;
 import de.markusbordihn.easymobfarm.config.MobCaptureCardModelsConfig;
 import java.util.Set;
@@ -50,16 +50,16 @@ public class ModelEventHandler {
   @SuppressWarnings("unused")
   @SubscribeEvent
   public static void onModelRegistry(ModelEvent.RegisterAdditional event) {
-    log.info("Registering custom models ...");
+    log.info("Registering card models ...");
 
     // Pre-Loading default models for Mob Capture Card.
     Set.of(
             new ModelResourceLocation(UnbakedMobCaptureCardModel.MODEL, "standalone"),
-            ModelManager.getModelManager().getDefaultModelResourceLocation(),
-            ModelManager.getModelManager().getDefaultUncommonModelResourceLocation(),
-            ModelManager.getModelManager().getDefaultRareModelResourceLocation(),
-            ModelManager.getModelManager().getDefaultEpicModelResourceLocation(),
-            ModelManager.getModelManager().getDefaultFishModelResourceLocation())
+            ModelManagerInterface.DEFAULT_MODEL,
+            ModelManagerInterface.DEFAULT_UNCOMMON_MODEL,
+            ModelManagerInterface.DEFAULT_RARE_MODEL,
+            ModelManagerInterface.DEFAULT_EPIC_MODEL,
+            ModelManagerInterface.DEFAULT_FISH_MODEL)
         .forEach(
             resourceLocation -> {
               log.info("Registering default model {} ...", resourceLocation);

@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+# v8.5.1
+
+- Fixed #80 crash by adding additional checks for mob capture cards.
+- Fixed issues with custom spawn eggs not recognized by the mob farm in some cases.
+- Optimized model baking process and model management.
+
 # v8.5.0
 
 - Fixed #78 by using more universal approach for getting relevant experience.

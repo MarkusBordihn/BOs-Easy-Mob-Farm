@@ -19,65 +19,29 @@
 
 package de.markusbordihn.easymobfarm.client.model;
 
-import de.markusbordihn.easymobfarm.config.MobCaptureCardModelsConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.item.Rarity;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 
 public class ModModelManager implements ModelManagerInterface {
 
+  /**
+   * This is needed to make sure we are using the modified Fabric Model Manager instead of the
+   * vanilla one, which is not able to handle the custom models in 1.21.1 and newer.
+   */
   @Override
-  public BakedModel getModel(String type, String variant, DyeColor color) {
+  public BakedModel getModel(ModelResourceLocation modelResourceLocation) {
+    if (modelResourceLocation == null) {
+      return null;
+    }
     BakedModel bakedModel =
-        Minecraft.getInstance()
-            .getModelManager()
-            .getModel(MobCaptureCardModelsConfig.getResourceLocation(type, variant, color));
-    return bakedModel != Minecraft.getInstance().getModelManager().getMissingModel()
-        ? bakedModel
-        : null;
-  }
-
-  @Override
-  public BakedModel getModel(String type) {
-    BakedModel bakedModel =
-        Minecraft.getInstance()
-            .getModelManager()
-            .getModel(MobCaptureCardModelsConfig.getResourceLocation(type));
-    return bakedModel != Minecraft.getInstance().getModelManager().getMissingModel()
-        ? bakedModel
-        : null;
-  }
-
-  @Override
-  public BakedModel getModel(Rarity rarity) {
-    BakedModel bakedModel =
-        switch (rarity) {
-          case COMMON -> null;
-          case UNCOMMON ->
-              Minecraft.getInstance().getModelManager().getModel(getDefaultUncommonModelLocation());
-          case RARE ->
-              Minecraft.getInstance().getModelManager().getModel(getDefaultRareModelLocation());
-          case EPIC ->
-              Minecraft.getInstance().getModelManager().getModel(getDefaultEpicModelLocation());
-        };
-    return bakedModel != Minecraft.getInstance().getModelManager().getMissingModel()
-        ? bakedModel
-        : null;
-  }
-
-  @Override
-  public BakedModel getModel(EntityType<?> entityType) {
-    return isFish(entityType)
-        ? Minecraft.getInstance().getModelManager().getModel(getDefaultFishModelLocation())
-        : null;
-  }
-
-  @Override
-  public BakedModel getDefaultModel() {
-    BakedModel bakedModel =
-        Minecraft.getInstance().getModelManager().getModel(getDefaultModelLocation());
+        Minecraft.getInstance().getModelManager().getModel(modelResourceLocation.id());
+    if (bakedModel == Minecraft.getInstance().getModelManager().getMissingModel()) {
+      if (KNOWN_MISSING_MODELS.add(modelResourceLocation.id().toString())) {
+        log.error("{} Missing model for '{}'", LOG_PREFIX, modelResourceLocation.id());
+      }
+      return null;
+    }
     return bakedModel != Minecraft.getInstance().getModelManager().getMissingModel()
         ? bakedModel
         : null;

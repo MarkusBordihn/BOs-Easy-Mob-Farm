@@ -56,9 +56,7 @@ public class MobCaptureCardModelsConfig extends Config {
 
   private static final StringBuilder KEY_BUILDER = new StringBuilder();
   private static final String KEY_SEPARATOR = "::";
-  private static final HashMap<String, ResourceLocation> mobCaptureCardResourceLocations =
-      new HashMap<>();
-  private static final HashMap<String, ModelResourceLocation> mobCaptureCardModelResourceLocations =
+  private static final HashMap<String, ModelResourceLocation> mobCaptureCardModels =
       new HashMap<>();
   private static final String MOB_CAPTURE_CARD_PREFIX =
       Constants.MOD_ID + ":item/mob_capture_card/minecraft/";
@@ -138,45 +136,29 @@ public class MobCaptureCardModelsConfig extends Config {
       if (propertyValue.isEmpty()) {
         continue;
       }
-      ResourceLocation resourceLocation = ResourceLocation.parse(propertyValue);
-      mobCaptureCardResourceLocations.put(propertyKey, resourceLocation);
 
       // Add model resource location
-      mobCaptureCardModelResourceLocations.put(
+      mobCaptureCardModels.put(
           propertyKey,
-          new ModelResourceLocation(
-              ResourceLocation.fromNamespaceAndPath(
-                  resourceLocation.getNamespace(), resourceLocation.getPath()),
-              "standalone"));
+          new ModelResourceLocation(ResourceLocation.parse(propertyValue), "standalone"));
     }
 
     // Update config file if needed
     updateConfigFileIfChanged(configFile, CONFIG_FILE_HEADER, properties, unmodifiedProperties);
   }
 
-  public static ResourceLocation getResourceLocation(final String entityName) {
-    return mobCaptureCardResourceLocations.get(entityName);
-  }
-
-  public static ResourceLocation getResourceLocation(
-      String entityName, String variant, DyeColor color) {
-    return mobCaptureCardResourceLocations.getOrDefault(
-        getEntityKey(entityName, variant, color), mobCaptureCardResourceLocations.get(entityName));
-  }
-
   public static ModelResourceLocation getModelResourceLocation(final String entityName) {
-    return mobCaptureCardModelResourceLocations.get(entityName);
+    return mobCaptureCardModels.get(entityName);
   }
 
   public static ModelResourceLocation getModelResourceLocation(
       String entityName, String variant, DyeColor color) {
-    return mobCaptureCardModelResourceLocations.getOrDefault(
-        getEntityKey(entityName, variant, color),
-        mobCaptureCardModelResourceLocations.get(entityName));
+    return mobCaptureCardModels.getOrDefault(
+        getEntityKey(entityName, variant, color), mobCaptureCardModels.get(entityName));
   }
 
   public static Set<String> getMobCaptureCardModels() {
-    return mobCaptureCardResourceLocations.keySet();
+    return mobCaptureCardModels.keySet();
   }
 
   public static String getEntityKey(

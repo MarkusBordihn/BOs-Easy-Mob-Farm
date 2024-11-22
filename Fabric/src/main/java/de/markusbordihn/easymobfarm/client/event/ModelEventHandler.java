@@ -20,7 +20,7 @@
 package de.markusbordihn.easymobfarm.client.event;
 
 import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.client.model.ModelManager;
+import de.markusbordihn.easymobfarm.client.model.ModelManagerInterface;
 import de.markusbordihn.easymobfarm.client.model.UnbakedMobCaptureCardModel;
 import de.markusbordihn.easymobfarm.config.MobCaptureCardModelsConfig;
 import java.util.Set;
@@ -45,32 +45,34 @@ public class ModelEventHandler {
 
           // Pre-Loading default models for Mob Capture Card.
           Set.of(
-                  ModelManager.getModelManager().getDefaultModelLocation(),
-                  ModelManager.getModelManager().getDefaultUncommonModelLocation(),
-                  ModelManager.getModelManager().getDefaultRareModelLocation(),
-                  ModelManager.getModelManager().getDefaultEpicModelLocation(),
-                  ModelManager.getModelManager().getDefaultFishModelLocation())
+                  ModelManagerInterface.DEFAULT_MODEL,
+                  ModelManagerInterface.DEFAULT_UNCOMMON_MODEL,
+                  ModelManagerInterface.DEFAULT_RARE_MODEL,
+                  ModelManagerInterface.DEFAULT_EPIC_MODEL,
+                  ModelManagerInterface.DEFAULT_FISH_MODEL)
               .forEach(
-                  resourceLocation -> {
-                    log.info("Registering default model {} ...", resourceLocation);
-                    pluginContext.addModels(resourceLocation);
+                  modelResourceLocation -> {
+                    log.info("Registering default model {} ...", modelResourceLocation.id());
+                    pluginContext.addModels(modelResourceLocation.id());
                   });
 
           // Pre-Loading additional models for Mob Capture Card from config file.
           MobCaptureCardModelsConfig.getMobCaptureCardModels()
               .forEach(
                   entityName -> {
-                    ResourceLocation resourceLocation =
-                        MobCaptureCardModelsConfig.getResourceLocation(entityName);
-                    if (resourceLocation == null) {
+                    ModelResourceLocation modelResourceLocation =
+                        MobCaptureCardModelsConfig.getModelResourceLocation(entityName);
+                    if (modelResourceLocation == null) {
                       log.error(
                           "Skipping model for entity {} because of invalid resource locations.",
                           entityName);
                       return;
                     }
                     log.info(
-                        "Registering custom model {} for {} ...", resourceLocation, entityName);
-                    pluginContext.addModels(resourceLocation);
+                        "Registering custom model {} for {} ...",
+                        modelResourceLocation.id(),
+                        entityName);
+                    pluginContext.addModels(modelResourceLocation.id());
                   });
 
           // Register custom model for Mob Capture Card.
