@@ -86,7 +86,8 @@ public class ModelManager {
     }
 
     // Check if we have a valid original model to return.
-    if (originalModel != Minecraft.getInstance().getModelManager().getMissingModel()
+    if (originalModel != null
+        && originalModel != Minecraft.getInstance().getModelManager().getMissingModel()
         && originalModel.getParticleIcon()
             != Minecraft.getInstance().getModelManager().getMissingModel().getParticleIcon()) {
       return originalModel;
