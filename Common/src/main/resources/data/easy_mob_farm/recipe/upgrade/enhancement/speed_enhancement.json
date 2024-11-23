@@ -1,13 +1,14 @@
 {
   "type": "minecraft:crafting_shaped",
+  "group": "mob_farm_enhancement",
   "pattern": [
     " R ",
     "RQR",
     " R "
   ],
   "key": {
-    "R": {"item": "minecraft:repeater"},
-    "Q": {"item": "minecraft:quartz"}
+    "R": "minecraft:repeater",
+    "Q": "minecraft:quartz"
   },
   "result": {
     "id": "easy_mob_farm:speed_enhancement"

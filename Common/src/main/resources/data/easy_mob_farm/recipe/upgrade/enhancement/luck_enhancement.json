@@ -1,13 +1,14 @@
 {
   "type": "minecraft:crafting_shaped",
+  "group": "mob_farm_enhancement",
   "pattern": [
     " E ",
     "EGE",
     " E "
   ],
   "key": {
-    "E": {"item": "minecraft:emerald"},
-    "G": {"item": "minecraft:quartz"}
+    "E": "minecraft:emerald",
+    "G": "minecraft:quartz"
   },
   "result": {
     "id": "easy_mob_farm:luck_enhancement"

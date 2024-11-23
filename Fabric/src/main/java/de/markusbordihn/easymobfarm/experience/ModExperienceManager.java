@@ -20,22 +20,11 @@
 package de.markusbordihn.easymobfarm.experience;
 
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.animal.Animal;
 
 public class ModExperienceManager implements ExperienceManagerInterface {
 
   @Override
   public int getExperienceReward(LivingEntity livingEntity) {
-    try {
-      if (livingEntity instanceof Animal animal) {
-        return animal.getBaseExperienceReward();
-      } else if (livingEntity instanceof Mob mob) {
-        return mob.getBaseExperienceReward();
-      }
-      return livingEntity.getBaseExperienceReward();
-    } catch (Exception e) {
-      return 0;
-    }
+    return 0;
   }
 }

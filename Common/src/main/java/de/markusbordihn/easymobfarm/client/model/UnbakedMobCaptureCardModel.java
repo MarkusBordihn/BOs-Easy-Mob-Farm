@@ -20,12 +20,12 @@
 package de.markusbordihn.easymobfarm.client.model;
 
 import de.markusbordihn.easymobfarm.Constants;
-import java.util.Collection;
 import java.util.function.Function;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.ModelBaker;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.resources.ResourceLocation;
@@ -34,8 +34,10 @@ import org.apache.logging.log4j.Logger;
 
 public class UnbakedMobCaptureCardModel implements UnbakedModel {
 
-  public static final ResourceLocation MODEL =
-      ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "item/mob_capture_card/dynamic");
+  public static final ModelResourceLocation MODEL_LOCATION =
+      new ModelResourceLocation(
+          ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "item/mob_capture_card/dynamic"),
+          "standalone");
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private final UnbakedModel originalUnbakedModel;
 
@@ -44,13 +46,8 @@ public class UnbakedMobCaptureCardModel implements UnbakedModel {
   }
 
   @Override
-  public Collection<ResourceLocation> getDependencies() {
-    return originalUnbakedModel.getDependencies();
-  }
-
-  @Override
-  public void resolveParents(Function<ResourceLocation, UnbakedModel> function) {
-    originalUnbakedModel.resolveParents(function);
+  public void resolveDependencies(Resolver resolver) {
+    originalUnbakedModel.resolveDependencies(resolver);
   }
 
   @Override

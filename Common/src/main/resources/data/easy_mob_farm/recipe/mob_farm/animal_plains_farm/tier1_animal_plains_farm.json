@@ -1,31 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
+  "group": "animal_plains_farm",
   "pattern": ["EGW", "T#G", "S-F"],
   "key": {
-    "#": {
-      "item": "easy_mob_farm:tier1_mob_farm_template"
-    },
-    "G": {
-      "item": "minecraft:short_grass"
-    },
-    "W": {
-      "item": "minecraft:wheat"
-    },
-    "S": {
-      "item": "minecraft:wheat_seeds"
-    },
-    "E": {
-      "item": "minecraft:egg"
-    },
-    "T": {
-      "item": "minecraft:white_tulip"
-    },
-    "-": {
-      "item": "minecraft:dirt"
-    },
-    "F": {
-      "item": "minecraft:feather"
-    }
+    "#": "easy_mob_farm:tier1_mob_farm_template",
+    "G": "minecraft:short_grass",
+    "W": "minecraft:wheat",
+    "S": "minecraft:wheat_seeds",
+    "E": "minecraft:egg",
+    "T": "minecraft:white_tulip",
+    "-": "minecraft:dirt",
+    "F": "minecraft:feather"
   },
   "result": {
     "count": 1,

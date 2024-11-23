@@ -31,6 +31,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 
@@ -63,8 +64,10 @@ public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
         Minecraft.getInstance().getEntityRenderDispatcher();
 
     // Prepare entity rendering.
-    EntityRenderer<Entity> entityRenderer =
-        (EntityRenderer<Entity>) entityRenderDispatcher.getRenderer(entity);
+    EntityRenderer<Entity, LivingEntityRenderState> entityRenderer =
+        (EntityRenderer<Entity, LivingEntityRenderState>)
+            entityRenderDispatcher.getRenderer(entity);
+    LivingEntityRenderState livingEntityRenderState = entityRenderer.createRenderState();
 
     // Animation support
     entity.tickCount = (int) blockEntity.getLevel().getGameTime();
@@ -97,7 +100,7 @@ public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
     }
 
     // Render entity.
-    entityRenderer.render(entity, 0, 0, poseStack, buffer, combinedLight);
+    entityRenderer.render(livingEntityRenderState, poseStack, buffer, combinedLight);
 
     poseStack.popPose();
   }

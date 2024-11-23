@@ -40,7 +40,9 @@ public class EasyMobFarmClient {
     log.info("{} Model Manager ...", Constants.LOG_REGISTER_PREFIX);
     ModelManager.registerModelManager(new ModModelManager());
 
+    log.info("{} Registering client event handlers ...", Constants.LOG_REGISTER_PREFIX);
     modEventBus.addListener(ClientRenderer::registerBlockEntityRenderers);
+    modEventBus.addListener(ClientRenderer::registerRenderLayers);
     modEventBus.addListener(ClientScreens::registerScreens);
     ModTabs.CREATIVE_TABS.register(modEventBus);
   }

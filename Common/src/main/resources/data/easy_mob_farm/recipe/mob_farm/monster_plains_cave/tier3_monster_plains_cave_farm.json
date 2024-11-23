@@ -1,29 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
+  "group": "monster_plains_cave_farm",
   "pattern": [
     "LWG",
     "C#-",
     "C--"
   ],
   "key": {
-    "#": {
-      "item": "easy_mob_farm:tier3_mob_farm_template"
-    },
-    "-": {
-      "item": "minecraft:stone"
-    },
-    "G": {
-      "item": "minecraft:gold_ingot"
-    },
-    "C": {
-      "item": "minecraft:clay"
-    },
-    "L": {
-      "item": "minecraft:glow_lichen"
-    },
-    "W": {
-      "item": "minecraft:cobweb"
-    }
+    "#": "easy_mob_farm:tier3_mob_farm_template",
+    "-": "minecraft:stone",
+    "G": "minecraft:gold_ingot",
+    "C": "minecraft:clay",
+    "L": "minecraft:glow_lichen",
+    "W": "minecraft:cobweb"
   },
   "result": {
     "count": 1,

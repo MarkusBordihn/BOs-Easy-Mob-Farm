@@ -1,32 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
+  "group": "ocean_farm",
   "pattern": [
     "LWS",
     "K#R",
     "KGK"
   ],
   "key": {
-    "#": {
-      "item": "easy_mob_farm:tier1_mob_farm_template"
-    },
-    "K": {
-      "item": "minecraft:kelp"
-    },
-    "R": {
-      "item": "minecraft:seagrass"
-    },
-    "S": {
-      "item": "minecraft:sand"
-    },
-    "G": {
-      "item": "minecraft:gravel"
-    },
-    "L": {
-      "item": "minecraft:sea_lantern"
-    },
-    "W": {
-      "item": "minecraft:water_bucket"
-    }
+    "#": "easy_mob_farm:tier1_mob_farm_template",
+    "K": "minecraft:kelp",
+    "R": "minecraft:seagrass",
+    "S": "minecraft:sand",
+    "G": "minecraft:gravel",
+    "L": "minecraft:sea_lantern",
+    "W": "minecraft:water_bucket"
   },
   "result": {
     "count": 1,

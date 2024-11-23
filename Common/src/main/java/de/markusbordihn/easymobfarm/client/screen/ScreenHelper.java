@@ -112,16 +112,12 @@ public class ScreenHelper {
     quaternionfX.conjugate();
     entityRenderDispatcher.overrideCameraOrientation(quaternionfX);
     entityRenderDispatcher.setRenderShadow(false);
-    entityRenderDispatcher.render(
-        livingEntity,
-        0.0D,
-        0.0D,
-        0.0D,
-        0.0F,
-        1.0F,
-        guiGraphics.pose(),
-        guiGraphics.bufferSource(),
-        15728880);
+
+    guiGraphics.drawSpecial(
+        (bufferSource) ->
+            entityRenderDispatcher.render(
+                livingEntity, 0.0D, 0.0D, 0.0F, 1.0F, guiGraphics.pose(), bufferSource, 15728880));
+
     guiGraphics.flush();
     entityRenderDispatcher.setRenderShadow(true);
     guiGraphics.pose().popPose();

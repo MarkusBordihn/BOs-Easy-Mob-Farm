@@ -23,7 +23,9 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.capture.MobCaptureManager;
 import de.markusbordihn.easymobfarm.config.MobCaptureCardConfig;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -64,8 +66,9 @@ public class FishingEvents {
 
     // Check if the fish loot could be translated to an entity.
     ResourceLocation resourceLocation = BuiltInRegistries.ITEM.getKey(fishLoot);
-    EntityType<?> entityType = BuiltInRegistries.ENTITY_TYPE.get(resourceLocation);
-    if (entityType == null) {
+    Optional<Holder.Reference<EntityType<?>>> entityType =
+        BuiltInRegistries.ENTITY_TYPE.get(resourceLocation);
+    if (entityType.isEmpty()) {
       return;
     }
 
@@ -76,10 +79,11 @@ public class FishingEvents {
     }
 
     // Drop the mob capture card.
-    ItemStack itemStack = MobCaptureManager.captureMob(entityType, serverPlayer.level());
+    ItemStack itemStack =
+        MobCaptureManager.captureMob(entityType.get().value(), serverPlayer.level());
     if (itemStack != null) {
       log.debug("Dropped mob capture card {} for {}.", itemStack, entityType);
-      serverPlayer.spawnAtLocation(itemStack, 0.5F);
+      serverPlayer.spawnAtLocation(serverPlayer.serverLevel(), itemStack, 0.5F);
     } else {
       log.error("Failed to drop mob capture card for {}.", entityType);
     }

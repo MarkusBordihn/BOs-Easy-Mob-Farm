@@ -120,7 +120,7 @@ public class MobCatcherItem extends Item {
       }
     }
 
-    return InteractionResult.sidedSuccess(level.isClientSide);
+    return level.isClientSide ? InteractionResult.SUCCESS : InteractionResult.FAIL;
   }
 
   @Override

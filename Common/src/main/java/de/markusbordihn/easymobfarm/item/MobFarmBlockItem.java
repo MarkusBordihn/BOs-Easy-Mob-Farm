@@ -19,6 +19,7 @@
 
 package de.markusbordihn.easymobfarm.item;
 
+import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.config.MobFarmConfig;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
@@ -26,9 +27,12 @@ import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -41,10 +45,19 @@ import net.minecraft.world.level.block.Block;
 
 public class MobFarmBlockItem extends BlockItem {
 
+  public static final String ID = "mob_farm_block_item";
   private final String farmName;
 
   public MobFarmBlockItem(String farmName, Block block) {
-    this(farmName, block, new Item.Properties());
+    this(
+        farmName,
+        block,
+        new Item.Properties()
+            .useBlockDescriptionPrefix()
+            .setId(
+                ResourceKey.create(
+                    Registries.ITEM,
+                    ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, farmName))));
   }
 
   public MobFarmBlockItem(String farmName, Block block, Item.Properties properties) {

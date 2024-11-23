@@ -1,14 +1,15 @@
 {
   "type": "minecraft:crafting_shaped",
+  "group": "mob_farm_enhancement",
   "pattern": [
     " G ",
     "GQG",
     " E "
   ],
   "key": {
-    "G": {"item": "minecraft:gold_ingot"},
-    "Q": {"item": "minecraft:quartz"},
-    "E": {"item": "minecraft:emerald"}
+    "G": "minecraft:gold_ingot",
+    "Q": "minecraft:quartz",
+    "E": "minecraft:emerald"
   },
   "result": {
     "id": "easy_mob_farm:loot_enhancement"

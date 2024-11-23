@@ -1,28 +1,15 @@
 {
   "type": "minecraft:crafting_shaped",
+  "group": "bee_hive_farm",
   "pattern": ["OHD", "O#G", "B--"],
   "key": {
-    "#": {
-      "item": "easy_mob_farm:tier0_mob_farm_template"
-    },
-    "B": {
-      "item": "minecraft:blue_orchid"
-    },
-    "G": {
-      "item": "minecraft:short_grass"
-    },
-    "D": {
-      "item": "minecraft:oxeye_daisy"
-    },
-    "-": {
-      "item": "minecraft:dirt"
-    },
-    "O": {
-      "item": "minecraft:oak_log"
-    },
-    "H": {
-      "item": "minecraft:beehive"
-    }
+    "#": "easy_mob_farm:tier0_mob_farm_template",
+    "B": "minecraft:blue_orchid",
+    "G": "minecraft:short_grass",
+    "D": "minecraft:oxeye_daisy",
+    "-": "minecraft:dirt",
+    "O": "minecraft:oak_log",
+    "H": "minecraft:beehive"
   },
   "result": {
     "count": 1,

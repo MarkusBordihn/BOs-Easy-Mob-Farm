@@ -1,20 +1,15 @@
 {
   "type": "minecraft:crafting_shaped",
+  "group": "mob_farm_enhancement",
   "pattern": [
     "WWW",
     "FPF",
     "WWW"
   ],
   "key": {
-    "W": {
-      "tag": "minecraft:planks"
-    },
-    "F": {
-      "item": "minecraft:flowering_azalea"
-    },
-    "P": {
-      "item": "minecraft:iron_bars"
-    }
+    "W": "#minecraft:planks",
+    "F": "minecraft:flowering_azalea",
+    "P": "minecraft:iron_bars"
   },
   "result": {
     "id": "easy_mob_farm:pollen_trap_enhancement",

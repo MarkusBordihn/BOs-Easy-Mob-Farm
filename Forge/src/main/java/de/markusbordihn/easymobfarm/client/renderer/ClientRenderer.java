@@ -22,7 +22,10 @@ package de.markusbordihn.easymobfarm.client.renderer;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.client.renderer.blockentity.MobFarmBlockEntityRenderer;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -39,5 +42,34 @@ public class ClientRenderer {
         ModBlocks.CREATIVE_MOB_FARM_ENTITY.get(), MobFarmBlockEntityRenderer::new);
     event.registerBlockEntityRenderer(
         ModBlocks.MOB_FARM_ENTITY.get(), MobFarmBlockEntityRenderer::new);
+  }
+
+  public static void registerRenderLayers(final FMLClientSetupEvent event) {
+    event.enqueueWork(
+        () -> {
+          log.info("{} Render Layers ...", Constants.LOG_REGISTER_PREFIX);
+          ItemBlockRenderTypes.setRenderLayer(
+              ModBlocks.TIER_0_MOB_FARM_TEMPLATE.get(), RenderType.cutout());
+          ItemBlockRenderTypes.setRenderLayer(
+              ModBlocks.TIER_1_MOB_FARM_TEMPLATE.get(), RenderType.cutout());
+          ItemBlockRenderTypes.setRenderLayer(
+              ModBlocks.TIER_2_MOB_FARM_TEMPLATE.get(), RenderType.cutout());
+          ItemBlockRenderTypes.setRenderLayer(
+              ModBlocks.TIER_3_MOB_FARM_TEMPLATE.get(), RenderType.cutout());
+
+          ItemBlockRenderTypes.setRenderLayer(
+              ModBlocks.ANIMAL_PLAINS_FARM.get(), RenderType.cutout());
+          ItemBlockRenderTypes.setRenderLayer(ModBlocks.BEE_HIVE_FARM.get(), RenderType.cutout());
+          ItemBlockRenderTypes.setRenderLayer(
+              ModBlocks.CREATIVE_MOB_FARM.get(), RenderType.cutout());
+          ItemBlockRenderTypes.setRenderLayer(ModBlocks.DESERT_FARM.get(), RenderType.cutout());
+          ItemBlockRenderTypes.setRenderLayer(ModBlocks.JUNGLE_FARM.get(), RenderType.cutout());
+          ItemBlockRenderTypes.setRenderLayer(
+              ModBlocks.MONSTER_PLAINS_CAVE_FARM.get(), RenderType.cutout());
+          ItemBlockRenderTypes.setRenderLayer(
+              ModBlocks.NETHER_FORTRESS_FARM.get(), RenderType.cutout());
+          ItemBlockRenderTypes.setRenderLayer(ModBlocks.OCEAN_FARM.get(), RenderType.cutout());
+          ItemBlockRenderTypes.setRenderLayer(ModBlocks.SWAMP_FARM.get(), RenderType.cutout());
+        });
   }
 }

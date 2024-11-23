@@ -1,26 +1,17 @@
 {
   "type": "minecraft:crafting_shaped",
+  "group": "desert_farm",
   "pattern": [
     "CSD",
     "S#C",
     "D-C"
   ],
   "key": {
-    "#": {
-      "item": "easy_mob_farm:tier2_mob_farm_template"
-    },
-    "C": {
-      "item": "minecraft:cactus"
-    },
-    "S": {
-      "item": "minecraft:sandstone"
-    },
-    "D": {
-      "item": "minecraft:dead_bush"
-    },
-    "-": {
-      "item": "minecraft:sand"
-    }
+    "#": "easy_mob_farm:tier2_mob_farm_template",
+    "C": "minecraft:cactus",
+    "S": "minecraft:sandstone",
+    "D": "minecraft:dead_bush",
+    "-": "minecraft:sand"
   },
   "result": {
     "count": 1,

@@ -30,8 +30,8 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class MobFarmBlockWrapper extends MobFarmBlock {
 
-  public MobFarmBlockWrapper() {
-    super();
+  public MobFarmBlockWrapper(String id) {
+    super(id);
   }
 
   public MobFarmBlockWrapper(Properties properties) {

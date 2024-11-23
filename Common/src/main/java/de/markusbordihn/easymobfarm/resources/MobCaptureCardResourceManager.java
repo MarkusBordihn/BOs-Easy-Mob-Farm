@@ -122,7 +122,7 @@ public class MobCaptureCardResourceManager {
     if (modelPath.contains(":item/")) {
       modelPath = modelPath.replace(":item/", ":");
     }
-    return new ModelResourceLocation(ResourceLocation.parse(modelPath), "inventory");
+    return new ModelResourceLocation(ResourceLocation.parse(modelPath), "standalone");
   }
 
   public static Collection<String> getCustomModelPaths() {

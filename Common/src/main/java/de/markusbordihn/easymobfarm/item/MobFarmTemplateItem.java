@@ -19,10 +19,14 @@
 
 package de.markusbordihn.easymobfarm.item;
 
+import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.List;
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -37,7 +41,22 @@ public class MobFarmTemplateItem extends BlockItem {
   private final String tierLevel;
 
   public MobFarmTemplateItem(String tierLevel, Block block) {
-    this(tierLevel, block, new Properties());
+    this(
+        tierLevel,
+        block,
+        new Properties()
+            .useBlockDescriptionPrefix()
+            .setId(
+                ResourceKey.create(
+                    Registries.ITEM,
+                    ResourceLocation.fromNamespaceAndPath(
+                        Constants.MOD_ID,
+                        switch (tierLevel) {
+                          case ID_TIER_1 -> ID_TIER_1;
+                          case ID_TIER_2 -> ID_TIER_2;
+                          case ID_TIER_3 -> ID_TIER_3;
+                          default -> ID_TIER_0;
+                        }))));
   }
 
   public MobFarmTemplateItem(String tierLevel, Block block, Properties properties) {

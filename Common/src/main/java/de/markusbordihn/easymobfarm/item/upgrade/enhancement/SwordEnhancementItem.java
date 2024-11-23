@@ -23,7 +23,10 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.item.upgrade.EnhancementItem;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.List;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 
@@ -32,7 +35,11 @@ public class SwordEnhancementItem extends EnhancementItem {
   public static final String ID = "sword" + ID_POSTFIX;
 
   public SwordEnhancementItem() {
-    this(new Properties());
+    this(
+        new Properties()
+            .setId(
+                ResourceKey.create(
+                    Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, ID))));
   }
 
   public SwordEnhancementItem(Properties properties) {

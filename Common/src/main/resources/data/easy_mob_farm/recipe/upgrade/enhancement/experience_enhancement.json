@@ -1,13 +1,14 @@
 {
   "type": "minecraft:crafting_shaped",
+  "group": "mob_farm_enhancement",
   "pattern": [
     " L ",
     "LQL",
     " L "
   ],
   "key": {
-    "L": {"item": "minecraft:lapis_lazuli"},
-    "Q": {"item": "minecraft:quartz"}
+    "L": "minecraft:lapis_lazuli",
+    "Q": "minecraft:quartz"
   },
   "result": {
     "id": "easy_mob_farm:experience_enhancement"

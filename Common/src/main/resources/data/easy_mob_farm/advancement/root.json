@@ -12,7 +12,7 @@
     "create_tier0_template": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
-        "items": [{"items": ["easy_mob_farm:tier0_mob_farm_template"]}]
+        "items": [{"items": "easy_mob_farm:tier0_mob_farm_template"}]
       }
     }
   }

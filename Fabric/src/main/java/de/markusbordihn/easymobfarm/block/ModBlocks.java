@@ -35,19 +35,26 @@ import org.apache.logging.log4j.Logger;
 
 public class ModBlocks {
 
-  public static final Block TIER_0_MOB_FARM_TEMPLATE = new MobFarmTemplateBlock();
-  public static final Block TIER_1_MOB_FARM_TEMPLATE = new MobFarmTemplateBlock();
-  public static final Block TIER_2_MOB_FARM_TEMPLATE = new MobFarmTemplateBlock();
-  public static final Block TIER_3_MOB_FARM_TEMPLATE = new MobFarmTemplateBlock();
+  public static final Block TIER_0_MOB_FARM_TEMPLATE =
+      new MobFarmTemplateBlock(MobFarmTemplateBlock.ID_TIER_0);
+  public static final Block TIER_1_MOB_FARM_TEMPLATE =
+      new MobFarmTemplateBlock(MobFarmTemplateBlock.ID_TIER_1);
+  public static final Block TIER_2_MOB_FARM_TEMPLATE =
+      new MobFarmTemplateBlock(MobFarmTemplateBlock.ID_TIER_2);
+  public static final Block TIER_3_MOB_FARM_TEMPLATE =
+      new MobFarmTemplateBlock(MobFarmTemplateBlock.ID_TIER_3);
   public static final Block CREATIVE_MOB_FARM = new CreativeMobFarmBlockWrapper();
-  public static final Block ANIMAL_PLAINS_FARM = new MobFarmBlockWrapper();
-  public static final Block BEE_HIVE_FARM = new MobFarmBlockWrapper();
-  public static final Block DESERT_FARM = new MobFarmBlockWrapper();
-  public static final Block JUNGLE_FARM = new MobFarmBlockWrapper();
-  public static final Block MONSTER_PLAINS_CAVE_FARM = new MobFarmBlockWrapper();
-  public static final Block NETHER_FORTRESS_FARM = new MobFarmBlockWrapper();
-  public static final Block OCEAN_FARM = new MobFarmBlockWrapper();
-  public static final Block SWAMP_FARM = new MobFarmBlockWrapper();
+  public static final Block ANIMAL_PLAINS_FARM =
+      new MobFarmBlockWrapper(MobFarmBlock.ID_ANIMAL_PLAINS_FARM);
+  public static final Block BEE_HIVE_FARM = new MobFarmBlockWrapper(MobFarmBlock.ID_BEE_HIVE_FARM);
+  public static final Block DESERT_FARM = new MobFarmBlockWrapper(MobFarmBlock.ID_DESERT_FARM);
+  public static final Block JUNGLE_FARM = new MobFarmBlockWrapper(MobFarmBlock.ID_JUNGLE_FARM);
+  public static final Block MONSTER_PLAINS_CAVE_FARM =
+      new MobFarmBlockWrapper(MobFarmBlock.ID_JUNGLE_FARM);
+  public static final Block NETHER_FORTRESS_FARM =
+      new MobFarmBlockWrapper(MobFarmBlock.ID_NETHER_FORTRESS_FARM);
+  public static final Block OCEAN_FARM = new MobFarmBlockWrapper(MobFarmBlock.ID_OCEAN_FARM);
+  public static final Block SWAMP_FARM = new MobFarmBlockWrapper(MobFarmBlock.ID_SWAMP_FARM);
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   private ModBlocks() {}

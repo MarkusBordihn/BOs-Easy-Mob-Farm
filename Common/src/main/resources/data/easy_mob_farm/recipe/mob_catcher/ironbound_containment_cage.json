@@ -6,10 +6,10 @@
     "IBI"
   ],
   "key": {
-    "I": {"item": "minecraft:iron_ingot"},
-    "B": {"item": "minecraft:iron_bars"},
-    "L": {"item": "minecraft:lead"},
-    "C": {"item": "minecraft:chain"}
+    "I": "minecraft:iron_ingot",
+    "B": "minecraft:iron_bars",
+    "L": "minecraft:lead",
+    "C": "minecraft:chain"
   },
   "result": {
     "id": "easy_mob_farm:ironbound_containment_cage"

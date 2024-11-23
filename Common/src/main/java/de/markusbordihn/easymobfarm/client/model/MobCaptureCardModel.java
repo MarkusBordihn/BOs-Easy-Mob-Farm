@@ -24,9 +24,9 @@ import de.markusbordihn.easymobfarm.client.renderer.block.model.MobCaptureCardOv
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import net.minecraft.client.renderer.block.model.BakedOverrides;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.BlockModel;
-import net.minecraft.client.renderer.block.model.ItemOverrides;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
@@ -56,7 +56,7 @@ public class MobCaptureCardModel implements BakedModel {
             null,
             ItemTransforms.NO_TRANSFORMS,
             List.of());
-    this.overrides = new MobCaptureCardOverrides(modelBaker, blockModel, List.of());
+    this.overrides = new MobCaptureCardOverrides(modelBaker, List.of());
   }
 
   public MobCaptureCardModel(BakedModel originalModel, ModelBaker modelBaker) {
@@ -100,7 +100,7 @@ public class MobCaptureCardModel implements BakedModel {
   }
 
   @Override
-  public ItemOverrides getOverrides() {
+  public BakedOverrides overrides() {
     return this.overrides;
   }
 }

@@ -24,7 +24,10 @@ import de.markusbordihn.easymobfarm.config.MobFarmConfig;
 import de.markusbordihn.easymobfarm.item.upgrade.EnhancementItem;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.List;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 
@@ -33,7 +36,11 @@ public class SpeedEnhancementItem extends EnhancementItem {
   public static final String ID = "speed" + ID_POSTFIX;
 
   public SpeedEnhancementItem() {
-    this(new Properties());
+    this(
+        new Properties()
+            .setId(
+                ResourceKey.create(
+                    Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, ID))));
   }
 
   public SpeedEnhancementItem(Properties properties) {

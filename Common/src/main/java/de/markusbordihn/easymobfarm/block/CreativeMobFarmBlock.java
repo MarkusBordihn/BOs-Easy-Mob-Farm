@@ -19,6 +19,10 @@
 
 package de.markusbordihn.easymobfarm.block;
 
+import de.markusbordihn.easymobfarm.Constants;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.MapColor;
 
@@ -28,6 +32,9 @@ public class CreativeMobFarmBlock extends MobFarmBlock {
   public CreativeMobFarmBlock() {
     this(
         Properties.of()
+            .setId(
+                ResourceKey.create(
+                    Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, ID)))
             .mapColor(MapColor.NETHER)
             .requiresCorrectToolForDrops()
             .strength(5.0f)

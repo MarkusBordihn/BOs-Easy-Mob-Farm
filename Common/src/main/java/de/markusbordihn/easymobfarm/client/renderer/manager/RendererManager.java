@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.animal.AbstractFish;
@@ -99,7 +100,7 @@ public class RendererManager {
     }
 
     // Create entity
-    Entity entity = entityType.create(mobFarmBlockEntity.getLevel());
+    Entity entity = entityType.create(mobFarmBlockEntity.getLevel(), EntitySpawnReason.EVENT);
     if (entity == null) {
       log.error("Unable to create entity for entity type {}", entityType);
       return null;

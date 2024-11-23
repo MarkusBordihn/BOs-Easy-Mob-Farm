@@ -19,6 +19,10 @@
 
 package de.markusbordihn.easymobfarm.item.mobcatcher;
 
+import de.markusbordihn.easymobfarm.Constants;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 
 public class IronboundContainmentCageItem extends MobCatcherItem {
@@ -30,7 +34,11 @@ public class IronboundContainmentCageItem extends MobCatcherItem {
   private static final float MAX_ENTITY_WIDTH_TO_CAPTURE = 1.5f;
 
   public IronboundContainmentCageItem() {
-    this(new Item.Properties());
+    this(
+        new Item.Properties()
+            .setId(
+                ResourceKey.create(
+                    Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, ID))));
   }
 
   public IronboundContainmentCageItem(Item.Properties properties) {

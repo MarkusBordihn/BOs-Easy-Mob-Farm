@@ -6,9 +6,9 @@
     " F "
   ],
   "key": {
-    "L": {"item": "minecraft:lead"},
-    "S": {"item": "minecraft:string"},
-    "F": {"item": "minecraft:feather"}
+    "L": "minecraft:lead",
+    "S": "minecraft:string",
+    "F": "minecraft:feather"
   },
   "result": {
     "id": "easy_mob_farm:enduring_capture_net"

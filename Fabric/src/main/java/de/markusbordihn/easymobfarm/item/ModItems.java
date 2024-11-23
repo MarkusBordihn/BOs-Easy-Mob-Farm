@@ -46,6 +46,9 @@ import de.markusbordihn.easymobfarm.item.upgrade.slot.SmallSlotUpgradeItem;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
@@ -64,7 +67,15 @@ public class ModItems {
       new MobFarmTemplateItem(MobFarmTemplateItem.ID_TIER_3, ModBlocks.TIER_3_MOB_FARM_TEMPLATE);
 
   public static final Item CREATIVE_MOB_FARM =
-      new BlockItem(ModBlocks.CREATIVE_MOB_FARM, new Item.Properties());
+      new BlockItem(
+          ModBlocks.CREATIVE_MOB_FARM,
+          new Item.Properties()
+              .useBlockDescriptionPrefix()
+              .setId(
+                  ResourceKey.create(
+                      Registries.ITEM,
+                      ResourceLocation.fromNamespaceAndPath(
+                          Constants.MOD_ID, CreativeMobFarmBlock.ID))));
   public static final Item ANIMAL_PLAINS_FARM =
       new MobFarmBlockItem(MobFarmBlock.ID_ANIMAL_PLAINS_FARM, ModBlocks.ANIMAL_PLAINS_FARM);
   public static final Item BEE_HIVE_FARM =

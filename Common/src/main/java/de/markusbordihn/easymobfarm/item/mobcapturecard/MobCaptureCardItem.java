@@ -25,11 +25,14 @@ import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -47,7 +50,11 @@ public class MobCaptureCardItem extends Item {
   public static final String TOOLTIP_PREFIX = Constants.TOOLTIP_PREFIX + ID + ".";
 
   public MobCaptureCardItem() {
-    this(new Item.Properties());
+    this(
+        new Item.Properties()
+            .setId(
+                ResourceKey.create(
+                    Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, ID))));
   }
 
   public MobCaptureCardItem(Properties properties) {
@@ -55,8 +62,8 @@ public class MobCaptureCardItem extends Item {
   }
 
   public static MobCaptureCardItem getMobCaptureCardItem() {
-    if (BuiltInRegistries.ITEM.get(RESOURCE_LOCATION)
-        instanceof MobCaptureCardItem mobCaptureCardItem) {
+    Optional<Item> holder = BuiltInRegistries.ITEM.getOptional(RESOURCE_LOCATION);
+    if (holder.isPresent() && holder.get() instanceof MobCaptureCardItem mobCaptureCardItem) {
       return mobCaptureCardItem;
     }
     return null;
@@ -69,11 +76,6 @@ public class MobCaptureCardItem extends Item {
     return Arrays.stream(variant.split("_"))
         .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase())
         .collect(Collectors.joining(" "));
-  }
-
-  @Override
-  public boolean isEnchantable(ItemStack itemStack) {
-    return false;
   }
 
   @Override

@@ -21,6 +21,7 @@ package de.markusbordihn.easymobfarm.data.capture;
 
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.MobCatcherItem;
+import java.util.Optional;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -148,7 +149,9 @@ public class MobCaptureDataSupport {
     if (entityName == null || entityName.isEmpty()) {
       return null;
     }
-    return BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.parse(entityName));
+    Optional<EntityType<?>> entityTypeHolder =
+        BuiltInRegistries.ENTITY_TYPE.getOptional(ResourceLocation.parse(entityName));
+    return entityTypeHolder.orElse(null);
   }
 
   public static String getEntityTypeName(ItemStack itemStack) {

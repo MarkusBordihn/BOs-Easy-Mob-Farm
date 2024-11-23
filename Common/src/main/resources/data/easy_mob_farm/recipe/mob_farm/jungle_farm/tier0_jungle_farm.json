@@ -1,22 +1,13 @@
 {
   "type": "minecraft:crafting_shaped",
+  "group": "jungle_farm",
   "pattern": ["JLJ", "J#J", "-B-"],
   "key": {
-    "#": {
-      "item": "easy_mob_farm:tier0_mob_farm_template"
-    },
-    "J": {
-      "item": "minecraft:jungle_log"
-    },
-    "B": {
-      "item": "minecraft:bamboo"
-    },
-    "-": {
-      "item": "minecraft:dirt"
-    },
-    "L": {
-      "item": "minecraft:jungle_leaves"
-    }
+    "#": "easy_mob_farm:tier0_mob_farm_template",
+    "J": "minecraft:jungle_log",
+    "B": "minecraft:bamboo",
+    "-": "minecraft:dirt",
+    "L": "minecraft:jungle_leaves"
   },
   "result": {
     "count": 1,

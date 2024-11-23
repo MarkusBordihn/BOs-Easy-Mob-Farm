@@ -1,14 +1,15 @@
 {
   "type": "minecraft:crafting_shaped",
+  "group": "mob_farm_filter",
   "pattern": [
     " F ",
     " H ",
     " B "
   ],
   "key": {
-    "F": {"item": "minecraft:allium"},
-    "H": {"item": "minecraft:hopper"},
-    "B": {"item": "minecraft:blue_orchid"}
+    "F": "minecraft:allium",
+    "H": "minecraft:hopper",
+    "B": "minecraft:blue_orchid"
   },
   "result": {
     "id": "easy_mob_farm:no_flowers_filter"

@@ -33,6 +33,7 @@ import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SheepEnhancementIte
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SwordEnhancementItem;
 import de.markusbordihn.easymobfarm.server.player.FakePlayer;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 import net.minecraft.core.BlockPos;
@@ -42,6 +43,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
@@ -76,7 +78,7 @@ public class LootManager {
       log.error("Unable to get entity type from Mob Capture data: {}", mobCaptureData);
       return NonNullList.create();
     }
-    Entity entity = entityType.create(level);
+    Entity entity = entityType.create(level, EntitySpawnReason.EVENT);
     if (entity == null) {
       log.error("Unable to create entity {}!", entityType);
       return NonNullList.create();
@@ -172,18 +174,21 @@ public class LootManager {
 
   private static ResourceKey<?> getLootTableLocation(
       LivingEntity livingEntity, Set<EnhancementItem> enhancements) {
-    ResourceKey<?> lootTableLocation = livingEntity.getType().getDefaultLootTable();
+    Optional<ResourceKey<LootTable>> lootTableLocation =
+        livingEntity.getType().getDefaultLootTable();
+
     for (EnhancementItem enhancement : enhancements) {
       if (enhancement instanceof SheepEnhancementItem && livingEntity instanceof Sheep sheep) {
         DyeColor color = sheep.getColor();
         lootTableLocation =
-            ResourceKey.create(
-                Registries.LOOT_TABLE,
-                ResourceLocation.fromNamespaceAndPath(
-                    "minecraft", "entities/sheep/" + color.getName()));
+            Optional.of(
+                ResourceKey.create(
+                    Registries.LOOT_TABLE,
+                    ResourceLocation.fromNamespaceAndPath(
+                        "minecraft", "entities/sheep/" + color.getName())));
       }
     }
-    return lootTableLocation;
+    return lootTableLocation.orElse(null);
   }
 
   private static void setSwordEnhancementParameters(

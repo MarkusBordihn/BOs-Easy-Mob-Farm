@@ -19,4 +19,34 @@
 
 package de.markusbordihn.easymobfarm.client.model;
 
-public class ModModelManager implements ModelManagerInterface {}
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+
+public class ModModelManager implements ModelManagerInterface {
+
+  @Override
+  public BakedModel getModel(ModelResourceLocation modelResourceLocation) {
+    if (modelResourceLocation == null) {
+      return null;
+    }
+    ModelResourceLocation rewrittenModelResourceLocation =
+        new ModelResourceLocation(
+            ResourceLocation.fromNamespaceAndPath(
+                modelResourceLocation.id().getNamespace(),
+                modelResourceLocation.id().getPath().replaceFirst("item/", "")),
+            "inventory");
+    BakedModel bakedModel =
+        Minecraft.getInstance().getModelManager().getModel(rewrittenModelResourceLocation);
+    if (bakedModel == Minecraft.getInstance().getModelManager().getMissingModel()) {
+      if (KNOWN_MISSING_MODELS.add(modelResourceLocation.toString())) {
+        log.error("{} Missing model for '{}'", LOG_PREFIX, modelResourceLocation);
+      }
+      return null;
+    }
+    return bakedModel != Minecraft.getInstance().getModelManager().getMissingModel()
+        ? bakedModel
+        : null;
+  }
+}

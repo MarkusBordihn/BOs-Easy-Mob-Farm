@@ -1,4 +1,4 @@
-# 🪤 Easy Mob Farm (1.21.1)
+# 🪤 Easy Mob Farm (1.21.3)
 
 [![Easy Mob Farm Versions](http://cf.way2muchnoise.eu/versions/Minecraft_563464_all.svg)](https://www.curseforge.com/minecraft/mc-mods/easy-mob-farm)
 

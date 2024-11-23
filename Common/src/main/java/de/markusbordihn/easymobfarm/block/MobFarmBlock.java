@@ -25,10 +25,12 @@ import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -44,7 +46,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
@@ -53,7 +55,6 @@ import org.apache.logging.log4j.Logger;
 
 public class MobFarmBlock extends BaseEntityBlock {
 
-  public static final String ID = "mob_farm";
   public static final String ID_ANIMAL_PLAINS_FARM = "animal_plains_farm";
   public static final String ID_BEE_HIVE_FARM = "bee_hive_farm";
   public static final String ID_DESERT_FARM = "desert_farm";
@@ -62,15 +63,18 @@ public class MobFarmBlock extends BaseEntityBlock {
   public static final String ID_NETHER_FORTRESS_FARM = "nether_fortress_farm";
   public static final String ID_OCEAN_FARM = "ocean_farm";
   public static final String ID_SWAMP_FARM = "swamp_farm";
-  public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+  public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
   public static final BooleanProperty WORKING = BooleanProperty.create("working");
   public static final IntegerProperty TIER_LEVEL = IntegerProperty.create("tier_level", 0, 3);
   public static final MapCodec<MobFarmBlock> CODEC = simpleCodec(MobFarmBlock::new);
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  public MobFarmBlock() {
+  public MobFarmBlock(String id) {
     this(
         Properties.of()
+            .setId(
+                ResourceKey.create(
+                    Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, id)))
             .mapColor(MapColor.STONE)
             .requiresCorrectToolForDrops()
             .strength(5.0f)
@@ -185,7 +189,7 @@ public class MobFarmBlock extends BaseEntityBlock {
   }
 
   @Override
-  public ItemInteractionResult useItemOn(
+  public InteractionResult useItemOn(
       ItemStack itemStack,
       final BlockState blockState,
       final Level level,
@@ -194,13 +198,13 @@ public class MobFarmBlock extends BaseEntityBlock {
       final InteractionHand interactionHand,
       final BlockHitResult blockHitResult) {
     if (level.isClientSide) {
-      return ItemInteractionResult.SUCCESS;
+      return InteractionResult.SUCCESS;
     }
 
     // Confirm that block is a mob farm block entity
     BlockEntity blockEntity = level.getBlockEntity(blockPos);
     if (!(blockEntity instanceof MobFarmBlockEntity mobFarmBlockEntity)) {
-      return ItemInteractionResult.FAIL;
+      return InteractionResult.FAIL;
     }
 
     // Check if item in hand could be consumed
@@ -209,18 +213,18 @@ public class MobFarmBlock extends BaseEntityBlock {
             || mobFarmBlockEntity.takeEnhancementItem(player, interactionHand)
             || mobFarmBlockEntity.takeSlotUpgradeItem(player, interactionHand)
             || mobFarmBlockEntity.takeFilterItem(player, interactionHand))) {
-      return ItemInteractionResult.CONSUME;
+      return InteractionResult.CONSUME;
     }
 
     // Check if mob capture items could be extracted
     if (player.isShiftKeyDown() && mobFarmBlockEntity.hasCapturedMob()) {
       mobFarmBlockEntity.giveMobCaptureItem(player, interactionHand);
-      return ItemInteractionResult.CONSUME;
+      return InteractionResult.CONSUME;
     }
 
     // Open Mob Farm GUI
     this.openMenu(level, blockPos, player);
-    return ItemInteractionResult.CONSUME;
+    return InteractionResult.CONSUME;
   }
 
   protected void openMenu(final Level level, final BlockPos blockPos, final Player player) {

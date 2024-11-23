@@ -43,6 +43,9 @@ import de.markusbordihn.easymobfarm.item.upgrade.filter.NoFlowersFilterItem;
 import de.markusbordihn.easymobfarm.item.upgrade.filter.NoMeatFilterItem;
 import de.markusbordihn.easymobfarm.item.upgrade.slot.BigSlotUpgradeItem;
 import de.markusbordihn.easymobfarm.item.upgrade.slot.SmallSlotUpgradeItem;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.DeferredRegister;
@@ -140,7 +143,16 @@ public class ModItems {
   public static final RegistryObject<Item> CREATIVE_MOB_FARM =
       ITEMS.register(
           CreativeMobFarmBlock.ID,
-          () -> new BlockItem(ModBlocks.CREATIVE_MOB_FARM.get(), new Item.Properties()));
+          () ->
+              new BlockItem(
+                  ModBlocks.CREATIVE_MOB_FARM.get(),
+                  new Item.Properties()
+                      .useBlockDescriptionPrefix()
+                      .setId(
+                          ResourceKey.create(
+                              Registries.ITEM,
+                              ResourceLocation.fromNamespaceAndPath(
+                                  Constants.MOD_ID, CreativeMobFarmBlock.ID)))));
 
   public static final RegistryObject<Item> ANIMAL_PLAINS_FARM =
       ITEMS.register(

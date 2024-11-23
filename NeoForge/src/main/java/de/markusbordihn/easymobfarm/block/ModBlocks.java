@@ -39,32 +39,52 @@ public class ModBlocks {
       DeferredRegister.create(BuiltInRegistries.BLOCK_ENTITY_TYPE, Constants.MOD_ID);
 
   public static final DeferredBlock<Block> TIER_0_MOB_FARM_TEMPLATE =
-      BLOCKS.register(MobFarmTemplateBlock.ID_TIER_0, MobFarmTemplateBlock::new);
+      BLOCKS.register(
+          MobFarmTemplateBlock.ID_TIER_0,
+          () -> new MobFarmTemplateBlock(MobFarmTemplateBlock.ID_TIER_0));
   public static final DeferredBlock<Block> TIER_1_MOB_FARM_TEMPLATE =
-      BLOCKS.register(MobFarmTemplateBlock.ID_TIER_1, MobFarmTemplateBlock::new);
+      BLOCKS.register(
+          MobFarmTemplateBlock.ID_TIER_1,
+          () -> new MobFarmTemplateBlock(MobFarmTemplateBlock.ID_TIER_1));
   public static final DeferredBlock<Block> TIER_2_MOB_FARM_TEMPLATE =
-      BLOCKS.register(MobFarmTemplateBlock.ID_TIER_2, MobFarmTemplateBlock::new);
+      BLOCKS.register(
+          MobFarmTemplateBlock.ID_TIER_2,
+          () -> new MobFarmTemplateBlock(MobFarmTemplateBlock.ID_TIER_2));
   public static final DeferredBlock<Block> TIER_3_MOB_FARM_TEMPLATE =
-      BLOCKS.register(MobFarmTemplateBlock.ID_TIER_3, MobFarmTemplateBlock::new);
+      BLOCKS.register(
+          MobFarmTemplateBlock.ID_TIER_3,
+          () -> new MobFarmTemplateBlock(MobFarmTemplateBlock.ID_TIER_3));
 
   public static final DeferredBlock<Block> CREATIVE_MOB_FARM =
       BLOCKS.register(CreativeMobFarmBlock.ID, CreativeMobFarmBlockWrapper::new);
   public static final DeferredBlock<Block> ANIMAL_PLAINS_FARM =
-      BLOCKS.register(MobFarmBlock.ID_ANIMAL_PLAINS_FARM, MobFarmBlockWrapper::new);
+      BLOCKS.register(
+          MobFarmBlock.ID_ANIMAL_PLAINS_FARM,
+          () -> new MobFarmBlockWrapper(MobFarmBlock.ID_ANIMAL_PLAINS_FARM));
   public static final DeferredBlock<Block> BEE_HIVE_FARM =
-      BLOCKS.register(MobFarmBlock.ID_BEE_HIVE_FARM, MobFarmBlockWrapper::new);
+      BLOCKS.register(
+          MobFarmBlock.ID_BEE_HIVE_FARM,
+          () -> new MobFarmBlockWrapper(MobFarmBlock.ID_BEE_HIVE_FARM));
   public static final DeferredBlock<Block> DESERT_FARM =
-      BLOCKS.register(MobFarmBlock.ID_DESERT_FARM, MobFarmBlockWrapper::new);
+      BLOCKS.register(
+          MobFarmBlock.ID_DESERT_FARM, () -> new MobFarmBlockWrapper(MobFarmBlock.ID_DESERT_FARM));
   public static final DeferredBlock<Block> JUNGLE_FARM =
-      BLOCKS.register(MobFarmBlock.ID_JUNGLE_FARM, MobFarmBlockWrapper::new);
+      BLOCKS.register(
+          MobFarmBlock.ID_JUNGLE_FARM, () -> new MobFarmBlockWrapper(MobFarmBlock.ID_JUNGLE_FARM));
   public static final DeferredBlock<Block> MONSTER_PLAINS_CAVE_FARM =
-      BLOCKS.register(MobFarmBlock.ID_MONSTER_PLAINS_CAVE_FARM, MobFarmBlockWrapper::new);
+      BLOCKS.register(
+          MobFarmBlock.ID_MONSTER_PLAINS_CAVE_FARM,
+          () -> new MobFarmBlockWrapper(MobFarmBlock.ID_MONSTER_PLAINS_CAVE_FARM));
   public static final DeferredBlock<Block> NETHER_FORTRESS_FARM =
-      BLOCKS.register(MobFarmBlock.ID_NETHER_FORTRESS_FARM, MobFarmBlockWrapper::new);
+      BLOCKS.register(
+          MobFarmBlock.ID_NETHER_FORTRESS_FARM,
+          () -> new MobFarmBlockWrapper(MobFarmBlock.ID_NETHER_FORTRESS_FARM));
   public static final DeferredBlock<Block> OCEAN_FARM =
-      BLOCKS.register(MobFarmBlock.ID_OCEAN_FARM, MobFarmBlockWrapper::new);
+      BLOCKS.register(
+          MobFarmBlock.ID_OCEAN_FARM, () -> new MobFarmBlockWrapper(MobFarmBlock.ID_OCEAN_FARM));
   public static final DeferredBlock<Block> SWAMP_FARM =
-      BLOCKS.register(MobFarmBlock.ID_SWAMP_FARM, MobFarmBlockWrapper::new);
+      BLOCKS.register(
+          MobFarmBlock.ID_SWAMP_FARM, () -> new MobFarmBlockWrapper(MobFarmBlock.ID_SWAMP_FARM));
 
   protected ModBlocks() {}
 
@@ -74,24 +94,22 @@ public class ModBlocks {
           BLOCK_ENTITY_TYPES.register(
               CreativeMobFarmBlockEntity.ID,
               () ->
-                  BlockEntityType.Builder.of(
-                          CreativeMobFarmBlockEntityWrapper::new, CREATIVE_MOB_FARM.get())
-                      .build(null));
+                  new BlockEntityType<>(
+                      CreativeMobFarmBlockEntityWrapper::new, CREATIVE_MOB_FARM.get()));
 
   public static final DeferredHolder<BlockEntityType<?>, BlockEntityType<MobFarmBlockEntityWrapper>>
       MOB_FARM_ENTITY =
           BLOCK_ENTITY_TYPES.register(
               MobFarmBlockEntity.ID,
               () ->
-                  BlockEntityType.Builder.of(
-                          MobFarmBlockEntityWrapper::new,
-                          ANIMAL_PLAINS_FARM.get(),
-                          BEE_HIVE_FARM.get(),
-                          DESERT_FARM.get(),
-                          JUNGLE_FARM.get(),
-                          MONSTER_PLAINS_CAVE_FARM.get(),
-                          NETHER_FORTRESS_FARM.get(),
-                          OCEAN_FARM.get(),
-                          SWAMP_FARM.get())
-                      .build(null));
+                  new BlockEntityType<>(
+                      MobFarmBlockEntityWrapper::new,
+                      ANIMAL_PLAINS_FARM.get(),
+                      BEE_HIVE_FARM.get(),
+                      DESERT_FARM.get(),
+                      JUNGLE_FARM.get(),
+                      MONSTER_PLAINS_CAVE_FARM.get(),
+                      NETHER_FORTRESS_FARM.get(),
+                      OCEAN_FARM.get(),
+                      SWAMP_FARM.get()));
 }

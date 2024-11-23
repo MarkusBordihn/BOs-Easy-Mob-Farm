@@ -23,6 +23,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.capture.MobCaptureManager;
 import de.markusbordihn.easymobfarm.config.MobCaptureCardConfig;
 import java.util.Random;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -58,9 +59,9 @@ public class LivingEntityEvents {
 
     // Drop the mob capture card.
     ItemStack itemStack = MobCaptureManager.captureMob(livingEntity);
-    if (itemStack != null) {
+    if (itemStack != null && livingEntity.level() instanceof ServerLevel serverLevel) {
       log.debug("Dropped mob capture card {} for {}.", itemStack, livingEntity);
-      livingEntity.spawnAtLocation(itemStack, 0.5F);
+      livingEntity.spawnAtLocation(serverLevel, itemStack, 0.5F);
     } else {
       log.error("Failed to drop mob capture card for {}.", livingEntity);
     }

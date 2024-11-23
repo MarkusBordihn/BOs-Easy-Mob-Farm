@@ -1,13 +1,14 @@
 {
   "type": "minecraft:crafting_shaped",
+  "group": "mob_farm_enhancement",
   "pattern": [
     " Q ",
     "QSQ",
     " Q "
   ],
   "key": {
-    "Q": {"item": "minecraft:quartz"},
-    "S": {"item": "minecraft:iron_sword"}
+    "Q": "minecraft:quartz",
+    "S": "minecraft:iron_sword"
   },
   "result": {
     "id": "easy_mob_farm:sword_enhancement"

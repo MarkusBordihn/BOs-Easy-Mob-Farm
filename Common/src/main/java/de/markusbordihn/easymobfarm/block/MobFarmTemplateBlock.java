@@ -19,6 +19,10 @@
 
 package de.markusbordihn.easymobfarm.block;
 
+import de.markusbordihn.easymobfarm.Constants;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -31,9 +35,12 @@ public class MobFarmTemplateBlock extends Block {
   public static final String ID_TIER_2 = "tier2_mob_farm_template";
   public static final String ID_TIER_3 = "tier3_mob_farm_template";
 
-  public MobFarmTemplateBlock() {
+  public MobFarmTemplateBlock(String id) {
     super(
         BlockBehaviour.Properties.of()
+            .setId(
+                ResourceKey.create(
+                    Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, id)))
             .mapColor(MapColor.STONE)
             .requiresCorrectToolForDrops()
             .strength(3.0F, 6.0F)

@@ -20,5 +20,5 @@ pluginManagement {
   }
 }
 
-rootProject.name = 'Easy Mob Farm 1.21.1'
+rootProject.name = 'Easy Mob Farm 1.21.3'
 include("Common", "Fabric", "Forge", "NeoForge")

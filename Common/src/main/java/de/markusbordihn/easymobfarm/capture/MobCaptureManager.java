@@ -27,6 +27,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -57,7 +58,7 @@ public class MobCaptureManager {
       return null;
     }
 
-    Entity entity = entityType.create(level);
+    Entity entity = entityType.create(level, EntitySpawnReason.SPAWN_ITEM_USE);
     if (entity == null) {
       log.error("{} Unable to create entity {}!", LOG_PREFIX, entityType);
       return null;
@@ -125,7 +126,7 @@ public class MobCaptureManager {
     }
 
     // Create entity from EntityType
-    Entity entity = entityType.create(serverLevel);
+    Entity entity = entityType.create(serverLevel, EntitySpawnReason.SPAWN_ITEM_USE);
     if (entity == null) {
       log.error("{} Unable to create entity {}!", LOG_PREFIX, entityType);
       return false;
@@ -174,12 +175,20 @@ public class MobCaptureManager {
     return true;
   }
 
+  public static ItemStack createMobCaptureCard(ItemLike itemLike, MobCaptureData mobCaptureData) {
+    if (itemLike == null) {
+      return null;
+    }
+    ItemStack itemStack = new ItemStack(itemLike);
+    writeMobCaptureData(itemStack, mobCaptureData);
+    return itemStack;
+  }
+
   public static ItemStack createMobCaptureCard(
       ItemLike itemLike, EntityType<?> entityType, String variant, DyeColor dyeColor) {
     if (itemLike == null || entityType == null) {
       return null;
     }
-    ItemStack itemStack = new ItemStack(itemLike);
     MobCaptureData mobCaptureData = new MobCaptureData(entityType).withFoil(false);
     CompoundTag compoundTag = new CompoundTag();
 
@@ -197,8 +206,8 @@ public class MobCaptureManager {
       compoundTag.putInt(COLOR_TAG, dyeColor.getId());
     }
 
-    writeMobCaptureData(itemStack, mobCaptureData.withData(compoundTag));
-    return itemStack;
+    // Return item stack with mob capture data.
+    return createMobCaptureCard(itemLike, mobCaptureData.withData(compoundTag));
   }
 
   public static void writeMobCaptureData(ItemStack itemStack, MobCaptureData mobCaptureData) {

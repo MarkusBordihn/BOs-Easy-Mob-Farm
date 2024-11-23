@@ -24,6 +24,7 @@ import de.markusbordihn.easymobfarm.block.entity.CreativeMobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.block.entity.CreativeMobFarmBlockEntityWrapper;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityWrapper;
+import java.util.Set;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.registries.DeferredRegister;
@@ -38,32 +39,52 @@ public class ModBlocks {
       DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, Constants.MOD_ID);
 
   public static final RegistryObject<Block> TIER_0_MOB_FARM_TEMPLATE =
-      BLOCKS.register(MobFarmTemplateBlock.ID_TIER_0, MobFarmTemplateBlock::new);
+      BLOCKS.register(
+          MobFarmTemplateBlock.ID_TIER_0,
+          () -> new MobFarmTemplateBlock(MobFarmTemplateBlock.ID_TIER_0));
   public static final RegistryObject<Block> TIER_1_MOB_FARM_TEMPLATE =
-      BLOCKS.register(MobFarmTemplateBlock.ID_TIER_1, MobFarmTemplateBlock::new);
+      BLOCKS.register(
+          MobFarmTemplateBlock.ID_TIER_1,
+          () -> new MobFarmTemplateBlock(MobFarmTemplateBlock.ID_TIER_1));
   public static final RegistryObject<Block> TIER_2_MOB_FARM_TEMPLATE =
-      BLOCKS.register(MobFarmTemplateBlock.ID_TIER_2, MobFarmTemplateBlock::new);
+      BLOCKS.register(
+          MobFarmTemplateBlock.ID_TIER_2,
+          () -> new MobFarmTemplateBlock(MobFarmTemplateBlock.ID_TIER_2));
   public static final RegistryObject<Block> TIER_3_MOB_FARM_TEMPLATE =
-      BLOCKS.register(MobFarmTemplateBlock.ID_TIER_3, MobFarmTemplateBlock::new);
+      BLOCKS.register(
+          MobFarmTemplateBlock.ID_TIER_3,
+          () -> new MobFarmTemplateBlock(MobFarmTemplateBlock.ID_TIER_3));
 
   public static final RegistryObject<Block> CREATIVE_MOB_FARM =
       BLOCKS.register(CreativeMobFarmBlock.ID, CreativeMobFarmBlockWrapper::new);
   public static final RegistryObject<Block> ANIMAL_PLAINS_FARM =
-      BLOCKS.register(MobFarmBlock.ID_ANIMAL_PLAINS_FARM, MobFarmBlockWrapper::new);
+      BLOCKS.register(
+          MobFarmBlock.ID_ANIMAL_PLAINS_FARM,
+          () -> new MobFarmBlockWrapper(MobFarmBlock.ID_ANIMAL_PLAINS_FARM));
   public static final RegistryObject<Block> BEE_HIVE_FARM =
-      BLOCKS.register(MobFarmBlock.ID_BEE_HIVE_FARM, MobFarmBlockWrapper::new);
+      BLOCKS.register(
+          MobFarmBlock.ID_BEE_HIVE_FARM,
+          () -> new MobFarmBlockWrapper(MobFarmBlock.ID_BEE_HIVE_FARM));
   public static final RegistryObject<Block> DESERT_FARM =
-      BLOCKS.register(MobFarmBlock.ID_DESERT_FARM, MobFarmBlockWrapper::new);
+      BLOCKS.register(
+          MobFarmBlock.ID_DESERT_FARM, () -> new MobFarmBlockWrapper(MobFarmBlock.ID_DESERT_FARM));
   public static final RegistryObject<Block> JUNGLE_FARM =
-      BLOCKS.register(MobFarmBlock.ID_JUNGLE_FARM, MobFarmBlockWrapper::new);
+      BLOCKS.register(
+          MobFarmBlock.ID_JUNGLE_FARM, () -> new MobFarmBlockWrapper(MobFarmBlock.ID_JUNGLE_FARM));
   public static final RegistryObject<Block> MONSTER_PLAINS_CAVE_FARM =
-      BLOCKS.register(MobFarmBlock.ID_MONSTER_PLAINS_CAVE_FARM, MobFarmBlockWrapper::new);
+      BLOCKS.register(
+          MobFarmBlock.ID_MONSTER_PLAINS_CAVE_FARM,
+          () -> new MobFarmBlockWrapper(MobFarmBlock.ID_MONSTER_PLAINS_CAVE_FARM));
   public static final RegistryObject<Block> NETHER_FORTRESS_FARM =
-      BLOCKS.register(MobFarmBlock.ID_NETHER_FORTRESS_FARM, MobFarmBlockWrapper::new);
+      BLOCKS.register(
+          MobFarmBlock.ID_NETHER_FORTRESS_FARM,
+          () -> new MobFarmBlockWrapper(MobFarmBlock.ID_NETHER_FORTRESS_FARM));
   public static final RegistryObject<Block> OCEAN_FARM =
-      BLOCKS.register(MobFarmBlock.ID_OCEAN_FARM, MobFarmBlockWrapper::new);
+      BLOCKS.register(
+          MobFarmBlock.ID_OCEAN_FARM, () -> new MobFarmBlockWrapper(MobFarmBlock.ID_OCEAN_FARM));
   public static final RegistryObject<Block> SWAMP_FARM =
-      BLOCKS.register(MobFarmBlock.ID_SWAMP_FARM, MobFarmBlockWrapper::new);
+      BLOCKS.register(
+          MobFarmBlock.ID_SWAMP_FARM, () -> new MobFarmBlockWrapper(MobFarmBlock.ID_SWAMP_FARM));
 
   protected ModBlocks() {}
 
@@ -72,16 +93,16 @@ public class ModBlocks {
           BLOCK_ENTITIES.register(
               CreativeMobFarmBlockEntity.ID,
               () ->
-                  BlockEntityType.Builder.of(
-                          CreativeMobFarmBlockEntityWrapper::new, CREATIVE_MOB_FARM.get())
-                      .build(null));
+                  new BlockEntityType<>(
+                      CreativeMobFarmBlockEntityWrapper::new, Set.of(CREATIVE_MOB_FARM.get())));
 
   public static final RegistryObject<BlockEntityType<MobFarmBlockEntityWrapper>> MOB_FARM_ENTITY =
       BLOCK_ENTITIES.register(
           MobFarmBlockEntity.ID,
           () ->
-              BlockEntityType.Builder.of(
-                      MobFarmBlockEntityWrapper::new,
+              new BlockEntityType<>(
+                  MobFarmBlockEntityWrapper::new,
+                  Set.of(
                       ANIMAL_PLAINS_FARM.get(),
                       BEE_HIVE_FARM.get(),
                       DESERT_FARM.get(),
@@ -89,6 +110,5 @@ public class ModBlocks {
                       MONSTER_PLAINS_CAVE_FARM.get(),
                       NETHER_FORTRESS_FARM.get(),
                       OCEAN_FARM.get(),
-                      SWAMP_FARM.get())
-                  .build(null));
+                      SWAMP_FARM.get())));
 }

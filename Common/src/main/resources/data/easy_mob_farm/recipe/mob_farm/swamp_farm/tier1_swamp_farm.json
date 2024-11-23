@@ -1,28 +1,15 @@
 {
   "type": "minecraft:crafting_shaped",
+  "group": "swamp_farm",
   "pattern": ["ODD", "B#M", "-W-"],
   "key": {
-    "#": {
-      "item": "easy_mob_farm:tier1_mob_farm_template"
-    },
-    "W": {
-      "item": "minecraft:water_bucket"
-    },
-    "-": {
-      "item": "minecraft:dirt"
-    },
-    "D": {
-      "item": "minecraft:dead_bush"
-    },
-    "B": {
-      "item": "minecraft:blue_orchid"
-    },
-    "O": {
-      "item": "minecraft:oak_log"
-    },
-    "M": {
-      "item": "minecraft:brown_mushroom"
-    }
+    "#": "easy_mob_farm:tier1_mob_farm_template",
+    "W": "minecraft:water_bucket",
+    "-": "minecraft:dirt",
+    "D": "minecraft:dead_bush",
+    "B": "minecraft:blue_orchid",
+    "O": "minecraft:oak_log",
+    "M": "minecraft:brown_mushroom"
   },
   "result": {
     "count": 1,

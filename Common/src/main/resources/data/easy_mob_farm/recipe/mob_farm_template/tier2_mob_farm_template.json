@@ -1,16 +1,11 @@
 {
   "type": "minecraft:crafting_shaped",
+  "group": "mob_farm_template",
   "pattern": ["|||", "|#|", "|T|"],
   "key": {
-    "|": {
-      "item": "minecraft:iron_ingot"
-    },
-    "#": {
-      "item": "minecraft:glass"
-    },
-    "T": {
-      "item": "minecraft:hopper"
-    }
+    "|": "minecraft:iron_ingot",
+    "#": "minecraft:glass",
+    "T": "minecraft:hopper"
   },
   "result": {
     "id": "easy_mob_farm:tier2_mob_farm_template"
