@@ -1,0 +1,32 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "LBL",
+    "S#S",
+    "OFO"
+  ],
+  "key": {
+    "#": {
+      "item": "easy_mob_farm:tier3_mob_farm_template"
+    },
+    "L": {
+      "item": "minecraft:lava_bucket"
+    },
+    "B": {
+      "item": "minecraft:iron_bars"
+    },
+    "S": {
+      "item": "minecraft:skeleton_skull"
+    },
+    "O": {
+      "item": "minecraft:obsidian"
+    },
+    "F": {
+      "item": "minecraft:blaze_powder"
+    }
+  },
+  "result": {
+    "item": "easy_mob_farm:lucky_drop_farm",
+    "nbt": "{TierLevel:3,CustomModelData:3}"
+  }
+}

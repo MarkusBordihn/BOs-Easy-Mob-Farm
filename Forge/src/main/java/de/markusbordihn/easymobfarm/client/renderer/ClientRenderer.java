@@ -66,7 +66,11 @@ public class ClientRenderer {
           ItemBlockRenderTypes.setRenderLayer(
               ModBlocks.DESERT_FARM.get(), RenderType.cutoutMipped());
           ItemBlockRenderTypes.setRenderLayer(
+              ModBlocks.IRON_GOLEM_FARM.get(), RenderType.cutoutMipped());
+          ItemBlockRenderTypes.setRenderLayer(
               ModBlocks.JUNGLE_FARM.get(), RenderType.cutoutMipped());
+          ItemBlockRenderTypes.setRenderLayer(
+              ModBlocks.LUCKY_DROP_FARM.get(), RenderType.cutoutMipped());
           ItemBlockRenderTypes.setRenderLayer(
               ModBlocks.MONSTER_PLAINS_CAVE_FARM.get(), RenderType.cutoutMipped());
           ItemBlockRenderTypes.setRenderLayer(

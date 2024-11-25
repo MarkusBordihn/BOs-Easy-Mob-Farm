@@ -55,12 +55,12 @@ public class MobFarmContainerData implements ContainerData {
     switch (index) {
       case MobFarmDataEntry.BLOCK_POS_X,
               MobFarmDataEntry.BLOCK_POS_Y,
-              MobFarmDataEntry.BLOCK_POS_Z ->
+              MobFarmDataEntry.BLOCK_POS_Z,
+              MobFarmDataEntry.FARM_TIER_LEVEL ->
           log.warn("Trying to set read-only data index {} for {}", index, this);
       case MobFarmDataEntry.NUMBER_OF_OUTPUT_SLOTS -> mobFarmEntity.setNumberOfOutputSlots(value);
       case MobFarmDataEntry.FARM_PROGRESS -> mobFarmEntity.setFarmProgress(value);
       case MobFarmDataEntry.FARM_STATUS -> mobFarmEntity.setFarmStatus(value);
-      case MobFarmDataEntry.FARM_TIER_LEVEL -> mobFarmEntity.setFarmTierLevel(value);
       default -> log.error("Unknown data index {} for {}", index, this);
     }
   }

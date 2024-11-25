@@ -1,0 +1,61 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_lucky_drop_farm": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["easy_mob_farm:lucky_drop_farm"]
+          }
+        ]
+      }
+    },
+    "has_mob_farm_template": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "easy_mob_farm:mob_farm_templates"
+          }
+        ]
+      }
+    },
+    "has_iron_bars": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:iron_bars"]
+          }
+        ]
+      }
+    },
+    "has_skeleton_skull": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:skeleton_skull"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_lucky_drop_farm",
+      "has_mob_farm_template",
+      "has_iron_bars",
+      "has_skeleton_skull"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "easy_mob_farm:mob_farm/lucky_drop_farm/tier0_lucky_drop_farm",
+      "easy_mob_farm:mob_farm/lucky_drop_farm/tier1_lucky_drop_farm",
+      "easy_mob_farm:mob_farm/lucky_drop_farm/tier2_lucky_drop_farm",
+      "easy_mob_farm:mob_farm/lucky_drop_farm/tier3_lucky_drop_farm"
+    ]
+  }
+}

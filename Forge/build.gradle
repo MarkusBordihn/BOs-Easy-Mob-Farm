@@ -137,6 +137,14 @@ dependencies {
   compileOnly fg.deobf("curse.maven:storage-drawers-223852:3807626")
   runtimeOnly fg.deobf("curse.maven:storage-drawers-223852:3807626")
 
+  // REI: Integration
+  // compileOnly fg.deobf("curse.maven:architectury-419699:5137931")
+  // runtimeOnly fg.deobf("curse.maven:architectury-419699:5137931")
+  // compileOnly fg.deobf("curse.maven:cloth-348521:5729090")
+  // runtimeOnly fg.deobf("curse.maven:cloth-348521:5729090")
+  // compileOnly fg.deobf("curse.maven:rei-310111:5751285")
+  // runtimeOnly fg.deobf("curse.maven:rei-310111:5751285")
+
   // Productive Bees: Integration
   // compileOnly fg.deobf("curse.maven:productivebees-377897:4257307")
   // runtimeOnly fg.deobf("curse.maven:productivebees-377897:4257307")

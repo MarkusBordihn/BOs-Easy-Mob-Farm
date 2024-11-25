@@ -297,14 +297,33 @@ public class MobFarmMenu extends AbstractContainerMenu {
     }
 
     ItemStack itemStack = slot.getItem();
+    ItemStack itemStackCopy = itemStack.copy();
 
-    // Store changes if itemStack is not empty.
+    // Handle moving items between different slot groups
+    if (slot.container == this.container) {
+      // Move from Mob Farm (container) to Player Inventory or Hotbar
+      if (!this.moveItemStackTo(itemStack, 36, this.slots.size(), true)) {
+        return ItemStack.EMPTY;
+      }
+    } else if (slot.container == this.playerInventory) {
+      // Move from Player Inventory or Hotbar to Mob Farm
+      if (!this.moveItemStackTo(itemStack, 0, MobFarmSlots.RESULT_SLOTS.size(), false)) {
+        return ItemStack.EMPTY;
+      }
+    }
+
+    // Handle stack updates
     if (itemStack.isEmpty()) {
       slot.set(ItemStack.EMPTY);
     } else {
       slot.setChanged();
     }
 
-    return ItemStack.EMPTY;
+    if (itemStack.getCount() == itemStackCopy.getCount()) {
+      return ItemStack.EMPTY;
+    }
+
+    slot.onTake(player, itemStack);
+    return itemStackCopy;
   }
 }

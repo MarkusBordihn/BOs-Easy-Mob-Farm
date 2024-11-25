@@ -22,6 +22,7 @@ package de.markusbordihn.easymobfarm.block.entity;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.MobFarmBlock;
 import de.markusbordihn.easymobfarm.capture.MobCaptureManager;
+import de.markusbordihn.easymobfarm.config.MobFarmBonusConfig;
 import de.markusbordihn.easymobfarm.config.MobFarmConfig;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureDataSupport;
@@ -30,6 +31,7 @@ import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmDataEntry;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmSlot;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmSlots;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmStatus;
+import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import de.markusbordihn.easymobfarm.item.upgrade.EnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.FilterItem;
 import de.markusbordihn.easymobfarm.item.upgrade.SlotUpgradeItem;
@@ -53,6 +55,8 @@ import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -74,28 +78,43 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
   public static final int DEFAULT_PROCESSING_TICKS = 20;
   public static final int DEFAULT_RECHECK_TICKS = 200;
   public static final String TIER_LEVEL_TAG = "TierLevel";
+  public static final String FARM_TYPE_TAG = "FarmType";
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final int[] RESULT_SLOTS =
       MobFarmSlots.RESULT_SLOTS.stream().mapToInt(MobFarmSlot::index).toArray();
+  private static final Random random = new Random();
   protected final NonNullList<ItemStack> items =
       NonNullList.withSize(MobFarmMenu.CONTAINER_SIZE, ItemStack.EMPTY);
   private final ContainerData dataAccess;
   private final int processingDelay;
+  private MobFarmType mobFarmType;
+  private int farmTierLevel;
   private int numberOfOutputSlots = MobFarmMenu.MIN_NUMBER_OF_OUTPUT_SLOTS;
   private int farmProgress = 0;
   private int farmStatus = MobFarmStatus.IDLE;
-  private int farmTierLevel = 0;
 
   public MobFarmBlockEntity(
       final BlockEntityType<?> blockEntityType,
       final BlockPos blockPos,
       final BlockState blockState) {
+    this(
+        blockEntityType,
+        blockPos,
+        blockState,
+        MobFarmBlock.getTierLevel(blockState),
+        MobFarmBlock.getFarmType(blockState));
+  }
+
+  public MobFarmBlockEntity(
+      final BlockEntityType<?> blockEntityType,
+      final BlockPos blockPos,
+      final BlockState blockState,
+      final int farmTierLevel,
+      final MobFarmType mobFarmType) {
     super(blockEntityType, blockPos, blockState);
     this.dataAccess = new MobFarmContainerData(this);
-    int tierLevel = MobFarmBlock.getTierLevel(blockState);
-    if (tierLevel > 0) {
-      this.setMobTierLevel(farmTierLevel);
-    }
+    this.farmTierLevel = farmTierLevel;
+    this.mobFarmType = mobFarmType;
 
     // Add random delay (0 - DEFAULT_PROCESSING_TICKS) to avoid processing at the same time.
     this.processingDelay =
@@ -239,12 +258,93 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
       return;
     }
 
-    // Set farm status to processing
+    // Update farm status to processing for visual feedback and other mechanics.
     this.farmStatus = MobFarmStatus.PROCESSING;
 
-    // Get loot drops for captured mob
+    // Get loot drops for captured mob over loot manager and their loot tables.
     NonNullList<ItemStack> lootDrops =
         LootManager.getEntityLoot(mobCaptureData, this.getEnchantmentItems(), level);
+
+    // Check if lucky drop farm is active and add additional loot drops.
+    if (this.getFarmType() == MobFarmType.LUCKY_DROP_FARM) {
+      int luckRoll = random.nextInt(100);
+      if (luckRoll < 95) {
+        log.debug(
+            "Adding lucky drop for {} (tier: {}) block entity at {} with captured mob {}",
+            this.getFarmType(),
+            this.getFarmTierLevel(),
+            this.getBlockPos(),
+            mobCaptureData.entityType());
+
+        // Add lucky loot drop based on the mob farm, tier level and captured mob.
+        if (random.nextInt(2) == 0) {
+          NonNullList<ItemStack> luckyDrop =
+              LootManager.getLuckyLoot(mobCaptureData, this.getBlockPos(), level);
+          if (!luckyDrop.isEmpty()) {
+            lootDrops.addAll(luckyDrop);
+          }
+        }
+
+        // Damage mob capture item
+        ItemStack capturedMob = this.getItem(MobFarmSlot.CAPTURED_MOB);
+        if (capturedMob != null && capturedMob.isDamageableItem()) {
+          int damageValue = capturedMob.getDamageValue();
+          int damageAmount =
+              random.nextInt(
+                      switch (this.getFarmTierLevel()) {
+                        case 0 -> 5;
+                        case 1 -> 4;
+                        case 2 -> 3;
+                        case 3 -> 2;
+                        default -> 2;
+                      })
+                  + 1;
+          if (damageValue + damageAmount >= capturedMob.getMaxDamage()) {
+            this.removeItem(MobFarmSlot.CAPTURED_MOB.index(), 1);
+            this.handleLootDrops(lootDrops);
+            this.farmStatus = MobFarmStatus.IDLE;
+            return;
+          }
+          capturedMob.setDamageValue(damageValue + damageAmount);
+        }
+      } else {
+        // 5% Bad lucky drop, spawn captured mob and remove item.
+        log.debug(
+            "Bad lucky drop for {} (tier: {}) block entity at {} with captured mob {}",
+            this.getFarmType(),
+            this.getFarmTierLevel(),
+            this.getBlockPos(),
+            mobCaptureData.entityType());
+        this.spawnEntity(mobCaptureData.entityType(), this.level, this.getBlockPos().above());
+        this.removeItem(MobFarmSlot.CAPTURED_MOB.index(), 1);
+        this.farmStatus = MobFarmStatus.IDLE;
+        return;
+      }
+    }
+
+    // Add optional bonus loot drop based on the mob farm, tier level and captured mob.
+    ItemStack bonusLootDrop =
+        MobFarmBonusConfig.getBonusDrop(
+            this.getFarmType(), this.getFarmTierLevel(), mobCaptureData.entityType());
+    if (!bonusLootDrop.isEmpty()) {
+      log.debug(
+          "Adding bonus loot drop {} for {} (tier: {}) block entity at {} with captured mob {}",
+          bonusLootDrop,
+          this.getFarmType(),
+          this.getFarmTierLevel(),
+          this.getBlockPos(),
+          mobCaptureData.entityType());
+      lootDrops.add(bonusLootDrop.copy());
+    }
+
+    // Handle loot drops
+    this.handleLootDrops(lootDrops);
+
+    // Set farm status to working
+    this.farmStatus = MobFarmStatus.IDLE;
+  }
+
+  private void handleLootDrops(NonNullList<ItemStack> lootDrops) {
     if (lootDrops == null || lootDrops.isEmpty()) {
       return;
     }
@@ -283,9 +383,6 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
       // Handle output slots
       storeItemInOutputSlot(lootDrop);
     }
-
-    // Set farm status to working
-    this.farmStatus = MobFarmStatus.IDLE;
   }
 
   private void storeItemInOutputSlot(final ItemStack itemStack) {
@@ -506,8 +603,8 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     return this.farmTierLevel;
   }
 
-  public void setFarmTierLevel(int farmTierLevel) {
-    this.farmTierLevel = farmTierLevel;
+  public MobFarmType getFarmType() {
+    return this.mobFarmType;
   }
 
   public ItemStack getCapturedMob() {
@@ -551,6 +648,22 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     }
   }
 
+  private void spawnEntity(EntityType<?> entityType, Level level, BlockPos position) {
+    if (entityType == null || level == null || position == null) {
+      return;
+    }
+    Entity entity = entityType.create(level);
+    if (entity != null) {
+      log.debug(
+          "Spawn entity {} at position {} for mob farm block entity at {}",
+          entity,
+          position,
+          this.getBlockPos());
+      entity.setPos(position.getX() + 0.5, position.getY() + 1, position.getZ() + 0.5);
+      level.addFreshEntity(entity);
+    }
+  }
+
   @Override
   protected Component getDefaultName() {
     return TextComponent.getTranslatedTextRaw("container.easy_mob_farm.mob_farm");
@@ -583,7 +696,9 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
 
   @Override
   public ItemStack removeItem(final int index, final int count) {
-    return ContainerHelper.removeItem(this.items, index, count);
+    ItemStack itemStack = ContainerHelper.removeItem(this.items, index, count);
+    this.syncChanges();
+    return itemStack;
   }
 
   @Override
@@ -673,6 +788,9 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     if (compoundTag.contains(TIER_LEVEL_TAG)) {
       this.farmTierLevel = compoundTag.getInt(TIER_LEVEL_TAG);
     }
+    if (compoundTag.contains(FARM_TYPE_TAG)) {
+      this.mobFarmType = MobFarmType.valueOf(compoundTag.getString(FARM_TYPE_TAG));
+    }
   }
 
   @Override
@@ -684,5 +802,6 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
 
     // Save additional data
     compoundTag.putInt(TIER_LEVEL_TAG, this.farmTierLevel);
+    compoundTag.putString(FARM_TYPE_TAG, this.mobFarmType.name());
   }
 }
