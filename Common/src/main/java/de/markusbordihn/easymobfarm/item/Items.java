@@ -26,6 +26,8 @@ import de.markusbordihn.easymobfarm.item.mobcatcher.CreativeMobCatcherItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.EnduringCaptureNetItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.IronboundContainmentCageItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.MysticBindingCrystalItem;
+import de.markusbordihn.easymobfarm.item.mobcatcher.VoidBindingChainItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.CreativeSpeedEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyHarvesterFrameEnhancementItem;
@@ -47,6 +49,7 @@ public class Items {
   public static final Item CREATIVE_MOB_CAPTURE_CARD = new CreativeBlankMobCaptureCardItem();
   public static final Item MOB_CAPTURE_CARD = new MobCaptureCardItem();
 
+  public static final Item CREATIVE_SPEED_ENHANCEMENT = new CreativeSpeedEnhancementItem();
   public static final Item EXPERIENCE_ENHANCEMENT = new ExperienceEnhancementItem();
   public static final Item HONEY_EXTRACTOR_ENHANCEMENT = new HoneyExtractorEnhancementItem();
   public static final Item HONEY_HARVESTER_FRAME_ENHANCEMENT =
@@ -68,6 +71,7 @@ public class Items {
   public static final Item ENDURING_CAPTURE_NET = new EnduringCaptureNetItem();
   public static final Item IRONBOUND_CONTAINMENT_CAGE = new IronboundContainmentCageItem();
   public static final Item MYSTIC_BINDING_CRYSTAL = new MysticBindingCrystalItem();
+  public static final Item VOID_BINDING_CHAIN = new VoidBindingChainItem();
 
   private Items() {}
 }

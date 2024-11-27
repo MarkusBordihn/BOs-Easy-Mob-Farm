@@ -1,0 +1,68 @@
+{
+  "variants": {
+    "facing=north,tier_level=0": {
+      "model": "easy_mob_farm:block/mob_farm/tier0/lucky_drop_farm",
+      "y": 0
+    },
+    "facing=east,tier_level=0": {
+      "model": "easy_mob_farm:block/mob_farm/tier0/lucky_drop_farm",
+      "y": 90
+    },
+    "facing=south,tier_level=0": {
+      "model": "easy_mob_farm:block/mob_farm/tier0/lucky_drop_farm",
+      "y": 180
+    },
+    "facing=west,tier_level=0": {
+      "model": "easy_mob_farm:block/mob_farm/tier0/lucky_drop_farm",
+      "y": 270
+    },
+    "facing=north,tier_level=1": {
+      "model": "easy_mob_farm:block/mob_farm/tier1/lucky_drop_farm",
+      "y": 0
+    },
+    "facing=east,tier_level=1": {
+      "model": "easy_mob_farm:block/mob_farm/tier1/lucky_drop_farm",
+      "y": 90
+    },
+    "facing=south,tier_level=1": {
+      "model": "easy_mob_farm:block/mob_farm/tier1/lucky_drop_farm",
+      "y": 180
+    },
+    "facing=west,tier_level=1": {
+      "model": "easy_mob_farm:block/mob_farm/tier1/lucky_drop_farm",
+      "y": 270
+    },
+    "facing=north,tier_level=2": {
+      "model": "easy_mob_farm:block/mob_farm/tier2/lucky_drop_farm",
+      "y": 0
+    },
+    "facing=east,tier_level=2": {
+      "model": "easy_mob_farm:block/mob_farm/tier2/lucky_drop_farm",
+      "y": 90
+    },
+    "facing=south,tier_level=2": {
+      "model": "easy_mob_farm:block/mob_farm/tier2/lucky_drop_farm",
+      "y": 180
+    },
+    "facing=west,tier_level=2": {
+      "model": "easy_mob_farm:block/mob_farm/tier2/lucky_drop_farm",
+      "y": 270
+    },
+    "facing=north,tier_level=3": {
+      "model": "easy_mob_farm:block/mob_farm/tier3/lucky_drop_farm",
+      "y": 0
+    },
+    "facing=east,tier_level=3": {
+      "model": "easy_mob_farm:block/mob_farm/tier3/lucky_drop_farm",
+      "y": 90
+    },
+    "facing=south,tier_level=3": {
+      "model": "easy_mob_farm:block/mob_farm/tier3/lucky_drop_farm",
+      "y": 180
+    },
+    "facing=west,tier_level=3": {
+      "model": "easy_mob_farm:block/mob_farm/tier3/lucky_drop_farm",
+      "y": 270
+    }
+  }
+}

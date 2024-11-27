@@ -3,7 +3,7 @@
   "minVersion": "0.8",
   "package": "de.markusbordihn.easymobfarm.mixin",
   "compatibilityLevel": "JAVA_17",
-  "mixins": ["FishingHookMixin", "LivingEntityDeathEventMixin"],
+  "mixins": ["FishingHookMixin", "LivingEntityDeathEventMixin", "ShapedRecipeMixin"],
   "client": [],
   "server": [],
   "injectors": {

@@ -157,10 +157,10 @@ public record MobCaptureData(
     compoundTag.putString(
         MobEntityTypeData.TYPE_TAG, Registry.ENTITY_TYPE.getKey(this.entityType).toString());
     compoundTag.put(MobEntityData.DATA_TAG, this.data);
-    if (this.color != null) {
+    if (this.hasColor()) {
       compoundTag.putString(MobColorData.COLOR_TAG, this.color.getName());
     }
-    if (this.variant != null) {
+    if (this.hasVariant()) {
       compoundTag.putString(MobVariantData.VARIANT_TAG, this.variant);
     }
     compoundTag.putString(MobRarityData.RARITY_TAG, this.rarity.name());

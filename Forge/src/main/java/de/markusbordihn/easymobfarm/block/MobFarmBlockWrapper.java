@@ -21,6 +21,7 @@ package de.markusbordihn.easymobfarm.block;
 
 import de.markusbordihn.easymobfarm.block.entity.CreativeMobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityWrapper;
+import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -30,12 +31,8 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class MobFarmBlockWrapper extends MobFarmBlock {
 
-  public MobFarmBlockWrapper() {
-    super();
-  }
-
-  public MobFarmBlockWrapper(Properties properties) {
-    super(properties);
+  public MobFarmBlockWrapper(MobFarmType mobFarmType) {
+    super(mobFarmType);
   }
 
   @Override

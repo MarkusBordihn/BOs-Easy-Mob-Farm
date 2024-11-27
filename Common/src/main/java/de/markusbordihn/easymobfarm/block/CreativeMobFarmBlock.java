@@ -19,11 +19,11 @@
 
 package de.markusbordihn.easymobfarm.block;
 
+import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.Material;
 
 public class CreativeMobFarmBlock extends MobFarmBlock {
-  public static final String ID = "creative_mob_farm";
 
   public CreativeMobFarmBlock() {
     this(
@@ -36,6 +36,6 @@ public class CreativeMobFarmBlock extends MobFarmBlock {
   }
 
   public CreativeMobFarmBlock(final Properties properties) {
-    super(properties, 3);
+    super(properties, 3, MobFarmType.CREATIVE_MOB_FARM);
   }
 }

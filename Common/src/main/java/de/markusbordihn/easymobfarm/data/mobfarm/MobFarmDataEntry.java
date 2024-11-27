@@ -27,6 +27,8 @@ public class MobFarmDataEntry {
   public static final int FARM_PROGRESS = 4;
   public static final int FARM_STATUS = 5;
   public static final int FARM_TIER_LEVEL = 6;
+  public static final int FARM_TYPE = 7;
+  public static final int CAPTURED_MOB_EXPERIENCE = 8;
 
   private MobFarmDataEntry() {}
 }

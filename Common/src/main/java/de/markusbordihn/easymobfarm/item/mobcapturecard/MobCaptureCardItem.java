@@ -51,7 +51,7 @@ public class MobCaptureCardItem extends Item {
   }
 
   public MobCaptureCardItem(Properties properties) {
-    super(properties.stacksTo(64));
+    super(properties.stacksTo(64).fireResistant().defaultDurability(32));
   }
 
   public static MobCaptureCardItem getMobCaptureCardItem() {

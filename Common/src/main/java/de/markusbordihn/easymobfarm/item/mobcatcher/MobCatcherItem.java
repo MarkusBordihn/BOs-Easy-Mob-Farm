@@ -24,6 +24,7 @@ import de.markusbordihn.easymobfarm.block.MobFarmBlock;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.capture.MobCaptureManager;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
+import de.markusbordihn.easymobfarm.item.MobFarmItem;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.List;
 import net.minecraft.ChatFormatting;
@@ -41,7 +42,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 
-public class MobCatcherItem extends Item {
+public class MobCatcherItem extends MobFarmItem {
 
   public static final String ID = "mob_catcher";
   public static final String MOB_CAPTURE_DATA_TAG = "MobCaptureData";
@@ -62,7 +63,8 @@ public class MobCatcherItem extends Item {
   }
 
   public boolean hasMobCaptureData(ItemStack itemStack) {
-    return itemStack.hasTag()
+    return itemStack != null
+        && itemStack.hasTag()
         && itemStack.getTag() != null
         && itemStack.getTag().contains(MOB_CAPTURE_DATA_TAG);
   }
@@ -81,6 +83,11 @@ public class MobCatcherItem extends Item {
 
   public int getItemDamageOnUse() {
     return ITEM_DAMAGE_ON_USE;
+  }
+
+  @Override
+  public boolean isFoil(ItemStack itemStack) {
+    return hasMobCaptureData(itemStack);
   }
 
   @Override
@@ -187,38 +194,47 @@ public class MobCatcherItem extends Item {
       ItemStack itemStack, Level level, List<Component> tooltip, TooltipFlag flag) {
     if (hasMobCaptureData(itemStack)) {
       MobCaptureData mobCaptureData = MobCaptureManager.getMobCaptureData(itemStack);
-      tooltip.add(
+      addTooltip(
+          tooltip,
           TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "release_hint", mobCaptureData.name())
               .withStyle(ChatFormatting.DARK_RED));
-      tooltip.add(
+      addTooltip(
+          tooltip,
           TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "name", mobCaptureData.name()));
       if (flag.isAdvanced()) {
-        tooltip.add(
+        addTooltip(
+            tooltip,
             TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "type", mobCaptureData.type()));
       }
       if (mobCaptureData.variant() != null) {
-        tooltip.add(
+        addTooltip(
+            tooltip,
             TextComponent.getTranslatedTextRaw(
                 TOOLTIP_PREFIX + "variant", mobCaptureData.variant()));
       }
       if (mobCaptureData.color() != null) {
-        tooltip.add(
+        addTooltip(
+            tooltip,
             TextComponent.getTranslatedTextRaw(
                 TOOLTIP_PREFIX + "color", mobCaptureData.color().getName()));
       }
     } else {
-      tooltip.add(
+      addTooltip(
+          tooltip,
           TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "capture_hint")
               .withStyle(ChatFormatting.DARK_GREEN));
-      tooltip.add(
+      addTooltip(
+          tooltip,
           TextComponent.getTranslatedTextRaw(
               TOOLTIP_PREFIX + "max_size",
               getMaxEntityWidthToCapture() + "x" + getMaxEntityHeightToCapture()));
-      tooltip.add(
+      addTooltip(
+          tooltip,
           TextComponent.getTranslatedTextRaw(
               TOOLTIP_PREFIX + "min_health", getRequiredHealthPercentageToCapture() * 100 + "%"));
     }
-    tooltip.add(
+    addTooltip(
+        tooltip,
         TextComponent.getTranslatedTextRaw(
                 TOOLTIP_PREFIX + "usage_left",
                 "("

@@ -69,7 +69,9 @@ public class ModTabs {
                   stack.add(ModItems.ANIMAL_PLAINS_FARM.getDefaultInstance());
                   stack.add(ModItems.BEE_HIVE_FARM.getDefaultInstance());
                   stack.add(ModItems.DESERT_FARM.getDefaultInstance());
+                  stack.add(ModItems.IRON_GOLEM_FARM.getDefaultInstance());
                   stack.add(ModItems.JUNGLE_FARM.getDefaultInstance());
+                  stack.add(ModItems.LUCKY_DROP_FARM.getDefaultInstance());
                   stack.add(ModItems.MONSTER_PLAINS_CAVE_FARM.getDefaultInstance());
                   stack.add(ModItems.NETHER_FORTRESS_FARM.getDefaultInstance());
                   stack.add(ModItems.OCEAN_FARM.getDefaultInstance());
@@ -83,6 +85,7 @@ public class ModTabs {
             .appendItems(
                 stack -> {
                   // Default mob farm upgrades
+                  stack.add(Items.CREATIVE_SPEED_ENHANCEMENT.getDefaultInstance());
                   stack.add(Items.EXPERIENCE_ENHANCEMENT.getDefaultInstance());
                   stack.add(Items.HONEY_EXTRACTOR_ENHANCEMENT.getDefaultInstance());
                   stack.add(Items.HONEY_HARVESTER_FRAME_ENHANCEMENT.getDefaultInstance());
@@ -109,6 +112,7 @@ public class ModTabs {
                   stack.add(Items.ENDURING_CAPTURE_NET.getDefaultInstance());
                   stack.add(Items.IRONBOUND_CONTAINMENT_CAGE.getDefaultInstance());
                   stack.add(Items.MYSTIC_BINDING_CRYSTAL.getDefaultInstance());
+                  stack.add(Items.VOID_BINDING_CHAIN.getDefaultInstance());
                 })
             .build();
   }
