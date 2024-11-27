@@ -20,9 +20,8 @@
 package de.markusbordihn.easymobfarm.item;
 
 import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.CreativeMobFarmBlock;
-import de.markusbordihn.easymobfarm.block.MobFarmBlock;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
+import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.BlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.CreativeBlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
@@ -30,6 +29,8 @@ import de.markusbordihn.easymobfarm.item.mobcatcher.CreativeMobCatcherItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.EnduringCaptureNetItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.IronboundContainmentCageItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.MysticBindingCrystalItem;
+import de.markusbordihn.easymobfarm.item.mobcatcher.VoidBindingChainItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.CreativeSpeedEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyHarvesterFrameEnhancementItem;
@@ -62,6 +63,9 @@ public class ModItems {
 
   public static final RegistryObject<Item> MOB_CAPTURE_CARD =
       ITEMS.register(MobCaptureCardItem.ID, () -> Items.MOB_CAPTURE_CARD);
+
+  public static final RegistryObject<Item> CREATIVE_SPEED_ENHANCEMENT =
+      ITEMS.register(CreativeSpeedEnhancementItem.ID, () -> Items.CREATIVE_SPEED_ENHANCEMENT);
 
   public static final RegistryObject<Item> EXPERIENCE_ENHANCEMENT =
       ITEMS.register(ExperienceEnhancementItem.ID, () -> Items.EXPERIENCE_ENHANCEMENT);
@@ -111,6 +115,8 @@ public class ModItems {
       ITEMS.register(IronboundContainmentCageItem.ID, () -> Items.IRONBOUND_CONTAINMENT_CAGE);
   public static final RegistryObject<Item> MYSTIC_BINDING_CRYSTAL =
       ITEMS.register(MysticBindingCrystalItem.ID, () -> Items.MYSTIC_BINDING_CRYSTAL);
+  public static final RegistryObject<Item> VOID_BINDING_CHAIN =
+      ITEMS.register(VoidBindingChainItem.ID, () -> Items.VOID_BINDING_CHAIN);
 
   public static final RegistryObject<Item> TIER_0_MOB_FARM_TEMPLATE =
       ITEMS.register(
@@ -139,55 +145,71 @@ public class ModItems {
 
   public static final RegistryObject<Item> CREATIVE_MOB_FARM =
       ITEMS.register(
-          CreativeMobFarmBlock.ID,
+          MobFarmType.CREATIVE_MOB_FARM.getId(),
           () -> new BlockItem(ModBlocks.CREATIVE_MOB_FARM.get(), new Item.Properties()));
 
   public static final RegistryObject<Item> ANIMAL_PLAINS_FARM =
       ITEMS.register(
-          MobFarmBlock.ID_ANIMAL_PLAINS_FARM,
+          MobFarmType.ANIMAL_PLAINS_FARM.getId(),
           () ->
               new MobFarmBlockItem(
-                  MobFarmBlock.ID_ANIMAL_PLAINS_FARM, ModBlocks.ANIMAL_PLAINS_FARM.get()));
+                  MobFarmType.ANIMAL_PLAINS_FARM.getId(), ModBlocks.ANIMAL_PLAINS_FARM.get()));
 
   public static final RegistryObject<Item> BEE_HIVE_FARM =
       ITEMS.register(
-          MobFarmBlock.ID_BEE_HIVE_FARM,
-          () -> new MobFarmBlockItem(MobFarmBlock.ID_BEE_HIVE_FARM, ModBlocks.BEE_HIVE_FARM.get()));
+          MobFarmType.BEE_HIVE_FARM.getId(),
+          () ->
+              new MobFarmBlockItem(
+                  MobFarmType.BEE_HIVE_FARM.getId(), ModBlocks.BEE_HIVE_FARM.get()));
 
   public static final RegistryObject<Item> DESERT_FARM =
       ITEMS.register(
-          MobFarmBlock.ID_DESERT_FARM,
-          () -> new MobFarmBlockItem(MobFarmBlock.ID_DESERT_FARM, ModBlocks.DESERT_FARM.get()));
+          MobFarmType.DESERT_FARM.getId(),
+          () -> new MobFarmBlockItem(MobFarmType.DESERT_FARM.getId(), ModBlocks.DESERT_FARM.get()));
+
+  public static final RegistryObject<Item> IRON_GOLEM_FARM =
+      ITEMS.register(
+          MobFarmType.IRON_GOLEM_FARM.getId(),
+          () ->
+              new MobFarmBlockItem(
+                  MobFarmType.IRON_GOLEM_FARM.getId(), ModBlocks.IRON_GOLEM_FARM.get()));
 
   public static final RegistryObject<Item> JUNGLE_FARM =
       ITEMS.register(
-          MobFarmBlock.ID_JUNGLE_FARM,
-          () -> new MobFarmBlockItem(MobFarmBlock.ID_JUNGLE_FARM, ModBlocks.JUNGLE_FARM.get()));
+          MobFarmType.JUNGLE_FARM.getId(),
+          () -> new MobFarmBlockItem(MobFarmType.JUNGLE_FARM.getId(), ModBlocks.JUNGLE_FARM.get()));
+
+  public static final RegistryObject<Item> LUCKY_DROP_FARM =
+      ITEMS.register(
+          MobFarmType.LUCKY_DROP_FARM.getId(),
+          () ->
+              new MobFarmBlockItem(
+                  MobFarmType.LUCKY_DROP_FARM.getId(), ModBlocks.LUCKY_DROP_FARM.get()));
 
   public static final RegistryObject<Item> MONSTER_PLAINS_CAVE_FARM =
       ITEMS.register(
-          MobFarmBlock.ID_MONSTER_PLAINS_CAVE_FARM,
+          MobFarmType.MONSTER_PLAINS_CAVE_FARM.getId(),
           () ->
               new MobFarmBlockItem(
-                  MobFarmBlock.ID_MONSTER_PLAINS_CAVE_FARM,
+                  MobFarmType.MONSTER_PLAINS_CAVE_FARM.getId(),
                   ModBlocks.MONSTER_PLAINS_CAVE_FARM.get()));
 
   public static final RegistryObject<Item> NETHER_FORTRESS_FARM =
       ITEMS.register(
-          MobFarmBlock.ID_NETHER_FORTRESS_FARM,
+          MobFarmType.NETHER_FORTRESS_FARM.getId(),
           () ->
               new MobFarmBlockItem(
-                  MobFarmBlock.ID_NETHER_FORTRESS_FARM, ModBlocks.NETHER_FORTRESS_FARM.get()));
+                  MobFarmType.NETHER_FORTRESS_FARM.getId(), ModBlocks.NETHER_FORTRESS_FARM.get()));
 
   public static final RegistryObject<Item> OCEAN_FARM =
       ITEMS.register(
-          MobFarmBlock.ID_OCEAN_FARM,
-          () -> new MobFarmBlockItem(MobFarmBlock.ID_OCEAN_FARM, ModBlocks.OCEAN_FARM.get()));
+          MobFarmType.OCEAN_FARM.getId(),
+          () -> new MobFarmBlockItem(MobFarmType.OCEAN_FARM.getId(), ModBlocks.OCEAN_FARM.get()));
 
   public static final RegistryObject<Item> SWAMP_FARM =
       ITEMS.register(
-          MobFarmBlock.ID_SWAMP_FARM,
-          () -> new MobFarmBlockItem(MobFarmBlock.ID_SWAMP_FARM, ModBlocks.SWAMP_FARM.get()));
+          MobFarmType.SWAMP_FARM.getId(),
+          () -> new MobFarmBlockItem(MobFarmType.SWAMP_FARM.getId(), ModBlocks.SWAMP_FARM.get()));
 
   protected ModItems() {}
 }

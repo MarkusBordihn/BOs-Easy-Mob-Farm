@@ -1,0 +1,61 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_iron_golem_farm": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["easy_mob_farm:iron_golem_farm"]
+          }
+        ]
+      }
+    },
+    "has_mob_farm_template": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "easy_mob_farm:mob_farm_templates"
+          }
+        ]
+      }
+    },
+    "has_poppy": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:poppy"]
+          }
+        ]
+      }
+    },
+    "has_cauldron": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:cauldron"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_iron_golem_farm",
+      "has_mob_farm_template",
+      "has_poppy",
+      "has_cauldron"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "easy_mob_farm:mob_farm/iron_golem_farm/tier0_iron_golem_farm",
+      "easy_mob_farm:mob_farm/iron_golem_farm/tier1_iron_golem_farm",
+      "easy_mob_farm:mob_farm/iron_golem_farm/tier2_iron_golem_farm",
+      "easy_mob_farm:mob_farm/iron_golem_farm/tier3_iron_golem_farm"
+    ]
+  }
+}

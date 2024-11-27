@@ -147,6 +147,40 @@ public class LootManager {
     return drops;
   }
 
+  public static NonNullList<ItemStack> getLuckyLoot(
+      final MobCaptureData mobCaptureData, final BlockPos blockPos, final Level Level) {
+    NonNullList<ItemStack> drops = NonNullList.create();
+    if (!(Level instanceof ServerLevel serverLevel)) {
+      return drops;
+    }
+
+    // Use different loot tables based on rarity of mob capture data.
+    ResourceLocation lootTableLocation =
+        new ResourceLocation(
+            "minecraft",
+            switch (mobCaptureData.rarity()) {
+              case COMMON -> "chests/simple_dungeon";
+              case UNCOMMON -> "chests/village/village_toolsmith";
+              case RARE -> "chests/stronghold_library";
+              case EPIC -> "chests/end_city_treasure";
+            });
+    FakePlayer fakePlayer = getFakePlayer(serverLevel, blockPos);
+    LootTable lootTable = serverLevel.getServer().getLootData().getLootTable(lootTableLocation);
+    LootParams.Builder lootContextBuilder = createLootChestContextBuilder(serverLevel, fakePlayer);
+    lootContextBuilder.withLuck(
+        switch (mobCaptureData.rarity()) {
+          case COMMON -> 0.0f;
+          case UNCOMMON -> 0.5f;
+          case RARE -> 1.0f;
+          case EPIC -> 1.5f;
+        });
+    LootParams lootContext = lootContextBuilder.create(LootContextParamSets.CHEST);
+    lootTable.getRandomItems(lootContext).stream()
+        .filter(itemStack -> !itemStack.isEmpty())
+        .forEach(drops::add);
+    return drops;
+  }
+
   private static void handleSpecialEntityDrops(
       final LivingEntity livingEntity, final NonNullList<ItemStack> drops) {
     if (livingEntity instanceof WitherBoss) {
@@ -163,6 +197,13 @@ public class LootManager {
       ServerLevel serverLevel, LivingEntity livingEntity) {
     return new LootParams.Builder(serverLevel)
         .withParameter(LootContextParams.DAMAGE_SOURCE, serverLevel.damageSources().generic())
+        .withParameter(LootContextParams.ORIGIN, livingEntity.position())
+        .withParameter(LootContextParams.THIS_ENTITY, livingEntity);
+  }
+
+  private static LootParams.Builder createLootChestContextBuilder(
+      ServerLevel serverLevel, LivingEntity livingEntity) {
+    return new LootParams.Builder(serverLevel)
         .withParameter(LootContextParams.ORIGIN, livingEntity.position())
         .withParameter(LootContextParams.THIS_ENTITY, livingEntity);
   }

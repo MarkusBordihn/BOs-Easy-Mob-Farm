@@ -88,6 +88,7 @@ public class MobCaptureCardModelsConfig extends Config {
     defaultModels.put("minecraft:guardian", MOB_CAPTURE_CARD_PREFIX + "guardian");
     defaultModels.put("minecraft:husk", MOB_CAPTURE_CARD_PREFIX + "husk");
     defaultModels.put("minecraft:iron_golem", MOB_CAPTURE_CARD_PREFIX + "iron_golem");
+    defaultModels.put("minecraft:magma_cube", MOB_CAPTURE_CARD_PREFIX + "magma_cube");
     defaultModels.put("minecraft:phantom", MOB_CAPTURE_CARD_PREFIX + "phantom");
     defaultModels.put("minecraft:pig", MOB_CAPTURE_CARD_PREFIX + "pig");
     defaultModels.put("minecraft:pillager", MOB_CAPTURE_CARD_PREFIX + "pillager");

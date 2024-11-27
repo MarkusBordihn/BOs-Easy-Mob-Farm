@@ -24,6 +24,7 @@ import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmDataEntry;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmSlot;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmSlots;
+import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import de.markusbordihn.easymobfarm.item.upgrade.slot.BigSlotUpgradeItem;
 import de.markusbordihn.easymobfarm.item.upgrade.slot.SmallSlotUpgradeItem;
 import de.markusbordihn.easymobfarm.menu.slots.CapturedMobSlot;
@@ -132,7 +133,7 @@ public class MobFarmMenu extends AbstractContainerMenu {
         this.data.get(MobFarmDataEntry.BLOCK_POS_Z));
   }
 
-  public void setMobFarmBlockPos(BlockPos blockPos) {
+  public void setMobFarmBlockPos(final BlockPos blockPos) {
     this.data.set(MobFarmDataEntry.BLOCK_POS_X, blockPos.getX());
     this.data.set(MobFarmDataEntry.BLOCK_POS_Y, blockPos.getY());
     this.data.set(MobFarmDataEntry.BLOCK_POS_Z, blockPos.getZ());
@@ -142,7 +143,7 @@ public class MobFarmMenu extends AbstractContainerMenu {
     return this.data.get(MobFarmDataEntry.NUMBER_OF_OUTPUT_SLOTS);
   }
 
-  public void setMobFarmNumberOfOutputSlots(int numberOfOutputSlots) {
+  public void setMobFarmNumberOfOutputSlots(final int numberOfOutputSlots) {
     this.data.set(MobFarmDataEntry.NUMBER_OF_OUTPUT_SLOTS, numberOfOutputSlots);
   }
 
@@ -156,6 +157,17 @@ public class MobFarmMenu extends AbstractContainerMenu {
 
   public int getMobFarmTierLevel() {
     return this.data.get(MobFarmDataEntry.FARM_TIER_LEVEL);
+  }
+
+  public MobFarmType getMobFarmType() {
+    int mobFarmTypeIndex = this.data.get(MobFarmDataEntry.FARM_TYPE);
+    return mobFarmTypeIndex > 0
+        ? MobFarmType.values()[this.data.get(MobFarmDataEntry.FARM_TYPE)]
+        : null;
+  }
+
+  public int getCapturedMobExperience() {
+    return this.data.get(MobFarmDataEntry.CAPTURED_MOB_EXPERIENCE);
   }
 
   private void defineMobFarmSlots() {
@@ -271,7 +283,7 @@ public class MobFarmMenu extends AbstractContainerMenu {
     return false;
   }
 
-  private void adjustOutputSlots(int maxNumberOfOutputSlots) {
+  private void adjustOutputSlots(final int maxNumberOfOutputSlots) {
     int currentNumberOfOutputSlots = 0;
     for (Slot slot : this.slots) {
       if (slot instanceof OutputSlot outputSlot) {
@@ -280,31 +292,59 @@ public class MobFarmMenu extends AbstractContainerMenu {
     }
   }
 
-  public void slotUpgradeChanged(SlotUpgradeSlot slot) {
+  public void slotUpgradeChanged(final SlotUpgradeSlot slot) {
     this.updateNumberOfOutputSlots();
   }
 
   @Override
-  public boolean stillValid(Player player) {
+  public boolean stillValid(final Player player) {
     return player.isAlive();
   }
 
   @Override
-  public ItemStack quickMoveStack(Player player, int slotIndex) {
+  public ItemStack quickMoveStack(final Player player, final int slotIndex) {
     Slot slot = this.slots.get(slotIndex);
     if (!slot.hasItem()) {
       return ItemStack.EMPTY;
     }
 
     ItemStack itemStack = slot.getItem();
+    ItemStack itemStackCopy = itemStack.copy();
 
-    // Store changes if itemStack is not empty.
+    // Handle moving items between different slot groups
+    if (slot.container == this.container) {
+      // Move from Mob Farm (container) to Player Inventory or Hotbar
+      if (!this.moveItemStackTo(itemStack, 36, this.slots.size(), true)) {
+        return ItemStack.EMPTY;
+      }
+    } else if (slot.container == this.playerInventory) {
+      // Prevent moving items to Output Slots
+      for (Slot targetSlot : this.slots) {
+        if (targetSlot instanceof OutputSlot
+            && targetSlot.hasItem()
+            && targetSlot.getItem().equals(itemStack)) {
+          return ItemStack.EMPTY;
+        }
+      }
+
+      // Move from Player Inventory or Hotbar to remaining Mob Farm Slots.
+      if (!this.moveItemStackTo(itemStack, 0, MobFarmSlots.RESULT_SLOTS.size(), false)) {
+        return ItemStack.EMPTY;
+      }
+    }
+
+    // Handle stack updates
     if (itemStack.isEmpty()) {
       slot.set(ItemStack.EMPTY);
     } else {
       slot.setChanged();
     }
 
-    return ItemStack.EMPTY;
+    if (itemStack.getCount() == itemStackCopy.getCount()) {
+      return ItemStack.EMPTY;
+    }
+
+    slot.onTake(player, itemStack);
+    return itemStackCopy;
   }
 }

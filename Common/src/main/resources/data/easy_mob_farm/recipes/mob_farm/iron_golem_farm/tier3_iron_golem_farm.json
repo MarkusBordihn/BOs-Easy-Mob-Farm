@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "P-P",
+    "I#I",
+    "ICI"
+  ],
+  "key": {
+    "#": {
+      "item": "easy_mob_farm:tier3_mob_farm_template"
+    },
+    "P": {
+      "item": "minecraft:poppy"
+    },
+    "-": {
+      "item": "minecraft:dirt"
+    },
+    "I": {
+      "item": "minecraft:iron_block"
+    },
+    "C": {
+      "item": "minecraft:cauldron"
+    }
+  },
+  "result": {
+    "item": "easy_mob_farm:iron_golem_farm",
+    "nbt": "{TierLevel:3,CustomModelData:3}"
+  }
+}

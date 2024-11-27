@@ -73,12 +73,9 @@ public class MobCaptureManager {
   }
 
   public static ItemStack captureMob(LivingEntity livingEntity) {
-    if (livingEntity == null || livingEntity instanceof Player) {
-      return null;
-    }
-
-    Level level = livingEntity.level();
-    if (level.isClientSide) {
+    if (livingEntity == null
+        || livingEntity instanceof Player
+        || livingEntity.level().isClientSide) {
       return null;
     }
 

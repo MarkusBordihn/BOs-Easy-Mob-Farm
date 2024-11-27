@@ -31,17 +31,13 @@ public class MobFarmTemplateBlock extends Block {
   public static final String ID_TIER_2 = "tier2_mob_farm_template";
   public static final String ID_TIER_3 = "tier3_mob_farm_template";
 
-  public MobFarmTemplateBlock() {
-    this(
+  public MobFarmTemplateBlock(String id) {
+    super(
         BlockBehaviour.Properties.of()
             .mapColor(MapColor.STONE)
             .requiresCorrectToolForDrops()
             .strength(3.0F, 6.0F)
             .sound(SoundType.METAL)
             .noOcclusion());
-  }
-
-  public MobFarmTemplateBlock(Properties properties) {
-    super(properties);
   }
 }
