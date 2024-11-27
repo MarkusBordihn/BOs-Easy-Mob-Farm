@@ -46,6 +46,8 @@ public class MobFarmContainerData implements ContainerData {
       case MobFarmDataEntry.FARM_PROGRESS -> mobFarmEntity.getFarmProgress();
       case MobFarmDataEntry.FARM_STATUS -> mobFarmEntity.getFarmStatus();
       case MobFarmDataEntry.FARM_TIER_LEVEL -> mobFarmEntity.getFarmTierLevel();
+      case MobFarmDataEntry.FARM_TYPE -> mobFarmEntity.getFarmType().ordinal();
+      case MobFarmDataEntry.CAPTURED_MOB_EXPERIENCE -> mobFarmEntity.getCapturedMobExperience();
       default -> 0;
     };
   }
@@ -54,9 +56,11 @@ public class MobFarmContainerData implements ContainerData {
   public void set(int index, int value) {
     switch (index) {
       case MobFarmDataEntry.BLOCK_POS_X,
-              MobFarmDataEntry.BLOCK_POS_Y,
-              MobFarmDataEntry.BLOCK_POS_Z,
-              MobFarmDataEntry.FARM_TIER_LEVEL ->
+          MobFarmDataEntry.BLOCK_POS_Y,
+          MobFarmDataEntry.BLOCK_POS_Z,
+          MobFarmDataEntry.FARM_TIER_LEVEL,
+          MobFarmDataEntry.FARM_TYPE,
+          MobFarmDataEntry.CAPTURED_MOB_EXPERIENCE ->
           log.warn("Trying to set read-only data index {} for {}", index, this);
       case MobFarmDataEntry.NUMBER_OF_OUTPUT_SLOTS -> mobFarmEntity.setNumberOfOutputSlots(value);
       case MobFarmDataEntry.FARM_PROGRESS -> mobFarmEntity.setFarmProgress(value);

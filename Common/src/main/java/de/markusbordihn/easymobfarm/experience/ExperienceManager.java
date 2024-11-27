@@ -28,6 +28,7 @@ import org.apache.logging.log4j.Logger;
 public class ExperienceManager {
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+  private static final String LOG_PREFIX = "[Experience Manager]";
 
   private static ExperienceManagerInterface experienceManagerInterface;
 
@@ -47,8 +48,14 @@ public class ExperienceManager {
   }
 
   public static int getExperienceReward(LivingEntity livingEntity, Player player) {
-    if (experienceManagerInterface != null) {
+    try {
       return experienceManagerInterface.getExperienceReward(livingEntity, player);
+    } catch (Exception e) {
+      log.error(
+          "{} Failed to get experience reward for {}",
+          LOG_PREFIX,
+          livingEntity.getClass().getSimpleName(),
+          e);
     }
     return 0;
   }
