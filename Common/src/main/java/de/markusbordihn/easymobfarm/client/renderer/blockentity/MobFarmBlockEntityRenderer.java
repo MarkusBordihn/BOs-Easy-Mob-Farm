@@ -25,6 +25,7 @@ import de.markusbordihn.easymobfarm.block.MobFarmBlock;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.client.renderer.manager.EntityScalingManager;
 import de.markusbordihn.easymobfarm.client.renderer.manager.RendererManager;
+import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -33,6 +34,7 @@ import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
+import net.minecraft.world.entity.animal.Bee;
 
 public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
     implements BlockEntityRenderer<T> {
@@ -69,12 +71,28 @@ public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
     // Animation support
     entity.tickCount = (int) blockEntity.getLevel().getGameTime();
 
+    // Get Mob Farm Type for render adjustments like entity scaling and position.
+    MobFarmType mobFarmType = blockEntity.getFarmType();
+
     // Move entity to center of block.
     poseStack.pushPose();
-    poseStack.translate(0.5, 0.05, 0.5);
+    if (mobFarmType != null) {
+      if (mobFarmType == MobFarmType.LUCKY_DROP_FARM) {
+        poseStack.translate(0.5, 0.19, 0.5);
+      } else {
+        poseStack.translate(0.5, 0.08, 0.5);
+      }
+    } else {
+      poseStack.translate(0.5, 0.08, 0.5);
+    }
 
     // Scale entity to fit into block.
     float entityScaling = EntityScalingManager.getBlockScale(entity);
+    if (mobFarmType != null) {
+      if (mobFarmType == MobFarmType.LUCKY_DROP_FARM) {
+        entityScaling *= 0.75f;
+      }
+    }
     poseStack.scale(entityScaling, entityScaling, entityScaling);
 
     // Rotate entity based on block facing direction.
@@ -94,6 +112,8 @@ public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
       poseStack.mulPose(Axis.XP.rotationDegrees(2.0F));
       poseStack.mulPose(Axis.YP.rotationDegrees(15.0F));
       poseStack.mulPose(Axis.ZP.rotationDegrees(-90.0F));
+    } else if (entity instanceof Bee) {
+      poseStack.translate(0, 0.5, 0);
     }
 
     // Render entity.

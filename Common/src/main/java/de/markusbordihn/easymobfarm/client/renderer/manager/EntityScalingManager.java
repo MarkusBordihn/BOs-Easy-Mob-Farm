@@ -22,15 +22,14 @@ package de.markusbordihn.easymobfarm.client.renderer.manager;
 import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityDimensions;
 
 public class EntityScalingManager {
 
-  private static final float MAX_BLOCK_SCALE = 0.90f;
-  private static final float MAX_UI_WIDTH_PIXELS = 50.0f;
-  private static final float MAX_UI_HEIGHT_PIXELS = 80.0f;
+  private static final float MAX_BLOCK_SCALE = 0.85f;
+  private static final float MAX_UI_WIDTH_PIXELS = 47.0f;
+  private static final float MAX_UI_HEIGHT_PIXELS = 71.0f;
   private static final float DEFAULT_SCALE_BLOCK = 0.40f;
-  private static final float DEFAULT_SCALE_UI = 0.45f;
+  private static final float DEFAULT_SCALE_UI = 0.40f;
 
   private static final Map<Class<? extends Entity>, Float> blockScaleCache = new HashMap<>();
   private static final Map<Class<? extends Entity>, Integer> uiScaleCache = new HashMap<>();
@@ -41,13 +40,29 @@ public class EntityScalingManager {
     return blockScaleCache.computeIfAbsent(
         entity.getClass(),
         cls -> {
-          EntityDimensions dimensions = entity.getDimensions(entity.getPose());
-          if ((dimensions.width() < MAX_BLOCK_SCALE && dimensions.height() < MAX_BLOCK_SCALE)
-              || (dimensions.width() * DEFAULT_SCALE_BLOCK < MAX_BLOCK_SCALE
-                  && dimensions.height() * DEFAULT_SCALE_BLOCK < MAX_BLOCK_SCALE)) {
+          // Get entity width and height from bounding box or dimensions.
+          float entityWidth;
+          float entityHeight;
+          if (entity.getBoundingBox().getXsize() > 0 && entity.getBoundingBox().getYsize() > 0) {
+            entityWidth = (float) entity.getBoundingBox().getXsize();
+            entityHeight = (float) entity.getBoundingBox().getYsize();
+          } else {
+            entityWidth = entity.getDimensions(entity.getPose()).width();
+            entityHeight = entity.getDimensions(entity.getPose()).height();
+          }
+
+          // Return default scale if entity width or height is not available.
+          if (entityWidth == 0 || entityHeight == 0) {
             return DEFAULT_SCALE_BLOCK;
           }
-          float scaleFactor = Math.max(dimensions.width(), dimensions.height()) / MAX_BLOCK_SCALE;
+
+          // Calculate scale factor for block.
+          if ((entityWidth < MAX_BLOCK_SCALE && entityHeight < MAX_BLOCK_SCALE)
+              || (entityWidth * DEFAULT_SCALE_BLOCK < MAX_BLOCK_SCALE
+                  && entityHeight * DEFAULT_SCALE_BLOCK < MAX_BLOCK_SCALE)) {
+            return DEFAULT_SCALE_BLOCK;
+          }
+          float scaleFactor = Math.max(entityWidth, entityHeight) / MAX_BLOCK_SCALE;
           return scaleFactor > 1.0f ? MAX_BLOCK_SCALE / scaleFactor : MAX_BLOCK_SCALE;
         });
   }
@@ -56,17 +71,33 @@ public class EntityScalingManager {
     return uiScaleCache.computeIfAbsent(
         entity.getClass(),
         cls -> {
-          EntityDimensions dimensions = entity.getDimensions(entity.getPose());
-          if ((dimensions.width() < MAX_UI_WIDTH_PIXELS
-                  && dimensions.height() < MAX_UI_HEIGHT_PIXELS)
-              || (dimensions.width() * DEFAULT_SCALE_UI < MAX_UI_WIDTH_PIXELS
-                  && dimensions.height() * DEFAULT_SCALE_UI < MAX_UI_HEIGHT_PIXELS)) {
+
+          // Get entity width and height from bounding box or dimensions.
+          float entityWidth;
+          float entityHeight;
+          if (entity.getBoundingBox().getXsize() > 0 && entity.getBoundingBox().getYsize() > 0) {
+            entityWidth = (float) entity.getBoundingBox().getXsize();
+            entityHeight = (float) entity.getBoundingBox().getYsize();
+          } else {
+            entityWidth = entity.getDimensions(entity.getPose()).width();
+            entityHeight = entity.getDimensions(entity.getPose()).height();
+          }
+
+          // Return default scale if entity width or height is not available.
+          if (entityWidth == 0 || entityHeight == 0) {
+            return Math.round(DEFAULT_SCALE_UI * 9);
+          }
+
+          // Calculate scale factor for UI.
+          if ((entityWidth < MAX_UI_WIDTH_PIXELS && entityHeight < MAX_UI_HEIGHT_PIXELS)
+              || (entityWidth * DEFAULT_SCALE_UI < MAX_UI_WIDTH_PIXELS
+                  && entityHeight * DEFAULT_SCALE_UI < MAX_UI_HEIGHT_PIXELS)) {
             return (int) (DEFAULT_SCALE_UI * Math.min(MAX_UI_WIDTH_PIXELS, MAX_UI_HEIGHT_PIXELS));
           }
           float scaleFactor =
               Math.min(
-                  MAX_UI_WIDTH_PIXELS / (dimensions.width() * 16),
-                  MAX_UI_HEIGHT_PIXELS / (dimensions.height() * 16));
+                  MAX_UI_WIDTH_PIXELS / (entityWidth * 16),
+                  MAX_UI_HEIGHT_PIXELS / (entityHeight * 16));
           return Math.round(scaleFactor * 9);
         });
   }

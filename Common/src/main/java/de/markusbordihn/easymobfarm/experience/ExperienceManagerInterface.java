@@ -19,6 +19,7 @@
 
 package de.markusbordihn.easymobfarm.experience;
 
+import java.lang.reflect.Method;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -49,5 +50,16 @@ public interface ExperienceManagerInterface {
     } catch (Exception e) {
       return false;
     }
+  }
+
+  default Method findMethodInHierarchy(Class<?> clazz, String methodName) {
+    while (clazz != null) {
+      try {
+        return clazz.getDeclaredMethod(methodName);
+      } catch (NoSuchMethodException e) {
+        clazz = clazz.getSuperclass();
+      }
+    }
+    return null;
   }
 }

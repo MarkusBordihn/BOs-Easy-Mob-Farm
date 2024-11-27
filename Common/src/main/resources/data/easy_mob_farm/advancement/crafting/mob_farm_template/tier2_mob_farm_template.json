@@ -1,19 +1,21 @@
 {
-  "parent": "easy_mob_farm:tier1_template",
+  "parent": "easy_mob_farm:crafting/mob_farm_template/tier1_mob_farm_template",
   "display": {
-    "icon": {"item": "easy_mob_farm:tier2_mob_farm_template"},
+    "icon": {"id": "easy_mob_farm:tier2_mob_farm_template"},
     "title": {"translate": "advancement.easy_mob_farm.tier2_template.title"},
     "description": {"translate": "advancement.easy_mob_farm.tier2_template.description"},
+    "frame": "task",
     "show_toast": true,
-    "announce_to_chat": false,
+    "announce_to_chat": true,
     "hidden": false
   },
   "criteria": {
-    "create_tier2_template": {
+    "get_tier2_template": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
-        "items": [{"items": ["easy_mob_farm:tier2_mob_farm_template"]}]
+        "items": [{"items": "easy_mob_farm:tier2_mob_farm_template"}]
       }
     }
-  }
+  },
+  "requirements": [["get_tier2_template"]]
 }

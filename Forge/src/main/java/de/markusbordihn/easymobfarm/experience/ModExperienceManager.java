@@ -19,6 +19,7 @@
 
 package de.markusbordihn.easymobfarm.experience;
 
+import java.lang.reflect.Method;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.Animal;
@@ -27,13 +28,30 @@ public class ModExperienceManager implements ExperienceManagerInterface {
 
   @Override
   public int getExperienceReward(LivingEntity livingEntity) {
-    try {
-      if (livingEntity instanceof Animal animal) {
-        return animal.getBaseExperienceReward();
-      } else if (livingEntity instanceof Mob mob) {
-        return mob.getBaseExperienceReward();
+    if (livingEntity instanceof Animal animal) {
+      try {
+        Method getBaseExperienceRewardMethod =
+            findMethodInHierarchy(animal.getClass(), "getBaseExperienceReward");
+        getBaseExperienceRewardMethod.setAccessible(true);
+        return (int) getBaseExperienceRewardMethod.invoke(livingEntity);
+      } catch (Exception e) {
+        // no base experience reward found
       }
-      return livingEntity.getBaseExperienceReward();
+    } else if (livingEntity instanceof Mob mob) {
+      try {
+        Method getBaseExperienceRewardMethod =
+            findMethodInHierarchy(mob.getClass(), "getBaseExperienceReward");
+        getBaseExperienceRewardMethod.setAccessible(true);
+        return (int) getBaseExperienceRewardMethod.invoke(livingEntity);
+      } catch (Exception e) {
+        // no base experience reward found
+      }
+    }
+    try {
+      Method getBaseExperienceRewardMethod =
+          findMethodInHierarchy(livingEntity.getClass(), "getBaseExperienceReward");
+      getBaseExperienceRewardMethod.setAccessible(true);
+      return (int) getBaseExperienceRewardMethod.invoke(livingEntity);
     } catch (Exception e) {
       return 0;
     }

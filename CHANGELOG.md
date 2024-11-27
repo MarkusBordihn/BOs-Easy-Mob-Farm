@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+# v8.6.0
+
+- Fixed #86 by adding Fabric NBT support for mob farm recipes.
+- Fixed #85 by adding correct quickMoveStack definition for the mob farm.
+- Fixed #84 by allowing drops regardless of mob size, but the correct mob size will increase the
+  drop rate.
+- Fixed #81 by adding void binding chain for capturing very large mobs.
+- Fixed #79 by adding configurable mob farm bonus drops for matching mobs e.g. bee farm for bees.
+- Fixed Mob Catcher tooltips for Fabric.
+- Fixed smaller translation issues.
+- Fixed broken advancements.
+- Added magma cube custom mob cards.
+- Added visible size category for slimes and magma cubes.
+- Added foil effect for mob capture items and captured mobs.
+- Added new Iron Golem Farm.
+- Added new Lucky Drop Farm (be careful with this one).
+- Improved captured mob experience detection and caching.
+- Improved entity scaling for captured mobs.
+
+A big thank you to `@Routhinator` for the detailed bug reports and valuable feedback!
+
 # v8.5.1
 
 - Fixed #80 crash by adding additional checks for mob capture cards.

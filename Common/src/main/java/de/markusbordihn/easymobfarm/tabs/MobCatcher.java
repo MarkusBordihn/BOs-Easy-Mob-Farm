@@ -35,5 +35,6 @@ public class MobCatcher implements DisplayItemsGenerator {
     output.accept(Items.ENDURING_CAPTURE_NET.getDefaultInstance());
     output.accept(Items.IRONBOUND_CONTAINMENT_CAGE.getDefaultInstance());
     output.accept(Items.MYSTIC_BINDING_CRYSTAL.getDefaultInstance());
+    output.accept(Items.VOID_BINDING_CHAIN.getDefaultInstance());
   }
 }

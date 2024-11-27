@@ -6,7 +6,7 @@ issueTrackerURL = "https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/issues"
 [[mods]]
 modId = "easy_mob_farm"
 version = "${file.jarVersion}"
-displayName = "Easy NPC"
+displayName = "Easy Mob Farm"
 displayURL = "https://www.curseforge.com/minecraft/mc-mods/easy-mob-farm"
 logoFile = "logo.png"
 credits = ""

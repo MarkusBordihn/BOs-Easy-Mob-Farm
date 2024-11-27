@@ -20,8 +20,10 @@
 package de.markusbordihn.easymobfarm.block;
 
 import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
+import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
@@ -45,6 +47,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
@@ -53,22 +56,23 @@ import org.apache.logging.log4j.Logger;
 
 public class MobFarmBlock extends BaseEntityBlock {
 
-  public static final String ID = "mob_farm";
-  public static final String ID_ANIMAL_PLAINS_FARM = "animal_plains_farm";
-  public static final String ID_BEE_HIVE_FARM = "bee_hive_farm";
-  public static final String ID_DESERT_FARM = "desert_farm";
-  public static final String ID_JUNGLE_FARM = "jungle_farm";
-  public static final String ID_MONSTER_PLAINS_CAVE_FARM = "monster_plains_cave_farm";
-  public static final String ID_NETHER_FORTRESS_FARM = "nether_fortress_farm";
-  public static final String ID_OCEAN_FARM = "ocean_farm";
-  public static final String ID_SWAMP_FARM = "swamp_farm";
   public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
   public static final BooleanProperty WORKING = BooleanProperty.create("working");
   public static final IntegerProperty TIER_LEVEL = IntegerProperty.create("tier_level", 0, 3);
-  public static final MapCodec<MobFarmBlock> CODEC = simpleCodec(MobFarmBlock::new);
+  public static final EnumProperty<MobFarmType> FARM_TYPE =
+      EnumProperty.create("farm_type", MobFarmType.class);
+  public static final MapCodec<MobFarmBlock> CODEC =
+      RecordCodecBuilder.mapCodec(
+          instance ->
+              instance
+                  .group(
+                      MobFarmType.CODEC
+                          .fieldOf("mobFarmType")
+                          .forGetter(block -> getFarmType(block.defaultBlockState())))
+                  .apply(instance, MobFarmBlock::new));
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  public MobFarmBlock() {
+  public MobFarmBlock(final MobFarmType mobFarmType) {
     this(
         Properties.of()
             .mapColor(MapColor.STONE)
@@ -76,21 +80,23 @@ public class MobFarmBlock extends BaseEntityBlock {
             .strength(5.0f)
             .lightLevel(MobFarmBlock::getLightLevel)
             .sound(SoundType.METAL)
-            .noOcclusion());
+            .noOcclusion(),
+        mobFarmType);
   }
 
-  public MobFarmBlock(final Properties properties) {
-    this(properties, 0);
+  public MobFarmBlock(final Properties properties, final MobFarmType mobFarmType) {
+    this(properties, 0, mobFarmType);
   }
 
-  public MobFarmBlock(final Properties properties, int tierLevel) {
+  public MobFarmBlock(final Properties properties, int tierLevel, final MobFarmType mobFarmType) {
     super(properties);
     this.registerDefaultState(
         this.stateDefinition
             .any()
             .setValue(FACING, Direction.NORTH)
             .setValue(WORKING, Boolean.FALSE)
-            .setValue(TIER_LEVEL, tierLevel));
+            .setValue(TIER_LEVEL, tierLevel)
+            .setValue(FARM_TYPE, mobFarmType));
   }
 
   public static int getLightLevel(final BlockState blockState) {
@@ -101,8 +107,13 @@ public class MobFarmBlock extends BaseEntityBlock {
     return blockState.getValue(MobFarmBlock.TIER_LEVEL);
   }
 
-  public static void setTierLevel(final BlockState blockState, int tierLevel) {
-    blockState.setValue(MobFarmBlock.TIER_LEVEL, tierLevel);
+  public static MobFarmType getFarmType(final BlockState blockState) {
+    return blockState.getValue(MobFarmBlock.FARM_TYPE);
+  }
+
+  public BlockEntity newBlockEntity(
+      final BlockPos blockPos, final BlockState blockState, MobFarmType mobFarmType) {
+    throw new UnsupportedOperationException("This method must be overridden by a subclass!");
   }
 
   @Override
@@ -125,7 +136,7 @@ public class MobFarmBlock extends BaseEntityBlock {
 
   @Override
   public BlockEntity newBlockEntity(final BlockPos blockPos, final BlockState blockState) {
-    return new MobFarmBlockEntity(null, blockPos, blockState);
+    return newBlockEntity(blockPos, blockState, getFarmType(blockState));
   }
 
   @Override
@@ -137,7 +148,7 @@ public class MobFarmBlock extends BaseEntityBlock {
   @Override
   protected void createBlockStateDefinition(
       final StateDefinition.Builder<Block, BlockState> blockState) {
-    blockState.add(FACING, WORKING, TIER_LEVEL);
+    blockState.add(FACING, WORKING, TIER_LEVEL, FARM_TYPE);
   }
 
   @Override

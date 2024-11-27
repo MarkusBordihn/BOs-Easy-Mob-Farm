@@ -25,7 +25,6 @@ import de.markusbordihn.easymobfarm.client.renderer.manager.EntityScalingManager
 import de.markusbordihn.easymobfarm.client.renderer.manager.RendererManager;
 import de.markusbordihn.easymobfarm.client.screen.components.Graphics;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmStatus;
-import de.markusbordihn.easymobfarm.experience.ExperienceManager;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import de.markusbordihn.easymobfarm.menu.MobFarmSlot;
@@ -39,7 +38,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 
@@ -169,7 +167,17 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
     // Render tooltip for the "info" button.
     if (isHovering(24, 17, 10, 13, mouseX, mouseY)) {
       List<Component> infoText = new java.util.ArrayList<>(List.of());
-      infoText.add(TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "mob_farm"));
+      infoText.add(
+          TextComponent.getTranslatedTextRaw(
+                  Constants.BLOCK_PREFIX + this.getMenu().getMobFarmType().getId(),
+                  String.valueOf(this.getMenu().getMobFarmTierLevel()))
+              .withStyle(
+                  switch (this.getMenu().getMobFarmTierLevel()) {
+                    case 1 -> ChatFormatting.GREEN;
+                    case 2 -> ChatFormatting.YELLOW;
+                    case 3 -> ChatFormatting.RED;
+                    default -> ChatFormatting.WHITE;
+                  }));
       infoText.add(
           TextComponent.getTranslatedTextRaw(
               TOOLTIP_PREFIX + "tier", new Object[] {this.getMenu().getMobFarmTierLevel()}));
@@ -192,23 +200,20 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
         infoText.add(
             TextComponent.getTranslatedTextRaw(
                 TOOLTIP_PREFIX + "entity_type", new Object[] {this.entity.getType().toString()}));
-        if (this.entity instanceof LivingEntity livingEntity
-            && ExperienceManager.shouldDropExperience(livingEntity)) {
-          if (this.entityExperience == 0) {
-            this.entityExperience = ExperienceManager.getExperienceReward(livingEntity);
-          }
-          if (this.entityExperience >= ExperienceEnhancementItem.MIN_EXPERIENCE_FOR_DROP) {
-            infoText.add(
-                TextComponent.getTranslatedTextRaw(
-                        TOOLTIP_PREFIX + "experience", new Object[] {this.entityExperience})
-                    .withStyle(ChatFormatting.GREEN));
-          } else {
-            infoText.add(
-                TextComponent.getTranslatedTextRaw(
-                        TOOLTIP_PREFIX + "low_experience", new Object[] {this.entityExperience})
-                    .withStyle(ChatFormatting.YELLOW));
-          }
-        } else {
+
+        // Add experience information to the tooltip, if available.
+        int capturedMobExperience = this.getMenu().getCapturedMobExperience();
+        if (capturedMobExperience >= ExperienceEnhancementItem.MIN_EXPERIENCE_FOR_DROP) {
+          infoText.add(
+              TextComponent.getTranslatedTextRaw(
+                      TOOLTIP_PREFIX + "experience", new Object[] {capturedMobExperience})
+                  .withStyle(ChatFormatting.GREEN));
+        } else if (capturedMobExperience > 0) {
+          infoText.add(
+              TextComponent.getTranslatedTextRaw(
+                      TOOLTIP_PREFIX + "low_experience", new Object[] {capturedMobExperience})
+                  .withStyle(ChatFormatting.YELLOW));
+        } else if (capturedMobExperience == 0) {
           infoText.add(
               TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "no_experience")
                   .withStyle(ChatFormatting.RED));

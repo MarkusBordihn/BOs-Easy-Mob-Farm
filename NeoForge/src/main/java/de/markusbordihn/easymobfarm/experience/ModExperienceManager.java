@@ -56,15 +56,4 @@ public class ModExperienceManager implements ExperienceManagerInterface {
       return 0;
     }
   }
-
-  private Method findMethodInHierarchy(Class<?> clazz, String methodName) {
-    while (clazz != null) {
-      try {
-        return clazz.getDeclaredMethod(methodName);
-      } catch (NoSuchMethodException e) {
-        clazz = clazz.getSuperclass();
-      }
-    }
-    return null;
-  }
 }

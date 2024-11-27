@@ -54,6 +54,7 @@ public class Config {
   public static void registerCommonConfig() {
     log.info("{} Registering common configuration ...", LOG_PREFIX);
     MobFarmConfig.registerConfig();
+    MobFarmBonusConfig.registerConfig();
     MobCaptureCardConfig.registerConfig();
     MobCaptureCardRarityConfig.registerConfig();
   }
