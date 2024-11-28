@@ -24,6 +24,7 @@ import de.markusbordihn.easymobfarm.block.entity.CreativeMobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.block.entity.CreativeMobFarmBlockEntityWrapper;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityWrapper;
+import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -56,35 +57,43 @@ public class ModBlocks {
           () -> new MobFarmTemplateBlock(MobFarmTemplateBlock.ID_TIER_3));
 
   public static final DeferredBlock<Block> CREATIVE_MOB_FARM =
-      BLOCKS.register(CreativeMobFarmBlock.ID, CreativeMobFarmBlockWrapper::new);
+      BLOCKS.register(MobFarmType.CREATIVE_MOB_FARM.getId(), CreativeMobFarmBlockWrapper::new);
   public static final DeferredBlock<Block> ANIMAL_PLAINS_FARM =
       BLOCKS.register(
-          MobFarmBlock.ID_ANIMAL_PLAINS_FARM,
-          () -> new MobFarmBlockWrapper(MobFarmBlock.ID_ANIMAL_PLAINS_FARM));
+          MobFarmType.ANIMAL_PLAINS_FARM.getId(),
+          () -> new MobFarmBlockWrapper(MobFarmType.ANIMAL_PLAINS_FARM));
   public static final DeferredBlock<Block> BEE_HIVE_FARM =
       BLOCKS.register(
-          MobFarmBlock.ID_BEE_HIVE_FARM,
-          () -> new MobFarmBlockWrapper(MobFarmBlock.ID_BEE_HIVE_FARM));
+          MobFarmType.BEE_HIVE_FARM.getId(),
+          () -> new MobFarmBlockWrapper(MobFarmType.BEE_HIVE_FARM));
   public static final DeferredBlock<Block> DESERT_FARM =
       BLOCKS.register(
-          MobFarmBlock.ID_DESERT_FARM, () -> new MobFarmBlockWrapper(MobFarmBlock.ID_DESERT_FARM));
+          MobFarmType.DESERT_FARM.getId(), () -> new MobFarmBlockWrapper(MobFarmType.DESERT_FARM));
+  public static final DeferredBlock<Block> IRON_GOLEM_FARM =
+      BLOCKS.register(
+          MobFarmType.IRON_GOLEM_FARM.getId(),
+          () -> new MobFarmBlockWrapper(MobFarmType.IRON_GOLEM_FARM));
   public static final DeferredBlock<Block> JUNGLE_FARM =
       BLOCKS.register(
-          MobFarmBlock.ID_JUNGLE_FARM, () -> new MobFarmBlockWrapper(MobFarmBlock.ID_JUNGLE_FARM));
+          MobFarmType.JUNGLE_FARM.getId(), () -> new MobFarmBlockWrapper(MobFarmType.JUNGLE_FARM));
+  public static final DeferredBlock<Block> LUCKY_DROP_FARM =
+      BLOCKS.register(
+          MobFarmType.LUCKY_DROP_FARM.getId(),
+          () -> new MobFarmBlockWrapper(MobFarmType.LUCKY_DROP_FARM));
   public static final DeferredBlock<Block> MONSTER_PLAINS_CAVE_FARM =
       BLOCKS.register(
-          MobFarmBlock.ID_MONSTER_PLAINS_CAVE_FARM,
-          () -> new MobFarmBlockWrapper(MobFarmBlock.ID_MONSTER_PLAINS_CAVE_FARM));
+          MobFarmType.MONSTER_PLAINS_CAVE_FARM.getId(),
+          () -> new MobFarmBlockWrapper(MobFarmType.MONSTER_PLAINS_CAVE_FARM));
   public static final DeferredBlock<Block> NETHER_FORTRESS_FARM =
       BLOCKS.register(
-          MobFarmBlock.ID_NETHER_FORTRESS_FARM,
-          () -> new MobFarmBlockWrapper(MobFarmBlock.ID_NETHER_FORTRESS_FARM));
+          MobFarmType.NETHER_FORTRESS_FARM.getId(),
+          () -> new MobFarmBlockWrapper(MobFarmType.NETHER_FORTRESS_FARM));
   public static final DeferredBlock<Block> OCEAN_FARM =
       BLOCKS.register(
-          MobFarmBlock.ID_OCEAN_FARM, () -> new MobFarmBlockWrapper(MobFarmBlock.ID_OCEAN_FARM));
+          MobFarmType.OCEAN_FARM.getId(), () -> new MobFarmBlockWrapper(MobFarmType.OCEAN_FARM));
   public static final DeferredBlock<Block> SWAMP_FARM =
       BLOCKS.register(
-          MobFarmBlock.ID_SWAMP_FARM, () -> new MobFarmBlockWrapper(MobFarmBlock.ID_SWAMP_FARM));
+          MobFarmType.SWAMP_FARM.getId(), () -> new MobFarmBlockWrapper(MobFarmType.SWAMP_FARM));
 
   protected ModBlocks() {}
 
@@ -106,7 +115,9 @@ public class ModBlocks {
                       MobFarmBlockEntityWrapper::new,
                       ANIMAL_PLAINS_FARM.get(),
                       BEE_HIVE_FARM.get(),
+                      IRON_GOLEM_FARM.get(),
                       DESERT_FARM.get(),
+                      LUCKY_DROP_FARM.get(),
                       JUNGLE_FARM.get(),
                       MONSTER_PLAINS_CAVE_FARM.get(),
                       NETHER_FORTRESS_FARM.get(),

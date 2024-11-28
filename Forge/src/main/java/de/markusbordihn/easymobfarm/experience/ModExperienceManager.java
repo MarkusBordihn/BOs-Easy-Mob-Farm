@@ -19,12 +19,13 @@
 
 package de.markusbordihn.easymobfarm.experience;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 
 public class ModExperienceManager implements ExperienceManagerInterface {
 
   @Override
-  public int getExperienceReward(LivingEntity livingEntity) {
-    return 0;
+  public int getExperienceReward(LivingEntity livingEntity, ServerLevel serverLevel) {
+    return getExperienceReward(livingEntity, serverLevel, "e");
   }
 }

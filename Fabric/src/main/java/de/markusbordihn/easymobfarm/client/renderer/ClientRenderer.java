@@ -49,7 +49,9 @@ public class ClientRenderer {
     BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.ANIMAL_PLAINS_FARM, RenderType.cutoutMipped());
     BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.BEE_HIVE_FARM, RenderType.cutoutMipped());
     BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.DESERT_FARM, RenderType.cutoutMipped());
+    BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.IRON_GOLEM_FARM, RenderType.cutoutMipped());
     BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.JUNGLE_FARM, RenderType.cutoutMipped());
+    BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.LUCKY_DROP_FARM, RenderType.cutoutMipped());
     BlockRenderLayerMap.INSTANCE.putBlock(
         ModBlocks.MONSTER_PLAINS_CAVE_FARM, RenderType.cutoutMipped());
     BlockRenderLayerMap.INSTANCE.putBlock(

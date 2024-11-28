@@ -25,11 +25,17 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.animal.CatVariant;
+import net.minecraft.world.entity.monster.MagmaCube;
+import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.npc.Villager;
 
 public class MobVariantData {
 
   public static final String VARIANT_TAG = "Variant";
+  public static final String LARGE_VARIANT = "large";
+  public static final String MEDIUM_VARIANT = "medium";
+  public static final String SMALL_VARIANT = "small";
+  public static final String TINY_VARIANT = "tiny";
 
   private MobVariantData() {}
 
@@ -45,6 +51,10 @@ public class MobVariantData {
           .replace("minecraft:", "");
     } else if (livingEntity instanceof Villager villager) {
       return villager.getVillagerData().getProfession().name();
+    } else if (livingEntity instanceof MagmaCube magmaCube) {
+      return getSizeVariant(magmaCube.getSize());
+    } else if (livingEntity instanceof Slime slime) {
+      return getSizeVariant(slime.getSize());
     }
     return null;
   }
@@ -60,5 +70,21 @@ public class MobVariantData {
       return compoundTag.getString(VARIANT_TAG.toLowerCase());
     }
     return null;
+  }
+
+  public static String getSizeVariant(float size) {
+    if (size <= 1.0f) {
+      return TINY_VARIANT;
+    }
+    if (size <= 2.0f) {
+      return SMALL_VARIANT;
+    }
+    if (size < 4.0f) {
+      return MEDIUM_VARIANT;
+    }
+    if (size >= 4.0f) {
+      return LARGE_VARIANT;
+    }
+    return "";
   }
 }

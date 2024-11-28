@@ -20,9 +20,8 @@
 package de.markusbordihn.easymobfarm.item;
 
 import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.CreativeMobFarmBlock;
-import de.markusbordihn.easymobfarm.block.MobFarmBlock;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
+import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.BlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.CreativeBlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
@@ -30,6 +29,8 @@ import de.markusbordihn.easymobfarm.item.mobcatcher.CreativeMobCatcherItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.EnduringCaptureNetItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.IronboundContainmentCageItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.MysticBindingCrystalItem;
+import de.markusbordihn.easymobfarm.item.mobcatcher.VoidBindingChainItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.CreativeSpeedEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyHarvesterFrameEnhancementItem;
@@ -75,24 +76,29 @@ public class ModItems {
                   ResourceKey.create(
                       Registries.ITEM,
                       ResourceLocation.fromNamespaceAndPath(
-                          Constants.MOD_ID, CreativeMobFarmBlock.ID))));
+                          Constants.MOD_ID, MobFarmType.CREATIVE_MOB_FARM.getId()))));
   public static final Item ANIMAL_PLAINS_FARM =
-      new MobFarmBlockItem(MobFarmBlock.ID_ANIMAL_PLAINS_FARM, ModBlocks.ANIMAL_PLAINS_FARM);
+      new MobFarmBlockItem(MobFarmType.ANIMAL_PLAINS_FARM.getId(), ModBlocks.ANIMAL_PLAINS_FARM);
   public static final Item BEE_HIVE_FARM =
-      new MobFarmBlockItem(MobFarmBlock.ID_BEE_HIVE_FARM, ModBlocks.BEE_HIVE_FARM);
+      new MobFarmBlockItem(MobFarmType.BEE_HIVE_FARM.getId(), ModBlocks.BEE_HIVE_FARM);
   public static final Item DESERT_FARM =
-      new MobFarmBlockItem(MobFarmBlock.ID_DESERT_FARM, ModBlocks.DESERT_FARM);
+      new MobFarmBlockItem(MobFarmType.DESERT_FARM.getId(), ModBlocks.DESERT_FARM);
+  public static final Item IRON_GOLEM_FARM =
+      new MobFarmBlockItem(MobFarmType.IRON_GOLEM_FARM.getId(), ModBlocks.IRON_GOLEM_FARM);
   public static final Item JUNGLE_FARM =
-      new MobFarmBlockItem(MobFarmBlock.ID_JUNGLE_FARM, ModBlocks.JUNGLE_FARM);
+      new MobFarmBlockItem(MobFarmType.JUNGLE_FARM.getId(), ModBlocks.JUNGLE_FARM);
+  public static final Item LUCKY_DROP_FARM =
+      new MobFarmBlockItem(MobFarmType.LUCKY_DROP_FARM.getId(), ModBlocks.LUCKY_DROP_FARM);
   public static final Item MONSTER_PLAINS_CAVE_FARM =
       new MobFarmBlockItem(
-          MobFarmBlock.ID_MONSTER_PLAINS_CAVE_FARM, ModBlocks.MONSTER_PLAINS_CAVE_FARM);
+          MobFarmType.MONSTER_PLAINS_CAVE_FARM.getId(), ModBlocks.MONSTER_PLAINS_CAVE_FARM);
   public static final Item NETHER_FORTRESS_FARM =
-      new MobFarmBlockItem(MobFarmBlock.ID_NETHER_FORTRESS_FARM, ModBlocks.NETHER_FORTRESS_FARM);
+      new MobFarmBlockItem(
+          MobFarmType.NETHER_FORTRESS_FARM.getId(), ModBlocks.NETHER_FORTRESS_FARM);
   public static final Item OCEAN_FARM =
-      new MobFarmBlockItem(MobFarmBlock.ID_OCEAN_FARM, ModBlocks.OCEAN_FARM);
+      new MobFarmBlockItem(MobFarmType.OCEAN_FARM.getId(), ModBlocks.OCEAN_FARM);
   public static final Item SWAMP_FARM =
-      new MobFarmBlockItem(MobFarmBlock.ID_SWAMP_FARM, ModBlocks.SWAMP_FARM);
+      new MobFarmBlockItem(MobFarmType.SWAMP_FARM.getId(), ModBlocks.SWAMP_FARM);
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
@@ -105,6 +111,7 @@ public class ModItems {
     registerItem(MobCaptureCardItem.ID, Items.MOB_CAPTURE_CARD);
 
     log.info("{} Enhancement items ...", Constants.LOG_REGISTER_PREFIX);
+    registerItem(CreativeSpeedEnhancementItem.ID, Items.CREATIVE_SPEED_ENHANCEMENT);
     registerItem(ExperienceEnhancementItem.ID, Items.EXPERIENCE_ENHANCEMENT);
     registerItem(HoneyExtractorEnhancementItem.ID, Items.HONEY_EXTRACTOR_ENHANCEMENT);
     registerItem(HoneyHarvesterFrameEnhancementItem.ID, Items.HONEY_HARVESTER_FRAME_ENHANCEMENT);
@@ -138,21 +145,24 @@ public class ModItems {
             });
 
     log.info("{} Mob Farms items ...", Constants.LOG_REGISTER_PREFIX);
-    registerItem(CreativeMobFarmBlock.ID, CREATIVE_MOB_FARM);
-    registerItem(MobFarmBlock.ID_ANIMAL_PLAINS_FARM, ANIMAL_PLAINS_FARM);
-    registerItem(MobFarmBlock.ID_BEE_HIVE_FARM, BEE_HIVE_FARM);
-    registerItem(MobFarmBlock.ID_DESERT_FARM, DESERT_FARM);
-    registerItem(MobFarmBlock.ID_JUNGLE_FARM, JUNGLE_FARM);
-    registerItem(MobFarmBlock.ID_MONSTER_PLAINS_CAVE_FARM, MONSTER_PLAINS_CAVE_FARM);
-    registerItem(MobFarmBlock.ID_NETHER_FORTRESS_FARM, NETHER_FORTRESS_FARM);
-    registerItem(MobFarmBlock.ID_OCEAN_FARM, OCEAN_FARM);
-    registerItem(MobFarmBlock.ID_SWAMP_FARM, SWAMP_FARM);
+    registerItem(MobFarmType.CREATIVE_MOB_FARM.getId(), CREATIVE_MOB_FARM);
+    registerItem(MobFarmType.ANIMAL_PLAINS_FARM.getId(), ANIMAL_PLAINS_FARM);
+    registerItem(MobFarmType.BEE_HIVE_FARM.getId(), BEE_HIVE_FARM);
+    registerItem(MobFarmType.DESERT_FARM.getId(), DESERT_FARM);
+    registerItem(MobFarmType.IRON_GOLEM_FARM.getId(), IRON_GOLEM_FARM);
+    registerItem(MobFarmType.JUNGLE_FARM.getId(), JUNGLE_FARM);
+    registerItem(MobFarmType.LUCKY_DROP_FARM.getId(), LUCKY_DROP_FARM);
+    registerItem(MobFarmType.MONSTER_PLAINS_CAVE_FARM.getId(), MONSTER_PLAINS_CAVE_FARM);
+    registerItem(MobFarmType.NETHER_FORTRESS_FARM.getId(), NETHER_FORTRESS_FARM);
+    registerItem(MobFarmType.OCEAN_FARM.getId(), OCEAN_FARM);
+    registerItem(MobFarmType.SWAMP_FARM.getId(), SWAMP_FARM);
 
     log.info("{} Mob Catcher items ...", Constants.LOG_REGISTER_PREFIX);
     registerItem(CreativeMobCatcherItem.ID, Items.CREATIVE_MOB_CATCHER);
     registerItem(EnduringCaptureNetItem.ID, Items.ENDURING_CAPTURE_NET);
     registerItem(IronboundContainmentCageItem.ID, Items.IRONBOUND_CONTAINMENT_CAGE);
     registerItem(MysticBindingCrystalItem.ID, Items.MYSTIC_BINDING_CRYSTAL);
+    registerItem(VoidBindingChainItem.ID, Items.VOID_BINDING_CHAIN);
   }
 
   private static void registerItem(final String id, final Item item) {

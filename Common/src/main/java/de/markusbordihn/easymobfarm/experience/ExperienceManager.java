@@ -27,8 +27,8 @@ import org.apache.logging.log4j.Logger;
 
 public class ExperienceManager {
 
+  public static final String LOG_PREFIX = "[Experience Manager]";
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
-
   private static ExperienceManagerInterface experienceManagerInterface;
 
   private ExperienceManager() {}
@@ -46,23 +46,16 @@ public class ExperienceManager {
     return experienceManagerInterface;
   }
 
-  public static int getExperienceReward(ServerLevel serverLevel, LivingEntity livingEntity) {
-    if (experienceManagerInterface != null) {
-      return experienceManagerInterface.getExperienceReward(serverLevel, livingEntity);
-    }
-    return 0;
-  }
-
-  public static int getExperienceReward(LivingEntity livingEntity) {
-    if (experienceManagerInterface != null) {
-      return experienceManagerInterface.getExperienceReward(livingEntity);
+  public static int getExperienceReward(LivingEntity livingEntity, ServerLevel serverLevel) {
+    if (getExperienceManager() != null) {
+      return getExperienceManager().getExperienceReward(livingEntity, serverLevel);
     }
     return 0;
   }
 
   public static boolean shouldDropExperience(LivingEntity livingEntity) {
-    if (experienceManagerInterface != null) {
-      return experienceManagerInterface.shouldDropExperience(livingEntity);
+    if (getExperienceManager() != null) {
+      return getExperienceManager().shouldDropExperience(livingEntity);
     }
     return false;
   }

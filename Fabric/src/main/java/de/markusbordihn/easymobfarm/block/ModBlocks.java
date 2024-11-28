@@ -24,6 +24,7 @@ import de.markusbordihn.easymobfarm.block.entity.CreativeMobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.block.entity.CreativeMobFarmBlockEntityWrapper;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityWrapper;
+import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -45,16 +46,18 @@ public class ModBlocks {
       new MobFarmTemplateBlock(MobFarmTemplateBlock.ID_TIER_3);
   public static final Block CREATIVE_MOB_FARM = new CreativeMobFarmBlockWrapper();
   public static final Block ANIMAL_PLAINS_FARM =
-      new MobFarmBlockWrapper(MobFarmBlock.ID_ANIMAL_PLAINS_FARM);
-  public static final Block BEE_HIVE_FARM = new MobFarmBlockWrapper(MobFarmBlock.ID_BEE_HIVE_FARM);
-  public static final Block DESERT_FARM = new MobFarmBlockWrapper(MobFarmBlock.ID_DESERT_FARM);
-  public static final Block JUNGLE_FARM = new MobFarmBlockWrapper(MobFarmBlock.ID_JUNGLE_FARM);
+      new MobFarmBlockWrapper(MobFarmType.ANIMAL_PLAINS_FARM);
+  public static final Block BEE_HIVE_FARM = new MobFarmBlockWrapper(MobFarmType.BEE_HIVE_FARM);
+  public static final Block DESERT_FARM = new MobFarmBlockWrapper(MobFarmType.DESERT_FARM);
+  public static final Block IRON_GOLEM_FARM = new MobFarmBlockWrapper(MobFarmType.IRON_GOLEM_FARM);
+  public static final Block JUNGLE_FARM = new MobFarmBlockWrapper(MobFarmType.JUNGLE_FARM);
+  public static final Block LUCKY_DROP_FARM = new MobFarmBlockWrapper(MobFarmType.LUCKY_DROP_FARM);
   public static final Block MONSTER_PLAINS_CAVE_FARM =
-      new MobFarmBlockWrapper(MobFarmBlock.ID_JUNGLE_FARM);
+      new MobFarmBlockWrapper(MobFarmType.JUNGLE_FARM);
   public static final Block NETHER_FORTRESS_FARM =
-      new MobFarmBlockWrapper(MobFarmBlock.ID_NETHER_FORTRESS_FARM);
-  public static final Block OCEAN_FARM = new MobFarmBlockWrapper(MobFarmBlock.ID_OCEAN_FARM);
-  public static final Block SWAMP_FARM = new MobFarmBlockWrapper(MobFarmBlock.ID_SWAMP_FARM);
+      new MobFarmBlockWrapper(MobFarmType.NETHER_FORTRESS_FARM);
+  public static final Block OCEAN_FARM = new MobFarmBlockWrapper(MobFarmType.OCEAN_FARM);
+  public static final Block SWAMP_FARM = new MobFarmBlockWrapper(MobFarmType.SWAMP_FARM);
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   private ModBlocks() {}
@@ -67,15 +70,17 @@ public class ModBlocks {
     registerBlock(MobFarmTemplateBlock.ID_TIER_3, TIER_3_MOB_FARM_TEMPLATE);
 
     log.info("{} Mob Farm blocks ...", Constants.LOG_REGISTER_PREFIX);
-    registerBlock(CreativeMobFarmBlock.ID, CREATIVE_MOB_FARM);
-    registerBlock(MobFarmBlock.ID_ANIMAL_PLAINS_FARM, ANIMAL_PLAINS_FARM);
-    registerBlock(MobFarmBlock.ID_BEE_HIVE_FARM, BEE_HIVE_FARM);
-    registerBlock(MobFarmBlock.ID_DESERT_FARM, DESERT_FARM);
-    registerBlock(MobFarmBlock.ID_JUNGLE_FARM, JUNGLE_FARM);
-    registerBlock(MobFarmBlock.ID_MONSTER_PLAINS_CAVE_FARM, MONSTER_PLAINS_CAVE_FARM);
-    registerBlock(MobFarmBlock.ID_NETHER_FORTRESS_FARM, NETHER_FORTRESS_FARM);
-    registerBlock(MobFarmBlock.ID_OCEAN_FARM, OCEAN_FARM);
-    registerBlock(MobFarmBlock.ID_SWAMP_FARM, SWAMP_FARM);
+    registerBlock(MobFarmType.CREATIVE_MOB_FARM.getId(), CREATIVE_MOB_FARM);
+    registerBlock(MobFarmType.ANIMAL_PLAINS_FARM.getId(), ANIMAL_PLAINS_FARM);
+    registerBlock(MobFarmType.BEE_HIVE_FARM.getId(), BEE_HIVE_FARM);
+    registerBlock(MobFarmType.DESERT_FARM.getId(), DESERT_FARM);
+    registerBlock(MobFarmType.IRON_GOLEM_FARM.getId(), IRON_GOLEM_FARM);
+    registerBlock(MobFarmType.JUNGLE_FARM.getId(), JUNGLE_FARM);
+    registerBlock(MobFarmType.LUCKY_DROP_FARM.getId(), LUCKY_DROP_FARM);
+    registerBlock(MobFarmType.MONSTER_PLAINS_CAVE_FARM.getId(), MONSTER_PLAINS_CAVE_FARM);
+    registerBlock(MobFarmType.NETHER_FORTRESS_FARM.getId(), NETHER_FORTRESS_FARM);
+    registerBlock(MobFarmType.OCEAN_FARM.getId(), OCEAN_FARM);
+    registerBlock(MobFarmType.SWAMP_FARM.getId(), SWAMP_FARM);
   }
 
   public static void registerModBlockEntities() {
@@ -107,7 +112,9 @@ public class ModBlocks {
               ANIMAL_PLAINS_FARM,
               BEE_HIVE_FARM,
               DESERT_FARM,
+              IRON_GOLEM_FARM,
               JUNGLE_FARM,
+              LUCKY_DROP_FARM,
               MONSTER_PLAINS_CAVE_FARM,
               NETHER_FORTRESS_FARM,
               OCEAN_FARM,
