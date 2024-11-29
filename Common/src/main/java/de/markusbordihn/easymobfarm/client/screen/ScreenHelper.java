@@ -31,6 +31,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
+import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.animal.Squid;
+import net.minecraft.world.entity.monster.Phantom;
 
 public class ScreenHelper {
 
@@ -84,6 +87,12 @@ public class ScreenHelper {
       poseStack1.mulPose(Vector3f.XP.rotationDegrees(2.0F));
       poseStack1.mulPose(Vector3f.YP.rotationDegrees(15.0F));
       poseStack1.mulPose(Vector3f.ZP.rotationDegrees(-90.0F));
+    } else if (livingEntity instanceof Bee) {
+      poseStack1.translate(0, 0.5, 0);
+    } else if (livingEntity instanceof Squid) {
+      poseStack1.translate(0, 1.30, 0);
+    } else if (livingEntity instanceof Phantom) {
+      poseStack1.translate(0, 0.5, 0);
     }
 
     // Hide gui elements or remove custom name

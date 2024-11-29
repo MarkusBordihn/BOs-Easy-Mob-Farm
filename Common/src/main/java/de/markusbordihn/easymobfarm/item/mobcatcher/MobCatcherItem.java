@@ -36,7 +36,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
@@ -53,10 +52,6 @@ public class MobCatcherItem extends MobFarmItem {
   private static final float MAX_ENTITY_HEIGHT_TO_CAPTURE = 2.0f;
   private static final float MAX_ENTITY_WIDTH_TO_CAPTURE = 1.5f;
   private static final int ITEM_DAMAGE_ON_USE = 1;
-
-  public MobCatcherItem() {
-    super(new Item.Properties());
-  }
 
   public MobCatcherItem(Properties properties) {
     super(properties);
