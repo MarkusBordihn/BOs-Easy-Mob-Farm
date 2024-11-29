@@ -31,6 +31,7 @@ import de.markusbordihn.easymobfarm.item.mobcatcher.IronboundContainmentCageItem
 import de.markusbordihn.easymobfarm.item.mobcatcher.MysticBindingCrystalItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.VoidBindingChainItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.CreativeSpeedEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.EggCollectorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyHarvesterFrameEnhancementItem;
@@ -69,6 +70,9 @@ public class ModItems {
 
   public static final RegistryObject<Item> CREATIVE_SPEED_ENHANCEMENT =
       ITEMS.register(CreativeSpeedEnhancementItem.ID, () -> Items.CREATIVE_SPEED_ENHANCEMENT);
+
+  public static final RegistryObject<Item> EGG_COLLECTOR_ENHANCEMENT =
+      ITEMS.register(EggCollectorEnhancementItem.ID, () -> Items.EGG_COLLECTOR_ENHANCEMENT);
 
   public static final RegistryObject<Item> EXPERIENCE_ENHANCEMENT =
       ITEMS.register(ExperienceEnhancementItem.ID, () -> Items.EXPERIENCE_ENHANCEMENT);

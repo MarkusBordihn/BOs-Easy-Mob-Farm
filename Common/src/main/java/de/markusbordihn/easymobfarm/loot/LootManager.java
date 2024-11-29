@@ -23,6 +23,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.experience.ExperienceManager;
 import de.markusbordihn.easymobfarm.item.upgrade.EnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.EggCollectorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyHarvesterFrameEnhancementItem;
@@ -47,6 +48,7 @@ import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.item.DyeColor;
@@ -282,6 +284,13 @@ public class LootManager {
           } else {
             drops.add(getRandomDye());
           }
+        }
+      }
+
+      // Handle egg drops for chicken entities with Egg Collector enhancement (50% chance)
+      if (livingEntity instanceof Chicken) {
+        if (enhancement instanceof EggCollectorEnhancementItem && random.nextInt(2) == 0) {
+          drops.add(new ItemStack(Items.EGG));
         }
       }
     }

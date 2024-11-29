@@ -40,7 +40,7 @@ public enum MobFarmType implements StringRepresentable {
 
   private final String name;
 
-  private MobFarmType() {
+  MobFarmType() {
     this.name = this.name().toLowerCase();
   }
 

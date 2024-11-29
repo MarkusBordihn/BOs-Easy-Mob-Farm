@@ -8,11 +8,23 @@ plugins {
 
 archivesBaseName = "${mod_id}-fabric-${minecraft_version}"
 
+repositories {
+  maven {
+    url "https://maven.jamieswhiteshirt.com/libs-release"
+    content {
+      includeGroup "com.jamieswhiteshirt"
+    }
+  }
+  maven { url = "https://mvn.devos.one/snapshots/" }
+  maven { url = "https://mvn.devos.one/releases/" }
+  maven { url = "https://maven.tterrag.com/" }
+}
+
 dependencies {
   minecraft "com.mojang:minecraft:${minecraft_version}"
   mappings loom.officialMojangMappings()
   modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
-  modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+  modApi "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
 
   // Include Common code
   implementation project(":Common")
@@ -27,6 +39,24 @@ dependencies {
   if (project.hasProperty('fabric_xaeros_minimap_mod') && project.fabric_xaeros_minimap_mod) {
     modRuntimeOnly("curse.maven:xaeros_minimap-263420:${project.fabric_xaeros_minimap_mod}")
   }
+
+  // Create: Integration Tests
+  //  modRuntimeOnly "io.github.tropheusj:milk-lib:1.2.60"
+  //  modRuntimeOnly "com.jamieswhiteshirt:reach-entity-attributes:2.4.0"
+  //  modRuntimeOnly "com.tterrag.registrate:Registrate:MC1.20-1.3.11"
+  //  modRuntimeOnly "io.github.fabricators_of_create.Porting-Lib:accessors:2.3.4+1.20.1"
+  //  modRuntimeOnly "io.github.fabricators_of_create.Porting-Lib:base:2.3.4+1.20.1"
+  //  modRuntimeOnly "io.github.fabricators_of_create.Porting-Lib:entity:2.3.4+1.20.1"
+  //  modRuntimeOnly "io.github.fabricators_of_create.Porting-Lib:extensions:2.3.4+1.20.1"
+  //  modRuntimeOnly "io.github.fabricators_of_create.Porting-Lib:networking:2.3.4+1.20.1"
+  //  modRuntimeOnly "io.github.fabricators_of_create.Porting-Lib:obj_loader:2.3.4+1.20.1"
+  //  modRuntimeOnly "io.github.fabricators_of_create.Porting-Lib:tags:2.3.4+1.20.1"
+  //  modRuntimeOnly "io.github.fabricators_of_create.Porting-Lib:transfer:2.3.4+1.20.1"
+  //  modRuntimeOnly "io.github.fabricators_of_create.Porting-Lib:models:2.3.4+1.20.1"
+  //  modRuntimeOnly "io.github.fabricators_of_create.Porting-Lib:model_generators:2.3.4+1.20.1"
+  //  modRuntimeOnly "io.github.fabricators_of_create.Porting-Lib:client_events:2.3.4+1.20.1"
+  //  modRuntimeOnly "curse.maven:forge-config-api-port-fabric-547434:5902421"
+  //  modRuntimeOnly "curse.maven:create-fabric-624165:5245234"
 }
 
 loom {

@@ -198,7 +198,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
               new Object[] {this.getMenu().getMobFarmNumberOfOutputSlots()}));
 
       // Add entity information to the tooltip, if available.
-      if (this.entity != null) {
+      if (this.entity != null && this.getMenu().getMobFarmStatus() != MobFarmStatus.IDLE) {
         infoText.add(
             TextComponent.getTranslatedTextRaw(
                 TOOLTIP_PREFIX + "entity_type", new Object[] {this.entity.getType().toString()}));

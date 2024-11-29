@@ -100,7 +100,6 @@
       "rotation": {"angle": 0, "axis": "y", "origin": [3.4, 2.5, 13.1]},
       "faces": {
         "north": {"uv": [0, 0, 16, 16], "texture": "#bee_nest_side"},
-        "east": {"uv": [0, 0, 16, 16], "texture": "#missing"},
         "south": {"uv": [0, 0, 16, 16], "texture": "#bee_nest_front"},
         "west": {"uv": [0, 0, 16, 16], "texture": "#bee_nest_front_honey"},
         "up": {"uv": [0, 0, 16, 16], "texture": "#bee_nest_top"},

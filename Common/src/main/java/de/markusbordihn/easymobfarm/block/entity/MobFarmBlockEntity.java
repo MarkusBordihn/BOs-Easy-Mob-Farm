@@ -738,8 +738,8 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     ItemStack itemStack = ContainerHelper.removeItem(this.items, index, count);
     if (index == MobFarmSlot.CAPTURED_MOB.index() && !itemStack.isEmpty()) {
       this.removedMobCaptureItem(itemStack);
+      this.syncChanges();
     }
-    this.syncChanges();
     return itemStack;
   }
 
@@ -755,8 +755,11 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
   @Override
   public void setItem(final int index, final ItemStack itemStack) {
     this.items.set(index, itemStack);
+    if (itemStack.getCount() > this.getMaxStackSize()) {
+      itemStack.setCount(this.getMaxStackSize());
+    }
     if (index == MobFarmSlot.CAPTURED_MOB.index() && !itemStack.isEmpty()) {
-      this.setsMobCaptureItem(itemStack);
+      this.setsMobCaptureItem(itemStack.copy());
     }
     this.syncChanges();
   }
