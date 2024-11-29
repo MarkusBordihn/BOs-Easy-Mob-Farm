@@ -34,6 +34,9 @@ import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
+import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.animal.Squid;
+import net.minecraft.world.entity.monster.Phantom;
 
 public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
     implements BlockEntityRenderer<T> {
@@ -111,6 +114,12 @@ public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
       poseStack.mulPose(Vector3f.XP.rotationDegrees(2.0F));
       poseStack.mulPose(Vector3f.YP.rotationDegrees(15.0F));
       poseStack.mulPose(Vector3f.ZP.rotationDegrees(-90.0F));
+    } else if (entity instanceof Bee) {
+      poseStack.translate(0, 0.5, 0);
+    } else if (entity instanceof Squid) {
+      poseStack.translate(0, 1.30, 0);
+    } else if (entity instanceof Phantom) {
+      poseStack.translate(0, 0.5, 0);
     }
 
     // Render entity.

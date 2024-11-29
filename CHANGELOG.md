@@ -10,14 +10,18 @@ All notable changes to this project will be documented in this file.
   drop rate.
 - Fixed #81 by adding void binding chain for capturing very large mobs.
 - Fixed #79 by adding configurable mob farm bonus drops for matching mobs e.g. bee farm for bees.
+- Fixed possible null pointer in Mob Farm Screen.
 - Fixed Mob Catcher tooltips for Fabric.
 - Fixed smaller translation issues.
 - Fixed broken advancements.
-- Added magma cube custom mob cards.
+- Added magma cube, evoker, frog, glow_squid, piglin, piglin_brute, rabbit and turtle custom mob
+  cards.
 - Added visible size category for slimes and magma cubes.
 - Added foil effect for mob capture items and captured mobs.
 - Added new Iron Golem Farm.
 - Added new Lucky Drop Farm (be careful with this one).
+- Improved Mob Farm UI.
+- Improved Lucky Drop Farm model.
 - Improved captured mob experience detection and caching.
 - Improved entity scaling for captured mobs.
 
