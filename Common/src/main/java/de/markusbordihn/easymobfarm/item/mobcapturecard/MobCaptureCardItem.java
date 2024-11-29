@@ -71,6 +71,13 @@ public class MobCaptureCardItem extends Item {
         .collect(Collectors.joining(" "));
   }
 
+  private static Component getTranslatedEntityName(MobCaptureData mobCaptureData) {
+    if (mobCaptureData == null || mobCaptureData.name() == null) {
+      return TextComponent.getText("Unknown");
+    }
+    return TextComponent.getTranslatedTextRaw(mobCaptureData.name());
+  }
+
   @Override
   public boolean isEnchantable(ItemStack itemStack) {
     return false;
@@ -97,23 +104,27 @@ public class MobCaptureCardItem extends Item {
     // Generate name based on variant and color.
     String key = TOOLTIP_PREFIX + "card_name";
     Object[] args = new Object[] {mobCaptureData.name()};
-    if ((mobCaptureData.variant() != null
-            && !mobCaptureData.name().equalsIgnoreCase(mobCaptureData.variant()))
-        && mobCaptureData.color() != null) {
-      key += "_variant_color";
-      args =
-          new Object[] {
-            mobCaptureData.name(),
-            getVariantName(mobCaptureData.variant()),
-            mobCaptureData.color().getName()
-          };
-    } else if (mobCaptureData.variant() != null
+    if (mobCaptureData.variant() != null
         && !mobCaptureData.name().equalsIgnoreCase(mobCaptureData.variant())) {
-      key += "_variant";
-      args = new Object[] {mobCaptureData.name(), getVariantName(mobCaptureData.variant())};
+      if (mobCaptureData.color() != null) {
+        key += "_variant_color";
+        args =
+            new Object[] {
+              getTranslatedEntityName(mobCaptureData),
+              getVariantName(mobCaptureData.variant()),
+              mobCaptureData.color().getName()
+            };
+      } else {
+        key += "_variant";
+        args =
+            new Object[] {
+              getTranslatedEntityName(mobCaptureData), getVariantName(mobCaptureData.variant())
+            };
+      }
     } else if (mobCaptureData.color() != null) {
       key += "_color";
-      args = new Object[] {mobCaptureData.name(), mobCaptureData.color().getName()};
+      args =
+          new Object[] {getTranslatedEntityName(mobCaptureData), mobCaptureData.color().getName()};
     }
 
     return TextComponent.getTranslatedTextRaw(key, args)

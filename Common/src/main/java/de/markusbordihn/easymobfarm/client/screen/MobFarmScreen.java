@@ -166,17 +166,19 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
     // Render tooltip for the "info" button.
     if (isHovering(24, 17, 10, 13, mouseX, mouseY)) {
       List<Component> infoText = new java.util.ArrayList<>(List.of());
-      infoText.add(
-          TextComponent.getTranslatedTextRaw(
-                  Constants.BLOCK_PREFIX + this.getMenu().getMobFarmType().getId(),
-                  String.valueOf(this.getMenu().getMobFarmTierLevel()))
-              .withStyle(
-                  switch (this.getMenu().getMobFarmTierLevel()) {
-                    case 1 -> ChatFormatting.GREEN;
-                    case 2 -> ChatFormatting.YELLOW;
-                    case 3 -> ChatFormatting.RED;
-                    default -> ChatFormatting.WHITE;
-                  }));
+      if (this.getMenu().getMobFarmType() != null) {
+        infoText.add(
+            TextComponent.getTranslatedTextRaw(
+                    Constants.BLOCK_PREFIX + this.getMenu().getMobFarmType().getId(),
+                    String.valueOf(this.getMenu().getMobFarmTierLevel()))
+                .withStyle(
+                    switch (this.getMenu().getMobFarmTierLevel()) {
+                      case 1 -> ChatFormatting.GREEN;
+                      case 2 -> ChatFormatting.YELLOW;
+                      case 3 -> ChatFormatting.RED;
+                      default -> ChatFormatting.WHITE;
+                    }));
+      }
       infoText.add(
           TextComponent.getTranslatedTextRaw(
               TOOLTIP_PREFIX + "tier", new Object[] {this.getMenu().getMobFarmTierLevel()}));
@@ -195,7 +197,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
               new Object[] {this.getMenu().getMobFarmNumberOfOutputSlots()}));
 
       // Add entity information to the tooltip, if available.
-      if (this.entity != null) {
+      if (this.entity != null && this.getMenu().getMobFarmStatus() != MobFarmStatus.IDLE) {
         infoText.add(
             TextComponent.getTranslatedTextRaw(
                 TOOLTIP_PREFIX + "entity_type", new Object[] {this.entity.getType()}));

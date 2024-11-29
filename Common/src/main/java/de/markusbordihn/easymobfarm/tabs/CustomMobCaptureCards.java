@@ -19,12 +19,14 @@
 
 package de.markusbordihn.easymobfarm.tabs;
 
+import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.capture.MobCaptureManager;
 import de.markusbordihn.easymobfarm.config.MobCaptureCardModelsConfig;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
 import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.Optional;
 import java.util.Set;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -33,8 +35,12 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.ItemLike;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class CustomMobCaptureCards {
+
+  private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   private CustomMobCaptureCards() {}
 
@@ -70,12 +76,24 @@ public class CustomMobCaptureCards {
               if (modelKeyData[0] == null) {
                 return;
               }
-              EntityType<?> entityType =
-                  BuiltInRegistries.ENTITY_TYPE.get(new ResourceLocation((String) modelKeyData[0]));
+              String entityName = (String) modelKeyData[0];
+              if (entityName.isEmpty()) {
+                return;
+              }
+              Optional<EntityType<?>> entityType =
+                  BuiltInRegistries.ENTITY_TYPE.getOptional(new ResourceLocation(entityName));
+              if (entityType.isEmpty()) {
+                if (entityName.startsWith("minecraft:")) {
+                  log.error("Unknown entity type {} for mob capture card!", entityName);
+                } else {
+                  log.warn("Unknown entity type {} for mob capture card!", entityName);
+                }
+                return;
+              }
               ItemStack itemStack =
                   MobCaptureManager.createMobCaptureCard(
                       mobCaptureCardItem,
-                      entityType,
+                      entityType.get(),
                       (String) modelKeyData[1],
                       (DyeColor) modelKeyData[2]);
               if (itemStack != null) {

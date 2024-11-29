@@ -28,6 +28,7 @@ import de.markusbordihn.easymobfarm.item.mobcatcher.IronboundContainmentCageItem
 import de.markusbordihn.easymobfarm.item.mobcatcher.MysticBindingCrystalItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.VoidBindingChainItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.CreativeSpeedEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.EggCollectorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyHarvesterFrameEnhancementItem;
@@ -50,6 +51,7 @@ public class Items {
   public static final Item MOB_CAPTURE_CARD = new MobCaptureCardItem();
 
   public static final Item CREATIVE_SPEED_ENHANCEMENT = new CreativeSpeedEnhancementItem();
+  public static final Item EGG_COLLECTOR_ENHANCEMENT = new EggCollectorEnhancementItem();
   public static final Item EXPERIENCE_ENHANCEMENT = new ExperienceEnhancementItem();
   public static final Item HONEY_EXTRACTOR_ENHANCEMENT = new HoneyExtractorEnhancementItem();
   public static final Item HONEY_HARVESTER_FRAME_ENHANCEMENT =

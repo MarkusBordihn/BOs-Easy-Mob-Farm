@@ -161,7 +161,7 @@ public class MobFarmMenu extends AbstractContainerMenu {
 
   public MobFarmType getMobFarmType() {
     int mobFarmTypeIndex = this.data.get(MobFarmDataEntry.FARM_TYPE);
-    return mobFarmTypeIndex > 0
+    return mobFarmTypeIndex >= 0
         ? MobFarmType.values()[this.data.get(MobFarmDataEntry.FARM_TYPE)]
         : null;
   }
