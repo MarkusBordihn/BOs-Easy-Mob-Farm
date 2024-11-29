@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# v8.6.1
+
+- Fixed #88 by making sure ItemStack size is considered for Create Funnels.
+- Fixed #87 by adding egg collector upgrade for chicken.
+- Fixed #83 by translating first the name instead of relying on the translation library.
+- Added bonus drops for eggs and chicken in the animal plains farm.
+
 # v8.6.0
 
 - Fixed #86 by adding Fabric NBT support for mob farm recipes.
