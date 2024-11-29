@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "NEN",
+    "###",
+    " H "
+  ],
+  "key": {
+    "N": {
+      "item": "minecraft:quartz"
+    },
+    "E": {
+      "item": "minecraft:egg"
+    },
+    "#": {
+      "item": "minecraft:wheat"
+    },
+    "H": {
+      "item": "minecraft:hopper"
+    }
+  },
+  "result": {
+    "id": "easy_mob_farm:egg_collector_enhancement"
+  }
+}

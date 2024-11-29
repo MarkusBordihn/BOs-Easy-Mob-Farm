@@ -32,6 +32,7 @@ public class MobFarmUpgrades implements DisplayItemsGenerator {
   public void accept(ItemDisplayParameters itemDisplayParameters, Output output) {
     // Default mob farm upgrades
     output.accept(Items.CREATIVE_SPEED_ENHANCEMENT.getDefaultInstance());
+    output.accept(Items.EGG_COLLECTOR_ENHANCEMENT.getDefaultInstance());
     output.accept(Items.EXPERIENCE_ENHANCEMENT.getDefaultInstance());
     output.accept(Items.HONEY_EXTRACTOR_ENHANCEMENT.getDefaultInstance());
     output.accept(Items.HONEY_HARVESTER_FRAME_ENHANCEMENT.getDefaultInstance());

@@ -17,39 +17,34 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.data.mobfarm;
+package de.markusbordihn.easymobfarm.item.upgrade.enhancement;
 
-import com.mojang.serialization.Codec;
-import net.minecraft.util.StringRepresentable;
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.item.upgrade.EnhancementItem;
+import de.markusbordihn.easymobfarm.network.components.TextComponent;
+import java.util.List;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 
-public enum MobFarmType implements StringRepresentable {
-  ANIMAL_PLAINS_FARM,
-  BEE_HIVE_FARM,
-  CREATIVE_MOB_FARM,
-  DESERT_FARM,
-  IRON_GOLEM_FARM,
-  LUCKY_DROP_FARM,
-  JUNGLE_FARM,
-  MONSTER_PLAINS_CAVE_FARM,
-  NETHER_FORTRESS_FARM,
-  OCEAN_FARM,
-  SWAMP_FARM;
+public class EggCollectorEnhancementItem extends EnhancementItem {
 
-  public static final Codec<MobFarmType> CODEC =
-      Codec.STRING.xmap(MobFarmType::valueOf, MobFarmType::name);
+  public static final String ID = "egg_collector" + ID_POSTFIX;
 
-  private final String name;
-
-  MobFarmType() {
-    this.name = this.name().toLowerCase();
+  public EggCollectorEnhancementItem() {
+    this(new Properties());
   }
 
-  public String getId() {
-    return this.name;
+  public EggCollectorEnhancementItem(Properties properties) {
+    super(properties.stacksTo(1));
   }
 
   @Override
-  public String getSerializedName() {
-    return this.name;
+  public void appendHoverText(
+      ItemStack itemStack,
+      TooltipContext tooltipContext,
+      List<Component> tooltip,
+      TooltipFlag flag) {
+    addTooltip(tooltip, TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_PREFIX + ID));
   }
 }

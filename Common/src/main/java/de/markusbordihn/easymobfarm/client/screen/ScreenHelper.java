@@ -28,6 +28,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
+import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.animal.Squid;
+import net.minecraft.world.entity.monster.Phantom;
 import net.minecraft.world.scores.PlayerTeam;
 import net.minecraft.world.scores.Team;
 import org.joml.Quaternionf;
@@ -105,6 +108,12 @@ public class ScreenHelper {
       guiGraphics.pose().mulPose(Axis.XP.rotationDegrees(2.0F));
       guiGraphics.pose().mulPose(Axis.YP.rotationDegrees(15.0F));
       guiGraphics.pose().mulPose(Axis.ZP.rotationDegrees(-90.0F));
+    } else if (livingEntity instanceof Bee) {
+      guiGraphics.pose().translate(0, 0.5, 0);
+    } else if (livingEntity instanceof Squid) {
+      guiGraphics.pose().translate(0, 1.30, 0);
+    } else if (livingEntity instanceof Phantom) {
+      guiGraphics.pose().translate(0, 0.5, 0);
     }
     Lighting.setupForEntityInInventory();
     EntityRenderDispatcher entityRenderDispatcher =

@@ -85,6 +85,18 @@ To disable a bonus drop for a default definition, set the amount to 0.
     defaultMobFarmBonusMap.put(
         MobFarmType.ANIMAL_PLAINS_FARM.getId() + "::3::minecraft:sheep",
         new HashMap<>(Map.of(5, new ItemStack(Items.WHITE_WOOL, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.ANIMAL_PLAINS_FARM.getId() + "::0::minecraft:chicken",
+        new HashMap<>(Map.of(20, new ItemStack(Items.EGG, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.ANIMAL_PLAINS_FARM.getId() + "::1::minecraft:chicken",
+        new HashMap<>(Map.of(15, new ItemStack(Items.EGG, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.ANIMAL_PLAINS_FARM.getId() + "::2::minecraft:chicken",
+        new HashMap<>(Map.of(10, new ItemStack(Items.EGG, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.ANIMAL_PLAINS_FARM.getId() + "::3::minecraft:chicken",
+        new HashMap<>(Map.of(5, new ItemStack(Items.EGG, 1))));
 
     // Bee Hive Farm Bonus
     defaultMobFarmBonusMap.put(
