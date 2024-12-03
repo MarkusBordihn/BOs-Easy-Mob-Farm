@@ -430,7 +430,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
       return;
     }
     log.debug("Set mob farm tier level to {}", farmTierLevel);
-    this.data.set(MobFarmDataEntry.FARM_TIER_LEVEL, farmTierLevel);
+    this.farmTierLevel = farmTierLevel;
   }
 
   public MobCaptureData getMobCaptureData() {

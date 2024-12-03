@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+# v8.6.3
+
+- Fixed #90 by using correct tier reference.
+- Added automatic game tests for mob farm tiers to catch issues early.
+
 # v8.6.1
 
 - Fixed #88 by making sure ItemStack size is considered for Create Funnels.
