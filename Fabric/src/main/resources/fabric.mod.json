@@ -22,7 +22,8 @@
       "de.markusbordihn.easymobfarm.EasyMobFarmClient"
     ],
     "fabric-gametest": [
-      "de.markusbordihn.easymobfarm.gametest.SmokeTest"
+      "de.markusbordihn.easymobfarm.gametest.SmokeTest",
+      "de.markusbordihn.easymobfarm.gametest.MobFarmBlockItemTest"
     ]
   },
   "mixins": [
