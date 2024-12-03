@@ -30,6 +30,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -171,13 +172,15 @@ public class MobFarmBlock extends BaseEntityBlock {
       final ItemStack itemStack) {
     BlockEntity blockEntity = level.getBlockEntity(blockPos);
     if (blockEntity instanceof MobFarmBlockEntity blockEntityInstance
-        && livingEntity instanceof ServerPlayer serverPlayer) {
-      blockEntityInstance.setOwner(serverPlayer);
+        && level instanceof ServerLevel serverLevel) {
+      if (livingEntity instanceof ServerPlayer serverPlayer) {
+        blockEntityInstance.setOwner(serverPlayer);
+      }
       CustomData customData = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
       int tierLevel = customData.getUnsafe().getInt(MobFarmBlockEntity.TIER_LEVEL_TAG);
       if (tierLevel >= 0) {
         BlockState newBlockState = blockState.setValue(TIER_LEVEL, tierLevel);
-        level.setBlock(blockPos, newBlockState, 3);
+        serverLevel.setBlock(blockPos, newBlockState, 3);
         blockEntityInstance.setMobTierLevel(tierLevel);
         blockEntity.setChanged();
       }
