@@ -193,6 +193,13 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
               }));
       infoText.add(
           TextComponent.getTranslatedTextRaw(
+              TOOLTIP_PREFIX + "progression_speed",
+              new Object[] {
+                this.getMenu().getMobFarmProgressionSpeed(),
+                this.getMenu().getMobFarmProgressionSpeedBonus()
+              }));
+      infoText.add(
+          TextComponent.getTranslatedTextRaw(
               TOOLTIP_PREFIX + "output_slots",
               new Object[] {this.getMenu().getMobFarmNumberOfOutputSlots()}));
 

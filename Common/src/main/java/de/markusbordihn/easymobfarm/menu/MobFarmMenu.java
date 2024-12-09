@@ -64,7 +64,7 @@ public class MobFarmMenu extends AbstractContainerMenu {
   public static final int PLAYER_HOTBAR_SLOT_X = 48;
   public static final int PLAYER_HOTBAR_SLOT_Y = 215;
   public static final int CONTAINER_SIZE = 52;
-  public static final int CONTAINER_DATA_SIZE = 10;
+  public static final int CONTAINER_DATA_SIZE = MobFarmDataEntry.getLastSlotIndex() + 1;
   public static final int MIN_NUMBER_OF_OUTPUT_SLOTS = 6;
   public static final int MAX_NUMBER_OF_OUTPUT_SLOTS = 27;
 
@@ -149,6 +149,14 @@ public class MobFarmMenu extends AbstractContainerMenu {
 
   public int getMobFarmProgress() {
     return this.data.get(MobFarmDataEntry.FARM_PROGRESS);
+  }
+
+  public int getMobFarmProgressionSpeed() {
+    return this.data.get(MobFarmDataEntry.FARM_PROGRESSION_SPEED);
+  }
+
+  public int getMobFarmProgressionSpeedBonus() {
+    return this.data.get(MobFarmDataEntry.FARM_PROGRESSION_SPEED_BONUS);
   }
 
   public int getMobFarmStatus() {
