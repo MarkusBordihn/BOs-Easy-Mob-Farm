@@ -52,6 +52,15 @@ dependencies {
 
   testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.1'
   testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.7.1'
+
+  // Immersive Engineering: Integration
+  // runtimeOnly "curse.maven:immersive-engineering-231951:5828000"
+
+  // Applied Energistics 2: Integration
+  // runtimeOnly "curse.maven:applied-energistics-2-223794:5729094"
+
+  // Mekanism: Integration
+  // implementation "curse.maven:mekanism-268560:5680395"
 }
 
 // NeoGradle compiles the game, but we don't want to add our common code to the game's code
