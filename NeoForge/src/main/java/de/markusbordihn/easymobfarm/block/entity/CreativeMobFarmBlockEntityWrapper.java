@@ -22,9 +22,12 @@ package de.markusbordihn.easymobfarm.block.entity;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenuWrapper;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
 
 public class CreativeMobFarmBlockEntityWrapper extends CreativeMobFarmBlockEntity {
 
@@ -35,5 +38,9 @@ public class CreativeMobFarmBlockEntityWrapper extends CreativeMobFarmBlockEntit
   @Override
   protected AbstractContainerMenu createMenu(int windowId, Inventory inventory) {
     return new MobFarmMenuWrapper(windowId, inventory, this, this.getContainerData());
+  }
+
+  public IItemHandler getItemCapability(final Direction direction) {
+    return new SidedInvWrapper(this, direction);
   }
 }

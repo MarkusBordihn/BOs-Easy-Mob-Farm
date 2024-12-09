@@ -813,7 +813,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
 
   @Override
   public boolean canPlaceItemThroughFace(
-      final int face, final ItemStack itemStack, final Direction direction) {
+      final int slot, final ItemStack itemStack, final Direction direction) {
     return direction == Direction.UP;
   }
 

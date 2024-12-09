@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+# v8.6.4
+
+- Fixed #94 by adding NeoForge 'Capabilities.ItemHandler.BLOCK' to the mob farms.
+- Fixed issue with Forge only allowing extraction from the bottom.
+
 # v8.6.3
 
 - Fixed #90 by using correct tier reference.
