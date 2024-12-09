@@ -176,7 +176,7 @@ public class MobFarmBlock extends BaseEntityBlock {
       if (tierLevel >= 0) {
         BlockState newBlockState = blockState.setValue(TIER_LEVEL, tierLevel);
         serverLevel.setBlock(blockPos, newBlockState, 3);
-        blockEntityInstance.setMobTierLevel(tierLevel);
+        blockEntityInstance.setFarmTierLevel(tierLevel);
         blockEntity.setChanged();
       }
     }

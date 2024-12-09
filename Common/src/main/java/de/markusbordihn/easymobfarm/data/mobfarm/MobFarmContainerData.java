@@ -44,6 +44,9 @@ public class MobFarmContainerData implements ContainerData {
       case MobFarmDataEntry.BLOCK_POS_Z -> mobFarmEntity.getBlockPos().getZ();
       case MobFarmDataEntry.NUMBER_OF_OUTPUT_SLOTS -> mobFarmEntity.getNumberOfOutputSlots();
       case MobFarmDataEntry.FARM_PROGRESS -> mobFarmEntity.getFarmProgress();
+      case MobFarmDataEntry.FARM_PROGRESSION_SPEED -> mobFarmEntity.getFarmProgressionSpeed();
+      case MobFarmDataEntry.FARM_PROGRESSION_SPEED_BONUS ->
+          mobFarmEntity.getFarmProgressionSpeedBonus();
       case MobFarmDataEntry.FARM_STATUS -> mobFarmEntity.getFarmStatus();
       case MobFarmDataEntry.FARM_TIER_LEVEL -> mobFarmEntity.getFarmTierLevel();
       case MobFarmDataEntry.FARM_TYPE -> mobFarmEntity.getFarmType().ordinal();

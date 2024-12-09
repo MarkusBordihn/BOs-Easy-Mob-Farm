@@ -35,7 +35,6 @@ import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SwordEnhancementIte
 import de.markusbordihn.easymobfarm.server.player.FakePlayer;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
@@ -71,7 +70,7 @@ public class LootManager {
 
   public static NonNullList<ItemStack> getEntityLoot(
       final MobCaptureData mobCaptureData,
-      final Set<EnhancementItem> enhancements,
+      final List<EnhancementItem> enhancements,
       final Level level) {
     EntityType<?> entityType = mobCaptureData.entityType();
     if (entityType == null) {
@@ -102,7 +101,7 @@ public class LootManager {
   }
 
   public static NonNullList<ItemStack> getEntityLoot(
-      final Entity entity, final Set<EnhancementItem> enhancements, final Level level) {
+      final Entity entity, final List<EnhancementItem> enhancements, final Level level) {
     NonNullList<ItemStack> drops = NonNullList.create();
     if (!(entity instanceof LivingEntity livingEntity)
         || !(level instanceof ServerLevel serverLevel)) {
@@ -217,7 +216,7 @@ public class LootManager {
   }
 
   private static ResourceKey<?> getLootTableLocation(
-      LivingEntity livingEntity, Set<EnhancementItem> enhancements) {
+      LivingEntity livingEntity, List<EnhancementItem> enhancements) {
     ResourceKey<?> lootTableLocation = livingEntity.getType().getDefaultLootTable();
     for (EnhancementItem enhancement : enhancements) {
       if (enhancement instanceof SheepEnhancementItem && livingEntity instanceof Sheep sheep) {
@@ -243,7 +242,7 @@ public class LootManager {
   }
 
   private static void handlePostEnhancements(
-      Set<EnhancementItem> enhancements,
+      List<EnhancementItem> enhancements,
       LivingEntity livingEntity,
       ServerLevel serverLevel,
       FakePlayer fakePlayer,

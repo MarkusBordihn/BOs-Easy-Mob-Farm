@@ -39,7 +39,7 @@ public class CreativeSpeedEnhancementItem extends SpeedEnhancementItem {
   }
 
   public int getUpgradeSpeed() {
-    return 100;
+    return 250;
   }
 
   @Override
