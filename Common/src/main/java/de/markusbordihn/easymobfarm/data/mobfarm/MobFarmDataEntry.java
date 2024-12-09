@@ -29,6 +29,12 @@ public class MobFarmDataEntry {
   public static final int FARM_TIER_LEVEL = 6;
   public static final int FARM_TYPE = 7;
   public static final int CAPTURED_MOB_EXPERIENCE = 8;
+  public static final int FARM_PROGRESSION_SPEED = 9;
+  public static final int FARM_PROGRESSION_SPEED_BONUS = 10;
 
   private MobFarmDataEntry() {}
+
+  public static int getLastSlotIndex() {
+    return FARM_PROGRESSION_SPEED_BONUS;
+  }
 }

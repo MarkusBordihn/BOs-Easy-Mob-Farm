@@ -43,7 +43,9 @@ import de.markusbordihn.easymobfarm.loot.LootManager;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import de.markusbordihn.easymobfarm.tags.ModItemTags;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import net.minecraft.core.BlockPos;
@@ -94,6 +96,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
   private int farmTierLevel;
   private int numberOfOutputSlots = MobFarmMenu.MIN_NUMBER_OF_OUTPUT_SLOTS;
   private int farmProgress = 0;
+  private int farmProgressionSpeed = DEFAULT_PROCESSING_TICKS;
   private int farmStatus = MobFarmStatus.IDLE;
   private int capturedMobExperience = -1;
 
@@ -117,7 +120,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
       final MobFarmType mobFarmType) {
     super(blockEntityType, blockPos, blockState);
     this.data = new MobFarmContainerData(this);
-    this.farmTierLevel = farmTierLevel;
+    this.setFarmTierLevel(farmTierLevel);
     this.mobFarmType = mobFarmType;
 
     // Add random delay (0 - DEFAULT_PROCESSING_TICKS) to avoid processing at the same time.
@@ -173,7 +176,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
       }
 
       // Calculate farm progression speed and increase farm progress
-      int farmProgressionSpeed = getFarmProgressionSpeed(blockEntity);
+      int farmProgressionSpeed = getEffectiveFarmProgressionSpeed(blockEntity);
       blockEntity.farmProgress =
           Math.min(blockEntity.farmProgress + farmProgressionSpeed, DEFAULT_FARM_PROCESSING_TIME);
       blockEntity.farmStatus = MobFarmStatus.WORKING;
@@ -194,24 +197,26 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     blockEntity.farmProgress = 0;
   }
 
-  private static int getFarmProgressionSpeed(MobFarmBlockEntity blockEntity) {
-    int farmProgressionSpeed = DEFAULT_PROCESSING_TICKS;
-
-    // Handle tier upgrades
-    farmProgressionSpeed +=
-        MobFarmConfig.getFarmTierProgressionUpgradeSpeed(blockEntity.getFarmTierLevel());
-
-    // Handle speed upgrades
-    for (EnhancementItem enhancementItem : blockEntity.getEnchantmentItems()) {
-      if (enhancementItem instanceof SpeedEnhancementItem speedEnhancementItem) {
-        farmProgressionSpeed += DEFAULT_PROCESSING_TICKS * speedEnhancementItem.getUpgradeSpeed();
-      }
-    }
-    return farmProgressionSpeed;
+  private static int getEffectiveFarmProgressionSpeed(MobFarmBlockEntity blockEntity) {
+    return blockEntity.getFarmProgressionSpeed() + blockEntity.getFarmProgressionSpeedBonus();
   }
 
-  public Set<EnhancementItem> getEnchantmentItems() {
-    Set<EnhancementItem> enchantmentItems = new HashSet<>();
+  public int getFarmProgressionSpeed() {
+    return this.farmProgressionSpeed;
+  }
+
+  public int getFarmProgressionSpeedBonus() {
+    int farmProgressionSpeedBonus = 0;
+    for (EnhancementItem enhancementItem : this.getEnchantmentItems()) {
+      if (enhancementItem instanceof SpeedEnhancementItem speedEnhancementItem) {
+        farmProgressionSpeedBonus += speedEnhancementItem.getUpgradeSpeed();
+      }
+    }
+    return farmProgressionSpeedBonus;
+  }
+
+  public List<EnhancementItem> getEnchantmentItems() {
+    List<EnhancementItem> enchantmentItems = new ArrayList<>();
     for (MobFarmSlot upgradeSlot : MobFarmSlots.ENHANCEMENT_ITEM_SLOTS) {
       ItemStack itemStack = this.getItem(upgradeSlot.index());
       if (!itemStack.isEmpty() && itemStack.getItem() instanceof EnhancementItem enhancementItem) {
@@ -425,14 +430,6 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     itemStack.shrink(amountToGrow);
   }
 
-  public void setMobTierLevel(int farmTierLevel) {
-    if (this.data.get(MobFarmDataEntry.FARM_TIER_LEVEL) == farmTierLevel) {
-      return;
-    }
-    log.debug("Set mob farm tier level to {}", farmTierLevel);
-    this.farmTierLevel = farmTierLevel;
-  }
-
   public MobCaptureData getMobCaptureData() {
     return MobCaptureManager.getMobCaptureData(this.getItem(MobFarmSlot.CAPTURED_MOB));
   }
@@ -605,6 +602,19 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
 
   public int getFarmTierLevel() {
     return this.farmTierLevel;
+  }
+
+  public void setFarmTierLevel(int farmTierLevel) {
+    if (this.data.get(MobFarmDataEntry.FARM_TIER_LEVEL) == farmTierLevel) {
+      return;
+    }
+
+    // Handle tier progression speed
+    this.farmProgressionSpeed = DEFAULT_PROCESSING_TICKS;
+    this.farmProgressionSpeed += MobFarmConfig.getFarmTierProgressionUpgradeSpeed(farmTierLevel);
+
+    log.debug("Set mob farm tier level to {}", farmTierLevel);
+    this.farmTierLevel = farmTierLevel;
   }
 
   public MobFarmType getFarmType() {
@@ -827,7 +837,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
 
     // Load additional data
     if (compoundTag.contains(TIER_LEVEL_TAG)) {
-      this.farmTierLevel = compoundTag.getInt(TIER_LEVEL_TAG);
+      this.setFarmTierLevel(compoundTag.getInt(TIER_LEVEL_TAG));
     }
     if (compoundTag.contains(FARM_TYPE_TAG)) {
       this.mobFarmType = MobFarmType.valueOf(compoundTag.getString(FARM_TYPE_TAG));

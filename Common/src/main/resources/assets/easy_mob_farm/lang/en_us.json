@@ -84,6 +84,7 @@
   "tooltip.easy_mob_farm.farm.no_experience": "No Experience",
   "tooltip.easy_mob_farm.farm.output_slots": "Output Slots: %s",
   "tooltip.easy_mob_farm.farm.progress": "Progress: %s/%s",
+  "tooltip.easy_mob_farm.farm.progression_speed": "Speed: %s (+%s) ticks/sec",
   "tooltip.easy_mob_farm.farm.status": "Status: %s",
   "tooltip.easy_mob_farm.farm.tier": "Tier: %s",
   "tooltip.easy_mob_farm.filter_slot": "Use this slot to filter items from the mob farm output.",
