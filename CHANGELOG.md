@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+# v8.7.1
+
+- Fixed recipes syntax for 1.21.3 and later.
+- Refactored code for 1.21.4 which requires a new way to handle the relevant block and item models.
+
 # v8.7.0
 
 - Fixed #92 by using List instead of Set for mob farm enhancements.

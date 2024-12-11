@@ -16,8 +16,7 @@
     "count": 1,
     "id": "easy_mob_farm:animal_plains_farm",
     "components": {
-      "minecraft:custom_data": {"TierLevel": 3},
-      "minecraft:custom_model_data": 3
+      "minecraft:custom_data": {"TierLevel": 3}
     }
   }
 }

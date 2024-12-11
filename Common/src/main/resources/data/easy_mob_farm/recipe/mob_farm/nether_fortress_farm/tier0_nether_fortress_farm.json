@@ -15,8 +15,7 @@
     "count": 1,
     "id": "easy_mob_farm:nether_fortress_farm",
     "components": {
-      "minecraft:custom_data": {"TierLevel": 0},
-      "minecraft:custom_model_data": 0
+      "minecraft:custom_data": {"TierLevel": 0}
     }
   }
 }

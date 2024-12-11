@@ -19,8 +19,7 @@
     "count": 1,
     "id": "easy_mob_farm:ocean_farm",
     "components": {
-      "minecraft:custom_data": {"TierLevel": 0},
-      "minecraft:custom_model_data": 0
+      "minecraft:custom_data": {"TierLevel": 0}
     }
   }
 }

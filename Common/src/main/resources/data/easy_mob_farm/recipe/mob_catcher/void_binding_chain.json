@@ -6,10 +6,10 @@
     " Q "
   ],
   "key": {
-    "E": {"item": "minecraft:ender_eye"},
-    "C": {"item": "minecraft:chain"},
-    "L": {"item": "minecraft:lead"},
-    "Q": {"item": "minecraft:netherite_scrap"}
+    "E": "minecraft:ender_eye",
+    "C": "minecraft:chain",
+    "L": "minecraft:lead",
+    "Q": "minecraft:netherite_scrap"
   },
   "result": {
     "id": "easy_mob_farm:void_binding_chain"

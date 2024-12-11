@@ -6,18 +6,10 @@
     " H "
   ],
   "key": {
-    "N": {
-      "item": "minecraft:quartz"
-    },
-    "E": {
-      "item": "minecraft:egg"
-    },
-    "#": {
-      "item": "minecraft:wheat"
-    },
-    "H": {
-      "item": "minecraft:hopper"
-    }
+    "N": "minecraft:quartz",
+    "E": "minecraft:egg",
+    "#": "minecraft:wheat",
+    "H": "minecraft:hopper"
   },
   "result": {
     "id": "easy_mob_farm:egg_collector_enhancement"
