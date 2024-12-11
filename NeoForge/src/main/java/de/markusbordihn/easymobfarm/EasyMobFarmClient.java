@@ -19,9 +19,8 @@
 
 package de.markusbordihn.easymobfarm;
 
-import de.markusbordihn.easymobfarm.client.model.ModModelManager;
-import de.markusbordihn.easymobfarm.client.model.ModelManager;
 import de.markusbordihn.easymobfarm.client.renderer.ClientRenderer;
+import de.markusbordihn.easymobfarm.client.renderer.item.properties.ModItemProperties;
 import de.markusbordihn.easymobfarm.client.screen.ClientScreens;
 import de.markusbordihn.easymobfarm.tabs.ModTabs;
 import net.neoforged.api.distmarker.Dist;
@@ -39,11 +38,11 @@ public class EasyMobFarmClient {
   public EasyMobFarmClient(IEventBus modEventBus) {
     log.info("Initializing {} (NeoForge-Client) ...", Constants.MOD_NAME);
 
-    log.info("{} Model Manager ...", Constants.LOG_REGISTER_PREFIX);
-    ModelManager.registerModelManager(new ModModelManager());
-
     modEventBus.addListener(ClientRenderer::registerBlockEntityRenderers);
     modEventBus.addListener(ClientScreens::registerScreens);
     ModTabs.CREATIVE_TABS.register(modEventBus);
+
+    log.info("{} Item Properties ...", Constants.LOG_REGISTER_PREFIX);
+    ModItemProperties.registerItemProperties();
   }
 }

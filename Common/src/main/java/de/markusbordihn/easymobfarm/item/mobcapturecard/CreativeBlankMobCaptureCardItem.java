@@ -75,7 +75,8 @@ public class CreativeBlankMobCaptureCardItem extends BlankMobCaptureCardItem {
     }
 
     // Verify captured entity.
-    MobCaptureData mobCaptureData = MobCaptureManager.getMobCaptureData(mobCaptureCardItemStack);
+    MobCaptureData mobCaptureData =
+        MobCaptureManager.getMobCaptureData(mobCaptureCardItemStack, level);
     if (mobCaptureData == null || mobCaptureData.entityType() == null) {
       log.error("Failed to get mob capture data for entity {}", livingEntity);
       return InteractionResult.FAIL;

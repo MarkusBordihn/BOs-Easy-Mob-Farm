@@ -34,9 +34,7 @@ public class MobCaptureCardModelsConfig extends Config {
   public static final String CONFIG_FILE_NAME = "mob_capture_card_models.cfg";
   public static final String CONFIG_FILE_HEADER =
       """
- Mob Capture Card Models Configuration
-
- This configuration file allows you to define the models for the Mob Capture Cards.
+ Mob Capture Card Models Configuration (deprecated with 1.21.4)
 
  The format is as follows:
  - <entity_name> = <resource_location>
@@ -48,9 +46,6 @@ public class MobCaptureCardModelsConfig extends Config {
  - minecraft:zombie = easy_mob_farm:item/mob_capture_card/minecraft/zombie
  - minecraft:zombie::blue = easy_mob_farm:item/mob_capture_card/minecraft/zombie_blue
  - minecraft:zombie::old::blue = easy_mob_farm:item/mob_capture_card/minecraft/zombie_old_blue
-
- The mods tries to load and bake the models for the Mob Capture Cards based on the configuration.
- However, if the model is not found, the default model will be used.
 
 """;
 

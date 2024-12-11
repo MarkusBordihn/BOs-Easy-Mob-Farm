@@ -19,10 +19,8 @@
 
 package de.markusbordihn.easymobfarm;
 
-import de.markusbordihn.easymobfarm.client.event.ModelEventHandler;
-import de.markusbordihn.easymobfarm.client.model.ModModelManager;
-import de.markusbordihn.easymobfarm.client.model.ModelManager;
 import de.markusbordihn.easymobfarm.client.renderer.ClientRenderer;
+import de.markusbordihn.easymobfarm.client.renderer.item.properties.ModItemProperties;
 import de.markusbordihn.easymobfarm.client.screen.ClientScreens;
 import de.markusbordihn.easymobfarm.tabs.ModTabs;
 import net.fabricmc.api.ClientModInitializer;
@@ -40,12 +38,6 @@ public class EasyMobFarmClient implements ClientModInitializer {
     log.info("{} Tabs ...", Constants.LOG_REGISTER_PREFIX);
     ModTabs.registerModTabs();
 
-    log.info("{} Model Manager ...", Constants.LOG_REGISTER_PREFIX);
-    ModelManager.registerModelManager(new ModModelManager());
-
-    log.info("{} Custom Models ...", Constants.LOG_REGISTER_PREFIX);
-    ModelEventHandler.registerModelEventHandler();
-
     log.info("{} Block Entity Renderers ...", Constants.LOG_REGISTER_PREFIX);
     ClientRenderer.registerBlockEntityRenderers();
 
@@ -54,5 +46,8 @@ public class EasyMobFarmClient implements ClientModInitializer {
 
     log.info("{} Client Screens ...", Constants.LOG_REGISTER_PREFIX);
     ClientScreens.registerScreens();
+
+    log.info("{} Item Properties ...", Constants.LOG_REGISTER_PREFIX);
+    ModItemProperties.registerItemProperties();
   }
 }

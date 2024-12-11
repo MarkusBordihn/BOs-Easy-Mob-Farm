@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "easy_mob_farm:item/upgrade/enhancement/luck_enhancement"
+  }
+}

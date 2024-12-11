@@ -31,6 +31,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.item.component.CustomData;
+import net.minecraft.world.level.Level;
 
 public class MobCaptureDataSupport {
 
@@ -85,15 +86,15 @@ public class MobCaptureDataSupport {
         || PRODUCTIVE_BEES_BEE_JAR.equals(itemRegistryName);
   }
 
-  public static EntityType<?> getEntityType(ItemStack itemStack) {
+  public static EntityType<?> getEntityType(ItemStack itemStack, Level level) {
     if (!isValidItemStack(itemStack)) {
       return null;
     }
 
     // Early return for default mob capture items.
     Item item = itemStack.getItem();
-    if (item instanceof SpawnEggItem spawnEggItem) {
-      return spawnEggItem.getType(itemStack);
+    if (item instanceof SpawnEggItem spawnEggItem && level != null) {
+      return spawnEggItem.getType(level.registryAccess(), itemStack);
     }
 
     // Use registry name to identify the entity type.
@@ -154,8 +155,8 @@ public class MobCaptureDataSupport {
     return entityTypeHolder.orElse(null);
   }
 
-  public static String getEntityTypeName(ItemStack itemStack) {
-    EntityType<?> entityType = getEntityType(itemStack);
+  public static String getEntityTypeName(ItemStack itemStack, Level level) {
+    EntityType<?> entityType = getEntityType(itemStack, level);
     if (entityType != null) {
       return BuiltInRegistries.ENTITY_TYPE.getKey(entityType).toString();
     }

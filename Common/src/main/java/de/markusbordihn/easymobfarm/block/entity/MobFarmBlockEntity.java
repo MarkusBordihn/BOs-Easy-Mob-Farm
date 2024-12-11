@@ -436,7 +436,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
   }
 
   public MobCaptureData getMobCaptureData() {
-    return MobCaptureManager.getMobCaptureData(this.getItem(MobFarmSlot.CAPTURED_MOB));
+    return MobCaptureManager.getMobCaptureData(this.getItem(MobFarmSlot.CAPTURED_MOB), this.level);
   }
 
   public boolean hasCapturedMob() {

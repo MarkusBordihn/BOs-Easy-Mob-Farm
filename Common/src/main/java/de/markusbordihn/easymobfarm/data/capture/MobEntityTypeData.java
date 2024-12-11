@@ -24,6 +24,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 public class MobEntityTypeData {
 
@@ -41,14 +42,15 @@ public class MobEntityTypeData {
     return BuiltInRegistries.ENTITY_TYPE.getKey(entityType).toString();
   }
 
-  public static String getEntityTypeName(ItemStack itemStack, CompoundTag compoundTag) {
+  public static String getEntityTypeName(
+      ItemStack itemStack, CompoundTag compoundTag, Level level) {
     if (itemStack == null || itemStack.isEmpty()) {
       return getEntityTypeName(compoundTag);
     }
 
     // Use MobCaptureDataSupport to get the entity type name
     if (MobCaptureDataSupport.isSupported(itemStack)) {
-      String entityTypeName = MobCaptureDataSupport.getEntityTypeName(itemStack);
+      String entityTypeName = MobCaptureDataSupport.getEntityTypeName(itemStack, level);
       if (entityTypeName != null) {
         return entityTypeName;
       }
@@ -75,14 +77,15 @@ public class MobEntityTypeData {
     return null;
   }
 
-  public static EntityType<?> getEntityType(ItemStack itemStack, CompoundTag compoundTag) {
+  public static EntityType<?> getEntityType(
+      ItemStack itemStack, CompoundTag compoundTag, Level level) {
     if (itemStack == null || itemStack.isEmpty()) {
       return getEntityType(compoundTag);
     }
 
     // Use MobCaptureDataSupport to get the entity type
     if (MobCaptureDataSupport.isSupported(itemStack)) {
-      EntityType<?> entityType = MobCaptureDataSupport.getEntityType(itemStack);
+      EntityType<?> entityType = MobCaptureDataSupport.getEntityType(itemStack, level);
       if (entityType != null) {
         return entityType;
       }

@@ -21,6 +21,7 @@ package de.markusbordihn.easymobfarm.item.mobcapturecard;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.capture.MobCaptureManager;
+import de.markusbordihn.easymobfarm.capture.MobCaptureManagerClient;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.Arrays;
@@ -35,6 +36,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -85,6 +87,26 @@ public class MobCaptureCardItem extends Item {
     return TextComponent.getTranslatedTextRaw(mobCaptureData.name());
   }
 
+  public static Rarity getRarity(ItemStack itemStack) {
+    MobCaptureData mobCaptureData = MobCaptureManager.getMobCaptureData(itemStack, null);
+    return mobCaptureData != null ? mobCaptureData.rarity() : Rarity.COMMON;
+  }
+
+  public static DyeColor getEntityColor(ItemStack itemStack) {
+    MobCaptureData mobCaptureData = MobCaptureManager.getMobCaptureData(itemStack, null);
+    return mobCaptureData != null ? mobCaptureData.color() : null;
+  }
+
+  public static String getEntityType(ItemStack itemStack) {
+    MobCaptureData mobCaptureData = MobCaptureManager.getMobCaptureData(itemStack, null);
+    return mobCaptureData != null ? mobCaptureData.type() : null;
+  }
+
+  public static String getEntityVariant(ItemStack itemStack) {
+    MobCaptureData mobCaptureData = MobCaptureManager.getMobCaptureData(itemStack, null);
+    return mobCaptureData != null ? mobCaptureData.variant() : null;
+  }
+
   @Override
   public boolean canAttackBlock(
       BlockState blockState, Level level, BlockPos blockPos, Player player) {
@@ -93,7 +115,7 @@ public class MobCaptureCardItem extends Item {
 
   @Override
   public Component getName(ItemStack itemStack) {
-    MobCaptureData mobCaptureData = MobCaptureManager.getMobCaptureData(itemStack);
+    MobCaptureData mobCaptureData = MobCaptureManagerClient.getMobCaptureData(itemStack);
     if (mobCaptureData == null) {
       return super.getName(itemStack);
     }
@@ -131,15 +153,9 @@ public class MobCaptureCardItem extends Item {
                 .withStyle(ChatFormatting.GRAY));
   }
 
-  // @Override
-  public Rarity getRarity(ItemStack itemStack) {
-    MobCaptureData mobCaptureData = MobCaptureManager.getMobCaptureData(itemStack);
-    return mobCaptureData != null ? mobCaptureData.rarity() : Rarity.COMMON;
-  }
-
   @Override
   public boolean isFoil(ItemStack itemStack) {
-    MobCaptureData mobCaptureData = MobCaptureManager.getMobCaptureData(itemStack);
+    MobCaptureData mobCaptureData = MobCaptureManager.getMobCaptureData(itemStack, null);
     return mobCaptureData != null && mobCaptureData.isFoil();
   }
 
@@ -149,7 +165,7 @@ public class MobCaptureCardItem extends Item {
       TooltipContext tooltipContext,
       List<Component> tooltip,
       TooltipFlag flag) {
-    MobCaptureData mobCaptureData = MobCaptureManager.getMobCaptureData(itemStack);
+    MobCaptureData mobCaptureData = MobCaptureManagerClient.getMobCaptureData(itemStack);
     if (mobCaptureData == null) {
       tooltip.add(TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "empty"));
       return;

@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "easy_mob_farm:block/mob_farm_template/tier3_mob_farm_template"
+  }
+}

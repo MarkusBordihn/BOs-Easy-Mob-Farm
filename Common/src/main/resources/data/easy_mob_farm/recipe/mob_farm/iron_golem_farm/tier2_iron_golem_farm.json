@@ -6,27 +6,16 @@
     "ICI"
   ],
   "key": {
-    "#": {
-      "item": "easy_mob_farm:tier2_mob_farm_template"
-    },
-    "P": {
-      "item": "minecraft:poppy"
-    },
-    "-": {
-      "item": "minecraft:dirt"
-    },
-    "I": {
-      "item": "minecraft:iron_block"
-    },
-    "C": {
-      "item": "minecraft:cauldron"
-    }
+    "#": "easy_mob_farm:tier2_mob_farm_template",
+    "P": "minecraft:poppy",
+    "-": "minecraft:dirt",
+    "I": "minecraft:iron_block",
+    "C": "minecraft:cauldron"
   },
   "result": {
     "id": "easy_mob_farm:iron_golem_farm",
     "components": {
-      "minecraft:custom_data": {"TierLevel": 2},
-      "minecraft:custom_model_data": 2
+      "minecraft:custom_data": {"TierLevel": 2}
     }
   }
 }

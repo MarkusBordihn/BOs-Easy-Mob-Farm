@@ -1,0 +1,14 @@
+{
+  "model": {
+    "type": "minecraft:condition",
+    "property": "easy_mob_farm:has_mob_capture_data",
+    "on_true": {
+      "type": "minecraft:model",
+      "model": "easy_mob_farm:item/mob_catcher/mystic_binding_crystal_active"
+    },
+    "on_false": {
+      "type": "minecraft:model",
+      "model": "easy_mob_farm:item/mob_catcher/mystic_binding_crystal_inactive"
+    }
+  }
+}

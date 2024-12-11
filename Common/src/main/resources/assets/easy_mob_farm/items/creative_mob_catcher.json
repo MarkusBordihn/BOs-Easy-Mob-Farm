@@ -1,0 +1,14 @@
+{
+  "model": {
+    "type": "minecraft:condition",
+    "property": "easy_mob_farm:has_mob_capture_data",
+    "on_true": {
+      "type": "minecraft:model",
+      "model": "easy_mob_farm:item/mob_catcher/creative_mob_catcher_active"
+    },
+    "on_false": {
+      "type": "minecraft:model",
+      "model": "easy_mob_farm:item/mob_catcher/creative_mob_catcher_inactive"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "easy_mob_farm:item/mob_catcher/enduring_capture_net"
+  }
+}

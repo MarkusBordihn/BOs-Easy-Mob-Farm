@@ -226,7 +226,7 @@ public class MobCaptureManager {
             .contains(MOB_CAPTURE_DATA_TAG);
   }
 
-  public static MobCaptureData getMobCaptureData(ItemStack itemStack) {
+  public static MobCaptureData getMobCaptureData(ItemStack itemStack, Level level) {
     if (itemStack == null || itemStack.isEmpty()) {
       return null;
     }
@@ -243,6 +243,6 @@ public class MobCaptureManager {
     }
 
     // Try to get mob capture data from item stack.
-    return new MobCaptureData(itemStack, compoundTag);
+    return new MobCaptureData(itemStack, compoundTag, level);
   }
 }

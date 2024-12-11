@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "easy_mob_farm:item/mob_catcher/ironbound_containment_cage"
+  }
+}

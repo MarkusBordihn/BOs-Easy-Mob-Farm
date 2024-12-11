@@ -23,6 +23,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.MobFarmBlock;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.capture.MobCaptureManager;
+import de.markusbordihn.easymobfarm.capture.MobCaptureManagerClient;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.item.MobFarmItem;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
@@ -60,7 +61,7 @@ public class MobCatcherItem extends MobFarmItem {
     super(properties);
   }
 
-  public boolean hasMobCaptureData(ItemStack itemStack) {
+  public static boolean hasMobCaptureData(ItemStack itemStack) {
     return itemStack != null
         && itemStack.has(DataComponents.CUSTOM_DATA)
         && itemStack.get(DataComponents.CUSTOM_DATA) != null
@@ -117,7 +118,9 @@ public class MobCatcherItem extends MobFarmItem {
       if (MobCaptureManager.releaseMob(mobCaptureData, blockPos, serverLevel)) {
         compoundTag.remove(MOB_CAPTURE_DATA_TAG);
         CustomData.set(DataComponents.CUSTOM_DATA, itemStack, compoundTag);
-        itemStack.set(DataComponents.CUSTOM_MODEL_DATA, new CustomModelData(0));
+        itemStack.set(
+            DataComponents.CUSTOM_MODEL_DATA,
+            new CustomModelData(List.of(0.0f), List.of(), List.of(), List.of()));
         return InteractionResult.SUCCESS;
       }
     }
@@ -182,7 +185,9 @@ public class MobCatcherItem extends MobFarmItem {
     CompoundTag compoundTag = customData.getUnsafe();
     compoundTag.put(MOB_CAPTURE_DATA_TAG, mobCaptureData.createTag());
     CustomData.set(DataComponents.CUSTOM_DATA, itemStack, compoundTag);
-    itemStack.set(DataComponents.CUSTOM_MODEL_DATA, new CustomModelData(1));
+    itemStack.set(
+        DataComponents.CUSTOM_MODEL_DATA,
+        new CustomModelData(List.of(1f), List.of(), List.of(), List.of()));
 
     player.setItemInHand(hand, itemStack);
     livingEntity.discard();
@@ -203,7 +208,7 @@ public class MobCatcherItem extends MobFarmItem {
       List<Component> tooltip,
       TooltipFlag flag) {
     if (hasMobCaptureData(itemStack)) {
-      MobCaptureData mobCaptureData = MobCaptureManager.getMobCaptureData(itemStack);
+      MobCaptureData mobCaptureData = MobCaptureManagerClient.getMobCaptureData(itemStack);
       addTooltip(
           tooltip,
           TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "release_hint", mobCaptureData.name())

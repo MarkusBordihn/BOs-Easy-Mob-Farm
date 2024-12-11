@@ -33,14 +33,12 @@ import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Item.TooltipContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.CustomData;
-import net.minecraft.world.item.component.CustomModelData;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 
 public class MobFarmBlockItem extends BlockItem {
@@ -65,14 +63,9 @@ public class MobFarmBlockItem extends BlockItem {
     this.farmName = farmName;
   }
 
-  private void setCustomModelData(ItemStack itemStack) {
-    var tag = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).getUnsafe();
-    if (tag.contains(MobFarmBlockEntity.TIER_LEVEL_TAG)) {
-      int tierLevel = tag.getInt(MobFarmBlockEntity.TIER_LEVEL_TAG);
-      if (tierLevel > 0) {
-        itemStack.set(DataComponents.CUSTOM_MODEL_DATA, new CustomModelData(tierLevel));
-      }
-    }
+  public static int getTierLevel(ItemStack itemStack) {
+    CustomData customData = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+    return customData.getUnsafe().getInt(MobFarmBlockEntity.TIER_LEVEL_TAG);
   }
 
   @Override
@@ -80,12 +73,6 @@ public class MobFarmBlockItem extends BlockItem {
     CustomData customData = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
     int tierLevel = customData.getUnsafe().getInt(MobFarmBlockEntity.TIER_LEVEL_TAG);
     return TextComponent.getTranslatedBlockText(this.farmName, tierLevel);
-  }
-
-  @Override
-  public void onCraftedBy(ItemStack stack, Level level, Player player) {
-    super.onCraftedBy(stack, level, player);
-    setCustomModelData(stack);
   }
 
   @Override

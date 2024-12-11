@@ -17,8 +17,7 @@
     "count": 1,
     "id": "easy_mob_farm:desert_farm",
     "components": {
-      "minecraft:custom_data": {"TierLevel": 2},
-      "minecraft:custom_model_data": 2
+      "minecraft:custom_data": {"TierLevel": 2}
     }
   }
 }

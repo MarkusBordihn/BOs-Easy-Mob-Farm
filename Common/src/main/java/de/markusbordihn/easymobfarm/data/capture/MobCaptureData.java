@@ -26,6 +26,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.level.Level;
 
 public record MobCaptureData(
     String name,
@@ -75,11 +76,23 @@ public record MobCaptureData(
         MobFoilData.getRandomFoil());
   }
 
+  public MobCaptureData(final ItemStack itemStack, final CompoundTag compoundTag, Level level) {
+    this(
+        MobNameData.getName(compoundTag),
+        MobEntityTypeData.getEntityTypeName(itemStack, compoundTag, level),
+        MobEntityTypeData.getEntityType(itemStack, compoundTag, level),
+        MobEntityData.getMobEntityData(compoundTag),
+        MobColorData.getColor(compoundTag),
+        MobVariantData.getVariant(compoundTag),
+        MobRarityData.getRarity(compoundTag),
+        MobFoilData.getFoil(compoundTag));
+  }
+
   public MobCaptureData(final ItemStack itemStack, final CompoundTag compoundTag) {
     this(
         MobNameData.getName(compoundTag),
-        MobEntityTypeData.getEntityTypeName(itemStack, compoundTag),
-        MobEntityTypeData.getEntityType(itemStack, compoundTag),
+        MobEntityTypeData.getEntityTypeName(itemStack, compoundTag, null),
+        MobEntityTypeData.getEntityType(itemStack, compoundTag, null),
         MobEntityData.getMobEntityData(compoundTag),
         MobColorData.getColor(compoundTag),
         MobVariantData.getVariant(compoundTag),
