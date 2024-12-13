@@ -21,6 +21,7 @@ package de.markusbordihn.easymobfarm.config;
 
 import java.io.File;
 import java.util.Properties;
+import java.util.Set;
 
 public class MobCaptureCardConfig extends Config {
 
@@ -31,6 +32,25 @@ public class MobCaptureCardConfig extends Config {
 
  This configuration file allows you to define the general settings for the Mob Capture Cards.
 
+ Allow and Deny list
+ -------------------
+ If you want to allow or deny specific mobs, you can use the allow and deny list.
+ Keep in mind that if you add a mob to the allow list, all other mobs will be denied by default.
+ There are two separate lists for kill and fishing drops.
+
+  Example for allow only specific mobs:
+    mobCaptureCardKillDropAllowList=minecraft:zombie,minecraft:skeleton
+    mobCaptureCardKillDropDenyList=
+    mobCaptureCardFishingDropAllowList=minecraft:cod,minecraft:salmon
+    mobCaptureCardFishingDropDenyList=
+
+  Example for deny specific mobs:
+    mobCaptureCardKillDropAllowList=
+    mobCaptureCardKillDropDenyList=minecraft:ender_dragon,minecraft:wither
+    mobCaptureCardFishingDropAllowList=
+    mobCaptureCardFishingDropDenyList=minecraft:squid,minecraft:turtle
+
+
 """;
 
   public static boolean dropMobCaptureCardOnKill = true;
@@ -40,6 +60,12 @@ public class MobCaptureCardConfig extends Config {
   public static float mobCaptureCardKillDropChance = 10 / 100f;
   public static float mobCaptureCardFishingDropChance = 15 / 100f;
   public static float mobCaptureCardFoilDropChance = 1 / 100f;
+
+  public static Set<String> mobCaptureCardKillDropAllowList = Set.of();
+  public static Set<String> mobCaptureCardKillDropDenyList = Set.of();
+
+  public static Set<String> mobCaptureCardFishingDropAllowList = Set.of();
+  public static Set<String> mobCaptureCardFishingDropDenyList = Set.of();
 
   public static void registerConfig() {
     registerConfigFile(CONFIG_FILE_NAME, CONFIG_FILE_HEADER);
@@ -66,6 +92,20 @@ public class MobCaptureCardConfig extends Config {
             properties, "mobCaptureCardFishingDropChance", mobCaptureCardFishingDropChance);
     mobCaptureCardFoilDropChance =
         parseConfigValue(properties, "mobCaptureCardFoilDropChance", mobCaptureCardFoilDropChance);
+
+    mobCaptureCardKillDropAllowList =
+        parseConfigValue(
+            properties, "mobCaptureCardKillDropAllowList", mobCaptureCardKillDropAllowList);
+    mobCaptureCardKillDropDenyList =
+        parseConfigValue(
+            properties, "mobCaptureCardKillDropDenyList", mobCaptureCardKillDropDenyList);
+
+    mobCaptureCardFishingDropAllowList =
+        parseConfigValue(
+            properties, "mobCaptureCardFishingDropAllowList", mobCaptureCardFishingDropAllowList);
+    mobCaptureCardFishingDropDenyList =
+        parseConfigValue(
+            properties, "mobCaptureCardFishingDropDenyList", mobCaptureCardFishingDropDenyList);
 
     // Update config file if needed
     updateConfigFileIfChanged(configFile, CONFIG_FILE_HEADER, properties, unmodifiedProperties);
