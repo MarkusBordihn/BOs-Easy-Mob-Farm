@@ -23,6 +23,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.capture.MobCaptureManager;
 import de.markusbordihn.easymobfarm.config.MobCaptureCardConfig;
 import java.util.Random;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
@@ -48,6 +49,15 @@ public class LivingEntityEvents {
     // Check if we require a player kill to drop the mob capture card.
     if (MobCaptureCardConfig.requirePlayerKill
         && (damageSource.getEntity() == null || !(damageSource.getEntity() instanceof Player))) {
+      return;
+    }
+
+    // Check allow and deny list for drops.
+    String entityName = BuiltInRegistries.ENTITY_TYPE.getKey(livingEntity.getType()).toString();
+    if (MobCaptureCardConfig.mobCaptureCardKillDropDenyList.contains(entityName)
+        || (!MobCaptureCardConfig.mobCaptureCardKillDropAllowList.isEmpty()
+            && !MobCaptureCardConfig.mobCaptureCardKillDropAllowList.contains(entityName))) {
+      log.debug("[Skip] Mob capture card kill drop for {}.", entityName);
       return;
     }
 

@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+# v8.8.0
+
+- Fixed #95 by adding allow and deny list for the Mob Capture Cards.
+- Improved config file list support.
+
 # v8.7.1
 
 - Fixed recipes syntax for 1.21.3 and later.

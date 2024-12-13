@@ -72,6 +72,15 @@ public class FishingEvents {
       return;
     }
 
+    // Check allow and deny list for drops.
+    String entityName = BuiltInRegistries.ENTITY_TYPE.getKey(entityType.get().value()).toString();
+    if (MobCaptureCardConfig.mobCaptureCardFishingDropDenyList.contains(entityName)
+        || (!MobCaptureCardConfig.mobCaptureCardFishingDropAllowList.isEmpty()
+            && !MobCaptureCardConfig.mobCaptureCardFishingDropAllowList.contains(entityName))) {
+      log.debug("[Skip] Mob capture card fishing drop for {}.", entityName);
+      return;
+    }
+
     // Check the drop chance for the mob capture card.
     if (MobCaptureCardConfig.mobCaptureCardFishingDropChance > 0.0f
         && RANDOM.nextFloat() > MobCaptureCardConfig.mobCaptureCardFishingDropChance) {
