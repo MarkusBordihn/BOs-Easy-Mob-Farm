@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+# v8.8.0
+
+- Fixed #95 by adding allow and deny list for the Mob Capture Cards.
+- Improved config file list support.
+
 # v8.7.0
 
 - Fixed #92 by using List instead of Set for mob farm enhancements.
