@@ -20,6 +20,8 @@
 package de.markusbordihn.easymobfarm.item.mobcatcher;
 
 import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.config.MobCatcherConfig;
+import java.util.Set;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -28,10 +30,6 @@ import net.minecraft.world.item.Item;
 public class EnduringCaptureNetItem extends MobCatcherItem {
 
   public static final String ID = "enduring_capture_net";
-  public static final int MAX_DURABILITY = 64;
-  private static final float REQUIRED_HEALTH_PERCENTAGE_TO_CAPTURE = 0.5f;
-  private static final float MAX_ENTITY_HEIGHT_TO_CAPTURE = 1.4f;
-  private static final float MAX_ENTITY_WIDTH_TO_CAPTURE = 0.9f;
 
   public EnduringCaptureNetItem() {
     this(
@@ -42,21 +40,31 @@ public class EnduringCaptureNetItem extends MobCatcherItem {
   }
 
   public EnduringCaptureNetItem(Item.Properties properties) {
-    super(properties.durability(MAX_DURABILITY));
+    super(properties.durability(MobCatcherConfig.ENDURING_CAPTURE_NET_MAX_DURABILITY));
   }
 
   @Override
   public float getRequiredHealthPercentageToCapture() {
-    return REQUIRED_HEALTH_PERCENTAGE_TO_CAPTURE;
+    return MobCatcherConfig.ENDURING_CAPTURE_NET_REQUIRED_HEALTH_PERCENTAGE_TO_CAPTURE;
   }
 
   @Override
   public float getMaxEntityHeightToCapture() {
-    return MAX_ENTITY_HEIGHT_TO_CAPTURE;
+    return MobCatcherConfig.ENDURING_CAPTURE_NET_MAX_ENTITY_HEIGHT_TO_CAPTURE;
   }
 
   @Override
   public float getMaxEntityWidthToCapture() {
-    return MAX_ENTITY_WIDTH_TO_CAPTURE;
+    return MobCatcherConfig.ENDURING_CAPTURE_NET_MAX_ENTITY_WIDTH_TO_CAPTURE;
+  }
+
+  @Override
+  public Set<String> getAllowList() {
+    return MobCatcherConfig.ENDURING_CAPTURE_NET_ALLOW_LIST;
+  }
+
+  @Override
+  public Set<String> getDenyList() {
+    return MobCatcherConfig.ENDURING_CAPTURE_NET_DENY_LIST;
   }
 }

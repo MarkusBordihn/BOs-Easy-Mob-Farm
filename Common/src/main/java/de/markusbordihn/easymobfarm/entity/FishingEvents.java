@@ -89,7 +89,7 @@ public class FishingEvents {
 
     // Drop the mob capture card.
     ItemStack itemStack =
-        MobCaptureManager.captureMob(entityType.get().value(), serverPlayer.level());
+        MobCaptureManager.getMobCaptureCardItem(entityType.get().value(), serverPlayer.level());
     if (itemStack != null) {
       log.debug("Dropped mob capture card {} for {}.", itemStack, entityType);
       serverPlayer.spawnAtLocation(serverPlayer.serverLevel(), itemStack, 0.5F);

@@ -27,9 +27,11 @@ import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.item.MobFarmItem;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.List;
+import java.util.Set;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -44,6 +46,8 @@ import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.CustomModelData;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class MobCatcherItem extends MobFarmItem {
 
@@ -51,10 +55,14 @@ public class MobCatcherItem extends MobFarmItem {
   public static final String MOB_CAPTURE_DATA_TAG = "MobCaptureData";
   public static final String TOOLTIP_PREFIX = Constants.TOOLTIP_PREFIX + ID + ".";
 
+  private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final float REQUIRED_HEALTH_PERCENTAGE_TO_CAPTURE = 0.25f;
   private static final float MAX_ENTITY_HEIGHT_TO_CAPTURE = 2.0f;
   private static final float MAX_ENTITY_WIDTH_TO_CAPTURE = 1.5f;
   private static final int ITEM_DAMAGE_ON_USE = 1;
+
+  private static final Set<String> allowList = Set.of();
+  private static final Set<String> denyList = Set.of();
 
   public MobCatcherItem(Properties properties) {
     super(properties);
@@ -83,6 +91,14 @@ public class MobCatcherItem extends MobFarmItem {
 
   public int getItemDamageOnUse() {
     return ITEM_DAMAGE_ON_USE;
+  }
+
+  public Set<String> getAllowList() {
+    return allowList;
+  }
+
+  public Set<String> getDenyList() {
+    return denyList;
   }
 
   @Override
@@ -145,16 +161,45 @@ public class MobCatcherItem extends MobFarmItem {
           getItemDamageOnUse(), player, LivingEntity.getSlotForHand(player.getUsedItemHand()));
     }
 
-    // Check mob dimensions, if we have any restrictions.
-    if (getMaxEntityHeightToCapture() > 0 || getMaxEntityWidthToCapture() > 0f) {
-      EntityDimensions dimensions = livingEntity.getDimensions(livingEntity.getPose());
-      if (dimensions.height() > getMaxEntityHeightToCapture()
-          || dimensions.width() > getMaxEntityWidthToCapture()) {
+    // Check first allow list for mob types.
+    String entityName = BuiltInRegistries.ENTITY_TYPE.getKey(livingEntity.getType()).toString();
+    if (!this.getAllowList().isEmpty()) {
+      if (!this.getAllowList().contains(entityName)) {
+        log.debug("Mob {} is not on the allow list for {}.", entityName, this);
         player.displayClientMessage(
             TextComponent.getTranslatedText(
-                "too_large_to_capture", livingEntity.getDisplayName().getString()),
+                "mob_is_not_on_allow_list", livingEntity.getDisplayName().getString()),
             true);
         return InteractionResult.FAIL;
+      }
+    } else {
+      // Check deny list for mob types.
+      if (!this.getDenyList().isEmpty() && this.getDenyList().contains(entityName)) {
+        log.debug("Mob {} is on the deny list for {}.", entityName, this);
+        player.displayClientMessage(
+            TextComponent.getTranslatedText(
+                "mob_is_on_deny_list", livingEntity.getDisplayName().getString()),
+            true);
+        return InteractionResult.FAIL;
+      }
+
+      // Check mob dimensions, if we have any restrictions.
+      if (getMaxEntityHeightToCapture() > 0 || getMaxEntityWidthToCapture() > 0f) {
+        EntityDimensions dimensions = livingEntity.getDimensions(livingEntity.getPose());
+        if (dimensions.height() > getMaxEntityHeightToCapture()
+            || dimensions.width() > getMaxEntityWidthToCapture()) {
+          log.debug(
+              "Mob {} with {}x{} size is too large to be captured by {}.",
+              entityName,
+              dimensions.width(),
+              dimensions.height(),
+              this);
+          player.displayClientMessage(
+              TextComponent.getTranslatedText(
+                  "too_large_to_capture", livingEntity.getDisplayName().getString()),
+              true);
+          return InteractionResult.FAIL;
+        }
       }
     }
 
@@ -162,6 +207,11 @@ public class MobCatcherItem extends MobFarmItem {
     if (getRequiredHealthPercentageToCapture() > 0f) {
       float healthPercentage = livingEntity.getHealth() / livingEntity.getMaxHealth();
       if (healthPercentage > getRequiredHealthPercentageToCapture()) {
+        log.debug(
+            "Mob {} with {} health is too strong to be captured by {}.",
+            entityName,
+            healthPercentage,
+            this);
         player.displayClientMessage(
             TextComponent.getTranslatedText(
                 "too_strong_to_capture", livingEntity.getDisplayName().getString()),

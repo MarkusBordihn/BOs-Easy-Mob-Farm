@@ -33,6 +33,7 @@ import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmSlots;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmStatus;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import de.markusbordihn.easymobfarm.experience.ExperienceManager;
+import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.upgrade.EnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.FilterItem;
 import de.markusbordihn.easymobfarm.item.upgrade.SlotUpgradeItem;
@@ -265,6 +266,51 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     return false;
   }
 
+  private boolean processingLuckyDrops(
+      MobCaptureData mobCaptureData, NonNullList<ItemStack> lootDrops) {
+    if (this.getFarmType() != MobFarmType.LUCKY_DROP_FARM) {
+      return false;
+    }
+
+    // 5% Bad lucky drop, spawn captured mob and remove item.
+    int luckRoll = random.nextInt(100);
+    if (luckRoll > 95) {
+      log.debug(
+          "Bad lucky drop for {} (tier: {}) block entity at {} with captured mob {}",
+          this.getFarmType(),
+          this.getFarmTierLevel(),
+          this.getBlockPos(),
+          mobCaptureData.entityType());
+      this.spawnEntity(mobCaptureData.entityType(), this.level, this.getBlockPos().above());
+      this.removeItem(MobFarmSlot.CAPTURED_MOB.index(), 1);
+      this.farmStatus = MobFarmStatus.IDLE;
+      return true;
+    }
+
+    // Add lucky loot drop based on the mob farm, tier level and captured mob.
+    log.debug(
+        "Lucky drop for {} (tier: {}) block entity at {} with captured mob {}",
+        this.getFarmType(),
+        this.getFarmTierLevel(),
+        this.getBlockPos(),
+        mobCaptureData.entityType());
+    if (random.nextInt(2) == 0) {
+      NonNullList<ItemStack> luckyDrop =
+          LootManager.getLuckyLoot(mobCaptureData, this.getBlockPos(), level);
+      if (!luckyDrop.isEmpty()) {
+        log.debug(
+            "Adding lucky loot drop {} for {} (tier: {}) block entity at {} with captured mob {}",
+            luckyDrop,
+            this.getFarmType(),
+            this.getFarmTierLevel(),
+            this.getBlockPos(),
+            mobCaptureData.entityType());
+        lootDrops.addAll(luckyDrop);
+      }
+    }
+    return false;
+  }
+
   public void processingResults() {
     MobCaptureData mobCaptureData = this.getMobCaptureData();
     if (mobCaptureData == null) {
@@ -279,60 +325,8 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
         LootManager.getEntityLoot(mobCaptureData, this.getEnchantmentItems(), level);
 
     // Check if lucky drop farm is active and add additional loot drops.
-    if (this.getFarmType() == MobFarmType.LUCKY_DROP_FARM) {
-      int luckRoll = random.nextInt(100);
-      if (luckRoll < 95) {
-        log.debug(
-            "Adding lucky drop for {} (tier: {}) block entity at {} with captured mob {}",
-            this.getFarmType(),
-            this.getFarmTierLevel(),
-            this.getBlockPos(),
-            mobCaptureData.entityType());
-
-        // Add lucky loot drop based on the mob farm, tier level and captured mob.
-        if (random.nextInt(2) == 0) {
-          NonNullList<ItemStack> luckyDrop =
-              LootManager.getLuckyLoot(mobCaptureData, this.getBlockPos(), level);
-          if (!luckyDrop.isEmpty()) {
-            lootDrops.addAll(luckyDrop);
-          }
-        }
-
-        // Damage mob capture item
-        ItemStack capturedMob = this.getItem(MobFarmSlot.CAPTURED_MOB);
-        if (capturedMob != null && capturedMob.isDamageableItem()) {
-          int damageValue = capturedMob.getDamageValue();
-          int damageAmount =
-              random.nextInt(
-                      switch (this.getFarmTierLevel()) {
-                        case 0 -> 5;
-                        case 1 -> 4;
-                        case 2 -> 3;
-                        case 3 -> 2;
-                        default -> 2;
-                      })
-                  + 1;
-          if (damageValue + damageAmount >= capturedMob.getMaxDamage()) {
-            this.removeItem(MobFarmSlot.CAPTURED_MOB.index(), 1);
-            this.handleLootDrops(lootDrops);
-            this.farmStatus = MobFarmStatus.IDLE;
-            return;
-          }
-          capturedMob.setDamageValue(damageValue + damageAmount);
-        }
-      } else {
-        // 5% Bad lucky drop, spawn captured mob and remove item.
-        log.debug(
-            "Bad lucky drop for {} (tier: {}) block entity at {} with captured mob {}",
-            this.getFarmType(),
-            this.getFarmTierLevel(),
-            this.getBlockPos(),
-            mobCaptureData.entityType());
-        this.spawnEntity(mobCaptureData.entityType(), this.level, this.getBlockPos().above());
-        this.removeItem(MobFarmSlot.CAPTURED_MOB.index(), 1);
-        this.farmStatus = MobFarmStatus.IDLE;
-        return;
-      }
+    if (processingLuckyDrops(mobCaptureData, lootDrops)) {
+      return;
     }
 
     // Add optional bonus loot drop based on the mob farm, tier level and captured mob.
@@ -500,7 +494,8 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
       return false;
     }
 
-    if (MobCaptureDataSupport.isSupported(handItemStack)
+    if ((MobCaptureDataSupport.isSupported(handItemStack)
+            || handItemStack.getItem() instanceof MobCaptureCardItem)
         && this.getItem(MobFarmSlot.CAPTURED_MOB).isEmpty()) {
       return takePlayerItem(MobFarmSlot.CAPTURED_MOB.index(), player, hand);
     }
@@ -576,7 +571,9 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     ItemStack itemStack = handItemStack.copy();
     itemStack.setCount(1);
     setItem(index, itemStack);
-    handItemStack.shrink(1);
+    if (player.isCreative()) {
+      handItemStack.shrink(1);
+    }
     this.syncChanges();
     return true;
   }

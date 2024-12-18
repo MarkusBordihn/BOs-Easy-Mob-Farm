@@ -38,7 +38,8 @@ public class LivingEntityDeathEventMixin {
     LivingEntity livingEntity = (LivingEntity) (Object) this;
     if (livingEntity == null
         || livingEntity.level().isClientSide
-        || livingEntity instanceof Player) {
+        || livingEntity instanceof Player
+        || !(livingEntity instanceof LivingEntity)) {
       return;
     }
 

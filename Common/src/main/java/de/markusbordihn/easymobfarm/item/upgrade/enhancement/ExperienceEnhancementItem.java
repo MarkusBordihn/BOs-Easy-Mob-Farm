@@ -46,7 +46,7 @@ public class ExperienceEnhancementItem extends EnhancementItem {
   }
 
   public ExperienceEnhancementItem(Properties properties) {
-    super(properties.stacksTo(1));
+    super(properties);
   }
 
   public int minExperienceForDrop() {

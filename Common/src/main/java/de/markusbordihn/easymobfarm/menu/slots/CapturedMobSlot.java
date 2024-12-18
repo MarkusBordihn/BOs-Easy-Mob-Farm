@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.menu.slots;
 
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureDataSupport;
+import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
 import de.markusbordihn.easymobfarm.menu.MobFarmSlot;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import net.minecraft.core.component.DataComponents;
@@ -40,15 +41,21 @@ public class CapturedMobSlot extends MobFarmSlot {
       return false;
     }
 
-    if (MobCaptureDataSupport.isSupported(itemStack)) {
+    if (MobCaptureDataSupport.isSupported(itemStack)
+        || itemStack.getItem() instanceof MobCaptureCardItem) {
       return true;
     }
 
     log.debug(
-        "Item {} ({}) is not supported for captured mob slot.",
+        "Item {} {} is not supported for captured mob slot.",
         itemStack,
         itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY));
     return false;
+  }
+
+  @Override
+  public int getMaxStackSize() {
+    return 1;
   }
 
   @Override

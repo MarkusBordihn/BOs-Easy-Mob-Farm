@@ -21,6 +21,7 @@ package de.markusbordihn.easymobfarm.data.capture;
 
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.MobCatcherItem;
+import java.util.Locale;
 import java.util.Optional;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -53,7 +54,7 @@ public class MobCaptureDataSupport {
   private static final String MOB_HOLDER_TAG = "MobHolder";
   private static final String ENTITY_DATA_TAG = "EntityData";
   private static final String ENTITY_TAG = "Entity";
-  private static final String ENTITY__TAG = ENTITY_TAG.toLowerCase();
+  private static final String ENTITY__TAG = ENTITY_TAG.toLowerCase(Locale.ROOT);
 
   public static boolean isSupported(ItemStack itemStack) {
     if (!isValidItemStack(itemStack)) {

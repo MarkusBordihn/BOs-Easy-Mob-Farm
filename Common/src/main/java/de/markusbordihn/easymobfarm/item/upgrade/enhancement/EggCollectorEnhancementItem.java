@@ -43,7 +43,7 @@ public class EggCollectorEnhancementItem extends EnhancementItem {
   }
 
   public EggCollectorEnhancementItem(Properties properties) {
-    super(properties.stacksTo(1));
+    super(properties);
   }
 
   @Override

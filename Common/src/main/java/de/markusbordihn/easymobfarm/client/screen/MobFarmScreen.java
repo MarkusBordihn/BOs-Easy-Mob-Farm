@@ -24,6 +24,7 @@ import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.client.renderer.manager.EntityScalingManager;
 import de.markusbordihn.easymobfarm.client.renderer.manager.RendererManager;
 import de.markusbordihn.easymobfarm.client.screen.components.Graphics;
+import de.markusbordihn.easymobfarm.config.MobFarmBonusConfig;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmStatus;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
@@ -40,6 +41,7 @@ import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 
 public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
 
@@ -185,7 +187,9 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
               TOOLTIP_PREFIX + "tier", new Object[] {this.getMenu().getMobFarmTierLevel()}));
       infoText.add(
           TextComponent.getTranslatedTextRaw(
-              TOOLTIP_PREFIX + "status", new Object[] {this.getMenu().getMobFarmStatus()}));
+              TOOLTIP_PREFIX + "status",
+              TextComponent.getTranslatedTextRaw(
+                  TOOLTIP_PREFIX + "status_" + this.getMenu().getMobFarmStatus())));
       infoText.add(
           TextComponent.getTranslatedTextRaw(
               TOOLTIP_PREFIX + "progress",
@@ -226,6 +230,23 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
           infoText.add(
               TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "no_experience")
                   .withStyle(ChatFormatting.RED));
+        }
+
+        // Add Bonus drop information, if available.
+        ItemStack bonusLootDrop =
+            MobFarmBonusConfig.getBonusDropEntry(
+                this.getMenu().getMobFarmType(),
+                this.getMenu().getMobFarmTierLevel(),
+                this.entity.getType());
+        if (!bonusLootDrop.isEmpty()) {
+          infoText.add(
+              TextComponent.getTranslatedTextRaw(
+                      TOOLTIP_PREFIX + "bonus_drop", new Object[] {bonusLootDrop.getDisplayName()})
+                  .withStyle(ChatFormatting.GREEN));
+        } else {
+          infoText.add(
+              TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "no_bonus_drop")
+                  .withStyle(ChatFormatting.GRAY));
         }
       }
       guiGraphics.renderComponentTooltip(this.font, infoText, mouseX, mouseY);
