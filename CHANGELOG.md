@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+# v8.9.1
+
+- Fixed #105 by correcting .isCreative() condition.
+
 # v8.9.0
 
 - Fixed #101 by making sure tooltips and wiki are up to date.
