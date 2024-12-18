@@ -37,7 +37,7 @@ public class HoneyExtractorEnhancementItem extends EnhancementItem {
   }
 
   public HoneyExtractorEnhancementItem(Properties properties) {
-    super(properties.stacksTo(1));
+    super(properties);
   }
 
   @Override

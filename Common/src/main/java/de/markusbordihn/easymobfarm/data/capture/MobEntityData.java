@@ -45,6 +45,22 @@ public class MobEntityData {
           "Pos",
           "Rotation");
   protected static final Set<String> UNSAFE_TO_REMOVE_BASE_TAGS = Set.of("UUID", "Attributes");
+  protected static final Set<String> SAFE_TO_REMOVE_MOB_CAPTURE_CARD_TAGS =
+      Set.of(
+          "AbsorptionAmount",
+          "ActiveEffects",
+          "AngerTime",
+          "Brain",
+          "CanBreakDoors",
+          "CanPickUpLoot",
+          "CanUpdate",
+          "CurativeItems",
+          "DrownedConversionTime",
+          "Health",
+          "Invulnerable",
+          "LeftHanded",
+          "PersistenceRequired",
+          "TimeInOverworld");
 
   private MobEntityData() {}
 
@@ -95,6 +111,25 @@ public class MobEntityData {
     CompoundTag cleanedCompoundTag = new CompoundTag();
     for (String key : compoundTag.getAllKeys()) {
       if (!UNSAFE_TO_REMOVE_BASE_TAGS.contains(key)) {
+        cleanedCompoundTag.put(key, compoundTag.get(key));
+      }
+    }
+    return cleanedCompoundTag;
+  }
+
+  public static CompoundTag removeSafeToRemoveMobCaptureCardTags(CompoundTag compoundTag) {
+    CompoundTag cleanedCompoundTag = new CompoundTag();
+    for (String key : compoundTag.getAllKeys()) {
+      if (SAFE_TO_REMOVE_MOB_CAPTURE_CARD_TAGS.contains(key)) {
+        continue;
+      }
+
+      // Keep inventory data if available, otherwise remove it.
+      if (key.equals("Inventory")) {
+        if (compoundTag.get(key) != null && !compoundTag.getList(key, 10).isEmpty()) {
+          cleanedCompoundTag.put(key, compoundTag.get(key));
+        }
+      } else {
         cleanedCompoundTag.put(key, compoundTag.get(key));
       }
     }

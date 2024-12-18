@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+# v8.9.0
+
+- Fixed #101 by making sure tooltips and wiki are up to date.
+- Fixed #100 by making enhancements stackable and consider instant build.
+- Fixed #99 by improve wiki and documentation and adding human-readable mob farm status.
+- Fixed #98 by adding allow and deny list for the Mob Catcher Items.
+- Fixed #96 by adding squid, warden, wither and zombified piglin custom mob cards.
+- Fixed issue with `toLowerCase` and `toUpperCase` language sensitive operations.
+- Fixed loot tables for mob farm templates, so that they could be pickup after breaking.
+- Added configuration file for the Mob Catcher items to adjust max durability, health and size
+  requirements.
+- Added additional user messages in the case mob are not on the allow list or on the deny list.
+- Added bonus drop overview to the mob farm screen.
+- Optimized Mob Capture Card meta-data for better performance and stackability.
+
 # v8.8.0
 
 - Fixed #95 by adding allow and deny list for the Mob Capture Cards.

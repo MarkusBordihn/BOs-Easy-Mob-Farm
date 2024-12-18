@@ -37,7 +37,7 @@ public class PollenTrapEnhancementItem extends EnhancementItem {
   }
 
   public PollenTrapEnhancementItem(Properties properties) {
-    super(properties.stacksTo(1));
+    super(properties);
   }
 
   @Override

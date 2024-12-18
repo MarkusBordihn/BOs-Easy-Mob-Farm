@@ -21,6 +21,7 @@ package de.markusbordihn.easymobfarm.capture;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
+import de.markusbordihn.easymobfarm.data.capture.MobEntityData;
 import de.markusbordihn.easymobfarm.data.capture.MobVariantData;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
 import net.minecraft.core.BlockPos;
@@ -49,7 +50,7 @@ public class MobCaptureManager {
 
   private MobCaptureManager() {}
 
-  public static ItemStack captureMob(EntityType<?> entityType, Level level) {
+  public static ItemStack getMobCaptureCardItem(EntityType<?> entityType, Level level) {
     if (entityType == null || level == null) {
       return null;
     }
@@ -66,13 +67,13 @@ public class MobCaptureManager {
       return null;
     }
 
-    ItemStack itemStack = captureMob(livingEntity);
+    ItemStack itemStack = getMobCaptureCardItem(livingEntity);
     log.debug("{} Captured mob {} with data:{}.", LOG_PREFIX, entityType, itemStack);
     entity.discard();
     return itemStack;
   }
 
-  public static ItemStack captureMob(LivingEntity livingEntity) {
+  public static ItemStack getMobCaptureCardItem(LivingEntity livingEntity) {
     if (livingEntity == null
         || livingEntity instanceof Player
         || livingEntity.getLevel().isClientSide) {
@@ -93,6 +94,11 @@ public class MobCaptureManager {
           "{} Unable to get mob capture data from living entity {}.", LOG_PREFIX, livingEntity);
       return null;
     }
+
+    // Cleanup Mob Data for allowing better stackability.
+    mobCaptureData =
+        mobCaptureData.withData(
+            MobEntityData.removeSafeToRemoveMobCaptureCardTags(mobCaptureData.data()));
 
     // Set mob capture data to mob capture card item.
     ItemStack itemStack = new ItemStack(mobCaptureCardItem);

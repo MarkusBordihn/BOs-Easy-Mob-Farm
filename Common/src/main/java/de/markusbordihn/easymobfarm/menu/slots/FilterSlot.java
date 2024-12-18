@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.menu.slots;
 
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureDataSupport;
+import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.upgrade.EnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.SlotUpgradeItem;
 import de.markusbordihn.easymobfarm.menu.MobFarmSlot;
@@ -37,18 +38,24 @@ public class FilterSlot extends MobFarmSlot {
 
   @Override
   public boolean mayPlace(ItemStack itemStack) {
-    if (itemStack.isEmpty() || hasItem() || itemStack.getCount() > 1) {
+    if (itemStack.isEmpty() || hasItem()) {
       return false;
     }
 
     Item item = itemStack.getItem();
     if (MobCaptureDataSupport.isSupported(itemStack)
+        || item instanceof MobCaptureCardItem
         || item instanceof EnhancementItem
         || item instanceof SlotUpgradeItem) {
       return false;
     }
 
     return true;
+  }
+
+  @Override
+  public int getMaxStackSize() {
+    return 1;
   }
 
   @Override
