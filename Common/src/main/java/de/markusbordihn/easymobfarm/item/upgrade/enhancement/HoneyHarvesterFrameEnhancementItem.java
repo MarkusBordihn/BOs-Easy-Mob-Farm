@@ -37,7 +37,7 @@ public class HoneyHarvesterFrameEnhancementItem extends EnhancementItem {
   }
 
   public HoneyHarvesterFrameEnhancementItem(Properties properties) {
-    super(properties.stacksTo(1));
+    super(properties);
   }
 
   @Override

@@ -35,7 +35,7 @@ public class EnhancementSlot extends MobFarmSlot {
 
   @Override
   public boolean mayPlace(ItemStack itemStack) {
-    if (itemStack.isEmpty() || hasItem() || itemStack.getCount() > 1) {
+    if (itemStack.isEmpty() || hasItem()) {
       return false;
     }
 
@@ -45,10 +45,15 @@ public class EnhancementSlot extends MobFarmSlot {
     }
 
     log.debug(
-        "Item {} ({}) is not supported for enhancement slot.",
+        "Item {} {} is not supported for enhancement slot.",
         itemStack,
         itemStack.getOrCreateTag());
     return false;
+  }
+
+  @Override
+  public int getMaxStackSize() {
+    return 1;
   }
 
   @Override

@@ -70,7 +70,7 @@ public class ModItems {
           CreativeBlankMobCaptureCardItem.ID,
           () ->
               new CreativeBlankMobCaptureCardItem(
-                  new Item.Properties().tab(ModTabs.TAB_MOB_CAPTURE_CARDS).stacksTo(1)));
+                  new Item.Properties().tab(ModTabs.TAB_MOB_CAPTURE_CARDS)));
 
   public static final RegistryObject<Item> MOB_CAPTURE_CARD =
       ITEMS.register(MobCaptureCardItem.ID, MobCaptureCardItemWrapper::new);
@@ -168,19 +168,23 @@ public class ModItems {
           () ->
               new CreativeMobCatcherItem(
                   new Item.Properties().tab(ModTabs.TAB_MOB_CATCHER).stacksTo(1)));
+
   public static final RegistryObject<Item> ENDURING_CAPTURE_NET =
       ITEMS.register(
           EnduringCaptureNetItem.ID,
           () -> new EnduringCaptureNetItem(new Item.Properties().tab(ModTabs.TAB_MOB_CATCHER)));
+
   public static final RegistryObject<Item> IRONBOUND_CONTAINMENT_CAGE =
       ITEMS.register(
           IronboundContainmentCageItem.ID,
           () ->
               new IronboundContainmentCageItem(new Item.Properties().tab(ModTabs.TAB_MOB_CATCHER)));
+
   public static final RegistryObject<Item> MYSTIC_BINDING_CRYSTAL =
       ITEMS.register(
           MysticBindingCrystalItem.ID,
           () -> new MysticBindingCrystalItem(new Item.Properties().tab(ModTabs.TAB_MOB_CATCHER)));
+
   public static final RegistryObject<Item> VOID_BINDING_CHAIN =
       ITEMS.register(
           VoidBindingChainItem.ID,

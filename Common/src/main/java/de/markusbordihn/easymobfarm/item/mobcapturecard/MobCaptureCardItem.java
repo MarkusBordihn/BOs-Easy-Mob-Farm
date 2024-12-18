@@ -25,6 +25,7 @@ import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -51,7 +52,7 @@ public class MobCaptureCardItem extends Item {
   }
 
   public MobCaptureCardItem(Properties properties) {
-    super(properties.stacksTo(64).fireResistant().defaultDurability(32));
+    super(properties.fireResistant());
   }
 
   public static MobCaptureCardItem getMobCaptureCardItem() {
@@ -66,7 +67,10 @@ public class MobCaptureCardItem extends Item {
       return "";
     }
     return Arrays.stream(variant.split("_"))
-        .map(word -> word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase())
+        .map(
+            word ->
+                word.substring(0, 1).toUpperCase(Locale.ROOT)
+                    + word.substring(1).toLowerCase(Locale.ROOT))
         .collect(Collectors.joining(" "));
   }
 

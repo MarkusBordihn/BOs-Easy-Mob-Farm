@@ -354,6 +354,25 @@ To disable a bonus drop for a default definition, set the amount to 0.
     updateConfigFileIfChanged(configFile, CONFIG_FILE_HEADER, properties, unmodifiedProperties);
   }
 
+  public static ItemStack getBonusDropEntry(
+      MobFarmType mobFarmType, int tierLevel, EntityType<?> entityType) {
+    return getBonusDropEntry(
+        mobFarmType.getId(), tierLevel, String.valueOf(Registry.ENTITY_TYPE.getKey(entityType)));
+  }
+
+  public static ItemStack getBonusDropEntry(String mobFarmName, int tierLevel, String entityType) {
+    if (!hasBonusDrop(mobFarmName, tierLevel, entityType)) {
+      return ItemStack.EMPTY;
+    }
+    return mobFarmBonusMap
+        .get(mobFarmName + "::" + tierLevel + "::" + entityType)
+        .entrySet()
+        .stream()
+        .map(Map.Entry::getValue)
+        .findFirst()
+        .orElse(ItemStack.EMPTY);
+  }
+
   public static ItemStack getBonusDrop(
       MobFarmType mobFarmType, int tierLevel, EntityType<?> entityType) {
     return getBonusDrop(

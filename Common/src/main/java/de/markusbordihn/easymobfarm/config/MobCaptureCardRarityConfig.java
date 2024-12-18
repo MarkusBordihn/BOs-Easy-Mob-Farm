@@ -21,6 +21,7 @@ package de.markusbordihn.easymobfarm.config;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -85,6 +86,8 @@ public class MobCaptureCardRarityConfig extends Config {
     defaultRarity.put("minecraft:polar_bear", Rarity.UNCOMMON);
     defaultRarity.put("minecraft:slime", Rarity.UNCOMMON);
     defaultRarity.put("minecraft:stray", Rarity.UNCOMMON);
+    defaultRarity.put("minecraft:zombified_piglin", Rarity.UNCOMMON);
+    defaultRarity.put("minecraft:zombified_villager", Rarity.UNCOMMON);
 
     // RARE mobs
     defaultRarity.put("minecraft:blaze", Rarity.RARE);
@@ -130,7 +133,7 @@ public class MobCaptureCardRarityConfig extends Config {
     Set<String> propertyKeys = properties.stringPropertyNames();
     for (String propertyKey : propertyKeys) {
       Rarity propertyValue = parseConfigValue(properties, propertyKey, Rarity.COMMON);
-      mobCaptureCardRarity.put(propertyKey.trim().toLowerCase(), propertyValue);
+      mobCaptureCardRarity.put(propertyKey.trim().toLowerCase(Locale.ROOT), propertyValue);
     }
 
     // Update config file if needed
@@ -142,7 +145,7 @@ public class MobCaptureCardRarityConfig extends Config {
   }
 
   public static boolean hasRarity(final String entityName) {
-    return mobCaptureCardRarity.containsKey(entityName.trim().toLowerCase());
+    return mobCaptureCardRarity.containsKey(entityName.trim().toLowerCase(Locale.ROOT));
   }
 
   public static Rarity getRarity(final EntityType<?> entityType) {
@@ -150,6 +153,7 @@ public class MobCaptureCardRarityConfig extends Config {
   }
 
   public static Rarity getRarity(final String entityName) {
-    return mobCaptureCardRarity.getOrDefault(entityName.trim().toLowerCase(), Rarity.COMMON);
+    return mobCaptureCardRarity.getOrDefault(
+        entityName.trim().toLowerCase(Locale.ROOT), Rarity.COMMON);
   }
 }
