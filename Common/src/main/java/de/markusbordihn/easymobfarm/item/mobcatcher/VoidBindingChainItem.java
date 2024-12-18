@@ -19,34 +19,43 @@
 
 package de.markusbordihn.easymobfarm.item.mobcatcher;
 
+import de.markusbordihn.easymobfarm.config.MobCatcherConfig;
+import java.util.Set;
+
 public class VoidBindingChainItem extends MobCatcherItem {
 
   public static final String ID = "void_binding_chain";
-  public static final int MAX_DURABILITY = 16;
-  private static final float REQUIRED_HEALTH_PERCENTAGE_TO_CAPTURE = 0.20f;
-  private static final float MAX_ENTITY_HEIGHT_TO_CAPTURE = 6f;
-  private static final float MAX_ENTITY_WIDTH_TO_CAPTURE = 4f;
 
   public VoidBindingChainItem() {
     this(new Properties());
   }
 
   public VoidBindingChainItem(Properties properties) {
-    super(properties.defaultDurability(MAX_DURABILITY));
+    super(properties.defaultDurability(MobCatcherConfig.VOID_BINDING_CHAIN_MAX_DURABILITY));
   }
 
   @Override
   public float getRequiredHealthPercentageToCapture() {
-    return REQUIRED_HEALTH_PERCENTAGE_TO_CAPTURE;
+    return MobCatcherConfig.VOID_BINDING_CHAIN_REQUIRED_HEALTH_PERCENTAGE_TO_CAPTURE;
   }
 
   @Override
   public float getMaxEntityHeightToCapture() {
-    return MAX_ENTITY_HEIGHT_TO_CAPTURE;
+    return MobCatcherConfig.VOID_BINDING_CHAIN_MAX_ENTITY_HEIGHT_TO_CAPTURE;
   }
 
   @Override
   public float getMaxEntityWidthToCapture() {
-    return MAX_ENTITY_WIDTH_TO_CAPTURE;
+    return MobCatcherConfig.VOID_BINDING_CHAIN_MAX_ENTITY_WIDTH_TO_CAPTURE;
+  }
+
+  @Override
+  public Set<String> getAllowList() {
+    return MobCatcherConfig.VOID_BINDING_CHAIN_ALLOW_LIST;
+  }
+
+  @Override
+  public Set<String> getDenyList() {
+    return MobCatcherConfig.VOID_BINDING_CHAIN_DENY_LIST;
   }
 }

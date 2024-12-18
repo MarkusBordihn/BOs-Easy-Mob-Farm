@@ -22,6 +22,7 @@ package de.markusbordihn.easymobfarm.config;
 import de.markusbordihn.easymobfarm.Constants;
 import java.io.File;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -110,12 +111,16 @@ public class MobCaptureCardModelsConfig extends Config {
     defaultModels.put("minecraft:skeleton", MOB_CAPTURE_CARD_PREFIX + "skeleton");
     defaultModels.put("minecraft:slime", MOB_CAPTURE_CARD_PREFIX + "slime");
     defaultModels.put("minecraft:spider", MOB_CAPTURE_CARD_PREFIX + "spider");
+    defaultModels.put("minecraft:squid", MOB_CAPTURE_CARD_PREFIX + "squid");
     defaultModels.put("minecraft:turtle", MOB_CAPTURE_CARD_PREFIX + "turtle");
     defaultModels.put("minecraft:villager", MOB_CAPTURE_CARD_PREFIX + "villager");
+    defaultModels.put("minecraft:warden", MOB_CAPTURE_CARD_PREFIX + "warden");
     defaultModels.put("minecraft:witch", MOB_CAPTURE_CARD_PREFIX + "witch");
+    defaultModels.put("minecraft:wither", MOB_CAPTURE_CARD_PREFIX + "wither");
     defaultModels.put("minecraft:wither_skeleton", MOB_CAPTURE_CARD_PREFIX + "wither_skeleton");
     defaultModels.put("minecraft:zombie", MOB_CAPTURE_CARD_PREFIX + "zombie");
     defaultModels.put("minecraft:zombie_villager", MOB_CAPTURE_CARD_PREFIX + "zombie_villager");
+    defaultModels.put("minecraft:zombified_piglin", MOB_CAPTURE_CARD_PREFIX + "zombified_piglin");
   }
 
   public static void registerConfig() {
@@ -173,18 +178,18 @@ public class MobCaptureCardModelsConfig extends Config {
   public static String getEntityKey(
       final String entityName, final String variant, final DyeColor color) {
     KEY_BUILDER.setLength(0);
-    KEY_BUILDER.append(entityName.trim().toLowerCase());
+    KEY_BUILDER.append(entityName.trim().toLowerCase(Locale.ROOT));
 
     if (color == null && (variant == null || variant.isEmpty())) {
       return KEY_BUILDER.toString();
     }
 
     if (variant != null && !variant.isEmpty()) {
-      KEY_BUILDER.append(KEY_SEPARATOR).append(variant.trim().toLowerCase());
+      KEY_BUILDER.append(KEY_SEPARATOR).append(variant.trim().toLowerCase(Locale.ROOT));
     }
 
     if (color != null) {
-      KEY_BUILDER.append(KEY_SEPARATOR).append(color.getName().toLowerCase());
+      KEY_BUILDER.append(KEY_SEPARATOR).append(color.getName().toLowerCase(Locale.ROOT));
     }
 
     return KEY_BUILDER.toString();
@@ -205,7 +210,7 @@ public class MobCaptureCardModelsConfig extends Config {
     if (parts.length == 3) {
       variant = parts[1];
       try {
-        color = DyeColor.valueOf(parts[2].toUpperCase());
+        color = DyeColor.valueOf(parts[2].toUpperCase(Locale.ROOT));
       } catch (IllegalArgumentException e) {
         // No color found
       }
@@ -214,7 +219,7 @@ public class MobCaptureCardModelsConfig extends Config {
         variant = parts[1];
       } else {
         try {
-          color = DyeColor.valueOf(parts[1].toUpperCase());
+          color = DyeColor.valueOf(parts[1].toUpperCase(Locale.ROOT));
         } catch (IllegalArgumentException e) {
           variant = parts[1];
         }

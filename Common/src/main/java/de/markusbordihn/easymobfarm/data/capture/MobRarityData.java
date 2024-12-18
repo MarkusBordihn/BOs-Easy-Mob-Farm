@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.data.capture;
 
 import de.markusbordihn.easymobfarm.config.MobCaptureCardRarityConfig;
+import java.util.Locale;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -42,7 +43,7 @@ public class MobRarityData {
     }
 
     // Get entity name and check for rarity.
-    String entityName = entityType.getDescriptionId().toLowerCase();
+    String entityName = entityType.getDescriptionId().toLowerCase(Locale.ROOT);
     if (entityName.contains("epic")) {
       return Rarity.EPIC;
     } else if (entityName.contains("rare")) {
