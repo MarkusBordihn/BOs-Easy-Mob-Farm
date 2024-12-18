@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.data.mobfarm;
 
 import com.mojang.serialization.Codec;
+import java.util.Locale;
 import net.minecraft.util.StringRepresentable;
 
 public enum MobFarmType implements StringRepresentable {
@@ -41,7 +42,7 @@ public enum MobFarmType implements StringRepresentable {
   private final String name;
 
   MobFarmType() {
-    this.name = this.name().toLowerCase();
+    this.name = this.name().toLowerCase(Locale.ROOT);
   }
 
   public String getId() {

@@ -19,36 +19,44 @@
 
 package de.markusbordihn.easymobfarm.item.mobcatcher;
 
+import de.markusbordihn.easymobfarm.config.MobCatcherConfig;
+import java.util.Set;
 import net.minecraft.world.item.Item;
 
 public class MysticBindingCrystalItem extends MobCatcherItem {
 
   public static final String ID = "mystic_binding_crystal";
-  public static final int MAX_DURABILITY = 32;
-  private static final float REQUIRED_HEALTH_PERCENTAGE_TO_CAPTURE = 0.25f;
-  private static final float MAX_ENTITY_HEIGHT_TO_CAPTURE = 4f;
-  private static final float MAX_ENTITY_WIDTH_TO_CAPTURE = 3f;
 
   public MysticBindingCrystalItem() {
     this(new Item.Properties());
   }
 
   public MysticBindingCrystalItem(Item.Properties properties) {
-    super(properties.durability(MAX_DURABILITY));
+    super(properties.durability(MobCatcherConfig.MYSTIC_BINDING_CRYSTAL_MAX_DURABILITY));
   }
 
   @Override
   public float getRequiredHealthPercentageToCapture() {
-    return REQUIRED_HEALTH_PERCENTAGE_TO_CAPTURE;
+    return MobCatcherConfig.MYSTIC_BINDING_CRYSTAL_REQUIRED_HEALTH_PERCENTAGE_TO_CAPTURE;
   }
 
   @Override
   public float getMaxEntityHeightToCapture() {
-    return MAX_ENTITY_HEIGHT_TO_CAPTURE;
+    return MobCatcherConfig.MYSTIC_BINDING_CRYSTAL_MAX_ENTITY_HEIGHT_TO_CAPTURE;
   }
 
   @Override
   public float getMaxEntityWidthToCapture() {
-    return MAX_ENTITY_WIDTH_TO_CAPTURE;
+    return MobCatcherConfig.MYSTIC_BINDING_CRYSTAL_MAX_ENTITY_WIDTH_TO_CAPTURE;
+  }
+
+  @Override
+  public Set<String> getAllowList() {
+    return MobCatcherConfig.MYSTIC_BINDING_CRYSTAL_ALLOW_LIST;
+  }
+
+  @Override
+  public Set<String> getDenyList() {
+    return MobCatcherConfig.MYSTIC_BINDING_CRYSTAL_DENY_LIST;
   }
 }

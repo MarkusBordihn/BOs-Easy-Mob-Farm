@@ -36,7 +36,7 @@ public class NoFlowersFilterItem extends FilterItem {
   }
 
   public NoFlowersFilterItem(Properties properties) {
-    super(properties.stacksTo(1));
+    super(properties);
   }
 
   @Override

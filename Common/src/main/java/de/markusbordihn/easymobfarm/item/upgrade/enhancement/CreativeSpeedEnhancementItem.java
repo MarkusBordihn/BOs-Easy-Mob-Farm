@@ -35,7 +35,7 @@ public class CreativeSpeedEnhancementItem extends SpeedEnhancementItem {
   }
 
   public CreativeSpeedEnhancementItem(Properties properties) {
-    super(properties.stacksTo(1));
+    super(properties);
   }
 
   public int getUpgradeSpeed() {

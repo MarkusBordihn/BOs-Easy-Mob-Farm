@@ -36,7 +36,7 @@ public class SwordEnhancementItem extends EnhancementItem {
   }
 
   public SwordEnhancementItem(Properties properties) {
-    super(properties.stacksTo(1));
+    super(properties);
   }
 
   @Override

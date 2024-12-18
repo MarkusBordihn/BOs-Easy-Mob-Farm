@@ -25,6 +25,7 @@ import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Locale;
 import java.util.Properties;
 import java.util.Set;
 import net.minecraft.world.item.Rarity;
@@ -57,6 +58,7 @@ public class Config {
     MobFarmBonusConfig.registerConfig();
     MobCaptureCardConfig.registerConfig();
     MobCaptureCardRarityConfig.registerConfig();
+    MobCatcherConfig.registerConfig();
   }
 
   public static void registerClientConfig() {
@@ -109,9 +111,10 @@ public class Config {
 
   public static void createConfigFile(final File configFile, final String header) {
     Properties properties = new Properties();
-    log.info("{} Creating configuration file {}", LOG_PREFIX, configFile);
+    log.info("{} Try creating configuration file {}", LOG_PREFIX, configFile);
     try (FileWriter writer = new FileWriter(configFile)) {
       properties.store(writer, header.trim());
+      log.info("{} Created configuration file {} ...", LOG_PREFIX, configFile);
     } catch (Exception e) {
       log.error(
           "{} Failed to create configuration file {} for {}", LOG_PREFIX, configFile, properties);
@@ -181,7 +184,7 @@ public class Config {
       final Properties properties, final String key, final Rarity defaultValue) {
     if (properties.containsKey(key)) {
       try {
-        return Rarity.valueOf(properties.getProperty(key).trim().toUpperCase());
+        return Rarity.valueOf(properties.getProperty(key).trim().toUpperCase(Locale.ROOT));
       } catch (Exception e) {
         log.error("{} Failed to parse Rarity value for key {}:", LOG_PREFIX, key, e);
       }

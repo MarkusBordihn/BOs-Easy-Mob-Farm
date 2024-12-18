@@ -36,7 +36,7 @@ public class BigSlotUpgradeItem extends SlotUpgradeItem {
   }
 
   public BigSlotUpgradeItem(Properties properties) {
-    super(properties.stacksTo(1));
+    super(properties);
   }
 
   @Override

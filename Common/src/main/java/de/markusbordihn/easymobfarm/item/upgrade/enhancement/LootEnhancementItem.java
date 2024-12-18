@@ -36,7 +36,7 @@ public class LootEnhancementItem extends EnhancementItem {
   }
 
   public LootEnhancementItem(Properties properties) {
-    super(properties.stacksTo(1));
+    super(properties);
   }
 
   @Override

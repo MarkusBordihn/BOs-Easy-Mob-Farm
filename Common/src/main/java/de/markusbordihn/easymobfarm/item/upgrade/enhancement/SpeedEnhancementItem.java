@@ -37,7 +37,7 @@ public class SpeedEnhancementItem extends EnhancementItem {
   }
 
   public SpeedEnhancementItem(Properties properties) {
-    super(properties.stacksTo(1));
+    super(properties);
   }
 
   public int getUpgradeSpeed() {

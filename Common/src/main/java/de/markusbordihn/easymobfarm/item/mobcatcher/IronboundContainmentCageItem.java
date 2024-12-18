@@ -19,36 +19,44 @@
 
 package de.markusbordihn.easymobfarm.item.mobcatcher;
 
+import de.markusbordihn.easymobfarm.config.MobCatcherConfig;
+import java.util.Set;
 import net.minecraft.world.item.Item;
 
 public class IronboundContainmentCageItem extends MobCatcherItem {
 
   public static final String ID = "ironbound_containment_cage";
-  public static final int MAX_DURABILITY = 32;
-  private static final float REQUIRED_HEALTH_PERCENTAGE_TO_CAPTURE = 0.25f;
-  private static final float MAX_ENTITY_HEIGHT_TO_CAPTURE = 2.0f;
-  private static final float MAX_ENTITY_WIDTH_TO_CAPTURE = 1.5f;
 
   public IronboundContainmentCageItem() {
     this(new Item.Properties());
   }
 
   public IronboundContainmentCageItem(Item.Properties properties) {
-    super(properties.durability(MAX_DURABILITY));
+    super(properties.durability(MobCatcherConfig.IRONBOUND_CONTAINMENT_CAGE_MAX_DURABILITY));
   }
 
   @Override
   public float getRequiredHealthPercentageToCapture() {
-    return REQUIRED_HEALTH_PERCENTAGE_TO_CAPTURE;
+    return MobCatcherConfig.IRONBOUND_CONTAINMENT_CAGE_REQUIRED_HEALTH_PERCENTAGE_TO_CAPTURE;
   }
 
   @Override
   public float getMaxEntityHeightToCapture() {
-    return MAX_ENTITY_HEIGHT_TO_CAPTURE;
+    return MobCatcherConfig.IRONBOUND_CONTAINMENT_CAGE_MAX_ENTITY_HEIGHT_TO_CAPTURE;
   }
 
   @Override
   public float getMaxEntityWidthToCapture() {
-    return MAX_ENTITY_WIDTH_TO_CAPTURE;
+    return MobCatcherConfig.IRONBOUND_CONTAINMENT_CAGE_MAX_ENTITY_WIDTH_TO_CAPTURE;
+  }
+
+  @Override
+  public Set<String> getAllowList() {
+    return MobCatcherConfig.IRONBOUND_CONTAINMENT_CAGE_ALLOW_LIST;
+  }
+
+  @Override
+  public Set<String> getDenyList() {
+    return MobCatcherConfig.IRONBOUND_CONTAINMENT_CAGE_DENY_LIST;
   }
 }
