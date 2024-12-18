@@ -566,7 +566,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     ItemStack itemStack = handItemStack.copy();
     itemStack.setCount(1);
     setItem(index, itemStack);
-    if (player.isCreative()) {
+    if (!player.isCreative()) {
       handItemStack.shrink(1);
     }
     this.syncChanges();
