@@ -327,17 +327,16 @@ public class MobFarmMenu extends AbstractContainerMenu {
       }
     } else if (slot.container == this.playerInventory) {
       // Prevent moving items to Output Slots
-      for (Slot targetSlot : this.slots) {
-        if (targetSlot instanceof OutputSlot
-            && targetSlot.hasItem()
-            && targetSlot.getItem().equals(itemStack)) {
-          return ItemStack.EMPTY;
+      for (Slot targetSlot : this.slots.subList(0, MobFarmSlots.RESULT_SLOTS.size())) {
+        // Skip Output Slots and ensure the target slot is empty or below max stack size
+        if (!(targetSlot instanceof OutputSlot)
+            && !targetSlot.hasItem()
+            && targetSlot.mayPlace(itemStack)) {
+          ItemStack singleItem = itemStack.split(1);
+          targetSlot.set(singleItem);
+          targetSlot.setChanged();
+          break;
         }
-      }
-
-      // Move from Player Inventory or Hotbar to remaining Mob Farm Slots.
-      if (!this.moveItemStackTo(itemStack, 0, MobFarmSlots.RESULT_SLOTS.size(), false)) {
-        return ItemStack.EMPTY;
       }
     }
 

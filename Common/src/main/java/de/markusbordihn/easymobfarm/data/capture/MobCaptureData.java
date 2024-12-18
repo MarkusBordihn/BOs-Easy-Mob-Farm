@@ -113,8 +113,8 @@ public record MobCaptureData(
   }
 
   public int getCardId() {
-    int namespaceHash = this.type.split(":")[0].hashCode();
-    int pathHash = this.type.split(":")[1].hashCode();
+    int namespaceHash = (this.type != null) ? this.type.split(":")[0].hashCode() : 0;
+    int pathHash = (this.type != null) ? this.type.split(":")[1].hashCode() : 0;
     int colorHash = (this.color != null) ? this.color.hashCode() : 0;
     int variantHash = (this.variant != null) ? this.variant.hashCode() : 0;
 

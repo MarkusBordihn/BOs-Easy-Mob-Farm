@@ -324,6 +324,13 @@
         }
       },
       {
+        "when": "minecraft:squid",
+        "model": {
+          "type": "minecraft:model",
+          "model": "easy_mob_farm:item/mob_capture_card/minecraft/squid"
+        }
+      },
+      {
         "when": "minecraft:turtle",
         "model": {
           "type": "minecraft:model",
@@ -338,10 +345,24 @@
         }
       },
       {
+        "when": "minecraft:warden",
+        "model": {
+          "type": "minecraft:model",
+          "model": "easy_mob_farm:item/mob_capture_card/minecraft/warden"
+        }
+      },
+      {
         "when": "minecraft:witch",
         "model": {
           "type": "minecraft:model",
           "model": "easy_mob_farm:item/mob_capture_card/minecraft/witch"
+        }
+      },
+      {
+        "when": "minecraft:wither",
+        "model": {
+          "type": "minecraft:model",
+          "model": "easy_mob_farm:item/mob_capture_card/minecraft/wither"
         }
       },
       {
@@ -363,6 +384,13 @@
         "model": {
           "type": "minecraft:model",
           "model": "easy_mob_farm:item/mob_capture_card/minecraft/zombie_villager"
+        }
+      },
+      {
+        "when": "minecraft:zombified_piglin",
+        "model": {
+          "type": "minecraft:model",
+          "model": "easy_mob_farm:item/mob_capture_card/minecraft/zombified_piglin"
         }
       }
     ],

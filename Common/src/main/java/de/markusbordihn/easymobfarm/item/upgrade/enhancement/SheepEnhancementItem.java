@@ -43,7 +43,7 @@ public class SheepEnhancementItem extends EnhancementItem {
   }
 
   public SheepEnhancementItem(Properties properties) {
-    super(properties.stacksTo(1));
+    super(properties);
   }
 
   @Override

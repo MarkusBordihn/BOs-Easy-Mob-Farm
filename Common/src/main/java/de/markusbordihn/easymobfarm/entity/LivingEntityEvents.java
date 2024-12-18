@@ -68,7 +68,7 @@ public class LivingEntityEvents {
     }
 
     // Drop the mob capture card.
-    ItemStack itemStack = MobCaptureManager.captureMob(livingEntity);
+    ItemStack itemStack = MobCaptureManager.getMobCaptureCardItem(livingEntity);
     if (itemStack != null && livingEntity.level() instanceof ServerLevel serverLevel) {
       log.debug("Dropped mob capture card {} for {}.", itemStack, livingEntity);
       livingEntity.spawnAtLocation(serverLevel, itemStack, 0.5F);

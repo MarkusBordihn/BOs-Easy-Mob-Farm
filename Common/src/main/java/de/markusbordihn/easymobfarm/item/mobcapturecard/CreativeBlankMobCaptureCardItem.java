@@ -68,7 +68,7 @@ public class CreativeBlankMobCaptureCardItem extends BlankMobCaptureCardItem {
     }
 
     // Capture entity and check if it was successful.
-    ItemStack mobCaptureCardItemStack = MobCaptureManager.captureMob(livingEntity);
+    ItemStack mobCaptureCardItemStack = MobCaptureManager.getMobCaptureCardItem(livingEntity);
     if (mobCaptureCardItemStack == null || mobCaptureCardItemStack.isEmpty()) {
       log.error("Failed to capture entity {}", livingEntity);
       return InteractionResult.FAIL;

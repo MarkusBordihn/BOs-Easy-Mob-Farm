@@ -116,12 +116,16 @@ public class ModItems {
 
   public static final RegistryObject<Item> CREATIVE_MOB_CATCHER =
       ITEMS.register(CreativeMobCatcherItem.ID, () -> Items.CREATIVE_MOB_CATCHER);
+
   public static final RegistryObject<Item> ENDURING_CAPTURE_NET =
       ITEMS.register(EnduringCaptureNetItem.ID, () -> Items.ENDURING_CAPTURE_NET);
+
   public static final RegistryObject<Item> IRONBOUND_CONTAINMENT_CAGE =
       ITEMS.register(IronboundContainmentCageItem.ID, () -> Items.IRONBOUND_CONTAINMENT_CAGE);
+
   public static final RegistryObject<Item> MYSTIC_BINDING_CRYSTAL =
       ITEMS.register(MysticBindingCrystalItem.ID, () -> Items.MYSTIC_BINDING_CRYSTAL);
+
   public static final RegistryObject<Item> VOID_BINDING_CHAIN =
       ITEMS.register(VoidBindingChainItem.ID, () -> Items.VOID_BINDING_CHAIN);
 

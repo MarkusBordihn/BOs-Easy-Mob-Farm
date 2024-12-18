@@ -43,7 +43,7 @@ public class NoMeatFilterItem extends FilterItem {
   }
 
   public NoMeatFilterItem(Properties properties) {
-    super(properties.stacksTo(1));
+    super(properties);
   }
 
   @Override

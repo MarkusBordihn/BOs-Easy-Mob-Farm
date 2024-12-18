@@ -19,6 +19,7 @@
 
 package de.markusbordihn.easymobfarm.data.capture;
 
+import java.util.Locale;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.EntityType;
@@ -66,8 +67,8 @@ public class MobVariantData {
     if (compoundTag.contains(VARIANT_TAG)) {
       return compoundTag.getString(VARIANT_TAG);
     }
-    if (compoundTag.contains(VARIANT_TAG.toLowerCase())) {
-      return compoundTag.getString(VARIANT_TAG.toLowerCase());
+    if (compoundTag.contains(VARIANT_TAG.toLowerCase(Locale.ROOT))) {
+      return compoundTag.getString(VARIANT_TAG.toLowerCase(Locale.ROOT));
     }
     return null;
   }
