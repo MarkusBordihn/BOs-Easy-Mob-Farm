@@ -21,7 +21,7 @@ package de.markusbordihn.easymobfarm.tabs;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.item.Items;
-import de.markusbordihn.easymobfarm.item.ModItems;
+import de.markusbordihn.easymobfarm.item.ModBlockItems;
 import java.util.Set;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.minecraft.resources.ResourceLocation;
@@ -61,21 +61,21 @@ public class ModTabs {
 
     TAB_MOB_FARMS =
         FabricItemGroupBuilder.create(new ResourceLocation(Constants.MOD_ID, "mob_farms"))
-            .icon(ModItems.CREATIVE_MOB_FARM::getDefaultInstance)
+            .icon(ModBlockItems.CREATIVE_MOB_FARM::getDefaultInstance)
             .appendItems(
                 stack -> {
                   // Default mob farm items
-                  stack.add(ModItems.CREATIVE_MOB_FARM.getDefaultInstance());
-                  stack.add(ModItems.ANIMAL_PLAINS_FARM.getDefaultInstance());
-                  stack.add(ModItems.BEE_HIVE_FARM.getDefaultInstance());
-                  stack.add(ModItems.DESERT_FARM.getDefaultInstance());
-                  stack.add(ModItems.IRON_GOLEM_FARM.getDefaultInstance());
-                  stack.add(ModItems.JUNGLE_FARM.getDefaultInstance());
-                  stack.add(ModItems.LUCKY_DROP_FARM.getDefaultInstance());
-                  stack.add(ModItems.MONSTER_PLAINS_CAVE_FARM.getDefaultInstance());
-                  stack.add(ModItems.NETHER_FORTRESS_FARM.getDefaultInstance());
-                  stack.add(ModItems.OCEAN_FARM.getDefaultInstance());
-                  stack.add(ModItems.SWAMP_FARM.getDefaultInstance());
+                  stack.add(ModBlockItems.CREATIVE_MOB_FARM.getDefaultInstance());
+                  stack.add(ModBlockItems.ANIMAL_PLAINS_FARM.getDefaultInstance());
+                  stack.add(ModBlockItems.BEE_HIVE_FARM.getDefaultInstance());
+                  stack.add(ModBlockItems.DESERT_FARM.getDefaultInstance());
+                  stack.add(ModBlockItems.IRON_GOLEM_FARM.getDefaultInstance());
+                  stack.add(ModBlockItems.JUNGLE_FARM.getDefaultInstance());
+                  stack.add(ModBlockItems.LUCKY_DROP_FARM.getDefaultInstance());
+                  stack.add(ModBlockItems.MONSTER_PLAINS_CAVE_FARM.getDefaultInstance());
+                  stack.add(ModBlockItems.NETHER_FORTRESS_FARM.getDefaultInstance());
+                  stack.add(ModBlockItems.OCEAN_FARM.getDefaultInstance());
+                  stack.add(ModBlockItems.SWAMP_FARM.getDefaultInstance());
                 })
             .build();
 

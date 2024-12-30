@@ -23,7 +23,11 @@
     ],
     "fabric-gametest": [
       "de.markusbordihn.easymobfarm.gametest.SmokeTest",
-      "de.markusbordihn.easymobfarm.gametest.MobFarmBlockItemTest"
+      "de.markusbordihn.easymobfarm.gametest.ModBlocksTest",
+      "de.markusbordihn.easymobfarm.gametest.ModBlockItemsTest",
+      "de.markusbordihn.easymobfarm.gametest.ModItemsTest",
+      "de.markusbordihn.easymobfarm.gametest.MobFarmBlockItemsTest",
+      "de.markusbordihn.easymobfarm.gametest.LootTablesTest"
     ]
   },
   "mixins": [

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Markus Bordihn
+ * Copyright 2023 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -17,45 +17,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.menu.slots;
+package de.markusbordihn.easymobfarm.gametest;
 
-import de.markusbordihn.easymobfarm.item.upgrade.EnhancementItem;
-import de.markusbordihn.easymobfarm.menu.MobFarmSlot;
-import de.markusbordihn.easymobfarm.network.components.TextComponent;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.Container;
+import net.minecraft.core.BlockPos;
+import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 
-public class EnhancementSlot extends MobFarmSlot {
+public class ModItemsTestHelper {
 
-  public EnhancementSlot(Container container, int index, int x, int y) {
-    super(container, index, x, y);
+  private ModItemsTestHelper() {}
+
+  public static void testModItem(GameTestHelper helper, Item item) {
+    BlockPos blockPos = new BlockPos(0, 1, 0);
+    testModItem(helper, item, blockPos);
   }
 
-  @Override
-  public boolean mayPlace(ItemStack itemStack) {
-    if (itemStack.isEmpty() || hasItem()) {
-      return false;
+  public static void testModItem(GameTestHelper helper, Item item, BlockPos blockPos) {
+    if (item == null || blockPos == null) {
+      helper.fail("Item or block position is not defined!");
+      return;
     }
-
-    Item item = itemStack.getItem();
-    if (item instanceof EnhancementItem) {
-      return true;
-    }
-
-    log.debug(
-        "Item {} {} is not supported for enhancement slot.", itemStack, itemStack.getOrCreateTag());
-    return false;
-  }
-
-  @Override
-  public int getMaxStackSize() {
-    return 1;
-  }
-
-  @Override
-  public Component getTooltip() {
-    return TextComponent.getTooltipText("enhancement_slot");
+    helper.spawnItem(item, blockPos.getX(), blockPos.getY(), blockPos.getZ());
+    helper.assertItemEntityPresent(item, blockPos, 0D);
   }
 }

@@ -33,9 +33,12 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.animal.Squid;
+import net.minecraft.world.entity.monster.Guardian;
 import net.minecraft.world.entity.monster.Phantom;
 
 public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
@@ -89,7 +92,7 @@ public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
     }
 
     // Scale entity to fit into block.
-    float entityScaling = EntityScalingManager.getBlockScale(entity);
+    float entityScaling = EntityScalingManager.getEntityScale(entity);
     if (mobFarmType != null) {
       if (mobFarmType == MobFarmType.LUCKY_DROP_FARM) {
         entityScaling *= 0.75f;
@@ -108,7 +111,7 @@ public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
         };
     poseStack.mulPose(Vector3f.YP.rotationDegrees(rotationDegrees));
 
-    // Rotate entity based on entity type.
+    // Rotate and move entity based on entity type.
     if (entity instanceof AbstractSchoolingFish) {
       poseStack.translate(-0.1, 0.5, 0.1);
       poseStack.mulPose(Vector3f.XP.rotationDegrees(2.0F));
@@ -120,6 +123,10 @@ public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
       poseStack.translate(0, 1.30, 0);
     } else if (entity instanceof Phantom) {
       poseStack.translate(0, 0.5, 0);
+    } else if (entity instanceof FlyingMob
+        || (entity instanceof FlyingAnimal flyingAnimal && flyingAnimal.isFlying())
+        || entity instanceof Guardian) {
+      poseStack.translate(0, 0.3 / entityScaling, 0);
     }
 
     // Render entity.
