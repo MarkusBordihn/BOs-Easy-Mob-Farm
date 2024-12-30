@@ -23,7 +23,6 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.capture.MobCaptureManager;
 import de.markusbordihn.easymobfarm.config.MobCaptureCardConfig;
 import java.util.Random;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;

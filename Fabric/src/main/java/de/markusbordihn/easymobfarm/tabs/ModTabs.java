@@ -21,7 +21,7 @@ package de.markusbordihn.easymobfarm.tabs;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.item.Items;
-import de.markusbordihn.easymobfarm.item.ModItems;
+import de.markusbordihn.easymobfarm.item.ModBlockItems;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -51,7 +51,7 @@ public class ModTabs {
         BuiltInRegistries.CREATIVE_MODE_TAB,
         Constants.MOD_ID + ":mob_farms",
         FabricItemGroup.builder()
-            .icon(() -> ModItems.CREATIVE_MOB_FARM.asItem().getDefaultInstance())
+            .icon(() -> ModBlockItems.CREATIVE_MOB_FARM.asItem().getDefaultInstance())
             .title(Component.translatable("itemGroup.easy_mob_farm.mob_farms"))
             .displayItems(new MobFarms())
             .build());

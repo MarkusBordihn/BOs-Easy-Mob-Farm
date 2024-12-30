@@ -19,7 +19,7 @@
 
 package de.markusbordihn.easymobfarm.tabs;
 
-import de.markusbordihn.easymobfarm.item.ModItems;
+import de.markusbordihn.easymobfarm.item.ModBlockItems;
 import net.minecraft.world.item.CreativeModeTab.DisplayItemsGenerator;
 import net.minecraft.world.item.CreativeModeTab.ItemDisplayParameters;
 import net.minecraft.world.item.CreativeModeTab.Output;
@@ -32,14 +32,16 @@ public class MobFarms implements DisplayItemsGenerator {
   public void accept(ItemDisplayParameters itemDisplayParameters, Output output) {
 
     // Default mob farm items
-    output.accept(ModItems.CREATIVE_MOB_FARM.get().getDefaultInstance());
-    output.accept(ModItems.ANIMAL_PLAINS_FARM.get().getDefaultInstance());
-    output.accept(ModItems.BEE_HIVE_FARM.get().getDefaultInstance());
-    output.accept(ModItems.DESERT_FARM.get().getDefaultInstance());
-    output.accept(ModItems.JUNGLE_FARM.get().getDefaultInstance());
-    output.accept(ModItems.MONSTER_PLAINS_CAVE_FARM.get().getDefaultInstance());
-    output.accept(ModItems.NETHER_FORTRESS_FARM.get().getDefaultInstance());
-    output.accept(ModItems.OCEAN_FARM.get().getDefaultInstance());
-    output.accept(ModItems.SWAMP_FARM.get().getDefaultInstance());
+    output.accept(ModBlockItems.CREATIVE_MOB_FARM.get().getDefaultInstance());
+    output.accept(ModBlockItems.ANIMAL_PLAINS_FARM.get().getDefaultInstance());
+    output.accept(ModBlockItems.BEE_HIVE_FARM.get().getDefaultInstance());
+    output.accept(ModBlockItems.DESERT_FARM.get().getDefaultInstance());
+    output.accept(ModBlockItems.IRON_GOLEM_FARM.get().getDefaultInstance());
+    output.accept(ModBlockItems.JUNGLE_FARM.get().getDefaultInstance());
+    output.accept(ModBlockItems.LUCKY_DROP_FARM.get().getDefaultInstance());
+    output.accept(ModBlockItems.MONSTER_PLAINS_CAVE_FARM.get().getDefaultInstance());
+    output.accept(ModBlockItems.NETHER_FORTRESS_FARM.get().getDefaultInstance());
+    output.accept(ModBlockItems.OCEAN_FARM.get().getDefaultInstance());
+    output.accept(ModBlockItems.SWAMP_FARM.get().getDefaultInstance());
   }
 }

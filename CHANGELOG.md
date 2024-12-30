@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+# v8.10.0
+
+- Fixed #114 by adjusting cull-faces to make sure that sides are rendered correctly with shaders.
+- Fixed #111 by fixing typo with block registry name.
+- Fixed #110 by adding additional checks to avoid crashes on server side.
+- Fixed #107 by changing the way entities are downscaled in the mob farm and mob farm screen.
+- Fixed #106 by adding additional test to make sure breaking the mob farm works as expected.
+- Fixed #83 by reducing the encapsulation of translated text components between server and client.
+- Fixed Monster Plains Cave Farm for Fabric.
+- Fixed unbreakable issues with Iron Golem Farm and Lucky Drop Farm.
+- Fixed mob farm block name for Jade and similar mods.
+- Added additional automatic tests for mob farm blocks, items and loot tables.
+- Cleanup assets and models.
+- Smaller performance improvements and optimizations.
+
 # v8.9.1
 
 - Fixed #105 by correcting .isCreative() condition.
