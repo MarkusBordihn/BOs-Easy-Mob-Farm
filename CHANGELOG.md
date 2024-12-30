@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+# v8.10.1
+
+- Fixed missing Mob Farm Template Blocks in Building Blocks Creative Tab.
+
 # v8.10.0
 
 - Fixed #114 by adjusting cull-faces to make sure that sides are rendered correctly with shaders.
