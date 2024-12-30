@@ -54,7 +54,7 @@ public class ModBlocks {
   public static final Block JUNGLE_FARM = new MobFarmBlockWrapper(MobFarmType.JUNGLE_FARM);
   public static final Block LUCKY_DROP_FARM = new MobFarmBlockWrapper(MobFarmType.LUCKY_DROP_FARM);
   public static final Block MONSTER_PLAINS_CAVE_FARM =
-      new MobFarmBlockWrapper(MobFarmType.JUNGLE_FARM);
+      new MobFarmBlockWrapper(MobFarmType.MONSTER_PLAINS_CAVE_FARM);
   public static final Block NETHER_FORTRESS_FARM =
       new MobFarmBlockWrapper(MobFarmType.NETHER_FORTRESS_FARM);
   public static final Block OCEAN_FARM = new MobFarmBlockWrapper(MobFarmType.OCEAN_FARM);

@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.tabs;
 
 import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.item.ModBlockItems;
 import de.markusbordihn.easymobfarm.item.ModItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -45,7 +46,7 @@ public class ModTabs {
           "mob_farms",
           () ->
               CreativeModeTab.builder()
-                  .icon(() -> ModItems.CREATIVE_MOB_FARM.get().getDefaultInstance())
+                  .icon(() -> ModBlockItems.CREATIVE_MOB_FARM.get().getDefaultInstance())
                   .displayItems(new MobFarms())
                   .title(Component.translatable("itemGroup.easy_mob_farm.mob_farms"))
                   .build());

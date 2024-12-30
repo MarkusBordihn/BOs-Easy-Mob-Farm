@@ -26,10 +26,13 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.animal.Squid;
+import net.minecraft.world.entity.monster.Guardian;
 import net.minecraft.world.entity.monster.Phantom;
 import net.minecraft.world.scores.PlayerTeam;
 import net.minecraft.world.scores.Team;
@@ -40,7 +43,7 @@ public class ScreenHelper {
   private ScreenHelper() {}
 
   public static void renderEntity(
-      GuiGraphics guiGraphics, int x, int y, float yRot, float xRot, int scale, Entity entity) {
+      GuiGraphics guiGraphics, int x, int y, float yRot, float xRot, float scale, Entity entity) {
     if (entity instanceof LivingEntity livingEntity) {
       renderEntity(guiGraphics, x, y, yRot, xRot, scale, livingEntity);
     }
@@ -52,7 +55,7 @@ public class ScreenHelper {
       int y,
       float yRot,
       float xRot,
-      int scale,
+      float scale,
       LivingEntity livingEntity) {
     // Prepare Renderer
     boolean isDead = livingEntity.isDeadOrDying();
@@ -112,9 +115,13 @@ public class ScreenHelper {
       guiGraphics.pose().translate(0, 0.5, 0);
     } else if (livingEntity instanceof Squid) {
       guiGraphics.pose().translate(0, 1.30, 0);
-    } else if (livingEntity instanceof Phantom) {
+    } else if (livingEntity instanceof Phantom || livingEntity instanceof Guardian) {
       guiGraphics.pose().translate(0, 0.5, 0);
+    } else if (livingEntity instanceof FlyingMob
+        || (livingEntity instanceof FlyingAnimal flyingAnimal && flyingAnimal.isFlying())) {
+      guiGraphics.pose().translate(0, 1.0 * scale, 0);
     }
+
     Lighting.setupForEntityInInventory();
     EntityRenderDispatcher entityRenderDispatcher =
         Minecraft.getInstance().getEntityRenderDispatcher();

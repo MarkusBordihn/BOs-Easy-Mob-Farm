@@ -20,8 +20,6 @@
 package de.markusbordihn.easymobfarm.item;
 
 import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.block.ModBlocks;
-import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.BlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.CreativeBlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
@@ -45,50 +43,13 @@ import de.markusbordihn.easymobfarm.item.upgrade.filter.NoFlowersFilterItem;
 import de.markusbordihn.easymobfarm.item.upgrade.filter.NoMeatFilterItem;
 import de.markusbordihn.easymobfarm.item.upgrade.slot.BigSlotUpgradeItem;
 import de.markusbordihn.easymobfarm.item.upgrade.slot.SmallSlotUpgradeItem;
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class ModItems {
-
-  public static final Item TIER_0_MOB_FARM_TEMPLATE =
-      new MobFarmTemplateItem(MobFarmTemplateItem.ID_TIER_0, ModBlocks.TIER_0_MOB_FARM_TEMPLATE);
-  public static final Item TIER_1_MOB_FARM_TEMPLATE =
-      new MobFarmTemplateItem(MobFarmTemplateItem.ID_TIER_1, ModBlocks.TIER_1_MOB_FARM_TEMPLATE);
-  public static final Item TIER_2_MOB_FARM_TEMPLATE =
-      new MobFarmTemplateItem(MobFarmTemplateItem.ID_TIER_2, ModBlocks.TIER_2_MOB_FARM_TEMPLATE);
-  public static final Item TIER_3_MOB_FARM_TEMPLATE =
-      new MobFarmTemplateItem(MobFarmTemplateItem.ID_TIER_3, ModBlocks.TIER_3_MOB_FARM_TEMPLATE);
-
-  public static final Item CREATIVE_MOB_FARM =
-      new BlockItem(ModBlocks.CREATIVE_MOB_FARM, new Item.Properties());
-  public static final Item ANIMAL_PLAINS_FARM =
-      new MobFarmBlockItem(MobFarmType.ANIMAL_PLAINS_FARM.getId(), ModBlocks.ANIMAL_PLAINS_FARM);
-  public static final Item BEE_HIVE_FARM =
-      new MobFarmBlockItem(MobFarmType.BEE_HIVE_FARM.getId(), ModBlocks.BEE_HIVE_FARM);
-  public static final Item DESERT_FARM =
-      new MobFarmBlockItem(MobFarmType.DESERT_FARM.getId(), ModBlocks.DESERT_FARM);
-  public static final Item IRON_GOLEM_FARM =
-      new MobFarmBlockItem(MobFarmType.IRON_GOLEM_FARM.getId(), ModBlocks.IRON_GOLEM_FARM);
-  public static final Item JUNGLE_FARM =
-      new MobFarmBlockItem(MobFarmType.JUNGLE_FARM.getId(), ModBlocks.JUNGLE_FARM);
-  public static final Item LUCKY_DROP_FARM =
-      new MobFarmBlockItem(MobFarmType.LUCKY_DROP_FARM.getId(), ModBlocks.LUCKY_DROP_FARM);
-  public static final Item MONSTER_PLAINS_CAVE_FARM =
-      new MobFarmBlockItem(
-          MobFarmType.MONSTER_PLAINS_CAVE_FARM.getId(), ModBlocks.MONSTER_PLAINS_CAVE_FARM);
-  public static final Item NETHER_FORTRESS_FARM =
-      new MobFarmBlockItem(
-          MobFarmType.NETHER_FORTRESS_FARM.getId(), ModBlocks.NETHER_FORTRESS_FARM);
-  public static final Item OCEAN_FARM =
-      new MobFarmBlockItem(MobFarmType.OCEAN_FARM.getId(), ModBlocks.OCEAN_FARM);
-  public static final Item SWAMP_FARM =
-      new MobFarmBlockItem(MobFarmType.SWAMP_FARM.getId(), ModBlocks.SWAMP_FARM);
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
@@ -120,33 +81,6 @@ public class ModItems {
     log.info("{} Slot upgrade items ...", Constants.LOG_REGISTER_PREFIX);
     registerItem(BigSlotUpgradeItem.ID, Items.BIG_SLOT_UPGRADE);
     registerItem(SmallSlotUpgradeItem.ID, Items.SMALL_SLOT_UPGRADE);
-
-    log.info("{} Mob Farm Templates items ...", Constants.LOG_REGISTER_PREFIX);
-    registerItem(MobFarmTemplateItem.ID_TIER_0, TIER_0_MOB_FARM_TEMPLATE);
-    registerItem(MobFarmTemplateItem.ID_TIER_1, TIER_1_MOB_FARM_TEMPLATE);
-    registerItem(MobFarmTemplateItem.ID_TIER_2, TIER_2_MOB_FARM_TEMPLATE);
-    registerItem(MobFarmTemplateItem.ID_TIER_3, TIER_3_MOB_FARM_TEMPLATE);
-    ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.BUILDING_BLOCKS)
-        .register(
-            entries -> {
-              entries.accept(TIER_0_MOB_FARM_TEMPLATE);
-              entries.accept(TIER_1_MOB_FARM_TEMPLATE);
-              entries.accept(TIER_2_MOB_FARM_TEMPLATE);
-              entries.accept(TIER_3_MOB_FARM_TEMPLATE);
-            });
-
-    log.info("{} Mob Farms items ...", Constants.LOG_REGISTER_PREFIX);
-    registerItem(MobFarmType.CREATIVE_MOB_FARM.getId(), CREATIVE_MOB_FARM);
-    registerItem(MobFarmType.ANIMAL_PLAINS_FARM.getId(), ANIMAL_PLAINS_FARM);
-    registerItem(MobFarmType.BEE_HIVE_FARM.getId(), BEE_HIVE_FARM);
-    registerItem(MobFarmType.DESERT_FARM.getId(), DESERT_FARM);
-    registerItem(MobFarmType.IRON_GOLEM_FARM.getId(), IRON_GOLEM_FARM);
-    registerItem(MobFarmType.JUNGLE_FARM.getId(), JUNGLE_FARM);
-    registerItem(MobFarmType.LUCKY_DROP_FARM.getId(), LUCKY_DROP_FARM);
-    registerItem(MobFarmType.MONSTER_PLAINS_CAVE_FARM.getId(), MONSTER_PLAINS_CAVE_FARM);
-    registerItem(MobFarmType.NETHER_FORTRESS_FARM.getId(), NETHER_FORTRESS_FARM);
-    registerItem(MobFarmType.OCEAN_FARM.getId(), OCEAN_FARM);
-    registerItem(MobFarmType.SWAMP_FARM.getId(), SWAMP_FARM);
 
     log.info("{} Mob Catcher items ...", Constants.LOG_REGISTER_PREFIX);
     registerItem(CreativeMobCatcherItem.ID, Items.CREATIVE_MOB_CATCHER);
