@@ -19,13 +19,25 @@
 
 package de.markusbordihn.easymobfarm.capture;
 
+import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.ItemStack;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class MobCaptureManagerClient {
 
+  private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+
+  private MobCaptureManagerClient() {}
+
   public static MobCaptureData getMobCaptureData(ItemStack itemStack) {
-    return MobCaptureManager.getMobCaptureData(itemStack, Minecraft.getInstance().level);
+    try {
+      return MobCaptureManager.getMobCaptureData(itemStack, Minecraft.getInstance().level);
+    } catch (Exception e) {
+      log.error("Failed to get client-side mob capture data", e);
+    }
+    return MobCaptureManager.getMobCaptureData(itemStack, null);
   }
 }

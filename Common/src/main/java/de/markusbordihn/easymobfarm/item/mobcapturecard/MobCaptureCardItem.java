@@ -36,12 +36,16 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -51,6 +55,7 @@ public class MobCaptureCardItem extends Item {
   public static final ResourceLocation RESOURCE_LOCATION =
       ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, ID);
   public static final String TOOLTIP_PREFIX = Constants.TOOLTIP_PREFIX + ID + ".";
+  private Level level;
 
   public MobCaptureCardItem() {
     this(
@@ -112,21 +117,49 @@ public class MobCaptureCardItem extends Item {
   }
 
   @Override
+  public InteractionResult useOn(UseOnContext context) {
+    this.level = context.getLevel();
+    return super.useOn(context);
+  }
+
+  @Override
+  public void onCraftedBy(ItemStack itemStack, Level level, Player player) {
+    this.level = level;
+    super.onCraftedBy(itemStack, level, player);
+  }
+
+  @Override
+  public void onDestroyed(ItemEntity itemEntity) {
+    this.level = itemEntity.level();
+    super.onDestroyed(itemEntity);
+  }
+
+  @Override
+  public void inventoryTick(
+      ItemStack itemStack, Level level, Entity entity, int slot, boolean selected) {
+    if (entity instanceof Player && this.level == null) {
+      this.level = level;
+    }
+    super.inventoryTick(itemStack, level, entity, slot, selected);
+  }
+
+  @Override
   public boolean canAttackBlock(
       BlockState blockState, Level level, BlockPos blockPos, Player player) {
+    this.level = level;
     return false;
   }
 
   @Override
   public Component getName(ItemStack itemStack) {
-    MobCaptureData mobCaptureData = MobCaptureManagerClient.getMobCaptureData(itemStack);
+    MobCaptureData mobCaptureData = MobCaptureManager.getMobCaptureData(itemStack, this.level);
     if (mobCaptureData == null) {
       return super.getName(itemStack);
     }
 
     // Generate name based on variant and color.
     String key = TOOLTIP_PREFIX + "card_name";
-    Object[] args = new Object[] {mobCaptureData.name()};
+    Object[] args = new Object[] {getTranslatedEntityName(mobCaptureData)};
     if (mobCaptureData.variant() != null
         && !mobCaptureData.name().equalsIgnoreCase(mobCaptureData.variant())) {
       if (mobCaptureData.color() != null) {
@@ -174,9 +207,13 @@ public class MobCaptureCardItem extends Item {
       tooltip.add(TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "empty"));
       return;
     }
-
-    tooltip.add(TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "name", mobCaptureData.name()));
+    tooltip.add(
+        TextComponent.getTranslatedTextRaw(
+            TOOLTIP_PREFIX + "name", getTranslatedEntityName(mobCaptureData)));
     if (flag.isAdvanced()) {
+      tooltip.add(
+          TextComponent.getTranslatedTextRaw(
+              TOOLTIP_PREFIX + "description_id", mobCaptureData.name()));
       tooltip.add(
           TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "type", mobCaptureData.type()));
     }

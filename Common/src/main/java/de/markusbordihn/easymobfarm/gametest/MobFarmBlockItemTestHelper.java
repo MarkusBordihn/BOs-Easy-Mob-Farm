@@ -20,8 +20,10 @@
 package de.markusbordihn.easymobfarm.gametest;
 
 import de.markusbordihn.easymobfarm.block.MobFarmBlock;
+import de.markusbordihn.easymobfarm.block.MobFarmTemplateBlock;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.item.MobFarmBlockItem;
+import de.markusbordihn.easymobfarm.item.MobFarmTemplateItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.component.DataComponents;
@@ -48,7 +50,7 @@ public class MobFarmBlockItemTestHelper {
 
   public static void useMobFarmBlockItem(
       GameTestHelper helper, Item item, int tierLevel, Block block) {
-    BlockPos blockPose = new BlockPos(0, 1, 0);
+    BlockPos blockPos = new BlockPos(0, 1, 0);
     ItemStack itemStack = new ItemStack(item);
 
     // Set tier level and custom model data
@@ -58,10 +60,10 @@ public class MobFarmBlockItemTestHelper {
     CustomData.set(DataComponents.CUSTOM_DATA, itemStack, tag);
 
     // Place block and check if it is present
-    useMobFarmBlockItem(helper, itemStack, block, blockPose);
+    useMobFarmBlockItem(helper, itemStack, block, blockPos);
 
     // Check if the placed block has the correct tier level
-    BlockState blockState = helper.getBlockState(blockPose.above());
+    BlockState blockState = helper.getBlockState(blockPos.above());
     GameTestHelpers.assertTrue(
         helper,
         "Expected tier level " + tierLevel + " but found " + MobFarmBlock.getTierLevel(blockState),
@@ -69,10 +71,13 @@ public class MobFarmBlockItemTestHelper {
   }
 
   public static void useMobFarmBlockItem(
-      GameTestHelper helper, ItemStack itemStack, Block block, BlockPos blockPose) {
-    if (itemStack.getItem() instanceof MobFarmBlockItem mobFarmBlockItem
+      GameTestHelper helper, ItemStack itemStack, Block block, BlockPos blockPos) {
+    if (itemStack.getItem() instanceof MobFarmBlockItem
         && block instanceof MobFarmBlock mobFarmBlock) {
-      useMobFarmBlockItem(helper, itemStack, mobFarmBlock, blockPose);
+      useAndTestMobFarmBlockItem(helper, itemStack, mobFarmBlock, blockPos);
+    } else if (itemStack.getItem() instanceof MobFarmTemplateItem
+        && block instanceof MobFarmTemplateBlock mobFarmTemplateBlock) {
+      useAndTestMobFarmBlockItem(helper, itemStack, mobFarmTemplateBlock, blockPos);
     } else {
       helper.fail(
           "Item "
@@ -83,11 +88,11 @@ public class MobFarmBlockItemTestHelper {
     }
   }
 
-  public static void useMobFarmBlockItem(
+  public static void useAndTestMobFarmBlockItem(
       GameTestHelper helper,
       ItemStack mobFarmBlockItemStack,
-      MobFarmBlock mobFarmBlock,
-      BlockPos blockPose) {
+      Block mobFarmBlock,
+      BlockPos blockPos) {
     Player player = helper.makeMockPlayer(GameType.SURVIVAL);
     player.setItemInHand(player.getUsedItemHand(), mobFarmBlockItemStack);
     UseOnContext useOnContext =
@@ -95,12 +100,12 @@ public class MobFarmBlockItemTestHelper {
             player,
             player.getUsedItemHand(),
             new BlockHitResult(
-                helper.absoluteVec(new Vec3(blockPose.getX(), blockPose.getY(), blockPose.getZ())),
+                helper.absoluteVec(new Vec3(blockPos.getX(), blockPos.getY(), blockPos.getZ())),
                 Direction.UP,
-                helper.absolutePos(blockPose),
+                helper.absolutePos(blockPos),
                 false));
     mobFarmBlockItemStack.useOn(useOnContext);
 
-    helper.assertBlockPresent(mobFarmBlock, blockPose.above());
+    helper.assertBlockPresent(mobFarmBlock, blockPos.above());
   }
 }

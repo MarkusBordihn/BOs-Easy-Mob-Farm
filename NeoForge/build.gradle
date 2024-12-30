@@ -13,6 +13,7 @@ base {
 if (file('src/main/resources/META-INF/accesstransformer.cfg').exists()) {
   minecraft.accessTransformers.file file('src/main/resources/META-INF/accesstransformer.cfg')
 }
+
 runs {
   configureEach {
     systemProperty 'forge.logging.markers', 'REGISTRIES'
