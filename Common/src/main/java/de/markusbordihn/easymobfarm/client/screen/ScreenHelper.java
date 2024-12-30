@@ -29,24 +29,28 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.animal.Squid;
+import net.minecraft.world.entity.monster.Guardian;
 import net.minecraft.world.entity.monster.Phantom;
 
 public class ScreenHelper {
 
   private ScreenHelper() {}
 
-  public static void renderEntity(int x, int y, float yRot, float xRot, int scale, Entity entity) {
+  public static void renderEntity(
+      int x, int y, float yRot, float xRot, float scale, Entity entity) {
     if (entity instanceof LivingEntity livingEntity) {
       renderEntity(x, y, yRot, xRot, scale, livingEntity);
     }
   }
 
   public static void renderEntity(
-      int x, int y, float yRot, float xRot, int scale, LivingEntity livingEntity) {
+      int x, int y, float yRot, float xRot, float scale, LivingEntity livingEntity) {
     // Prepare Renderer
     Minecraft minecraft = Minecraft.getInstance();
     float f = (float) Math.atan(yRot / 40.0F);
@@ -91,8 +95,11 @@ public class ScreenHelper {
       poseStack1.translate(0, 0.5, 0);
     } else if (livingEntity instanceof Squid) {
       poseStack1.translate(0, 1.30, 0);
-    } else if (livingEntity instanceof Phantom) {
+    } else if (livingEntity instanceof Phantom || livingEntity instanceof Guardian) {
       poseStack1.translate(0, 0.5, 0);
+    } else if (livingEntity instanceof FlyingMob
+        || (livingEntity instanceof FlyingAnimal flyingAnimal && flyingAnimal.isFlying())) {
+      poseStack1.translate(0, 1.0 * scale, 0);
     }
 
     // Hide gui elements or remove custom name

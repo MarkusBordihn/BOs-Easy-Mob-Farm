@@ -19,7 +19,7 @@
 
 package de.markusbordihn.easymobfarm.data.capture;
 
-import de.markusbordihn.easymobfarm.network.components.TextComponent;
+import java.util.Locale;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -27,21 +27,44 @@ import net.minecraft.world.entity.LivingEntity;
 public class MobNameData {
 
   public static final String NAME_TAG = "Name";
+  public static final String TYPE_TAG = "Type";
+  public static final String ID_TAG = "id";
 
   private MobNameData() {}
 
   public static String getName(final EntityType<?> entityType) {
-    return TextComponent.getTranslatedTextRaw(entityType.getDescriptionId()).getString();
+    return entityType.getDescriptionId();
   }
 
   public static String getName(final LivingEntity livingEntity) {
-    return livingEntity.getName().getString();
+    return livingEntity.getType().getDescriptionId();
   }
 
   public static String getName(final CompoundTag compoundTag) {
-    if (compoundTag == null || !compoundTag.contains(NAME_TAG)) {
+    if (compoundTag == null) {
       return "";
     }
-    return compoundTag.getString(NAME_TAG);
+
+    // Check if we have a valid name tag.
+    String name = compoundTag.getString(NAME_TAG);
+    if (compoundTag.contains(NAME_TAG)
+        && name.startsWith("entity.")
+        && name.equals(name.toLowerCase(Locale.ROOT))) {
+      return name;
+    }
+
+    // Check if we have a valid type tag.
+    String entityTypeName = compoundTag.getString(TYPE_TAG);
+    if (!compoundTag.contains(TYPE_TAG)) {
+      entityTypeName = compoundTag.getString(ID_TAG);
+    }
+    if (!entityTypeName.contains(":")
+        || !entityTypeName.equals(entityTypeName.toLowerCase(Locale.ROOT))) {
+      return "";
+    }
+
+    // Get Name over entity type, if possible.
+    EntityType<?> entityType = EntityType.byString(entityTypeName).orElse(null);
+    return entityType != null ? entityType.getDescriptionId() : "";
   }
 }

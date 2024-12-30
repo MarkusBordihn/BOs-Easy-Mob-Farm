@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.tabs;
 
 import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.item.ModBlockItems;
 import de.markusbordihn.easymobfarm.item.ModItems;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -36,7 +37,7 @@ public class ModTabs {
   public static final CreativeModeTab TAB_MOB_FARMS =
       new CreativeModeTab(Constants.MOD_PREFIX + "mob_farms") {
         public ItemStack makeIcon() {
-          return ModItems.CREATIVE_MOB_FARM.get().getDefaultInstance();
+          return ModBlockItems.CREATIVE_MOB_FARM.get().getDefaultInstance();
         }
       };
 

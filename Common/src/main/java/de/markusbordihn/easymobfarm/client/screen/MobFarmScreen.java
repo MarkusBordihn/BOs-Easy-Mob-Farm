@@ -164,7 +164,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
       if (this.getMenu().getMobFarmType() != null) {
         infoText.add(
             TextComponent.getTranslatedTextRaw(
-                    Constants.BLOCK_PREFIX + this.getMenu().getMobFarmType().getId(),
+                TOOLTIP_PREFIX + this.getMenu().getMobFarmType().getId(),
                     String.valueOf(this.getMenu().getMobFarmTierLevel()))
                 .withStyle(
                     switch (this.getMenu().getMobFarmTierLevel()) {
