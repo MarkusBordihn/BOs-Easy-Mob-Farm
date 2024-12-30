@@ -104,7 +104,7 @@ public class MobCaptureCardItem extends Item {
 
     // Generate name based on variant and color.
     String key = TOOLTIP_PREFIX + "card_name";
-    Object[] args = new Object[] {mobCaptureData.name()};
+    Object[] args = new Object[] {getTranslatedEntityName(mobCaptureData)};
     if (mobCaptureData.variant() != null
         && !mobCaptureData.name().equalsIgnoreCase(mobCaptureData.variant())) {
       if (mobCaptureData.color() != null) {
@@ -158,9 +158,13 @@ public class MobCaptureCardItem extends Item {
       tooltip.add(TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "empty"));
       return;
     }
-
-    tooltip.add(TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "name", mobCaptureData.name()));
+    tooltip.add(
+        TextComponent.getTranslatedTextRaw(
+            TOOLTIP_PREFIX + "name", getTranslatedEntityName(mobCaptureData)));
     if (flag.isAdvanced()) {
+      tooltip.add(
+          TextComponent.getTranslatedTextRaw(
+              TOOLTIP_PREFIX + "description_id", mobCaptureData.name()));
       tooltip.add(
           TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "type", mobCaptureData.type()));
     }

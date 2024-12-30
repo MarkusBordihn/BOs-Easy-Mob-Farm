@@ -22,22 +22,21 @@ package de.markusbordihn.easymobfarm.client.renderer.manager;
 import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.FlyingMob;
+import net.minecraft.world.entity.animal.FlyingAnimal;
+import net.minecraft.world.entity.monster.ElderGuardian;
 
 public class EntityScalingManager {
 
-  private static final float MAX_BLOCK_SCALE = 0.85f;
-  private static final float MAX_UI_WIDTH_PIXELS = 47.0f;
-  private static final float MAX_UI_HEIGHT_PIXELS = 71.0f;
-  private static final float DEFAULT_SCALE_BLOCK = 0.40f;
-  private static final float DEFAULT_SCALE_UI = 0.40f;
+  private static final float MAX_BLOCK_SCALE = 0.80f;
+  private static final float DEFAULT_SCALE_BLOCK = 0.30f;
 
-  private static final Map<Class<? extends Entity>, Float> blockScaleCache = new HashMap<>();
-  private static final Map<Class<? extends Entity>, Integer> uiScaleCache = new HashMap<>();
+  private static final Map<Class<? extends Entity>, Float> entityScaleCache = new HashMap<>();
 
   private EntityScalingManager() {}
 
-  public static float getBlockScale(Entity entity) {
-    return blockScaleCache.computeIfAbsent(
+  public static float getEntityScale(Entity entity) {
+    return entityScaleCache.computeIfAbsent(
         entity.getClass(),
         cls -> {
           // Get entity width and height from bounding box or dimensions.
@@ -54,6 +53,12 @@ public class EntityScalingManager {
           // Return default scale if entity width or height is not available.
           if (entityWidth == 0 || entityHeight == 0) {
             return DEFAULT_SCALE_BLOCK;
+          }
+
+          // Add extra scale numbers for specific entities to consider additional
+          // space requirements for body parts like wings or tails.
+          if (entity instanceof ElderGuardian) {
+            entityWidth *= 1.8f;
           }
 
           // Calculate scale factor for block.
@@ -63,42 +68,19 @@ public class EntityScalingManager {
             return DEFAULT_SCALE_BLOCK;
           }
           float scaleFactor = Math.max(entityWidth, entityHeight) / MAX_BLOCK_SCALE;
-          return scaleFactor > 1.0f ? MAX_BLOCK_SCALE / scaleFactor : MAX_BLOCK_SCALE;
+          if (scaleFactor > 1.0f) {
+            if (entity instanceof FlyingMob
+                || (entity instanceof FlyingAnimal flyingAnimal && flyingAnimal.isFlying())) {
+              return MAX_BLOCK_SCALE / scaleFactor * 0.60f;
+            }
+            return MAX_BLOCK_SCALE / scaleFactor;
+          }
+          return MAX_BLOCK_SCALE;
         });
   }
 
-  public static int getUIScale(Entity entity) {
-    return uiScaleCache.computeIfAbsent(
-        entity.getClass(),
-        cls -> {
-
-          // Get entity width and height from bounding box or dimensions.
-          float entityWidth;
-          float entityHeight;
-          if (entity.getBoundingBox().getXsize() > 0 && entity.getBoundingBox().getYsize() > 0) {
-            entityWidth = (float) entity.getBoundingBox().getXsize();
-            entityHeight = (float) entity.getBoundingBox().getYsize();
-          } else {
-            entityWidth = entity.getDimensions(entity.getPose()).width();
-            entityHeight = entity.getDimensions(entity.getPose()).height();
-          }
-
-          // Return default scale if entity width or height is not available.
-          if (entityWidth == 0 || entityHeight == 0) {
-            return Math.round(DEFAULT_SCALE_UI * 9);
-          }
-
-          // Calculate scale factor for UI.
-          if ((entityWidth < MAX_UI_WIDTH_PIXELS && entityHeight < MAX_UI_HEIGHT_PIXELS)
-              || (entityWidth * DEFAULT_SCALE_UI < MAX_UI_WIDTH_PIXELS
-                  && entityHeight * DEFAULT_SCALE_UI < MAX_UI_HEIGHT_PIXELS)) {
-            return (int) (DEFAULT_SCALE_UI * Math.min(MAX_UI_WIDTH_PIXELS, MAX_UI_HEIGHT_PIXELS));
-          }
-          float scaleFactor =
-              Math.min(
-                  MAX_UI_WIDTH_PIXELS / (entityWidth * 16),
-                  MAX_UI_HEIGHT_PIXELS / (entityHeight * 16));
-          return Math.round(scaleFactor * 9);
-        });
+  public static float getUIScale(Entity entity) {
+    float entityScale = getEntityScale(entity);
+    return entityScale * 45;
   }
 }
