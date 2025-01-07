@@ -126,7 +126,7 @@ public class RendererManager {
     if (entity instanceof Sheep sheepEntity) {
       sheepEntity.setSheared(false);
       if (mobCaptureData.hasColor()) {
-        sheepEntity.setColor(mobCaptureData.color());
+        sheepEntity.setColor(mobCaptureData.color().getDyeColor());
       }
     }
 

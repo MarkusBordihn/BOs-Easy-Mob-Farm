@@ -21,11 +21,11 @@ package de.markusbordihn.easymobfarm.client.renderer.item.properties.select;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
+import de.markusbordihn.easymobfarm.data.capture.MobColor;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.item.properties.select.SelectItemModelProperty;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 
@@ -41,8 +41,8 @@ public record MobCaptureCardEntityColor() implements SelectItemModelProperty<Str
       LivingEntity livingEntity,
       int i,
       ItemDisplayContext itemDisplayContext) {
-    DyeColor dyeColor = MobCaptureCardItem.getEntityColor(itemStack);
-    return dyeColor == null ? null : dyeColor.getName().toLowerCase();
+    MobColor mobColor = MobCaptureCardItem.getEntityColor(itemStack);
+    return mobColor == null ? null : mobColor.getName().toLowerCase();
   }
 
   @Override

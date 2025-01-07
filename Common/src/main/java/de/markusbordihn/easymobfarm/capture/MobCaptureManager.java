@@ -20,11 +20,12 @@
 package de.markusbordihn.easymobfarm.capture;
 
 import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.component.DataComponents;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
+import de.markusbordihn.easymobfarm.data.capture.MobColor;
 import de.markusbordihn.easymobfarm.data.capture.MobEntityData;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -32,10 +33,7 @@ import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SpawnEggItem;
-import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -45,7 +43,6 @@ import org.apache.logging.log4j.Logger;
 
 public class MobCaptureManager {
 
-  public static final String MOB_CAPTURE_DATA_TAG = "MobCaptureData";
   public static final String CAT_VARIANT_TAG = "variant";
   public static final String COLOR_TAG = "Color";
 
@@ -188,7 +185,7 @@ public class MobCaptureManager {
   }
 
   public static ItemStack createMobCaptureCard(
-      ItemLike itemLike, EntityType<?> entityType, String variant, DyeColor dyeColor) {
+      ItemLike itemLike, EntityType<?> entityType, String variant, MobColor mobColor) {
     if (itemLike == null || entityType == null) {
       return null;
     }
@@ -196,7 +193,7 @@ public class MobCaptureManager {
     CompoundTag compoundTag = new CompoundTag();
 
     // Set variant and corresponding data.
-    if (variant != null) {
+    if (variant != null && !variant.isEmpty()) {
       mobCaptureData = mobCaptureData.withVariant(variant);
       if (entityType == EntityType.CAT) {
         compoundTag.putString(CAT_VARIANT_TAG, variant);
@@ -204,9 +201,9 @@ public class MobCaptureManager {
     }
 
     // Set dye color and corresponding data.
-    if (dyeColor != null) {
-      mobCaptureData = mobCaptureData.withColor(dyeColor);
-      compoundTag.putInt(COLOR_TAG, dyeColor.getId());
+    if (mobColor != null && mobColor != MobColor.NONE) {
+      mobCaptureData = mobCaptureData.withColor(mobColor);
+      compoundTag.putInt(COLOR_TAG, mobColor.getDyeColor().getId());
     }
 
     // Return item stack with mob capture data.
@@ -217,19 +214,14 @@ public class MobCaptureManager {
     if (itemStack == null || itemStack.isEmpty() || mobCaptureData == null) {
       return;
     }
-    CompoundTag compoundTag =
-        itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).getUnsafe();
-    compoundTag.put(MOB_CAPTURE_DATA_TAG, mobCaptureData.createTag());
-    CustomData.set(DataComponents.CUSTOM_DATA, itemStack, compoundTag);
+    itemStack.set(DataComponents.MOB_CAPTURE_DATA, mobCaptureData);
   }
 
   public static boolean hasMobCaptureData(ItemStack itemStack) {
     return itemStack != null
         && !itemStack.isEmpty()
-        && itemStack.has(DataComponents.CUSTOM_DATA)
-        && itemStack
-            .getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY)
-            .contains(MOB_CAPTURE_DATA_TAG);
+        && itemStack.has(DataComponents.MOB_CAPTURE_DATA)
+        && !itemStack.getOrDefault(DataComponents.MOB_CAPTURE_DATA, MobCaptureData.EMPTY).isEmpty();
   }
 
   public static MobCaptureData getMobCaptureData(ItemStack itemStack, Level level) {
@@ -237,18 +229,6 @@ public class MobCaptureManager {
       return null;
     }
 
-    // Get mob capture data from item stack.
-    CompoundTag compoundTag =
-        itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).getUnsafe();
-
-    // Mob capture card compatible data.
-    if (compoundTag != null
-        && compoundTag.contains(MOB_CAPTURE_DATA_TAG)
-        && !(itemStack.getItem() instanceof SpawnEggItem)) {
-      return new MobCaptureData(compoundTag.getCompound(MOB_CAPTURE_DATA_TAG));
-    }
-
-    // Try to get mob capture data from item stack.
-    return new MobCaptureData(itemStack, compoundTag, level);
+    return itemStack.get(DataComponents.MOB_CAPTURE_DATA);
   }
 }

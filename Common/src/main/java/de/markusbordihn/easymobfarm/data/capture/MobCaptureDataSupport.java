@@ -161,12 +161,12 @@ public class MobCaptureDataSupport {
     if (entityType != null) {
       return BuiltInRegistries.ENTITY_TYPE.getKey(entityType).toString();
     }
-    return null;
+    return "";
   }
 
   public static String getItemRegistryName(Item item) {
     if (item == null) {
-      return null;
+      return "";
     }
     return BuiltInRegistries.ITEM.getKey(item).toString();
   }

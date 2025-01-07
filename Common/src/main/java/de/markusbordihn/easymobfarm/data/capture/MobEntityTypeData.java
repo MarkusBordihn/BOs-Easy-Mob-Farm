@@ -74,7 +74,7 @@ public class MobEntityTypeData {
       }
     }
 
-    return null;
+    return "";
   }
 
   public static EntityType<?> getEntityType(

@@ -40,6 +40,10 @@ dependencies {
     modRuntimeOnly("curse.maven:xaeros_minimap-263420:${project.fabric_xaeros_minimap_mod}")
   }
 
+  // Bug Testing
+  // modRuntimeOnly("curse.maven:polymer-551890:6012918")
+  // modRuntimeOnly("curse.maven:trailier-tales-1124703:5960030")
+
   // Create: Integration Tests
   //  modRuntimeOnly "io.github.tropheusj:milk-lib:1.2.60"
   //  modRuntimeOnly "com.jamieswhiteshirt:reach-entity-attributes:2.4.0"

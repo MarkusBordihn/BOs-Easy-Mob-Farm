@@ -23,6 +23,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.capture.MobCaptureManager;
 import de.markusbordihn.easymobfarm.capture.MobCaptureManagerClient;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
+import de.markusbordihn.easymobfarm.data.capture.MobColor;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.Arrays;
 import java.util.List;
@@ -40,7 +41,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -101,19 +101,19 @@ public class MobCaptureCardItem extends Item {
     return mobCaptureData != null ? mobCaptureData.rarity() : Rarity.COMMON;
   }
 
-  public static DyeColor getEntityColor(ItemStack itemStack) {
+  public static MobColor getEntityColor(ItemStack itemStack) {
     MobCaptureData mobCaptureData = MobCaptureManager.getMobCaptureData(itemStack, null);
-    return mobCaptureData != null ? mobCaptureData.color() : null;
+    return mobCaptureData != null ? mobCaptureData.color() : MobColor.NONE;
   }
 
   public static String getEntityType(ItemStack itemStack) {
     MobCaptureData mobCaptureData = MobCaptureManager.getMobCaptureData(itemStack, null);
-    return mobCaptureData != null ? mobCaptureData.type() : null;
+    return mobCaptureData != null ? mobCaptureData.type() : "";
   }
 
   public static String getEntityVariant(ItemStack itemStack) {
     MobCaptureData mobCaptureData = MobCaptureManager.getMobCaptureData(itemStack, null);
-    return mobCaptureData != null ? mobCaptureData.variant() : null;
+    return mobCaptureData != null ? mobCaptureData.variant() : "";
   }
 
   @Override
@@ -160,9 +160,9 @@ public class MobCaptureCardItem extends Item {
     // Generate name based on variant and color.
     String key = TOOLTIP_PREFIX + "card_name";
     Object[] args = new Object[] {getTranslatedEntityName(mobCaptureData)};
-    if (mobCaptureData.variant() != null
+    if (mobCaptureData.hasVariant()
         && !mobCaptureData.name().equalsIgnoreCase(mobCaptureData.variant())) {
-      if (mobCaptureData.color() != null) {
+      if (mobCaptureData.hasColor()) {
         key += "_variant_color";
         args =
             new Object[] {
@@ -177,7 +177,7 @@ public class MobCaptureCardItem extends Item {
               getTranslatedEntityName(mobCaptureData), getVariantName(mobCaptureData.variant())
             };
       }
-    } else if (mobCaptureData.color() != null) {
+    } else if (mobCaptureData.hasColor()) {
       key += "_color";
       args =
           new Object[] {getTranslatedEntityName(mobCaptureData), mobCaptureData.color().getName()};
@@ -217,11 +217,11 @@ public class MobCaptureCardItem extends Item {
       tooltip.add(
           TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "type", mobCaptureData.type()));
     }
-    if (mobCaptureData.variant() != null) {
+    if (mobCaptureData.hasVariant()) {
       tooltip.add(
           TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "variant", mobCaptureData.variant()));
     }
-    if (mobCaptureData.color() != null) {
+    if (mobCaptureData.hasColor()) {
       tooltip.add(
           TextComponent.getTranslatedTextRaw(
               TOOLTIP_PREFIX + "color", mobCaptureData.color().getName()));

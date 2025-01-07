@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.config;
 
 import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.data.capture.MobColor;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Locale;
@@ -28,7 +29,6 @@ import java.util.Properties;
 import java.util.Set;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.DyeColor;
 
 public class MobCaptureCardModelsConfig extends Config {
 
@@ -160,7 +160,7 @@ public class MobCaptureCardModelsConfig extends Config {
   }
 
   public static ModelResourceLocation getModelResourceLocation(
-      String entityName, String variant, DyeColor color) {
+      String entityName, String variant, MobColor color) {
     return mobCaptureCardModels.getOrDefault(
         getEntityKey(entityName, variant, color), mobCaptureCardModels.get(entityName));
   }
@@ -170,7 +170,7 @@ public class MobCaptureCardModelsConfig extends Config {
   }
 
   public static String getEntityKey(
-      final String entityName, final String variant, final DyeColor color) {
+      final String entityName, final String variant, final MobColor color) {
     KEY_BUILDER.setLength(0);
     KEY_BUILDER.append(entityName.trim().toLowerCase(Locale.ROOT));
 
@@ -182,7 +182,7 @@ public class MobCaptureCardModelsConfig extends Config {
       KEY_BUILDER.append(KEY_SEPARATOR).append(variant.trim().toLowerCase(Locale.ROOT));
     }
 
-    if (color != null) {
+    if (color != null && color != MobColor.NONE) {
       KEY_BUILDER.append(KEY_SEPARATOR).append(color.getName().toLowerCase(Locale.ROOT));
     }
 
@@ -195,16 +195,17 @@ public class MobCaptureCardModelsConfig extends Config {
 
     // Check entity name
     if (entityName.isEmpty()) {
-      return new Object[] {null, null, null};
+      log.error("Unknown entity type {} for mob capture card!", entityName);
+      return new Object[] {"Unknown", "", MobColor.NONE};
     }
 
     // Check for variant and color
-    String variant = null;
-    DyeColor color = null;
+    String variant = "";
+    MobColor color = MobColor.NONE;
     if (parts.length == 3) {
       variant = parts[1];
       try {
-        color = DyeColor.valueOf(parts[2].toUpperCase(Locale.ROOT));
+        color = MobColor.valueOf(parts[2].toUpperCase(Locale.ROOT));
       } catch (IllegalArgumentException e) {
         // No color found
       }
@@ -212,8 +213,14 @@ public class MobCaptureCardModelsConfig extends Config {
       if (entityName.equals("minecraft:cat")) {
         variant = parts[1];
       } else {
+        // Check if we have a valid mob color, otherwise use it as variant.
         try {
-          color = DyeColor.valueOf(parts[1].toUpperCase(Locale.ROOT));
+          MobColor mobColor = MobColor.valueOf(parts[1].toUpperCase(Locale.ROOT));
+          if (mobColor != MobColor.NONE) {
+            color = mobColor;
+          } else {
+            variant = parts[1];
+          }
         } catch (IllegalArgumentException e) {
           variant = parts[1];
         }

@@ -103,7 +103,7 @@
           ],
           "fallback": {
             "type": "minecraft:model",
-            "model": "easy_mob_farm:item/mob_capture_card/minecraft/cat/black"
+            "model": "easy_mob_farm:item/mob_capture_card/minecraft/cat_black"
           }
         }
       },
