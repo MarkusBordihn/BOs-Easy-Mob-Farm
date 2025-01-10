@@ -23,6 +23,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.capture.MobCaptureManager;
 import de.markusbordihn.easymobfarm.config.MobCaptureCardModelsConfig;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
+import de.markusbordihn.easymobfarm.data.capture.MobColor;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
 import java.util.Collections;
 import java.util.LinkedHashSet;
@@ -31,7 +32,6 @@ import java.util.Set;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.ItemLike;
@@ -78,6 +78,7 @@ public class CustomMobCaptureCards {
               }
               String entityName = (String) modelKeyData[0];
               if (entityName.isEmpty()) {
+                log.error("Empty entity name for mob capture card at key {}!", modelKey);
                 return;
               }
               Optional<EntityType<?>> entityType =
@@ -95,7 +96,7 @@ public class CustomMobCaptureCards {
                       mobCaptureCardItem,
                       entityType.get(),
                       (String) modelKeyData[1],
-                      (DyeColor) modelKeyData[2]);
+                      (MobColor) modelKeyData[2]);
               if (itemStack != null) {
                 result.add(itemStack);
               }

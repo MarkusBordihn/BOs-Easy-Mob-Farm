@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+# v9.1.0
+
+- Fixed Spawn Eggs not working with the Mob Farm.
+- Fixed possible null pointer exception with unsupported mob capture items.
+- Smaller Code cleanup.
+
+# v9.0.0
+
+⚠️ Important Major release with breaking changes for Minecraft 1.21.x and later.
+
+- Fixed #120, #117 by making sure default Render State is set for 3rd party mods.
+- Fixed #103, #118 by adding separate Mob Capture Card Data Component.
+- Fixed smaller Render issues with 1.21.x.
+- Upgraded wiki and added recipes for each single item.
+
+🚨 Backup your world – Existing Mob Capture Cards will be lost for 1.21.x due #103.
+
 # v8.10.1
 
 - Fixed missing Mob Farm Template Blocks in Building Blocks Creative Tab.

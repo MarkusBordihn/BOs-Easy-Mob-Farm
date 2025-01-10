@@ -35,7 +35,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -103,9 +102,9 @@ public class MobCaptureCardItem extends Item {
     // Generate name based on variant and color.
     String key = TOOLTIP_PREFIX + "card_name";
     Object[] args = new Object[] {getTranslatedEntityName(mobCaptureData)};
-    if (mobCaptureData.variant() != null
+    if (mobCaptureData.hasVariant()
         && !mobCaptureData.name().equalsIgnoreCase(mobCaptureData.variant())) {
-      if (mobCaptureData.color() != null) {
+      if (mobCaptureData.hasColor()) {
         key += "_variant_color";
         args =
             new Object[] {
@@ -120,7 +119,7 @@ public class MobCaptureCardItem extends Item {
               getTranslatedEntityName(mobCaptureData), getVariantName(mobCaptureData.variant())
             };
       }
-    } else if (mobCaptureData.color() != null) {
+    } else if (mobCaptureData.hasColor()) {
       key += "_color";
       args =
           new Object[] {getTranslatedEntityName(mobCaptureData), mobCaptureData.color().getName()};
@@ -131,12 +130,6 @@ public class MobCaptureCardItem extends Item {
         .append(
             TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_PREFIX + ID)
                 .withStyle(ChatFormatting.GRAY));
-  }
-
-  // @Override
-  public Rarity getRarity(ItemStack itemStack) {
-    MobCaptureData mobCaptureData = MobCaptureManager.getMobCaptureData(itemStack);
-    return mobCaptureData != null ? mobCaptureData.rarity() : Rarity.COMMON;
   }
 
   @Override
@@ -166,11 +159,11 @@ public class MobCaptureCardItem extends Item {
       tooltip.add(
           TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "type", mobCaptureData.type()));
     }
-    if (mobCaptureData.variant() != null) {
+    if (mobCaptureData.hasVariant()) {
       tooltip.add(
           TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "variant", mobCaptureData.variant()));
     }
-    if (mobCaptureData.color() != null) {
+    if (mobCaptureData.hasColor()) {
       tooltip.add(
           TextComponent.getTranslatedTextRaw(
               TOOLTIP_PREFIX + "color", mobCaptureData.color().getName()));
