@@ -19,11 +19,16 @@
 
 package de.markusbordihn.easymobfarm.data.capture;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 
@@ -32,11 +37,68 @@ public record MobCaptureData(
     String type,
     EntityType<?> entityType,
     CompoundTag data,
-    DyeColor color,
+    MobColor color,
     String variant,
     Rarity rarity,
     boolean isFoil) {
 
+  public static final String TYPE_SEPARATOR = ":";
+  public static final String ID = "mob_capture_data";
+
+  public static final MobCaptureData EMPTY =
+      new MobCaptureData(
+          "",
+          "",
+          EntityType.ARMOR_STAND,
+          new CompoundTag(),
+          MobColor.NONE,
+          "",
+          Rarity.COMMON,
+          false);
+  public static final Codec<MobCaptureData> CODEC =
+      RecordCodecBuilder.create(
+          instance ->
+              instance
+                  .group(
+                      Codec.STRING.fieldOf("name").forGetter(MobCaptureData::name),
+                      Codec.STRING.fieldOf("type").forGetter(MobCaptureData::type),
+                      BuiltInRegistries.ENTITY_TYPE
+                          .byNameCodec()
+                          .fieldOf("entityType")
+                          .forGetter(MobCaptureData::entityType),
+                      CompoundTag.CODEC
+                          .optionalFieldOf("data", new CompoundTag())
+                          .forGetter(MobCaptureData::data),
+                      MobColor.CODEC
+                          .optionalFieldOf("color", MobColor.NONE)
+                          .forGetter(MobCaptureData::color),
+                      Codec.STRING
+                          .optionalFieldOf("variant", "")
+                          .forGetter(MobCaptureData::variant),
+                      Rarity.CODEC
+                          .optionalFieldOf("rarity", Rarity.COMMON)
+                          .forGetter(MobCaptureData::rarity),
+                      Codec.BOOL.optionalFieldOf("isFoil", false).forGetter(MobCaptureData::isFoil))
+                  .apply(instance, MobCaptureData::new));
+  public static final StreamCodec<RegistryFriendlyByteBuf, MobCaptureData> STREAM_CODEC =
+      StreamCodec.composite(
+          ByteBufCodecs.STRING_UTF8,
+          MobCaptureData::name,
+          ByteBufCodecs.STRING_UTF8,
+          MobCaptureData::type,
+          ByteBufCodecs.registry(Registries.ENTITY_TYPE),
+          MobCaptureData::entityType,
+          ByteBufCodecs.COMPOUND_TAG,
+          MobCaptureData::data,
+          MobColor.STREAM_CODEC,
+          MobCaptureData::color,
+          ByteBufCodecs.STRING_UTF8,
+          MobCaptureData::variant,
+          Rarity.STREAM_CODEC,
+          MobCaptureData::rarity,
+          ByteBufCodecs.BOOL,
+          MobCaptureData::isFoil,
+          MobCaptureData::new);
   private static final int MAX_ID_LIMIT = 16777216;
 
   public MobCaptureData(final String name, final EntityType<?> entityType, final Rarity rarity) {
@@ -100,8 +162,14 @@ public record MobCaptureData(
   }
 
   public int getCardId() {
-    int namespaceHash = (this.type != null) ? this.type.split(":")[0].hashCode() : 0;
-    int pathHash = (this.type != null) ? this.type.split(":")[1].hashCode() : 0;
+    int namespaceHash =
+        (this.type != null && this.type.contains(TYPE_SEPARATOR))
+            ? this.type.split(TYPE_SEPARATOR)[0].hashCode()
+            : 0;
+    int pathHash =
+        (this.type != null && this.type.contains(TYPE_SEPARATOR))
+            ? this.type.split(TYPE_SEPARATOR)[1].hashCode()
+            : 0;
     int colorHash = (this.color != null) ? this.color.hashCode() : 0;
     int variantHash = (this.variant != null) ? this.variant.hashCode() : 0;
 
@@ -116,7 +184,7 @@ public record MobCaptureData(
     return (result & 0x7FFFFFFF) % MAX_ID_LIMIT;
   }
 
-  public MobCaptureData withColor(final DyeColor color) {
+  public MobCaptureData withColor(final MobColor color) {
     return new MobCaptureData(name, type, entityType, data, color, variant, rarity, isFoil);
   }
 
@@ -136,8 +204,12 @@ public record MobCaptureData(
     return new MobCaptureData(name, type, entityType, data, color, variant, rarity, isFoil);
   }
 
+  public boolean isEmpty() {
+    return this.equals(EMPTY);
+  }
+
   public boolean hasColor() {
-    return this.color != null;
+    return this.color != null && this.color != MobColor.NONE;
   }
 
   public boolean hasData() {
@@ -150,27 +222,6 @@ public record MobCaptureData(
 
   public boolean hasRarity() {
     return this.rarity != null;
-  }
-
-  public CompoundTag write(final CompoundTag compoundTag) {
-    compoundTag.putString(MobNameData.NAME_TAG, this.name);
-    compoundTag.putString(
-        MobEntityTypeData.TYPE_TAG,
-        BuiltInRegistries.ENTITY_TYPE.getKey(this.entityType).toString());
-    compoundTag.put(MobEntityData.DATA_TAG, this.data);
-    if (this.hasColor()) {
-      compoundTag.putString(MobColorData.COLOR_TAG, this.color.getName());
-    }
-    if (this.hasVariant()) {
-      compoundTag.putString(MobVariantData.VARIANT_TAG, this.variant);
-    }
-    compoundTag.putString(MobRarityData.RARITY_TAG, this.rarity.name());
-    compoundTag.putBoolean(MobFoilData.FOIL_TAG, this.isFoil);
-    return compoundTag;
-  }
-
-  public CompoundTag createTag() {
-    return write(new CompoundTag());
   }
 
   @Override

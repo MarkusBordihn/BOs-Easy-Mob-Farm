@@ -74,7 +74,9 @@ public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
     EntityRenderer<Entity, LivingEntityRenderState> entityRenderer =
         (EntityRenderer<Entity, LivingEntityRenderState>)
             entityRenderDispatcher.getRenderer(entity);
-    LivingEntityRenderState livingEntityRenderState = entityRenderer.createRenderState();
+
+    // Prepare entity rendering state.
+    LivingEntityRenderState livingEntityRenderState = entityRenderer.createRenderState(entity, 0);
 
     // Animation support
     entity.tickCount = (int) blockEntity.getLevel().getGameTime();

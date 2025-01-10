@@ -22,6 +22,7 @@ package de.markusbordihn.easymobfarm;
 import cpw.mods.modlauncher.Launcher;
 import cpw.mods.modlauncher.api.IEnvironment;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
+import de.markusbordihn.easymobfarm.component.ModDataComponents;
 import de.markusbordihn.easymobfarm.config.Config;
 import de.markusbordihn.easymobfarm.debug.DebugManager;
 import de.markusbordihn.easymobfarm.experience.ExperienceManager;
@@ -84,6 +85,9 @@ public class EasyMobFarm {
 
     log.info("{} Menu Types ...", Constants.LOG_REGISTER_PREFIX);
     ModMenuTypes.MENU_TYPES.register(modEventBus);
+
+    log.info("{} Mod Data Components ...", Constants.LOG_REGISTER_PREFIX);
+    ModDataComponents.DATA_COMPONENTS.register(modEventBus);
 
     // Initialize the client mod initializer
     DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> new EasyMobFarmClient(modEventBus));

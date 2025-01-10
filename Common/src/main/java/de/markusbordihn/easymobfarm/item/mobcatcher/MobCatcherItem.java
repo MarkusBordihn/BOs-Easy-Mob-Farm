@@ -23,6 +23,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.MobFarmBlock;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.capture.MobCaptureManager;
+import de.markusbordihn.easymobfarm.component.DataComponents;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.item.MobFarmItem;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
@@ -30,9 +31,7 @@ import java.util.List;
 import java.util.Set;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -42,7 +41,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.component.CustomModelData;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
@@ -70,11 +68,8 @@ public class MobCatcherItem extends MobFarmItem {
 
   public boolean hasMobCaptureData(ItemStack itemStack) {
     return itemStack != null
-        && itemStack.has(DataComponents.CUSTOM_DATA)
-        && itemStack.get(DataComponents.CUSTOM_DATA) != null
-        && itemStack
-            .getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY)
-            .contains(MOB_CAPTURE_DATA_TAG);
+        && itemStack.has(DataComponents.MOB_CAPTURE_DATA)
+        && !itemStack.getOrDefault(DataComponents.MOB_CAPTURE_DATA, MobCaptureData.EMPTY).isEmpty();
   }
 
   public float getRequiredHealthPercentageToCapture() {
@@ -126,14 +121,11 @@ public class MobCatcherItem extends MobFarmItem {
 
     // Release the mob and remove the capture data.
     if (!level.isClientSide && level instanceof ServerLevel serverLevel) {
-      CustomData customData = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
-      CompoundTag compoundTag = customData.getUnsafe();
-      MobCaptureData mobCaptureData =
-          new MobCaptureData(compoundTag.getCompound(MOB_CAPTURE_DATA_TAG));
+      MobCaptureData mobCaptureData = itemStack.get(DataComponents.MOB_CAPTURE_DATA);
       if (MobCaptureManager.releaseMob(mobCaptureData, blockPos, serverLevel)) {
-        compoundTag.remove(MOB_CAPTURE_DATA_TAG);
-        CustomData.set(DataComponents.CUSTOM_DATA, itemStack, compoundTag);
-        itemStack.set(DataComponents.CUSTOM_MODEL_DATA, new CustomModelData(0));
+        itemStack.remove(DataComponents.MOB_CAPTURE_DATA);
+        itemStack.set(
+            net.minecraft.core.component.DataComponents.CUSTOM_MODEL_DATA, new CustomModelData(0));
         return InteractionResult.SUCCESS;
       }
     }
@@ -228,11 +220,9 @@ public class MobCatcherItem extends MobFarmItem {
 
     // Capture the entity and store the data.
     MobCaptureData mobCaptureData = new MobCaptureData(livingEntity);
-    CustomData customData = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
-    CompoundTag compoundTag = customData.getUnsafe();
-    compoundTag.put(MOB_CAPTURE_DATA_TAG, mobCaptureData.createTag());
-    CustomData.set(DataComponents.CUSTOM_DATA, itemStack, compoundTag);
-    itemStack.set(DataComponents.CUSTOM_MODEL_DATA, new CustomModelData(1));
+    itemStack.set(DataComponents.MOB_CAPTURE_DATA, mobCaptureData);
+    itemStack.set(
+        net.minecraft.core.component.DataComponents.CUSTOM_MODEL_DATA, new CustomModelData(1));
 
     player.setItemInHand(hand, itemStack);
     livingEntity.discard();

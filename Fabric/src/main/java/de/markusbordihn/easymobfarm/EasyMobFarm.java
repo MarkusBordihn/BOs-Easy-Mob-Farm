@@ -21,6 +21,7 @@ package de.markusbordihn.easymobfarm;
 
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.commands.manager.CommandManager;
+import de.markusbordihn.easymobfarm.component.DataComponents;
 import de.markusbordihn.easymobfarm.config.Config;
 import de.markusbordihn.easymobfarm.debug.DebugManager;
 import de.markusbordihn.easymobfarm.experience.ExperienceManager;
@@ -78,5 +79,8 @@ public class EasyMobFarm implements ModInitializer {
 
     log.info("{} Menu Types ...", Constants.LOG_REGISTER_PREFIX);
     ModMenuTypes.register();
+
+    log.info("{} Mod Data Components ...", Constants.LOG_REGISTER_PREFIX);
+    DataComponents.registerMobCaptureData();
   }
 }

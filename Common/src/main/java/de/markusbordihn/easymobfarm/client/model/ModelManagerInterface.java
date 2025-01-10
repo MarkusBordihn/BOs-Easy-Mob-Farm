@@ -21,6 +21,7 @@ package de.markusbordihn.easymobfarm.client.model;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.config.MobCaptureCardModelsConfig;
+import de.markusbordihn.easymobfarm.data.capture.MobColor;
 import java.util.HashSet;
 import java.util.Set;
 import net.minecraft.client.Minecraft;
@@ -31,7 +32,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import org.apache.logging.log4j.LogManager;
@@ -94,7 +94,7 @@ public interface ModelManagerInterface {
         : null;
   }
 
-  default BakedModel getModel(String type, String variant, DyeColor color) {
+  default BakedModel getModel(String type, String variant, MobColor color) {
     ModelResourceLocation modelResourceLocation =
         MobCaptureCardModelsConfig.getModelResourceLocation(type, variant, color);
     if (modelResourceLocation == null) {

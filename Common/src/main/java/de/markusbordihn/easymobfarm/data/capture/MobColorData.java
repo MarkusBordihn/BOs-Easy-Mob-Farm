@@ -19,56 +19,35 @@
 
 package de.markusbordihn.easymobfarm.data.capture;
 
-import java.util.HashMap;
-import java.util.Map;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.npc.Villager;
-import net.minecraft.world.entity.npc.VillagerType;
-import net.minecraft.world.item.DyeColor;
 
 public class MobColorData {
 
   public static final String COLOR_TAG = "Color";
 
-  private static final Map<VillagerType, DyeColor> VILLAGER_COLOR_MAP = new HashMap<>();
-
-  static {
-    // Villager color map
-    VILLAGER_COLOR_MAP.put(VillagerType.PLAINS, DyeColor.LIGHT_GRAY);
-    VILLAGER_COLOR_MAP.put(VillagerType.DESERT, DyeColor.YELLOW);
-    VILLAGER_COLOR_MAP.put(VillagerType.SAVANNA, DyeColor.ORANGE);
-    VILLAGER_COLOR_MAP.put(VillagerType.TAIGA, DyeColor.BROWN);
-    VILLAGER_COLOR_MAP.put(VillagerType.SNOW, DyeColor.WHITE);
-    VILLAGER_COLOR_MAP.put(VillagerType.JUNGLE, DyeColor.GREEN);
-    VILLAGER_COLOR_MAP.put(VillagerType.SWAMP, DyeColor.PURPLE);
-  }
-
   private MobColorData() {}
 
-  public static DyeColor getColor(final EntityType<?> entityType) {
-    return null;
+  public static MobColor getColor(final EntityType<?> entityType) {
+    return MobColor.NONE;
   }
 
-  public static DyeColor getColor(final LivingEntity livingEntity) {
+  public static MobColor getColor(final LivingEntity livingEntity) {
     if (livingEntity instanceof Sheep sheep) {
-      return sheep.getColor();
+      return MobColor.byDyeColor(sheep.getColor());
     } else if (livingEntity instanceof Villager villager) {
-      return VILLAGER_COLOR_MAP.get(villager.getVillagerData().getType());
+      return MobColor.byVillagerType(villager.getVillagerData().getType());
     }
-    return null;
+    return MobColor.NONE;
   }
 
-  public static DyeColor getColor(final CompoundTag compoundTag) {
+  public static MobColor getColor(final CompoundTag compoundTag) {
     if (compoundTag == null || !compoundTag.contains(COLOR_TAG)) {
-      return null;
+      return MobColor.NONE;
     }
-    return getColor(compoundTag.getString(COLOR_TAG));
-  }
-
-  public static DyeColor getColor(final String color) {
-    return DyeColor.byName(color, null);
+    return MobColor.byName(compoundTag.getString(COLOR_TAG));
   }
 }

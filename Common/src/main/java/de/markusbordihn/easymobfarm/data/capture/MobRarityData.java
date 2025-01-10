@@ -55,6 +55,13 @@ public class MobRarityData {
     return Rarity.COMMON;
   }
 
+  public static Rarity getRarity(final String rarity) {
+    if (rarity == null || rarity.isEmpty()) {
+      return Rarity.COMMON;
+    }
+    return Rarity.valueOf(rarity);
+  }
+
   public static Rarity getRarity(final LivingEntity livingEntity) {
     if (livingEntity == null) {
       return Rarity.COMMON;
