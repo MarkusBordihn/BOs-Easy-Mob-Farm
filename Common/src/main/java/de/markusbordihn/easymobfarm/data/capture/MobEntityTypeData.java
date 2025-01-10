@@ -61,7 +61,7 @@ public class MobEntityTypeData {
 
   public static String getEntityTypeName(CompoundTag compoundTag) {
     if (compoundTag == null) {
-      return null;
+      return "";
     }
 
     if (compoundTag.contains(TYPE_TAG)) {

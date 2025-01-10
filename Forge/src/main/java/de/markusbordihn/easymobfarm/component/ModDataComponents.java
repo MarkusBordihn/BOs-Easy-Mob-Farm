@@ -32,11 +32,8 @@ import net.minecraftforge.registries.RegistryObject;
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
 public class ModDataComponents {
 
-  private ModDataComponents() {}
-
   public static final DeferredRegister<DataComponentType<?>> DATA_COMPONENTS =
       DeferredRegister.create(Registries.DATA_COMPONENT_TYPE, Constants.MOD_ID);
-
   public static final RegistryObject<DataComponentType<MobCaptureData>> MOB_CAPTURE_DATA =
       DATA_COMPONENTS.register(
           MobCaptureData.ID,
@@ -45,6 +42,8 @@ public class ModDataComponents {
                   .persistent(MobCaptureData.CODEC)
                   .networkSynchronized(MobCaptureData.STREAM_CODEC)
                   .build());
+
+  private ModDataComponents() {}
 
   @SubscribeEvent
   public static void onCommonSetup(FMLCommonSetupEvent event) {

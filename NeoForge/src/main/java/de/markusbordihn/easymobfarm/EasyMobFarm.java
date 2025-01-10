@@ -22,7 +22,6 @@ package de.markusbordihn.easymobfarm;
 import cpw.mods.modlauncher.Launcher;
 import cpw.mods.modlauncher.api.IEnvironment;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
-import de.markusbordihn.easymobfarm.component.DataComponents;
 import de.markusbordihn.easymobfarm.component.ModDataComponents;
 import de.markusbordihn.easymobfarm.config.Config;
 import de.markusbordihn.easymobfarm.debug.DebugManager;

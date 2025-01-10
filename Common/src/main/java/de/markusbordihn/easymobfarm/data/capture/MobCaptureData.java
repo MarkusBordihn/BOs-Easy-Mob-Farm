@@ -44,6 +44,7 @@ public record MobCaptureData(
     boolean isFoil) {
 
   public static final String ID = "mob_capture_data";
+  public static final String TYPE_SEPARATOR = ":";
 
   public static final MobCaptureData EMPTY =
       new MobCaptureData(
@@ -174,8 +175,14 @@ public record MobCaptureData(
   }
 
   public int getCardId() {
-    int namespaceHash = (this.type != null) ? this.type.split(":")[0].hashCode() : 0;
-    int pathHash = (this.type != null) ? this.type.split(":")[1].hashCode() : 0;
+    int namespaceHash =
+        (this.type != null && this.type.contains(TYPE_SEPARATOR))
+            ? this.type.split(TYPE_SEPARATOR)[0].hashCode()
+            : 0;
+    int pathHash =
+        (this.type != null && this.type.contains(TYPE_SEPARATOR))
+            ? this.type.split(TYPE_SEPARATOR)[1].hashCode()
+            : 0;
     int colorHash = (this.color != null) ? this.color.hashCode() : 0;
     int variantHash = (this.variant != null) ? this.variant.hashCode() : 0;
 

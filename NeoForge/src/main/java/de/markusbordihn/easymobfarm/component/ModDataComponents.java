@@ -32,11 +32,8 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
 public class ModDataComponents {
 
-  private ModDataComponents() {}
-
   public static final DeferredRegister.DataComponents DATA_COMPONENTS =
       DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, Constants.MOD_ID);
-
   public static final Supplier<DataComponentType<MobCaptureData>> MOB_CAPTURE_DATA =
       DATA_COMPONENTS.registerComponentType(
           MobCaptureData.ID,
@@ -44,6 +41,8 @@ public class ModDataComponents {
               builder
                   .persistent(MobCaptureData.CODEC)
                   .networkSynchronized(MobCaptureData.STREAM_CODEC));
+
+  private ModDataComponents() {}
 
   @SubscribeEvent
   public static void onCommonSetup(FMLCommonSetupEvent event) {

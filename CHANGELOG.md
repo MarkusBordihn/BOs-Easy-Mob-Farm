@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+# v9.1.0
+
+- Fixed Spawn Eggs not working with the Mob Farm.
+- Fixed possible null pointer exception with unsupported mob capture items.
+- Smaller Code cleanup.
+
 # v9.0.0
 
 ⚠️ Important Major release with breaking changes for Minecraft 1.21.x and later.

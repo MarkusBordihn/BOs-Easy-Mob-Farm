@@ -34,6 +34,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -229,6 +230,17 @@ public class MobCaptureManager {
       return null;
     }
 
-    return itemStack.get(DataComponents.MOB_CAPTURE_DATA);
+    // Use MobCaptureData from item stack, if available.
+    if (itemStack.has(DataComponents.MOB_CAPTURE_DATA)) {
+      return itemStack.get(DataComponents.MOB_CAPTURE_DATA);
+    }
+
+    // Try to get mob capture data from item stack like spawn eggs or similar.
+    return new MobCaptureData(
+        itemStack,
+        itemStack
+            .getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, CustomData.EMPTY)
+            .getUnsafe(),
+        level);
   }
 }
