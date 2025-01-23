@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+# v9.2.0
+
+- Added possibility to disable Mob Catcher recipes per configuration.
+- Updated wiki and documentation.
+
 # v9.1.0
 
 - Fixed Spawn Eggs not working with the Mob Farm.

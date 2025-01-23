@@ -35,7 +35,7 @@ subprojects {
   }
 
   tasks.register('wrapper', Wrapper) {
-    gradleVersion = '8.10'
+    gradleVersion = '8.11'
     distributionType = Wrapper.DistributionType.BIN
   }
 

@@ -29,6 +29,7 @@ import de.markusbordihn.easymobfarm.experience.ModExperienceManager;
 import de.markusbordihn.easymobfarm.item.ModBlockItems;
 import de.markusbordihn.easymobfarm.item.ModItems;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
+import de.markusbordihn.easymobfarm.server.ServerEventHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -82,5 +83,8 @@ public class EasyMobFarm implements ModInitializer {
 
     log.info("{} Mod Data Components ...", Constants.LOG_REGISTER_PREFIX);
     DataComponents.registerMobCaptureData();
+
+    log.info("{} Server Event Handler ...", Constants.LOG_REGISTER_PREFIX);
+    ServerEventHandler.registerServerEvents();
   }
 }
