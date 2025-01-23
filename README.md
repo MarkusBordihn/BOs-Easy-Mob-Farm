@@ -107,7 +107,7 @@ Please check the [wiki][wiki] for additional information.
 
 [issues]: https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/issues
 
-[logo]: wiki/images/logo_header.png
+[logo]: https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/wiki/images/logo_header.png
 
 [mob_capture_cards]: wiki/images/mob_capture_cards.png
 
@@ -116,4 +116,3 @@ Please check the [wiki][wiki] for additional information.
 [mob_farm]: wiki/images/mob_farm.png
 
 [mob_farm_screen]: wiki/images/mob_farm_screen.png
-
