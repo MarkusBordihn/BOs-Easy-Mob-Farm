@@ -50,6 +50,7 @@ public class MobCatcherConfig extends Config {
 """;
 
   // Enduring Capture Net
+  public static boolean ENDURING_CAPTURE_NET_ENABLED = true;
   public static int ENDURING_CAPTURE_NET_MAX_DURABILITY = 64;
   public static float ENDURING_CAPTURE_NET_REQUIRED_HEALTH_PERCENTAGE_TO_CAPTURE = 0.5f;
   public static float ENDURING_CAPTURE_NET_MAX_ENTITY_HEIGHT_TO_CAPTURE = 1.4f;
@@ -58,6 +59,7 @@ public class MobCatcherConfig extends Config {
   public static Set<String> ENDURING_CAPTURE_NET_DENY_LIST = Set.of();
 
   // Ironbound Containment Cage
+  public static boolean IRONBOUND_CONTAINMENT_CAGE_ENABLED = true;
   public static int IRONBOUND_CONTAINMENT_CAGE_MAX_DURABILITY = 32;
   public static float IRONBOUND_CONTAINMENT_CAGE_REQUIRED_HEALTH_PERCENTAGE_TO_CAPTURE = 0.25f;
   public static float IRONBOUND_CONTAINMENT_CAGE_MAX_ENTITY_HEIGHT_TO_CAPTURE = 2.0f;
@@ -66,6 +68,7 @@ public class MobCatcherConfig extends Config {
   public static Set<String> IRONBOUND_CONTAINMENT_CAGE_DENY_LIST = Set.of();
 
   // Mystic Binding Crystal
+  public static boolean MYSTIC_BINDING_CRYSTAL_ENABLED = true;
   public static int MYSTIC_BINDING_CRYSTAL_MAX_DURABILITY = 32;
   public static float MYSTIC_BINDING_CRYSTAL_REQUIRED_HEALTH_PERCENTAGE_TO_CAPTURE = 0.25f;
   public static float MYSTIC_BINDING_CRYSTAL_MAX_ENTITY_HEIGHT_TO_CAPTURE = 4f;
@@ -74,6 +77,7 @@ public class MobCatcherConfig extends Config {
   public static Set<String> MYSTIC_BINDING_CRYSTAL_DENY_LIST = Set.of();
 
   // Void Binding Chain
+  public static boolean VOID_BINDING_CHAIN_ENABLED = true;
   public static int VOID_BINDING_CHAIN_MAX_DURABILITY = 16;
   public static float VOID_BINDING_CHAIN_REQUIRED_HEALTH_PERCENTAGE_TO_CAPTURE = 0.20f;
   public static float VOID_BINDING_CHAIN_MAX_ENTITY_HEIGHT_TO_CAPTURE = 6f;
@@ -92,6 +96,8 @@ public class MobCatcherConfig extends Config {
     Properties unmodifiedProperties = (Properties) properties.clone();
 
     // Enduring Capture Net
+    ENDURING_CAPTURE_NET_ENABLED =
+        parseConfigValue(properties, "EnduringCaptureNet:Enabled", ENDURING_CAPTURE_NET_ENABLED);
     ENDURING_CAPTURE_NET_MAX_DURABILITY =
         parseConfigValue(
             properties, "EnduringCaptureNet:MaxDurability", ENDURING_CAPTURE_NET_MAX_DURABILITY);
@@ -117,6 +123,9 @@ public class MobCatcherConfig extends Config {
         parseConfigValue(properties, "EnduringCaptureNet:DenyList", ENDURING_CAPTURE_NET_DENY_LIST);
 
     // Ironbound Containment Cage
+    IRONBOUND_CONTAINMENT_CAGE_ENABLED =
+        parseConfigValue(
+            properties, "IronboundContainmentCage:Enabled", IRONBOUND_CONTAINMENT_CAGE_ENABLED);
     IRONBOUND_CONTAINMENT_CAGE_MAX_DURABILITY =
         parseConfigValue(
             properties,
@@ -147,6 +156,9 @@ public class MobCatcherConfig extends Config {
             properties, "IronboundContainmentCage:DenyList", IRONBOUND_CONTAINMENT_CAGE_DENY_LIST);
 
     // Mystic Binding Crystal
+    MYSTIC_BINDING_CRYSTAL_ENABLED =
+        parseConfigValue(
+            properties, "MysticBindingCrystal:Enabled", MYSTIC_BINDING_CRYSTAL_ENABLED);
     MYSTIC_BINDING_CRYSTAL_MAX_DURABILITY =
         parseConfigValue(
             properties,
@@ -175,6 +187,8 @@ public class MobCatcherConfig extends Config {
             properties, "MysticBindingCrystal:DenyList", MYSTIC_BINDING_CRYSTAL_DENY_LIST);
 
     // Void Binding Chain
+    VOID_BINDING_CHAIN_ENABLED =
+        parseConfigValue(properties, "VoidBindingChain:Enabled", VOID_BINDING_CHAIN_ENABLED);
     VOID_BINDING_CHAIN_MAX_DURABILITY =
         parseConfigValue(
             properties, "VoidBindingChain:MaxDurability", VOID_BINDING_CHAIN_MAX_DURABILITY);
