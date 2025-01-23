@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+# v8.11.0
+
+- Added possibility to disable Mob Catcher recipes per configuration.
+- Updated wiki and documentation.
+
 # v8.10.1
 
 - Fixed missing Mob Farm Template Blocks in Building Blocks Creative Tab.
