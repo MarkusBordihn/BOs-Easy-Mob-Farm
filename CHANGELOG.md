@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+# v9.3.0
+
+- Fixed #123 by adding milk extractor enhancement.
+- Fixed #122 by adding configuration for processing mob farms only if owner is online.
+- Added Milk Bottle item to allow players to get milk from cows.
+- Added Milk Bottle to Milk Bucket recipe (4 milk bottles + 1 empty bucket = 1 milk bucket).
+- Added Owner information to mob farm screen.
+- Smaller bug fixes and improvements.
+
 # v9.2.0
 
 - Added possibility to disable Mob Catcher recipes per configuration.

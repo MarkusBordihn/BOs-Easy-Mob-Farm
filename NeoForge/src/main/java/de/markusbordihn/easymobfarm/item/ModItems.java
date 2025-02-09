@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.item;
 
 import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.item.consumables.MilkBottleItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.BlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.CreativeBlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
@@ -35,6 +36,7 @@ import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhan
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyHarvesterFrameEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LootEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LuckEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.MilkExtractorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.PollenTrapEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SheepEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SpeedEnhancementItem;
@@ -82,6 +84,9 @@ public class ModItems {
   public static final DeferredItem<Item> LUCK_ENHANCEMENT =
       ITEMS.register(LuckEnhancementItem.ID, () -> Items.LUCK_ENHANCEMENT);
 
+  public static final DeferredItem<Item> MILK_EXTRACTOR_ENHANCEMENT =
+    ITEMS.register(MilkExtractorEnhancementItem.ID, () -> Items.MILK_EXTRACTOR_ENHANCEMENT);
+
   public static final DeferredItem<Item> POLLEN_TRAP_ENHANCEMENT =
       ITEMS.register(PollenTrapEnhancementItem.ID, () -> Items.POLLEN_TRAP_ENHANCEMENT);
 
@@ -116,6 +121,9 @@ public class ModItems {
       ITEMS.register(MysticBindingCrystalItem.ID, () -> Items.MYSTIC_BINDING_CRYSTAL);
   public static final DeferredItem<Item> VOID_BINDING_CHAIN =
       ITEMS.register(VoidBindingChainItem.ID, () -> Items.VOID_BINDING_CHAIN);
+
+  public static final DeferredItem<Item> MILK_BOTTLE =
+    ITEMS.register(MilkBottleItem.ID, () -> Items.MILK_BOTTLE);
 
   protected ModItems() {}
 }
