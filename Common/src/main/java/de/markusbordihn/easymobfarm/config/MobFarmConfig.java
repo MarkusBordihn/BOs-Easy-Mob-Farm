@@ -41,6 +41,8 @@ public class MobFarmConfig extends Config {
   public static int experienceDropChance = 5;
   public static int speedEnhancementUpgradeSpeed = 6;
 
+  public static boolean processingRequiresOwnerToBeOnline = false;
+
   public static void registerConfig() {
     registerConfigFile(CONFIG_FILE_NAME, CONFIG_FILE_HEADER);
     parseConfigFile();
@@ -65,6 +67,10 @@ public class MobFarmConfig extends Config {
         parseConfigValue(properties, "experienceDropChance", experienceDropChance);
     speedEnhancementUpgradeSpeed =
         parseConfigValue(properties, "speedEnhancementUpgradeSpeed", speedEnhancementUpgradeSpeed);
+
+    processingRequiresOwnerToBeOnline =
+        parseConfigValue(
+            properties, "progressingRequiresOwnerToBeOnline", processingRequiresOwnerToBeOnline);
 
     // Update config file if needed
     updateConfigFileIfChanged(configFile, CONFIG_FILE_HEADER, properties, unmodifiedProperties);
