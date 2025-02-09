@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "easy_mob_farm:milk_bottle",
+    "easy_mob_farm:milk_bottle",
+    "easy_mob_farm:milk_bottle",
+    "easy_mob_farm:milk_bottle",
+    "minecraft:bucket"
+  ],
+  "result": {
+    "id": "minecraft:milk_bucket"
+  }
+}

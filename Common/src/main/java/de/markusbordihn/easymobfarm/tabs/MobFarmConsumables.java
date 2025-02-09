@@ -24,28 +24,12 @@ import net.minecraft.world.item.CreativeModeTab.DisplayItemsGenerator;
 import net.minecraft.world.item.CreativeModeTab.ItemDisplayParameters;
 import net.minecraft.world.item.CreativeModeTab.Output;
 
-public class MobFarmUpgrades implements DisplayItemsGenerator {
+public class MobFarmConsumables implements DisplayItemsGenerator {
 
-  protected MobFarmUpgrades() {}
+  protected MobFarmConsumables() {}
 
   @Override
   public void accept(ItemDisplayParameters itemDisplayParameters, Output output) {
-    // Default mob farm upgrades
-    output.accept(Items.BIG_SLOT_UPGRADE.getDefaultInstance());
-    output.accept(Items.CREATIVE_SPEED_ENHANCEMENT.getDefaultInstance());
-    output.accept(Items.EGG_COLLECTOR_ENHANCEMENT.getDefaultInstance());
-    output.accept(Items.EXPERIENCE_ENHANCEMENT.getDefaultInstance());
-    output.accept(Items.HONEY_EXTRACTOR_ENHANCEMENT.getDefaultInstance());
-    output.accept(Items.HONEY_HARVESTER_FRAME_ENHANCEMENT.getDefaultInstance());
-    output.accept(Items.LOOT_ENHANCEMENT.getDefaultInstance());
-    output.accept(Items.LUCK_ENHANCEMENT.getDefaultInstance());
-    output.accept(Items.MILK_EXTRACTOR_ENHANCEMENT.getDefaultInstance());
-    output.accept(Items.NO_FLOWERS_FILTER.getDefaultInstance());
-    output.accept(Items.NO_MEAT_FILTER.getDefaultInstance());
-    output.accept(Items.POLLEN_TRAP_ENHANCEMENT.getDefaultInstance());
-    output.accept(Items.SHEEP_ENHANCEMENT.getDefaultInstance());
-    output.accept(Items.SMALL_SLOT_UPGRADE.getDefaultInstance());
-    output.accept(Items.SPEED_ENHANCEMENT.getDefaultInstance());
-    output.accept(Items.SWORD_ENHANCEMENT.getDefaultInstance());
+    output.accept(Items.MILK_BOTTLE.getDefaultInstance());
   }
 }

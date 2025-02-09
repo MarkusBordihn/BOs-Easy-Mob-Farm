@@ -32,6 +32,7 @@ public final class Constants {
   public static final String TEXT_PREFIX = "text." + MOD_PREFIX;
   public static final String TEXT_CONFIG_PREFIX = TEXT_PREFIX + "config.";
   public static final String BLOCK_PREFIX = "block." + MOD_PREFIX;
+  public static final String MOD_ID_PREFIX = MOD_ID + ":";
   public static final String TOOLTIP_PREFIX = "tooltip." + MOD_ID + ".";
   public static final String LOG_NAME = MOD_NAME;
   public static final String LOG_REGISTER_PREFIX = "Register " + MOD_NAME;
