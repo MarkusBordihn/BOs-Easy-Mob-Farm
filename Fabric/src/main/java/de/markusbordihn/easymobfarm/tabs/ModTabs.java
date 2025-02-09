@@ -73,5 +73,14 @@ public class ModTabs {
             .title(Component.translatable("itemGroup.easy_mob_farm.mob_catcher"))
             .displayItems(new MobCatcher())
             .build());
+
+    Registry.register(
+        BuiltInRegistries.CREATIVE_MODE_TAB,
+        Constants.MOD_ID + ":mob_farm_consumables",
+        FabricItemGroup.builder()
+            .icon(() -> Items.MILK_BOTTLE.asItem().getDefaultInstance())
+            .title(Component.translatable("itemGroup.easy_mob_farm.mob_farm_consumables"))
+            .displayItems(new MobFarmConsumables())
+            .build());
   }
 }

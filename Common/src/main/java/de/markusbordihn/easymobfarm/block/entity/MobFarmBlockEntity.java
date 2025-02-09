@@ -49,6 +49,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.UUID;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -87,6 +88,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
   public static final int DEFAULT_RECHECK_TICKS = 200;
   public static final String TIER_LEVEL_TAG = "TierLevel";
   public static final String FARM_TYPE_TAG = "FarmType";
+  public static final String OWNER_TAG = "Owner";
   public static final String CAPTURED_MOB_EXPERIENCE_TAG = "CapturedMobExperience";
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final int[] RESULT_SLOTS =
@@ -98,6 +100,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
       NonNullList.withSize(MobFarmMenu.CONTAINER_SIZE, ItemStack.EMPTY);
   private MobFarmType mobFarmType;
   private int farmTierLevel;
+  private UUID owner;
   private int numberOfOutputSlots = MobFarmMenu.MIN_NUMBER_OF_OUTPUT_SLOTS;
   private int farmProgress = 0;
   private int farmProgressionSpeed = DEFAULT_PROCESSING_TICKS;
@@ -185,6 +188,13 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
       blockEntity.farmProgress =
           Math.min(blockEntity.farmProgress + farmProgressionSpeed, DEFAULT_FARM_PROCESSING_TIME);
       blockEntity.farmStatus = MobFarmStatus.WORKING;
+      return;
+    }
+
+    // Check if owner is online for processing results.
+    if (MobFarmConfig.processingRequiresOwnerToBeOnline
+        && blockEntity.hasOwner()
+        && level.getPlayerByUUID(blockEntity.getOwner()) == null) {
       return;
     }
 
@@ -645,8 +655,18 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     }
   }
 
+  public UUID getOwner() {
+    return this.owner;
+  }
+
   public void setOwner(final Player player) {
-    log.info("Set owner for mob farm block entity to {}", player);
+    log.debug("Set owner for mob farm block entity to {}", player);
+    this.owner = player.getUUID();
+    this.setChanged();
+  }
+
+  public boolean hasOwner() {
+    return this.owner != null && !this.owner.equals(new UUID(0, 0));
   }
 
   public ContainerData getContainerData() {
@@ -654,16 +674,17 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
   }
 
   public void dropInventoryContents() {
-    if (!this.level.isClientSide && !this.items.isEmpty()) {
-      for (ItemStack stack : this.items) {
-        if (!stack.isEmpty()) {
-          Containers.dropItemStack(
-              this.level,
-              this.worldPosition.getX(),
-              this.worldPosition.getY(),
-              this.worldPosition.getZ(),
-              stack);
-        }
+    if (this.level.isClientSide || this.items.isEmpty()) {
+      return;
+    }
+    for (ItemStack stack : this.items) {
+      if (!stack.isEmpty()) {
+        Containers.dropItemStack(
+            this.level,
+            this.worldPosition.getX(),
+            this.worldPosition.getY(),
+            this.worldPosition.getZ(),
+            stack);
       }
     }
   }
@@ -863,6 +884,11 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
       this.capturedMobExperience = compoundTag.getInt(CAPTURED_MOB_EXPERIENCE_TAG);
     }
 
+    // Load owner
+    if (compoundTag.contains(OWNER_TAG)) {
+      this.owner = compoundTag.getUUID(OWNER_TAG);
+    }
+
     // Cache provider
     this.provider = provider;
   }
@@ -879,6 +905,11 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     compoundTag.putString(FARM_TYPE_TAG, this.mobFarmType.name());
     if (this.capturedMobExperience >= 0) {
       compoundTag.putInt(CAPTURED_MOB_EXPERIENCE_TAG, this.capturedMobExperience);
+    }
+
+    // Save owner
+    if (this.owner != null) {
+      compoundTag.putUUID(OWNER_TAG, this.owner);
     }
   }
 }

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "mob_farm_enhancement",
+  "pattern": [
+    "IMI",
+    "CPC",
+    " B "
+  ],
+  "key": {
+    "M": "minecraft:milk_bucket",
+    "B": "minecraft:glass_bottle",
+    "I": "minecraft:iron_ingot",
+    "C": "minecraft:copper_ingot",
+    "P": "minecraft:piston"
+  },
+  "result": {
+    "id": "easy_mob_farm:milk_extractor_enhancement",
+    "count": 1
+  }
+}

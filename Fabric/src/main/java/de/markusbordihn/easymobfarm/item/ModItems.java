@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.item;
 
 import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.item.consumables.MilkBottleItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.BlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.CreativeBlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
@@ -35,6 +36,7 @@ import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhan
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyHarvesterFrameEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LootEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LuckEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.MilkExtractorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.PollenTrapEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SheepEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SpeedEnhancementItem;
@@ -69,6 +71,7 @@ public class ModItems {
     registerItem(HoneyHarvesterFrameEnhancementItem.ID, Items.HONEY_HARVESTER_FRAME_ENHANCEMENT);
     registerItem(LootEnhancementItem.ID, Items.LOOT_ENHANCEMENT);
     registerItem(LuckEnhancementItem.ID, Items.LUCK_ENHANCEMENT);
+    registerItem(MilkExtractorEnhancementItem.ID, Items.MILK_EXTRACTOR_ENHANCEMENT);
     registerItem(PollenTrapEnhancementItem.ID, Items.POLLEN_TRAP_ENHANCEMENT);
     registerItem(SheepEnhancementItem.ID, Items.SHEEP_ENHANCEMENT);
     registerItem(SpeedEnhancementItem.ID, Items.SPEED_ENHANCEMENT);
@@ -88,6 +91,9 @@ public class ModItems {
     registerItem(IronboundContainmentCageItem.ID, Items.IRONBOUND_CONTAINMENT_CAGE);
     registerItem(MysticBindingCrystalItem.ID, Items.MYSTIC_BINDING_CRYSTAL);
     registerItem(VoidBindingChainItem.ID, Items.VOID_BINDING_CHAIN);
+
+    log.info("{} Consumables items ...", Constants.LOG_REGISTER_PREFIX);
+    registerItem(MilkBottleItem.ID, Items.MILK_BOTTLE);
   }
 
   private static void registerItem(final String id, final Item item) {
