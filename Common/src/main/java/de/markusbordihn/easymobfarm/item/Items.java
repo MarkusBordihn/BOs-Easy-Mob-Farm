@@ -19,6 +19,7 @@
 
 package de.markusbordihn.easymobfarm.item;
 
+import de.markusbordihn.easymobfarm.item.consumables.MilkBottleItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.BlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.CreativeBlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
@@ -34,6 +35,7 @@ import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhan
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyHarvesterFrameEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LootEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LuckEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.MilkExtractorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.PollenTrapEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SheepEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SpeedEnhancementItem;
@@ -58,6 +60,7 @@ public class Items {
       new HoneyHarvesterFrameEnhancementItem();
   public static final Item LOOT_ENHANCEMENT = new LootEnhancementItem();
   public static final Item LUCK_ENHANCEMENT = new LuckEnhancementItem();
+  public static final Item MILK_EXTRACTOR_ENHANCEMENT = new MilkExtractorEnhancementItem();
   public static final Item POLLEN_TRAP_ENHANCEMENT = new PollenTrapEnhancementItem();
   public static final Item SHEEP_ENHANCEMENT = new SheepEnhancementItem();
   public static final Item SPEED_ENHANCEMENT = new SpeedEnhancementItem();
@@ -74,6 +77,8 @@ public class Items {
   public static final Item IRONBOUND_CONTAINMENT_CAGE = new IronboundContainmentCageItem();
   public static final Item MYSTIC_BINDING_CRYSTAL = new MysticBindingCrystalItem();
   public static final Item VOID_BINDING_CHAIN = new VoidBindingChainItem();
+
+  public static final Item MILK_BOTTLE = new MilkBottleItem();
 
   private Items() {}
 }

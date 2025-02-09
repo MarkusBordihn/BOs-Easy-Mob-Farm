@@ -87,6 +87,12 @@ public class ModItemsTest {
   }
 
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  public void testMilkExtractorEnhancementItem(GameTestHelper helper) {
+    ModItemsTestHelper.testModItem(helper, Items.MILK_EXTRACTOR_ENHANCEMENT);
+    helper.succeed();
+  }
+
+  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testPollenTrapEnhancementItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.POLLEN_TRAP_ENHANCEMENT);
     helper.succeed();
@@ -161,6 +167,12 @@ public class ModItemsTest {
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testVoidBindingChainItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.VOID_BINDING_CHAIN);
+    helper.succeed();
+  }
+
+  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  public void testMilkBottleItem(GameTestHelper helper) {
+    ModItemsTestHelper.testModItem(helper, Items.MILK_BOTTLE);
     helper.succeed();
   }
 }

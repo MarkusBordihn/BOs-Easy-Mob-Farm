@@ -22,6 +22,7 @@ package de.markusbordihn.easymobfarm.loot;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.experience.ExperienceManager;
+import de.markusbordihn.easymobfarm.item.consumables.MilkBottleItem;
 import de.markusbordihn.easymobfarm.item.upgrade.EnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.EggCollectorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
@@ -29,6 +30,7 @@ import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhan
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyHarvesterFrameEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LootEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LuckEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.MilkExtractorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.PollenTrapEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SheepEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SwordEnhancementItem;
@@ -37,6 +39,7 @@ import java.util.List;
 import java.util.Random;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -44,6 +47,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.animal.Chicken;
+import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.item.DyeColor;
@@ -266,6 +270,18 @@ public class LootManager {
             drops.add(getRandomFlower());
           } else {
             drops.add(getRandomDye());
+          }
+        }
+      }
+
+      // Handle Cow specific enhancements
+      if (livingEntity instanceof Cow) {
+        if (enhancement instanceof MilkExtractorEnhancementItem && random.nextInt(2) == 0) {
+          Item milkBottle =
+              BuiltInRegistries.ITEM.get(
+                  new ResourceLocation(Constants.MOD_ID_PREFIX + MilkBottleItem.ID));
+          if (milkBottle != null) {
+            drops.add(new ItemStack(milkBottle));
           }
         }
       }
