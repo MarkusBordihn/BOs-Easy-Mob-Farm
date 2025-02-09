@@ -55,5 +55,12 @@ public class ModTabs {
         }
       };
 
+  public static final CreativeModeTab TAB_MOB_FARM_CONSUMABLES =
+      new CreativeModeTab(Constants.MOD_PREFIX + "mob_farm_consumables") {
+        public ItemStack makeIcon() {
+          return ModItems.MILK_BOTTLE.get().getDefaultInstance();
+        }
+      };
+
   private ModTabs() {}
 }

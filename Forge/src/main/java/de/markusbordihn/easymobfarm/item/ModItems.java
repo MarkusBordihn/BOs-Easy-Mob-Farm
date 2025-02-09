@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.item;
 
 import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.item.consumables.MilkBottleItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.BlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.CreativeBlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
@@ -35,6 +36,7 @@ import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhan
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyHarvesterFrameEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LootEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LuckEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.MilkExtractorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.PollenTrapEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SheepEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SpeedEnhancementItem;
@@ -116,6 +118,13 @@ public class ModItems {
           LuckEnhancementItem.ID,
           () -> new LuckEnhancementItem(new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
 
+  public static final RegistryObject<Item> MILK_EXTRACTOR_ENHANCEMENT =
+      ITEMS.register(
+          MilkExtractorEnhancementItem.ID,
+          () ->
+              new MilkExtractorEnhancementItem(
+                  new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
+
   public static final RegistryObject<Item> POLLEN_TRAP_ENHANCEMENT =
       ITEMS.register(
           PollenTrapEnhancementItem.ID,
@@ -185,6 +194,11 @@ public class ModItems {
       ITEMS.register(
           VoidBindingChainItem.ID,
           () -> new VoidBindingChainItem(new Item.Properties().tab(ModTabs.TAB_MOB_CATCHER)));
+
+  public static final RegistryObject<Item> MILK_BOTTLE =
+      ITEMS.register(
+          MilkBottleItem.ID,
+          () -> new MilkBottleItem(new Item.Properties().tab(ModTabs.TAB_MOB_FARM_CONSUMABLES)));
 
   protected ModItems() {}
 }

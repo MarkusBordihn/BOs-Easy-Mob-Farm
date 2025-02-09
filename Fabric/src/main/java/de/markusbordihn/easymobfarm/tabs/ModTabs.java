@@ -37,6 +37,7 @@ public class ModTabs {
   public static CreativeModeTab TAB_MOB_FARMS;
   public static CreativeModeTab TAB_MOB_FARM_UPGRADES;
   public static CreativeModeTab TAB_MOB_CATCHER;
+  public static CreativeModeTab TAB_MOB_FARM_CONSUMABLES;
 
   private ModTabs() {}
 
@@ -85,6 +86,7 @@ public class ModTabs {
             .appendItems(
                 stack -> {
                   // Default mob farm upgrades
+                  stack.add(Items.BIG_SLOT_UPGRADE.getDefaultInstance());
                   stack.add(Items.CREATIVE_SPEED_ENHANCEMENT.getDefaultInstance());
                   stack.add(Items.EGG_COLLECTOR_ENHANCEMENT.getDefaultInstance());
                   stack.add(Items.EXPERIENCE_ENHANCEMENT.getDefaultInstance());
@@ -92,14 +94,14 @@ public class ModTabs {
                   stack.add(Items.HONEY_HARVESTER_FRAME_ENHANCEMENT.getDefaultInstance());
                   stack.add(Items.LOOT_ENHANCEMENT.getDefaultInstance());
                   stack.add(Items.LUCK_ENHANCEMENT.getDefaultInstance());
-                  stack.add(Items.POLLEN_TRAP_ENHANCEMENT.getDefaultInstance());
-                  stack.add(Items.SHEEP_ENHANCEMENT.getDefaultInstance());
-                  stack.add(Items.SPEED_ENHANCEMENT.getDefaultInstance());
-                  stack.add(Items.SWORD_ENHANCEMENT.getDefaultInstance());
+                  stack.add(Items.MILK_EXTRACTOR_ENHANCEMENT.getDefaultInstance());
                   stack.add(Items.NO_FLOWERS_FILTER.getDefaultInstance());
                   stack.add(Items.NO_MEAT_FILTER.getDefaultInstance());
+                  stack.add(Items.POLLEN_TRAP_ENHANCEMENT.getDefaultInstance());
+                  stack.add(Items.SHEEP_ENHANCEMENT.getDefaultInstance());
                   stack.add(Items.SMALL_SLOT_UPGRADE.getDefaultInstance());
-                  stack.add(Items.BIG_SLOT_UPGRADE.getDefaultInstance());
+                  stack.add(Items.SPEED_ENHANCEMENT.getDefaultInstance());
+                  stack.add(Items.SWORD_ENHANCEMENT.getDefaultInstance());
                 })
             .build();
 
@@ -114,6 +116,17 @@ public class ModTabs {
                   stack.add(Items.IRONBOUND_CONTAINMENT_CAGE.getDefaultInstance());
                   stack.add(Items.MYSTIC_BINDING_CRYSTAL.getDefaultInstance());
                   stack.add(Items.VOID_BINDING_CHAIN.getDefaultInstance());
+                })
+            .build();
+
+    TAB_MOB_FARM_CONSUMABLES =
+        FabricItemGroupBuilder.create(
+                new ResourceLocation(Constants.MOD_ID, "mob_farm_consumables"))
+            .icon(Items.MILK_BOTTLE::getDefaultInstance)
+            .appendItems(
+                stack -> {
+                  // Default mob farm consumables
+                  stack.add(Items.MILK_BOTTLE.getDefaultInstance());
                 })
             .build();
   }
