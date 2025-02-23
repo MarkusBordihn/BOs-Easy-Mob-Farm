@@ -100,7 +100,7 @@
   "tooltip.easy_mob_farm.farm.no_bonus_drop": "追加ドロップなし",
   "tooltip.easy_mob_farm.farm.no_experience": "経験値なし",
   "tooltip.easy_mob_farm.farm.ocean_farm": "海のファーム (ティア %s)",
-  "tooltip.easy_mob_farm.farm.output_slots": "出力スロット出力スロット: %s",
+  "tooltip.easy_mob_farm.farm.output_slots": "出力スロット: %s",
   "tooltip.easy_mob_farm.farm.progress": "進捗: %s/%s",
   "tooltip.easy_mob_farm.farm.progression_speed": "速度: %s (+%s) ティック/秒",
   "tooltip.easy_mob_farm.farm.status": "状態: %s",
