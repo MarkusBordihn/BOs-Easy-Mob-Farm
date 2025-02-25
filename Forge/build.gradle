@@ -108,6 +108,7 @@ dependencies {
 
   // Additional helpful Mods for development (runtime dependency)
   if (project.hasProperty('forge_jei_mod') && project.forge_jei_mod) {
+    compileOnly fg.deobf("curse.maven:jei-238222:${project.forge_jei_mod}")
     runtimeOnly fg.deobf("curse.maven:jei-238222:${project.forge_jei_mod}")
   }
   if (project.hasProperty('forge_spark_mod') && project.forge_spark_mod) {
@@ -161,6 +162,10 @@ dependencies {
   // Immersive Engineering: Integration
   compileOnly fg.deobf("curse.maven:immersive-engineering-231951:4412849")
   runtimeOnly fg.deobf("curse.maven:immersive-engineering-231951:4412849")
+
+  // Farmers Delight: Integration
+  compileOnly fg.deobf("curse.maven:farmers-delight-398521:4679315")
+  runtimeOnly fg.deobf("curse.maven:farmers-delight-398521:4679315")
 
   // Pipez: Integration
   compileOnly fg.deobf("curse.maven:pipez-443900:3819249")

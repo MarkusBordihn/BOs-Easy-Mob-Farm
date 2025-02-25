@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.loot;
 
 import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.compat.CompatConstants;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.experience.ExperienceManager;
 import de.markusbordihn.easymobfarm.item.consumables.MilkBottleItem;
@@ -277,12 +278,22 @@ public class LootManager {
 
       // Handle Cow specific enhancements
       if (livingEntity instanceof Cow) {
+
+        // Handle MilkExtractor enhancement (50% chance)
         if (enhancement instanceof MilkExtractorEnhancementItem && random.nextInt(2) == 0) {
-          Item milkBottle =
-              Registry.ITEM.get(new ResourceLocation(Constants.MOD_ID_PREFIX + MilkBottleItem.ID));
-          if (milkBottle != null) {
-            drops.add(new ItemStack(milkBottle));
+          Item milkBottle;
+          if (CompatConstants.MOD_FARMERS_DELIGHT_LOADED) {
+            milkBottle =
+                Registry.ITEM.get(
+                    new ResourceLocation(
+                        CompatConstants.MOD_FARMERS_DELIGHT_PREFIX
+                            + CompatConstants.MOD_FARMERS_DELIGHT_MILK_BOTTLE));
+          } else {
+            milkBottle =
+                Registry.ITEM.get(
+                    new ResourceLocation(Constants.MOD_ID_PREFIX + MilkBottleItem.ID));
           }
+          drops.add(new ItemStack(milkBottle));
         }
       }
 

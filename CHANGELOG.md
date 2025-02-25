@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+# v9.4.0
+
+- Fixed #134 by adding JEI support for virtual items and blocks.
+- Fixed #133 by adding virtual Mob Farm Block Tier Items for creative tab.
+- Fixed #132 by using vanilla style rotation, scaling and default models for items.
+- Fixed #130 by adding support for Farmer's Delight `Milk Bottle`.
+- Fixed #128 by making luck for Lucky Drop Farm configurable over `luckyDropFarmLuckPercentage`.
+- Added Japanese translation. Thanks to `@twister716` for the contribution.
+
 # v9.3.0
 
 - Fixed #123 by adding milk extractor enhancement.

@@ -80,7 +80,7 @@ public class ModBlockItems {
       ITEMS.register(
           MobFarmType.ANIMAL_PLAINS_FARM.getId(),
           () ->
-              new MobFarmBlockItem(
+              new MobFarmBlockItemWrapper(
                   MobFarmType.ANIMAL_PLAINS_FARM.getId(),
                   ModBlocks.ANIMAL_PLAINS_FARM.get(),
                   new Item.Properties().tab(ModTabs.TAB_MOB_FARMS)));
@@ -89,7 +89,7 @@ public class ModBlockItems {
       ITEMS.register(
           MobFarmType.BEE_HIVE_FARM.getId(),
           () ->
-              new MobFarmBlockItem(
+              new MobFarmBlockItemWrapper(
                   MobFarmType.BEE_HIVE_FARM.getId(),
                   ModBlocks.BEE_HIVE_FARM.get(),
                   new Item.Properties().tab(ModTabs.TAB_MOB_FARMS)));
@@ -98,7 +98,7 @@ public class ModBlockItems {
       ITEMS.register(
           MobFarmType.DESERT_FARM.getId(),
           () ->
-              new MobFarmBlockItem(
+              new MobFarmBlockItemWrapper(
                   MobFarmType.DESERT_FARM.getId(),
                   ModBlocks.DESERT_FARM.get(),
                   new Item.Properties().tab(ModTabs.TAB_MOB_FARMS)));
@@ -107,7 +107,7 @@ public class ModBlockItems {
       ITEMS.register(
           MobFarmType.IRON_GOLEM_FARM.getId(),
           () ->
-              new MobFarmBlockItem(
+              new MobFarmBlockItemWrapper(
                   MobFarmType.IRON_GOLEM_FARM.getId(),
                   ModBlocks.IRON_GOLEM_FARM.get(),
                   new Item.Properties().tab(ModTabs.TAB_MOB_FARMS)));
@@ -116,7 +116,7 @@ public class ModBlockItems {
       ITEMS.register(
           MobFarmType.JUNGLE_FARM.getId(),
           () ->
-              new MobFarmBlockItem(
+              new MobFarmBlockItemWrapper(
                   MobFarmType.JUNGLE_FARM.getId(),
                   ModBlocks.JUNGLE_FARM.get(),
                   new Item.Properties().tab(ModTabs.TAB_MOB_FARMS)));
@@ -125,7 +125,7 @@ public class ModBlockItems {
       ITEMS.register(
           MobFarmType.LUCKY_DROP_FARM.getId(),
           () ->
-              new MobFarmBlockItem(
+              new MobFarmBlockItemWrapper(
                   MobFarmType.LUCKY_DROP_FARM.getId(),
                   ModBlocks.LUCKY_DROP_FARM.get(),
                   new Item.Properties().tab(ModTabs.TAB_MOB_FARMS)));
@@ -134,7 +134,7 @@ public class ModBlockItems {
       ITEMS.register(
           MobFarmType.MONSTER_PLAINS_CAVE_FARM.getId(),
           () ->
-              new MobFarmBlockItem(
+              new MobFarmBlockItemWrapper(
                   MobFarmType.MONSTER_PLAINS_CAVE_FARM.getId(),
                   ModBlocks.MONSTER_PLAINS_CAVE_FARM.get(),
                   new Item.Properties().tab(ModTabs.TAB_MOB_FARMS)));
@@ -143,7 +143,7 @@ public class ModBlockItems {
       ITEMS.register(
           MobFarmType.NETHER_FORTRESS_FARM.getId(),
           () ->
-              new MobFarmBlockItem(
+              new MobFarmBlockItemWrapper(
                   MobFarmType.NETHER_FORTRESS_FARM.getId(),
                   ModBlocks.NETHER_FORTRESS_FARM.get(),
                   new Item.Properties().tab(ModTabs.TAB_MOB_FARMS)));
@@ -152,7 +152,7 @@ public class ModBlockItems {
       ITEMS.register(
           MobFarmType.OCEAN_FARM.getId(),
           () ->
-              new MobFarmBlockItem(
+              new MobFarmBlockItemWrapper(
                   MobFarmType.OCEAN_FARM.getId(),
                   ModBlocks.OCEAN_FARM.get(),
                   new Item.Properties().tab(ModTabs.TAB_MOB_FARMS)));
@@ -161,7 +161,7 @@ public class ModBlockItems {
       ITEMS.register(
           MobFarmType.SWAMP_FARM.getId(),
           () ->
-              new MobFarmBlockItem(
+              new MobFarmBlockItemWrapper(
                   MobFarmType.SWAMP_FARM.getId(),
                   ModBlocks.SWAMP_FARM.get(),
                   new Item.Properties().tab(ModTabs.TAB_MOB_FARMS)));
