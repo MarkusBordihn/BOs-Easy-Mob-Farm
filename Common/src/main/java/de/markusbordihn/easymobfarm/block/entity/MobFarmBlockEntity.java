@@ -280,7 +280,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
 
     // 5% Bad lucky drop, spawn captured mob and remove item.
     int luckRoll = random.nextInt(100);
-    if (luckRoll > 95) {
+    if (luckRoll > MobFarmConfig.luckyDropFarmLuckPercentage) {
       log.debug(
           "Bad lucky drop for {} (tier: {}) block entity at {} with captured mob {}",
           this.getFarmType(),

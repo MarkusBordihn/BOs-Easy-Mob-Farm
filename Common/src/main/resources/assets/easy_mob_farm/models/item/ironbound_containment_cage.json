@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:item/handheld",
+  "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "easy_mob_farm:item/mob_catcher/ironbound_containment_cage"
   }

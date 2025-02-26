@@ -51,7 +51,12 @@ public class MobFarmBlockItem extends BlockItem {
     this.farmName = farmName;
   }
 
-  private void setCustomModelData(ItemStack itemStack) {
+  public static void setTierLevel(ItemStack itemStack, int tierLevel) {
+    itemStack.getOrCreateTag().putInt(MobFarmBlockEntity.TIER_LEVEL_TAG, tierLevel);
+    setCustomModelData(itemStack);
+  }
+
+  private static void setCustomModelData(ItemStack itemStack) {
     var tag = itemStack.getOrCreateTag();
     if (tag.contains(MobFarmBlockEntity.TIER_LEVEL_TAG) && !tag.contains(CUSTOM_MODEL_DATA_TAG)) {
       int tierLevel = tag.getInt(MobFarmBlockEntity.TIER_LEVEL_TAG);

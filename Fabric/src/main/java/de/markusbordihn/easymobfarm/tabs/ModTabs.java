@@ -67,16 +67,21 @@ public class ModTabs {
                 stack -> {
                   // Default mob farm items
                   stack.add(ModBlockItems.CREATIVE_MOB_FARM.getDefaultInstance());
-                  stack.add(ModBlockItems.ANIMAL_PLAINS_FARM.getDefaultInstance());
-                  stack.add(ModBlockItems.BEE_HIVE_FARM.getDefaultInstance());
-                  stack.add(ModBlockItems.DESERT_FARM.getDefaultInstance());
-                  stack.add(ModBlockItems.IRON_GOLEM_FARM.getDefaultInstance());
-                  stack.add(ModBlockItems.JUNGLE_FARM.getDefaultInstance());
-                  stack.add(ModBlockItems.LUCKY_DROP_FARM.getDefaultInstance());
-                  stack.add(ModBlockItems.MONSTER_PLAINS_CAVE_FARM.getDefaultInstance());
-                  stack.add(ModBlockItems.NETHER_FORTRESS_FARM.getDefaultInstance());
-                  stack.add(ModBlockItems.OCEAN_FARM.getDefaultInstance());
-                  stack.add(ModBlockItems.SWAMP_FARM.getDefaultInstance());
+
+                  // Add custom mob farm tier items
+                  stack.addAll(
+                      CustomMobFarmBlocks.getMobFarmTiers(ModBlockItems.ANIMAL_PLAINS_FARM));
+                  stack.addAll(CustomMobFarmBlocks.getMobFarmTiers(ModBlockItems.BEE_HIVE_FARM));
+                  stack.addAll(CustomMobFarmBlocks.getMobFarmTiers(ModBlockItems.DESERT_FARM));
+                  stack.addAll(CustomMobFarmBlocks.getMobFarmTiers(ModBlockItems.IRON_GOLEM_FARM));
+                  stack.addAll(CustomMobFarmBlocks.getMobFarmTiers(ModBlockItems.JUNGLE_FARM));
+                  stack.addAll(CustomMobFarmBlocks.getMobFarmTiers(ModBlockItems.LUCKY_DROP_FARM));
+                  stack.addAll(
+                      CustomMobFarmBlocks.getMobFarmTiers(ModBlockItems.MONSTER_PLAINS_CAVE_FARM));
+                  stack.addAll(
+                      CustomMobFarmBlocks.getMobFarmTiers(ModBlockItems.NETHER_FORTRESS_FARM));
+                  stack.addAll(CustomMobFarmBlocks.getMobFarmTiers(ModBlockItems.OCEAN_FARM));
+                  stack.addAll(CustomMobFarmBlocks.getMobFarmTiers(ModBlockItems.SWAMP_FARM));
                 })
             .build();
 
