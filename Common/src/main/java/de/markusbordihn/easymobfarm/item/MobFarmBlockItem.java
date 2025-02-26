@@ -21,11 +21,13 @@ package de.markusbordihn.easymobfarm.item;
 
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.config.MobFarmConfig;
+import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmTierLevel;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
@@ -52,14 +54,33 @@ public class MobFarmBlockItem extends BlockItem {
     this.farmName = farmName;
   }
 
-  private void setCustomModelData(ItemStack itemStack) {
-    var tag = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).getUnsafe();
+  public static void setTierLevel(ItemStack itemStack, int tierLevel) {
+    CompoundTag tag =
+        itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).getUnsafe();
+    tag.putInt(MobFarmBlockEntity.TIER_LEVEL_TAG, tierLevel);
+    itemStack.set(DataComponents.CUSTOM_DATA, CustomData.of(tag));
+    setCustomModelData(itemStack);
+  }
+
+  private static void setCustomModelData(ItemStack itemStack) {
+    CompoundTag tag =
+        itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).getUnsafe();
     if (tag.contains(MobFarmBlockEntity.TIER_LEVEL_TAG)) {
       int tierLevel = tag.getInt(MobFarmBlockEntity.TIER_LEVEL_TAG);
       if (tierLevel > 0) {
         itemStack.set(DataComponents.CUSTOM_MODEL_DATA, new CustomModelData(tierLevel));
       }
     }
+  }
+
+  public static MobFarmTierLevel getTierLevel(ItemStack itemStack) {
+    CustomData customData = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
+    int tierLevel = customData.getUnsafe().getInt(MobFarmBlockEntity.TIER_LEVEL_TAG);
+    return MobFarmTierLevel.getTierLevel(tierLevel);
+  }
+
+  public String getFarmName() {
+    return this.farmName;
   }
 
   @Override

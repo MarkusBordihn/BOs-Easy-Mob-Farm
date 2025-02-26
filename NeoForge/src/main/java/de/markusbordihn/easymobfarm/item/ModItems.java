@@ -85,7 +85,7 @@ public class ModItems {
       ITEMS.register(LuckEnhancementItem.ID, () -> Items.LUCK_ENHANCEMENT);
 
   public static final DeferredItem<Item> MILK_EXTRACTOR_ENHANCEMENT =
-    ITEMS.register(MilkExtractorEnhancementItem.ID, () -> Items.MILK_EXTRACTOR_ENHANCEMENT);
+      ITEMS.register(MilkExtractorEnhancementItem.ID, () -> Items.MILK_EXTRACTOR_ENHANCEMENT);
 
   public static final DeferredItem<Item> POLLEN_TRAP_ENHANCEMENT =
       ITEMS.register(PollenTrapEnhancementItem.ID, () -> Items.POLLEN_TRAP_ENHANCEMENT);
@@ -123,7 +123,7 @@ public class ModItems {
       ITEMS.register(VoidBindingChainItem.ID, () -> Items.VOID_BINDING_CHAIN);
 
   public static final DeferredItem<Item> MILK_BOTTLE =
-    ITEMS.register(MilkBottleItem.ID, () -> Items.MILK_BOTTLE);
+      ITEMS.register(MilkBottleItem.ID, () -> Items.MILK_BOTTLE);
 
   protected ModItems() {}
 }

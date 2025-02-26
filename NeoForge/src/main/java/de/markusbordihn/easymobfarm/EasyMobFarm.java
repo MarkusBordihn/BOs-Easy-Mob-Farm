@@ -22,6 +22,8 @@ package de.markusbordihn.easymobfarm;
 import cpw.mods.modlauncher.Launcher;
 import cpw.mods.modlauncher.api.IEnvironment;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
+import de.markusbordihn.easymobfarm.compat.CompatHandler;
+import de.markusbordihn.easymobfarm.compat.CompatManager;
 import de.markusbordihn.easymobfarm.component.ModDataComponents;
 import de.markusbordihn.easymobfarm.config.Config;
 import de.markusbordihn.easymobfarm.debug.DebugManager;
@@ -62,6 +64,9 @@ public class EasyMobFarm {
 
     log.info("{} Configuration ...", Constants.LOG_REGISTER_PREFIX);
     Config.register(FMLEnvironment.dist == Dist.DEDICATED_SERVER);
+
+    log.info("{} Compatibility Handler ...", Constants.LOG_REGISTER_PREFIX);
+    CompatManager.registerCompatHandler(new CompatHandler());
 
     log.info("{} Experience Manager ...", Constants.LOG_REGISTER_PREFIX);
     ExperienceManager.registerExperienceManager(new ModExperienceManager());
