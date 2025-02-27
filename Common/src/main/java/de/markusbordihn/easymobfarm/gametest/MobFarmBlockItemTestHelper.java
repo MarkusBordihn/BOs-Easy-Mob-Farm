@@ -21,18 +21,17 @@ package de.markusbordihn.easymobfarm.gametest;
 
 import de.markusbordihn.easymobfarm.block.MobFarmBlock;
 import de.markusbordihn.easymobfarm.block.MobFarmTemplateBlock;
-import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
+import de.markusbordihn.easymobfarm.component.DataComponents;
+import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmData;
+import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmTierLevel;
 import de.markusbordihn.easymobfarm.item.MobFarmBlockItem;
 import de.markusbordihn.easymobfarm.item.MobFarmTemplateItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.block.Block;
@@ -49,15 +48,13 @@ public class MobFarmBlockItemTestHelper {
   }
 
   public static void useMobFarmBlockItem(
-      GameTestHelper helper, Item item, int tierLevel, Block block) {
+      GameTestHelper helper, Item item, MobFarmTierLevel tierLevel, Block block) {
     BlockPos blockPos = new BlockPos(0, 1, 0);
     ItemStack itemStack = new ItemStack(item);
 
     // Set tier level and custom model data
-    CompoundTag tag =
-        itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).getUnsafe();
-    tag.putInt(MobFarmBlockEntity.TIER_LEVEL_TAG, tierLevel);
-    CustomData.set(DataComponents.CUSTOM_DATA, itemStack, tag);
+    MobFarmData mobFarmData = MobFarmData.EMPTY.withTierLevel(tierLevel);
+    itemStack.set(DataComponents.MOB_FARM_DATA, mobFarmData);
 
     // Place block and check if it is present
     useMobFarmBlockItem(helper, itemStack, block, blockPos);
@@ -67,7 +64,7 @@ public class MobFarmBlockItemTestHelper {
     GameTestHelpers.assertTrue(
         helper,
         "Expected tier level " + tierLevel + " but found " + MobFarmBlock.getTierLevel(blockState),
-        MobFarmBlock.getTierLevel(blockState) == tierLevel);
+        MobFarmBlock.getTierLevel(blockState) == tierLevel.getTierLevel());
   }
 
   public static void useMobFarmBlockItem(

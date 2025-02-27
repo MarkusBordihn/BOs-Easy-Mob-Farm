@@ -21,6 +21,7 @@ package de.markusbordihn.easymobfarm.component;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
+import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmData;
 import java.util.function.Supplier;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
@@ -34,12 +35,12 @@ public class DataComponents {
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   public static DataComponentType<MobCaptureData> MOB_CAPTURE_DATA;
+  public static DataComponentType<MobFarmData> MOB_FARM_DATA;
 
   private DataComponents() {}
 
   public static void registerMobCaptureData() {
-    log.info("{} Data Component {} ...", Constants.MOD_NAME, DataComponents.MOB_CAPTURE_DATA);
-
+    log.info("{} Data Components ...", Constants.MOD_NAME);
     MOB_CAPTURE_DATA =
         Registry.register(
             BuiltInRegistries.DATA_COMPONENT_TYPE,
@@ -48,10 +49,24 @@ public class DataComponents {
                 .persistent(MobCaptureData.CODEC)
                 .networkSynchronized(MobCaptureData.STREAM_CODEC)
                 .build());
+
+    MOB_FARM_DATA =
+        Registry.register(
+            BuiltInRegistries.DATA_COMPONENT_TYPE,
+            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, MobFarmData.ID),
+            DataComponentType.<MobFarmData>builder()
+                .persistent(MobFarmData.CODEC)
+                .networkSynchronized(MobFarmData.STREAM_CODEC)
+                .build());
   }
 
   public static void registerMobCaptureData(Supplier<DataComponentType<MobCaptureData>> supplier) {
     log.info("{} Mob Capture Data Component {} ...", Constants.MOD_NAME, supplier.get());
     MOB_CAPTURE_DATA = supplier.get();
+  }
+
+  public static void registerMobFarmData(Supplier<DataComponentType<MobFarmData>> supplier) {
+    log.info("{} Mob Farm Data Component {} ...", Constants.MOD_NAME, supplier.get());
+    MOB_FARM_DATA = supplier.get();
   }
 }

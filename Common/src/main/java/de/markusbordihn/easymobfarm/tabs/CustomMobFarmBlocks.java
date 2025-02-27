@@ -19,6 +19,8 @@
 
 package de.markusbordihn.easymobfarm.tabs;
 
+import de.markusbordihn.easymobfarm.component.DataComponents;
+import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmData;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmTierLevel;
 import de.markusbordihn.easymobfarm.item.MobFarmBlockItem;
 import java.util.Collections;
@@ -31,15 +33,17 @@ public class CustomMobFarmBlocks {
 
   private CustomMobFarmBlocks() {}
 
-  public static Set<ItemStack> getMobFarmTiers(ItemLike mobFarmBlockItem) {
-    if (!(mobFarmBlockItem instanceof MobFarmBlockItem)) {
+  public static Set<ItemStack> getMobFarmTiers(ItemLike itemLike) {
+    if (!(itemLike instanceof MobFarmBlockItem mobFarmBlockItem)) {
       return Collections.emptySet();
     }
     Set<ItemStack> result = new LinkedHashSet<>();
     for (MobFarmTierLevel mobFarmTierLevel : MobFarmTierLevel.values()) {
-      int tierLevel = mobFarmTierLevel.getTierLevel();
+      MobFarmData mobFarmData =
+          new MobFarmData(mobFarmBlockItem.getMobFarmType(), mobFarmTierLevel);
       ItemStack itemStack = new ItemStack(mobFarmBlockItem);
-      MobFarmBlockItem.setTierLevel(itemStack, tierLevel);
+      itemStack.set(DataComponents.MOB_FARM_DATA, mobFarmData);
+      MobFarmBlockItem.updateCustomModelData(itemStack);
       result.add(itemStack);
     }
     return result;

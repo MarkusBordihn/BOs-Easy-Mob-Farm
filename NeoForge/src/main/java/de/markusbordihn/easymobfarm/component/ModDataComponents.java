@@ -21,6 +21,7 @@ package de.markusbordihn.easymobfarm.component;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
+import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmData;
 import java.util.function.Supplier;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
@@ -41,11 +42,20 @@ public class ModDataComponents {
               builder
                   .persistent(MobCaptureData.CODEC)
                   .networkSynchronized(MobCaptureData.STREAM_CODEC));
+  public static final Supplier<DataComponentType<MobFarmData>> MOB_FARM_DATA =
+      DATA_COMPONENTS.registerComponentType(
+          MobFarmData.ID,
+          builder ->
+              builder.persistent(MobFarmData.CODEC).networkSynchronized(MobFarmData.STREAM_CODEC));
 
   private ModDataComponents() {}
 
   @SubscribeEvent
   public static void onCommonSetup(FMLCommonSetupEvent event) {
-    event.enqueueWork(() -> DataComponents.registerMobCaptureData(MOB_CAPTURE_DATA));
+    event.enqueueWork(
+        () -> {
+          DataComponents.registerMobCaptureData(MOB_CAPTURE_DATA);
+          DataComponents.registerMobFarmData(MOB_FARM_DATA);
+        });
   }
 }

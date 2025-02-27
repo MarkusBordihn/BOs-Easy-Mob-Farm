@@ -19,16 +19,33 @@
 
 package de.markusbordihn.easymobfarm.data.mobfarm;
 
-public enum MobFarmTierLevel {
+import io.netty.buffer.ByteBuf;
+import java.util.Locale;
+import java.util.function.IntFunction;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.util.ByIdMap;
+import net.minecraft.util.ByIdMap.OutOfBoundsStrategy;
+import net.minecraft.util.StringRepresentable;
+
+public enum MobFarmTierLevel implements StringRepresentable {
   TIER_LEVEL_0(0),
   TIER_LEVEL_1(1),
   TIER_LEVEL_2(2),
   TIER_LEVEL_3(3);
 
+  public static final StringRepresentable.EnumCodec<MobFarmTierLevel> CODEC =
+      StringRepresentable.fromEnum(MobFarmTierLevel::values);
+  private static final IntFunction<MobFarmTierLevel> BY_ID =
+      ByIdMap.continuous(MobFarmTierLevel::getTierLevel, values(), OutOfBoundsStrategy.ZERO);
+  public static final StreamCodec<ByteBuf, MobFarmTierLevel> STREAM_CODEC =
+      ByteBufCodecs.idMapper(BY_ID, MobFarmTierLevel::getTierLevel);
   private final int tierLevel;
+  private final String name;
 
   MobFarmTierLevel(int tierLevel) {
     this.tierLevel = tierLevel;
+    this.name = this.name().toLowerCase(Locale.ROOT);
   }
 
   public static MobFarmTierLevel getTierLevel(int tierLevel) {
@@ -42,5 +59,10 @@ public enum MobFarmTierLevel {
 
   public int getTierLevel() {
     return this.tierLevel;
+  }
+
+  @Override
+  public String getSerializedName() {
+    return this.name;
   }
 }
