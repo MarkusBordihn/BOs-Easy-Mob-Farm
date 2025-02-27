@@ -43,6 +43,8 @@ public class MobFarmConfig extends Config {
 
   public static boolean processingRequiresOwnerToBeOnline = false;
 
+  public static int luckyDropFarmLuckPercentage = 95;
+
   public static void registerConfig() {
     registerConfigFile(CONFIG_FILE_NAME, CONFIG_FILE_HEADER);
     parseConfigFile();
@@ -71,6 +73,9 @@ public class MobFarmConfig extends Config {
     processingRequiresOwnerToBeOnline =
         parseConfigValue(
             properties, "progressingRequiresOwnerToBeOnline", processingRequiresOwnerToBeOnline);
+
+    luckyDropFarmLuckPercentage =
+        parseConfigValue(properties, "luckyDropFarmLuckPercentage", luckyDropFarmLuckPercentage);
 
     // Update config file if needed
     updateConfigFileIfChanged(configFile, CONFIG_FILE_HEADER, properties, unmodifiedProperties);

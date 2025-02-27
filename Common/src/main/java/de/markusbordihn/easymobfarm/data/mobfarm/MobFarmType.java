@@ -20,10 +20,18 @@
 package de.markusbordihn.easymobfarm.data.mobfarm;
 
 import com.mojang.serialization.Codec;
+import io.netty.buffer.ByteBuf;
+import java.util.Arrays;
 import java.util.Locale;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.StringRepresentable;
 
 public enum MobFarmType implements StringRepresentable {
+  UNKNOWN,
   ANIMAL_PLAINS_FARM,
   BEE_HIVE_FARM,
   CREATIVE_MOB_FARM,
@@ -39,6 +47,11 @@ public enum MobFarmType implements StringRepresentable {
   public static final Codec<MobFarmType> CODEC =
       Codec.STRING.xmap(MobFarmType::valueOf, MobFarmType::name);
 
+  private static final MobFarmType[] VALUES = values();
+  public static final StreamCodec<ByteBuf, MobFarmType> STREAM_CODEC =
+      ByteBufCodecs.idMapper(index -> VALUES[index], MobFarmType::ordinal);
+  private static final Map<String, MobFarmType> BY_NAME =
+      Arrays.stream(VALUES).collect(Collectors.toMap(MobFarmType::getId, Function.identity()));
   private final String name;
 
   MobFarmType() {

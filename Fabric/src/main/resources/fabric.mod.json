@@ -28,6 +28,9 @@
       "de.markusbordihn.easymobfarm.gametest.ModItemsTest",
       "de.markusbordihn.easymobfarm.gametest.MobFarmBlockItemsTest",
       "de.markusbordihn.easymobfarm.gametest.LootTablesTest"
+    ],
+    "jei_mod_plugin": [
+      "de.markusbordihn.easymobfarm.compat.jei.EasyMobFarmJeiPlugin"
     ]
   },
   "mixins": [

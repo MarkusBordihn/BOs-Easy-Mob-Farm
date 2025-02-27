@@ -56,27 +56,26 @@ public class ModBlockItems {
                       ResourceLocation.fromNamespaceAndPath(
                           Constants.MOD_ID, MobFarmType.CREATIVE_MOB_FARM.getId()))));
   public static final Item ANIMAL_PLAINS_FARM =
-      new MobFarmBlockItem(MobFarmType.ANIMAL_PLAINS_FARM.getId(), ModBlocks.ANIMAL_PLAINS_FARM);
+      new MobFarmBlockItem(MobFarmType.ANIMAL_PLAINS_FARM, ModBlocks.ANIMAL_PLAINS_FARM);
   public static final Item BEE_HIVE_FARM =
-      new MobFarmBlockItem(MobFarmType.BEE_HIVE_FARM.getId(), ModBlocks.BEE_HIVE_FARM);
+      new MobFarmBlockItem(MobFarmType.BEE_HIVE_FARM, ModBlocks.BEE_HIVE_FARM);
   public static final Item DESERT_FARM =
-      new MobFarmBlockItem(MobFarmType.DESERT_FARM.getId(), ModBlocks.DESERT_FARM);
+      new MobFarmBlockItem(MobFarmType.DESERT_FARM, ModBlocks.DESERT_FARM);
   public static final Item IRON_GOLEM_FARM =
-      new MobFarmBlockItem(MobFarmType.IRON_GOLEM_FARM.getId(), ModBlocks.IRON_GOLEM_FARM);
+      new MobFarmBlockItem(MobFarmType.IRON_GOLEM_FARM, ModBlocks.IRON_GOLEM_FARM);
   public static final Item JUNGLE_FARM =
-      new MobFarmBlockItem(MobFarmType.JUNGLE_FARM.getId(), ModBlocks.JUNGLE_FARM);
+      new MobFarmBlockItem(MobFarmType.JUNGLE_FARM, ModBlocks.JUNGLE_FARM);
   public static final Item LUCKY_DROP_FARM =
-      new MobFarmBlockItem(MobFarmType.LUCKY_DROP_FARM.getId(), ModBlocks.LUCKY_DROP_FARM);
+      new MobFarmBlockItem(MobFarmType.LUCKY_DROP_FARM, ModBlocks.LUCKY_DROP_FARM);
   public static final Item MONSTER_PLAINS_CAVE_FARM =
       new MobFarmBlockItem(
-          MobFarmType.MONSTER_PLAINS_CAVE_FARM.getId(), ModBlocks.MONSTER_PLAINS_CAVE_FARM);
+          MobFarmType.MONSTER_PLAINS_CAVE_FARM, ModBlocks.MONSTER_PLAINS_CAVE_FARM);
   public static final Item NETHER_FORTRESS_FARM =
-      new MobFarmBlockItem(
-          MobFarmType.NETHER_FORTRESS_FARM.getId(), ModBlocks.NETHER_FORTRESS_FARM);
+      new MobFarmBlockItem(MobFarmType.NETHER_FORTRESS_FARM, ModBlocks.NETHER_FORTRESS_FARM);
   public static final Item OCEAN_FARM =
-      new MobFarmBlockItem(MobFarmType.OCEAN_FARM.getId(), ModBlocks.OCEAN_FARM);
+      new MobFarmBlockItem(MobFarmType.OCEAN_FARM, ModBlocks.OCEAN_FARM);
   public static final Item SWAMP_FARM =
-      new MobFarmBlockItem(MobFarmType.SWAMP_FARM.getId(), ModBlocks.SWAMP_FARM);
+      new MobFarmBlockItem(MobFarmType.SWAMP_FARM, ModBlocks.SWAMP_FARM);
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 

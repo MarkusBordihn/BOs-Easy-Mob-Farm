@@ -38,7 +38,7 @@ public record MobFarmBlockItemTierLevel() implements RangeSelectItemModelPropert
       @Nullable ClientLevel clientLevel,
       @Nullable LivingEntity livingEntity,
       int i) {
-    return MobFarmBlockItem.getTierLevel(itemStack);
+    return MobFarmBlockItem.getTierLevel(itemStack).getTierLevel();
   }
 
   @Override

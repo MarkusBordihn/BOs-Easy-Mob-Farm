@@ -54,6 +54,12 @@ dependencies {
   testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.1'
   testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.7.1'
 
+  // Additional helpful Mods for development (runtime dependency)
+  if (project.hasProperty('forge_jei_mod') && project.neoforge_jei_mod) {
+    compileOnly "curse.maven:jei-238222:${project.neoforge_jei_mod}"
+    // runtimeOnly "curse.maven:jei-238222:${project.neoforge_jei_mod}"
+  }
+
   // Immersive Engineering: Integration
   // runtimeOnly "curse.maven:immersive-engineering-231951:5828000"
 

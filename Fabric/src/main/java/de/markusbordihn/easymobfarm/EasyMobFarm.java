@@ -21,6 +21,8 @@ package de.markusbordihn.easymobfarm;
 
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.commands.manager.CommandManager;
+import de.markusbordihn.easymobfarm.compat.CompatHandler;
+import de.markusbordihn.easymobfarm.compat.CompatManager;
 import de.markusbordihn.easymobfarm.component.DataComponents;
 import de.markusbordihn.easymobfarm.config.Config;
 import de.markusbordihn.easymobfarm.debug.DebugManager;
@@ -57,6 +59,9 @@ public class EasyMobFarm implements ModInitializer {
 
     log.info("{} Configuration ...", Constants.LOG_REGISTER_PREFIX);
     Config.register(FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER);
+
+    log.info("{} Compatibility Handler ...", Constants.LOG_REGISTER_PREFIX);
+    CompatManager.registerCompatHandler(new CompatHandler());
 
     log.info("{} Experience Manager ...", Constants.LOG_REGISTER_PREFIX);
     ExperienceManager.registerExperienceManager(new ModExperienceManager());
