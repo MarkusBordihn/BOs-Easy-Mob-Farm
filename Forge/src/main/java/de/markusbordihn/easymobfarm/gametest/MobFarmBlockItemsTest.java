@@ -21,6 +21,7 @@ package de.markusbordihn.easymobfarm.gametest;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
+import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmTierLevel;
 import de.markusbordihn.easymobfarm.item.ModBlockItems;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -44,7 +45,7 @@ public class MobFarmBlockItemsTest {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
         helper,
         ModBlockItems.ANIMAL_PLAINS_FARM.get().asItem(),
-        0,
+        MobFarmTierLevel.TIER_LEVEL_0,
         ModBlocks.ANIMAL_PLAINS_FARM.get());
     helper.succeed();
   }
@@ -54,7 +55,7 @@ public class MobFarmBlockItemsTest {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
         helper,
         ModBlockItems.ANIMAL_PLAINS_FARM.get().asItem(),
-        1,
+        MobFarmTierLevel.TIER_LEVEL_1,
         ModBlocks.ANIMAL_PLAINS_FARM.get());
     helper.succeed();
   }
@@ -64,7 +65,7 @@ public class MobFarmBlockItemsTest {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
         helper,
         ModBlockItems.ANIMAL_PLAINS_FARM.get().asItem(),
-        2,
+        MobFarmTierLevel.TIER_LEVEL_2,
         ModBlocks.ANIMAL_PLAINS_FARM.get());
     helper.succeed();
   }
@@ -74,7 +75,7 @@ public class MobFarmBlockItemsTest {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
         helper,
         ModBlockItems.ANIMAL_PLAINS_FARM.get().asItem(),
-        3,
+        MobFarmTierLevel.TIER_LEVEL_3,
         ModBlocks.ANIMAL_PLAINS_FARM.get());
     helper.succeed();
   }
@@ -89,28 +90,40 @@ public class MobFarmBlockItemsTest {
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testBeeHiveFarmTier0(GameTestHelper helper) {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.BEE_HIVE_FARM.get().asItem(), 0, ModBlocks.BEE_HIVE_FARM.get());
+        helper,
+        ModBlockItems.BEE_HIVE_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_LEVEL_0,
+        ModBlocks.BEE_HIVE_FARM.get());
     helper.succeed();
   }
 
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testBeeHiveFarmTier1(GameTestHelper helper) {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.BEE_HIVE_FARM.get().asItem(), 1, ModBlocks.BEE_HIVE_FARM.get());
+        helper,
+        ModBlockItems.BEE_HIVE_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_LEVEL_1,
+        ModBlocks.BEE_HIVE_FARM.get());
     helper.succeed();
   }
 
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testBeeHiveFarmTier2(GameTestHelper helper) {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.BEE_HIVE_FARM.get().asItem(), 2, ModBlocks.BEE_HIVE_FARM.get());
+        helper,
+        ModBlockItems.BEE_HIVE_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_LEVEL_2,
+        ModBlocks.BEE_HIVE_FARM.get());
     helper.succeed();
   }
 
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testBeeHiveFarmTier3(GameTestHelper helper) {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.BEE_HIVE_FARM.get().asItem(), 3, ModBlocks.BEE_HIVE_FARM.get());
+        helper,
+        ModBlockItems.BEE_HIVE_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_LEVEL_3,
+        ModBlocks.BEE_HIVE_FARM.get());
     helper.succeed();
   }
 
@@ -124,28 +137,40 @@ public class MobFarmBlockItemsTest {
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testDesertFarmTier0(GameTestHelper helper) {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.DESERT_FARM.get().asItem(), 0, ModBlocks.DESERT_FARM.get());
+        helper,
+        ModBlockItems.DESERT_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_LEVEL_0,
+        ModBlocks.DESERT_FARM.get());
     helper.succeed();
   }
 
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testDesertFarmTier1(GameTestHelper helper) {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.DESERT_FARM.get().asItem(), 1, ModBlocks.DESERT_FARM.get());
+        helper,
+        ModBlockItems.DESERT_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_LEVEL_1,
+        ModBlocks.DESERT_FARM.get());
     helper.succeed();
   }
 
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testDesertFarmTier2(GameTestHelper helper) {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.DESERT_FARM.get().asItem(), 2, ModBlocks.DESERT_FARM.get());
+        helper,
+        ModBlockItems.DESERT_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_LEVEL_2,
+        ModBlocks.DESERT_FARM.get());
     helper.succeed();
   }
 
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testDesertFarmTier3(GameTestHelper helper) {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.DESERT_FARM.get().asItem(), 3, ModBlocks.DESERT_FARM.get());
+        helper,
+        ModBlockItems.DESERT_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_LEVEL_3,
+        ModBlocks.DESERT_FARM.get());
     helper.succeed();
   }
 
@@ -159,28 +184,40 @@ public class MobFarmBlockItemsTest {
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testIronGolemFarmTier0(GameTestHelper helper) {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.IRON_GOLEM_FARM.get().asItem(), 0, ModBlocks.IRON_GOLEM_FARM.get());
+        helper,
+        ModBlockItems.IRON_GOLEM_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_LEVEL_0,
+        ModBlocks.IRON_GOLEM_FARM.get());
     helper.succeed();
   }
 
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testIronGolemFarmTier1(GameTestHelper helper) {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.IRON_GOLEM_FARM.get().asItem(), 1, ModBlocks.IRON_GOLEM_FARM.get());
+        helper,
+        ModBlockItems.IRON_GOLEM_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_LEVEL_1,
+        ModBlocks.IRON_GOLEM_FARM.get());
     helper.succeed();
   }
 
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testIronGolemFarmTier2(GameTestHelper helper) {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.IRON_GOLEM_FARM.get().asItem(), 2, ModBlocks.IRON_GOLEM_FARM.get());
+        helper,
+        ModBlockItems.IRON_GOLEM_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_LEVEL_2,
+        ModBlocks.IRON_GOLEM_FARM.get());
     helper.succeed();
   }
 
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testIronGolemFarmTier3(GameTestHelper helper) {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.IRON_GOLEM_FARM.get().asItem(), 3, ModBlocks.IRON_GOLEM_FARM.get());
+        helper,
+        ModBlockItems.IRON_GOLEM_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_LEVEL_3,
+        ModBlocks.IRON_GOLEM_FARM.get());
     helper.succeed();
   }
 
@@ -194,28 +231,40 @@ public class MobFarmBlockItemsTest {
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testJungleFarmTier0(GameTestHelper helper) {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.JUNGLE_FARM.get().asItem(), 0, ModBlocks.JUNGLE_FARM.get());
+        helper,
+        ModBlockItems.JUNGLE_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_LEVEL_0,
+        ModBlocks.JUNGLE_FARM.get());
     helper.succeed();
   }
 
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testJungleFarmTier1(GameTestHelper helper) {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.JUNGLE_FARM.get().asItem(), 1, ModBlocks.JUNGLE_FARM.get());
+        helper,
+        ModBlockItems.JUNGLE_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_LEVEL_1,
+        ModBlocks.JUNGLE_FARM.get());
     helper.succeed();
   }
 
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testJungleFarmTier2(GameTestHelper helper) {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.JUNGLE_FARM.get().asItem(), 2, ModBlocks.JUNGLE_FARM.get());
+        helper,
+        ModBlockItems.JUNGLE_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_LEVEL_2,
+        ModBlocks.JUNGLE_FARM.get());
     helper.succeed();
   }
 
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testJungleFarmTier3(GameTestHelper helper) {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.JUNGLE_FARM.get().asItem(), 3, ModBlocks.JUNGLE_FARM.get());
+        helper,
+        ModBlockItems.JUNGLE_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_LEVEL_3,
+        ModBlocks.JUNGLE_FARM.get());
     helper.succeed();
   }
 
@@ -229,28 +278,40 @@ public class MobFarmBlockItemsTest {
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testLuckyDropFarmTier0(GameTestHelper helper) {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.LUCKY_DROP_FARM.get().asItem(), 0, ModBlocks.LUCKY_DROP_FARM.get());
+        helper,
+        ModBlockItems.LUCKY_DROP_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_LEVEL_0,
+        ModBlocks.LUCKY_DROP_FARM.get());
     helper.succeed();
   }
 
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testLuckyDropFarmTier1(GameTestHelper helper) {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.LUCKY_DROP_FARM.get().asItem(), 1, ModBlocks.LUCKY_DROP_FARM.get());
+        helper,
+        ModBlockItems.LUCKY_DROP_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_LEVEL_1,
+        ModBlocks.LUCKY_DROP_FARM.get());
     helper.succeed();
   }
 
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testLuckyDropFarmTier2(GameTestHelper helper) {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.LUCKY_DROP_FARM.get().asItem(), 2, ModBlocks.LUCKY_DROP_FARM.get());
+        helper,
+        ModBlockItems.LUCKY_DROP_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_LEVEL_2,
+        ModBlocks.LUCKY_DROP_FARM.get());
     helper.succeed();
   }
 
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testLuckyDropFarmTier3(GameTestHelper helper) {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.LUCKY_DROP_FARM.get().asItem(), 3, ModBlocks.LUCKY_DROP_FARM.get());
+        helper,
+        ModBlockItems.LUCKY_DROP_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_LEVEL_3,
+        ModBlocks.LUCKY_DROP_FARM.get());
     helper.succeed();
   }
 
@@ -268,7 +329,7 @@ public class MobFarmBlockItemsTest {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
         helper,
         ModBlockItems.MONSTER_PLAINS_CAVE_FARM.get().asItem(),
-        0,
+        MobFarmTierLevel.TIER_LEVEL_0,
         ModBlocks.MONSTER_PLAINS_CAVE_FARM.get());
     helper.succeed();
   }
@@ -278,7 +339,7 @@ public class MobFarmBlockItemsTest {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
         helper,
         ModBlockItems.MONSTER_PLAINS_CAVE_FARM.get().asItem(),
-        1,
+        MobFarmTierLevel.TIER_LEVEL_1,
         ModBlocks.MONSTER_PLAINS_CAVE_FARM.get());
     helper.succeed();
   }
@@ -288,7 +349,7 @@ public class MobFarmBlockItemsTest {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
         helper,
         ModBlockItems.MONSTER_PLAINS_CAVE_FARM.get().asItem(),
-        2,
+        MobFarmTierLevel.TIER_LEVEL_2,
         ModBlocks.MONSTER_PLAINS_CAVE_FARM.get());
     helper.succeed();
   }
@@ -298,7 +359,7 @@ public class MobFarmBlockItemsTest {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
         helper,
         ModBlockItems.MONSTER_PLAINS_CAVE_FARM.get().asItem(),
-        3,
+        MobFarmTierLevel.TIER_LEVEL_3,
         ModBlocks.MONSTER_PLAINS_CAVE_FARM.get());
     helper.succeed();
   }
@@ -317,7 +378,7 @@ public class MobFarmBlockItemsTest {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
         helper,
         ModBlockItems.NETHER_FORTRESS_FARM.get().asItem(),
-        0,
+        MobFarmTierLevel.TIER_LEVEL_0,
         ModBlocks.NETHER_FORTRESS_FARM.get());
     helper.succeed();
   }
@@ -327,7 +388,7 @@ public class MobFarmBlockItemsTest {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
         helper,
         ModBlockItems.NETHER_FORTRESS_FARM.get().asItem(),
-        1,
+        MobFarmTierLevel.TIER_LEVEL_1,
         ModBlocks.NETHER_FORTRESS_FARM.get());
     helper.succeed();
   }
@@ -337,7 +398,7 @@ public class MobFarmBlockItemsTest {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
         helper,
         ModBlockItems.NETHER_FORTRESS_FARM.get().asItem(),
-        2,
+        MobFarmTierLevel.TIER_LEVEL_2,
         ModBlocks.NETHER_FORTRESS_FARM.get());
     helper.succeed();
   }
@@ -347,7 +408,7 @@ public class MobFarmBlockItemsTest {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
         helper,
         ModBlockItems.NETHER_FORTRESS_FARM.get().asItem(),
-        3,
+        MobFarmTierLevel.TIER_LEVEL_3,
         ModBlocks.NETHER_FORTRESS_FARM.get());
     helper.succeed();
   }
@@ -362,28 +423,40 @@ public class MobFarmBlockItemsTest {
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testOceanFarmTier0(GameTestHelper helper) {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.OCEAN_FARM.get().asItem(), 0, ModBlocks.OCEAN_FARM.get());
+        helper,
+        ModBlockItems.OCEAN_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_LEVEL_0,
+        ModBlocks.OCEAN_FARM.get());
     helper.succeed();
   }
 
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testOceanFarmTier1(GameTestHelper helper) {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.OCEAN_FARM.get().asItem(), 1, ModBlocks.OCEAN_FARM.get());
+        helper,
+        ModBlockItems.OCEAN_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_LEVEL_1,
+        ModBlocks.OCEAN_FARM.get());
     helper.succeed();
   }
 
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testOceanFarmTier2(GameTestHelper helper) {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.OCEAN_FARM.get().asItem(), 2, ModBlocks.OCEAN_FARM.get());
+        helper,
+        ModBlockItems.OCEAN_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_LEVEL_2,
+        ModBlocks.OCEAN_FARM.get());
     helper.succeed();
   }
 
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testOceanFarmTier3(GameTestHelper helper) {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.OCEAN_FARM.get().asItem(), 3, ModBlocks.OCEAN_FARM.get());
+        helper,
+        ModBlockItems.OCEAN_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_LEVEL_3,
+        ModBlocks.OCEAN_FARM.get());
     helper.succeed();
   }
 
@@ -397,28 +470,40 @@ public class MobFarmBlockItemsTest {
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testSwampFarmTier0(GameTestHelper helper) {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.SWAMP_FARM.get().asItem(), 0, ModBlocks.SWAMP_FARM.get());
+        helper,
+        ModBlockItems.SWAMP_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_LEVEL_0,
+        ModBlocks.SWAMP_FARM.get());
     helper.succeed();
   }
 
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testSwampFarmTier1(GameTestHelper helper) {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.SWAMP_FARM.get().asItem(), 1, ModBlocks.SWAMP_FARM.get());
+        helper,
+        ModBlockItems.SWAMP_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_LEVEL_1,
+        ModBlocks.SWAMP_FARM.get());
     helper.succeed();
   }
 
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testSwampFarmTier2(GameTestHelper helper) {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.SWAMP_FARM.get().asItem(), 2, ModBlocks.SWAMP_FARM.get());
+        helper,
+        ModBlockItems.SWAMP_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_LEVEL_2,
+        ModBlocks.SWAMP_FARM.get());
     helper.succeed();
   }
 
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testSwampFarmTier3(GameTestHelper helper) {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.SWAMP_FARM.get().asItem(), 3, ModBlocks.SWAMP_FARM.get());
+        helper,
+        ModBlockItems.SWAMP_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_LEVEL_3,
+        ModBlocks.SWAMP_FARM.get());
     helper.succeed();
   }
 }

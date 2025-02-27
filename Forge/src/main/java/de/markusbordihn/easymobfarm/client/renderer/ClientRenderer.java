@@ -70,7 +70,7 @@ public class ClientRenderer {
               ModBlocks.MONSTER_PLAINS_CAVE_FARM.get(), RenderType.cutout());
           ItemBlockRenderTypes.setRenderLayer(
               ModBlocks.NETHER_FORTRESS_FARM.get(), RenderType.cutout());
-          ItemBlockRenderTypes.setRenderLayer(ModBlocks.OCEAN_FARM.get(), RenderType.cutout());
+          ItemBlockRenderTypes.setRenderLayer(ModBlocks.OCEAN_FARM.get(), RenderType.translucent());
           ItemBlockRenderTypes.setRenderLayer(ModBlocks.SWAMP_FARM.get(), RenderType.cutout());
         });
   }

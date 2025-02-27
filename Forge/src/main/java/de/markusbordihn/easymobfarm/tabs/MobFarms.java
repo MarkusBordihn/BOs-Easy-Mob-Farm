@@ -33,15 +33,35 @@ public class MobFarms implements DisplayItemsGenerator {
 
     // Default mob farm items
     output.accept(ModBlockItems.CREATIVE_MOB_FARM.get().getDefaultInstance());
-    output.accept(ModBlockItems.ANIMAL_PLAINS_FARM.get().getDefaultInstance());
-    output.accept(ModBlockItems.BEE_HIVE_FARM.get().getDefaultInstance());
-    output.accept(ModBlockItems.DESERT_FARM.get().getDefaultInstance());
-    output.accept(ModBlockItems.IRON_GOLEM_FARM.get().getDefaultInstance());
-    output.accept(ModBlockItems.JUNGLE_FARM.get().getDefaultInstance());
-    output.accept(ModBlockItems.LUCKY_DROP_FARM.get().getDefaultInstance());
-    output.accept(ModBlockItems.MONSTER_PLAINS_CAVE_FARM.get().getDefaultInstance());
-    output.accept(ModBlockItems.NETHER_FORTRESS_FARM.get().getDefaultInstance());
-    output.accept(ModBlockItems.OCEAN_FARM.get().getDefaultInstance());
-    output.accept(ModBlockItems.SWAMP_FARM.get().getDefaultInstance());
+    output.acceptAll(
+        CustomMobFarmBlocks.getMobFarmTiers(
+            ModBlockItems.ANIMAL_PLAINS_FARM.get().getDefaultInstance().getItem()));
+    output.acceptAll(
+        CustomMobFarmBlocks.getMobFarmTiers(
+            ModBlockItems.BEE_HIVE_FARM.get().getDefaultInstance().getItem()));
+    output.acceptAll(
+        CustomMobFarmBlocks.getMobFarmTiers(
+            ModBlockItems.DESERT_FARM.get().getDefaultInstance().getItem()));
+    output.acceptAll(
+        CustomMobFarmBlocks.getMobFarmTiers(
+            ModBlockItems.IRON_GOLEM_FARM.get().getDefaultInstance().getItem()));
+    output.acceptAll(
+        CustomMobFarmBlocks.getMobFarmTiers(
+            ModBlockItems.JUNGLE_FARM.get().getDefaultInstance().getItem()));
+    output.acceptAll(
+        CustomMobFarmBlocks.getMobFarmTiers(
+            ModBlockItems.LUCKY_DROP_FARM.get().getDefaultInstance().getItem()));
+    output.acceptAll(
+        CustomMobFarmBlocks.getMobFarmTiers(
+            ModBlockItems.MONSTER_PLAINS_CAVE_FARM.get().getDefaultInstance().getItem()));
+    output.acceptAll(
+        CustomMobFarmBlocks.getMobFarmTiers(
+            ModBlockItems.NETHER_FORTRESS_FARM.get().getDefaultInstance().getItem()));
+    output.acceptAll(
+        CustomMobFarmBlocks.getMobFarmTiers(
+            ModBlockItems.OCEAN_FARM.get().getDefaultInstance().getItem()));
+    output.acceptAll(
+        CustomMobFarmBlocks.getMobFarmTiers(
+            ModBlockItems.SWAMP_FARM.get().getDefaultInstance().getItem()));
   }
 }

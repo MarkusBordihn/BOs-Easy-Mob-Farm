@@ -23,10 +23,11 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
+import de.markusbordihn.easymobfarm.component.DataComponents;
+import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmData;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -37,7 +38,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -176,8 +176,9 @@ public class MobFarmBlock extends BaseEntityBlock {
       if (livingEntity instanceof ServerPlayer serverPlayer) {
         blockEntityInstance.setOwner(serverPlayer);
       }
-      CustomData customData = itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY);
-      int tierLevel = customData.getUnsafe().getInt(MobFarmBlockEntity.TIER_LEVEL_TAG);
+      MobFarmData mobFarmData =
+          itemStack.getOrDefault(DataComponents.MOB_FARM_DATA, MobFarmData.EMPTY);
+      int tierLevel = mobFarmData.tierLevel().getTierLevel();
       if (tierLevel >= 0) {
         BlockState newBlockState = blockState.setValue(TIER_LEVEL, tierLevel);
         serverLevel.setBlock(blockPos, newBlockState, 3);

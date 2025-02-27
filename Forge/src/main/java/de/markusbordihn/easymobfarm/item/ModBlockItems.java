@@ -80,63 +80,56 @@ public class ModBlockItems {
           MobFarmType.ANIMAL_PLAINS_FARM.getId(),
           () ->
               new MobFarmBlockItem(
-                  MobFarmType.ANIMAL_PLAINS_FARM.getId(), ModBlocks.ANIMAL_PLAINS_FARM.get()));
+                  MobFarmType.ANIMAL_PLAINS_FARM, ModBlocks.ANIMAL_PLAINS_FARM.get()));
 
   public static final RegistryObject<Item> BEE_HIVE_FARM =
       ITEMS.register(
           MobFarmType.BEE_HIVE_FARM.getId(),
-          () ->
-              new MobFarmBlockItem(
-                  MobFarmType.BEE_HIVE_FARM.getId(), ModBlocks.BEE_HIVE_FARM.get()));
+          () -> new MobFarmBlockItem(MobFarmType.BEE_HIVE_FARM, ModBlocks.BEE_HIVE_FARM.get()));
 
   public static final RegistryObject<Item> DESERT_FARM =
       ITEMS.register(
           MobFarmType.DESERT_FARM.getId(),
-          () -> new MobFarmBlockItem(MobFarmType.DESERT_FARM.getId(), ModBlocks.DESERT_FARM.get()));
+          () -> new MobFarmBlockItem(MobFarmType.DESERT_FARM, ModBlocks.DESERT_FARM.get()));
 
   public static final RegistryObject<Item> IRON_GOLEM_FARM =
       ITEMS.register(
           MobFarmType.IRON_GOLEM_FARM.getId(),
-          () ->
-              new MobFarmBlockItem(
-                  MobFarmType.IRON_GOLEM_FARM.getId(), ModBlocks.IRON_GOLEM_FARM.get()));
+          () -> new MobFarmBlockItem(MobFarmType.IRON_GOLEM_FARM, ModBlocks.IRON_GOLEM_FARM.get()));
 
   public static final RegistryObject<Item> JUNGLE_FARM =
       ITEMS.register(
           MobFarmType.JUNGLE_FARM.getId(),
-          () -> new MobFarmBlockItem(MobFarmType.JUNGLE_FARM.getId(), ModBlocks.JUNGLE_FARM.get()));
+          () -> new MobFarmBlockItem(MobFarmType.JUNGLE_FARM, ModBlocks.JUNGLE_FARM.get()));
 
   public static final RegistryObject<Item> LUCKY_DROP_FARM =
       ITEMS.register(
           MobFarmType.LUCKY_DROP_FARM.getId(),
-          () ->
-              new MobFarmBlockItem(
-                  MobFarmType.LUCKY_DROP_FARM.getId(), ModBlocks.LUCKY_DROP_FARM.get()));
+          () -> new MobFarmBlockItem(MobFarmType.LUCKY_DROP_FARM, ModBlocks.LUCKY_DROP_FARM.get()));
 
   public static final RegistryObject<Item> MONSTER_PLAINS_CAVE_FARM =
       ITEMS.register(
           MobFarmType.MONSTER_PLAINS_CAVE_FARM.getId(),
           () ->
               new MobFarmBlockItem(
-                  MobFarmType.MONSTER_PLAINS_CAVE_FARM.getId(),
-                  ModBlocks.MONSTER_PLAINS_CAVE_FARM.get()));
+                  MobFarmType.MONSTER_PLAINS_CAVE_FARM, ModBlocks.MONSTER_PLAINS_CAVE_FARM.get()));
 
   public static final RegistryObject<Item> NETHER_FORTRESS_FARM =
       ITEMS.register(
           MobFarmType.NETHER_FORTRESS_FARM.getId(),
           () ->
               new MobFarmBlockItem(
-                  MobFarmType.NETHER_FORTRESS_FARM.getId(), ModBlocks.NETHER_FORTRESS_FARM.get()));
+                  MobFarmType.NETHER_FORTRESS_FARM, ModBlocks.NETHER_FORTRESS_FARM.get()));
 
   public static final RegistryObject<Item> OCEAN_FARM =
       ITEMS.register(
           MobFarmType.OCEAN_FARM.getId(),
-          () -> new MobFarmBlockItem(MobFarmType.OCEAN_FARM.getId(), ModBlocks.OCEAN_FARM.get()));
+          () -> new MobFarmBlockItem(MobFarmType.OCEAN_FARM, ModBlocks.OCEAN_FARM.get()));
 
   public static final RegistryObject<Item> SWAMP_FARM =
       ITEMS.register(
           MobFarmType.SWAMP_FARM.getId(),
-          () -> new MobFarmBlockItem(MobFarmType.SWAMP_FARM.getId(), ModBlocks.SWAMP_FARM.get()));
+          () -> new MobFarmBlockItem(MobFarmType.SWAMP_FARM, ModBlocks.SWAMP_FARM.get()));
 
   protected ModBlockItems() {}
 }
