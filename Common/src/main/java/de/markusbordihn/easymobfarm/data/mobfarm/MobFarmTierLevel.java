@@ -29,10 +29,10 @@ import net.minecraft.util.ByIdMap.OutOfBoundsStrategy;
 import net.minecraft.util.StringRepresentable;
 
 public enum MobFarmTierLevel implements StringRepresentable {
-  TIER_LEVEL_0(0),
-  TIER_LEVEL_1(1),
-  TIER_LEVEL_2(2),
-  TIER_LEVEL_3(3);
+  TIER_0(0),
+  TIER_1(1),
+  TIER_2(2),
+  TIER_3(3);
 
   public static final StringRepresentable.EnumCodec<MobFarmTierLevel> CODEC =
       StringRepresentable.fromEnum(MobFarmTierLevel::values);
@@ -54,7 +54,7 @@ public enum MobFarmTierLevel implements StringRepresentable {
         return mobFarmTierLevel;
       }
     }
-    return MobFarmTierLevel.TIER_LEVEL_0;
+    return MobFarmTierLevel.TIER_0;
   }
 
   public int getTierLevel() {
