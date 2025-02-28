@@ -39,8 +39,7 @@ public class CustomMobFarmBlocks {
     }
     Set<ItemStack> result = new LinkedHashSet<>();
     for (MobFarmTierLevel mobFarmTierLevel : MobFarmTierLevel.values()) {
-      MobFarmData mobFarmData =
-          new MobFarmData(mobFarmBlockItem.getMobFarmType(), mobFarmTierLevel);
+      MobFarmData mobFarmData = new MobFarmData(mobFarmTierLevel);
       ItemStack itemStack = new ItemStack(mobFarmBlockItem);
       itemStack.set(DataComponents.MOB_FARM_DATA, mobFarmData);
       result.add(itemStack);

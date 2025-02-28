@@ -24,7 +24,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 
-public record MobFarmData(MobFarmType farmType, MobFarmTierLevel tierLevel) {
+public record MobFarmData(MobFarmTierLevel tierLevel) {
 
   public static final String ID = "mob_farm_data";
 
@@ -33,22 +33,16 @@ public record MobFarmData(MobFarmType farmType, MobFarmTierLevel tierLevel) {
           instance ->
               instance
                   .group(
-                      MobFarmType.CODEC.fieldOf("farmType").forGetter(MobFarmData::farmType),
                       MobFarmTierLevel.CODEC.fieldOf("tierLevel").forGetter(MobFarmData::tierLevel))
                   .apply(instance, MobFarmData::new));
 
   public static final StreamCodec<RegistryFriendlyByteBuf, MobFarmData> STREAM_CODEC =
       StreamCodec.composite(
-          MobFarmType.STREAM_CODEC,
-          MobFarmData::farmType,
-          MobFarmTierLevel.STREAM_CODEC,
-          MobFarmData::tierLevel,
-          MobFarmData::new);
+          MobFarmTierLevel.STREAM_CODEC, MobFarmData::tierLevel, MobFarmData::new);
 
-  public static final MobFarmData EMPTY =
-      new MobFarmData(MobFarmType.UNKNOWN, MobFarmTierLevel.TIER_LEVEL_0);
+  public static final MobFarmData EMPTY = new MobFarmData(MobFarmTierLevel.TIER_0);
 
   public MobFarmData withTierLevel(MobFarmTierLevel tierLevel) {
-    return new MobFarmData(this.farmType, tierLevel);
+    return new MobFarmData(tierLevel);
   }
 }

@@ -15,7 +15,9 @@
   "result": {
     "id": "easy_mob_farm:iron_golem_farm",
     "components": {
-      "minecraft:custom_data": {"TierLevel": 2}
+      "easy_mob_farm:mob_farm_data": {
+        "tierLevel": "tier_2"
+      }
     }
   }
 }
