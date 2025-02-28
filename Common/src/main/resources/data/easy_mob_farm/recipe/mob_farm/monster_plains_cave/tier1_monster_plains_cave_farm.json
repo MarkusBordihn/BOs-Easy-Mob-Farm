@@ -29,7 +29,9 @@
     "count": 1,
     "id": "easy_mob_farm:monster_plains_cave_farm",
     "components": {
-      "minecraft:custom_data": {"TierLevel": 1},
+      "easy_mob_farm:mob_farm_data": {
+        "tierLevel": "tier_1"
+      },
       "minecraft:custom_model_data": 1
     }
   }

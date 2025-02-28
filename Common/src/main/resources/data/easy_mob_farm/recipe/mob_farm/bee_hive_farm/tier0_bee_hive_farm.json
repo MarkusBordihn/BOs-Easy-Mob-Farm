@@ -28,7 +28,9 @@
     "count": 1,
     "id": "easy_mob_farm:bee_hive_farm",
     "components": {
-      "minecraft:custom_data": {"TierLevel": 0},
+      "easy_mob_farm:mob_farm_data": {
+        "tierLevel": "tier_0"
+      },
       "minecraft:custom_model_data": 0
     }
   }

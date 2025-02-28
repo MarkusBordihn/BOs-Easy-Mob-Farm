@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+# v9.5.0
+
+- Fixed #137 by adjusting crafting recipe to use `MobFarmData` instead of
+  `DataComponents.CUSTOM_DATA`.
+
 # v9.4.0
 
 - Fixed #134 by adding JEI support for virtual items and blocks.
