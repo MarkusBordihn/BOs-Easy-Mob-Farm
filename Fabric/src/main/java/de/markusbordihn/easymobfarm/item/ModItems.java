@@ -32,6 +32,7 @@ import de.markusbordihn.easymobfarm.item.mobcatcher.VoidBindingChainItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.CreativeSpeedEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.EggCollectorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.FrogCatalystEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyHarvesterFrameEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LootEnhancementItem;
@@ -66,6 +67,10 @@ public class ModItems {
     registerItem(CreativeSpeedEnhancementItem.ID, Items.CREATIVE_SPEED_ENHANCEMENT);
     registerItem(EggCollectorEnhancementItem.ID, Items.EGG_COLLECTOR_ENHANCEMENT);
     registerItem(ExperienceEnhancementItem.ID, Items.EXPERIENCE_ENHANCEMENT);
+    registerItem(FrogCatalystEnhancementItem.ID_COLD, Items.FROG_CATALYST_COLD_ENHANCEMENT);
+    registerItem(
+        FrogCatalystEnhancementItem.ID_TEMPERATE, Items.FROG_CATALYST_TEMPERATE_ENHANCEMENT);
+    registerItem(FrogCatalystEnhancementItem.ID_WARM, Items.FROG_CATALYST_WARM_ENHANCEMENT);
     registerItem(HoneyExtractorEnhancementItem.ID, Items.HONEY_EXTRACTOR_ENHANCEMENT);
     registerItem(HoneyHarvesterFrameEnhancementItem.ID, Items.HONEY_HARVESTER_FRAME_ENHANCEMENT);
     registerItem(LootEnhancementItem.ID, Items.LOOT_ENHANCEMENT);

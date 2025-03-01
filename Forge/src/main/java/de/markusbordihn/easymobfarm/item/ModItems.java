@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.item;
 
 import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.data.enhancement.FrogCatalystType;
 import de.markusbordihn.easymobfarm.item.consumables.MilkBottleItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.BlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.CreativeBlankMobCaptureCardItem;
@@ -32,6 +33,7 @@ import de.markusbordihn.easymobfarm.item.mobcatcher.VoidBindingChainItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.CreativeSpeedEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.EggCollectorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.FrogCatalystEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyHarvesterFrameEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LootEnhancementItem;
@@ -93,6 +95,28 @@ public class ModItems {
           () ->
               new ExperienceEnhancementItem(
                   new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
+
+  public static final RegistryObject<Item> FROG_CATALYST_COLD_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_COLD,
+          () ->
+              new FrogCatalystEnhancementItem(
+                  FrogCatalystType.COLD, new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
+
+  public static final RegistryObject<Item> FROG_CATALYST_TEMPERATE_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_TEMPERATE,
+          () ->
+              new FrogCatalystEnhancementItem(
+                  FrogCatalystType.TEMPERATE,
+                  new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
+
+  public static final RegistryObject<Item> FROG_CATALYST_WARM_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_WARM,
+          () ->
+              new FrogCatalystEnhancementItem(
+                  FrogCatalystType.WARM, new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
 
   public static final RegistryObject<Item> HONEY_EXTRACTOR_ENHANCEMENT =
       ITEMS.register(

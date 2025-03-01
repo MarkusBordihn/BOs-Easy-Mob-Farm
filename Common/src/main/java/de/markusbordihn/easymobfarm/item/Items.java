@@ -19,6 +19,7 @@
 
 package de.markusbordihn.easymobfarm.item;
 
+import de.markusbordihn.easymobfarm.data.enhancement.FrogCatalystType;
 import de.markusbordihn.easymobfarm.item.consumables.MilkBottleItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.BlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.CreativeBlankMobCaptureCardItem;
@@ -31,6 +32,7 @@ import de.markusbordihn.easymobfarm.item.mobcatcher.VoidBindingChainItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.CreativeSpeedEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.EggCollectorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.FrogCatalystEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyHarvesterFrameEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LootEnhancementItem;
@@ -55,6 +57,12 @@ public class Items {
   public static final Item CREATIVE_SPEED_ENHANCEMENT = new CreativeSpeedEnhancementItem();
   public static final Item EGG_COLLECTOR_ENHANCEMENT = new EggCollectorEnhancementItem();
   public static final Item EXPERIENCE_ENHANCEMENT = new ExperienceEnhancementItem();
+  public static final Item FROG_CATALYST_COLD_ENHANCEMENT =
+      new FrogCatalystEnhancementItem(FrogCatalystType.COLD);
+  public static final Item FROG_CATALYST_TEMPERATE_ENHANCEMENT =
+      new FrogCatalystEnhancementItem(FrogCatalystType.TEMPERATE);
+  public static final Item FROG_CATALYST_WARM_ENHANCEMENT =
+      new FrogCatalystEnhancementItem(FrogCatalystType.WARM);
   public static final Item HONEY_EXTRACTOR_ENHANCEMENT = new HoneyExtractorEnhancementItem();
   public static final Item HONEY_HARVESTER_FRAME_ENHANCEMENT =
       new HoneyHarvesterFrameEnhancementItem();
