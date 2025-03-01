@@ -146,8 +146,8 @@
     "tooltip.easy_mob_farm.no_flowers_filter": "모든 꽃 드롭을 수집에서 제외합니다.",
     "tooltip.easy_mob_farm.no_meat_filter": "모든 고기 드롭을 수집에서 제외합니다.",
     "tooltip.easy_mob_farm.pollen_trap_enhancement": "꽃가루를 수집하여 꽃이나 염료를 생성합니다.",
-    "tooltip.easy_mob_farm.sheep_enhancement": "몸 팝에서 양털을 자동으로 깎습니다.",
-    "tooltip.easy_mob_farm.slot_upgrade_slot": "이 슬롯을 사용하면 몹 팝의 출력 슬롯을 업그레이드 합니다.",
+    "tooltip.easy_mob_farm.sheep_enhancement": "몹 팜에서 양털을 자동으로 깎습니다.",
+    "tooltip.easy_mob_farm.slot_upgrade_slot": "이 슬롯을 사용하면 몹 팜의 출력 슬롯을 업그레이드 합니다.",
     "tooltip.easy_mob_farm.small_slot_upgrade": "팜의 저장소 용량을 %s 만큼 확장합니다.",   
     "tooltip.easy_mob_farm.speed_enhancement": "아이템 수집 속도를 +%s 틱/초 만큼 증가시킵니다.",
     "tooltip.easy_mob_farm.sword_enhancement": "플레이어가 검으로 죽인 것처럼 전리품을 생성합니다."
