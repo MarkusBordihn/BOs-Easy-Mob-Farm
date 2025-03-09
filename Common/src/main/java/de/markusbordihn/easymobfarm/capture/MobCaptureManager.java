@@ -44,6 +44,7 @@ import org.apache.logging.log4j.Logger;
 public class MobCaptureManager {
 
   public static final String MOB_CAPTURE_DATA_TAG = "MobCaptureData";
+  public static final String VARIANT_TAG = "variant";
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final String LOG_PREFIX = "[MobCaptureManager]";
@@ -193,8 +194,12 @@ public class MobCaptureManager {
       mobCaptureData = mobCaptureData.withVariant(variant);
       if (entityType == EntityType.CAT) {
         compoundTag.putString(
-            "variant",
+            VARIANT_TAG,
             Registry.CAT_VARIANT.getKey(MobVariantData.getCatVariant(variant)).toString());
+      } else if (entityType == EntityType.FROG) {
+        compoundTag.putString(
+            VARIANT_TAG,
+            Registry.FROG_VARIANT.getKey(MobVariantData.getFrogVariant(variant)).toString());
       }
     }
 

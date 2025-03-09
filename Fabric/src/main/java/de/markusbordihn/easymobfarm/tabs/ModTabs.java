@@ -95,6 +95,9 @@ public class ModTabs {
                   stack.add(Items.CREATIVE_SPEED_ENHANCEMENT.getDefaultInstance());
                   stack.add(Items.EGG_COLLECTOR_ENHANCEMENT.getDefaultInstance());
                   stack.add(Items.EXPERIENCE_ENHANCEMENT.getDefaultInstance());
+                  stack.add(Items.FROG_CATALYST_COLD_ENHANCEMENT.getDefaultInstance());
+                  stack.add(Items.FROG_CATALYST_TEMPERATE_ENHANCEMENT.getDefaultInstance());
+                  stack.add(Items.FROG_CATALYST_WARM_ENHANCEMENT.getDefaultInstance());
                   stack.add(Items.HONEY_EXTRACTOR_ENHANCEMENT.getDefaultInstance());
                   stack.add(Items.HONEY_HARVESTER_FRAME_ENHANCEMENT.getDefaultInstance());
                   stack.add(Items.LOOT_ENHANCEMENT.getDefaultInstance());

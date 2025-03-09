@@ -64,6 +64,7 @@ public class Config {
   public static void registerClientConfig() {
     log.info("{} Registering client configuration ...", LOG_PREFIX);
     MobCaptureCardModelsConfig.registerConfig();
+    RequiresKilledByPlayerConfig.registerConfig();
   }
 
   public static void registerServerConfig() {

@@ -26,6 +26,7 @@ import de.markusbordihn.easymobfarm.client.renderer.manager.EntityScalingManager
 import de.markusbordihn.easymobfarm.client.renderer.manager.RendererManager;
 import de.markusbordihn.easymobfarm.client.screen.components.Graphics;
 import de.markusbordihn.easymobfarm.config.MobFarmBonusConfig;
+import de.markusbordihn.easymobfarm.config.RequiresKilledByPlayerConfig;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmStatus;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
@@ -205,6 +206,13 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
         infoText.add(
             TextComponent.getTranslatedTextRaw(
                 TOOLTIP_PREFIX + "entity_type", new Object[] {this.entity.getType()}));
+
+        // Add Requires "killed_by_player" information, if available.
+        if (RequiresKilledByPlayerConfig.requiresKilledByPlayer(this.entity.getType())) {
+          infoText.add(
+              TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "killed_by_player")
+                  .withStyle(ChatFormatting.RED));
+        }
 
         // Add experience information to the tooltip, if available.
         int capturedMobExperience = this.getMenu().getCapturedMobExperience();

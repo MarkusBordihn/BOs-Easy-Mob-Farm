@@ -27,6 +27,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.animal.CatVariant;
+import net.minecraft.world.entity.animal.FrogVariant;
+import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.entity.monster.MagmaCube;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.npc.Villager;
@@ -40,6 +42,7 @@ public class MobVariantData {
   public static final String TINY_VARIANT = "tiny";
 
   private static final Map<CatVariant, String> CAT_VARIANT_MAP = new HashMap<>();
+  private static final Map<FrogVariant, String> FROG_VARIANT_MAP = new HashMap<>();
 
   static {
     // Cat variant map
@@ -54,6 +57,11 @@ public class MobVariantData {
     CAT_VARIANT_MAP.put(CatVariant.WHITE, "white");
     CAT_VARIANT_MAP.put(CatVariant.JELLIE, "jellie");
     CAT_VARIANT_MAP.put(CatVariant.ALL_BLACK, "all_black");
+
+    // Frog variant map
+    FROG_VARIANT_MAP.put(FrogVariant.COLD, "cold");
+    FROG_VARIANT_MAP.put(FrogVariant.WARM, "warm");
+    FROG_VARIANT_MAP.put(FrogVariant.TEMPERATE, "temperate");
   }
 
   private MobVariantData() {}
@@ -71,6 +79,8 @@ public class MobVariantData {
       return getSizeVariant(magmaCube.getSize());
     } else if (livingEntity instanceof Slime slime) {
       return getSizeVariant(slime.getSize());
+    } else if (livingEntity instanceof Frog frog) {
+      return FROG_VARIANT_MAP.get(frog.getVariant());
     }
     return null;
   }
@@ -111,5 +121,14 @@ public class MobVariantData {
       }
     }
     return CatVariant.BLACK;
+  }
+
+  public static FrogVariant getFrogVariant(final String variant) {
+    for (Map.Entry<FrogVariant, String> entry : FROG_VARIANT_MAP.entrySet()) {
+      if (entry.getValue().equals(variant)) {
+        return entry.getKey();
+      }
+    }
+    return FrogVariant.TEMPERATE;
   }
 }

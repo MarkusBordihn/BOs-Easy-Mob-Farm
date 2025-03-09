@@ -87,6 +87,9 @@ public class MobCaptureCardModelsConfig extends Config {
     defaultModels.put("minecraft:enderman", MOB_CAPTURE_CARD_PREFIX + "enderman");
     defaultModels.put("minecraft:evoker", MOB_CAPTURE_CARD_PREFIX + "evoker");
     defaultModels.put("minecraft:frog", MOB_CAPTURE_CARD_PREFIX + "frog");
+    defaultModels.put("minecraft:frog::cold", MOB_CAPTURE_CARD_PREFIX + "frog_cold");
+    defaultModels.put("minecraft:frog::temperate", MOB_CAPTURE_CARD_PREFIX + "frog_temperate");
+    defaultModels.put("minecraft:frog::warm", MOB_CAPTURE_CARD_PREFIX + "frog_warm");
     defaultModels.put("minecraft:glow_squid", MOB_CAPTURE_CARD_PREFIX + "glow_squid");
     defaultModels.put("minecraft:guardian", MOB_CAPTURE_CARD_PREFIX + "guardian");
     defaultModels.put("minecraft:husk", MOB_CAPTURE_CARD_PREFIX + "husk");

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " G ",
+    "CFC",
+    " I "
+  ],
+  "key": {
+    "G": { "item": "minecraft:glass_pane" },
+    "C": { "item": "minecraft:copper_ingot" },
+    "F": { "item": "easy_mob_farm:mob_capture_card_ingredient_frog_cold" },
+    "I": { "item": "minecraft:packed_ice" }
+  },
+  "result": {
+    "item": "easy_mob_farm:frog_catalyst_cold_enhancement"
+  }
+}
