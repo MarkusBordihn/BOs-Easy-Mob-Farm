@@ -63,6 +63,14 @@ public class ModItemsTest {
   }
 
   @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  public void testFrogCatalystEnhancementItem(GameTestHelper helper) {
+    ModItemsTestHelper.testModItem(helper, Items.FROG_CATALYST_COLD_ENHANCEMENT);
+    ModItemsTestHelper.testModItem(helper, Items.FROG_CATALYST_TEMPERATE_ENHANCEMENT);
+    ModItemsTestHelper.testModItem(helper, Items.FROG_CATALYST_WARM_ENHANCEMENT);
+    helper.succeed();
+  }
+
+  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
   public void testHoneyExtractorEnhancementItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.HONEY_EXTRACTOR_ENHANCEMENT);
     helper.succeed();

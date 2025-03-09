@@ -19,6 +19,10 @@
 
 package de.markusbordihn.easymobfarm.server;
 
+import de.markusbordihn.easymobfarm.inventory.CraftingHandler;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.inventory.CraftingMenu;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -26,10 +30,27 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 @EventBusSubscriber
 public class ServerEventHandler {
 
+  private static final int PLAYER_INVENTORY_TICKS = 20;
+  private static int playerInventoryTicker = 0;
+
   private ServerEventHandler() {}
 
   @SubscribeEvent
   public static void onServerStarted(ServerStartedEvent event) {
     ServerEvents.handleServerStartedEvent(event.getServer());
+  }
+
+  @SubscribeEvent
+  public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
+    if (event.phase == TickEvent.Phase.END && event.player instanceof ServerPlayer serverPlayer) {
+      if (serverPlayer.containerMenu instanceof CraftingMenu craftingMenu) {
+        CraftingHandler.handleCraftingMenu(craftingMenu, craftingMenu.craftSlots);
+      }
+
+      if (playerInventoryTicker++ > PLAYER_INVENTORY_TICKS) {
+        CraftingHandler.handlePlayerInventory(serverPlayer);
+        playerInventoryTicker = 0;
+      }
+    }
   }
 }

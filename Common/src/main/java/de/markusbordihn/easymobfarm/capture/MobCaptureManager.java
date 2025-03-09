@@ -22,8 +22,10 @@ package de.markusbordihn.easymobfarm.capture;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.data.capture.MobEntityData;
+import de.markusbordihn.easymobfarm.data.capture.MobVariantData;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -42,8 +44,8 @@ import org.apache.logging.log4j.Logger;
 public class MobCaptureManager {
 
   public static final String MOB_CAPTURE_DATA_TAG = "MobCaptureData";
-  public static final String CAT_VARIANT_TAG = "variant";
   public static final String COLOR_TAG = "Color";
+  public static final String VARIANT_TAG = "variant";
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final String LOG_PREFIX = "[MobCaptureManager]";
@@ -192,7 +194,13 @@ public class MobCaptureManager {
     if (variant != null) {
       mobCaptureData = mobCaptureData.withVariant(variant);
       if (entityType == EntityType.CAT) {
-        compoundTag.putString(CAT_VARIANT_TAG, variant);
+        compoundTag.putString(VARIANT_TAG, variant);
+      } else if (entityType == EntityType.FROG) {
+        compoundTag.putString(
+            VARIANT_TAG,
+            BuiltInRegistries.FROG_VARIANT
+                .getKey(MobVariantData.getFrogVariant(variant))
+                .toString());
       }
     }
 

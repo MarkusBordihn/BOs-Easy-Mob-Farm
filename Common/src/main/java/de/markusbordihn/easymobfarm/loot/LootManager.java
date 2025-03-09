@@ -27,6 +27,7 @@ import de.markusbordihn.easymobfarm.item.consumables.MilkBottleItem;
 import de.markusbordihn.easymobfarm.item.upgrade.EnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.EggCollectorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.FrogCatalystEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyHarvesterFrameEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LootEnhancementItem;
@@ -51,6 +52,7 @@ import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
+import net.minecraft.world.entity.monster.MagmaCube;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -300,6 +302,27 @@ public class LootManager {
       if (livingEntity instanceof Chicken) {
         if (enhancement instanceof EggCollectorEnhancementItem && random.nextInt(2) == 0) {
           drops.add(new ItemStack(Items.EGG));
+        }
+      }
+
+      // Handle Magma cube specific enhancements.
+      if (livingEntity instanceof MagmaCube) {
+        // Adding additional Magma cream drop with 12.5% chance
+        if (random.nextInt(8) == 0) {
+          drops.add(new ItemStack(Items.MAGMA_CREAM));
+        }
+
+        if (enhancement instanceof FrogCatalystEnhancementItem frogCatalystEnhancementItem
+            && random.nextInt(2) == 0) {
+          switch (frogCatalystEnhancementItem.getFrogCatalystType()) {
+            case COLD -> drops.add(new ItemStack(Items.VERDANT_FROGLIGHT));
+            case TEMPERATE -> drops.add(new ItemStack(Items.OCHRE_FROGLIGHT));
+            case WARM -> drops.add(new ItemStack(Items.PEARLESCENT_FROGLIGHT));
+            default ->
+                log.warn(
+                    "Unknown Frog Catalyst type {}",
+                    frogCatalystEnhancementItem.getFrogCatalystType());
+          }
         }
       }
     }
