@@ -5,3 +5,5 @@ accessible field net/minecraft/world/entity/projectile/FishingHook luck I
 accessible method net/minecraft/world/entity/animal/Animal getBaseExperienceReward ()I
 accessible method net/minecraft/world/entity/Mob getBaseExperienceReward ()I
 accessible method net/minecraft/world/entity/LivingEntity getBaseExperienceReward ()I
+
+accessible field net/minecraft/world/inventory/CraftingMenu craftSlots Lnet/minecraft/world/inventory/CraftingContainer;

@@ -23,6 +23,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.item.consumables.MilkBottleItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.BlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.CreativeBlankMobCaptureCardItem;
+import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardIngredientItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.CreativeMobCatcherItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.EnduringCaptureNetItem;
@@ -32,6 +33,7 @@ import de.markusbordihn.easymobfarm.item.mobcatcher.VoidBindingChainItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.CreativeSpeedEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.EggCollectorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.FrogCatalystEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyHarvesterFrameEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LootEnhancementItem;
@@ -63,6 +65,16 @@ public class ModItems {
 
   public static final RegistryObject<Item> MOB_CAPTURE_CARD =
       ITEMS.register(MobCaptureCardItem.ID, () -> Items.MOB_CAPTURE_CARD);
+  public static final RegistryObject<Item> MOB_CAPTURE_CARD_FROG_COLD =
+      ITEMS.register(
+          MobCaptureCardIngredientItem.ID_FROG_COLD, () -> Items.MOB_CAPTURE_CARD_FROG_COLD);
+  public static final RegistryObject<Item> MOB_CAPTURE_CARD_FROG_TEMPERATE =
+      ITEMS.register(
+          MobCaptureCardIngredientItem.ID_FROG_TEMPERATE,
+          () -> Items.MOB_CAPTURE_CARD_FROG_TEMPERATE);
+  public static final RegistryObject<Item> MOB_CAPTURE_CARD_FROG_WARM =
+      ITEMS.register(
+          MobCaptureCardIngredientItem.ID_FROG_WARM, () -> Items.MOB_CAPTURE_CARD_FROG_WARM);
 
   public static final RegistryObject<Item> CREATIVE_SPEED_ENHANCEMENT =
       ITEMS.register(CreativeSpeedEnhancementItem.ID, () -> Items.CREATIVE_SPEED_ENHANCEMENT);
@@ -72,6 +84,19 @@ public class ModItems {
 
   public static final RegistryObject<Item> EXPERIENCE_ENHANCEMENT =
       ITEMS.register(ExperienceEnhancementItem.ID, () -> Items.EXPERIENCE_ENHANCEMENT);
+
+  public static final RegistryObject<Item> FROG_CATALYST_COLD_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_COLD, () -> Items.FROG_CATALYST_COLD_ENHANCEMENT);
+
+  public static final RegistryObject<Item> FROG_CATALYST_TEMPERATE_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_TEMPERATE,
+          () -> Items.FROG_CATALYST_TEMPERATE_ENHANCEMENT);
+
+  public static final RegistryObject<Item> FROG_CATALYST_WARM_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_WARM, () -> Items.FROG_CATALYST_WARM_ENHANCEMENT);
 
   public static final RegistryObject<Item> HONEY_EXTRACTOR_ENHANCEMENT =
       ITEMS.register(HoneyExtractorEnhancementItem.ID, () -> Items.HONEY_EXTRACTOR_ENHANCEMENT);

@@ -25,6 +25,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.animal.CatVariant;
+import net.minecraft.world.entity.animal.FrogVariant;
+import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.entity.monster.MagmaCube;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.npc.Villager;
@@ -55,6 +57,11 @@ public class MobVariantData {
       return getSizeVariant(magmaCube.getSize());
     } else if (livingEntity instanceof Slime slime) {
       return getSizeVariant(slime.getSize());
+    } else if (livingEntity instanceof Frog frog) {
+      return (frog.getVariant().unwrapKey().orElse(FrogVariant.TEMPERATE))
+          .location()
+          .toString()
+          .replace("minecraft:", "");
     }
     return "";
   }
