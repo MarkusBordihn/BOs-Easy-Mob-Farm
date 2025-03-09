@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "mob_farm_enhancement",
+  "pattern": [
+    " G ",
+    "CFC",
+    " M "
+  ],
+  "key": {
+    "G": "minecraft:glass_pane",
+    "C": "minecraft:copper_ingot",
+    "F": "easy_mob_farm:mob_capture_card_ingredient_frog_warm",
+    "M": "minecraft:magma_block"
+  },
+  "result": {
+    "id": "easy_mob_farm:frog_catalyst_warm_enhancement"
+  }
+}

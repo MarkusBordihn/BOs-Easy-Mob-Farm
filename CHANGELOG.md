@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+# v9.6.0
+
+- Fixed #135 by adding frog light extractor Enhancement.
+- Fixed #113 by adding known requires "killed_by_player" entities as tooltip.
+- Added Korean translation. Thanks to `@thecats1105` for the contribution.
+- Added different frog cards for cold, temperate and warm variants.
+- Added crafting support for frog mob capture cards.
+- Smaller bug fixes and improvements.
+
 # v9.5.0
 
 - Fixed #137 by adjusting crafting recipe to use `MobFarmData` instead of

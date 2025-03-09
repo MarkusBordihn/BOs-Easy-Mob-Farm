@@ -19,18 +19,39 @@
 
 package de.markusbordihn.easymobfarm.server;
 
+import de.markusbordihn.easymobfarm.inventory.CraftingHandler;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.inventory.CraftingMenu;
 
 public class ServerEventHandler {
+
+  private static final int PLAYER_INVENTORY_TICKS = 20;
+  private static int playerInventoryTicker = 0;
 
   private ServerEventHandler() {}
 
   public static void registerServerEvents() {
     ServerLifecycleEvents.SERVER_STARTED.register(ServerEventHandler::onServerStarted);
+    ServerTickEvents.END_SERVER_TICK.register(ServerEventHandler::onServerTick);
   }
 
   private static void onServerStarted(MinecraftServer server) {
     ServerEvents.handleServerStartedEvent(server);
+  }
+
+  private static void onServerTick(MinecraftServer minecraftServer) {
+    for (ServerPlayer serverPlayer : minecraftServer.getPlayerList().getPlayers()) {
+      if (serverPlayer.containerMenu instanceof CraftingMenu craftingMenu) {
+        CraftingHandler.handleCraftingMenu(craftingMenu, craftingMenu.craftSlots);
+      }
+
+      if (playerInventoryTicker++ > PLAYER_INVENTORY_TICKS) {
+        CraftingHandler.handlePlayerInventory(serverPlayer);
+        playerInventoryTicker = 0;
+      }
+    }
   }
 }
