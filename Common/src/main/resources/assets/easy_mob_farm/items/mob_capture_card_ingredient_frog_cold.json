@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "easy_mob_farm:item/mob_capture_card/minecraft/frog_cold"
+  }
+}

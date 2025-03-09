@@ -44,8 +44,8 @@ import org.apache.logging.log4j.Logger;
 
 public class MobCaptureManager {
 
-  public static final String CAT_VARIANT_TAG = "variant";
   public static final String COLOR_TAG = "Color";
+  public static final String VARIANT_TAG = "variant";
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final String LOG_PREFIX = "[MobCaptureManager]";
@@ -196,8 +196,8 @@ public class MobCaptureManager {
     // Set variant and corresponding data.
     if (variant != null && !variant.isEmpty()) {
       mobCaptureData = mobCaptureData.withVariant(variant);
-      if (entityType == EntityType.CAT) {
-        compoundTag.putString(CAT_VARIANT_TAG, variant);
+      if (entityType == EntityType.CAT || entityType == EntityType.FROG) {
+        compoundTag.putString(VARIANT_TAG, variant);
       }
     }
 

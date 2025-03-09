@@ -35,6 +35,9 @@ public class MobFarmUpgrades implements DisplayItemsGenerator {
     output.accept(Items.CREATIVE_SPEED_ENHANCEMENT.getDefaultInstance());
     output.accept(Items.EGG_COLLECTOR_ENHANCEMENT.getDefaultInstance());
     output.accept(Items.EXPERIENCE_ENHANCEMENT.getDefaultInstance());
+    output.accept(Items.FROG_CATALYST_COLD_ENHANCEMENT.getDefaultInstance());
+    output.accept(Items.FROG_CATALYST_TEMPERATE_ENHANCEMENT.getDefaultInstance());
+    output.accept(Items.FROG_CATALYST_WARM_ENHANCEMENT.getDefaultInstance());
     output.accept(Items.HONEY_EXTRACTOR_ENHANCEMENT.getDefaultInstance());
     output.accept(Items.HONEY_HARVESTER_FRAME_ENHANCEMENT.getDefaultInstance());
     output.accept(Items.LOOT_ENHANCEMENT.getDefaultInstance());

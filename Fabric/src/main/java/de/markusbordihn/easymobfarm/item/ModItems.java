@@ -23,6 +23,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.item.consumables.MilkBottleItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.BlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.CreativeBlankMobCaptureCardItem;
+import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardIngredientItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.CreativeMobCatcherItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.EnduringCaptureNetItem;
@@ -32,6 +33,7 @@ import de.markusbordihn.easymobfarm.item.mobcatcher.VoidBindingChainItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.CreativeSpeedEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.EggCollectorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.FrogCatalystEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyHarvesterFrameEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LootEnhancementItem;
@@ -62,11 +64,19 @@ public class ModItems {
     registerItem(BlankMobCaptureCardItem.ID, Items.BLANK_MOB_CAPTURE_CARD);
     registerItem(CreativeBlankMobCaptureCardItem.ID, Items.CREATIVE_MOB_CAPTURE_CARD);
     registerItem(MobCaptureCardItem.ID, Items.MOB_CAPTURE_CARD);
+    registerItem(MobCaptureCardIngredientItem.ID_FROG_COLD, Items.MOB_CAPTURE_CARD_FROG_COLD);
+    registerItem(
+        MobCaptureCardIngredientItem.ID_FROG_TEMPERATE, Items.MOB_CAPTURE_CARD_FROG_TEMPERATE);
+    registerItem(MobCaptureCardIngredientItem.ID_FROG_WARM, Items.MOB_CAPTURE_CARD_FROG_WARM);
 
     log.info("{} Enhancement items ...", Constants.LOG_REGISTER_PREFIX);
     registerItem(CreativeSpeedEnhancementItem.ID, Items.CREATIVE_SPEED_ENHANCEMENT);
     registerItem(EggCollectorEnhancementItem.ID, Items.EGG_COLLECTOR_ENHANCEMENT);
     registerItem(ExperienceEnhancementItem.ID, Items.EXPERIENCE_ENHANCEMENT);
+    registerItem(FrogCatalystEnhancementItem.ID_COLD, Items.FROG_CATALYST_COLD_ENHANCEMENT);
+    registerItem(
+        FrogCatalystEnhancementItem.ID_TEMPERATE, Items.FROG_CATALYST_TEMPERATE_ENHANCEMENT);
+    registerItem(FrogCatalystEnhancementItem.ID_WARM, Items.FROG_CATALYST_WARM_ENHANCEMENT);
     registerItem(HoneyExtractorEnhancementItem.ID, Items.HONEY_EXTRACTOR_ENHANCEMENT);
     registerItem(HoneyHarvesterFrameEnhancementItem.ID, Items.HONEY_HARVESTER_FRAME_ENHANCEMENT);
     registerItem(LootEnhancementItem.ID, Items.LOOT_ENHANCEMENT);
