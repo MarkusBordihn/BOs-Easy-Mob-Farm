@@ -25,6 +25,6 @@ import net.minecraft.client.Minecraft;
 public class ClientEvents {
 
   public static void handleClientStartedEvent(Minecraft client) {
-    Config.registerCommonConfigDeferred();
+    Config.registerDeferred(false);
   }
 }
