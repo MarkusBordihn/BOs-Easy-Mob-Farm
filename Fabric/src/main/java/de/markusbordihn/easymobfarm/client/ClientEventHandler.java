@@ -17,19 +17,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.server;
+package de.markusbordihn.easymobfarm.client;
 
-import de.markusbordihn.easymobfarm.config.Config;
-import de.markusbordihn.easymobfarm.item.ModRecipeManager;
-import net.minecraft.server.MinecraftServer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
+import net.minecraft.client.Minecraft;
 
-public class ServerEvents {
+public class ClientEventHandler {
 
-  public static void handleServerStartedEvent(MinecraftServer minecraftServer) {
-    ModRecipeManager.register(minecraftServer);
+  private ClientEventHandler() {}
+
+  public static void registerClientEvents() {
+    ClientLifecycleEvents.CLIENT_STARTED.register(ClientEventHandler::registerClientStarted);
   }
 
-  public static void handleServerStartingEvent(MinecraftServer minecraftServer) {
-    Config.registerCommonConfigDeferred();
+  public static void registerClientStarted(Minecraft client) {
+    ClientEvents.handleClientStartedEvent(client);
   }
 }

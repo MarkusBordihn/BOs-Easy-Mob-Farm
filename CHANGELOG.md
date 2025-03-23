@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+# v9.6.1
+
+- Fixed #147 by changing loading order of configuration files.
+- Added additional pre-check for Mob Farm Bonus configuration.
+
 # v9.6.0
 
 - Fixed #135 by adding frog light extractor Enhancement.
