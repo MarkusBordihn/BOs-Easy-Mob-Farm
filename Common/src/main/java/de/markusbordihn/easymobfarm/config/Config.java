@@ -52,10 +52,18 @@ public class Config {
     }
   }
 
+  public static void registerDeferred(boolean isServer) {
+    registerCommonConfigDeferred();
+  }
+
+  public static void registerCommonConfigDeferred() {
+    log.info("{} Registering deferred common configuration ...", LOG_PREFIX);
+    MobFarmBonusConfig.registerConfig();
+  }
+
   public static void registerCommonConfig() {
     log.info("{} Registering common configuration ...", LOG_PREFIX);
     MobFarmConfig.registerConfig();
-    MobFarmBonusConfig.registerConfig();
     MobCaptureCardConfig.registerConfig();
     MobCaptureCardRarityConfig.registerConfig();
     MobCatcherConfig.registerConfig();
