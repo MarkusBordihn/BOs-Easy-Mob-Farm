@@ -30,6 +30,6 @@ public class ServerEvents {
   }
 
   public static void handleServerStartingEvent(MinecraftServer minecraftServer) {
-    Config.registerCommonConfigDeferred();
+    Config.registerDeferred(true);
   }
 }

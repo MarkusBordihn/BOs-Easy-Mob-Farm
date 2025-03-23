@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+# v9.6.2
+
+- Fixed #147 specific Forge issue with tooltip display.
+
 # v9.6.1
 
 - Fixed #147 by changing loading order of configuration files.
