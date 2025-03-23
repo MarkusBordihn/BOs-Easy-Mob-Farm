@@ -6,10 +6,10 @@
     " W "
   ],
   "key": {
-    "G": { "item": "minecraft:glass_pane" },
-    "C": { "item": "minecraft:copper_ingot" },
-    "F": { "item": "easy_mob_farm:mob_capture_card_ingredient_frog_temperate" },
-    "W": { "item": "minecraft:mossy_cobblestone" }
+    "G": {"item": "minecraft:glass_pane"},
+    "C": {"item": "minecraft:copper_ingot"},
+    "F": {"item": "easy_mob_farm:mob_capture_card_ingredient_frog_temperate"},
+    "W": {"item": "minecraft:mossy_cobblestone"}
   },
   "result": {
     "item": "easy_mob_farm:frog_catalyst_temperate_enhancement"

@@ -35,11 +35,16 @@ public class ServerEventHandler {
 
   public static void registerServerEvents() {
     ServerLifecycleEvents.SERVER_STARTED.register(ServerEventHandler::onServerStarted);
+    ServerLifecycleEvents.SERVER_STARTING.register(ServerEventHandler::onServerStarting);
     ServerTickEvents.END_SERVER_TICK.register(ServerEventHandler::onServerTick);
   }
 
   private static void onServerStarted(MinecraftServer server) {
     ServerEvents.handleServerStartedEvent(server);
+  }
+
+  private static void onServerStarting(MinecraftServer server) {
+    ServerEvents.handleServerStartingEvent(server);
   }
 
   private static void onServerTick(MinecraftServer minecraftServer) {
