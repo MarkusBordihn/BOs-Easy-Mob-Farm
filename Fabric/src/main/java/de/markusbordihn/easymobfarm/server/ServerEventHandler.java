@@ -28,9 +28,14 @@ public class ServerEventHandler {
 
   public static void registerServerEvents() {
     ServerLifecycleEvents.SERVER_STARTED.register(ServerEventHandler::onServerStarted);
+    ServerLifecycleEvents.SERVER_STARTING.register(ServerEventHandler::onServerStarting);
   }
 
   private static void onServerStarted(MinecraftServer server) {
     ServerEvents.handleServerStartedEvent(server);
+  }
+
+  private static void onServerStarting(MinecraftServer server) {
+    ServerEvents.handleServerStartingEvent(server);
   }
 }

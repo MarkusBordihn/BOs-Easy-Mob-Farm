@@ -17,25 +17,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.server;
+package de.markusbordihn.easymobfarm.client;
 
-import net.minecraftforge.event.server.ServerStartedEvent;
-import net.minecraftforge.event.server.ServerStartingEvent;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
 @EventBusSubscriber
-public class ServerEventHandler {
-
-  private ServerEventHandler() {}
+public class ClientEventHandler {
 
   @SubscribeEvent
-  public static void onServerStarted(ServerStartedEvent event) {
-    ServerEvents.handleServerStartedEvent(event.getServer());
-  }
-
-  @SubscribeEvent
-  public static void onServerStarting(ServerStartingEvent event) {
-    ServerEvents.handleServerStartingEvent(event.getServer());
+  public static void onClientSetup(FMLClientSetupEvent event) {
+    event.enqueueWork(() -> ClientEvents.handleClientStartedEvent(Minecraft.getInstance()));
   }
 }

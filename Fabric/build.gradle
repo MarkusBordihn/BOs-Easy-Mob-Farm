@@ -28,6 +28,9 @@ dependencies {
   if (project.hasProperty('fabric_xaeros_minimap_mod') && project.fabric_xaeros_minimap_mod) {
     modRuntimeOnly("curse.maven:xaeros_minimap-263420:${project.fabric_xaeros_minimap_mod}")
   }
+
+  // Integrate: Mob Test
+  modRuntimeOnly "curse.maven:vanilla-degus-463073:4538515"
 }
 
 loom {

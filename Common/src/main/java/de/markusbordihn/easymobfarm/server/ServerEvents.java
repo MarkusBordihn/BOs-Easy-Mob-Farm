@@ -19,6 +19,7 @@
 
 package de.markusbordihn.easymobfarm.server;
 
+import de.markusbordihn.easymobfarm.config.Config;
 import de.markusbordihn.easymobfarm.item.ModRecipeManager;
 import net.minecraft.server.MinecraftServer;
 
@@ -26,5 +27,9 @@ public class ServerEvents {
 
   public static void handleServerStartedEvent(MinecraftServer minecraftServer) {
     ModRecipeManager.register(minecraftServer);
+  }
+
+  public static void handleServerStartingEvent(MinecraftServer minecraftServer) {
+    Config.registerCommonConfigDeferred();
   }
 }
