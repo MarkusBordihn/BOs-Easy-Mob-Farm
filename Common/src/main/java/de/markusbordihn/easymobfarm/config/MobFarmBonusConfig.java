@@ -22,12 +22,14 @@ package de.markusbordihn.easymobfarm.config;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import java.io.File;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Random;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
@@ -52,6 +54,7 @@ Example:
 To disable a bonus drop for a default definition, set the amount to 0.
 
 """;
+  public static final String LOG_PREFIX = "[MobFarmBonusConfig]";
 
   private static final Random random = new Random();
   private static final HashMap<String, HashMap<Integer, ItemStack>> mobFarmBonusMap =
@@ -327,31 +330,66 @@ To disable a bonus drop for a default definition, set the amount to 0.
           int amount = Integer.parseInt(valueParts[1]);
           int chance = Integer.parseInt(valueParts[2]);
 
-          // We will ignore entries with amount <= 0
-          if (amount <= 0) {
-            log.error("Invalid amount in config file: {}", value);
-            return;
-          }
-
-          BuiltInRegistries.ITEM
-              .getOptional(new ResourceLocation(itemName))
-              .ifPresent(
-                  item -> {
-                    ItemStack itemStack = new ItemStack(item, amount);
-                    if (itemStack.isEmpty()) {
-                      log.error("Invalid item in config file ({}): {}", key, value);
-                      return;
-                    }
-                    mobFarmBonusMap
-                        .computeIfAbsent(
-                            mobFarmName + "::" + tierLevel + "::" + entityType,
-                            k -> new HashMap<>())
-                        .put(chance, itemStack);
-                  });
+          addBonusDropEntry(mobFarmName, tierLevel, entityType, chance, itemName, amount);
         });
 
     // Update config file if needed
     updateConfigFileIfChanged(configFile, CONFIG_FILE_HEADER, properties, unmodifiedProperties);
+  }
+
+  public static String getMobFarmKey(String mobFarmName, int tierLevel, String entityType) {
+    return mobFarmName + "::" + tierLevel + "::" + entityType;
+  }
+
+  public static void addBonusDropEntry(
+      String mobFarmName,
+      int tierLevel,
+      String entityType,
+      int chance,
+      String itemName,
+      int amount) {
+
+    // Check if item name is valid
+    Item item = BuiltInRegistries.ITEM.get(new ResourceLocation(itemName));
+    if (item == Items.AIR) {
+      log.error(
+          "{} Invalid item name {} in config file {}", LOG_PREFIX, itemName, CONFIG_FILE_NAME);
+      return;
+    }
+
+    try {
+      MobFarmType mobFarmType = MobFarmType.valueOf(mobFarmName.toUpperCase(Locale.ROOT));
+      addBonusDropEntry(mobFarmType, tierLevel, entityType, chance, new ItemStack(item, amount));
+    } catch (IllegalArgumentException e) {
+      log.error(
+          "{} Invalid mob farm name {} in config file {}",
+          LOG_PREFIX,
+          mobFarmName,
+          CONFIG_FILE_NAME);
+    }
+  }
+
+  public static void addBonusDropEntry(
+      MobFarmType mobFarmType, int tierLevel, String entityType, int chance, ItemStack itemStack) {
+    String mobFarmKey = getMobFarmKey(mobFarmType.getId(), tierLevel, entityType);
+
+    // Check if item stack amount is valid
+    if (itemStack.isEmpty()) {
+      log.error(
+          "{} Invalid item stack {} in config file {}", LOG_PREFIX, itemStack, CONFIG_FILE_NAME);
+      return;
+    }
+
+    // Check if entity type is valid
+    if (BuiltInRegistries.ENTITY_TYPE.getOptional(new ResourceLocation(entityType)).isEmpty()) {
+      log.error(
+          "{} Invalid entity type {} in config file {}", LOG_PREFIX, entityType, CONFIG_FILE_NAME);
+      return;
+    }
+
+    log.info(
+        "{} Add {} with a chance of 1 of {} for {}.", LOG_PREFIX, mobFarmKey, chance, itemStack);
+    mobFarmBonusMap.computeIfAbsent(mobFarmKey, k -> new HashMap<>()).put(chance, itemStack);
   }
 
   public static ItemStack getBonusDropEntry(
@@ -367,7 +405,7 @@ To disable a bonus drop for a default definition, set the amount to 0.
       return ItemStack.EMPTY;
     }
     return mobFarmBonusMap
-        .get(mobFarmName + "::" + tierLevel + "::" + entityType)
+        .get(getMobFarmKey(mobFarmName, tierLevel, entityType))
         .entrySet()
         .stream()
         .map(Map.Entry::getValue)
@@ -388,7 +426,7 @@ To disable a bonus drop for a default definition, set the amount to 0.
       return ItemStack.EMPTY;
     }
     return mobFarmBonusMap
-        .get(mobFarmName + "::" + tierLevel + "::" + entityType)
+        .get(getMobFarmKey(mobFarmName, tierLevel, entityType))
         .entrySet()
         .stream()
         .filter(entry -> random.nextInt(entry.getKey()) == 0)
@@ -403,7 +441,7 @@ To disable a bonus drop for a default definition, set the amount to 0.
   }
 
   public static boolean hasBonusDrop(String mobFarmName, int tierLevel, String entityType) {
-    return mobFarmBonusMap.containsKey(mobFarmName + "::" + tierLevel + "::" + entityType);
+    return mobFarmBonusMap.containsKey(getMobFarmKey(mobFarmName, tierLevel, entityType));
   }
 
   private static String[] parseKey(String key) {
