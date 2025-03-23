@@ -19,6 +19,7 @@
 
 package de.markusbordihn.easymobfarm;
 
+import de.markusbordihn.easymobfarm.client.ClientEventHandler;
 import de.markusbordihn.easymobfarm.client.renderer.ClientRenderer;
 import de.markusbordihn.easymobfarm.client.renderer.item.properties.ModItemProperties;
 import de.markusbordihn.easymobfarm.client.screen.ClientScreens;
@@ -46,6 +47,9 @@ public class EasyMobFarmClient implements ClientModInitializer {
 
     log.info("{} Client Screens ...", Constants.LOG_REGISTER_PREFIX);
     ClientScreens.registerScreens();
+
+    log.info("{} Client Event Handler ...", Constants.LOG_REGISTER_PREFIX);
+    ClientEventHandler.registerClientEvents();
 
     log.info("{} Item Properties ...", Constants.LOG_REGISTER_PREFIX);
     ModItemProperties.registerItemProperties();

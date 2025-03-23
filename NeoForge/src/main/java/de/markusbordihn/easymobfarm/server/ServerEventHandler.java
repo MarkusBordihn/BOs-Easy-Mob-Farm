@@ -25,6 +25,7 @@ import net.minecraft.world.inventory.CraftingMenu;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
+import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 @EventBusSubscriber
@@ -38,6 +39,11 @@ public class ServerEventHandler {
   @SubscribeEvent
   public static void onServerStarted(ServerStartedEvent event) {
     ServerEvents.handleServerStartedEvent(event.getServer());
+  }
+
+  @SubscribeEvent
+  public static void onServerStarting(ServerStartingEvent event) {
+    ServerEvents.handleServerStartingEvent(event.getServer());
   }
 
   @SubscribeEvent
