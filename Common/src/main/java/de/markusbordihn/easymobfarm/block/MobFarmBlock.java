@@ -161,8 +161,9 @@ public class MobFarmBlock extends BaseEntityBlock {
         blockEntityInstance.setFarmTierLevel(tierLevel);
         blockEntity.setChanged();
       }
-      if (level.hasNeighborSignal(blockPos) != blockState.getValue(POWERED)) {
-        level.setBlock(blockPos, blockState.setValue(POWERED, level.hasNeighborSignal(blockPos)), Block.UPDATE_CLIENTS);
+      boolean powered = level.hasNeighborSignal(blockPos);
+      if (powered != blockState.getValue(POWERED)) {
+        level.setBlock(blockPos, blockState.setValue(POWERED, powered), Block.UPDATE_CLIENTS);
       }
     }
   }
