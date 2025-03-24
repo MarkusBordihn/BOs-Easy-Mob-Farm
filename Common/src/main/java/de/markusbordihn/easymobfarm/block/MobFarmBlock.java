@@ -55,6 +55,7 @@ public class MobFarmBlock extends BaseEntityBlock {
   public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
   public static final BooleanProperty WORKING = BooleanProperty.create("working");
   public static final IntegerProperty TIER_LEVEL = IntegerProperty.create("tier_level", 0, 3);
+  public static final BooleanProperty POWERED = BooleanProperty.create("powered");
   public static final EnumProperty<MobFarmType> FARM_TYPE =
       EnumProperty.create("farm_type", MobFarmType.class);
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
@@ -83,7 +84,8 @@ public class MobFarmBlock extends BaseEntityBlock {
             .setValue(FACING, Direction.NORTH)
             .setValue(WORKING, Boolean.FALSE)
             .setValue(TIER_LEVEL, tierLevel)
-            .setValue(FARM_TYPE, mobFarmType));
+            .setValue(FARM_TYPE, mobFarmType)
+            .setValue(POWERED, false));
   }
 
   public static int getLightLevel(final BlockState blockState) {
@@ -130,7 +132,7 @@ public class MobFarmBlock extends BaseEntityBlock {
   @Override
   protected void createBlockStateDefinition(
       final StateDefinition.Builder<Block, BlockState> blockState) {
-    blockState.add(FACING, WORKING, TIER_LEVEL, FARM_TYPE);
+    blockState.add(FACING, WORKING, TIER_LEVEL, FARM_TYPE, POWERED);
   }
 
   @Override
@@ -158,6 +160,10 @@ public class MobFarmBlock extends BaseEntityBlock {
         serverLevel.setBlock(blockPos, newBlockState, 3);
         blockEntityInstance.setFarmTierLevel(tierLevel);
         blockEntity.setChanged();
+      }
+      boolean powered = level.hasNeighborSignal(blockPos);
+      if (powered != blockState.getValue(POWERED)) {
+        level.setBlock(blockPos, blockState.setValue(POWERED, powered), Block.UPDATE_CLIENTS);
       }
     }
   }
@@ -199,6 +205,23 @@ public class MobFarmBlock extends BaseEntityBlock {
     // Open Mob Farm GUI
     this.openMenu(level, blockPos, player);
     return InteractionResult.CONSUME;
+  }
+
+  @Override
+  public void neighborChanged(
+      final BlockState blockState,
+      final Level level,
+      final BlockPos blockPos,
+      final Block block,
+      final BlockPos fromBlockPos,
+      final boolean isMoving) {
+    if (!level.isClientSide) {
+      boolean isPowered = blockState.getValue(POWERED);
+      boolean isPoweredNow = level.hasNeighborSignal(blockPos);
+      if (isPowered != isPoweredNow) {
+        level.setBlock(blockPos, blockState.setValue(POWERED, isPoweredNow), Block.UPDATE_CLIENTS);
+      }
+    }
   }
 
   protected void openMenu(final Level level, final BlockPos blockPos, final Player player) {
