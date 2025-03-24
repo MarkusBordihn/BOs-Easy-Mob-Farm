@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+# v9.7.0
+
+- Fixed #146 by adding redstone signal support for mob farms.
+- Fixed animation issues and other rendering problems.
+- Added hungarian translation. Thanks to '@bayi' for the contribution.
+- Added automatic tests for mob farm redstone signal.
+- Added better support for `Ice and Fire` mod, part of #149.
+- Allows farms to be disabled when receiving a redstone high signal from any side. Thanks to '@bayi'
+  for the contribution.
+
 # v9.6.2
 
 - Fixed #147 specific Forge issue with tooltip display.

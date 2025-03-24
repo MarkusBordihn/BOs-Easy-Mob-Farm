@@ -91,13 +91,6 @@ public class ModelEventHandler {
   @SubscribeEvent
   public static void onModelBake(ModelBakeEvent event) {
 
-    // Debugging all baked models.
-    for (ResourceLocation location : event.getModelRegistry().keySet()) {
-      if (location.getNamespace().equals(Constants.MOD_ID)) {
-        log.debug("Found baked model: {} ({})", location, location.getPath());
-      }
-    }
-
     // Verify if Mob Capture Card model is available.
     ResourceLocation mobCaptureCardModelResourceLocation =
         new ModelResourceLocation(

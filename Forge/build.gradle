@@ -122,10 +122,14 @@ dependencies {
   }
 
   // Geckolib: Dependency
-  runtimeOnly fg.deobf("curse.maven:geckolib-388172:4181370")
+  // runtimeOnly fg.deobf("curse.maven:geckolib-388172:4181370")
 
   // Naturalist: Integration
-  runtimeOnly fg.deobf("curse.maven:naturalist-627986:3930806")
+  // runtimeOnly fg.deobf("curse.maven:naturalist-627986:3930806")
+
+  // Fire and Ice: Integration
+  runtimeOnly fg.deobf("curse.maven:citadel-331936:3783096")
+  runtimeOnly fg.deobf("curse.maven:ice-and-fire-dragons-264231:4614465")
 
   // Mob Catcher: Integration
   // compileOnly fg.deobf("curse.maven:mob-catcher-498389:4026567")
