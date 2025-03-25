@@ -25,6 +25,7 @@ import de.markusbordihn.easymobfarm.block.MobFarmBlock;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.client.renderer.manager.EntityScalingManager;
 import de.markusbordihn.easymobfarm.client.renderer.manager.RendererManager;
+import de.markusbordihn.easymobfarm.config.RequiresAnimationTickConfig;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -80,6 +81,10 @@ public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
 
     // Animation support
     entity.tickCount = (int) blockEntity.getLevel().getGameTime();
+    if (RequiresAnimationTickConfig.requiresAnimationTick(entity.getType())
+        && entity.tickCount % 2 == 0) {
+      entity.tick();
+    }
 
     // Get Mob Farm Type for render adjustments like entity scaling and position.
     MobFarmType mobFarmType = blockEntity.getFarmType();

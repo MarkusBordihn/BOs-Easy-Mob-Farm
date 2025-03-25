@@ -31,6 +31,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.animal.AbstractFish;
 import net.minecraft.world.entity.animal.Sheep;
+import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -106,15 +107,26 @@ public class RendererManager {
       return null;
     }
 
+    // Reset entity position and movement to prevent unwanted animations.
+    entity.tick();
+    entity.setPos(0, 0, 0);
+    entity.setDeltaMovement(Vec3.ZERO);
+    entity.xOld = 0;
+    entity.yOld = 0;
+    entity.zOld = 0;
+    entity.setOnGround(true);
+    entity.flyDist = 0;
+    entity.tick();
+
     // Set random head and body rotation
     entity.setYHeadRot(mobFarmBlockEntity.getLevel().random.nextFloat() * 60.0F);
     entity.setYBodyRot(mobFarmBlockEntity.getLevel().random.nextFloat() * 10.0F);
     entity.xRotO = entity.getXRot();
     entity.yRotO = entity.getYRot();
-    entity.tick();
 
     // Load entity data from Mob Capture data
     entity.load(mobCaptureData.data());
+    entity.tick();
 
     // Set additional entity properties for fish entities
     if (entity instanceof AbstractFish fishEntity) {
@@ -137,10 +149,6 @@ public class RendererManager {
       newPathfinderMob.noPhysics = true;
     }
     entity.noPhysics = true;
-    entity.setPos(
-        mobFarmBlockEntity.getBlockPos().getX() + 0.5,
-        mobFarmBlockEntity.getBlockPos().getY() + 0.05,
-        mobFarmBlockEntity.getBlockPos().getZ() + 0.5);
 
     return entity;
   }
