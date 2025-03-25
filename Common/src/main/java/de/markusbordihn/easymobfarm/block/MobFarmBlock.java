@@ -52,6 +52,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.BlockHitResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -61,6 +62,7 @@ public class MobFarmBlock extends BaseEntityBlock {
   public static final EnumProperty<Direction> FACING = HorizontalDirectionalBlock.FACING;
   public static final BooleanProperty WORKING = BooleanProperty.create("working");
   public static final IntegerProperty TIER_LEVEL = IntegerProperty.create("tier_level", 0, 3);
+  public static final BooleanProperty POWERED = BooleanProperty.create("powered");
   public static final EnumProperty<MobFarmType> FARM_TYPE =
       EnumProperty.create("farm_type", MobFarmType.class);
   public static final MapCodec<MobFarmBlock> CODEC =
@@ -102,7 +104,8 @@ public class MobFarmBlock extends BaseEntityBlock {
             .setValue(FACING, Direction.NORTH)
             .setValue(WORKING, Boolean.FALSE)
             .setValue(TIER_LEVEL, tierLevel)
-            .setValue(FARM_TYPE, mobFarmType));
+            .setValue(FARM_TYPE, mobFarmType)
+            .setValue(POWERED, false));
   }
 
   public static int getLightLevel(final BlockState blockState) {
@@ -154,7 +157,7 @@ public class MobFarmBlock extends BaseEntityBlock {
   @Override
   protected void createBlockStateDefinition(
       final StateDefinition.Builder<Block, BlockState> blockState) {
-    blockState.add(FACING, WORKING, TIER_LEVEL, FARM_TYPE);
+    blockState.add(FACING, WORKING, TIER_LEVEL, FARM_TYPE, POWERED);
   }
 
   @Override
@@ -176,13 +179,26 @@ public class MobFarmBlock extends BaseEntityBlock {
       if (livingEntity instanceof ServerPlayer serverPlayer) {
         blockEntityInstance.setOwner(serverPlayer);
       }
+      BlockState newBlockState = blockState;
+
+      // Set tier level from item stack
       MobFarmData mobFarmData =
           itemStack.getOrDefault(DataComponents.MOB_FARM_DATA, MobFarmData.EMPTY);
       int tierLevel = mobFarmData.tierLevel().getTierLevel();
       if (tierLevel >= 0) {
-        BlockState newBlockState = blockState.setValue(TIER_LEVEL, tierLevel);
-        serverLevel.setBlock(blockPos, newBlockState, 3);
+        newBlockState = newBlockState.setValue(TIER_LEVEL, tierLevel);
         blockEntityInstance.setFarmTierLevel(tierLevel);
+      }
+
+      // Set powered state from redstone signal
+      boolean powered = level.hasNeighborSignal(blockPos);
+      if (powered != Boolean.TRUE.equals(blockState.getValue(POWERED))) {
+        newBlockState = newBlockState.setValue(POWERED, powered);
+      }
+
+      // Update block state if needed
+      if (!newBlockState.equals(blockState)) {
+        serverLevel.setBlock(blockPos, newBlockState, Block.UPDATE_ALL);
         blockEntity.setChanged();
       }
     }
@@ -241,6 +257,23 @@ public class MobFarmBlock extends BaseEntityBlock {
     // Open Mob Farm GUI
     this.openMenu(level, blockPos, player);
     return InteractionResult.CONSUME;
+  }
+
+  @Override
+  public void neighborChanged(
+      final BlockState blockState,
+      final Level level,
+      final BlockPos blockPos,
+      final Block block,
+      final Orientation orientation,
+      final boolean isMoving) {
+    if (!level.isClientSide) {
+      boolean isPowered = blockState.getValue(POWERED);
+      boolean isPoweredNow = level.hasNeighborSignal(blockPos);
+      if (isPowered != isPoweredNow) {
+        level.setBlock(blockPos, blockState.setValue(POWERED, isPoweredNow), Block.UPDATE_CLIENTS);
+      }
+    }
   }
 
   protected void openMenu(final Level level, final BlockPos blockPos, final Player player) {

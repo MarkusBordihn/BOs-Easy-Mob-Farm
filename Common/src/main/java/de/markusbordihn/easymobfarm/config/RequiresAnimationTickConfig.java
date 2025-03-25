@@ -27,61 +27,24 @@ import java.util.Properties;
 import java.util.Set;
 import net.minecraft.world.entity.EntityType;
 
-public class RequiresKilledByPlayerConfig extends Config {
+public class RequiresAnimationTickConfig extends Config {
 
-  public static final String CONFIG_FILE_NAME = "requires_killed_by_player.cfg";
+  public static final String CONFIG_FILE_NAME = "requires_animation_tick.cfg";
   public static final String CONFIG_FILE_HEADER =
       """
- Requires Killed By Player Configuration
+ Requires Animation Tick Configuration
 
- This configuration file lists the known entities which requires "killed_by_player" for looting.
+ This configuration file lists the known entities which requires an animation tick.
 
   The format is as follows:
   - <entity_name> : <true|false>
 
 """;
-  private static final Set<EntityType<?>> requiresKilledByPlayerEntities = new HashSet<>();
-  private static final Set<String> knownRequiresKilledByPlayerMinecraftEntities =
+  private static final Set<EntityType<?>> requiresAnimationTickEntities = new HashSet<>();
+  private static final Set<String> knownRequiresAnimationTickEntities =
       new HashSet<>(
           List.of(
-              "minecraft:blaze",
-              "minecraft:cave_spider",
-              "minecraft:drowned",
-              "minecraft:elder_guardian",
-              "minecraft:evoker",
-              "minecraft:guardian",
-              "minecraft:husk",
-              "minecraft:phantom",
-              "minecraft:rabbit",
-              "minecraft:spider",
-              "minecraft:stray",
-              "minecraft:vindicator",
-              "minecraft:wither_skeleton",
-              "minecraft:zombie",
-              "minecraft:zombie_villager",
-              "minecraft:zombified_piglin"));
-  private static final Set<String> knownRequiresKilledByPlayerEntities =
-      new HashSet<>(
-          List.of(
-              "iceandfire:amphithere",
-              "iceandfire:cockatrice",
-              "iceandfire:cyclops",
-              "iceandfire:deathworm",
-              "iceandfire:dread_lich",
-              "iceandfire:fire_dragon",
-              "iceandfire:ghost",
-              "iceandfire:gorgon",
-              "iceandfire:hippocampus",
-              "iceandfire:hippogryph",
-              "iceandfire:hydra",
-              "iceandfire:ice_dragon",
-              "iceandfire:lightning_dragon",
-              "iceandfire:mymex",
-              "iceandfire:pixie",
-              "iceandfire:sea_serpent",
-              "iceandfire:siren",
-              "iceandfire:stymphalian_bird",
-              "iceandfire:troll"));
+              "iceandfire:fire_dragon", "iceandfire:ice_dragon", "iceandfire:lightning_dragon"));
 
   public static void registerConfig() {
     registerConfigFile(CONFIG_FILE_NAME, CONFIG_FILE_HEADER);
@@ -93,12 +56,8 @@ public class RequiresKilledByPlayerConfig extends Config {
     Properties properties = readConfigFile(configFile);
     Properties unmodifiedProperties = (Properties) properties.clone();
 
-    // Adding known entities to config file, if not present.
-    Set<String> allKnownEntities = new HashSet<>();
-    allKnownEntities.addAll(knownRequiresKilledByPlayerMinecraftEntities);
-    allKnownEntities.addAll(knownRequiresKilledByPlayerEntities);
-
-    for (String entityType : allKnownEntities) {
+    // Adding default values to config file, if not present.
+    for (String entityType : knownRequiresAnimationTickEntities) {
       parseConfigValue(properties, entityType, true);
     }
 
@@ -113,11 +72,11 @@ public class RequiresKilledByPlayerConfig extends Config {
 
       // Check if entity type is known, resolve it and add it to the list, if needed.
       Optional<EntityType<?>> entityType = EntityType.byString(entityTypeName);
-      if (entityType.isPresent() && !requiresKilledByPlayerEntities.contains(entityType.get())) {
+      if (entityType.isPresent() && !requiresAnimationTickEntities.contains(entityType.get())) {
         if (parseConfigValue(properties, entityTypeName, false)) {
-          requiresKilledByPlayerEntities.add(entityType.get());
+          requiresAnimationTickEntities.add(entityType.get());
         } else {
-          requiresKilledByPlayerEntities.remove(entityType.get());
+          requiresAnimationTickEntities.remove(entityType.get());
         }
       }
     }
@@ -125,7 +84,7 @@ public class RequiresKilledByPlayerConfig extends Config {
     updateConfigFileIfChanged(configFile, CONFIG_FILE_HEADER, properties, unmodifiedProperties);
   }
 
-  public static boolean requiresKilledByPlayer(EntityType<?> entityType) {
-    return requiresKilledByPlayerEntities.contains(entityType);
+  public static boolean requiresAnimationTick(EntityType<?> entityType) {
+    return requiresAnimationTickEntities.contains(entityType);
   }
 }
