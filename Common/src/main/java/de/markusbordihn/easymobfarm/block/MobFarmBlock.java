@@ -154,16 +154,25 @@ public class MobFarmBlock extends BaseEntityBlock {
       if (livingEntity instanceof ServerPlayer serverPlayer) {
         blockEntityInstance.setOwner(serverPlayer);
       }
+      BlockState newBlockState = blockState;
+
+      // Set tier level from item stack
       int tierLevel = itemStack.getOrCreateTag().getInt(MobFarmBlockEntity.TIER_LEVEL_TAG);
       if (tierLevel >= 0) {
-        BlockState newBlockState = blockState.setValue(TIER_LEVEL, tierLevel);
-        serverLevel.setBlock(blockPos, newBlockState, 3);
+        newBlockState = newBlockState.setValue(TIER_LEVEL, tierLevel);
         blockEntityInstance.setFarmTierLevel(tierLevel);
-        blockEntity.setChanged();
       }
+
+      // Set powered state from redstone signal
       boolean powered = level.hasNeighborSignal(blockPos);
-      if (powered != blockState.getValue(POWERED)) {
-        level.setBlock(blockPos, blockState.setValue(POWERED, powered), Block.UPDATE_CLIENTS);
+      if (powered != Boolean.TRUE.equals(blockState.getValue(POWERED))) {
+        newBlockState = newBlockState.setValue(POWERED, powered);
+      }
+
+      // Update block state if needed
+      if (!newBlockState.equals(blockState)) {
+        serverLevel.setBlock(blockPos, newBlockState, Block.UPDATE_ALL);
+        blockEntity.setChanged();
       }
     }
   }
