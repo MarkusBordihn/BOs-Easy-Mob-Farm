@@ -146,6 +146,15 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
       final BlockPos blockPos,
       final BlockState blockState,
       final MobFarmBlockEntity blockEntity) {
+
+    // Check if redstone power is active.
+    if (blockState.getValue(MobFarmBlock.POWERED)) {
+      if (blockEntity.farmStatus != MobFarmStatus.DISABLED) {
+        blockEntity.farmStatus = MobFarmStatus.DISABLED;
+      }
+      return;
+    }
+
     // Check if slot is filled.
     if (!blockEntity.hasCapturedMob() || blockEntity.farmStatus == MobFarmStatus.DISABLED) {
       if (blockEntity.farmStatus != MobFarmStatus.IDLE) {
