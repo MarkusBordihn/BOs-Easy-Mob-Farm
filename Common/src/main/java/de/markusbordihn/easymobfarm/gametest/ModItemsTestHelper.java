@@ -21,6 +21,7 @@ package de.markusbordihn.easymobfarm.gametest;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 
 public class ModItemsTestHelper {
@@ -34,7 +35,7 @@ public class ModItemsTestHelper {
 
   public static void testModItem(GameTestHelper helper, Item item, BlockPos blockPos) {
     if (item == null || blockPos == null) {
-      helper.fail("Item or block position is not defined!");
+      helper.fail(Component.literal("Item or block position is not defined!"));
       return;
     }
     helper.spawnItem(item, blockPos.getX(), blockPos.getY(), blockPos.getZ());

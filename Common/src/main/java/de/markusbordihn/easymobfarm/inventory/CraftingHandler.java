@@ -24,13 +24,13 @@ import de.markusbordihn.easymobfarm.capture.MobCaptureManager;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardIngredientItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
-import java.util.List;
 import java.util.Optional;
 import net.minecraft.core.Holder.Reference;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.CraftingMenu;
 import net.minecraft.world.item.Item;
@@ -93,9 +93,11 @@ public class CraftingHandler {
 
   public static void handlePlayerInventory(ServerPlayer serverPlayer) {
     // Check if we have transformed items and replace it with the original item.
-    List<ItemStack> inventory = serverPlayer.getInventory().items;
-    for (int i = 0; i < inventory.size(); i++) {
-      ItemStack itemStack = inventory.get(i);
+    Inventory playerInventory = serverPlayer.getInventory();
+    int containerSize =
+        playerInventory.getContainerSize() - Inventory.EQUIPMENT_SLOT_MAPPING.size();
+    for (int i = 0; i < containerSize; i++) {
+      ItemStack itemStack = playerInventory.getItem(i);
       if (itemStack.isEmpty() || !(itemStack.getItem() instanceof MobCaptureCardIngredientItem)) {
         continue;
       }
@@ -107,8 +109,8 @@ public class CraftingHandler {
             MobCaptureCardIngredientItem.restoreOriginalItemStack(
                 itemStack, new ItemStack(orginalItem.get().value()));
         if (!originalItemStack.isEmpty()) {
-          inventory.set(i, originalItemStack);
-          serverPlayer.getInventory().setChanged();
+          playerInventory.setItem(i, originalItemStack);
+          playerInventory.setChanged();
         }
       }
     }

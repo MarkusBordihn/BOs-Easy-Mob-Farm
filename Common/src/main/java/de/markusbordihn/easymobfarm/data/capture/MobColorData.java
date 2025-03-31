@@ -22,7 +22,7 @@ package de.markusbordihn.easymobfarm.data.capture;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.Sheep;
+import net.minecraft.world.entity.animal.sheep.Sheep;
 import net.minecraft.world.entity.npc.Villager;
 
 public class MobColorData {
@@ -39,7 +39,7 @@ public class MobColorData {
     if (livingEntity instanceof Sheep sheep) {
       return MobColor.byDyeColor(sheep.getColor());
     } else if (livingEntity instanceof Villager villager) {
-      return MobColor.byVillagerType(villager.getVillagerData().getType());
+      return MobColor.byVillagerType(villager.getVillagerData().type().unwrapKey().orElse(null));
     }
     return MobColor.NONE;
   }
@@ -48,6 +48,6 @@ public class MobColorData {
     if (compoundTag == null || !compoundTag.contains(COLOR_TAG)) {
       return MobColor.NONE;
     }
-    return MobColor.byName(compoundTag.getString(COLOR_TAG));
+    return MobColor.byName(compoundTag.getString(COLOR_TAG).orElse(""));
   }
 }

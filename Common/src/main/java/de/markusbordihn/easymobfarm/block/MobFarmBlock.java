@@ -131,16 +131,13 @@ public class MobFarmBlock extends BaseEntityBlock {
   }
 
   @Override
-  public void onRemove(
-      BlockState state, Level level, BlockPos blockPos, BlockState newState, boolean isMoving) {
-    if (!state.is(newState.getBlock())) {
-      BlockEntity blockEntity = level.getBlockEntity(blockPos);
-      if (blockEntity instanceof MobFarmBlockEntity mobFarmBlockEntity) {
-        mobFarmBlockEntity.dropInventoryContents();
-        level.updateNeighbourForOutputSignal(blockPos, this);
-      }
-      super.onRemove(state, level, blockPos, newState, isMoving);
+  public void affectNeighborsAfterRemoval(
+      BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, boolean isMoving) {
+    BlockEntity blockEntity = serverLevel.getBlockEntity(blockPos);
+    if (blockEntity instanceof MobFarmBlockEntity mobFarmBlockEntity) {
+      serverLevel.updateNeighbourForOutputSignal(blockPos, this);
     }
+    super.affectNeighborsAfterRemoval(blockState, serverLevel, blockPos, isMoving);
   }
 
   @Override

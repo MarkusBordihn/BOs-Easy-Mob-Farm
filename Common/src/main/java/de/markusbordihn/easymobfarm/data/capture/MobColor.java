@@ -24,6 +24,7 @@ import java.util.Locale;
 import java.util.function.IntFunction;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.ByIdMap;
 import net.minecraft.util.ByIdMap.OutOfBoundsStrategy;
 import net.minecraft.util.StringRepresentable;
@@ -100,7 +101,7 @@ public enum MobColor implements StringRepresentable {
     };
   }
 
-  public static MobColor byVillagerType(VillagerType villagerType) {
+  public static MobColor byVillagerType(ResourceKey<VillagerType> villagerType) {
     if (villagerType == null) {
       return MobColor.NONE;
     }

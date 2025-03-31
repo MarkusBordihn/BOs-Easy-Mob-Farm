@@ -19,101 +19,98 @@
 
 package de.markusbordihn.easymobfarm.gametest;
 
-import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.minecraftforge.gametest.GameTestHolder;
+import net.minecraftforge.gametest.GameTest;
 
 @SuppressWarnings("unused")
-@GameTestHolder(Constants.MOD_ID)
 public class ModBlocksTest {
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testTier0MobFarmTemplate(GameTestHelper helper) {
     ModBlocksTestHelper.testModBlock(helper, ModBlocks.TIER_0_MOB_FARM_TEMPLATE.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testTier1MobFarmTemplate(GameTestHelper helper) {
     ModBlocksTestHelper.testModBlock(helper, ModBlocks.TIER_1_MOB_FARM_TEMPLATE.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testTier2MobFarmTemplate(GameTestHelper helper) {
     ModBlocksTestHelper.testModBlock(helper, ModBlocks.TIER_2_MOB_FARM_TEMPLATE.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testTier3MobFarmTemplate(GameTestHelper helper) {
     ModBlocksTestHelper.testModBlock(helper, ModBlocks.TIER_3_MOB_FARM_TEMPLATE.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testCreativeMobFarm(GameTestHelper helper) {
     ModBlocksTestHelper.testModBlock(helper, ModBlocks.CREATIVE_MOB_FARM.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testAnimalPlainsFarm(GameTestHelper helper) {
     ModBlocksTestHelper.testModBlock(helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testBeeHiveFarm(GameTestHelper helper) {
     ModBlocksTestHelper.testModBlock(helper, ModBlocks.BEE_HIVE_FARM.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testDesertFarm(GameTestHelper helper) {
     ModBlocksTestHelper.testModBlock(helper, ModBlocks.DESERT_FARM.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testIronGolemFarm(GameTestHelper helper) {
     ModBlocksTestHelper.testModBlock(helper, ModBlocks.IRON_GOLEM_FARM.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testJungleFarm(GameTestHelper helper) {
     ModBlocksTestHelper.testModBlock(helper, ModBlocks.JUNGLE_FARM.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testLuckyDropFarm(GameTestHelper helper) {
     ModBlocksTestHelper.testModBlock(helper, ModBlocks.LUCKY_DROP_FARM.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testMonsterPlainsCaveFarm(GameTestHelper helper) {
     ModBlocksTestHelper.testModBlock(helper, ModBlocks.MONSTER_PLAINS_CAVE_FARM.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testNetherFortressFarm(GameTestHelper helper) {
     ModBlocksTestHelper.testModBlock(helper, ModBlocks.NETHER_FORTRESS_FARM.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testOceanFarm(GameTestHelper helper) {
     ModBlocksTestHelper.testModBlock(helper, ModBlocks.OCEAN_FARM.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testSwampFarm(GameTestHelper helper) {
     ModBlocksTestHelper.testModBlock(helper, ModBlocks.SWAMP_FARM.get());
     helper.succeed();

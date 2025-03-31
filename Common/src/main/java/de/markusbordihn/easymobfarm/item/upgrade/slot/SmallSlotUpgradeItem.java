@@ -22,13 +22,14 @@ package de.markusbordihn.easymobfarm.item.upgrade.slot;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.item.upgrade.SlotUpgradeItem;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
-import java.util.List;
+import java.util.function.Consumer;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 
 public class SmallSlotUpgradeItem extends SlotUpgradeItem {
 
@@ -50,10 +51,11 @@ public class SmallSlotUpgradeItem extends SlotUpgradeItem {
   public void appendHoverText(
       ItemStack itemStack,
       TooltipContext tooltipContext,
-      List<Component> tooltip,
-      TooltipFlag flag) {
+      TooltipDisplay tooltipDisplay,
+      Consumer<Component> tooltipConsumer,
+      TooltipFlag tooltipFlag) {
     addTooltip(
-        tooltip,
+        tooltipConsumer,
         TextComponent.getTranslatedTextRaw(
             Constants.TOOLTIP_PREFIX + ID, this.numberOfUpgradeSlots()));
   }

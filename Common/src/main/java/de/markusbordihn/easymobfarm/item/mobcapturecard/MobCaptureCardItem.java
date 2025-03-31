@@ -26,9 +26,9 @@ import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.data.capture.MobColor;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -37,14 +37,18 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -123,9 +127,9 @@ public class MobCaptureCardItem extends Item {
   }
 
   @Override
-  public void onCraftedBy(ItemStack itemStack, Level level, Player player) {
-    this.level = level;
-    super.onCraftedBy(itemStack, level, player);
+  public void onCraftedBy(ItemStack itemStack, Player player) {
+    this.level = player.level();
+    super.onCraftedBy(itemStack, player);
   }
 
   @Override
@@ -136,16 +140,20 @@ public class MobCaptureCardItem extends Item {
 
   @Override
   public void inventoryTick(
-      ItemStack itemStack, Level level, Entity entity, int slot, boolean selected) {
+      ItemStack itemStack, ServerLevel serverLevel, Entity entity, EquipmentSlot equipmentSlot) {
     if (entity instanceof Player && this.level == null) {
-      this.level = level;
+      this.level = serverLevel;
     }
-    super.inventoryTick(itemStack, level, entity, slot, selected);
+    super.inventoryTick(itemStack, serverLevel, entity, equipmentSlot);
   }
 
   @Override
-  public boolean canAttackBlock(
-      BlockState blockState, Level level, BlockPos blockPos, Player player) {
+  public boolean canDestroyBlock(
+      ItemStack itemStack,
+      BlockState blockState,
+      Level level,
+      BlockPos blockPos,
+      LivingEntity livingEntity) {
     this.level = level;
     return false;
   }
@@ -200,29 +208,30 @@ public class MobCaptureCardItem extends Item {
   public void appendHoverText(
       ItemStack itemStack,
       TooltipContext tooltipContext,
-      List<Component> tooltip,
-      TooltipFlag flag) {
+      TooltipDisplay tooltipDisplay,
+      Consumer<Component> tooltipConsumer,
+      TooltipFlag tooltipFlag) {
     MobCaptureData mobCaptureData = MobCaptureManagerClient.getMobCaptureData(itemStack);
     if (mobCaptureData == null) {
-      tooltip.add(TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "empty"));
+      tooltipConsumer.accept(TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "empty"));
       return;
     }
-    tooltip.add(
+    tooltipConsumer.accept(
         TextComponent.getTranslatedTextRaw(
             TOOLTIP_PREFIX + "name", getTranslatedEntityName(mobCaptureData)));
-    if (flag.isAdvanced()) {
-      tooltip.add(
+    if (tooltipFlag.isAdvanced()) {
+      tooltipConsumer.accept(
           TextComponent.getTranslatedTextRaw(
               TOOLTIP_PREFIX + "description_id", mobCaptureData.name()));
-      tooltip.add(
+      tooltipConsumer.accept(
           TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "type", mobCaptureData.type()));
     }
     if (mobCaptureData.hasVariant()) {
-      tooltip.add(
+      tooltipConsumer.accept(
           TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "variant", mobCaptureData.variant()));
     }
     if (mobCaptureData.hasColor()) {
-      tooltip.add(
+      tooltipConsumer.accept(
           TextComponent.getTranslatedTextRaw(
               TOOLTIP_PREFIX + "color", mobCaptureData.color().getName()));
     }
@@ -234,11 +243,11 @@ public class MobCaptureCardItem extends Item {
           case EPIC -> ChatFormatting.DARK_PURPLE;
           default -> ChatFormatting.GRAY;
         };
-    tooltip.add(
+    tooltipConsumer.accept(
         TextComponent.getTranslatedTextRaw(
                 TOOLTIP_PREFIX + "rarity", mobCaptureData.rarity().name())
             .withStyle(rarityColor));
-    tooltip.add(
+    tooltipConsumer.accept(
         TextComponent.getTranslatedTextRaw(
             TOOLTIP_PREFIX + "id", String.valueOf(mobCaptureData.getCardId())));
   }

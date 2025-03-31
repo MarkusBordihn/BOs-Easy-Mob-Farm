@@ -28,6 +28,7 @@ import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmTierLevel;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.List;
+import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
@@ -40,6 +41,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.block.Block;
 
 public class MobFarmBlockItem extends BlockItem {
@@ -92,9 +94,10 @@ public class MobFarmBlockItem extends BlockItem {
   public void appendHoverText(
       ItemStack itemStack,
       TooltipContext tooltipContext,
-      List<Component> tooltip,
-      TooltipFlag flag) {
-    super.appendHoverText(itemStack, tooltipContext, tooltip, flag);
+      TooltipDisplay tooltipDisplay,
+      Consumer<Component> tooltipConsumer,
+      TooltipFlag tooltipFlag) {
+    super.appendHoverText(itemStack, tooltipContext, tooltipDisplay, tooltipConsumer, tooltipFlag);
 
     // Add farm description
     Component farmDescription = TextComponent.getTranslatedText(this.farmName);
@@ -104,7 +107,8 @@ public class MobFarmBlockItem extends BlockItem {
             .getSplitter()
             .splitLines(farmDescription.getString(), 200, Style.EMPTY);
     for (FormattedText line : lines) {
-      tooltip.add(TextComponent.getText(line.getString()).withStyle(ChatFormatting.GRAY));
+      tooltipConsumer.accept(
+          TextComponent.getText(line.getString()).withStyle(ChatFormatting.GRAY));
     }
 
     // Add tier level
@@ -120,7 +124,7 @@ public class MobFarmBlockItem extends BlockItem {
           default -> null;
         };
     if (tierLevelText != null) {
-      tooltip.add(tierLevelText);
+      tooltipConsumer.accept(tierLevelText);
     }
 
     // Add processing speed
@@ -153,7 +157,7 @@ public class MobFarmBlockItem extends BlockItem {
           default -> null;
         };
     if (processingSpeedText != null) {
-      tooltip.add(processingSpeedText);
+      tooltipConsumer.accept(processingSpeedText);
     }
   }
 }

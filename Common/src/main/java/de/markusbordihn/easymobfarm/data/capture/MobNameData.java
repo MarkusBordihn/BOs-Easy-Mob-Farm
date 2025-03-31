@@ -46,17 +46,15 @@ public class MobNameData {
     }
 
     // Check if we have a valid name tag.
-    String name = compoundTag.getString(NAME_TAG);
-    if (compoundTag.contains(NAME_TAG)
-        && name.startsWith("entity.")
-        && name.equals(name.toLowerCase(Locale.ROOT))) {
+    String name = compoundTag.getString(NAME_TAG).orElse("");
+    if (name.startsWith("entity.") && name.equals(name.toLowerCase(Locale.ROOT))) {
       return name;
     }
 
     // Check if we have a valid type tag.
-    String entityTypeName = compoundTag.getString(TYPE_TAG);
+    String entityTypeName = compoundTag.getString(TYPE_TAG).orElse("");
     if (!compoundTag.contains(TYPE_TAG)) {
-      entityTypeName = compoundTag.getString(ID_TAG);
+      entityTypeName = compoundTag.getString(ID_TAG).orElse("");
     }
     if (!entityTypeName.contains(":")
         || !entityTypeName.equals(entityTypeName.toLowerCase(Locale.ROOT))) {

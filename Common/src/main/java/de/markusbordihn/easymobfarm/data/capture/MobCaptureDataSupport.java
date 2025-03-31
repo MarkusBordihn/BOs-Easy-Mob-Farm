@@ -110,37 +110,60 @@ public class MobCaptureDataSupport {
     if (MOB_CATCHER_DIAMOND.equals(itemRegistryName)
         || MOB_CATCHER_NETHERITE.equals(itemRegistryName)) {
       if (compoundTag.contains(MOD_DATA_TAG)
-          && compoundTag.getCompound(MOD_DATA_TAG).contains(ID_TAG)) {
-        return getEntityType(compoundTag.getCompound(MOD_DATA_TAG).getString(ID_TAG));
+          && compoundTag.getCompound(MOD_DATA_TAG).isPresent()
+          && compoundTag.getCompound(MOD_DATA_TAG).get().contains(ID_TAG)
+          && compoundTag.getCompound(MOD_DATA_TAG).get().getString(ID_TAG).isPresent()) {
+        return getEntityType(compoundTag.getCompound(MOD_DATA_TAG).get().getString(ID_TAG).get());
       }
     }
     if (MOB_CAPTURING_TOOL.equals(itemRegistryName)) {
       if (compoundTag.contains(CAPTURED_ENTITY_TAG)
-          && compoundTag.getCompound(CAPTURED_ENTITY_TAG).contains(ENTITY_TYPE_TAG)) {
+          && compoundTag.getCompound(CAPTURED_ENTITY_TAG).isPresent()
+          && compoundTag.getCompound(CAPTURED_ENTITY_TAG).get().contains(ENTITY_TYPE_TAG)
+          && compoundTag
+              .getCompound(CAPTURED_ENTITY_TAG)
+              .get()
+              .getString(ENTITY_TYPE_TAG)
+              .isPresent()) {
         return getEntityType(
-            compoundTag.getCompound(CAPTURED_ENTITY_TAG).getString(ENTITY_TYPE_TAG));
+            compoundTag.getCompound(CAPTURED_ENTITY_TAG).get().getString(ENTITY_TYPE_TAG).get());
       }
     }
     if (SUPPLEMENTARIES_CAGE.equals(itemRegistryName)
         || SUPPLEMENTARIES_JAR.equals(itemRegistryName)) {
       if (compoundTag.contains(BLOCK_ENTITY_TAG)
-          && compoundTag.getCompound(BLOCK_ENTITY_TAG).contains(MOB_HOLDER_TAG)
+          && compoundTag.getCompound(BLOCK_ENTITY_TAG).isPresent()
+          && compoundTag.getCompound(BLOCK_ENTITY_TAG).get().contains(MOB_HOLDER_TAG)
+          && compoundTag.getCompound(BLOCK_ENTITY_TAG).get().getCompound(MOB_HOLDER_TAG).isPresent()
           && compoundTag
               .getCompound(BLOCK_ENTITY_TAG)
+              .get()
               .getCompound(MOB_HOLDER_TAG)
-              .contains(ENTITY_DATA_TAG)) {
+              .get()
+              .contains(ENTITY_DATA_TAG)
+          && compoundTag
+              .getCompound(BLOCK_ENTITY_TAG)
+              .get()
+              .getCompound(MOB_HOLDER_TAG)
+              .get()
+              .getCompound(ENTITY_DATA_TAG)
+              .isPresent()) {
         return getEntityType(
             compoundTag
                 .getCompound(BLOCK_ENTITY_TAG)
+                .get()
                 .getCompound(MOB_HOLDER_TAG)
+                .get()
                 .getCompound(ENTITY_DATA_TAG)
-                .getString(ID_TAG));
+                .get()
+                .getString(ID_TAG)
+                .get());
       }
     }
     if (PRODUCTIVE_BEES_BEE_CAGE.equals(itemRegistryName)
         || PRODUCTIVE_BEES_BEE_JAR.equals(itemRegistryName)) {
-      if (compoundTag.contains(ENTITY__TAG)) {
-        return getEntityType(compoundTag.getString(ENTITY__TAG));
+      if (compoundTag.contains(ENTITY__TAG) && compoundTag.getString(ENTITY__TAG).isPresent()) {
+        return getEntityType(compoundTag.getString(ENTITY__TAG).get());
       }
     }
 

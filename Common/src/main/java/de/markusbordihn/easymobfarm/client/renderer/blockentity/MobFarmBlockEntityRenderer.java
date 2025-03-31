@@ -42,6 +42,7 @@ import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.animal.Squid;
 import net.minecraft.world.entity.monster.Guardian;
 import net.minecraft.world.entity.monster.Phantom;
+import net.minecraft.world.phys.Vec3;
 
 public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
     implements BlockEntityRenderer<T> {
@@ -55,7 +56,8 @@ public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
       PoseStack poseStack,
       MultiBufferSource buffer,
       int combinedLight,
-      int combinedOverlay) {
+      int combinedOverlay,
+      Vec3 vec3) {
     if (!blockEntity.hasCapturedMob()) {
       RendererManager.removeEntity(blockEntity);
       return;

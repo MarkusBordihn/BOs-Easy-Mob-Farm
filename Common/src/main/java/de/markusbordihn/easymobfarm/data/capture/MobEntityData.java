@@ -91,15 +91,15 @@ public class MobEntityData {
       return new CompoundTag();
     }
 
-    if (compoundTag.contains(DATA_TAG)) {
-      compoundTag = compoundTag.getCompound(DATA_TAG);
+    if (compoundTag.contains(DATA_TAG) && compoundTag.getCompound(DATA_TAG).isPresent()) {
+      compoundTag = compoundTag.getCompound(DATA_TAG).get();
     }
     return removeSafeToRemoveBaseTags(compoundTag);
   }
 
   private static CompoundTag removeSafeToRemoveBaseTags(CompoundTag compoundTag) {
     CompoundTag cleanedCompoundTag = new CompoundTag();
-    for (String key : compoundTag.getAllKeys()) {
+    for (String key : compoundTag.keySet()) {
       if (!SAFE_TO_REMOVE_BASE_TAGS.contains(key)) {
         cleanedCompoundTag.put(key, compoundTag.get(key));
       }
@@ -109,7 +109,7 @@ public class MobEntityData {
 
   private static CompoundTag removeUnsafeToRemoveBaseTags(CompoundTag compoundTag) {
     CompoundTag cleanedCompoundTag = new CompoundTag();
-    for (String key : compoundTag.getAllKeys()) {
+    for (String key : compoundTag.keySet()) {
       if (!UNSAFE_TO_REMOVE_BASE_TAGS.contains(key)) {
         cleanedCompoundTag.put(key, compoundTag.get(key));
       }
@@ -119,14 +119,14 @@ public class MobEntityData {
 
   public static CompoundTag removeSafeToRemoveMobCaptureCardTags(CompoundTag compoundTag) {
     CompoundTag cleanedCompoundTag = new CompoundTag();
-    for (String key : compoundTag.getAllKeys()) {
+    for (String key : compoundTag.keySet()) {
       if (SAFE_TO_REMOVE_MOB_CAPTURE_CARD_TAGS.contains(key)) {
         continue;
       }
 
       // Keep inventory data if available, otherwise remove it.
       if (key.equals("Inventory")) {
-        if (compoundTag.get(key) != null && !compoundTag.getList(key, 10).isEmpty()) {
+        if (compoundTag.get(key) != null && compoundTag.getList(key).isPresent()) {
           cleanedCompoundTag.put(key, compoundTag.get(key));
         }
       } else {

@@ -73,6 +73,6 @@ public class MobRarityData {
     if (compoundTag == null || !compoundTag.contains(RARITY_TAG)) {
       return Rarity.COMMON;
     }
-    return Rarity.valueOf(compoundTag.getString(RARITY_TAG));
+    return Rarity.valueOf(compoundTag.getString(RARITY_TAG).orElse(""));
   }
 }

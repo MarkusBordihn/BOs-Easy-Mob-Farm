@@ -44,6 +44,7 @@ import de.markusbordihn.easymobfarm.loot.LootManager;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import de.markusbordihn.easymobfarm.tags.ModItemTags;
+import de.markusbordihn.easymobfarm.utils.UUIDUtils;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -75,6 +76,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.apache.logging.log4j.LogManager;
@@ -874,6 +876,14 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
   }
 
   @Override
+  public void preRemoveSideEffects(BlockPos blockPos, BlockState blockState) {
+    BlockEntity blockEntity = level.getBlockEntity(blockPos);
+    if (blockEntity instanceof MobFarmBlockEntity mobFarmBlockEntity) {
+      mobFarmBlockEntity.dropInventoryContents();
+    }
+  }
+
+  @Override
   public void loadAdditional(final CompoundTag compoundTag, HolderLookup.Provider provider) {
     super.loadAdditional(compoundTag, provider);
 
@@ -882,20 +892,21 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     ContainerHelper.loadAllItems(compoundTag, this.items, provider);
 
     // Load additional data
-    if (compoundTag.contains(TIER_LEVEL_TAG)) {
-      this.setFarmTierLevel(compoundTag.getInt(TIER_LEVEL_TAG));
+    if (compoundTag.contains(TIER_LEVEL_TAG) && compoundTag.getInt(TIER_LEVEL_TAG).isPresent()) {
+      this.setFarmTierLevel(compoundTag.getInt(TIER_LEVEL_TAG).get());
     }
-    if (compoundTag.contains(FARM_TYPE_TAG)) {
-      this.mobFarmType = MobFarmType.valueOf(compoundTag.getString(FARM_TYPE_TAG));
+    if (compoundTag.contains(FARM_TYPE_TAG) && compoundTag.getString(FARM_TYPE_TAG).isPresent()) {
+      this.mobFarmType = MobFarmType.valueOf(compoundTag.getString(FARM_TYPE_TAG).get());
     }
     if (compoundTag.contains(CAPTURED_MOB_EXPERIENCE_TAG)
-        && compoundTag.getInt(CAPTURED_MOB_EXPERIENCE_TAG) >= 0) {
-      this.capturedMobExperience = compoundTag.getInt(CAPTURED_MOB_EXPERIENCE_TAG);
+        && compoundTag.getInt(CAPTURED_MOB_EXPERIENCE_TAG).isPresent()
+        && compoundTag.getInt(CAPTURED_MOB_EXPERIENCE_TAG).orElse(-1) >= 0) {
+      this.capturedMobExperience = compoundTag.getInt(CAPTURED_MOB_EXPERIENCE_TAG).get();
     }
 
     // Load owner
     if (compoundTag.contains(OWNER_TAG)) {
-      this.owner = compoundTag.getUUID(OWNER_TAG);
+      this.owner = UUIDUtils.readUUID(compoundTag, OWNER_TAG);
     }
 
     // Cache provider
@@ -918,7 +929,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
 
     // Save owner
     if (this.owner != null) {
-      compoundTag.putUUID(OWNER_TAG, this.owner);
+      UUIDUtils.writeUUID(compoundTag, OWNER_TAG, this.owner);
     }
   }
 }

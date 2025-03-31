@@ -21,6 +21,7 @@ package de.markusbordihn.easymobfarm.item;
 
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.List;
+import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -34,17 +35,19 @@ public class MobFarmItem extends Item {
     super(properties);
   }
 
-  public void addTooltip(List<Component> tooltip, final Component component) {
-    addTooltip(tooltip, component, ChatFormatting.GRAY);
+  public void addTooltip(Consumer<Component> tooltipConsumer, final Component component) {
+    addTooltip(tooltipConsumer, component, ChatFormatting.GRAY);
   }
 
   public void addTooltip(
-      List<Component> tooltip, final Component component, final ChatFormatting formatting) {
+      Consumer<Component> tooltipConsumer,
+      final Component component,
+      final ChatFormatting formatting) {
     String componentString = component.getString();
     List<FormattedText> lines =
         Minecraft.getInstance().font.getSplitter().splitLines(componentString, 200, Style.EMPTY);
     for (FormattedText line : lines) {
-      tooltip.add(TextComponent.getText(line.getString()).withStyle(formatting));
+      tooltipConsumer.accept(TextComponent.getText(line.getString()).withStyle(formatting));
     }
   }
 }

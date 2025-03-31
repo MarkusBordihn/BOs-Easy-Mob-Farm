@@ -19,24 +19,21 @@
 
 package de.markusbordihn.easymobfarm.gametest;
 
-import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.MobFarmBlock;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.item.ModBlockItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LeverBlock;
 import net.minecraft.world.level.block.state.properties.AttachFace;
-import net.minecraftforge.gametest.GameTestHolder;
+import net.minecraftforge.gametest.GameTest;
 
 @SuppressWarnings("unused")
-@GameTestHolder(Constants.MOD_ID)
 public class RedstoneSignalTest {
 
-  @GameTest(template = "easy_mob_farm:gametest.3x3x3")
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3")
   public void testRedstoneSignalWithLever(GameTestHelper helper) {
 
     BlockPos mobFarmPos = new BlockPos(0, 1, 0);
@@ -78,7 +75,7 @@ public class RedstoneSignalTest {
         });
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.3x3x3")
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3")
   public void testRedstoneSignalWithRedstoneBlock(GameTestHelper helper) {
 
     BlockPos mobFarmPos = new BlockPos(0, 1, 0);

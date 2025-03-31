@@ -21,6 +21,7 @@ package de.markusbordihn.easymobfarm.gametest;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.Block;
 
 public class ModBlocksTestHelper {
@@ -35,7 +36,7 @@ public class ModBlocksTestHelper {
 
   public static void testModBlock(GameTestHelper helper, Block block, BlockPos blockPos) {
     if (block == null || blockPos == null) {
-      helper.fail("Block or block position is not defined!");
+      helper.fail(Component.literal("Block or block position is not defined!"));
       return;
     }
     helper.setBlock(blockPos, block);

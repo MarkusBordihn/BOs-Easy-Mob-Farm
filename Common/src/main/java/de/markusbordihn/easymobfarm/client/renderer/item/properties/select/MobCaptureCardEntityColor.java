@@ -46,6 +46,11 @@ public record MobCaptureCardEntityColor() implements SelectItemModelProperty<Str
   }
 
   @Override
+  public Codec<String> valueCodec() {
+    return Codec.STRING;
+  }
+
+  @Override
   public Type<MobCaptureCardEntityColor, String> type() {
     return TYPE;
   }

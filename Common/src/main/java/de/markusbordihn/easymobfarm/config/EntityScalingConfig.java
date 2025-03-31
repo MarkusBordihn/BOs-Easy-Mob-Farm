@@ -30,7 +30,7 @@ public class EntityScalingConfig extends Config {
 
   public static final String CONFIG_FILE_NAME = "entity_scaling.cfg";
   public static final String CONFIG_FILE_HEADER =
-      """
+"""
  Entity Scaling Configuration
 
  This configuration overwrites the automatic calculated scaling factors for entity types.

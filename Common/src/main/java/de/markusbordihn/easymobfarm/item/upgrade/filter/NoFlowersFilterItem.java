@@ -22,13 +22,14 @@ package de.markusbordihn.easymobfarm.item.upgrade.filter;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.item.upgrade.FilterItem;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
-import java.util.List;
+import java.util.function.Consumer;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 
 public class NoFlowersFilterItem extends FilterItem {
 
@@ -50,8 +51,9 @@ public class NoFlowersFilterItem extends FilterItem {
   public void appendHoverText(
       ItemStack itemStack,
       TooltipContext tooltipContext,
-      List<Component> tooltip,
-      TooltipFlag flag) {
-    addTooltip(tooltip, TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_PREFIX + ID));
+      TooltipDisplay tooltipDisplay,
+      Consumer<Component> tooltipConsumer,
+      TooltipFlag tooltipFlag) {
+    addTooltip(tooltipConsumer, TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_PREFIX + ID));
   }
 }

@@ -45,6 +45,11 @@ public record MobCaptureCardEntityType() implements SelectItemModelProperty<Stri
   }
 
   @Override
+  public Codec<String> valueCodec() {
+    return Codec.STRING;
+  }
+
+  @Override
   public Type<MobCaptureCardEntityType, String> type() {
     return TYPE;
   }

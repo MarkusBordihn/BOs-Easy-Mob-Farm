@@ -46,6 +46,11 @@ public record MobCaptureCardRarity() implements SelectItemModelProperty<String> 
   }
 
   @Override
+  public Codec<String> valueCodec() {
+    return Codec.STRING;
+  }
+
+  @Override
   public Type<MobCaptureCardRarity, String> type() {
     return TYPE;
   }

@@ -30,6 +30,7 @@ import de.markusbordihn.easymobfarm.item.MobFarmItem;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -43,6 +44,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.CustomModelData;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import org.apache.logging.log4j.LogManager;
@@ -244,51 +246,52 @@ public class MobCatcherItem extends MobFarmItem {
   public void appendHoverText(
       ItemStack itemStack,
       TooltipContext tooltipContext,
-      List<Component> tooltip,
-      TooltipFlag flag) {
+      TooltipDisplay tooltipDisplay,
+      Consumer<Component> tooltipConsumer,
+      TooltipFlag tooltipFlag) {
     if (hasMobCaptureData(itemStack)) {
       MobCaptureData mobCaptureData = MobCaptureManagerClient.getMobCaptureData(itemStack);
       addTooltip(
-          tooltip,
+          tooltipConsumer,
           TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "release_hint", mobCaptureData.name())
               .withStyle(ChatFormatting.DARK_RED));
       addTooltip(
-          tooltip,
+          tooltipConsumer,
           TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "name", mobCaptureData.name()));
-      if (flag.isAdvanced()) {
+      if (tooltipFlag.isAdvanced()) {
         addTooltip(
-            tooltip,
+            tooltipConsumer,
             TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "type", mobCaptureData.type()));
       }
       if (mobCaptureData.variant() != null) {
         addTooltip(
-            tooltip,
+            tooltipConsumer,
             TextComponent.getTranslatedTextRaw(
                 TOOLTIP_PREFIX + "variant", mobCaptureData.variant()));
       }
       if (mobCaptureData.color() != null) {
         addTooltip(
-            tooltip,
+            tooltipConsumer,
             TextComponent.getTranslatedTextRaw(
                 TOOLTIP_PREFIX + "color", mobCaptureData.color().getName()));
       }
     } else {
       addTooltip(
-          tooltip,
+          tooltipConsumer,
           TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "capture_hint")
               .withStyle(ChatFormatting.DARK_GREEN));
       addTooltip(
-          tooltip,
+          tooltipConsumer,
           TextComponent.getTranslatedTextRaw(
               TOOLTIP_PREFIX + "max_size",
               getMaxEntityWidthToCapture() + "x" + getMaxEntityHeightToCapture()));
       addTooltip(
-          tooltip,
+          tooltipConsumer,
           TextComponent.getTranslatedTextRaw(
               TOOLTIP_PREFIX + "min_health", getRequiredHealthPercentageToCapture() * 100 + "%"));
     }
     addTooltip(
-        tooltip,
+        tooltipConsumer,
         TextComponent.getTranslatedTextRaw(
                 TOOLTIP_PREFIX + "usage_left",
                 "("

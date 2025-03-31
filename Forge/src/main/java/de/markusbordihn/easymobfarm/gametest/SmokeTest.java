@@ -20,16 +20,14 @@
 package de.markusbordihn.easymobfarm.gametest;
 
 import de.markusbordihn.easymobfarm.Constants;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraftforge.fml.ModList;
-import net.minecraftforge.gametest.GameTestHolder;
+import net.minecraftforge.gametest.GameTest;
 
 @SuppressWarnings("unused")
-@GameTestHolder(Constants.MOD_ID)
 public class SmokeTest {
 
-  @GameTest(template = "easy_mob_farm:gametest.3x3x3")
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3")
   public void testModRegistered(GameTestHelper helper) {
     GameTestHelpers.assertTrue(
         helper,

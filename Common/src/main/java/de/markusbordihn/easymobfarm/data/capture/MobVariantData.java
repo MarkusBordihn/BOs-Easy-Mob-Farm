@@ -24,9 +24,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Cat;
-import net.minecraft.world.entity.animal.CatVariant;
-import net.minecraft.world.entity.animal.FrogVariant;
+import net.minecraft.world.entity.animal.CatVariants;
 import net.minecraft.world.entity.animal.frog.Frog;
+import net.minecraft.world.entity.animal.frog.FrogVariants;
 import net.minecraft.world.entity.monster.MagmaCube;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.npc.Villager;
@@ -47,18 +47,18 @@ public class MobVariantData {
 
   public static String getVariant(final LivingEntity livingEntity) {
     if (livingEntity instanceof Cat cat) {
-      return (cat.getVariant().unwrapKey().orElse(CatVariant.BLACK))
+      return (cat.getVariant().unwrapKey().orElse(CatVariants.BLACK))
           .location()
           .toString()
           .replace("minecraft:", "");
     } else if (livingEntity instanceof Villager villager) {
-      return villager.getVillagerData().getProfession().name();
+      return villager.getVillagerData().profession().getRegisteredName();
     } else if (livingEntity instanceof MagmaCube magmaCube) {
       return getSizeVariant(magmaCube.getSize());
     } else if (livingEntity instanceof Slime slime) {
       return getSizeVariant(slime.getSize());
     } else if (livingEntity instanceof Frog frog) {
-      return (frog.getVariant().unwrapKey().orElse(FrogVariant.TEMPERATE))
+      return (frog.getVariant().unwrapKey().orElse(FrogVariants.TEMPERATE))
           .location()
           .toString()
           .replace("minecraft:", "");
@@ -71,10 +71,10 @@ public class MobVariantData {
       return "";
     }
     if (compoundTag.contains(VARIANT_TAG)) {
-      return compoundTag.getString(VARIANT_TAG);
+      return compoundTag.getString(VARIANT_TAG).orElse("");
     }
     if (compoundTag.contains(VARIANT_TAG.toLowerCase(Locale.ROOT))) {
-      return compoundTag.getString(VARIANT_TAG.toLowerCase(Locale.ROOT));
+      return compoundTag.getString(VARIANT_TAG.toLowerCase(Locale.ROOT)).orElse("");
     }
     return "";
   }

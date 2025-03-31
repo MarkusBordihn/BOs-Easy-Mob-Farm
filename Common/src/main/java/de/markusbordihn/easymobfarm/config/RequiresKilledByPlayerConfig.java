@@ -31,7 +31,7 @@ public class RequiresKilledByPlayerConfig extends Config {
 
   public static final String CONFIG_FILE_NAME = "requires_killed_by_player.cfg";
   public static final String CONFIG_FILE_HEADER =
-      """
+"""
  Requires Killed By Player Configuration
 
  This configuration file lists the known entities which requires "killed_by_player" for looting.

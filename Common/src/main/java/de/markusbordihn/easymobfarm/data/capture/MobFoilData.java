@@ -39,6 +39,6 @@ public class MobFoilData {
     if (compoundTag == null || !compoundTag.contains(FOIL_TAG)) {
       return false;
     }
-    return compoundTag.getBoolean(FOIL_TAG);
+    return compoundTag.getBoolean(FOIL_TAG).orElse(false);
   }
 }

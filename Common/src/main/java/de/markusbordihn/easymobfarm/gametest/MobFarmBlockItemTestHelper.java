@@ -29,6 +29,7 @@ import de.markusbordihn.easymobfarm.item.MobFarmTemplateItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -67,11 +68,12 @@ public class MobFarmBlockItemTestHelper {
       useAndTestMobFarmBlockItem(helper, itemStack, mobFarmTemplateBlock, blockPos);
     } else {
       helper.fail(
-          "Item "
-              + itemStack.getItem()
-              + " is not a MobFarmBlockItem or Block "
-              + block
-              + " is not a MobFarmBlock");
+          Component.literal(
+              "Item "
+                  + itemStack.getItem()
+                  + " is not a MobFarmBlockItem or Block "
+                  + block
+                  + " is not a MobFarmBlock"));
       return;
     }
 

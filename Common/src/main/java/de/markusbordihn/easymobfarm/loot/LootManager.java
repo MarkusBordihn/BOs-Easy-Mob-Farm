@@ -55,7 +55,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.Cow;
-import net.minecraft.world.entity.animal.Sheep;
+import net.minecraft.world.entity.animal.sheep.Sheep;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.entity.monster.MagmaCube;
 import net.minecraft.world.item.DyeColor;

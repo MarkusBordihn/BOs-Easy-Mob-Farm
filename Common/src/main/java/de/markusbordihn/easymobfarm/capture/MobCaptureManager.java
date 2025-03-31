@@ -32,6 +32,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
@@ -39,6 +40,7 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -155,8 +157,9 @@ public class MobCaptureManager {
 
     // Spawn entity at block position if possible
     if (finalBlockPos != null) {
-      entity.moveTo(
-          blockPos.getX() + 0.5D, blockPos.getY() + 1.0D, blockPos.getZ() + 0.5D, 0.0F, 0.0F);
+      entity.move(
+          MoverType.SELF,
+          new Vec3(blockPos.getX() + 0.5D, blockPos.getY() + 1.0D, blockPos.getZ() + 0.5D));
       serverLevel.addFreshEntity(entity);
       log.debug(
           "{} Released mob {} with data:{} at block position {}.",

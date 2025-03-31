@@ -64,13 +64,14 @@ public class MobEntityTypeData {
       return "";
     }
 
-    if (compoundTag.contains(TYPE_TAG)) {
-      return compoundTag.getString(TYPE_TAG);
+    if (compoundTag.contains(TYPE_TAG) && compoundTag.getString(TYPE_TAG).isPresent()) {
+      return compoundTag.getString(TYPE_TAG).get();
     }
-    if (compoundTag.contains(ENTITY_TYPE_TAG, 10)) {
-      CompoundTag entityTypeTag = compoundTag.getCompound(ENTITY_TYPE_TAG);
-      if (entityTypeTag.contains(ID_TAG, 8)) {
-        return entityTypeTag.getString(ID_TAG);
+    if (compoundTag.contains(ENTITY_TYPE_TAG)
+        && compoundTag.getCompound(ENTITY_TYPE_TAG).isPresent()) {
+      CompoundTag entityTypeTag = compoundTag.getCompound(ENTITY_TYPE_TAG).get();
+      if (entityTypeTag.contains(ID_TAG) && entityTypeTag.getString(ID_TAG).isPresent()) {
+        return entityTypeTag.getString(ID_TAG).get();
       }
     }
 

@@ -22,6 +22,7 @@ package de.markusbordihn.easymobfarm.item.consumables;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.List;
+import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
@@ -42,6 +43,7 @@ import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.Level;
 
 public class MilkBottleItem extends Item {
@@ -104,21 +106,24 @@ public class MilkBottleItem extends Item {
   public void appendHoverText(
       ItemStack itemStack,
       TooltipContext tooltipContext,
-      List<Component> tooltip,
-      TooltipFlag flag) {
+      TooltipDisplay tooltipDisplay,
+      Consumer<Component> tooltipConsumer,
+      TooltipFlag tooltipFlag) {
     addTooltip(
-        tooltip,
+        tooltipConsumer,
         TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_PREFIX + ID),
         ChatFormatting.GRAY);
   }
 
   public void addTooltip(
-      List<Component> tooltip, final Component component, final ChatFormatting formatting) {
+      Consumer<Component> tooltipConsumer,
+      final Component component,
+      final ChatFormatting formatting) {
     String componentString = component.getString();
     List<FormattedText> lines =
         Minecraft.getInstance().font.getSplitter().splitLines(componentString, 200, Style.EMPTY);
     for (FormattedText line : lines) {
-      tooltip.add(TextComponent.getText(line.getString()).withStyle(formatting));
+      tooltipConsumer.accept(TextComponent.getText(line.getString()).withStyle(formatting));
     }
   }
 }

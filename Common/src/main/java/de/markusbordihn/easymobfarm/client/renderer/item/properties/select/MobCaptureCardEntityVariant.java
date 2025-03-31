@@ -44,6 +44,11 @@ public record MobCaptureCardEntityVariant() implements SelectItemModelProperty<S
   }
 
   @Override
+  public Codec<String> valueCodec() {
+    return Codec.STRING;
+  }
+
+  @Override
   public Type<MobCaptureCardEntityVariant, String> type() {
     return TYPE;
   }

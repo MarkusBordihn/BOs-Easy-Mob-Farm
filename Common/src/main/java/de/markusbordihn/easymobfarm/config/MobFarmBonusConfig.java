@@ -38,7 +38,7 @@ public class MobFarmBonusConfig extends Config {
 
   public static final String CONFIG_FILE_NAME = "mob_farm_bonus.cfg";
   public static final String CONFIG_FILE_HEADER =
-      """
+"""
  Mob Farm Bonus Configuration
 
  This configuration file allows you to define the bonus drops for the Mob Farms.

@@ -19,53 +19,50 @@
 
 package de.markusbordihn.easymobfarm.gametest;
 
-import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.item.ModItems;
-import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.minecraftforge.gametest.GameTestHolder;
+import net.minecraftforge.gametest.GameTest;
 
 @SuppressWarnings("unused")
-@GameTestHolder(Constants.MOD_ID)
 public class ModItemsTest {
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testBlankMobCaptureCardItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, ModItems.BLANK_MOB_CAPTURE_CARD.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testCreativeMobCaptureCardItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, ModItems.CREATIVE_MOB_CAPTURE_CARD.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testMobCaptureCardItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, ModItems.MOB_CAPTURE_CARD.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testCreativeSpeedEnhancementItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, ModItems.CREATIVE_SPEED_ENHANCEMENT.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testEggCollectorEnhancementItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, ModItems.EGG_COLLECTOR_ENHANCEMENT.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testExperienceEnhancementItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, ModItems.EXPERIENCE_ENHANCEMENT.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testFrogCatalystEnhancementItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, ModItems.FROG_CATALYST_COLD_ENHANCEMENT.get());
     ModItemsTestHelper.testModItem(helper, ModItems.FROG_CATALYST_TEMPERATE_ENHANCEMENT.get());
@@ -73,115 +70,115 @@ public class ModItemsTest {
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testHoneyExtractorEnhancementItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, ModItems.HONEY_EXTRACTOR_ENHANCEMENT.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testHoneyHarvesterFrameEnhancementItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, ModItems.HONEY_HARVESTER_FRAME_ENHANCEMENT.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testLootEnhancementItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, ModItems.LOOT_ENHANCEMENT.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testLuckEnhancementItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, ModItems.LUCK_ENHANCEMENT.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testMilkExtractorEnhancementItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, ModItems.MILK_EXTRACTOR_ENHANCEMENT.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testPollenTrapEnhancementItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, ModItems.POLLEN_TRAP_ENHANCEMENT.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testSheepEnhancementItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, ModItems.SHEEP_ENHANCEMENT.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testSpeedEnhancementItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, ModItems.SPEED_ENHANCEMENT.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testSwordEnhancementItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, ModItems.SWORD_ENHANCEMENT.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testNoFlowersFilterItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, ModItems.NO_FLOWERS_FILTER.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testNoMeatFilterItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, ModItems.NO_MEAT_FILTER.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testBigSlotUpgradeItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, ModItems.BIG_SLOT_UPGRADE.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testSmallSlotUpgradeItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, ModItems.SMALL_SLOT_UPGRADE.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testCreativeMobCatcherItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, ModItems.CREATIVE_MOB_CATCHER.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testEnduringCaptureNetItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, ModItems.ENDURING_CAPTURE_NET.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testIronboundContainmentCageItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, ModItems.IRONBOUND_CONTAINMENT_CAGE.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testMysticBindingCrystalItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, ModItems.MYSTIC_BINDING_CRYSTAL.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testVoidBindingChainItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, ModItems.VOID_BINDING_CHAIN.get());
     helper.succeed();
   }
 
-  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testMilkBottleItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, ModItems.MILK_BOTTLE.get());
     helper.succeed();

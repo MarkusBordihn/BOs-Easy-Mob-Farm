@@ -21,7 +21,7 @@ package de.markusbordihn.easymobfarm.item;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
-import java.util.List;
+import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -30,6 +30,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.block.Block;
 
 public class MobFarmTemplateItem extends BlockItem {
@@ -68,9 +69,10 @@ public class MobFarmTemplateItem extends BlockItem {
   public void appendHoverText(
       ItemStack itemStack,
       TooltipContext tooltipContext,
-      List<Component> tooltip,
-      TooltipFlag flag) {
-    tooltip.add(
+      TooltipDisplay tooltipDisplay,
+      Consumer<Component> tooltipConsumer,
+      TooltipFlag tooltipFlag) {
+    tooltipConsumer.accept(
         TextComponent.getTranslatedText("mob_farm_template").withStyle(ChatFormatting.YELLOW));
 
     // Add Tier Level to tooltip
@@ -81,6 +83,6 @@ public class MobFarmTemplateItem extends BlockItem {
           case ID_TIER_3 -> TextComponent.getTranslatedText("tier_level", 3, ChatFormatting.RED);
           default -> TextComponent.getTranslatedText("tier_level", 0, ChatFormatting.WHITE);
         };
-    tooltip.add(tierLevelText);
+    tooltipConsumer.accept(tierLevelText);
   }
 }
