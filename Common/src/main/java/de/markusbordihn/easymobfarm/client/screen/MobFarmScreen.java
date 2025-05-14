@@ -26,8 +26,10 @@ import de.markusbordihn.easymobfarm.client.renderer.manager.EntityScalingManager
 import de.markusbordihn.easymobfarm.client.renderer.manager.RendererManager;
 import de.markusbordihn.easymobfarm.client.screen.components.Graphics;
 import de.markusbordihn.easymobfarm.config.MobFarmBonusConfig;
+import de.markusbordihn.easymobfarm.config.MobFarmConfig;
 import de.markusbordihn.easymobfarm.config.RequiresKilledByPlayerConfig;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmStatus;
+import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import de.markusbordihn.easymobfarm.menu.MobFarmSlot;
@@ -52,7 +54,6 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
       new ResourceLocation(Constants.MOD_ID, "textures/gui/mob_farm_idle.png");
   private static final ResourceLocation TEXTURE_ELEMENTS =
       new ResourceLocation(Constants.MOD_ID, "textures/gui/mob_farm_elements.png");
-  private static final String TOOLTIP_PREFIX = Constants.TOOLTIP_PREFIX + "farm.";
   protected float xMouse;
   protected float yMouse;
   protected Entity entity;
@@ -149,6 +150,8 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
   public void renderTooltip(PoseStack poseStack, int mouseX, int mouseY) {
     super.renderTooltip(poseStack, mouseX, mouseY);
 
+    MobFarmType mobFarmType = this.getMenu().getMobFarmType();
+
     // Render tooltip for different kind of slots.
     for (Slot slot : this.menu.slots) {
       if (slot instanceof MobFarmSlot mobFarmSlot
@@ -162,10 +165,10 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
     // Render tooltip for the "info" button.
     if (isHovering(24, 17, 10, 13, mouseX, mouseY)) {
       List<Component> infoText = new java.util.ArrayList<>(List.of());
-      if (this.getMenu().getMobFarmType() != null) {
+      if (mobFarmType != null) {
         infoText.add(
             TextComponent.getTranslatedTextRaw(
-                    TOOLTIP_PREFIX + this.getMenu().getMobFarmType().getId(),
+                    Constants.TOOLTIP_FARM_PREFIX + mobFarmType.getId(),
                     String.valueOf(this.getMenu().getMobFarmTierLevel()))
                 .withStyle(
                     switch (this.getMenu().getMobFarmTierLevel()) {
@@ -177,40 +180,50 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
       }
       infoText.add(
           TextComponent.getTranslatedTextRaw(
-              TOOLTIP_PREFIX + "tier", new Object[] {this.getMenu().getMobFarmTierLevel()}));
+              Constants.TOOLTIP_FARM_PREFIX + "tier",
+              new Object[] {this.getMenu().getMobFarmTierLevel()}));
       infoText.add(
           TextComponent.getTranslatedTextRaw(
-              TOOLTIP_PREFIX + "status",
+              Constants.TOOLTIP_FARM_PREFIX + "status",
               TextComponent.getTranslatedTextRaw(
-                  TOOLTIP_PREFIX + "status_" + this.getMenu().getMobFarmStatus())));
+                  Constants.TOOLTIP_FARM_PREFIX + "status_" + this.getMenu().getMobFarmStatus())));
       infoText.add(
           TextComponent.getTranslatedTextRaw(
-              TOOLTIP_PREFIX + "progress",
+              Constants.TOOLTIP_FARM_PREFIX + "progress",
               new Object[] {
                 this.getMenu().getMobFarmProgress(), MobFarmBlockEntity.DEFAULT_FARM_PROCESSING_TIME
               }));
       infoText.add(
           TextComponent.getTranslatedTextRaw(
-              TOOLTIP_PREFIX + "progression_speed",
+              Constants.TOOLTIP_FARM_PREFIX + "progression_speed",
               new Object[] {
                 this.getMenu().getMobFarmProgressionSpeed(),
                 this.getMenu().getMobFarmProgressionSpeedBonus()
               }));
       infoText.add(
           TextComponent.getTranslatedTextRaw(
-              TOOLTIP_PREFIX + "output_slots",
+              Constants.TOOLTIP_FARM_PREFIX + "output_slots",
               new Object[] {this.getMenu().getMobFarmNumberOfOutputSlots()}));
+
+      // Add additional information for special mob farms.
+      if (mobFarmType == MobFarmType.LUCKY_DROP_FARM) {
+        infoText.add(
+            TextComponent.getTranslatedTextRaw(
+                Constants.TOOLTIP_FARM_PREFIX + "lucky_drop_percentage",
+                new Object[] {MobFarmConfig.luckyDropFarmLuckPercentage}));
+      }
 
       // Add entity information to the tooltip, if available.
       if (this.entity != null && this.getMenu().getMobFarmStatus() != MobFarmStatus.IDLE) {
         infoText.add(
             TextComponent.getTranslatedTextRaw(
-                TOOLTIP_PREFIX + "entity_type", new Object[] {this.entity.getType()}));
+                Constants.TOOLTIP_FARM_PREFIX + "entity_type",
+                new Object[] {this.entity.getType()}));
 
         // Add Requires "killed_by_player" information, if available.
         if (RequiresKilledByPlayerConfig.requiresKilledByPlayer(this.entity.getType())) {
           infoText.add(
-              TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "killed_by_player")
+              TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "killed_by_player")
                   .withStyle(ChatFormatting.RED));
         }
 
@@ -219,16 +232,18 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
         if (capturedMobExperience >= ExperienceEnhancementItem.MIN_EXPERIENCE_FOR_DROP) {
           infoText.add(
               TextComponent.getTranslatedTextRaw(
-                      TOOLTIP_PREFIX + "experience", new Object[] {capturedMobExperience})
+                      Constants.TOOLTIP_FARM_PREFIX + "experience",
+                      new Object[] {capturedMobExperience})
                   .withStyle(ChatFormatting.GREEN));
         } else if (capturedMobExperience > 0) {
           infoText.add(
               TextComponent.getTranslatedTextRaw(
-                      TOOLTIP_PREFIX + "low_experience", new Object[] {capturedMobExperience})
+                      Constants.TOOLTIP_FARM_PREFIX + "low_experience",
+                      new Object[] {capturedMobExperience})
                   .withStyle(ChatFormatting.YELLOW));
         } else if (capturedMobExperience == 0) {
           infoText.add(
-              TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "no_experience")
+              TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "no_experience")
                   .withStyle(ChatFormatting.RED));
         }
 
@@ -241,11 +256,12 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
         if (!bonusLootDrop.isEmpty()) {
           infoText.add(
               TextComponent.getTranslatedTextRaw(
-                      TOOLTIP_PREFIX + "bonus_drop", new Object[] {bonusLootDrop.getDisplayName()})
+                      Constants.TOOLTIP_FARM_PREFIX + "bonus_drop",
+                      new Object[] {bonusLootDrop.getDisplayName()})
                   .withStyle(ChatFormatting.GREEN));
         } else {
           infoText.add(
-              TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "no_bonus_drop")
+              TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "no_bonus_drop")
                   .withStyle(ChatFormatting.GRAY));
         }
       }

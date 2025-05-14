@@ -42,33 +42,23 @@ public class MobFarmBlockItemTestHelper {
   private MobFarmBlockItemTestHelper() {}
 
   public static void testMobFarmBlockItem(GameTestHelper helper, Item item, Block block) {
-    useMobFarmBlockItem(helper, new ItemStack(item), block, new BlockPos(0, 1, 0));
+    testMobFarmBlockItem(helper, item, -1, block);
   }
 
-  public static void useMobFarmBlockItem(
+  public static void testMobFarmBlockItem(
       GameTestHelper helper, Item item, int tierLevel, Block block) {
     BlockPos blockPos = new BlockPos(0, 1, 0);
     ItemStack itemStack = new ItemStack(item);
 
-    // Set tier level and custom model data
-    CompoundTag tag = itemStack.getOrCreateTag();
-    tag.putInt(MobFarmBlockEntity.TIER_LEVEL_TAG, tierLevel);
-    tag.putInt(MobFarmBlockItem.CUSTOM_MODEL_DATA_TAG, tierLevel);
-    itemStack.setTag(tag);
+    // Optional: Set tier level and custom model data
+    if (tierLevel >= 0) {
+      CompoundTag tag = itemStack.getOrCreateTag();
+      tag.putInt(MobFarmBlockEntity.TIER_LEVEL_TAG, tierLevel);
+      tag.putInt(MobFarmBlockItem.CUSTOM_MODEL_DATA_TAG, tierLevel);
+      itemStack.setTag(tag);
+    }
 
     // Place block and check if it is present
-    useMobFarmBlockItem(helper, itemStack, block, blockPos);
-
-    // Check if the placed block has the correct tier level
-    BlockState blockState = helper.getBlockState(blockPos);
-    GameTestHelpers.assertTrue(
-        helper,
-        "Expected tier level " + tierLevel + " but found " + MobFarmBlock.getTierLevel(blockState),
-        MobFarmBlock.getTierLevel(blockState) == tierLevel);
-  }
-
-  public static void useMobFarmBlockItem(
-      GameTestHelper helper, ItemStack itemStack, Block block, BlockPos blockPos) {
     if (itemStack.getItem() instanceof MobFarmBlockItem
         && block instanceof MobFarmBlock mobFarmBlock) {
       useAndTestMobFarmBlockItem(helper, itemStack, mobFarmBlock, blockPos);
@@ -82,14 +72,24 @@ public class MobFarmBlockItemTestHelper {
               + " is not a MobFarmBlockItem or Block "
               + block
               + " is not a MobFarmBlock");
+      return;
+    }
+
+    // Check if the placed block has the correct tier level
+    if (tierLevel >= 0) {
+      BlockState blockState = helper.getBlockState(blockPos);
+      GameTestHelpers.assertTrue(
+          helper,
+          "Expected tier level "
+              + tierLevel
+              + " but found "
+              + MobFarmBlock.getTierLevel(blockState),
+          MobFarmBlock.getTierLevel(blockState) == tierLevel);
     }
   }
 
-  public static void useAndTestMobFarmBlockItem(
-      GameTestHelper helper,
-      ItemStack mobFarmBlockItemStack,
-      Block mobFarmBlock,
-      BlockPos blockPos) {
+  public static void useMobFarmBlockItem(
+      GameTestHelper helper, ItemStack mobFarmBlockItemStack, BlockPos blockPos) {
     Player player = helper.makeMockPlayer();
     player.setItemInHand(player.getUsedItemHand(), mobFarmBlockItemStack);
     UseOnContext useOnContext =
@@ -102,7 +102,14 @@ public class MobFarmBlockItemTestHelper {
                 helper.absolutePos(blockPos),
                 false));
     mobFarmBlockItemStack.useOn(useOnContext);
+  }
 
+  public static void useAndTestMobFarmBlockItem(
+      GameTestHelper helper,
+      ItemStack mobFarmBlockItemStack,
+      Block mobFarmBlock,
+      BlockPos blockPos) {
+    useMobFarmBlockItem(helper, mobFarmBlockItemStack, blockPos);
     helper.assertBlockPresent(mobFarmBlock, blockPos);
   }
 }

@@ -33,7 +33,7 @@ public class MobCaptureCardRarityConfig extends Config {
 
   public static final String CONFIG_FILE_NAME = "mob_capture_card_rarity.cfg";
   public static final String CONFIG_FILE_HEADER =
-      """
+"""
  Mob Capture Card Rarity Configuration
 
  This configuration file allows you to define the rarity for the Mob Capture Cards.

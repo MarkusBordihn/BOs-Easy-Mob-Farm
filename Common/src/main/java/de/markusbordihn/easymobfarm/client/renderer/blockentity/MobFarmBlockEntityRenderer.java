@@ -21,6 +21,7 @@ package de.markusbordihn.easymobfarm.client.renderer.blockentity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
+import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.MobFarmBlock;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.client.renderer.manager.EntityScalingManager;
@@ -35,15 +36,21 @@ import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.FlyingMob;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.animal.Squid;
+import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.monster.Guardian;
 import net.minecraft.world.entity.monster.Phantom;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
     implements BlockEntityRenderer<T> {
+
+  private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   public MobFarmBlockEntityRenderer(BlockEntityRendererProvider.Context context) {}
 
@@ -55,6 +62,7 @@ public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
       MultiBufferSource buffer,
       int combinedLight,
       int combinedOverlay) {
+
     if (!blockEntity.hasCapturedMob()) {
       RendererManager.removeEntity(blockEntity);
       return;
@@ -66,42 +74,80 @@ public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
       return;
     }
 
-    // Get entity render dispatcher.
-    EntityRenderDispatcher entityRenderDispatcher =
-        Minecraft.getInstance().getEntityRenderDispatcher();
+    // Try to render entity, if it fails, try to render generic entity.
+    try {
+      if (entity instanceof LivingEntity livingEntity) {
+        renderLivingEntity(blockEntity, livingEntity, poseStack, buffer, combinedLight);
+      } else if (entity instanceof Entity) {
+        renderGenericEntity(blockEntity, entity, poseStack, buffer, combinedLight);
+      }
+    } catch (Exception livingException) {
+      try {
+        renderGenericEntity(blockEntity, entity, poseStack, buffer, combinedLight);
+      } catch (Exception genericException) {
+        log.error(
+            "Failed to render entity {} for block entity {} with exception: {}",
+            entity.getType(),
+            blockEntity.getBlockPos(),
+            genericException.getMessage());
+      }
+    }
+  }
 
-    // Prepare entity rendering.
-    EntityRenderer<Entity> entityRenderer =
-        (EntityRenderer<Entity>) entityRenderDispatcher.getRenderer(entity);
+  private void renderLivingEntity(
+      T blockEntity,
+      LivingEntity entity,
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      int combinedLight) {
 
-    // Animation support
+    EntityRenderDispatcher dispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
+    EntityRenderer<? super LivingEntity> renderer = dispatcher.getRenderer(entity);
+
     entity.tickCount = (int) blockEntity.getLevel().getGameTime();
     if (RequiresAnimationTickConfig.requiresAnimationTick(entity.getType())
         && entity.tickCount % 2 == 0) {
       entity.tick();
     }
 
+    poseStack.pushPose();
+    prepareEntityPose(blockEntity, entity, poseStack);
+    renderer.render(entity, 0.0F, 0.0F, poseStack, buffer, combinedLight);
+    poseStack.popPose();
+  }
+
+  private void renderGenericEntity(
+      T blockEntity,
+      Entity entity,
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      int combinedLight) {
+
+    EntityRenderDispatcher dispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
+    EntityRenderer<? super Entity> renderer = dispatcher.getRenderer(entity);
+
+    entity.tickCount = (int) blockEntity.getLevel().getGameTime();
+
+    poseStack.pushPose();
+    prepareEntityPose(blockEntity, entity, poseStack);
+    renderer.render(entity, 0.0F, 0.0F, poseStack, buffer, combinedLight);
+    poseStack.popPose();
+  }
+
+  private void prepareEntityPose(T blockEntity, Entity entity, PoseStack poseStack) {
+
     // Get Mob Farm Type for render adjustments like entity scaling and position.
     MobFarmType mobFarmType = blockEntity.getFarmType();
-
-    // Move entity to center of block.
-    poseStack.pushPose();
-    if (mobFarmType != null) {
-      if (mobFarmType == MobFarmType.LUCKY_DROP_FARM) {
-        poseStack.translate(0.5, 0.19, 0.5);
-      } else {
-        poseStack.translate(0.5, 0.08, 0.5);
-      }
+    if (mobFarmType == MobFarmType.LUCKY_DROP_FARM) {
+      poseStack.translate(0.5, 0.19, 0.5);
     } else {
       poseStack.translate(0.5, 0.08, 0.5);
     }
 
     // Scale entity to fit into block.
     float entityScaling = EntityScalingManager.getEntityScale(entity);
-    if (mobFarmType != null) {
-      if (mobFarmType == MobFarmType.LUCKY_DROP_FARM) {
-        entityScaling *= 0.75f;
-      }
+    if (mobFarmType == MobFarmType.LUCKY_DROP_FARM) {
+      entityScaling *= 0.75f;
     }
     poseStack.scale(entityScaling, entityScaling, entityScaling);
 
@@ -132,11 +178,10 @@ public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
         || (entity instanceof FlyingAnimal flyingAnimal && flyingAnimal.isFlying())
         || entity instanceof Guardian) {
       poseStack.translate(0, 0.3 / entityScaling, 0);
+    } else if (entity instanceof EnderDragon) {
+      poseStack.mulPose(Vector3f.XP.rotationDegrees(0.0F));
+      poseStack.mulPose(Vector3f.YP.rotationDegrees(180.0F));
+      poseStack.mulPose(Vector3f.ZP.rotationDegrees(0.0F));
     }
-
-    // Render entity.
-    entityRenderer.render(entity, 0, 0, poseStack, buffer, combinedLight);
-
-    poseStack.popPose();
   }
 }

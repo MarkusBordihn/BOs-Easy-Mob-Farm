@@ -112,11 +112,9 @@ public class LootManager {
       return drops;
     }
 
+    // Get fake player and loot context builder and add additional luck and roles.
     FakePlayer fakePlayer = getFakePlayer(serverLevel, entity.blockPosition());
     LootContext.Builder lootContextBuilder = createLootContextBuilder(serverLevel, livingEntity);
-    ResourceLocation lootTableLocation = getLootTableLocation(livingEntity, enhancements);
-
-    // Add enhancements to loot context.
     float additionalLuck = 0;
     int additionalRolls = 0;
     for (EnhancementItem enhancement : enhancements) {
@@ -138,17 +136,45 @@ public class LootManager {
     }
 
     // Define loot context and loot table.
+    ResourceLocation lootTableLocation = getLootTableLocation(livingEntity, enhancements);
     LootContext lootContext = lootContextBuilder.create(LootContextParamSets.ENTITY);
-    LootTable lootTable = serverLevel.getServer().getLootTables().get(lootTableLocation);
 
-    // Get loot items from loot table.
-    for (int i = 0; i <= additionalRolls; i++) {
-      lootTable.getRandomItems(lootContext).stream()
-          .filter(itemStack -> !itemStack.isEmpty())
-          .forEach(drops::add);
-      handleSpecialEntityDrops(livingEntity, drops);
+    // Get loot items from default loot table.
+    if (lootTableLocation != null) {
+      LootTable lootTable = serverLevel.getServer().getLootTables().get(lootTableLocation);
+      for (int i = 0; i <= additionalRolls; i++) {
+        lootTable.getRandomItems(lootContext).stream()
+            .filter(itemStack -> !itemStack.isEmpty())
+            .forEach(drops::add);
+        handleSpecialEntityDrops(livingEntity, drops);
+      }
     }
 
+    // If no loot drops are available, try to get custom loot table.
+    if (drops.isEmpty()) {
+      ResourceLocation customLootTableLocation =
+          getCustomLootTableLocation(livingEntity, enhancements);
+      LootTable customLootTable =
+          serverLevel.getServer().getLootTables().get(customLootTableLocation);
+      if (customLootTable != LootTable.EMPTY) {
+        log.debug(
+            "No loot drops for {} trying custom loot table {}!",
+            livingEntity,
+            customLootTableLocation);
+        for (int i = 0; i <= additionalRolls; i++) {
+          customLootTable.getRandomItems(lootContext).stream()
+              .filter(itemStack -> !itemStack.isEmpty())
+              .forEach(drops::add);
+        }
+      } else {
+        log.debug(
+            "No loot drops for {} and no custom loot table {}!",
+            livingEntity,
+            customLootTableLocation);
+      }
+    }
+
+    // Handle post drop enhancements.
     handlePostEnhancements(enhancements, livingEntity, fakePlayer, drops);
 
     return drops;
@@ -226,7 +252,21 @@ public class LootManager {
         lootTableLocation = new ResourceLocation("minecraft", "entities/sheep/" + color.getName());
       }
     }
+
     return lootTableLocation;
+  }
+
+  private static ResourceLocation getCustomLootTableLocation(
+      LivingEntity livingEntity, List<EnhancementItem> enhancements) {
+    ResourceLocation entityTypeResourceLocation =
+        Registry.ENTITY_TYPE.getKey(livingEntity.getType());
+
+    return new ResourceLocation(
+        Constants.MOD_ID,
+        "entities/"
+            + entityTypeResourceLocation.getNamespace()
+            + "/"
+            + entityTypeResourceLocation.getPath());
   }
 
   private static void setSwordEnhancementParameters(
