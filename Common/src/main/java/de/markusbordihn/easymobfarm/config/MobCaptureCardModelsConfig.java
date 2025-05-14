@@ -34,7 +34,7 @@ public class MobCaptureCardModelsConfig extends Config {
 
   public static final String CONFIG_FILE_NAME = "mob_capture_card_models.cfg";
   public static final String CONFIG_FILE_HEADER =
-      """
+"""
  Mob Capture Card Models Configuration
 
  This configuration file allows you to define the models for the Mob Capture Cards.
@@ -85,6 +85,7 @@ public class MobCaptureCardModelsConfig extends Config {
     defaultModels.put("minecraft:cow", MOB_CAPTURE_CARD_PREFIX + "cow");
     defaultModels.put("minecraft:creeper", MOB_CAPTURE_CARD_PREFIX + "creeper");
     defaultModels.put("minecraft:drowned", MOB_CAPTURE_CARD_PREFIX + "drowned");
+    defaultModels.put("minecraft:ender_dragon", MOB_CAPTURE_CARD_PREFIX + "ender_dragon");
     defaultModels.put("minecraft:enderman", MOB_CAPTURE_CARD_PREFIX + "enderman");
     defaultModels.put("minecraft:evoker", MOB_CAPTURE_CARD_PREFIX + "evoker");
     defaultModels.put("minecraft:frog", MOB_CAPTURE_CARD_PREFIX + "frog");

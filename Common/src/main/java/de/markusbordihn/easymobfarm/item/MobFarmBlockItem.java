@@ -19,8 +19,10 @@
 
 package de.markusbordihn.easymobfarm.item;
 
+import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.config.MobFarmConfig;
+import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.List;
 import net.minecraft.ChatFormatting;
@@ -139,6 +141,14 @@ public class MobFarmBlockItem extends BlockItem {
         };
     if (processingSpeedText != null) {
       tooltip.add(processingSpeedText);
+    }
+
+    // Add additional information for special mob farms.
+    if (farmName == MobFarmType.LUCKY_DROP_FARM.getId()) {
+      tooltip.add(
+          TextComponent.getTranslatedTextRaw(
+              Constants.TOOLTIP_FARM_PREFIX + "lucky_drop_percentage",
+              new Object[] {MobFarmConfig.luckyDropFarmLuckPercentage}));
     }
   }
 }

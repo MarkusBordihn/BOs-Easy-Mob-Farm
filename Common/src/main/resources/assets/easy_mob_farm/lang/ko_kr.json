@@ -101,6 +101,7 @@
   "tooltip.easy_mob_farm.farm.killed_by_player": "일부 전리품을 위해 검 강화가 필요합니다!",
   "tooltip.easy_mob_farm.farm.low_experience": "경험치가 너무 낮습니다: %s",
   "tooltip.easy_mob_farm.farm.lucky_drop_farm": "럭키 드롭 팜 (%s등급)",
+  "tooltip.easy_mob_farm.farm.lucky_drop_percentage": "럭키 드롭 확률: %s%%",
   "tooltip.easy_mob_farm.farm.mob_farm": "몹 팜",
   "tooltip.easy_mob_farm.farm.monster_plains_cave_farm": "몬스터 평원 동굴 팜 (%s등급)",
   "tooltip.easy_mob_farm.farm.nether_fortress_farm": "네더 요새 팜 (%s등급)",
