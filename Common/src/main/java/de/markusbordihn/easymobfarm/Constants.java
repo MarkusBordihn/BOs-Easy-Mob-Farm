@@ -34,6 +34,7 @@ public final class Constants {
   public static final String BLOCK_PREFIX = "block." + MOD_PREFIX;
   public static final String MOD_ID_PREFIX = MOD_ID + ":";
   public static final String TOOLTIP_PREFIX = "tooltip." + MOD_ID + ".";
+  public static final String TOOLTIP_FARM_PREFIX = Constants.TOOLTIP_PREFIX + "farm.";
   public static final String LOG_NAME = MOD_NAME;
   public static final String LOG_REGISTER_PREFIX = "Register " + MOD_NAME;
   public static final ResourceLocation TEXTURE_DEMO_BACKGROUND =

@@ -31,7 +31,7 @@ public class RequiresAnimationTickConfig extends Config {
 
   public static final String CONFIG_FILE_NAME = "requires_animation_tick.cfg";
   public static final String CONFIG_FILE_HEADER =
-      """
+"""
  Requires Animation Tick Configuration
 
  This configuration file lists the known entities which requires an animation tick.

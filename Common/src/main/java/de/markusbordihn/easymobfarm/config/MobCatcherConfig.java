@@ -27,7 +27,7 @@ public class MobCatcherConfig extends Config {
 
   public static final String CONFIG_FILE_NAME = "mob_catcher.cfg";
   public static final String CONFIG_FILE_HEADER =
-      """
+"""
  Mob Catcher Configuration
 
  This configuration file allows you to define the general settings for the Mob Catcher.

@@ -101,6 +101,7 @@
   "tooltip.easy_mob_farm.farm.killed_by_player": "一部の戦利品には剣のエンハンスメントが必要です！",
   "tooltip.easy_mob_farm.farm.low_experience": "経験値が低すぎる: %s",
   "tooltip.easy_mob_farm.farm.lucky_drop_farm": "ラッキードロップファーム (ティア %s)",
+  "tooltip.easy_mob_farm.farm.lucky_drop_percentage": "ラッキードロップ確率: %s%%",
   "tooltip.easy_mob_farm.farm.mob_farm": "Mobファーム",
   "tooltip.easy_mob_farm.farm.monster_plains_cave_farm": "平原のモンスターの洞窟のファーム (ティア %s)",
   "tooltip.easy_mob_farm.farm.nether_fortress_farm": "ネザー要塞のファーム (ティア %s)",

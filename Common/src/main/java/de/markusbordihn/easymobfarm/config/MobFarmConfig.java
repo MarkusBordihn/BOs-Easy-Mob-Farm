@@ -26,7 +26,7 @@ public class MobFarmConfig extends Config {
 
   public static final String CONFIG_FILE_NAME = "mob_farm.cfg";
   public static final String CONFIG_FILE_HEADER =
-      """
+"""
  Mob Farm Configuration
 
  This configuration file allows you to define the general settings for the Mob Farms.

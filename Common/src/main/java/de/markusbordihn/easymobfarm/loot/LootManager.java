@@ -115,9 +115,9 @@ public class LootManager {
       return drops;
     }
 
+    // Get fake player and loot context builder and add additional luck and roles.
     FakePlayer fakePlayer = getFakePlayer(serverLevel, entity.blockPosition());
     LootParams.Builder lootContextBuilder = createLootContextBuilder(serverLevel, livingEntity);
-    ResourceKey lootTableLocation = getLootTableLocation(livingEntity, enhancements);
 
     // Add enhancements to loot context.
     float additionalLuck = 0;
@@ -141,18 +141,46 @@ public class LootManager {
     }
 
     // Define loot context and loot table.
+    ResourceKey<LootTable> lootTableLocation = getLootTableLocation(livingEntity, enhancements);
     LootParams lootContext = lootContextBuilder.create(LootContextParamSets.ENTITY);
-    LootTable lootTable =
-        serverLevel.getServer().reloadableRegistries().getLootTable(lootTableLocation);
 
     // Get loot items from loot table.
-    for (int i = 0; i <= additionalRolls; i++) {
-      lootTable.getRandomItems(lootContext).stream()
-          .filter(itemStack -> !itemStack.isEmpty())
-          .forEach(drops::add);
-      handleSpecialEntityDrops(livingEntity, drops);
+    if (lootTableLocation != null) {
+      LootTable lootTable =
+          serverLevel.getServer().reloadableRegistries().getLootTable(lootTableLocation);
+      for (int i = 0; i <= additionalRolls; i++) {
+        lootTable.getRandomItems(lootContext).stream()
+            .filter(itemStack -> !itemStack.isEmpty())
+            .forEach(drops::add);
+        handleSpecialEntityDrops(livingEntity, drops);
+      }
     }
 
+    // If no loot drops are available, try to get custom loot table.
+    if (drops.isEmpty()) {
+      ResourceKey<LootTable> customLootTableLocation =
+          getCustomLootTableLocation(livingEntity, enhancements);
+      LootTable customLootTable =
+          serverLevel.getServer().reloadableRegistries().getLootTable(customLootTableLocation);
+      if (customLootTable != LootTable.EMPTY) {
+        log.debug(
+            "No loot drops for {} trying custom loot table {}!",
+            livingEntity,
+            customLootTableLocation);
+        for (int i = 0; i <= additionalRolls; i++) {
+          customLootTable.getRandomItems(lootContext).stream()
+              .filter(itemStack -> !itemStack.isEmpty())
+              .forEach(drops::add);
+        }
+      } else {
+        log.debug(
+            "No loot drops for {} and no custom loot table {}!",
+            livingEntity,
+            customLootTableLocation);
+      }
+    }
+
+    // Handle post drop enhancements.
     handlePostEnhancements(enhancements, livingEntity, serverLevel, fakePlayer, drops);
 
     return drops;
@@ -222,9 +250,9 @@ public class LootManager {
         .withParameter(LootContextParams.THIS_ENTITY, livingEntity);
   }
 
-  private static ResourceKey<?> getLootTableLocation(
+  private static ResourceKey<LootTable> getLootTableLocation(
       LivingEntity livingEntity, List<EnhancementItem> enhancements) {
-    ResourceKey<?> lootTableLocation = livingEntity.getType().getDefaultLootTable();
+    ResourceKey<LootTable> lootTableLocation = livingEntity.getType().getDefaultLootTable();
     for (EnhancementItem enhancement : enhancements) {
       if (enhancement instanceof SheepEnhancementItem && livingEntity instanceof Sheep sheep) {
         DyeColor color = sheep.getColor();
@@ -235,7 +263,23 @@ public class LootManager {
                     "minecraft", "entities/sheep/" + color.getName()));
       }
     }
+
     return lootTableLocation;
+  }
+
+  private static ResourceKey<LootTable> getCustomLootTableLocation(
+      LivingEntity livingEntity, List<EnhancementItem> enhancements) {
+    ResourceLocation entityTypeResourceLocation =
+        BuiltInRegistries.ENTITY_TYPE.getKey(livingEntity.getType());
+
+    return ResourceKey.create(
+        Registries.LOOT_TABLE,
+        ResourceLocation.fromNamespaceAndPath(
+            Constants.MOD_ID,
+            "entities/"
+                + entityTypeResourceLocation.getNamespace()
+                + "/"
+                + entityTypeResourceLocation.getPath()));
   }
 
   private static void setSwordEnhancementParameters(
