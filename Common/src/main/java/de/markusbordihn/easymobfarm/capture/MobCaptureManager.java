@@ -32,15 +32,13 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -140,42 +138,33 @@ public class MobCaptureManager {
       livingEntity.readAdditionalSaveData(mobCaptureData.data());
     }
 
-    // Check if entity could be spawned at block position or above
-    BlockState blockState = serverLevel.getBlockState(blockPos);
-    BlockPos finalBlockPos = null;
-    if (blockState.is(Blocks.SHORT_GRASS)
-        || blockState.is(Blocks.TALL_GRASS)
-        || blockState.is(Blocks.SEAGRASS)
-        || blockState.is(Blocks.TALL_SEAGRASS)) {
-      finalBlockPos = blockPos;
-    } else {
-      BlockState blockStateBlockAbove = serverLevel.getBlockState(blockPos.above());
-      if ((blockStateBlockAbove.isAir() || blockStateBlockAbove.is(Blocks.WATER))) {
-        finalBlockPos = blockPos.above();
-      }
-    }
-
-    // Spawn entity at block position if possible
-    if (finalBlockPos != null) {
-      entity.move(
-          MoverType.SELF,
-          new Vec3(blockPos.getX() + 0.5D, blockPos.getY() + 1.0D, blockPos.getZ() + 0.5D));
-      serverLevel.addFreshEntity(entity);
-      log.debug(
-          "{} Released mob {} with data:{} at block position {}.",
+    // Get safe spawn position.
+    BlockPos safeSpawnBlockPos = getSafeSpawnPos(serverLevel, blockPos);
+    if (safeSpawnBlockPos == null) {
+      log.warn(
+          "{} Unable to release mob {} with data:{} at block position {}.",
           LOG_PREFIX,
           entityType,
           mobCaptureData.data(),
           blockPos);
-      return true;
+      return false;
     }
 
-    log.warn(
-        "{} Unable to release mob {} with data:{} at block position {}.",
+    // Spawn entity at safe spawn position.
+    entity.snapTo(
+        safeSpawnBlockPos.getX() + 0.5D,
+        safeSpawnBlockPos.getY() + 1.0D,
+        safeSpawnBlockPos.getZ() + 0.5D,
+        0.0F,
+        0.0F);
+    serverLevel.addFreshEntity(entity);
+    log.debug(
+        "{} Released mob {} with data:{} at block position {}.",
         LOG_PREFIX,
         entityType,
         mobCaptureData.data(),
-        blockPos);
+        safeSpawnBlockPos);
+
     return true;
   }
 
@@ -245,5 +234,39 @@ public class MobCaptureManager {
             .getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, CustomData.EMPTY)
             .getUnsafe(),
         level);
+  }
+
+  public static boolean isSafeSpawnPos(Level level, BlockPos blockPos) {
+    BlockState surfaceState = level.getBlockState(blockPos.below());
+    BlockState groundState = level.getBlockState(blockPos.below(2));
+
+    VoxelShape surfaceShape = surfaceState.getCollisionShape(level, blockPos.below());
+    VoxelShape groundShape = groundState.getCollisionShape(level, blockPos.below(2));
+
+    double surfaceHeight = surfaceShape.isEmpty() ? 0.0 : surfaceShape.bounds().maxY;
+    double groundHeight = groundShape.isEmpty() ? 0.0 : groundShape.bounds().maxY;
+
+    return !(surfaceState.isAir() && surfaceHeight < 0.05)
+        && !groundState.isAir()
+        && groundHeight >= 0.5;
+  }
+
+  public static BlockPos getSafeSpawnPos(Level level, BlockPos blockPos) {
+    if (isSafeSpawnPos(level, blockPos)) {
+      return blockPos;
+    }
+
+    for (int dx = -1; dx <= 1; dx++) {
+      for (int dz = -1; dz <= 1; dz++) {
+        if (dx == 0 && dz == 0) continue;
+
+        BlockPos nearbyPos = blockPos.offset(dx, 0, dz);
+        if (isSafeSpawnPos(level, nearbyPos)) {
+          return nearbyPos;
+        }
+      }
+    }
+
+    return null;
   }
 }

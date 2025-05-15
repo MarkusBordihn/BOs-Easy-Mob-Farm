@@ -75,6 +75,7 @@ public class MobCaptureCardModelsConfig extends Config {
     defaultModels.add("minecraft:cow");
     defaultModels.add("minecraft:creeper");
     defaultModels.add("minecraft:drowned");
+    defaultModels.add("minecraft:ender_dragon");
     defaultModels.add("minecraft:enderman");
     defaultModels.add("minecraft:evoker");
     defaultModels.add("minecraft:frog");

@@ -159,5 +159,13 @@ public class MobFarmBlockItem extends BlockItem {
     if (processingSpeedText != null) {
       tooltipConsumer.accept(processingSpeedText);
     }
+
+    // Add additional information for special mob farms.
+    if (MobFarmType.LUCKY_DROP_FARM.getId().equals(farmName)) {
+      tooltipConsumer.accept(
+          TextComponent.getTranslatedTextRaw(
+              Constants.TOOLTIP_FARM_PREFIX + "lucky_drop_percentage",
+              new Object[] {MobFarmConfig.luckyDropFarmLuckPercentage}));
+    }
   }
 }

@@ -60,7 +60,11 @@ public class EntityScalingConfig extends Config {
 
     // Adding default values to config file, if not present.
     for (Map.Entry<String, Float> entry : knownEntityScalingFactor.entrySet()) {
-      parseConfigValue(properties, entry.getKey(), entry.getValue());
+      String propertyKey = entry.getKey();
+      Float propertyValue = entry.getValue();
+      if (!properties.containsKey(propertyKey)) {
+        properties.setProperty(propertyKey, propertyValue.toString());
+      }
     }
 
     // Parse the rest of the configuration file.
@@ -74,13 +78,18 @@ public class EntityScalingConfig extends Config {
 
       // Check if entity type is known, resolve it and add it to the list, if needed.
       Optional<EntityType<?>> entityType = EntityType.byString(entityTypeName);
-      if (entityType.isPresent() && !entityScalingFactor.containsKey(entityType)) {
-        float scalingFactor = Float.parseFloat(properties.getProperty(entityTypeName));
-        log.info("Adding scaling factor {} for {}.", scalingFactor, entityTypeName);
-        entityScalingFactor.put(entityType.get(), scalingFactor);
+      if (entityType.isPresent()) {
+        try {
+          float scalingFactor = Float.parseFloat(properties.getProperty(entityTypeName));
+          log.info("Adding scaling factor {} for {}.", scalingFactor, entityTypeName);
+          entityScalingFactor.put(entityType.get(), scalingFactor);
+        } catch (NumberFormatException e) {
+          log.warn("Invalid scaling factor format for {}: {}", entityTypeName, e.getMessage());
+        }
       } else {
-        log.error("Remove unknown entity type {} from {}.", entityTypeName, CONFIG_FILE_NAME);
-        properties.remove(entityTypeName);
+        log.debug(
+            "Unknown entity type '{}'. Keeping it in config (possibly from a mod).",
+            entityTypeName);
       }
     }
 
