@@ -27,7 +27,7 @@ public class MobCaptureCardConfig extends Config {
 
   public static final String CONFIG_FILE_NAME = "mob_capture_card.cfg";
   public static final String CONFIG_FILE_HEADER =
-      """
+"""
  Mob Capture Card Configuration
 
  This configuration file allows you to define the general settings for the Mob Capture Cards.

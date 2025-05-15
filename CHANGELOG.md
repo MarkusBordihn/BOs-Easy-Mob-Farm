@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+# v9.8.0
+
+- Fixed #161 by removing negative status from captured mobs.
+- Fixed #159 by checking existing values for the scaling configuration.
+- Fixed #158 by adding additional tooltips for lucky drop farm.
+- Fixed #157 by adding support for Ender Dragon and other generic entities.
+- Fixed #149 by adding custom `Ice and Fire` loot tables.
+- Added Ender Dragon mob card.
+- Added custom loot drops over `easy_mob_farm/data/loot_tables/entities/<namespace>/<entity>.json`.
+- Added custom loot drops documentation and example wiki page.
+
 # v9.7.0
 
 - Fixed #146 by adding redstone signal support for mob farms.
