@@ -101,6 +101,7 @@
   "tooltip.easy_mob_farm.farm.killed_by_player": "¡Requiere mejora de espada para algunos botines!",
   "tooltip.easy_mob_farm.farm.low_experience": "Experiencia demasiado baja: %s",
   "tooltip.easy_mob_farm.farm.lucky_drop_farm": "Granja de Botín de Suerte (Nivel %s)",
+  "tooltip.easy_mob_farm.farm.lucky_drop_percentage": "Probabilidad de Botín de Suerte: %s%%",
   "tooltip.easy_mob_farm.farm.mob_farm": "Granja de Mobs",
   "tooltip.easy_mob_farm.farm.monster_plains_cave_farm": "Granja de Monstruos de Llanuras y Cuevas (Nivel %s)",
   "tooltip.easy_mob_farm.farm.nether_fortress_farm": "Granja de la Fortaleza del Nether (Nivel %s)",
