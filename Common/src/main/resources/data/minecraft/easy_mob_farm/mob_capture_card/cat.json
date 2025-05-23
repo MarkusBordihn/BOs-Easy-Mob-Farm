@@ -1,0 +1,40 @@
+{
+  "entity": "minecraft:cat",
+  "model": "minecraft:item/easy_mob_farm/mob_capture_card/cat_calico",
+  "rarity": "common",
+  "scale": 1.0,
+  "requires_killed_by_player": false,
+  "requires_animation_tick": false,
+  "variants": {
+    "all_black": {
+      "model": "minecraft:item/easy_mob_farm/mob_capture_card/cat_all_black"
+    },
+    "black": {
+      "model": "minecraft:item/easy_mob_farm/mob_capture_card/cat_black"
+    },
+    "calico": {
+      "model": "minecraft:item/easy_mob_farm/mob_capture_card/cat_calico"
+    },
+    "jellie": {
+      "model": "minecraft:item/easy_mob_farm/mob_capture_card/cat_jellie"
+    },
+    "persian": {
+      "model": "minecraft:item/easy_mob_farm/mob_capture_card/cat_persian"
+    },
+    "ragdoll": {
+      "model": "minecraft:item/easy_mob_farm/mob_capture_card/cat_ragdoll"
+    },
+    "red": {
+      "model": "minecraft:item/easy_mob_farm/mob_capture_card/cat_red"
+    },
+    "siamese": {
+      "model": "minecraft:item/easy_mob_farm/mob_capture_card/cat_siamese"
+    },
+    "tabby": {
+      "model": "minecraft:item/easy_mob_farm/mob_capture_card/cat_tabby"
+    },
+    "white": {
+      "model": "minecraft:item/easy_mob_farm/mob_capture_card/cat_white"
+    }
+  }
+}

@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+# v10.0.0
+
+- Added full datapack and resource pack support for mob capture cards.
+- Added missing sheep mob capture card.
+- Added `Ice and Fire` cards for dragons and siren.
+- Replaced configuration files with networked synched configuration.
+
 # v9.8.0
 
 - Fixed #161 by removing negative status from captured mobs.

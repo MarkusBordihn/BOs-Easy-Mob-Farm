@@ -19,11 +19,11 @@
 
 package de.markusbordihn.easymobfarm.client.renderer.manager;
 
-import de.markusbordihn.easymobfarm.config.EntityScalingConfig;
+import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinition;
+import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinitionManager;
 import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.monster.ElderGuardian;
@@ -53,11 +53,13 @@ public class EntityScalingManager {
           }
 
           // Add extra scale numbers for specific entities from external mods.
-          EntityType<?> entityType = entity.getType();
-          float customScalingFactor = EntityScalingConfig.getEntityScalingFactor(entityType);
-          if (customScalingFactor > 0f) {
-            entityWidth *= customScalingFactor;
-            entityHeight *= customScalingFactor;
+          MobCaptureCardDefinition mobCaptureCardDefinition =
+              MobCaptureCardDefinitionManager.get(entity.getType());
+          if (mobCaptureCardDefinition != null
+              && mobCaptureCardDefinition.scale() > 0f
+              && mobCaptureCardDefinition.scale() != 1f) {
+            entityWidth *= mobCaptureCardDefinition.scale();
+            entityHeight *= mobCaptureCardDefinition.scale();
           }
 
           // Return default scale if entity width or height is not available.

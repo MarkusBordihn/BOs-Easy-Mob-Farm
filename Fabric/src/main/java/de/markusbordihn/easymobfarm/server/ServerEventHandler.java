@@ -19,8 +19,16 @@
 
 package de.markusbordihn.easymobfarm.server;
 
+import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinitionManager;
+import de.markusbordihn.easymobfarm.network.message.client.SyncMobCaptureCardDefinitionsMessage;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.PacketSender;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.network.ServerGamePacketListenerImpl;
 
 public class ServerEventHandler {
 
@@ -29,6 +37,7 @@ public class ServerEventHandler {
   public static void registerServerEvents() {
     ServerLifecycleEvents.SERVER_STARTED.register(ServerEventHandler::onServerStarted);
     ServerLifecycleEvents.SERVER_STARTING.register(ServerEventHandler::onServerStarting);
+    ServerPlayConnectionEvents.JOIN.register(ServerEventHandler::onPlayerLogin);
   }
 
   private static void onServerStarted(MinecraftServer server) {
@@ -37,5 +46,21 @@ public class ServerEventHandler {
 
   private static void onServerStarting(MinecraftServer server) {
     ServerEvents.handleServerStartingEvent(server);
+  }
+
+  private static void onPlayerLogin(
+      ServerGamePacketListenerImpl serverGamePacketListener,
+      PacketSender packetSender,
+      MinecraftServer minecraftServer) {
+    SyncMobCaptureCardDefinitionsMessage message =
+        new SyncMobCaptureCardDefinitionsMessage(MobCaptureCardDefinitionManager.getAll());
+
+    FriendlyByteBuf buffer = PacketByteBufs.create();
+    message.write(buffer);
+
+    ServerPlayNetworking.send(
+        serverGamePacketListener.getPlayer(),
+        SyncMobCaptureCardDefinitionsMessage.MESSAGE_ID,
+        buffer);
   }
 }

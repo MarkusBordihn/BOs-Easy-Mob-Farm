@@ -1,0 +1,8 @@
+{
+  "entity": "iceandfire:siren",
+  "model": "iceandfire:item/easy_mob_farm/mob_capture_card/siren",
+  "rarity": "rare",
+  "scale": 2.1,
+  "requires_killed_by_player": false,
+  "requires_animation_tick": false
+}

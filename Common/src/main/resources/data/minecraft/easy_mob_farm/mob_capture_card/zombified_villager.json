@@ -1,0 +1,7 @@
+{
+  "entity": "minecraft:zombified_villager",
+  "rarity": "uncommon",
+  "scale": 1.0,
+  "requires_killed_by_player": false,
+  "requires_animation_tick": false
+}

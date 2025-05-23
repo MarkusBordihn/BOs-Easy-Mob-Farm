@@ -19,10 +19,16 @@
 
 package de.markusbordihn.easymobfarm.server;
 
+import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinitionManager;
+import de.markusbordihn.easymobfarm.network.NetworkHandler;
+import de.markusbordihn.easymobfarm.network.message.client.SyncMobCaptureCardDefinitionsMessage;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.network.NetworkDirection;
 
 @EventBusSubscriber
 public class ServerEventHandler {
@@ -37,5 +43,18 @@ public class ServerEventHandler {
   @SubscribeEvent
   public static void onServerStarting(ServerStartingEvent event) {
     ServerEvents.handleServerStartingEvent(event.getServer());
+  }
+
+  @SubscribeEvent
+  public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
+    if (!(event.getPlayer() instanceof ServerPlayer serverPlayer)) {
+      return;
+    }
+
+    // Sync all mob capture card definitions to the player.
+    NetworkHandler.INSTANCE.sendTo(
+        new SyncMobCaptureCardDefinitionsMessage(MobCaptureCardDefinitionManager.getAll()),
+        serverPlayer.connection.connection,
+        NetworkDirection.PLAY_TO_CLIENT);
   }
 }
