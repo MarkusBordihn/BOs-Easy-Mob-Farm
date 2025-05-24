@@ -58,6 +58,10 @@ dependencies {
   //  modRuntimeOnly "io.github.fabricators_of_create.Porting-Lib:client_events:2.3.4+1.20.1"
   //  modRuntimeOnly "curse.maven:forge-config-api-port-fabric-547434:5902421"
   //  modRuntimeOnly "curse.maven:create-fabric-624165:5245234"
+
+  // Swampier Swamps Tests
+  // modRuntimeOnly "curse.maven:cloth-config-348521:5729104"
+  // modRuntimeOnly "curse.maven:swampier-swamps-fabric-687298:4580758"
 }
 
 loom {

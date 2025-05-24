@@ -1,0 +1,7 @@
+{
+  "entity": "minecraft:vindicator",
+  "rarity": "rare",
+  "scale": 1.0,
+  "requires_killed_by_player": true,
+  "requires_animation_tick": false
+}

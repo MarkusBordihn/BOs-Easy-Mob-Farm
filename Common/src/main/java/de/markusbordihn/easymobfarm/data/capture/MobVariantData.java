@@ -19,11 +19,13 @@
 
 package de.markusbordihn.easymobfarm.data.capture;
 
+import de.markusbordihn.easymobfarm.compat.CompatConstants;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Cat;
@@ -42,12 +44,69 @@ public class MobVariantData {
   public static final String TINY_VARIANT = "tiny";
 
   private static final Map<FrogVariant, String> FROG_VARIANT_MAP = new HashMap<>();
+  private static final Map<ResourceLocation, String> SWAMPIER_SWAMPS_FROG_VARIANT_MAP =
+      new HashMap<>();
 
   static {
     // Frog variant map
     FROG_VARIANT_MAP.put(FrogVariant.COLD, "cold");
     FROG_VARIANT_MAP.put(FrogVariant.WARM, "warm");
     FROG_VARIANT_MAP.put(FrogVariant.TEMPERATE, "temperate");
+
+    if (CompatConstants.MOD_SWAMPIER_SWAMPS_LOADED) {
+      SWAMPIER_SWAMPS_FROG_VARIANT_MAP.put(
+          new ResourceLocation(
+              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "textures/entity/frog/frog_white.png"),
+          "white");
+      SWAMPIER_SWAMPS_FROG_VARIANT_MAP.put(
+          new ResourceLocation(
+              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "textures/entity/frog/frog_magenta.png"),
+          "magenta");
+      SWAMPIER_SWAMPS_FROG_VARIANT_MAP.put(
+          new ResourceLocation(
+              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "textures/entity/frog/frog_light_blue.png"),
+          "light_blue");
+      SWAMPIER_SWAMPS_FROG_VARIANT_MAP.put(
+          new ResourceLocation(
+              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "textures/entity/frog/frog_yellow.png"),
+          "yellow");
+      SWAMPIER_SWAMPS_FROG_VARIANT_MAP.put(
+          new ResourceLocation(
+              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "textures/entity/frog/frog_lime.png"),
+          "lime");
+      SWAMPIER_SWAMPS_FROG_VARIANT_MAP.put(
+          new ResourceLocation(
+              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "textures/entity/frog/frog_pink.png"),
+          "pink");
+      SWAMPIER_SWAMPS_FROG_VARIANT_MAP.put(
+          new ResourceLocation(
+              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "textures/entity/frog/frog_gray.png"),
+          "gray");
+      SWAMPIER_SWAMPS_FROG_VARIANT_MAP.put(
+          new ResourceLocation(
+              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "textures/entity/frog/frog_cyan.png"),
+          "cyan");
+      SWAMPIER_SWAMPS_FROG_VARIANT_MAP.put(
+          new ResourceLocation(
+              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "textures/entity/frog/frog_purple.png"),
+          "purple");
+      SWAMPIER_SWAMPS_FROG_VARIANT_MAP.put(
+          new ResourceLocation(
+              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "textures/entity/frog/frog_blue.png"),
+          "blue");
+      SWAMPIER_SWAMPS_FROG_VARIANT_MAP.put(
+          new ResourceLocation(
+              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "textures/entity/frog/frog_brown.png"),
+          "brown");
+      SWAMPIER_SWAMPS_FROG_VARIANT_MAP.put(
+          new ResourceLocation(
+              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "textures/entity/frog/frog_red.png"),
+          "red");
+      SWAMPIER_SWAMPS_FROG_VARIANT_MAP.put(
+          new ResourceLocation(
+              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "textures/entity/frog/frog_black.png"),
+          "black");
+    }
   }
 
   private MobVariantData() {}
@@ -69,7 +128,15 @@ public class MobVariantData {
     } else if (livingEntity instanceof Slime slime) {
       return getSizeVariant(slime.getSize());
     } else if (livingEntity instanceof Frog frog) {
-      return FROG_VARIANT_MAP.get(frog.getVariant());
+      String frogVariant = FROG_VARIANT_MAP.get(frog.getVariant());
+      if (frogVariant != null) {
+        return frogVariant;
+      }
+
+      // Swampier Swamps mod support
+      if (CompatConstants.MOD_SWAMPIER_SWAMPS_LOADED) {
+        return SWAMPIER_SWAMPS_FROG_VARIANT_MAP.get(frog.getVariant().texture());
+      }
     }
     return null;
   }

@@ -23,11 +23,11 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.client.model.ModelManager;
 import de.markusbordihn.easymobfarm.client.model.ModelManagerInterface;
 import de.markusbordihn.easymobfarm.client.model.UnbakedMobCaptureCardModel;
-import de.markusbordihn.easymobfarm.config.MobCaptureCardModelsConfig;
 import java.util.Set;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.model.UnbakedModel;
+import net.minecraft.resources.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -61,24 +61,18 @@ public class ModelEventHandler {
                     consumer.accept(resourceLocation);
                   });
 
-          // Pre-Loading additional models for Mob Capture Card from config file.
-          MobCaptureCardModelsConfig.getMobCaptureCardModels()
-              .forEach(
-                  entityName -> {
-                    ModelResourceLocation modelResourceLocation =
-                        MobCaptureCardModelsConfig.getModelResourceLocation(entityName);
-                    if (modelResourceLocation == null) {
-                      log.error(
-                          "Skipping model for entity {} because of invalid resource locations.",
-                          entityName);
-                      return;
-                    }
-                    log.info(
-                        "Registering custom model {} for {} ...",
-                        modelResourceLocation,
-                        entityName);
-                    consumer.accept(modelResourceLocation);
-                  });
+          // Pre-Loading additional models for Mob Capture Card from the resource folder.
+          for (ResourceLocation location :
+              resourceManager
+                  .listResources(
+                      "models/item/easy_mob_farm/mob_capture_card",
+                      resourceLocation -> resourceLocation.getPath().endsWith(".json"))
+                  .keySet()) {
+            ModelResourceLocation modelResourceLocation = getModelResourceLocation(location);
+            log.info(
+                "Automatically registering model {} as {} ...", location, modelResourceLocation);
+            consumer.accept(modelResourceLocation);
+          }
         });
 
     ModelLoadingRegistry.INSTANCE.registerResourceProvider(
@@ -102,5 +96,12 @@ public class ModelEventHandler {
               }
               return null;
             });
+  }
+
+  public static ModelResourceLocation getModelResourceLocation(ResourceLocation fileLocation) {
+    String modelPath =
+        fileLocation.getPath().replaceFirst("^models/item/", "").replaceAll("\\.json$", "");
+    return new ModelResourceLocation(
+        new ResourceLocation(fileLocation.getNamespace(), modelPath), "inventory");
   }
 }

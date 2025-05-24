@@ -20,8 +20,10 @@
 package de.markusbordihn.easymobfarm.client.model;
 
 import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.config.MobCaptureCardModelsConfig;
+import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinition;
+import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinitionManager;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.BakedModel;
@@ -84,32 +86,51 @@ public interface ModelManagerInterface {
   }
 
   default BakedModel getModel(String type, String variant, DyeColor color) {
-    ModelResourceLocation modelResourceLocation =
-        MobCaptureCardModelsConfig.getModelResourceLocation(type, variant, color);
-    if (modelResourceLocation == null) {
-      if (KNOWN_MISSING_MODELS.add(type)) {
-        log.warn(
-            "{} Missing custom model for type '{}', variant '{}' with color '{}'",
-            LOG_PREFIX,
-            type,
-            variant,
-            color);
-      }
+    MobCaptureCardDefinition mobCaptureCardDefinition =
+        MobCaptureCardDefinitionManager.get(new ResourceLocation(type));
+    if (mobCaptureCardDefinition == null) {
       return null;
     }
-    return this.getModel(modelResourceLocation);
+
+    // Check if the variant and color are valid.
+    ModelResourceLocation modelResourceLocation = null;
+    if (variant != null && color != null) {
+      if (mobCaptureCardDefinition.variants().containsKey(variant)
+          && mobCaptureCardDefinition.variants().get(variant).colors().containsKey(color)) {
+        modelResourceLocation =
+            getModelResourceLocation(
+                mobCaptureCardDefinition.variants().get(variant).colors().get(color).model());
+      }
+    } else if (variant != null) {
+      if (mobCaptureCardDefinition.variants().containsKey(variant)) {
+        modelResourceLocation =
+            getModelResourceLocation(mobCaptureCardDefinition.variants().get(variant).model());
+      }
+    } else if (color != null) {
+      String colorName = color.getName().toLowerCase(Locale.ROOT);
+      if (mobCaptureCardDefinition.colors().containsKey(colorName)) {
+        modelResourceLocation =
+            getModelResourceLocation(mobCaptureCardDefinition.colors().get(colorName).model());
+      }
+    }
+
+    // Fallback to default model if no model is found or if the model is missing.
+    ModelResourceLocation defaultModelResourceLocation =
+        getModelResourceLocation(mobCaptureCardDefinition.model());
+    if (modelResourceLocation == null) {
+      modelResourceLocation = defaultModelResourceLocation;
+    }
+    BakedModel bakedModel =
+        Minecraft.getInstance().getModelManager().getModel(modelResourceLocation);
+    if (bakedModel == Minecraft.getInstance().getModelManager().getMissingModel()) {
+      bakedModel = Minecraft.getInstance().getModelManager().getModel(defaultModelResourceLocation);
+    }
+
+    return bakedModel;
   }
 
   default BakedModel getModel(String type) {
-    ModelResourceLocation modelResourceLocation =
-        MobCaptureCardModelsConfig.getModelResourceLocation(type);
-    if (modelResourceLocation == null) {
-      if (KNOWN_MISSING_MODELS.add(type)) {
-        log.warn("{} Missing custom model for type '{}'", LOG_PREFIX, type);
-      }
-      return null;
-    }
-    return this.getModel(modelResourceLocation);
+    return this.getModel(type, null, null);
   }
 
   default BakedModel getModel(Rarity rarity) {
@@ -135,5 +156,12 @@ public interface ModelManagerInterface {
 
   default BakedModel getDefaultModel() {
     return this.getModel(DEFAULT_MODEL);
+  }
+
+  default ModelResourceLocation getModelResourceLocation(ResourceLocation resourceLocation) {
+    String namespace = resourceLocation.getNamespace();
+    String path = resourceLocation.getPath();
+    return new ModelResourceLocation(
+        new ResourceLocation(namespace, path.replace("item/", "")), "inventory");
   }
 }
