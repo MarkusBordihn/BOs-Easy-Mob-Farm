@@ -30,11 +30,14 @@ import de.markusbordihn.easymobfarm.experience.ModExperienceManager;
 import de.markusbordihn.easymobfarm.item.ModBlockItems;
 import de.markusbordihn.easymobfarm.item.ModItems;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
+import de.markusbordihn.easymobfarm.resources.MobCaptureCardResourceManagerWrapper;
 import de.markusbordihn.easymobfarm.server.ServerEventHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.server.packs.PackType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -61,6 +64,10 @@ public class EasyMobFarm implements ModInitializer {
 
     log.info("{} Compatibility Handler ...", Constants.LOG_REGISTER_PREFIX);
     CompatManager.registerCompatHandler(new CompatHandler());
+
+    log.info("{} server-side resource listener ...", Constants.LOG_REGISTER_PREFIX);
+    ResourceManagerHelper.get(PackType.SERVER_DATA)
+        .registerReloadListener(new MobCaptureCardResourceManagerWrapper());
 
     log.info("{} Experience Manager ...", Constants.LOG_REGISTER_PREFIX);
     ExperienceManager.registerExperienceManager(new ModExperienceManager());

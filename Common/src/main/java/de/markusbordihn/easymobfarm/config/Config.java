@@ -47,16 +47,11 @@ public class Config {
     registerCommonConfig();
     if (isServer) {
       registerServerConfig();
-    } else {
-      registerClientConfig();
     }
   }
 
   public static void registerDeferred(boolean isServer) {
     registerCommonConfigDeferred();
-    if (!isServer) {
-      registerClientConfigDeferred();
-    }
   }
 
   public static void registerCommonConfigDeferred() {
@@ -68,20 +63,7 @@ public class Config {
     log.info("{} Registering common configuration ...", LOG_PREFIX);
     MobFarmConfig.registerConfig();
     MobCaptureCardConfig.registerConfig();
-    MobCaptureCardRarityConfig.registerConfig();
     MobCatcherConfig.registerConfig();
-  }
-
-  public static void registerClientConfigDeferred() {
-    log.info("{} Registering deferred client configuration ...", LOG_PREFIX);
-    EntityScalingConfig.registerConfig();
-    RequiresAnimationTickConfig.registerConfig();
-    RequiresKilledByPlayerConfig.registerConfig();
-  }
-
-  public static void registerClientConfig() {
-    log.info("{} Registering client configuration ...", LOG_PREFIX);
-    MobCaptureCardModelsConfig.registerConfig();
   }
 
   public static void registerServerConfig() {

@@ -176,6 +176,13 @@ public class MobCaptureManager {
     return itemStack;
   }
 
+  public static ItemStack createMobCaptureCard(ItemLike itemLike, EntityType<?> entityType) {
+    if (itemLike == null || entityType == null) {
+      return null;
+    }
+    return createMobCaptureCard(itemLike, new MobCaptureData(entityType).withFoil(false));
+  }
+
   public static ItemStack createMobCaptureCard(
       ItemLike itemLike, EntityType<?> entityType, String variant, DyeColor dyeColor) {
     if (itemLike == null || entityType == null) {

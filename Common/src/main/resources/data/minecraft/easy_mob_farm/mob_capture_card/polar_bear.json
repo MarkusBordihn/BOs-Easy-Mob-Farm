@@ -1,0 +1,7 @@
+{
+  "entity": "minecraft:polar_bear",
+  "rarity": "uncommon",
+  "scale": 1.0,
+  "requires_killed_by_player": false,
+  "requires_animation_tick": false
+}

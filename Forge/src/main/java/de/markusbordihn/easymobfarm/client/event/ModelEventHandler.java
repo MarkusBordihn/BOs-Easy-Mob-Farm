@@ -23,14 +23,15 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.client.model.ModelManager;
 import de.markusbordihn.easymobfarm.client.model.ModelManagerInterface;
 import de.markusbordihn.easymobfarm.client.model.UnbakedMobCaptureCardModel;
-import de.markusbordihn.easymobfarm.config.MobCaptureCardModelsConfig;
 import java.util.Set;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.BlockModelRotation;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -69,21 +70,18 @@ public class ModelEventHandler {
               event.register(resourceLocation);
             });
 
-    // Pre-Loading additional models for Mob Capture Card from config file.
-    MobCaptureCardModelsConfig.getMobCaptureCardModels()
-        .forEach(
-            entityName -> {
-              ModelResourceLocation modelResourceLocation =
-                  MobCaptureCardModelsConfig.getModelResourceLocation(entityName);
-              if (modelResourceLocation == null) {
-                log.error(
-                    "Skipping model for entity {} because of invalid resource locations.",
-                    entityName);
-                return;
-              }
-              log.info("Registering custom model {} for {} ...", modelResourceLocation, entityName);
-              event.register(modelResourceLocation);
-            });
+    // Pre-Loading additional models for Mob Capture Card from the resource folder.
+    ResourceManager resourceManager = Minecraft.getInstance().getResourceManager();
+    for (ResourceLocation location :
+        resourceManager
+            .listResources(
+                "models/item/easy_mob_farm/mob_capture_card",
+                resourceLocation -> resourceLocation.getPath().endsWith(".json"))
+            .keySet()) {
+      ModelResourceLocation modelResourceLocation = getModelResourceLocation(location);
+      log.info("Automatically registering model {} as {} ...", location, modelResourceLocation);
+      event.register(modelResourceLocation);
+    }
   }
 
   @SuppressWarnings("unused")
@@ -109,5 +107,12 @@ public class ModelEventHandler {
             BlockModelRotation.X0_Y0,
             mobCaptureCardModelResourceLocation);
     event.getModels().put(mobCaptureCardModelResourceLocation, bakedModel);
+  }
+
+  public static ModelResourceLocation getModelResourceLocation(ResourceLocation fileLocation) {
+    String modelPath =
+        fileLocation.getPath().replaceFirst("^models/item/", "").replaceAll("\\.json$", "");
+    return new ModelResourceLocation(
+        new ResourceLocation(fileLocation.getNamespace(), modelPath), "inventory");
   }
 }

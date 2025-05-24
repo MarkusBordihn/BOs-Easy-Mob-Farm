@@ -19,16 +19,24 @@
 
 package de.markusbordihn.easymobfarm.server;
 
+import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinitionManager;
 import de.markusbordihn.easymobfarm.inventory.CraftingHandler;
+import de.markusbordihn.easymobfarm.network.message.client.SyncMobCaptureCardDefinitionsMessage;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.PacketSender;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.world.inventory.CraftingMenu;
 
 public class ServerEventHandler {
 
-  private static final int PLAYER_INVENTORY_TICKS = 20;
+  private static final int PLAYER_INVENTORY_TICKS = 25;
   private static int playerInventoryTicker = 0;
 
   private ServerEventHandler() {}
@@ -37,6 +45,7 @@ public class ServerEventHandler {
     ServerLifecycleEvents.SERVER_STARTED.register(ServerEventHandler::onServerStarted);
     ServerLifecycleEvents.SERVER_STARTING.register(ServerEventHandler::onServerStarting);
     ServerTickEvents.END_SERVER_TICK.register(ServerEventHandler::onServerTick);
+    ServerPlayConnectionEvents.JOIN.register(ServerEventHandler::onPlayerLogin);
   }
 
   private static void onServerStarted(MinecraftServer server) {
@@ -58,5 +67,21 @@ public class ServerEventHandler {
         playerInventoryTicker = 0;
       }
     }
+  }
+
+  private static void onPlayerLogin(
+      ServerGamePacketListenerImpl serverGamePacketListener,
+      PacketSender packetSender,
+      MinecraftServer minecraftServer) {
+    SyncMobCaptureCardDefinitionsMessage message =
+        new SyncMobCaptureCardDefinitionsMessage(MobCaptureCardDefinitionManager.getAll());
+
+    FriendlyByteBuf buffer = PacketByteBufs.create();
+    message.write(buffer);
+
+    ServerPlayNetworking.send(
+        serverGamePacketListener.getPlayer(),
+        SyncMobCaptureCardDefinitionsMessage.MESSAGE_ID,
+        buffer);
   }
 }
