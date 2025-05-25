@@ -26,7 +26,8 @@ import de.markusbordihn.easymobfarm.block.MobFarmBlock;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.client.renderer.manager.EntityScalingManager;
 import de.markusbordihn.easymobfarm.client.renderer.manager.RendererManager;
-import de.markusbordihn.easymobfarm.config.RequiresAnimationTickConfig;
+import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinition;
+import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinitionManager;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -105,7 +106,10 @@ public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
     EntityRenderer<? super LivingEntity> renderer = dispatcher.getRenderer(entity);
 
     entity.tickCount = (int) blockEntity.getLevel().getGameTime();
-    if (RequiresAnimationTickConfig.requiresAnimationTick(entity.getType())
+    MobCaptureCardDefinition mobCaptureCardDefinition =
+        MobCaptureCardDefinitionManager.get(entity.getType());
+    if (mobCaptureCardDefinition != null
+        && mobCaptureCardDefinition.requiresAnimationTick()
         && entity.tickCount % 2 == 0) {
       entity.tick();
     }

@@ -22,12 +22,13 @@ package de.markusbordihn.easymobfarm.client.event;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.client.model.ModelManagerInterface;
 import de.markusbordihn.easymobfarm.client.model.UnbakedMobCaptureCardModel;
-import de.markusbordihn.easymobfarm.config.MobCaptureCardModelsConfig;
 import java.util.Set;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.client.resources.model.UnbakedModel;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.ResourceManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -56,24 +57,20 @@ public class ModelEventHandler {
                     pluginContext.addModels(modelResourceLocation.id());
                   });
 
-          // Pre-Loading additional models for Mob Capture Card from config file.
-          MobCaptureCardModelsConfig.getMobCaptureCardModels()
-              .forEach(
-                  entityName -> {
-                    ModelResourceLocation modelResourceLocation =
-                        MobCaptureCardModelsConfig.getModelResourceLocation(entityName);
-                    if (modelResourceLocation == null) {
-                      log.error(
-                          "Skipping model for entity {} because of invalid resource locations.",
-                          entityName);
-                      return;
-                    }
-                    log.info(
-                        "Registering custom model {} for {} ...",
-                        modelResourceLocation.id(),
-                        entityName);
-                    pluginContext.addModels(modelResourceLocation.id());
-                  });
+          // Pre-Loading additional models for Mob Capture Card from the resource folder.
+          ResourceManager resourceManager = Minecraft.getInstance().getResourceManager();
+          for (ResourceLocation location :
+              resourceManager
+                  .listResources(
+                      "models/item/easy_mob_farm/mob_capture_card",
+                      resourceLocation -> resourceLocation.getPath().endsWith(".json"))
+                  .keySet()) {
+            ModelResourceLocation modelResourceLocation =
+                ModelManagerInterface.getModelResourceLocation(location);
+            log.info(
+                "Automatically registering model {} as {} ...", location, modelResourceLocation);
+            pluginContext.addModels(modelResourceLocation.id());
+          }
 
           // Register custom model for Mob Capture Card.
           pluginContext
@@ -85,25 +82,20 @@ public class ModelEventHandler {
                       return originalModel;
                     }
                     ResourceLocation resourceLocation = modelResourceLocation.id();
-                    if (resourceLocation.getNamespace().equals(Constants.MOD_ID)) {
-                      log.debug(
-                          "Found unbaked model: {} ({})",
-                          modelResourceLocation,
-                          resourceLocation.getPath());
-                      if (resourceLocation.getPath().equals("mob_capture_card")) {
-                        log.info("Adjusting baked model for {} ...", modelResourceLocation);
-                        UnbakedModel unbakedModel =
-                            onLoadContext.getOrLoadModel(UnbakedMobCaptureCardModel.MODEL);
-                        if (unbakedModel == null) {
-                          log.error(
-                              "Unable to load unbaked model for resource location {} from {}",
-                              modelResourceLocation,
-                              UnbakedMobCaptureCardModel.MODEL);
-                          return originalModel;
-                        }
-                        log.info("Baking unbaked model for {} ...", modelResourceLocation);
-                        return new UnbakedMobCaptureCardModel(unbakedModel);
+                    if (resourceLocation.getNamespace().equals(Constants.MOD_ID)
+                        && resourceLocation.getPath().equals("mob_capture_card")) {
+                      log.info("Adjusting baked model for {} ...", modelResourceLocation);
+                      UnbakedModel unbakedModel =
+                          onLoadContext.getOrLoadModel(UnbakedMobCaptureCardModel.MODEL);
+                      if (unbakedModel == null) {
+                        log.error(
+                            "Unable to load unbaked model for resource location {} from {}",
+                            modelResourceLocation,
+                            UnbakedMobCaptureCardModel.MODEL);
+                        return originalModel;
                       }
+                      log.info("Baking unbaked model for {} ...", modelResourceLocation);
+                      return new UnbakedMobCaptureCardModel(unbakedModel);
                     }
                     return originalModel;
                   });

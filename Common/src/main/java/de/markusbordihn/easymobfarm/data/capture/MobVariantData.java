@@ -19,6 +19,7 @@
 
 package de.markusbordihn.easymobfarm.data.capture;
 
+import de.markusbordihn.easymobfarm.compat.CompatConstants;
 import java.util.Locale;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
@@ -58,10 +59,19 @@ public class MobVariantData {
     } else if (livingEntity instanceof Slime slime) {
       return getSizeVariant(slime.getSize());
     } else if (livingEntity instanceof Frog frog) {
-      return (frog.getVariant().unwrapKey().orElse(FrogVariant.TEMPERATE))
-          .location()
-          .toString()
-          .replace("minecraft:", "");
+      String frogVariant =
+          (frog.getVariant().unwrapKey().orElse(FrogVariant.TEMPERATE))
+              .location()
+              .toString()
+              .replace("minecraft:", "");
+      if (CompatConstants.MOD_SWAMPIER_SWAMPS_LOADED) {
+        frogVariant =
+            frogVariant
+                .replace(CompatConstants.MOD_SWAMPIER_SWAMPS_ID + ":", "")
+                .replace("frog_", "")
+                .replace("_variant", "");
+      }
+      return frogVariant;
     }
     return "";
   }

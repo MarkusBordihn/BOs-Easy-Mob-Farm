@@ -19,14 +19,18 @@
 
 package de.markusbordihn.easymobfarm.server;
 
+import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinitionManager;
 import de.markusbordihn.easymobfarm.inventory.CraftingHandler;
+import de.markusbordihn.easymobfarm.network.message.client.SyncMobCaptureCardDefinitionsMessage;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.inventory.CraftingMenu;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 @EventBusSubscriber
 public class ServerEventHandler {
@@ -58,5 +62,17 @@ public class ServerEventHandler {
         playerInventoryTicker = 0;
       }
     }
+  }
+
+  @SubscribeEvent
+  public static void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
+    if (!(event.getEntity() instanceof ServerPlayer serverPlayer)) {
+      return;
+    }
+
+    // Sync all mob capture card definitions to the player.
+    PacketDistributor.sendToPlayer(
+        serverPlayer,
+        new SyncMobCaptureCardDefinitionsMessage(MobCaptureCardDefinitionManager.getAll()));
   }
 }

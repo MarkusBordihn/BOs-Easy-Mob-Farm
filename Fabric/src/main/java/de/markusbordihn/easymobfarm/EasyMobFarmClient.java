@@ -25,6 +25,7 @@ import de.markusbordihn.easymobfarm.client.model.ModModelManager;
 import de.markusbordihn.easymobfarm.client.model.ModelManager;
 import de.markusbordihn.easymobfarm.client.renderer.ClientRenderer;
 import de.markusbordihn.easymobfarm.client.screen.ClientScreens;
+import de.markusbordihn.easymobfarm.network.ClientNetworkHandler;
 import de.markusbordihn.easymobfarm.tabs.ModTabs;
 import net.fabricmc.api.ClientModInitializer;
 import org.apache.logging.log4j.LogManager;
@@ -58,5 +59,8 @@ public class EasyMobFarmClient implements ClientModInitializer {
 
     log.info("{} Client Event Handler ...", Constants.LOG_REGISTER_PREFIX);
     ClientEventHandler.registerClientEvents();
+
+    log.info("{} Client Network Handler ...", Constants.LOG_REGISTER_PREFIX);
+    ClientNetworkHandler.registerClientNetworkMessageHandler();
   }
 }

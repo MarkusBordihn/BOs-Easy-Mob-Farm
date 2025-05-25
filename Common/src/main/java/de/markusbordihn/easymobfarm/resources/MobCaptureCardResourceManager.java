@@ -19,113 +19,192 @@
 
 package de.markusbordihn.easymobfarm.resources;
 
-import com.google.gson.JsonArray;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import de.markusbordihn.easymobfarm.Constants;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Collection;
+import de.markusbordihn.easymobfarm.compat.CompatConstants;
+import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinition;
+import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinitionManager;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
-import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.PackResources;
-import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.Rarity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class MobCaptureCardResourceManager {
+public class MobCaptureCardResourceManager extends SimpleJsonResourceReloadListener {
 
+  public static final ResourceLocation RESOURCE_ID =
+      ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "mob_capture_card_resource_loader");
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
-  private static final String LOG_PREFIX = "[Mob Capture Card Resource Manager] ";
+  private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
-  private static final Map<Integer, String> MOB_CAPTURE_CARD_MODELS = new HashMap<>();
+  private static final String LOG_PREFIX = "[Mob Capture Card Resource Manager]";
+  private static final String SEARCH_PATH = "easy_mob_farm/mob_capture_card";
+  private static final String MODEL_TAG = "model";
+  private static final String RARITY_TAG = "rarity";
+  private static final String REQUIRES_ANIMATION_TICK_TAG = "requires_animation_tick";
+  private static final String REQUIRES_KILLED_BY_PLAYER_TAG = "requires_killed_by_player";
+  private static final String SCALE_TAG = "scale";
+  private static final String COLORS_TAG = "colors";
+  private static final String VARIANTS_TAG = "variants";
 
-  private MobCaptureCardResourceManager() {}
+  private static final ResourceLocation FROG_RESOURCE_LOCATION =
+      ResourceLocation.fromNamespaceAndPath("minecraft", "frog");
 
-  public static void loadMobCaptureCardData(ResourceManager resourceManager) {
-    ResourceLocation mobCaptureCardLocation =
-        ResourceLocation.fromNamespaceAndPath(
-            Constants.MOD_ID, "models/item/mob_capture_card/mob_capture_cards.json");
-    MOB_CAPTURE_CARD_MODELS.clear();
-
-    resourceManager
-        .listPacks()
-        .forEach(
-            packResources -> {
-              if (packResources.getResource(PackType.CLIENT_RESOURCES, mobCaptureCardLocation)
-                  != null) {
-                processMobCaptureCardData(packResources, mobCaptureCardLocation);
-              } else {
-                log.debug(
-                    "{} Skipping pack {} because it does not contain {}",
-                    LOG_PREFIX,
-                    packResources.packId(),
-                    mobCaptureCardLocation);
-              }
-            });
+  public MobCaptureCardResourceManager() {
+    super(GSON, SEARCH_PATH);
   }
 
-  public static void processMobCaptureCardData(
-      PackResources packResources, ResourceLocation mobCaptureCardLocation) {
-    try {
-      InputStream inputStream =
-          packResources.getResource(PackType.CLIENT_RESOURCES, mobCaptureCardLocation).get();
-      InputStreamReader reader = new InputStreamReader(inputStream);
-      JsonObject jsonObject = JsonParser.parseReader(reader).getAsJsonObject();
-      JsonArray captureCards = jsonObject.getAsJsonArray("mob_capture_cards");
+  private static void addAdditionalVariants(
+      ResourceLocation entity, Map<String, MobCaptureCardDefinition.Variant> variants) {
+    if (CompatConstants.MOD_SWAMPIER_SWAMPS_LOADED && FROG_RESOURCE_LOCATION.equals(entity)) {
+      addAdditionalFrogVariants(variants);
+    }
+  }
 
-      captureCards.forEach(
-          element -> {
-            JsonObject card = element.getAsJsonObject();
-            int cardId = card.get("card_id").getAsInt();
-            String modelPath = card.get("model").getAsString();
-            if (cardId <= 0 || modelPath == null || modelPath.isEmpty()) {
-              log.error(
-                  "{} Failed to load custom capture card with id {} and model {}",
-                  LOG_PREFIX,
-                  cardId,
-                  modelPath);
-              return;
-            }
-            log.debug(
-                "{} Added custom mob capture card with id {} and model {}",
+  private static void addAdditionalFrogVariants(
+      Map<String, MobCaptureCardDefinition.Variant> variants) {
+    for (DyeColor color : DyeColor.values()) {
+      String variantName = color.getName();
+      ResourceLocation model =
+          ResourceLocation.fromNamespaceAndPath(
+              "minecraft", "item/easy_mob_farm/mob_capture_card/frog_" + variantName);
+      variants.put(variantName, new MobCaptureCardDefinition.Variant(model, new HashMap<>()));
+    }
+  }
+
+  @Override
+  protected void apply(
+      Map<ResourceLocation, JsonElement> objectMap,
+      ResourceManager resourceManager,
+      ProfilerFiller profiler) {
+
+    log.info("{} Loading definitions ... from {}", LOG_PREFIX, SEARCH_PATH);
+    MobCaptureCardDefinitionManager.clear();
+
+    objectMap.forEach(
+        (location, element) -> {
+          try {
+            JsonObject json = GsonHelper.convertToJsonObject(element, "mob_capture_card");
+            log.debug("{} Parsing definition: {}", LOG_PREFIX, location);
+
+            // Parse entity, model, rarity, scale, and requires killed by player.
+            ResourceLocation entity =
+                ResourceLocation.parse(GsonHelper.getAsString(json, "entity"));
+            ResourceLocation model =
+                json.has(MODEL_TAG)
+                    ? ResourceLocation.parse(GsonHelper.getAsString(json, MODEL_TAG))
+                    : null;
+            Rarity rarity =
+                Rarity.valueOf(
+                    GsonHelper.getAsString(json, RARITY_TAG, "common").toUpperCase(Locale.ROOT));
+            float scale = GsonHelper.getAsFloat(json, SCALE_TAG, 1.0f);
+            boolean requiresKilledByPlayer =
+                GsonHelper.getAsBoolean(json, REQUIRES_KILLED_BY_PLAYER_TAG, false);
+            boolean requiresAnimationTick =
+                GsonHelper.getAsBoolean(json, REQUIRES_ANIMATION_TICK_TAG, false);
+
+            // Parse colors and variants.
+            Map<String, MobCaptureCardDefinition.Color> colors = parseColors(json);
+            Map<String, MobCaptureCardDefinition.Variant> variants = parseVariants(json);
+
+            // Add additional variants for specific entities and 3rd party mods integrations.
+            addAdditionalVariants(entity, variants);
+
+            MobCaptureCardDefinition definition =
+                new MobCaptureCardDefinition(
+                    entity,
+                    model,
+                    rarity,
+                    scale,
+                    requiresKilledByPlayer,
+                    requiresAnimationTick,
+                    variants,
+                    colors);
+
+            MobCaptureCardDefinitionManager.addDefinition(entity, definition);
+          } catch (Exception e) {
+            log.error(
+                "{} Failed to parse mob_capture_card definition: {} → {}",
                 LOG_PREFIX,
-                cardId,
-                modelPath);
-            MOB_CAPTURE_CARD_MODELS.put(cardId, modelPath);
-          });
-      reader.close();
-    } catch (Exception e) {
-      log.error(
-          "{} Failed to load custom capture cards for {}", LOG_PREFIX, packResources.packId(), e);
+                location,
+                e.getMessage());
+          }
+        });
+  }
+
+  private Map<String, MobCaptureCardDefinition.Color> parseColors(JsonObject json) {
+    Map<String, MobCaptureCardDefinition.Color> colors = new HashMap<>();
+    if (!json.has(COLORS_TAG)) {
+      return colors;
     }
+
+    JsonObject colorsJson = GsonHelper.getAsJsonObject(json, COLORS_TAG);
+    colorsJson
+        .entrySet()
+        .forEach(
+            entry -> {
+              String color = entry.getKey();
+              ResourceLocation colorModel =
+                  json.has(MODEL_TAG)
+                      ? ResourceLocation.parse(
+                          GsonHelper.getAsString(entry.getValue().getAsJsonObject(), MODEL_TAG))
+                      : null;
+              colors.put(color, new MobCaptureCardDefinition.Color(colorModel));
+            });
+
+    return colors;
   }
 
-  public static boolean isSupportedCardId(int cardID) {
-    return MOB_CAPTURE_CARD_MODELS.containsKey(cardID);
-  }
-
-  public static String getModelForCustomModelData(int cardID) {
-    return MOB_CAPTURE_CARD_MODELS.getOrDefault(
-        cardID, "easy_mob_farm:item/mob_capture_card/default");
-  }
-
-  public static ResourceLocation getResourceLocationForCardId(int cardID) {
-    return ResourceLocation.parse(getModelForCustomModelData(cardID));
-  }
-
-  public static ModelResourceLocation getModelResourceLocationForCardId(int cardID) {
-    String modelPath = getModelForCustomModelData(cardID);
-    if (modelPath.contains(":item/")) {
-      modelPath = modelPath.replace(":item/", ":");
+  private Map<String, MobCaptureCardDefinition.Variant> parseVariants(JsonObject json) {
+    Map<String, MobCaptureCardDefinition.Variant> variants = new HashMap<>();
+    if (!json.has(VARIANTS_TAG)) {
+      return variants;
     }
-    return new ModelResourceLocation(ResourceLocation.parse(modelPath), "inventory");
-  }
 
-  public static Collection<String> getCustomModelPaths() {
-    return MOB_CAPTURE_CARD_MODELS.values();
+    JsonObject variantsJson = GsonHelper.getAsJsonObject(json, VARIANTS_TAG);
+    variantsJson
+        .entrySet()
+        .forEach(
+            entry -> {
+              String variant = entry.getKey();
+              JsonObject variantObj = entry.getValue().getAsJsonObject();
+              ResourceLocation variantModel =
+                  json.has(MODEL_TAG)
+                      ? ResourceLocation.parse(GsonHelper.getAsString(variantObj, MODEL_TAG, null))
+                      : null;
+
+              Map<String, MobCaptureCardDefinition.Color> variantColors = new HashMap<>();
+              if (variantObj.has(COLORS_TAG)) {
+                JsonObject variantColorsJson = GsonHelper.getAsJsonObject(variantObj, COLORS_TAG);
+                variantColorsJson
+                    .entrySet()
+                    .forEach(
+                        colorEntry -> {
+                          String color = colorEntry.getKey();
+                          ResourceLocation colorModel =
+                              json.has(MODEL_TAG)
+                                  ? ResourceLocation.parse(
+                                      GsonHelper.getAsString(
+                                          colorEntry.getValue().getAsJsonObject(), MODEL_TAG))
+                                  : null;
+                          variantColors.put(color, new MobCaptureCardDefinition.Color(colorModel));
+                        });
+              }
+
+              variants.put(
+                  variant, new MobCaptureCardDefinition.Variant(variantModel, variantColors));
+            });
+
+    return variants;
   }
 }
