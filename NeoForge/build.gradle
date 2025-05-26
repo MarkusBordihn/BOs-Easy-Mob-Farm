@@ -55,9 +55,13 @@ dependencies {
   testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.7.1'
 
   // Additional helpful Mods for development (runtime dependency)
-  if (project.hasProperty('forge_jei_mod') && project.neoforge_jei_mod) {
+  if (project.hasProperty('neoforge_jei_mod') && project.neoforge_jei_mod) {
     compileOnly "curse.maven:jei-238222:${project.neoforge_jei_mod}"
-    // runtimeOnly "curse.maven:jei-238222:${project.neoforge_jei_mod}"
+    runtimeOnly "curse.maven:jei-238222:${project.neoforge_jei_mod}"
+  }
+
+  if (project.hasProperty('neoforge_xaeros_minimap_mod') && project.neoforge_xaeros_minimap_mod) {
+    runtimeOnly "curse.maven:xaeros-minimap-263420:${project.neoforge_xaeros_minimap_mod}"
   }
 
   // Immersive Engineering: Integration

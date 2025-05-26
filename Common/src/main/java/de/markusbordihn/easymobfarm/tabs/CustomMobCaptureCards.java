@@ -21,17 +21,14 @@ package de.markusbordihn.easymobfarm.tabs;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.capture.MobCaptureManager;
-import de.markusbordihn.easymobfarm.config.MobCaptureCardModelsConfig;
+import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinitionManager;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.data.capture.MobColor;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
 import java.util.Collections;
 import java.util.LinkedHashSet;
-import java.util.Optional;
+import java.util.Locale;
 import java.util.Set;
-import net.minecraft.core.Holder.Reference;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -69,38 +66,58 @@ public class CustomMobCaptureCards {
             mobCaptureCardItem,
             new MobCaptureData("Epic Card", EntityType.ARMOR_STAND, Rarity.EPIC)));
 
-    // Extract custom mob capture cards from configuration.
-    MobCaptureCardModelsConfig.getMobCaptureCardModels()
+    // Extract mob capture cards from MobCaptureCardResourceManager.
+    MobCaptureCardDefinitionManager.getAll()
         .forEach(
-            modelKey -> {
-              Object[] modelKeyData = MobCaptureCardModelsConfig.extractEntityKeyData(modelKey);
-              if (modelKeyData[0] == null) {
+            (location, definition) -> {
+              if (definition == null
+                  || definition.entityType() == null
+                  || definition.model() == null) {
                 return;
               }
-              String entityName = (String) modelKeyData[0];
-              if (entityName.isEmpty()) {
-                log.error("Empty entity type for mob capture card at key {}!", modelKey);
-                return;
-              }
-              Optional<Reference<EntityType<?>>> entityType =
-                  BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.parse(entityName));
-              if (entityType.isEmpty()) {
-                if (entityName.startsWith("minecraft:")) {
-                  log.error("Unknown entity type {} for mob capture card!", entityName);
-                } else {
-                  log.warn("Unknown entity type {} for mob capture card!", entityName);
-                }
-                return;
-              }
+
+              // Create default mob capture card.
               ItemStack itemStack =
                   MobCaptureManager.createMobCaptureCard(
-                      mobCaptureCardItem,
-                      entityType.<EntityType<?>>map(Reference::value).orElse(null),
-                      (String) modelKeyData[1],
-                      (MobColor) modelKeyData[2]);
-              if (itemStack != null) {
+                      mobCaptureCardItem, definition.entityType());
+              if (itemStack != null && !itemStack.isEmpty()) {
                 result.add(itemStack);
               }
+
+              // Create custom mob capture card variants.
+              definition
+                  .variants()
+                  .forEach(
+                      (variantName, variant) -> {
+                        if (variant == null) {
+                          return;
+                        }
+                        ItemStack variantItemStack =
+                            MobCaptureManager.createMobCaptureCard(
+                                mobCaptureCardItem, definition.entityType(), variantName, null);
+                        if (variantItemStack != null && !variantItemStack.isEmpty()) {
+                          result.add(variantItemStack);
+                        }
+                      });
+
+              // Create custom mob capture card colors.
+              definition
+                  .colors()
+                  .forEach(
+                      (colorName, color) -> {
+                        if (color == null) {
+                          return;
+                        }
+                        ItemStack colorItemStack =
+                            MobCaptureManager.createMobCaptureCard(
+                                mobCaptureCardItem,
+                                definition.entityType(),
+                                null,
+                                MobColor.valueOf(colorName.toUpperCase(Locale.ROOT)));
+                        if (colorItemStack != null && !colorItemStack.isEmpty()) {
+                          result.add(colorItemStack);
+                        }
+                      });
             });
 
     return result;

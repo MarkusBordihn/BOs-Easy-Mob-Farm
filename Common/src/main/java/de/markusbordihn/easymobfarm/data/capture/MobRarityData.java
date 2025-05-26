@@ -19,7 +19,6 @@
 
 package de.markusbordihn.easymobfarm.data.capture;
 
-import de.markusbordihn.easymobfarm.config.MobCaptureCardRarityConfig;
 import java.util.Locale;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
@@ -38,8 +37,10 @@ public class MobRarityData {
     }
 
     // Check for rarity based on entity type over the config file.
-    if (MobCaptureCardRarityConfig.hasRarity(entityType)) {
-      return MobCaptureCardRarityConfig.getRarity(entityType);
+    MobCaptureCardDefinition mobCaptureCardDefinition =
+        MobCaptureCardDefinitionManager.get(entityType);
+    if (mobCaptureCardDefinition != null) {
+      return mobCaptureCardDefinition.rarity();
     }
 
     // Get entity name and check for rarity.

@@ -12,6 +12,8 @@ dependencies {
   compileOnly group: 'org.spongepowered', name: 'mixin', version: '0.8.7'
 }
 
+apply from: "$projectDir/../gradle/tasks/generateMobCaptureCardItem.gradle"
+
 processResources {
   def buildProps = project.properties.clone()
 
