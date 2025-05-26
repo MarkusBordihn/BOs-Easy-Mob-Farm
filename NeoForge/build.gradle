@@ -57,7 +57,7 @@ dependencies {
   // Additional helpful Mods for development (runtime dependency)
   if (project.hasProperty('forge_jei_mod') && project.neoforge_jei_mod) {
     compileOnly "curse.maven:jei-238222:${project.neoforge_jei_mod}"
-    // runtimeOnly "curse.maven:jei-238222:${project.neoforge_jei_mod}"
+    runtimeOnly "curse.maven:jei-238222:${project.neoforge_jei_mod}"
   }
 
   // Immersive Engineering: Integration

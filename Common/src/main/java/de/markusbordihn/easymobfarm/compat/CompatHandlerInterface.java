@@ -37,6 +37,13 @@ public interface CompatHandlerInterface {
         CompatConstants.MOD_FARMERS_DELIGHT_NAME,
         CompatConstants.MOD_FARMERS_DELIGHT_ID,
         CompatConstants.MOD_FARMERS_DELIGHT_LOADED);
+
+    CompatConstants.MOD_SWAMPIER_SWAMPS_LOADED =
+        isModLoaded(CompatConstants.MOD_SWAMPIER_SWAMPS_ID);
+    logFoundMod(
+        CompatConstants.MOD_SWAMPIER_SWAMPS_NAME,
+        CompatConstants.MOD_SWAMPIER_SWAMPS_ID,
+        CompatConstants.MOD_SWAMPIER_SWAMPS_LOADED);
   }
 
   default void logFoundMod(String modName, String modId, boolean modLoaded) {

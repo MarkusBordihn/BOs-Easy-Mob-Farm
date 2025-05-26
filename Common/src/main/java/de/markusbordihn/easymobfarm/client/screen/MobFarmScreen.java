@@ -26,7 +26,8 @@ import de.markusbordihn.easymobfarm.client.renderer.manager.RendererManager;
 import de.markusbordihn.easymobfarm.client.screen.components.Graphics;
 import de.markusbordihn.easymobfarm.config.MobFarmBonusConfig;
 import de.markusbordihn.easymobfarm.config.MobFarmConfig;
-import de.markusbordihn.easymobfarm.config.RequiresKilledByPlayerConfig;
+import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinition;
+import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinitionManager;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmStatus;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
@@ -229,7 +230,9 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
                 new Object[] {this.entity.getType().toString()}));
 
         // Add Requires "killed_by_player" information, if available.
-        if (RequiresKilledByPlayerConfig.requiresKilledByPlayer(this.entity.getType())) {
+        MobCaptureCardDefinition mobCaptureCardDefinition =
+            MobCaptureCardDefinitionManager.get(this.entity.getType());
+        if (mobCaptureCardDefinition != null && mobCaptureCardDefinition.requiresKilledByPlayer()) {
           infoText.add(
               TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "killed_by_player")
                   .withStyle(ChatFormatting.RED));

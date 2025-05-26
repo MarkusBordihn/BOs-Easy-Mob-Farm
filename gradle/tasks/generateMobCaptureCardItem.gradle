@@ -1,0 +1,98 @@
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+
+def inputDir = file("$projectDir/../Common/src/main/resources/data")
+def outputFile = file("$projectDir/../Common/src/main/resources/assets/easy_mob_farm/items/mob_capture_card.json")
+
+task generateMobCaptureCardModel {
+  group = "build"
+  description = "Generates mob_capture_card.json from entity definitions."
+
+  inputs.dir inputDir
+  outputs.file outputFile
+
+  doLast {
+    def jsonSlurper = new JsonSlurper()
+    def cases = []
+
+    // Recursively read all JSON files in the input directory
+    inputDir.eachFileRecurse { file ->
+      if (file.name.endsWith(".json") && file.parentFile.name == "mob_capture_card") {
+        def data = jsonSlurper.parse(file)
+        def entity = data.entity
+        def baseModel = data.model
+        def variants = data.variants ?: [:]
+        def colors = data.colors ?: [:]
+
+        if (!entity || !baseModel) return
+
+        if (!variants.isEmpty()) {
+          def variantCases = variants.collect { key, value ->
+            [when: key, model: [type: "minecraft:model", model: value.model ?: baseModel]]
+          }
+          def fallback = variants.values().first().model ?: baseModel
+          cases << [
+              when : entity,
+              model: [
+                  type    : "minecraft:select",
+                  property: "easy_mob_farm:mob_capture_card_entity_variant",
+                  cases   : variantCases,
+                  fallback: [type: "minecraft:model", model: fallback]
+              ]
+          ]
+        } else if (!colors.isEmpty()) {
+          def colorCases = colors.collect { key, value ->
+            [when: key, model: [type: "minecraft:model", model: value.model ?: baseModel]]
+          }
+          def fallback = colors.values().first().model ?: baseModel
+          cases << [
+              when : entity,
+              model: [
+                  type    : "minecraft:select",
+                  property: "easy_mob_farm:mob_capture_card_entity_color",
+                  cases   : colorCases,
+                  fallback: [type: "minecraft:model", model: fallback]
+              ]
+          ]
+        } else {
+          cases << [
+              when : entity,
+              model: [type: "minecraft:model", model: baseModel]
+          ]
+        }
+      }
+    }
+
+    // Add default case for entities not defined in the input directory
+    def outputJson = [
+        model: [
+            type    : "minecraft:select",
+            property: "easy_mob_farm:mob_capture_card_entity_type",
+            cases   : cases,
+            fallback: [
+                type    : "minecraft:select",
+                property: "easy_mob_farm:mob_capture_card_rarity",
+                cases   : [
+                    [when: "common", model: [type: "minecraft:model", model: "easy_mob_farm:item/mob_capture_card/default"]],
+                    [when: "uncommon", model: [type: "minecraft:model", model: "easy_mob_farm:item/mob_capture_card/default_uncommon"]],
+                    [when: "rare", model: [type: "minecraft:model", model: "easy_mob_farm:item/mob_capture_card/default_rare"]],
+                    [when: "epic", model: [type: "minecraft:model", model: "easy_mob_farm:item/mob_capture_card/default_epic"]]
+                ],
+                fallback: [type: "minecraft:model", model: "easy_mob_farm:item/mob_capture_card/default"]
+            ]
+        ]
+    ]
+
+    // Format the JSON output and replace 4 spaces with 2 spaces
+    def newJsonText = JsonOutput.prettyPrint(JsonOutput.toJson(outputJson)).replaceAll(" {4}", "  ")
+
+    // Only write the file if it has changed
+    if (!outputFile.exists() || outputFile.text != newJsonText) {
+      outputFile.parentFile.mkdirs()
+      outputFile.text = newJsonText
+      println "✅ mob_capture_card.json has been (re)generated at ${outputFile}"
+    } else {
+      println "✅ mob_capture_card.json is up to date. No changes made."
+    }
+  }
+}

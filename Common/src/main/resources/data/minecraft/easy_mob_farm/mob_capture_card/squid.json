@@ -1,0 +1,8 @@
+{
+  "entity": "minecraft:squid",
+  "model": "minecraft:item/easy_mob_farm/mob_capture_card/squid",
+  "rarity": "common",
+  "scale": 1.0,
+  "requires_killed_by_player": false,
+  "requires_animation_tick": false
+}

@@ -37,9 +37,4 @@ public class MobCaptureCardSubtypeInterpreter implements ISubtypeInterpreter<Ite
     }
     return null;
   }
-
-  @Override
-  public String getLegacyStringSubtypeInfo(ItemStack itemStack, UidContext uidContext) {
-    return "";
-  }
 }

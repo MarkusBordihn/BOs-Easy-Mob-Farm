@@ -32,6 +32,7 @@ import de.markusbordihn.easymobfarm.experience.ModExperienceManager;
 import de.markusbordihn.easymobfarm.item.ModBlockItems;
 import de.markusbordihn.easymobfarm.item.ModItems;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
+import de.markusbordihn.easymobfarm.network.NetworkHandler;
 import java.util.Optional;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -93,6 +94,9 @@ public class EasyMobFarm {
 
     log.info("{} Mod Data Components ...", Constants.LOG_REGISTER_PREFIX);
     ModDataComponents.DATA_COMPONENTS.register(modEventBus);
+
+    log.info("{} Network Handler ...", Constants.LOG_REGISTER_PREFIX);
+    NetworkHandler.registerClientNetworkMessageHandler();
 
     // Initialize the client mod initializer
     DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> new EasyMobFarmClient(modEventBus));

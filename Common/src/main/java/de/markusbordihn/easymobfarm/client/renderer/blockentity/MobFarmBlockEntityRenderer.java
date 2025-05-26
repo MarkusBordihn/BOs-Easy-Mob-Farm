@@ -26,7 +26,8 @@ import de.markusbordihn.easymobfarm.block.MobFarmBlock;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.client.renderer.manager.EntityScalingManager;
 import de.markusbordihn.easymobfarm.client.renderer.manager.RendererManager;
-import de.markusbordihn.easymobfarm.config.RequiresAnimationTickConfig;
+import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinition;
+import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinitionManager;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -50,7 +51,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
-  implements BlockEntityRenderer<T> {
+    implements BlockEntityRenderer<T> {
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
@@ -58,12 +59,12 @@ public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
 
   @Override
   public void render(
-    T blockEntity,
-    float partialTicks,
-    PoseStack poseStack,
-    MultiBufferSource buffer,
-    int combinedLight,
-    int combinedOverlay) {
+      T blockEntity,
+      float partialTicks,
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      int combinedLight,
+      int combinedOverlay) {
 
     if (!blockEntity.hasCapturedMob()) {
       RendererManager.removeEntity(blockEntity);
@@ -88,30 +89,33 @@ public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
         renderGenericEntity(blockEntity, entity, poseStack, buffer, combinedLight);
       } catch (Exception genericException) {
         log.error(
-          "Failed to render entity {} for block entity {} with exception: {}",
-          entity.getType(),
-          blockEntity.getBlockPos(),
-          genericException.getMessage());
+            "Failed to render entity {} for block entity {} with exception: {}",
+            entity.getType(),
+            blockEntity.getBlockPos(),
+            genericException.getMessage());
       }
     }
   }
 
   private void renderLivingEntity(
-    T blockEntity,
-    LivingEntity entity,
-    PoseStack poseStack,
-    MultiBufferSource buffer,
-    int combinedLight) {
+      T blockEntity,
+      LivingEntity entity,
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      int combinedLight) {
 
     EntityRenderDispatcher dispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
     EntityRenderer<LivingEntity, LivingEntityRenderState> renderer =
-      (EntityRenderer<LivingEntity, LivingEntityRenderState>) dispatcher.getRenderer(entity);
+        (EntityRenderer<LivingEntity, LivingEntityRenderState>) dispatcher.getRenderer(entity);
     LivingEntityRenderState state = renderer.createRenderState(entity, 0);
 
     // Animation support
     entity.tickCount = (int) blockEntity.getLevel().getGameTime();
-    if (RequiresAnimationTickConfig.requiresAnimationTick(entity.getType())
-      && entity.tickCount % 2 == 0) {
+    MobCaptureCardDefinition mobCaptureCardDefinition =
+        MobCaptureCardDefinitionManager.get(entity.getType());
+    if (mobCaptureCardDefinition != null
+        && mobCaptureCardDefinition.requiresAnimationTick()
+        && entity.tickCount % 2 == 0) {
       entity.tick();
     }
 
@@ -122,11 +126,11 @@ public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
   }
 
   private void renderGenericEntity(
-    T blockEntity,
-    Entity entity,
-    PoseStack poseStack,
-    MultiBufferSource buffer,
-    int combinedLight) {
+      T blockEntity,
+      Entity entity,
+      PoseStack poseStack,
+      MultiBufferSource buffer,
+      int combinedLight) {
 
     EntityRenderDispatcher dispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
     EntityRenderer renderer = dispatcher.getRenderer(entity);
@@ -163,13 +167,13 @@ public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
 
     // Rotate entity based on block facing direction.
     float rotationDegrees =
-      switch (blockEntity.getBlockState().getValue(MobFarmBlock.FACING)) {
-        case NORTH -> 180f;
-        case SOUTH -> 0f;
-        case WEST -> -90f;
-        case EAST -> 90f;
-        default -> 0f;
-      };
+        switch (blockEntity.getBlockState().getValue(MobFarmBlock.FACING)) {
+          case NORTH -> 180f;
+          case SOUTH -> 0f;
+          case WEST -> -90f;
+          case EAST -> 90f;
+          default -> 0f;
+        };
     poseStack.mulPose(Axis.YP.rotationDegrees(rotationDegrees));
 
     // Rotate and move entity based on entity type.
@@ -185,8 +189,8 @@ public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
     } else if (entity instanceof Phantom) {
       poseStack.translate(0, 0.5, 0);
     } else if (entity instanceof FlyingMob
-      || (entity instanceof FlyingAnimal flyingAnimal && flyingAnimal.isFlying())
-      || entity instanceof Guardian) {
+        || (entity instanceof FlyingAnimal flyingAnimal && flyingAnimal.isFlying())
+        || entity instanceof Guardian) {
       poseStack.translate(0, 0.3 / entityScaling, 0);
     } else if (entity instanceof EnderDragon) {
       poseStack.mulPose(Axis.XP.rotationDegrees(0.0F));

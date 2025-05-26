@@ -1,0 +1,8 @@
+{
+  "entity": "iceandfire:fire_dragon",
+  "model": "iceandfire:item/easy_mob_farm/mob_capture_card/fire_dragon",
+  "rarity": "epic",
+  "scale": 3.5,
+  "requires_killed_by_player": true,
+  "requires_animation_tick": true
+}

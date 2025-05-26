@@ -37,9 +37,4 @@ public class MobFarmSubtypeInterpreter implements ISubtypeInterpreter<ItemStack>
     }
     return itemStack.getOrDefault(DataComponents.MOB_FARM_DATA, MobFarmData.EMPTY);
   }
-
-  @Override
-  public String getLegacyStringSubtypeInfo(ItemStack itemStack, UidContext uidContext) {
-    return "";
-  }
 }

@@ -4,17 +4,45 @@
     "property": "easy_mob_farm:mob_capture_card_entity_type",
     "cases": [
       {
+        "when": "iceandfire:fire_dragon",
+        "model": {
+          "type": "minecraft:model",
+          "model": "iceandfire:item/easy_mob_farm/mob_capture_card/fire_dragon"
+        }
+      },
+      {
+        "when": "iceandfire:ice_dragon",
+        "model": {
+          "type": "minecraft:model",
+          "model": "iceandfire:item/easy_mob_farm/mob_capture_card/ice_dragon"
+        }
+      },
+      {
+        "when": "iceandfire:lightning_dragon",
+        "model": {
+          "type": "minecraft:model",
+          "model": "iceandfire:item/easy_mob_farm/mob_capture_card/lightning_dragon"
+        }
+      },
+      {
+        "when": "iceandfire:siren",
+        "model": {
+          "type": "minecraft:model",
+          "model": "iceandfire:item/easy_mob_farm/mob_capture_card/siren"
+        }
+      },
+      {
         "when": "minecraft:bee",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/bee"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/bee"
         }
       },
       {
         "when": "minecraft:blaze",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/blaze"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/blaze"
         }
       },
       {
@@ -27,83 +55,76 @@
               "when": "all_black",
               "model": {
                 "type": "minecraft:model",
-                "model": "easy_mob_farm:item/mob_capture_card/minecraft/cat_all_black"
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/cat_all_black"
               }
             },
             {
               "when": "black",
               "model": {
                 "type": "minecraft:model",
-                "model": "easy_mob_farm:item/mob_capture_card/minecraft/cat_black"
-              }
-            },
-            {
-              "when": "british_shorthair",
-              "model": {
-                "type": "minecraft:model",
-                "model": "easy_mob_farm:item/mob_capture_card/minecraft/cat_british_shorthair"
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/cat_black"
               }
             },
             {
               "when": "calico",
               "model": {
                 "type": "minecraft:model",
-                "model": "easy_mob_farm:item/mob_capture_card/minecraft/cat_calico"
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/cat_calico"
               }
             },
             {
               "when": "jellie",
               "model": {
                 "type": "minecraft:model",
-                "model": "easy_mob_farm:item/mob_capture_card/minecraft/cat_jellie"
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/cat_jellie"
               }
             },
             {
               "when": "persian",
               "model": {
                 "type": "minecraft:model",
-                "model": "easy_mob_farm:item/mob_capture_card/minecraft/cat_persian"
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/cat_persian"
               }
             },
             {
               "when": "ragdoll",
               "model": {
                 "type": "minecraft:model",
-                "model": "easy_mob_farm:item/mob_capture_card/minecraft/cat_ragdoll"
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/cat_ragdoll"
               }
             },
             {
               "when": "red",
               "model": {
                 "type": "minecraft:model",
-                "model": "easy_mob_farm:item/mob_capture_card/minecraft/cat_red"
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/cat_red"
               }
             },
             {
               "when": "siamese",
               "model": {
                 "type": "minecraft:model",
-                "model": "easy_mob_farm:item/mob_capture_card/minecraft/cat_siamese"
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/cat_siamese"
               }
             },
             {
               "when": "tabby",
               "model": {
                 "type": "minecraft:model",
-                "model": "easy_mob_farm:item/mob_capture_card/minecraft/cat_tabby"
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/cat_tabby"
               }
             },
             {
               "when": "white",
               "model": {
                 "type": "minecraft:model",
-                "model": "easy_mob_farm:item/mob_capture_card/minecraft/cat_white"
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/cat_white"
               }
             }
           ],
           "fallback": {
             "type": "minecraft:model",
-            "model": "easy_mob_farm:item/mob_capture_card/minecraft/cat_black"
+            "model": "minecraft:item/easy_mob_farm/mob_capture_card/cat_all_black"
           }
         }
       },
@@ -111,56 +132,56 @@
         "when": "minecraft:chicken",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/chicken"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/chicken"
         }
       },
       {
         "when": "minecraft:cod",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/cod"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/cod"
         }
       },
       {
         "when": "minecraft:cow",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/cow"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/cow"
         }
       },
       {
         "when": "minecraft:creeper",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/creeper"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/creeper"
         }
       },
       {
         "when": "minecraft:drowned",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/drowned"
-        }
-      },
-      {
-        "when": "minecraft:ender_dragon",
-        "model": {
-          "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/ender_dragon"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/drowned"
         }
       },
       {
         "when": "minecraft:enderman",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/enderman"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/enderman"
+        }
+      },
+      {
+        "when": "minecraft:ender_dragon",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/ender_dragon"
         }
       },
       {
         "when": "minecraft:evoker",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/evoker"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/evoker"
         }
       },
       {
@@ -173,27 +194,27 @@
               "when": "cold",
               "model": {
                 "type": "minecraft:model",
-                "model": "easy_mob_farm:item/mob_capture_card/minecraft/frog_cold"
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/frog_cold"
               }
             },
             {
               "when": "temperate",
               "model": {
                 "type": "minecraft:model",
-                "model": "easy_mob_farm:item/mob_capture_card/minecraft/frog_temperate"
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/frog_temperate"
               }
             },
             {
               "when": "warm",
               "model": {
                 "type": "minecraft:model",
-                "model": "easy_mob_farm:item/mob_capture_card/minecraft/frog_warm"
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/frog_warm"
               }
             }
           ],
           "fallback": {
             "type": "minecraft:model",
-            "model": "easy_mob_farm:item/mob_capture_card/minecraft/frog"
+            "model": "minecraft:item/easy_mob_farm/mob_capture_card/frog_cold"
           }
         }
       },
@@ -201,70 +222,77 @@
         "when": "minecraft:glow_squid",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/glow_squid"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/glow_squid"
         }
       },
       {
         "when": "minecraft:guardian",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/guardian"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/guardian"
         }
       },
       {
         "when": "minecraft:husk",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/husk"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/husk"
         }
       },
       {
         "when": "minecraft:iron_golem",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/iron_golem"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/iron_golem"
         }
       },
       {
         "when": "minecraft:magma_cube",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/magma_cube"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/magma_cube"
         }
       },
       {
         "when": "minecraft:phantom",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/phantom"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/phantom"
         }
       },
       {
         "when": "minecraft:pig",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/pig"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/pig"
         }
       },
       {
         "when": "minecraft:piglin",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/piglin"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/piglin"
         }
       },
       {
         "when": "minecraft:piglin_brute",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/piglin_brute"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/piglin_brute"
+        }
+      },
+      {
+        "when": "minecraft:pillager",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/pillager"
         }
       },
       {
         "when": "minecraft:rabbit",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/rabbit"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/rabbit"
         }
       },
       {
@@ -277,62 +305,118 @@
               "when": "black",
               "model": {
                 "type": "minecraft:model",
-                "model": "easy_mob_farm:item/mob_capture_card/minecraft/sheep_black"
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/sheep_black"
               }
             },
             {
               "when": "blue",
               "model": {
                 "type": "minecraft:model",
-                "model": "easy_mob_farm:item/mob_capture_card/minecraft/sheep_blue"
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/sheep_blue"
               }
             },
             {
               "when": "brown",
               "model": {
                 "type": "minecraft:model",
-                "model": "easy_mob_farm:item/mob_capture_card/minecraft/sheep_brown"
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/sheep_brown"
+              }
+            },
+            {
+              "when": "cyan",
+              "model": {
+                "type": "minecraft:model",
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/sheep_cyan"
               }
             },
             {
               "when": "gray",
               "model": {
                 "type": "minecraft:model",
-                "model": "easy_mob_farm:item/mob_capture_card/minecraft/sheep_gray"
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/sheep_gray"
+              }
+            },
+            {
+              "when": "green",
+              "model": {
+                "type": "minecraft:model",
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/sheep_green"
+              }
+            },
+            {
+              "when": "light_blue",
+              "model": {
+                "type": "minecraft:model",
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/sheep_light_blue"
               }
             },
             {
               "when": "light_gray",
               "model": {
                 "type": "minecraft:model",
-                "model": "easy_mob_farm:item/mob_capture_card/minecraft/sheep_light_gray"
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/sheep_light_gray"
+              }
+            },
+            {
+              "when": "lime",
+              "model": {
+                "type": "minecraft:model",
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/sheep_lime"
+              }
+            },
+            {
+              "when": "magenta",
+              "model": {
+                "type": "minecraft:model",
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/sheep_magenta"
+              }
+            },
+            {
+              "when": "orange",
+              "model": {
+                "type": "minecraft:model",
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/sheep_orange"
               }
             },
             {
               "when": "pink",
               "model": {
                 "type": "minecraft:model",
-                "model": "easy_mob_farm:item/mob_capture_card/minecraft/sheep_pink"
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/sheep_pink"
+              }
+            },
+            {
+              "when": "purple",
+              "model": {
+                "type": "minecraft:model",
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/sheep_purple"
               }
             },
             {
               "when": "red",
               "model": {
                 "type": "minecraft:model",
-                "model": "easy_mob_farm:item/mob_capture_card/minecraft/sheep_red"
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/sheep_red"
               }
             },
             {
               "when": "white",
               "model": {
                 "type": "minecraft:model",
-                "model": "easy_mob_farm:item/mob_capture_card/minecraft/sheep_white"
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/sheep_white"
+              }
+            },
+            {
+              "when": "yellow",
+              "model": {
+                "type": "minecraft:model",
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/sheep_yellow"
               }
             }
           ],
           "fallback": {
             "type": "minecraft:model",
-            "model": "easy_mob_farm:item/mob_capture_card/minecraft/sheep"
+            "model": "minecraft:item/easy_mob_farm/mob_capture_card/sheep_black"
           }
         }
       },
@@ -340,91 +424,91 @@
         "when": "minecraft:skeleton",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/skeleton"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/skeleton"
         }
       },
       {
         "when": "minecraft:slime",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/slime"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/slime"
         }
       },
       {
         "when": "minecraft:spider",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/spider"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/spider"
         }
       },
       {
         "when": "minecraft:squid",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/squid"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/squid"
         }
       },
       {
         "when": "minecraft:turtle",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/turtle"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/turtle"
         }
       },
       {
         "when": "minecraft:villager",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/villager"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/villager"
         }
       },
       {
         "when": "minecraft:warden",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/warden"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/warden"
         }
       },
       {
         "when": "minecraft:witch",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/witch"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/witch"
         }
       },
       {
         "when": "minecraft:wither",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/wither"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/wither"
         }
       },
       {
         "when": "minecraft:wither_skeleton",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/wither_skeleton"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/wither_skeleton"
         }
       },
       {
         "when": "minecraft:zombie",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/zombie"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/zombie"
         }
       },
       {
         "when": "minecraft:zombie_villager",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/zombie_villager"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/zombie_villager"
         }
       },
       {
         "when": "minecraft:zombified_piglin",
         "model": {
           "type": "minecraft:model",
-          "model": "easy_mob_farm:item/mob_capture_card/minecraft/zombified_piglin"
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/zombified_piglin"
         }
       }
     ],

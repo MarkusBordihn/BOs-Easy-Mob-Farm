@@ -1,0 +1,19 @@
+{
+  "entity": "minecraft:frog",
+  "model": "minecraft:item/easy_mob_farm/mob_capture_card/frog",
+  "rarity": "common",
+  "scale": 1.0,
+  "requires_killed_by_player": false,
+  "requires_animation_tick": false,
+  "variants": {
+    "cold": {
+      "model": "minecraft:item/easy_mob_farm/mob_capture_card/frog_cold"
+    },
+    "temperate": {
+      "model": "minecraft:item/easy_mob_farm/mob_capture_card/frog_temperate"
+    },
+    "warm": {
+      "model": "minecraft:item/easy_mob_farm/mob_capture_card/frog_warm"
+    }
+  }
+}
