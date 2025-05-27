@@ -24,7 +24,6 @@ import de.markusbordihn.easymobfarm.data.enhancement.FrogCatalystType;
 import de.markusbordihn.easymobfarm.item.consumables.MilkBottleItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.BlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.CreativeBlankMobCaptureCardItem;
-import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardIngredientItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.CreativeMobCatcherItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.EnduringCaptureNetItem;
@@ -75,13 +74,6 @@ public class ModItems {
 
   public static final RegistryObject<Item> MOB_CAPTURE_CARD =
       ITEMS.register(MobCaptureCardItem.ID, MobCaptureCardItemWrapper::new);
-  public static final RegistryObject<Item> MOB_CAPTURE_CARD_FROG_COLD =
-      ITEMS.register(MobCaptureCardIngredientItem.ID_FROG_COLD, MobCaptureCardIngredientItem::new);
-  public static final RegistryObject<Item> MOB_CAPTURE_CARD_FROG_TEMPERATE =
-      ITEMS.register(
-          MobCaptureCardIngredientItem.ID_FROG_TEMPERATE, MobCaptureCardIngredientItem::new);
-  public static final RegistryObject<Item> MOB_CAPTURE_CARD_FROG_WARM =
-      ITEMS.register(MobCaptureCardIngredientItem.ID_FROG_WARM, MobCaptureCardIngredientItem::new);
 
   public static final RegistryObject<Item> CREATIVE_SPEED_ENHANCEMENT =
       ITEMS.register(
@@ -125,6 +117,128 @@ public class ModItems {
           () ->
               new FrogCatalystEnhancementItem(
                   FrogCatalystType.WARM, new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
+
+  public static final RegistryObject<Item> FROG_CATALYST_WHITE_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_WHITE,
+          () ->
+              new FrogCatalystEnhancementItem(
+                  FrogCatalystType.WHITE,
+                  new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
+
+  public static final RegistryObject<Item> FROG_CATALYST_ORANGE_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_ORANGE,
+          () ->
+              new FrogCatalystEnhancementItem(
+                  FrogCatalystType.ORANGE,
+                  new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
+
+  public static final RegistryObject<Item> FROG_CATALYST_MAGENTA_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_MAGENTA,
+          () ->
+              new FrogCatalystEnhancementItem(
+                  FrogCatalystType.MAGENTA,
+                  new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
+
+  public static final RegistryObject<Item> FROG_CATALYST_LIGHT_BLUE_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_LIGHT_BLUE,
+          () ->
+              new FrogCatalystEnhancementItem(
+                  FrogCatalystType.LIGHT_BLUE,
+                  new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
+
+  public static final RegistryObject<Item> FROG_CATALYST_YELLOW_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_YELLOW,
+          () ->
+              new FrogCatalystEnhancementItem(
+                  FrogCatalystType.YELLOW,
+                  new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
+
+  public static final RegistryObject<Item> FROG_CATALYST_LIME_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_LIME,
+          () ->
+              new FrogCatalystEnhancementItem(
+                  FrogCatalystType.LIME, new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
+
+  public static final RegistryObject<Item> FROG_CATALYST_PINK_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_PINK,
+          () ->
+              new FrogCatalystEnhancementItem(
+                  FrogCatalystType.PINK, new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
+
+  public static final RegistryObject<Item> FROG_CATALYST_GRAY_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_GRAY,
+          () ->
+              new FrogCatalystEnhancementItem(
+                  FrogCatalystType.GRAY, new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
+
+  public static final RegistryObject<Item> FROG_CATALYST_LIGHT_GRAY_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_LIGHT_GRAY,
+          () ->
+              new FrogCatalystEnhancementItem(
+                  FrogCatalystType.LIGHT_GRAY,
+                  new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
+
+  public static final RegistryObject<Item> FROG_CATALYST_CYAN_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_CYAN,
+          () ->
+              new FrogCatalystEnhancementItem(
+                  FrogCatalystType.CYAN, new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
+
+  public static final RegistryObject<Item> FROG_CATALYST_PURPLE_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_PURPLE,
+          () ->
+              new FrogCatalystEnhancementItem(
+                  FrogCatalystType.PURPLE,
+                  new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
+
+  public static final RegistryObject<Item> FROG_CATALYST_BLUE_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_BLUE,
+          () ->
+              new FrogCatalystEnhancementItem(
+                  FrogCatalystType.BLUE, new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
+
+  public static final RegistryObject<Item> FROG_CATALYST_BROWN_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_BROWN,
+          () ->
+              new FrogCatalystEnhancementItem(
+                  FrogCatalystType.BROWN,
+                  new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
+
+  public static final RegistryObject<Item> FROG_CATALYST_GREEN_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_GREEN,
+          () ->
+              new FrogCatalystEnhancementItem(
+                  FrogCatalystType.GREEN,
+                  new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
+
+  public static final RegistryObject<Item> FROG_CATALYST_RED_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_RED,
+          () ->
+              new FrogCatalystEnhancementItem(
+                  FrogCatalystType.RED, new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
+
+  public static final RegistryObject<Item> FROG_CATALYST_BLACK_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_BLACK,
+          () ->
+              new FrogCatalystEnhancementItem(
+                  FrogCatalystType.BLACK,
+                  new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
 
   public static final RegistryObject<Item> HONEY_EXTRACTOR_ENHANCEMENT =
       ITEMS.register(

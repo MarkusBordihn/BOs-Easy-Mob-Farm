@@ -23,7 +23,6 @@ import de.markusbordihn.easymobfarm.data.enhancement.FrogCatalystType;
 import de.markusbordihn.easymobfarm.item.consumables.MilkBottleItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.BlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.CreativeBlankMobCaptureCardItem;
-import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardIngredientItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.CreativeMobCatcherItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.EnduringCaptureNetItem;
@@ -54,9 +53,6 @@ public class Items {
   public static final Item BLANK_MOB_CAPTURE_CARD = new BlankMobCaptureCardItem();
   public static final Item CREATIVE_MOB_CAPTURE_CARD = new CreativeBlankMobCaptureCardItem();
   public static final Item MOB_CAPTURE_CARD = new MobCaptureCardItem();
-  public static final Item MOB_CAPTURE_CARD_FROG_COLD = new MobCaptureCardIngredientItem();
-  public static final Item MOB_CAPTURE_CARD_FROG_TEMPERATE = new MobCaptureCardIngredientItem();
-  public static final Item MOB_CAPTURE_CARD_FROG_WARM = new MobCaptureCardIngredientItem();
 
   public static final Item CREATIVE_SPEED_ENHANCEMENT = new CreativeSpeedEnhancementItem();
   public static final Item EGG_COLLECTOR_ENHANCEMENT = new EggCollectorEnhancementItem();
@@ -67,6 +63,39 @@ public class Items {
       new FrogCatalystEnhancementItem(FrogCatalystType.TEMPERATE);
   public static final Item FROG_CATALYST_WARM_ENHANCEMENT =
       new FrogCatalystEnhancementItem(FrogCatalystType.WARM);
+  public static final Item FROG_CATALYST_WHITE_ENHANCEMENT =
+      new FrogCatalystEnhancementItem(FrogCatalystType.WHITE);
+  public static final Item FROG_CATALYST_ORANGE_ENHANCEMENT =
+      new FrogCatalystEnhancementItem(FrogCatalystType.ORANGE);
+  public static final Item FROG_CATALYST_MAGENTA_ENHANCEMENT =
+      new FrogCatalystEnhancementItem(FrogCatalystType.MAGENTA);
+  public static final Item FROG_CATALYST_LIGHT_BLUE_ENHANCEMENT =
+      new FrogCatalystEnhancementItem(FrogCatalystType.LIGHT_BLUE);
+  public static final Item FROG_CATALYST_YELLOW_ENHANCEMENT =
+      new FrogCatalystEnhancementItem(FrogCatalystType.YELLOW);
+  public static final Item FROG_CATALYST_LIME_ENHANCEMENT =
+      new FrogCatalystEnhancementItem(FrogCatalystType.LIME);
+  public static final Item FROG_CATALYST_PINK_ENHANCEMENT =
+      new FrogCatalystEnhancementItem(FrogCatalystType.PINK);
+  public static final Item FROG_CATALYST_GRAY_ENHANCEMENT =
+      new FrogCatalystEnhancementItem(FrogCatalystType.GRAY);
+  public static final Item FROG_CATALYST_LIGHT_GRAY_ENHANCEMENT =
+      new FrogCatalystEnhancementItem(FrogCatalystType.LIGHT_GRAY);
+  public static final Item FROG_CATALYST_CYAN_ENHANCEMENT =
+      new FrogCatalystEnhancementItem(FrogCatalystType.CYAN);
+  public static final Item FROG_CATALYST_PURPLE_ENHANCEMENT =
+      new FrogCatalystEnhancementItem(FrogCatalystType.PURPLE);
+  public static final Item FROG_CATALYST_BLUE_ENHANCEMENT =
+      new FrogCatalystEnhancementItem(FrogCatalystType.BLUE);
+  public static final Item FROG_CATALYST_BROWN_ENHANCEMENT =
+      new FrogCatalystEnhancementItem(FrogCatalystType.BROWN);
+  public static final Item FROG_CATALYST_GREEN_ENHANCEMENT =
+      new FrogCatalystEnhancementItem(FrogCatalystType.GREEN);
+  public static final Item FROG_CATALYST_RED_ENHANCEMENT =
+      new FrogCatalystEnhancementItem(FrogCatalystType.RED);
+  public static final Item FROG_CATALYST_BLACK_ENHANCEMENT =
+      new FrogCatalystEnhancementItem(FrogCatalystType.BLACK);
+
   public static final Item HONEY_EXTRACTOR_ENHANCEMENT = new HoneyExtractorEnhancementItem();
   public static final Item HONEY_HARVESTER_FRAME_ENHANCEMENT =
       new HoneyHarvesterFrameEnhancementItem();

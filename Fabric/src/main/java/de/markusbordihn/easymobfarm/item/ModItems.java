@@ -23,7 +23,6 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.item.consumables.MilkBottleItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.BlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.CreativeBlankMobCaptureCardItem;
-import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardIngredientItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.CreativeMobCatcherItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.EnduringCaptureNetItem;
@@ -63,19 +62,11 @@ public class ModItems {
     registerItem(BlankMobCaptureCardItem.ID, Items.BLANK_MOB_CAPTURE_CARD);
     registerItem(CreativeBlankMobCaptureCardItem.ID, Items.CREATIVE_MOB_CAPTURE_CARD);
     registerItem(MobCaptureCardItem.ID, Items.MOB_CAPTURE_CARD);
-    registerItem(MobCaptureCardIngredientItem.ID_FROG_COLD, Items.MOB_CAPTURE_CARD_FROG_COLD);
-    registerItem(
-        MobCaptureCardIngredientItem.ID_FROG_TEMPERATE, Items.MOB_CAPTURE_CARD_FROG_TEMPERATE);
-    registerItem(MobCaptureCardIngredientItem.ID_FROG_WARM, Items.MOB_CAPTURE_CARD_FROG_WARM);
 
     log.info("{} Enhancement items ...", Constants.LOG_REGISTER_PREFIX);
     registerItem(CreativeSpeedEnhancementItem.ID, Items.CREATIVE_SPEED_ENHANCEMENT);
     registerItem(EggCollectorEnhancementItem.ID, Items.EGG_COLLECTOR_ENHANCEMENT);
     registerItem(ExperienceEnhancementItem.ID, Items.EXPERIENCE_ENHANCEMENT);
-    registerItem(FrogCatalystEnhancementItem.ID_COLD, Items.FROG_CATALYST_COLD_ENHANCEMENT);
-    registerItem(
-        FrogCatalystEnhancementItem.ID_TEMPERATE, Items.FROG_CATALYST_TEMPERATE_ENHANCEMENT);
-    registerItem(FrogCatalystEnhancementItem.ID_WARM, Items.FROG_CATALYST_WARM_ENHANCEMENT);
     registerItem(HoneyExtractorEnhancementItem.ID, Items.HONEY_EXTRACTOR_ENHANCEMENT);
     registerItem(HoneyHarvesterFrameEnhancementItem.ID, Items.HONEY_HARVESTER_FRAME_ENHANCEMENT);
     registerItem(LootEnhancementItem.ID, Items.LOOT_ENHANCEMENT);
@@ -85,6 +76,30 @@ public class ModItems {
     registerItem(SheepEnhancementItem.ID, Items.SHEEP_ENHANCEMENT);
     registerItem(SpeedEnhancementItem.ID, Items.SPEED_ENHANCEMENT);
     registerItem(SwordEnhancementItem.ID, Items.SWORD_ENHANCEMENT);
+
+    log.info("{} Enhancement Catalyst items ...", Constants.LOG_REGISTER_PREFIX);
+    registerItem(FrogCatalystEnhancementItem.ID_COLD, Items.FROG_CATALYST_COLD_ENHANCEMENT);
+    registerItem(
+        FrogCatalystEnhancementItem.ID_TEMPERATE, Items.FROG_CATALYST_TEMPERATE_ENHANCEMENT);
+    registerItem(FrogCatalystEnhancementItem.ID_WARM, Items.FROG_CATALYST_WARM_ENHANCEMENT);
+    registerItem(FrogCatalystEnhancementItem.ID_WHITE, Items.FROG_CATALYST_WHITE_ENHANCEMENT);
+    registerItem(FrogCatalystEnhancementItem.ID_ORANGE, Items.FROG_CATALYST_ORANGE_ENHANCEMENT);
+    registerItem(FrogCatalystEnhancementItem.ID_MAGENTA, Items.FROG_CATALYST_MAGENTA_ENHANCEMENT);
+    registerItem(
+        FrogCatalystEnhancementItem.ID_LIGHT_BLUE, Items.FROG_CATALYST_LIGHT_BLUE_ENHANCEMENT);
+    registerItem(FrogCatalystEnhancementItem.ID_YELLOW, Items.FROG_CATALYST_YELLOW_ENHANCEMENT);
+    registerItem(FrogCatalystEnhancementItem.ID_LIME, Items.FROG_CATALYST_LIME_ENHANCEMENT);
+    registerItem(FrogCatalystEnhancementItem.ID_PINK, Items.FROG_CATALYST_PINK_ENHANCEMENT);
+    registerItem(FrogCatalystEnhancementItem.ID_GRAY, Items.FROG_CATALYST_GRAY_ENHANCEMENT);
+    registerItem(
+        FrogCatalystEnhancementItem.ID_LIGHT_GRAY, Items.FROG_CATALYST_LIGHT_GRAY_ENHANCEMENT);
+    registerItem(FrogCatalystEnhancementItem.ID_CYAN, Items.FROG_CATALYST_CYAN_ENHANCEMENT);
+    registerItem(FrogCatalystEnhancementItem.ID_PURPLE, Items.FROG_CATALYST_PURPLE_ENHANCEMENT);
+    registerItem(FrogCatalystEnhancementItem.ID_BLUE, Items.FROG_CATALYST_BLUE_ENHANCEMENT);
+    registerItem(FrogCatalystEnhancementItem.ID_BROWN, Items.FROG_CATALYST_BROWN_ENHANCEMENT);
+    registerItem(FrogCatalystEnhancementItem.ID_GREEN, Items.FROG_CATALYST_GREEN_ENHANCEMENT);
+    registerItem(FrogCatalystEnhancementItem.ID_RED, Items.FROG_CATALYST_RED_ENHANCEMENT);
+    registerItem(FrogCatalystEnhancementItem.ID_BLACK, Items.FROG_CATALYST_BLACK_ENHANCEMENT);
 
     log.info("{} Filter items ...", Constants.LOG_REGISTER_PREFIX);
     registerItem(NoFlowersFilterItem.ID, Items.NO_FLOWERS_FILTER);

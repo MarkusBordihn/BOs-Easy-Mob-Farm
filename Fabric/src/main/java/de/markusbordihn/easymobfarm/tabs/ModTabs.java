@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.tabs;
 
 import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.compat.CompatConstants;
 import de.markusbordihn.easymobfarm.item.Items;
 import de.markusbordihn.easymobfarm.item.ModBlockItems;
 import java.util.Set;
@@ -98,6 +99,26 @@ public class ModTabs {
                   stack.add(Items.FROG_CATALYST_COLD_ENHANCEMENT.getDefaultInstance());
                   stack.add(Items.FROG_CATALYST_TEMPERATE_ENHANCEMENT.getDefaultInstance());
                   stack.add(Items.FROG_CATALYST_WARM_ENHANCEMENT.getDefaultInstance());
+
+                  if (CompatConstants.MOD_SWAMPIER_SWAMPS_LOADED) {
+                    stack.add(Items.FROG_CATALYST_WHITE_ENHANCEMENT.getDefaultInstance());
+                    stack.add(Items.FROG_CATALYST_ORANGE_ENHANCEMENT.getDefaultInstance());
+                    stack.add(Items.FROG_CATALYST_MAGENTA_ENHANCEMENT.getDefaultInstance());
+                    stack.add(Items.FROG_CATALYST_LIGHT_BLUE_ENHANCEMENT.getDefaultInstance());
+                    stack.add(Items.FROG_CATALYST_YELLOW_ENHANCEMENT.getDefaultInstance());
+                    stack.add(Items.FROG_CATALYST_LIME_ENHANCEMENT.getDefaultInstance());
+                    stack.add(Items.FROG_CATALYST_PINK_ENHANCEMENT.getDefaultInstance());
+                    stack.add(Items.FROG_CATALYST_GRAY_ENHANCEMENT.getDefaultInstance());
+                    stack.add(Items.FROG_CATALYST_LIGHT_GRAY_ENHANCEMENT.getDefaultInstance());
+                    stack.add(Items.FROG_CATALYST_CYAN_ENHANCEMENT.getDefaultInstance());
+                    stack.add(Items.FROG_CATALYST_PURPLE_ENHANCEMENT.getDefaultInstance());
+                    stack.add(Items.FROG_CATALYST_BLUE_ENHANCEMENT.getDefaultInstance());
+                    stack.add(Items.FROG_CATALYST_BROWN_ENHANCEMENT.getDefaultInstance());
+                    stack.add(Items.FROG_CATALYST_GREEN_ENHANCEMENT.getDefaultInstance());
+                    stack.add(Items.FROG_CATALYST_RED_ENHANCEMENT.getDefaultInstance());
+                    stack.add(Items.FROG_CATALYST_BLACK_ENHANCEMENT.getDefaultInstance());
+                  }
+
                   stack.add(Items.HONEY_EXTRACTOR_ENHANCEMENT.getDefaultInstance());
                   stack.add(Items.HONEY_HARVESTER_FRAME_ENHANCEMENT.getDefaultInstance());
                   stack.add(Items.LOOT_ENHANCEMENT.getDefaultInstance());

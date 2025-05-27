@@ -68,7 +68,8 @@ public class ModelEventHandler {
                       "models/item/easy_mob_farm/mob_capture_card",
                       resourceLocation -> resourceLocation.getPath().endsWith(".json"))
                   .keySet()) {
-            ModelResourceLocation modelResourceLocation = getModelResourceLocation(location);
+            ModelResourceLocation modelResourceLocation =
+                ModelManagerInterface.getModelResourceLocation(location);
             log.info(
                 "Automatically registering model {} as {} ...", location, modelResourceLocation);
             consumer.accept(modelResourceLocation);
@@ -78,30 +79,21 @@ public class ModelEventHandler {
     ModelLoadingRegistry.INSTANCE.registerResourceProvider(
         resourceManager ->
             (location, context) -> {
-              if (location.getNamespace().equals(Constants.MOD_ID)) {
-                log.debug("Found unbaked model: {} ({})", location, location.getPath());
-                if (location.getPath().equals("item/mob_capture_card")) {
-                  log.info("Adjusting baked model for {} ...", location);
-                  UnbakedModel unbakedModel = context.loadModel(UnbakedMobCaptureCardModel.MODEL);
-                  if (unbakedModel == null) {
-                    log.error(
-                        "Unable to load unbaked model for resource location {} from {}",
-                        location,
-                        UnbakedMobCaptureCardModel.MODEL);
-                    return null;
-                  }
-                  log.info("Baking unbaked model for {} ...", location);
-                  return new UnbakedMobCaptureCardModel(unbakedModel);
+              if (location.getNamespace().equals(Constants.MOD_ID)
+                  && location.getPath().equals("item/mob_capture_card")) {
+                log.info("Adjusting baked model for {} ...", location);
+                UnbakedModel unbakedModel = context.loadModel(UnbakedMobCaptureCardModel.MODEL);
+                if (unbakedModel == null) {
+                  log.error(
+                      "Unable to load unbaked model for resource location {} from {}",
+                      location,
+                      UnbakedMobCaptureCardModel.MODEL);
+                  return null;
                 }
+                log.info("Baking unbaked model for {} ...", location);
+                return new UnbakedMobCaptureCardModel(unbakedModel);
               }
               return null;
             });
-  }
-
-  public static ModelResourceLocation getModelResourceLocation(ResourceLocation fileLocation) {
-    String modelPath =
-        fileLocation.getPath().replaceFirst("^models/item/", "").replaceAll("\\.json$", "");
-    return new ModelResourceLocation(
-        new ResourceLocation(fileLocation.getNamespace(), modelPath), "inventory");
   }
 }

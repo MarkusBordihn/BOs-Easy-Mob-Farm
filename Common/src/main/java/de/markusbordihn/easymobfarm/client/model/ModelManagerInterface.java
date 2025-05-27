@@ -44,6 +44,7 @@ public interface ModelManagerInterface {
   Logger log = LogManager.getLogger(Constants.LOG_NAME);
   Set<String> KNOWN_MISSING_MODELS = new HashSet<>();
   String LOG_PREFIX = "[Model Manager]";
+  String MODEL_SEARCH_PATH = "/easy_mob_farm/mob_capture_card/";
 
   ModelResourceLocation DEFAULT_MODEL =
       new ModelResourceLocation(
@@ -66,6 +67,22 @@ public interface ModelManagerInterface {
     Item correspondingItem = Registry.ITEM.get(entityId);
     return correspondingItem != Items.AIR
         && correspondingItem.builtInRegistryHolder().is(ItemTags.FISHES);
+  }
+
+  static ModelResourceLocation getModelResourceLocation(final ResourceLocation resourceLocation) {
+    return new ModelResourceLocation(
+        new ResourceLocation(
+            resourceLocation.getNamespace(),
+            resourceLocation
+                .getPath()
+                .replaceFirst("^models/", "")
+                .replaceFirst("^item/", "")
+                .replaceFirst("\\.json$", "")),
+        "inventory");
+  }
+
+  static boolean isMobCaptureCardModel(ResourceLocation resourceLocation) {
+    return resourceLocation != null && resourceLocation.getPath().contains(MODEL_SEARCH_PATH);
   }
 
   default BakedModel getModel(ModelResourceLocation modelResourceLocation) {
@@ -94,14 +111,14 @@ public interface ModelManagerInterface {
 
     // Check if the variant and color are valid.
     ModelResourceLocation modelResourceLocation = null;
-    if (variant != null && color != null) {
+    if (variant != null && !variant.isBlank() && color != null) {
       if (mobCaptureCardDefinition.variants().containsKey(variant)
           && mobCaptureCardDefinition.variants().get(variant).colors().containsKey(color)) {
         modelResourceLocation =
             getModelResourceLocation(
                 mobCaptureCardDefinition.variants().get(variant).colors().get(color).model());
       }
-    } else if (variant != null) {
+    } else if (variant != null && !variant.isBlank()) {
       if (mobCaptureCardDefinition.variants().containsKey(variant)) {
         modelResourceLocation =
             getModelResourceLocation(mobCaptureCardDefinition.variants().get(variant).model());
@@ -120,8 +137,7 @@ public interface ModelManagerInterface {
     if (modelResourceLocation == null) {
       modelResourceLocation = defaultModelResourceLocation;
     }
-    BakedModel bakedModel =
-        Minecraft.getInstance().getModelManager().getModel(modelResourceLocation);
+    BakedModel bakedModel = this.getModel(modelResourceLocation);
     if (bakedModel == Minecraft.getInstance().getModelManager().getMissingModel()) {
       bakedModel = Minecraft.getInstance().getModelManager().getModel(defaultModelResourceLocation);
     }
@@ -156,12 +172,5 @@ public interface ModelManagerInterface {
 
   default BakedModel getDefaultModel() {
     return this.getModel(DEFAULT_MODEL);
-  }
-
-  default ModelResourceLocation getModelResourceLocation(ResourceLocation resourceLocation) {
-    String namespace = resourceLocation.getNamespace();
-    String path = resourceLocation.getPath();
-    return new ModelResourceLocation(
-        new ResourceLocation(namespace, path.replace("item/", "")), "inventory");
   }
 }

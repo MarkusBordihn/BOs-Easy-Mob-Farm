@@ -78,7 +78,8 @@ public class ModelEventHandler {
                 "models/item/easy_mob_farm/mob_capture_card",
                 resourceLocation -> resourceLocation.getPath().endsWith(".json"))
             .keySet()) {
-      ModelResourceLocation modelResourceLocation = getModelResourceLocation(location);
+      ModelResourceLocation modelResourceLocation =
+          ModelManagerInterface.getModelResourceLocation(location);
       log.info("Automatically registering model {} as {} ...", location, modelResourceLocation);
       event.register(modelResourceLocation);
     }
@@ -107,12 +108,5 @@ public class ModelEventHandler {
             BlockModelRotation.X0_Y0,
             mobCaptureCardModelResourceLocation);
     event.getModels().put(mobCaptureCardModelResourceLocation, bakedModel);
-  }
-
-  public static ModelResourceLocation getModelResourceLocation(ResourceLocation fileLocation) {
-    String modelPath =
-        fileLocation.getPath().replaceFirst("^models/item/", "").replaceAll("\\.json$", "");
-    return new ModelResourceLocation(
-        new ResourceLocation(fileLocation.getNamespace(), modelPath), "inventory");
   }
 }
