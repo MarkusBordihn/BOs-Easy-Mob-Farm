@@ -164,8 +164,8 @@ dependencies {
   // runtimeOnly fg.deobf("curse.maven:pipez-443900:3819249")
 
   // Swampier Swamps: Integration
-  // compileOnly fg.deobf("curse.maven:swampier-swamps-632591:4463591")
-  // runtimeOnly fg.deobf("curse.maven:swampier-swamps-632591:4463591")
+  compileOnly fg.deobf("curse.maven:swampier-swamps-632591:4578599")
+  runtimeOnly fg.deobf("curse.maven:swampier-swamps-632591:4578599")
 }
 
 tasks.withType(JavaCompile).configureEach {

@@ -56,6 +56,16 @@ public class TextComponent {
         .withStyle(chatFormatting);
   }
 
+  public static MutableComponent getTranslatedText(final String translationKey, final float value) {
+    return getTranslatedTextRaw(Constants.TEXT_PREFIX + translationKey, String.valueOf(value));
+  }
+
+  public static MutableComponent getTranslatedText(
+      final String translationKey, final float value, ChatFormatting chatFormatting) {
+    return getTranslatedTextRaw(Constants.TEXT_PREFIX + translationKey, String.valueOf(value))
+        .withStyle(chatFormatting);
+  }
+
   public static MutableComponent getTranslatedText(final String translationKey, final String data) {
     return getTranslatedTextRaw(Constants.TEXT_PREFIX + translationKey, data);
   }

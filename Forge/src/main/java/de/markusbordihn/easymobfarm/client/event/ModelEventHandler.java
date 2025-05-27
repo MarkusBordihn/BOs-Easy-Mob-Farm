@@ -80,7 +80,8 @@ public class ModelEventHandler {
                 "models/item/easy_mob_farm/mob_capture_card",
                 resourceLocation -> resourceLocation.getPath().endsWith(".json"))
             .keySet()) {
-      ModelResourceLocation modelResourceLocation = getModelResourceLocation(location);
+      ModelResourceLocation modelResourceLocation =
+          ModelManagerInterface.getModelResourceLocation(location);
       log.info("Automatically registering model {} as {} ...", location, modelResourceLocation);
       event.register(modelResourceLocation);
     }

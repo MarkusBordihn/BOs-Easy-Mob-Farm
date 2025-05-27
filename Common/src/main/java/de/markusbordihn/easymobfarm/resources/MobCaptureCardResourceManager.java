@@ -43,7 +43,7 @@ import org.apache.logging.log4j.Logger;
 public class MobCaptureCardResourceManager extends SimpleJsonResourceReloadListener {
 
   public static final ResourceLocation RESOURCE_ID =
-    new ResourceLocation(Constants.MOD_ID, "mob_capture_card_resource_loader");
+      new ResourceLocation(Constants.MOD_ID, "mob_capture_card_resource_loader");
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
@@ -58,86 +58,86 @@ public class MobCaptureCardResourceManager extends SimpleJsonResourceReloadListe
   private static final String VARIANTS_TAG = "variants";
 
   private static final ResourceLocation FROG_RESOURCE_LOCATION =
-    new ResourceLocation("minecraft", "frog");
+      new ResourceLocation("minecraft", "frog");
 
   public MobCaptureCardResourceManager() {
     super(GSON, SEARCH_PATH);
   }
 
   private static void addAdditionalVariants(
-    ResourceLocation entity, Map<String, MobCaptureCardDefinition.Variant> variants) {
+      ResourceLocation entity, Map<String, MobCaptureCardDefinition.Variant> variants) {
     if (CompatConstants.MOD_SWAMPIER_SWAMPS_LOADED && FROG_RESOURCE_LOCATION.equals(entity)) {
       addAdditionalFrogVariants(variants);
     }
   }
 
   private static void addAdditionalFrogVariants(
-    Map<String, MobCaptureCardDefinition.Variant> variants) {
+      Map<String, MobCaptureCardDefinition.Variant> variants) {
     for (DyeColor color : DyeColor.values()) {
       String variantName = color.getName();
       ResourceLocation model =
-        new ResourceLocation("minecraft:item/easy_mob_farm/mob_capture_card/frog_" + variantName);
+          new ResourceLocation("minecraft:item/easy_mob_farm/mob_capture_card/frog_" + variantName);
       variants.put(variantName, new MobCaptureCardDefinition.Variant(model, new HashMap<>()));
     }
   }
 
   @Override
   protected void apply(
-    Map<ResourceLocation, JsonElement> objectMap,
-    ResourceManager resourceManager,
-    ProfilerFiller profiler) {
+      Map<ResourceLocation, JsonElement> objectMap,
+      ResourceManager resourceManager,
+      ProfilerFiller profiler) {
 
     log.info("{} Loading definitions ... from {}", LOG_PREFIX, SEARCH_PATH);
     MobCaptureCardDefinitionManager.clear();
 
     objectMap.forEach(
-      (location, element) -> {
-        try {
-          JsonObject json = GsonHelper.convertToJsonObject(element, "mob_capture_card");
-          log.debug("{} Parsing definition: {}", LOG_PREFIX, location);
+        (location, element) -> {
+          try {
+            JsonObject json = GsonHelper.convertToJsonObject(element, "mob_capture_card");
+            log.debug("{} Parsing definition: {}", LOG_PREFIX, location);
 
-          // Parse entity, model, rarity, scale, and requires killed by player.
-          ResourceLocation entity = new ResourceLocation(GsonHelper.getAsString(json, "entity"));
-          ResourceLocation model =
-            json.has(MODEL_TAG)
-              ? new ResourceLocation(GsonHelper.getAsString(json, MODEL_TAG))
-              : null;
-          Rarity rarity =
-            Rarity.valueOf(
-              GsonHelper.getAsString(json, RARITY_TAG, "common").toUpperCase(Locale.ROOT));
-          float scale = GsonHelper.getAsFloat(json, SCALE_TAG, 1.0f);
-          boolean requiresKilledByPlayer =
-            GsonHelper.getAsBoolean(json, REQUIRES_KILLED_BY_PLAYER_TAG, false);
-          boolean requiresAnimationTick =
-            GsonHelper.getAsBoolean(json, REQUIRES_ANIMATION_TICK_TAG, false);
+            // Parse entity, model, rarity, scale, and requires killed by player.
+            ResourceLocation entity = new ResourceLocation(GsonHelper.getAsString(json, "entity"));
+            ResourceLocation model =
+                json.has(MODEL_TAG)
+                    ? new ResourceLocation(GsonHelper.getAsString(json, MODEL_TAG))
+                    : null;
+            Rarity rarity =
+                Rarity.valueOf(
+                    GsonHelper.getAsString(json, RARITY_TAG, "common").toUpperCase(Locale.ROOT));
+            float scale = GsonHelper.getAsFloat(json, SCALE_TAG, 1.0f);
+            boolean requiresKilledByPlayer =
+                GsonHelper.getAsBoolean(json, REQUIRES_KILLED_BY_PLAYER_TAG, false);
+            boolean requiresAnimationTick =
+                GsonHelper.getAsBoolean(json, REQUIRES_ANIMATION_TICK_TAG, false);
 
-          // Parse colors and variants.
-          Map<String, MobCaptureCardDefinition.Color> colors = parseColors(json);
-          Map<String, MobCaptureCardDefinition.Variant> variants = parseVariants(json);
+            // Parse colors and variants.
+            Map<String, MobCaptureCardDefinition.Color> colors = parseColors(json);
+            Map<String, MobCaptureCardDefinition.Variant> variants = parseVariants(json);
 
-          // Add additional variants for specific entities and 3rd party mods integrations.
-          addAdditionalVariants(entity, variants);
+            // Add additional variants for specific entities and 3rd party mods integrations.
+            addAdditionalVariants(entity, variants);
 
-          MobCaptureCardDefinition definition =
-            new MobCaptureCardDefinition(
-              entity,
-              model,
-              rarity,
-              scale,
-              requiresKilledByPlayer,
-              requiresAnimationTick,
-              variants,
-              colors);
+            MobCaptureCardDefinition definition =
+                new MobCaptureCardDefinition(
+                    entity,
+                    model,
+                    rarity,
+                    scale,
+                    requiresKilledByPlayer,
+                    requiresAnimationTick,
+                    variants,
+                    colors);
 
-          MobCaptureCardDefinitionManager.addDefinition(entity, definition);
-        } catch (Exception e) {
-          log.error(
-            "{} Failed to parse mob_capture_card definition: {} → {}",
-            LOG_PREFIX,
-            location,
-            e.getMessage());
-        }
-      });
+            MobCaptureCardDefinitionManager.addDefinition(entity, definition);
+          } catch (Exception e) {
+            log.error(
+                "{} Failed to parse mob_capture_card definition: {} → {}",
+                LOG_PREFIX,
+                location,
+                e.getMessage());
+          }
+        });
   }
 
   private Map<String, MobCaptureCardDefinition.Color> parseColors(JsonObject json) {
@@ -148,17 +148,17 @@ public class MobCaptureCardResourceManager extends SimpleJsonResourceReloadListe
 
     JsonObject colorsJson = GsonHelper.getAsJsonObject(json, COLORS_TAG);
     colorsJson
-      .entrySet()
-      .forEach(
-        entry -> {
-          String color = entry.getKey();
-          ResourceLocation colorModel =
-            json.has(MODEL_TAG)
-              ? new ResourceLocation(
-              GsonHelper.getAsString(entry.getValue().getAsJsonObject(), MODEL_TAG))
-              : null;
-          colors.put(color, new MobCaptureCardDefinition.Color(colorModel));
-        });
+        .entrySet()
+        .forEach(
+            entry -> {
+              String color = entry.getKey();
+              ResourceLocation colorModel =
+                  json.has(MODEL_TAG)
+                      ? new ResourceLocation(
+                          GsonHelper.getAsString(entry.getValue().getAsJsonObject(), MODEL_TAG))
+                      : null;
+              colors.put(color, new MobCaptureCardDefinition.Color(colorModel));
+            });
 
     return colors;
   }
@@ -171,37 +171,37 @@ public class MobCaptureCardResourceManager extends SimpleJsonResourceReloadListe
 
     JsonObject variantsJson = GsonHelper.getAsJsonObject(json, VARIANTS_TAG);
     variantsJson
-      .entrySet()
-      .forEach(
-        entry -> {
-          String variant = entry.getKey();
-          JsonObject variantObj = entry.getValue().getAsJsonObject();
-          ResourceLocation variantModel =
-            json.has(MODEL_TAG)
-              ? new ResourceLocation(GsonHelper.getAsString(variantObj, MODEL_TAG, null))
-              : null;
-
-          Map<String, MobCaptureCardDefinition.Color> variantColors = new HashMap<>();
-          if (variantObj.has(COLORS_TAG)) {
-            JsonObject variantColorsJson = GsonHelper.getAsJsonObject(variantObj, COLORS_TAG);
-            variantColorsJson
-              .entrySet()
-              .forEach(
-                colorEntry -> {
-                  String color = colorEntry.getKey();
-                  ResourceLocation colorModel =
-                    json.has(MODEL_TAG)
-                      ? new ResourceLocation(
-                      GsonHelper.getAsString(
-                        colorEntry.getValue().getAsJsonObject(), MODEL_TAG))
+        .entrySet()
+        .forEach(
+            entry -> {
+              String variant = entry.getKey();
+              JsonObject variantObj = entry.getValue().getAsJsonObject();
+              ResourceLocation variantModel =
+                  json.has(MODEL_TAG)
+                      ? new ResourceLocation(GsonHelper.getAsString(variantObj, MODEL_TAG, null))
                       : null;
-                  variantColors.put(color, new MobCaptureCardDefinition.Color(colorModel));
-                });
-          }
 
-          variants.put(
-            variant, new MobCaptureCardDefinition.Variant(variantModel, variantColors));
-        });
+              Map<String, MobCaptureCardDefinition.Color> variantColors = new HashMap<>();
+              if (variantObj.has(COLORS_TAG)) {
+                JsonObject variantColorsJson = GsonHelper.getAsJsonObject(variantObj, COLORS_TAG);
+                variantColorsJson
+                    .entrySet()
+                    .forEach(
+                        colorEntry -> {
+                          String color = colorEntry.getKey();
+                          ResourceLocation colorModel =
+                              json.has(MODEL_TAG)
+                                  ? new ResourceLocation(
+                                      GsonHelper.getAsString(
+                                          colorEntry.getValue().getAsJsonObject(), MODEL_TAG))
+                                  : null;
+                          variantColors.put(color, new MobCaptureCardDefinition.Color(colorModel));
+                        });
+              }
+
+              variants.put(
+                  variant, new MobCaptureCardDefinition.Variant(variantModel, variantColors));
+            });
 
     return variants;
   }

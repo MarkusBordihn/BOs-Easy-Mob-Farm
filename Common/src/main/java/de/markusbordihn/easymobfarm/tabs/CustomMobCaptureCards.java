@@ -50,75 +50,75 @@ public class CustomMobCaptureCards {
 
     // Add default mob capture cards.
     result.add(
-      MobCaptureManager.createMobCaptureCard(
-        mobCaptureCardItem,
-        new MobCaptureData("Common Card", EntityType.ARMOR_STAND, Rarity.COMMON)));
+        MobCaptureManager.createMobCaptureCard(
+            mobCaptureCardItem,
+            new MobCaptureData("Common Card", EntityType.ARMOR_STAND, Rarity.COMMON)));
     result.add(
-      MobCaptureManager.createMobCaptureCard(
-        mobCaptureCardItem,
-        new MobCaptureData("Uncommon Card", EntityType.ARMOR_STAND, Rarity.UNCOMMON)));
+        MobCaptureManager.createMobCaptureCard(
+            mobCaptureCardItem,
+            new MobCaptureData("Uncommon Card", EntityType.ARMOR_STAND, Rarity.UNCOMMON)));
     result.add(
-      MobCaptureManager.createMobCaptureCard(
-        mobCaptureCardItem,
-        new MobCaptureData("Rare Card", EntityType.ARMOR_STAND, Rarity.RARE)));
+        MobCaptureManager.createMobCaptureCard(
+            mobCaptureCardItem,
+            new MobCaptureData("Rare Card", EntityType.ARMOR_STAND, Rarity.RARE)));
     result.add(
-      MobCaptureManager.createMobCaptureCard(
-        mobCaptureCardItem,
-        new MobCaptureData("Epic Card", EntityType.ARMOR_STAND, Rarity.EPIC)));
+        MobCaptureManager.createMobCaptureCard(
+            mobCaptureCardItem,
+            new MobCaptureData("Epic Card", EntityType.ARMOR_STAND, Rarity.EPIC)));
 
     // Extract mob capture cards from MobCaptureCardResourceManager.
     MobCaptureCardDefinitionManager.getAll()
-      .forEach(
-        (location, definition) -> {
-          if (definition == null
-            || definition.entityType() == null
-            || definition.model() == null) {
-            return;
-          }
+        .forEach(
+            (location, definition) -> {
+              if (definition == null
+                  || definition.entityType() == null
+                  || definition.model() == null) {
+                return;
+              }
 
-          // Create default mob capture card.
-          ItemStack itemStack =
-            MobCaptureManager.createMobCaptureCard(
-              mobCaptureCardItem, definition.entityType());
-          if (itemStack != null && !itemStack.isEmpty()) {
-            result.add(itemStack);
-          }
-
-          // Create custom mob capture card variants.
-          definition
-            .variants()
-            .forEach(
-              (variantName, variant) -> {
-                if (variant == null) {
-                  return;
-                }
-                ItemStack variantItemStack =
+              // Create default mob capture card.
+              ItemStack itemStack =
                   MobCaptureManager.createMobCaptureCard(
-                    mobCaptureCardItem, definition.entityType(), variantName, null);
-                if (variantItemStack != null && !variantItemStack.isEmpty()) {
-                  result.add(variantItemStack);
-                }
-              });
+                      mobCaptureCardItem, definition.entityType());
+              if (itemStack != null && !itemStack.isEmpty()) {
+                result.add(itemStack);
+              }
 
-          // Create custom mob capture card colors.
-          definition
-            .colors()
-            .forEach(
-              (colorName, color) -> {
-                if (color == null) {
-                  return;
-                }
-                ItemStack colorItemStack =
-                  MobCaptureManager.createMobCaptureCard(
-                    mobCaptureCardItem,
-                    definition.entityType(),
-                    null,
-                    DyeColor.valueOf(colorName.toUpperCase(Locale.ROOT)));
-                if (colorItemStack != null && !colorItemStack.isEmpty()) {
-                  result.add(colorItemStack);
-                }
-              });
-        });
+              // Create custom mob capture card variants.
+              definition
+                  .variants()
+                  .forEach(
+                      (variantName, variant) -> {
+                        if (variant == null) {
+                          return;
+                        }
+                        ItemStack variantItemStack =
+                            MobCaptureManager.createMobCaptureCard(
+                                mobCaptureCardItem, definition.entityType(), variantName, null);
+                        if (variantItemStack != null && !variantItemStack.isEmpty()) {
+                          result.add(variantItemStack);
+                        }
+                      });
+
+              // Create custom mob capture card colors.
+              definition
+                  .colors()
+                  .forEach(
+                      (colorName, color) -> {
+                        if (color == null) {
+                          return;
+                        }
+                        ItemStack colorItemStack =
+                            MobCaptureManager.createMobCaptureCard(
+                                mobCaptureCardItem,
+                                definition.entityType(),
+                                null,
+                                DyeColor.valueOf(colorName.toUpperCase(Locale.ROOT)));
+                        if (colorItemStack != null && !colorItemStack.isEmpty()) {
+                          result.add(colorItemStack);
+                        }
+                      });
+            });
 
     return result;
   }

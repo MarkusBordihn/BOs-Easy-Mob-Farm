@@ -37,9 +37,11 @@ import de.markusbordihn.easymobfarm.menu.slots.OutputSlot;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.List;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.Entity;
@@ -62,6 +64,24 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
 
   public MobFarmScreen(T menu, Inventory inventory, Component component) {
     super(menu, inventory, component);
+  }
+
+  public static MutableComponent getLocalizedRemainingTimeComponent(
+      int totalTicks, int currentProgress, int speed, int bonus) {
+    int remainingTicks = Math.max(0, totalTicks - currentProgress);
+    float ticksPerSecond = Math.max(1f, speed + bonus);
+    float secondsRemaining = remainingTicks / ticksPerSecond;
+
+    int totalSeconds = Math.round(secondsRemaining);
+    if (totalSeconds < 60) {
+      return TextComponent.getTranslatedTextRaw(
+          Constants.TOOLTIP_FARM_PREFIX + "next_drop.seconds", totalSeconds);
+    } else {
+      int minutes = totalSeconds / 60;
+      int seconds = totalSeconds % 60;
+      return TextComponent.getTranslatedTextRaw(
+          Constants.TOOLTIP_FARM_PREFIX + "next_drop.full", new Object[] {minutes, seconds});
+    }
   }
 
   @Override
@@ -96,7 +116,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
 
   private void renderMobFarmProgress(GuiGraphics guiGraphics, int x, int y) {
     int mobFarmProgress = this.getMenu().getMobFarmProgress();
-    int currentWidth = (mobFarmProgress * 32) / MobFarmBlockEntity.DEFAULT_FARM_PROCESSING_TIME;
+    int currentWidth = (mobFarmProgress * 32) / MobFarmConfig.farmProgressingTime;
     Graphics.blit(
         guiGraphics,
         TEXTURE_ELEMENTS,
@@ -159,6 +179,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
     super.renderTooltip(guiGraphics, mouseX, mouseY);
 
     MobFarmType mobFarmType = this.getMenu().getMobFarmType();
+    boolean isAdvanced = Minecraft.getInstance().options.advancedItemTooltips;
 
     // Render tooltip for different kind of slots.
     for (Slot slot : this.menu.slots) {
@@ -195,19 +216,40 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
               Constants.TOOLTIP_FARM_PREFIX + "status",
               TextComponent.getTranslatedTextRaw(
                   Constants.TOOLTIP_FARM_PREFIX + "status_" + this.getMenu().getMobFarmStatus())));
-      infoText.add(
-          TextComponent.getTranslatedTextRaw(
-              Constants.TOOLTIP_FARM_PREFIX + "progress",
-              new Object[] {
-                this.getMenu().getMobFarmProgress(), MobFarmBlockEntity.DEFAULT_FARM_PROCESSING_TIME
-              }));
-      infoText.add(
-          TextComponent.getTranslatedTextRaw(
-              Constants.TOOLTIP_FARM_PREFIX + "progression_speed",
-              new Object[] {
+
+      if (this.getMenu().getMobFarmStatus() == MobFarmStatus.WORKING) {
+        infoText.add(
+            getLocalizedRemainingTimeComponent(
+                MobFarmConfig.farmProgressingTime,
+                this.getMenu().getMobFarmProgress(),
                 this.getMenu().getMobFarmProgressionSpeed(),
-                this.getMenu().getMobFarmProgressionSpeedBonus()
-              }));
+                this.getMenu().getMobFarmProgressionSpeedBonus()));
+      }
+      if (isAdvanced) {
+        infoText.add(
+            TextComponent.getTranslatedTextRaw(
+                Constants.TOOLTIP_FARM_PREFIX + "progress",
+                new Object[] {
+                  this.getMenu().getMobFarmProgress(), MobFarmConfig.farmProgressingTime
+                }));
+      }
+
+      infoText.add(
+          TextComponent.getTranslatedText(
+              "tier_level_processing_speed",
+              MobFarmBlockEntity.getProcessingSpeed(
+                  this.getMenu().getMobFarmTierLevel(),
+                  this.getMenu().getMobFarmProgressionSpeedBonus())));
+      if (isAdvanced) {
+        infoText.add(
+            TextComponent.getTranslatedTextRaw(
+                Constants.TOOLTIP_FARM_PREFIX + "progression_speed",
+                new Object[] {
+                  this.getMenu().getMobFarmProgressionSpeed(),
+                  this.getMenu().getMobFarmProgressionSpeedBonus()
+                }));
+      }
+
       infoText.add(
           TextComponent.getTranslatedTextRaw(
               Constants.TOOLTIP_FARM_PREFIX + "output_slots",
@@ -219,6 +261,11 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
             TextComponent.getTranslatedTextRaw(
                 Constants.TOOLTIP_FARM_PREFIX + "lucky_drop_percentage",
                 new Object[] {MobFarmConfig.luckyDropFarmLuckPercentage}));
+        if (MobFarmConfig.luckyDropFarmLuckPercentage < 100) {
+          infoText.add(
+              TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "lucky_drop_warn")
+                  .withStyle(ChatFormatting.RED));
+        }
       }
 
       // Add entity information to the tooltip, if available.

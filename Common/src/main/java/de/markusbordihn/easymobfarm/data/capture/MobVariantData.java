@@ -155,11 +155,36 @@ public class MobVariantData {
   }
 
   public static FrogVariant getFrogVariant(final String variant) {
+    // Check for vanilla frog variants
     for (Map.Entry<FrogVariant, String> entry : FROG_VARIANT_MAP.entrySet()) {
       if (entry.getValue().equals(variant)) {
         return entry.getKey();
       }
     }
+
+    // Swampier Swamps mod support
+    if (CompatConstants.MOD_SWAMPIER_SWAMPS_LOADED) {
+      // Check for Swampier Swamps frog variants
+      try {
+        ResourceLocation resourceLocation =
+            new ResourceLocation(CompatConstants.MOD_SWAMPIER_SWAMPS_ID, variant + "_variant");
+        if (BuiltInRegistries.FROG_VARIANT.containsKey(resourceLocation)) {
+          return BuiltInRegistries.FROG_VARIANT.get(resourceLocation);
+        }
+      } catch (Exception ignored) {
+      }
+
+      // Alternative check for Swampier Swamps frog variants
+      switch (variant) {
+        case "orange":
+          return FrogVariant.TEMPERATE;
+        case "light_gray":
+          return FrogVariant.WARM;
+        case "green":
+          return FrogVariant.COLD;
+      }
+    }
+
     return FrogVariant.TEMPERATE;
   }
 

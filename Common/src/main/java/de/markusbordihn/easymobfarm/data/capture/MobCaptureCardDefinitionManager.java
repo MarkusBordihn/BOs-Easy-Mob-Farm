@@ -56,7 +56,8 @@ public class MobCaptureCardDefinitionManager {
   public static void addDefinition(ResourceLocation entity, MobCaptureCardDefinition definition) {
 
     // Verify entity type.
-    Optional<EntityType<?>> entityType = BuiltInRegistries.ENTITY_TYPE.getOptional(definition.entity());
+    Optional<EntityType<?>> entityType =
+        BuiltInRegistries.ENTITY_TYPE.getOptional(definition.entity());
     if (entityType.isEmpty()) {
       log.warn(
           "{} Skipping {} definition {}. Entity type {} not found.",

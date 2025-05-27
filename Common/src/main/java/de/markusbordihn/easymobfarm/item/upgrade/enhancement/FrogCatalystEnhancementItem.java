@@ -37,6 +37,24 @@ public class FrogCatalystEnhancementItem extends EnhancementItem {
   public static final String ID_TEMPERATE =
       ID_PREFIX + FrogCatalystType.TEMPERATE.getId() + ID_POSTFIX;
   public static final String ID_WARM = ID_PREFIX + FrogCatalystType.WARM.getId() + ID_POSTFIX;
+  public static final String ID_WHITE = ID_PREFIX + FrogCatalystType.WHITE.getId() + ID_POSTFIX;
+  public static final String ID_ORANGE = ID_PREFIX + FrogCatalystType.ORANGE.getId() + ID_POSTFIX;
+  public static final String ID_MAGENTA = ID_PREFIX + FrogCatalystType.MAGENTA.getId() + ID_POSTFIX;
+  public static final String ID_LIGHT_BLUE =
+      ID_PREFIX + FrogCatalystType.LIGHT_BLUE.getId() + ID_POSTFIX;
+  public static final String ID_YELLOW = ID_PREFIX + FrogCatalystType.YELLOW.getId() + ID_POSTFIX;
+  public static final String ID_LIME = ID_PREFIX + FrogCatalystType.LIME.getId() + ID_POSTFIX;
+  public static final String ID_PINK = ID_PREFIX + FrogCatalystType.PINK.getId() + ID_POSTFIX;
+  public static final String ID_GRAY = ID_PREFIX + FrogCatalystType.GRAY.getId() + ID_POSTFIX;
+  public static final String ID_LIGHT_GRAY =
+      ID_PREFIX + FrogCatalystType.LIGHT_GRAY.getId() + ID_POSTFIX;
+  public static final String ID_CYAN = ID_PREFIX + FrogCatalystType.CYAN.getId() + ID_POSTFIX;
+  public static final String ID_PURPLE = ID_PREFIX + FrogCatalystType.PURPLE.getId() + ID_POSTFIX;
+  public static final String ID_BLUE = ID_PREFIX + FrogCatalystType.BLUE.getId() + ID_POSTFIX;
+  public static final String ID_BROWN = ID_PREFIX + FrogCatalystType.BROWN.getId() + ID_POSTFIX;
+  public static final String ID_GREEN = ID_PREFIX + FrogCatalystType.GREEN.getId() + ID_POSTFIX;
+  public static final String ID_RED = ID_PREFIX + FrogCatalystType.RED.getId() + ID_POSTFIX;
+  public static final String ID_BLACK = ID_PREFIX + FrogCatalystType.BLACK.getId() + ID_POSTFIX;
 
   private final FrogCatalystType frogCatalystType;
 
