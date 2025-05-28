@@ -23,7 +23,6 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.item.consumables.MilkBottleItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.BlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.CreativeBlankMobCaptureCardItem;
-import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardIngredientItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.CreativeMobCatcherItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.EnduringCaptureNetItem;
@@ -63,16 +62,6 @@ public class ModItems {
 
   public static final DeferredItem<Item> MOB_CAPTURE_CARD =
       ITEMS.register(MobCaptureCardItem.ID, () -> Items.MOB_CAPTURE_CARD);
-  public static final DeferredItem<Item> MOB_CAPTURE_CARD_FROG_COLD =
-      ITEMS.register(
-          MobCaptureCardIngredientItem.ID_FROG_COLD, () -> Items.MOB_CAPTURE_CARD_FROG_COLD);
-  public static final DeferredItem<Item> MOB_CAPTURE_CARD_FROG_TEMPERATE =
-      ITEMS.register(
-          MobCaptureCardIngredientItem.ID_FROG_TEMPERATE,
-          () -> Items.MOB_CAPTURE_CARD_FROG_TEMPERATE);
-  public static final DeferredItem<Item> MOB_CAPTURE_CARD_FROG_WARM =
-      ITEMS.register(
-          MobCaptureCardIngredientItem.ID_FROG_WARM, () -> Items.MOB_CAPTURE_CARD_FROG_WARM);
 
   public static final DeferredItem<Item> CREATIVE_SPEED_ENHANCEMENT =
       ITEMS.register(CreativeSpeedEnhancementItem.ID, () -> Items.CREATIVE_SPEED_ENHANCEMENT);
@@ -95,6 +84,71 @@ public class ModItems {
   public static final DeferredItem<Item> FROG_CATALYST_WARM_ENHANCEMENT =
       ITEMS.register(
           FrogCatalystEnhancementItem.ID_WARM, () -> Items.FROG_CATALYST_WARM_ENHANCEMENT);
+
+  public static final DeferredItem<Item> FROG_CATALYST_WHITE_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_WHITE, () -> Items.FROG_CATALYST_WHITE_ENHANCEMENT);
+
+  public static final DeferredItem<Item> FROG_CATALYST_ORANGE_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_ORANGE, () -> Items.FROG_CATALYST_ORANGE_ENHANCEMENT);
+
+  public static final DeferredItem<Item> FROG_CATALYST_MAGENTA_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_MAGENTA, () -> Items.FROG_CATALYST_MAGENTA_ENHANCEMENT);
+
+  public static final DeferredItem<Item> FROG_CATALYST_LIGHT_BLUE_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_LIGHT_BLUE,
+          () -> Items.FROG_CATALYST_LIGHT_BLUE_ENHANCEMENT);
+
+  public static final DeferredItem<Item> FROG_CATALYST_YELLOW_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_YELLOW, () -> Items.FROG_CATALYST_YELLOW_ENHANCEMENT);
+
+  public static final DeferredItem<Item> FROG_CATALYST_LIME_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_LIME, () -> Items.FROG_CATALYST_LIME_ENHANCEMENT);
+
+  public static final DeferredItem<Item> FROG_CATALYST_PINK_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_PINK, () -> Items.FROG_CATALYST_PINK_ENHANCEMENT);
+
+  public static final DeferredItem<Item> FROG_CATALYST_GRAY_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_GRAY, () -> Items.FROG_CATALYST_GRAY_ENHANCEMENT);
+
+  public static final DeferredItem<Item> FROG_CATALYST_LIGHT_GRAY_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_LIGHT_GRAY,
+          () -> Items.FROG_CATALYST_LIGHT_GRAY_ENHANCEMENT);
+
+  public static final DeferredItem<Item> FROG_CATALYST_CYAN_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_CYAN, () -> Items.FROG_CATALYST_CYAN_ENHANCEMENT);
+
+  public static final DeferredItem<Item> FROG_CATALYST_PURPLE_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_PURPLE, () -> Items.FROG_CATALYST_PURPLE_ENHANCEMENT);
+
+  public static final DeferredItem<Item> FROG_CATALYST_BLUE_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_BLUE, () -> Items.FROG_CATALYST_BLUE_ENHANCEMENT);
+
+  public static final DeferredItem<Item> FROG_CATALYST_BROWN_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_BROWN, () -> Items.FROG_CATALYST_BROWN_ENHANCEMENT);
+
+  public static final DeferredItem<Item> FROG_CATALYST_GREEN_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_GREEN, () -> Items.FROG_CATALYST_GREEN_ENHANCEMENT);
+
+  public static final DeferredItem<Item> FROG_CATALYST_RED_ENHANCEMENT =
+      ITEMS.register(FrogCatalystEnhancementItem.ID_RED, () -> Items.FROG_CATALYST_RED_ENHANCEMENT);
+
+  public static final DeferredItem<Item> FROG_CATALYST_BLACK_ENHANCEMENT =
+      ITEMS.register(
+          FrogCatalystEnhancementItem.ID_BLACK, () -> Items.FROG_CATALYST_BLACK_ENHANCEMENT);
 
   public static final DeferredItem<Item> HONEY_EXTRACTOR_ENHANCEMENT =
       ITEMS.register(HoneyExtractorEnhancementItem.ID, () -> Items.HONEY_EXTRACTOR_ENHANCEMENT);

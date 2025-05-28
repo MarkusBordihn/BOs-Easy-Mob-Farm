@@ -20,31 +20,23 @@
 package de.markusbordihn.easymobfarm.server;
 
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinitionManager;
-import de.markusbordihn.easymobfarm.inventory.CraftingHandler;
 import de.markusbordihn.easymobfarm.network.message.client.SyncMobCaptureCardDefinitionsMessage;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
-import net.minecraft.world.inventory.CraftingMenu;
 
 public class ServerEventHandler {
-
-  private static final int PLAYER_INVENTORY_TICKS = 25;
-  private static int playerInventoryTicker = 0;
 
   private ServerEventHandler() {}
 
   public static void registerServerEvents() {
     ServerLifecycleEvents.SERVER_STARTED.register(ServerEventHandler::onServerStarted);
     ServerLifecycleEvents.SERVER_STARTING.register(ServerEventHandler::onServerStarting);
-    ServerTickEvents.END_SERVER_TICK.register(ServerEventHandler::onServerTick);
     ServerPlayConnectionEvents.JOIN.register(ServerEventHandler::onPlayerLogin);
   }
 
@@ -54,19 +46,6 @@ public class ServerEventHandler {
 
   private static void onServerStarting(MinecraftServer server) {
     ServerEvents.handleServerStartingEvent(server);
-  }
-
-  private static void onServerTick(MinecraftServer minecraftServer) {
-    for (ServerPlayer serverPlayer : minecraftServer.getPlayerList().getPlayers()) {
-      if (serverPlayer.containerMenu instanceof CraftingMenu craftingMenu) {
-        CraftingHandler.handleCraftingMenu(craftingMenu, craftingMenu.craftSlots);
-      }
-
-      if (playerInventoryTicker++ > PLAYER_INVENTORY_TICKS) {
-        CraftingHandler.handlePlayerInventory(serverPlayer);
-        playerInventoryTicker = 0;
-      }
-    }
   }
 
   private static void onPlayerLogin(

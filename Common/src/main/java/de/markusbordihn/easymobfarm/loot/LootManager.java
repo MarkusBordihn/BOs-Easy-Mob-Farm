@@ -22,6 +22,8 @@ package de.markusbordihn.easymobfarm.loot;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.compat.CompatConstants;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
+import de.markusbordihn.easymobfarm.data.capture.MobVariantData;
+import de.markusbordihn.easymobfarm.data.enhancement.FrogCatalystType;
 import de.markusbordihn.easymobfarm.experience.ExperienceManager;
 import de.markusbordihn.easymobfarm.item.consumables.MilkBottleItem;
 import de.markusbordihn.easymobfarm.item.upgrade.EnhancementItem;
@@ -37,7 +39,9 @@ import de.markusbordihn.easymobfarm.item.upgrade.enhancement.PollenTrapEnhanceme
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SheepEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SwordEnhancementItem;
 import de.markusbordihn.easymobfarm.server.player.FakePlayer;
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 import net.minecraft.core.BlockPos;
@@ -56,6 +60,7 @@ import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.Cow;
 import net.minecraft.world.entity.animal.Sheep;
+import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.entity.monster.MagmaCube;
 import net.minecraft.world.item.DyeColor;
@@ -74,7 +79,155 @@ public class LootManager {
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final Random random = new Random();
+  private static final Map<String, ResourceLocation> FROG_CATALYST_RESOURCES =
+      Map.ofEntries(
+          Map.entry(
+              "cold",
+              ResourceLocation.fromNamespaceAndPath(
+                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_COLD)),
+          Map.entry(
+              "temperate",
+              ResourceLocation.fromNamespaceAndPath(
+                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_TEMPERATE)),
+          Map.entry(
+              "warm",
+              ResourceLocation.fromNamespaceAndPath(
+                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_WARM)),
+          Map.entry(
+              "white",
+              ResourceLocation.fromNamespaceAndPath(
+                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_WHITE)),
+          Map.entry(
+              "orange",
+              ResourceLocation.fromNamespaceAndPath(
+                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_ORANGE)),
+          Map.entry(
+              "magenta",
+              ResourceLocation.fromNamespaceAndPath(
+                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_MAGENTA)),
+          Map.entry(
+              "light_blue",
+              ResourceLocation.fromNamespaceAndPath(
+                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_LIGHT_BLUE)),
+          Map.entry(
+              "yellow",
+              ResourceLocation.fromNamespaceAndPath(
+                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_YELLOW)),
+          Map.entry(
+              "lime",
+              ResourceLocation.fromNamespaceAndPath(
+                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_LIME)),
+          Map.entry(
+              "pink",
+              ResourceLocation.fromNamespaceAndPath(
+                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_PINK)),
+          Map.entry(
+              "gray",
+              ResourceLocation.fromNamespaceAndPath(
+                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_GRAY)),
+          Map.entry(
+              "light_gray",
+              ResourceLocation.fromNamespaceAndPath(
+                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_LIGHT_GRAY)),
+          Map.entry(
+              "cyan",
+              ResourceLocation.fromNamespaceAndPath(
+                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_CYAN)),
+          Map.entry(
+              "purple",
+              ResourceLocation.fromNamespaceAndPath(
+                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_PURPLE)),
+          Map.entry(
+              "blue",
+              ResourceLocation.fromNamespaceAndPath(
+                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_BLUE)),
+          Map.entry(
+              "brown",
+              ResourceLocation.fromNamespaceAndPath(
+                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_BROWN)),
+          Map.entry(
+              "green",
+              ResourceLocation.fromNamespaceAndPath(
+                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_GREEN)),
+          Map.entry(
+              "red",
+              ResourceLocation.fromNamespaceAndPath(
+                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_RED)),
+          Map.entry(
+              "black",
+              ResourceLocation.fromNamespaceAndPath(
+                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_BLACK)));
+  private static final EnumMap<FrogCatalystType, ResourceLocation> FROGLIGHT_MAP =
+      new EnumMap<>(FrogCatalystType.class);
   private static FakePlayer fakePlayer;
+
+  static {
+    if (CompatConstants.MOD_SWAMPIER_SWAMPS_LOADED) {
+      FROGLIGHT_MAP.put(
+          FrogCatalystType.WHITE,
+          ResourceLocation.fromNamespaceAndPath(
+              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "white_froglight"));
+      FROGLIGHT_MAP.put(
+          FrogCatalystType.ORANGE,
+          ResourceLocation.fromNamespaceAndPath(
+              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "orange_froglight"));
+      FROGLIGHT_MAP.put(
+          FrogCatalystType.MAGENTA,
+          ResourceLocation.fromNamespaceAndPath(
+              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "magenta_froglight"));
+      FROGLIGHT_MAP.put(
+          FrogCatalystType.LIGHT_BLUE,
+          ResourceLocation.fromNamespaceAndPath(
+              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "light_blue_froglight"));
+      FROGLIGHT_MAP.put(
+          FrogCatalystType.YELLOW,
+          ResourceLocation.fromNamespaceAndPath(
+              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "yellow_froglight"));
+      FROGLIGHT_MAP.put(
+          FrogCatalystType.LIME,
+          ResourceLocation.fromNamespaceAndPath(
+              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "lime_froglight"));
+      FROGLIGHT_MAP.put(
+          FrogCatalystType.PINK,
+          ResourceLocation.fromNamespaceAndPath(
+              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "pink_froglight"));
+      FROGLIGHT_MAP.put(
+          FrogCatalystType.GRAY,
+          ResourceLocation.fromNamespaceAndPath(
+              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "gray_froglight"));
+      FROGLIGHT_MAP.put(
+          FrogCatalystType.LIGHT_GRAY,
+          ResourceLocation.fromNamespaceAndPath(
+              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "light_gray_froglight"));
+      FROGLIGHT_MAP.put(
+          FrogCatalystType.CYAN,
+          ResourceLocation.fromNamespaceAndPath(
+              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "cyan_froglight"));
+      FROGLIGHT_MAP.put(
+          FrogCatalystType.PURPLE,
+          ResourceLocation.fromNamespaceAndPath("minecraft", "pearlescent_froglight"));
+      FROGLIGHT_MAP.put(
+          FrogCatalystType.BLUE,
+          ResourceLocation.fromNamespaceAndPath(
+              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "blue_froglight"));
+      FROGLIGHT_MAP.put(
+          FrogCatalystType.BROWN,
+          ResourceLocation.fromNamespaceAndPath(
+              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "brown_froglight"));
+      FROGLIGHT_MAP.put(
+          FrogCatalystType.GREEN,
+          ResourceLocation.fromNamespaceAndPath(
+              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "green_froglight"));
+      FROGLIGHT_MAP.put(
+          FrogCatalystType.RED,
+          ResourceLocation.fromNamespaceAndPath(
+              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "red_froglight"));
+      FROGLIGHT_MAP.put(
+          FrogCatalystType.BLACK,
+          ResourceLocation.fromNamespaceAndPath(
+              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "black_froglight"));
+    }
+  }
 
   private LootManager() {}
 
@@ -321,7 +474,7 @@ public class LootManager {
         }
       }
 
-      // Handle Bee specific enhancements
+      // Handle Mob specific enhancements
       if (livingEntity instanceof Bee) {
         if (enhancement instanceof HoneyHarvesterFrameEnhancementItem && random.nextInt(4) == 0) {
           drops.add(new ItemStack(Items.HONEYCOMB));
@@ -335,11 +488,7 @@ public class LootManager {
             drops.add(getRandomDye());
           }
         }
-      }
-
-      // Handle Cow specific enhancements
-      if (livingEntity instanceof Cow) {
-
+      } else if (livingEntity instanceof Cow) {
         // Handle MilkExtractor enhancement (50% chance)
         if (enhancement instanceof MilkExtractorEnhancementItem && random.nextInt(2) == 0) {
           Optional<Reference<Item>> milkBottle;
@@ -356,32 +505,66 @@ public class LootManager {
           }
           milkBottle.ifPresent(itemReference -> drops.add(new ItemStack(itemReference)));
         }
-      }
-
-      // Handle egg drops for chicken entities with Egg Collector enhancement (50% chance)
-      if (livingEntity instanceof Chicken) {
+      } else if (livingEntity instanceof Chicken) {
         if (enhancement instanceof EggCollectorEnhancementItem && random.nextInt(2) == 0) {
           drops.add(new ItemStack(Items.EGG));
         }
-      }
-
-      // Handle Magma cube specific enhancements.
-      if (livingEntity instanceof MagmaCube) {
+      } else if (livingEntity instanceof Frog) {
+        // Dropping frog catalyst with a 2.5% change for the corresponding variant.
+        if (random.nextInt(40) == 0) {
+          String frogVariant = MobVariantData.getVariant(livingEntity);
+          ResourceLocation frogCatalystResourceLocation = FROG_CATALYST_RESOURCES.get(frogVariant);
+          if (frogCatalystResourceLocation != null) {
+            Optional<Reference<Item>> frogCatalystItem =
+                BuiltInRegistries.ITEM.get(frogCatalystResourceLocation);
+            if (frogCatalystItem.isPresent()
+                && frogCatalystItem.get().value()
+                    instanceof FrogCatalystEnhancementItem frogCatalystEnhancementItem) {
+              drops.add(new ItemStack(frogCatalystEnhancementItem));
+            } else {
+              log.warn(
+                  "Frog Catalyst item {} is not an instance of FrogCatalystEnhancementItem!",
+                  frogCatalystItem);
+            }
+          } else {
+            log.warn("No Frog Catalyst resource found for variant {}!", frogVariant);
+          }
+        }
+      } else if (livingEntity instanceof MagmaCube) {
         // Adding additional Magma cream drop with 12.5% chance
         if (random.nextInt(8) == 0) {
           drops.add(new ItemStack(Items.MAGMA_CREAM));
         }
 
+        // Adding additional Frog Light drop with a 50% chance with frog catalyst enhancement.
         if (enhancement instanceof FrogCatalystEnhancementItem frogCatalystEnhancementItem
             && random.nextInt(2) == 0) {
-          switch (frogCatalystEnhancementItem.getFrogCatalystType()) {
+          FrogCatalystType frogCatalystType = frogCatalystEnhancementItem.getFrogCatalystType();
+          // Handle basic frog catalyst drops based on type.
+          switch (frogCatalystType) {
             case COLD -> drops.add(new ItemStack(Items.VERDANT_FROGLIGHT));
             case TEMPERATE -> drops.add(new ItemStack(Items.OCHRE_FROGLIGHT));
             case WARM -> drops.add(new ItemStack(Items.PEARLESCENT_FROGLIGHT));
-            default ->
+            default -> {
+              if (!CompatConstants.MOD_SWAMPIER_SWAMPS_LOADED) {
+                log.error("Unknown Frog Catalyst type {}", frogCatalystType);
+              }
+            }
+          }
+
+          // Handle Swampier Swamps mod support
+          if (CompatConstants.MOD_SWAMPIER_SWAMPS_LOADED) {
+            ResourceLocation frogCatalystResourceLocation = FROGLIGHT_MAP.get(frogCatalystType);
+            if (frogCatalystResourceLocation != null) {
+              Optional<Reference<Item>> frogCatalystItem =
+                  BuiltInRegistries.ITEM.get(frogCatalystResourceLocation);
+              if (frogCatalystItem.isPresent() && frogCatalystItem.get().value() != Items.AIR) {
+                drops.add(new ItemStack(frogCatalystItem.get().value()));
+              } else {
                 log.warn(
-                    "Unknown Frog Catalyst type {}",
-                    frogCatalystEnhancementItem.getFrogCatalystType());
+                    "Swampier Swamps: Frog Catalyst item {} is not available!", frogCatalystType);
+              }
+            }
           }
         }
       }

@@ -1,5 +1,6 @@
 {
   "entity": "minecraft:ghast",
+  "model": "minecraft:item/easy_mob_farm/mob_capture_card/ghast",
   "rarity": "rare",
   "scale": 1.0,
   "requires_killed_by_player": false,

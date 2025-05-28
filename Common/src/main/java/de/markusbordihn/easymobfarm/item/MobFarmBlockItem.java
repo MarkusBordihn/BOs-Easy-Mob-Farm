@@ -28,6 +28,7 @@ import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmTierLevel;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.List;
+import java.util.Objects;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
@@ -129,26 +130,22 @@ public class MobFarmBlockItem extends BlockItem {
           case 0 ->
               TextComponent.getTranslatedText(
                   "tier_level_processing_speed",
-                  MobFarmBlockEntity.DEFAULT_PROCESSING_TICKS
-                      + MobFarmConfig.tier0progressionUpgradeSpeed,
+                  MobFarmBlockEntity.getProcessingSpeed(tierLevel),
                   ChatFormatting.WHITE);
           case 1 ->
               TextComponent.getTranslatedText(
                   "tier_level_processing_speed",
-                  MobFarmBlockEntity.DEFAULT_PROCESSING_TICKS
-                      + MobFarmConfig.tier1progressionUpgradeSpeed,
+                  MobFarmBlockEntity.getProcessingSpeed(tierLevel),
                   ChatFormatting.GREEN);
           case 2 ->
               TextComponent.getTranslatedText(
                   "tier_level_processing_speed",
-                  MobFarmBlockEntity.DEFAULT_PROCESSING_TICKS
-                      + MobFarmConfig.tier2progressionUpgradeSpeed,
+                  MobFarmBlockEntity.getProcessingSpeed(tierLevel),
                   ChatFormatting.YELLOW);
           case 3 ->
               TextComponent.getTranslatedText(
                   "tier_level_processing_speed",
-                  MobFarmBlockEntity.DEFAULT_PROCESSING_TICKS
-                      + MobFarmConfig.tier3progressionUpgradeSpeed,
+                  MobFarmBlockEntity.getProcessingSpeed(tierLevel),
                   ChatFormatting.RED);
           default -> null;
         };
@@ -157,11 +154,17 @@ public class MobFarmBlockItem extends BlockItem {
     }
 
     // Add additional information for special mob farms.
-    if (farmName == MobFarmType.LUCKY_DROP_FARM.getId()) {
+    if (Objects.equals(farmName, MobFarmType.LUCKY_DROP_FARM.getId())) {
       tooltip.add(
           TextComponent.getTranslatedTextRaw(
-              Constants.TOOLTIP_FARM_PREFIX + "lucky_drop_percentage",
-              new Object[] {MobFarmConfig.luckyDropFarmLuckPercentage}));
+                  Constants.TOOLTIP_FARM_PREFIX + "lucky_drop_percentage",
+                  new Object[] {MobFarmConfig.luckyDropFarmLuckPercentage})
+              .withStyle(ChatFormatting.DARK_GREEN));
+      if (MobFarmConfig.luckyDropFarmLuckPercentage < 100) {
+        tooltip.add(
+            TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "lucky_drop_warn")
+                .withStyle(ChatFormatting.RED));
+      }
     }
   }
 }
