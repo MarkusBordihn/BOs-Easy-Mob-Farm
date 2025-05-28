@@ -19,6 +19,7 @@
 
 package de.markusbordihn.easymobfarm.tabs;
 
+import de.markusbordihn.easymobfarm.compat.CompatConstants;
 import de.markusbordihn.easymobfarm.item.Items;
 import net.minecraft.world.item.CreativeModeTab.DisplayItemsGenerator;
 import net.minecraft.world.item.CreativeModeTab.ItemDisplayParameters;
@@ -38,6 +39,26 @@ public class MobFarmUpgrades implements DisplayItemsGenerator {
     output.accept(Items.FROG_CATALYST_COLD_ENHANCEMENT.getDefaultInstance());
     output.accept(Items.FROG_CATALYST_TEMPERATE_ENHANCEMENT.getDefaultInstance());
     output.accept(Items.FROG_CATALYST_WARM_ENHANCEMENT.getDefaultInstance());
+
+    if (CompatConstants.MOD_SWAMPIER_SWAMPS_LOADED) {
+      output.accept(Items.FROG_CATALYST_WHITE_ENHANCEMENT.getDefaultInstance());
+      output.accept(Items.FROG_CATALYST_ORANGE_ENHANCEMENT.getDefaultInstance());
+      output.accept(Items.FROG_CATALYST_MAGENTA_ENHANCEMENT.getDefaultInstance());
+      output.accept(Items.FROG_CATALYST_LIGHT_BLUE_ENHANCEMENT.getDefaultInstance());
+      output.accept(Items.FROG_CATALYST_YELLOW_ENHANCEMENT.getDefaultInstance());
+      output.accept(Items.FROG_CATALYST_LIME_ENHANCEMENT.getDefaultInstance());
+      output.accept(Items.FROG_CATALYST_PINK_ENHANCEMENT.getDefaultInstance());
+      output.accept(Items.FROG_CATALYST_GRAY_ENHANCEMENT.getDefaultInstance());
+      output.accept(Items.FROG_CATALYST_LIGHT_GRAY_ENHANCEMENT.getDefaultInstance());
+      output.accept(Items.FROG_CATALYST_CYAN_ENHANCEMENT.getDefaultInstance());
+      output.accept(Items.FROG_CATALYST_PURPLE_ENHANCEMENT.getDefaultInstance());
+      output.accept(Items.FROG_CATALYST_BLUE_ENHANCEMENT.getDefaultInstance());
+      output.accept(Items.FROG_CATALYST_BROWN_ENHANCEMENT.getDefaultInstance());
+      output.accept(Items.FROG_CATALYST_GREEN_ENHANCEMENT.getDefaultInstance());
+      output.accept(Items.FROG_CATALYST_RED_ENHANCEMENT.getDefaultInstance());
+      output.accept(Items.FROG_CATALYST_BLACK_ENHANCEMENT.getDefaultInstance());
+    }
+
     output.accept(Items.HONEY_EXTRACTOR_ENHANCEMENT.getDefaultInstance());
     output.accept(Items.HONEY_HARVESTER_FRAME_ENHANCEMENT.getDefaultInstance());
     output.accept(Items.LOOT_ENHANCEMENT.getDefaultInstance());

@@ -26,7 +26,25 @@ public enum FrogCatalystType implements StringRepresentable {
   NONE,
   COLD,
   TEMPERATE,
-  WARM;
+  WARM,
+
+  // Dye colors
+  WHITE,
+  ORANGE,
+  MAGENTA,
+  LIGHT_BLUE,
+  YELLOW,
+  LIME,
+  PINK,
+  GRAY,
+  LIGHT_GRAY,
+  CYAN,
+  PURPLE,
+  BLUE,
+  BROWN,
+  GREEN,
+  RED,
+  BLACK;
 
   private final String name;
 

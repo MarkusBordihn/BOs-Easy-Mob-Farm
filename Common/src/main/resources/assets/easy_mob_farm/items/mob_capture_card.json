@@ -129,6 +129,13 @@
         }
       },
       {
+        "when": "minecraft:cave_spider",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/cave_spider"
+        }
+      },
+      {
         "when": "minecraft:chicken",
         "model": {
           "type": "minecraft:model",
@@ -164,6 +171,13 @@
         }
       },
       {
+        "when": "minecraft:elder_guardian",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/elder_guardian"
+        }
+      },
+      {
         "when": "minecraft:enderman",
         "model": {
           "type": "minecraft:model",
@@ -182,6 +196,13 @@
         "model": {
           "type": "minecraft:model",
           "model": "minecraft:item/easy_mob_farm/mob_capture_card/evoker"
+        }
+      },
+      {
+        "when": "minecraft:fox",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/fox"
         }
       },
       {
@@ -219,6 +240,13 @@
         }
       },
       {
+        "when": "minecraft:ghast",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/ghast"
+        }
+      },
+      {
         "when": "minecraft:glow_squid",
         "model": {
           "type": "minecraft:model",
@@ -240,6 +268,13 @@
         }
       },
       {
+        "when": "minecraft:illusioner",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/illusioner"
+        }
+      },
+      {
         "when": "minecraft:iron_golem",
         "model": {
           "type": "minecraft:model",
@@ -247,10 +282,24 @@
         }
       },
       {
+        "when": "minecraft:llama",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/llama"
+        }
+      },
+      {
         "when": "minecraft:magma_cube",
         "model": {
           "type": "minecraft:model",
           "model": "minecraft:item/easy_mob_farm/mob_capture_card/magma_cube"
+        }
+      },
+      {
+        "when": "minecraft:panda",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/panda"
         }
       },
       {
@@ -286,6 +335,13 @@
         "model": {
           "type": "minecraft:model",
           "model": "minecraft:item/easy_mob_farm/mob_capture_card/pillager"
+        }
+      },
+      {
+        "when": "minecraft:polar_bear",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/polar_bear"
         }
       },
       {
@@ -421,6 +477,13 @@
         }
       },
       {
+        "when": "minecraft:shulker",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/shulker"
+        }
+      },
+      {
         "when": "minecraft:skeleton",
         "model": {
           "type": "minecraft:model",
@@ -449,6 +512,20 @@
         }
       },
       {
+        "when": "minecraft:stray",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/stray"
+        }
+      },
+      {
+        "when": "minecraft:strider",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/strider"
+        }
+      },
+      {
         "when": "minecraft:turtle",
         "model": {
           "type": "minecraft:model",
@@ -460,6 +537,13 @@
         "model": {
           "type": "minecraft:model",
           "model": "minecraft:item/easy_mob_farm/mob_capture_card/villager"
+        }
+      },
+      {
+        "when": "minecraft:vindicator",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/vindicator"
         }
       },
       {

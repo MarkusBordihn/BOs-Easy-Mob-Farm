@@ -1,5 +1,6 @@
 {
   "entity": "minecraft:illusioner",
+  "model": "minecraft:item/easy_mob_farm/mob_capture_card/illusioner",
   "rarity": "epic",
   "scale": 1.0,
   "requires_killed_by_player": false,

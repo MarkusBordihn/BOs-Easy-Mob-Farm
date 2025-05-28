@@ -133,26 +133,22 @@ public class MobFarmBlockItem extends BlockItem {
           case 0 ->
               TextComponent.getTranslatedText(
                   "tier_level_processing_speed",
-                  MobFarmBlockEntity.DEFAULT_PROCESSING_TICKS
-                      + MobFarmConfig.tier0progressionUpgradeSpeed,
+                  MobFarmBlockEntity.getProcessingSpeed(tierLevel),
                   ChatFormatting.WHITE);
           case 1 ->
               TextComponent.getTranslatedText(
                   "tier_level_processing_speed",
-                  MobFarmBlockEntity.DEFAULT_PROCESSING_TICKS
-                      + MobFarmConfig.tier1progressionUpgradeSpeed,
+                  MobFarmBlockEntity.getProcessingSpeed(tierLevel),
                   ChatFormatting.GREEN);
           case 2 ->
               TextComponent.getTranslatedText(
                   "tier_level_processing_speed",
-                  MobFarmBlockEntity.DEFAULT_PROCESSING_TICKS
-                      + MobFarmConfig.tier2progressionUpgradeSpeed,
+                  MobFarmBlockEntity.getProcessingSpeed(tierLevel),
                   ChatFormatting.YELLOW);
           case 3 ->
               TextComponent.getTranslatedText(
                   "tier_level_processing_speed",
-                  MobFarmBlockEntity.DEFAULT_PROCESSING_TICKS
-                      + MobFarmConfig.tier3progressionUpgradeSpeed,
+                  MobFarmBlockEntity.getProcessingSpeed(tierLevel),
                   ChatFormatting.RED);
           default -> null;
         };
@@ -166,6 +162,11 @@ public class MobFarmBlockItem extends BlockItem {
           TextComponent.getTranslatedTextRaw(
               Constants.TOOLTIP_FARM_PREFIX + "lucky_drop_percentage",
               new Object[] {MobFarmConfig.luckyDropFarmLuckPercentage}));
+      if (MobFarmConfig.luckyDropFarmLuckPercentage < 100) {
+        tooltipConsumer.accept(
+            TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "lucky_drop_warn")
+                .withStyle(ChatFormatting.RED));
+      }
     }
   }
 }

@@ -85,7 +85,6 @@ import org.apache.logging.log4j.Logger;
 public class MobFarmBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer {
 
   public static final String ID = "mob_farm_entity";
-  public static final int DEFAULT_FARM_PROCESSING_TIME = 6000;
   public static final int DEFAULT_PROCESSING_TICKS = 20;
   public static final int DEFAULT_RECHECK_TICKS = 200;
   public static final String TIER_LEVEL_TAG = "TierLevel";
@@ -185,19 +184,20 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     }
 
     // Increase farm progress
-    if (blockEntity.farmProgress < DEFAULT_FARM_PROCESSING_TIME) {
+    if (blockEntity.farmProgress < MobFarmConfig.farmProgressingTime) {
       if (blockEntity.farmProgress % 200 == 0) {
         log.debug(
             "Mob farm block entity at {} with farm progress {} / {}",
             blockPos,
             blockEntity.farmProgress,
-            DEFAULT_FARM_PROCESSING_TIME);
+            MobFarmConfig.farmProgressingTime);
       }
 
       // Calculate farm progression speed and increase farm progress
       int farmProgressionSpeed = getEffectiveFarmProgressionSpeed(blockEntity);
       blockEntity.farmProgress =
-          Math.min(blockEntity.farmProgress + farmProgressionSpeed, DEFAULT_FARM_PROCESSING_TIME);
+          Math.min(
+              blockEntity.farmProgress + farmProgressionSpeed, MobFarmConfig.farmProgressingTime);
       blockEntity.farmStatus = MobFarmStatus.WORKING;
       return;
     }
@@ -225,6 +225,24 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
 
   private static int getEffectiveFarmProgressionSpeed(MobFarmBlockEntity blockEntity) {
     return blockEntity.getFarmProgressionSpeed() + blockEntity.getFarmProgressionSpeedBonus();
+  }
+
+  public static float getProcessingSpeed(int tierLevel) {
+    return getProcessingSpeed(tierLevel, 0);
+  }
+
+  public static float getProcessingSpeed(int tierLevel, int bonusSpeed) {
+    int processingTicks =
+        DEFAULT_PROCESSING_TICKS
+            + switch (tierLevel) {
+              case 0 -> MobFarmConfig.tier0progressionUpgradeSpeed;
+              case 1 -> MobFarmConfig.tier1progressionUpgradeSpeed;
+              case 2 -> MobFarmConfig.tier2progressionUpgradeSpeed;
+              case 3 -> MobFarmConfig.tier3progressionUpgradeSpeed;
+              default -> 0;
+            }
+            + bonusSpeed;
+    return Math.round((float) MobFarmConfig.farmProgressingTime / processingTicks * 10) / 10.0f;
   }
 
   public int getFarmProgressionSpeed() {
@@ -338,6 +356,30 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
       return;
     }
 
+    // Verify if the captured mob is valid.
+    EntityType<?> entityType = mobCaptureData.entityType();
+    if (entityType == null) {
+      if (this.level instanceof ServerLevel serverLevel) {
+        log.debug(
+            "Dropping invalid captured mob item {} for mob farm block entity at {}",
+            this.getItem(MobFarmSlot.CAPTURED_MOB),
+            this.getBlockPos());
+        Containers.dropItemStack(
+            serverLevel,
+            this.getBlockPos().getX() + 0.5D,
+            this.getBlockPos().getY() + 0.5D,
+            this.getBlockPos().getZ() + 0.5D,
+            this.takeItem(MobFarmSlot.CAPTURED_MOB.index()));
+      } else {
+        log.error(
+            "Invalid entity type {} for mob farm block entity at {} with captured mob {}",
+            entityType,
+            this.getBlockPos(),
+            mobCaptureData);
+      }
+      return;
+    }
+
     // Update farm status to processing for visual feedback and other mechanics.
     this.farmStatus = MobFarmStatus.PROCESSING;
 
@@ -352,8 +394,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
 
     // Add optional bonus loot drop based on the mob farm, tier level and captured mob.
     ItemStack bonusLootDrop =
-        MobFarmBonusConfig.getBonusDrop(
-            this.getFarmType(), this.getFarmTierLevel(), mobCaptureData.entityType());
+        MobFarmBonusConfig.getBonusDrop(this.getFarmType(), this.getFarmTierLevel(), entityType);
     if (!bonusLootDrop.isEmpty()) {
       log.debug(
           "Adding bonus loot drop {} for {} (tier: {}) block entity at {} with captured mob {}",
@@ -361,7 +402,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
           this.getFarmType(),
           this.getFarmTierLevel(),
           this.getBlockPos(),
-          mobCaptureData.entityType());
+          entityType);
       lootDrops.add(bonusLootDrop.copy());
     }
 
