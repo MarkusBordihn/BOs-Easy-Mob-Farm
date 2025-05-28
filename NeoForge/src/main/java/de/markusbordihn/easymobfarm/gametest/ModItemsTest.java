@@ -72,6 +72,22 @@ public class ModItemsTest {
     ModItemsTestHelper.testModItem(helper, ModItems.FROG_CATALYST_COLD_ENHANCEMENT.get());
     ModItemsTestHelper.testModItem(helper, ModItems.FROG_CATALYST_TEMPERATE_ENHANCEMENT.get());
     ModItemsTestHelper.testModItem(helper, ModItems.FROG_CATALYST_WARM_ENHANCEMENT.get());
+    ModItemsTestHelper.testModItem(helper, ModItems.FROG_CATALYST_WHITE_ENHANCEMENT.get());
+    ModItemsTestHelper.testModItem(helper, ModItems.FROG_CATALYST_ORANGE_ENHANCEMENT.get());
+    ModItemsTestHelper.testModItem(helper, ModItems.FROG_CATALYST_MAGENTA_ENHANCEMENT.get());
+    ModItemsTestHelper.testModItem(helper, ModItems.FROG_CATALYST_LIGHT_BLUE_ENHANCEMENT.get());
+    ModItemsTestHelper.testModItem(helper, ModItems.FROG_CATALYST_YELLOW_ENHANCEMENT.get());
+    ModItemsTestHelper.testModItem(helper, ModItems.FROG_CATALYST_LIME_ENHANCEMENT.get());
+    ModItemsTestHelper.testModItem(helper, ModItems.FROG_CATALYST_PINK_ENHANCEMENT.get());
+    ModItemsTestHelper.testModItem(helper, ModItems.FROG_CATALYST_GRAY_ENHANCEMENT.get());
+    ModItemsTestHelper.testModItem(helper, ModItems.FROG_CATALYST_LIGHT_GRAY_ENHANCEMENT.get());
+    ModItemsTestHelper.testModItem(helper, ModItems.FROG_CATALYST_CYAN_ENHANCEMENT.get());
+    ModItemsTestHelper.testModItem(helper, ModItems.FROG_CATALYST_PURPLE_ENHANCEMENT.get());
+    ModItemsTestHelper.testModItem(helper, ModItems.FROG_CATALYST_BLUE_ENHANCEMENT.get());
+    ModItemsTestHelper.testModItem(helper, ModItems.FROG_CATALYST_BROWN_ENHANCEMENT.get());
+    ModItemsTestHelper.testModItem(helper, ModItems.FROG_CATALYST_GREEN_ENHANCEMENT.get());
+    ModItemsTestHelper.testModItem(helper, ModItems.FROG_CATALYST_RED_ENHANCEMENT.get());
+    ModItemsTestHelper.testModItem(helper, ModItems.FROG_CATALYST_BLACK_ENHANCEMENT.get());
     helper.succeed();
   }
 

@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "minecraft:item/easy_mob_farm/mob_capture_card/polar_bear"
+  }
+}

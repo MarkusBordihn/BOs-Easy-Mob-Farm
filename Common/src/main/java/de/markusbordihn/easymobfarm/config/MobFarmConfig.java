@@ -33,10 +33,11 @@ public class MobFarmConfig extends Config {
 
 """;
 
+  public static int farmProgressingTime = 6000; // 5 minutes in seconds
   public static int tier0progressionUpgradeSpeed = 0;
-  public static int tier1progressionUpgradeSpeed = 3;
-  public static int tier2progressionUpgradeSpeed = 6;
-  public static int tier3progressionUpgradeSpeed = 9;
+  public static int tier1progressionUpgradeSpeed = 2;
+  public static int tier2progressionUpgradeSpeed = 4;
+  public static int tier3progressionUpgradeSpeed = 6;
 
   public static int experienceDropChance = 5;
   public static int speedEnhancementUpgradeSpeed = 6;
@@ -56,6 +57,8 @@ public class MobFarmConfig extends Config {
     Properties unmodifiedProperties = (Properties) properties.clone();
 
     // Config entries
+    farmProgressingTime = parseConfigValue(properties, "farmProgressingTime", farmProgressingTime);
+
     tier0progressionUpgradeSpeed =
         parseConfigValue(properties, "tier0progressionUpgradeSpeed", tier0progressionUpgradeSpeed);
     tier1progressionUpgradeSpeed =

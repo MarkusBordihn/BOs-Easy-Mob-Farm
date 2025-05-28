@@ -4,11 +4,23 @@ All notable changes to this project will be documented in this file.
 
 # v10.0.0
 
+🚨 **Warning:** Easy Mob Farm version **10.x** uses datapacks and resource packs to define custom mob
+cards and other data, allowing easier integration with other mods.
+However, custom mob cards defined in the old config file `mob_capture_card_models.cfg` are **NOT
+compatible** and must be redefined using datapacks and resource packs. ⚠️
+
+- Fixed missing sheep mob capture card.
+- Fixed #160 by adding full support for `Swampier Swamps`.
 - Added full datapack and resource pack support for mob capture cards.
-- Added missing sheep mob capture card.
 - Added `Ice and Fire` cards for dragons and siren.
-- Added basic `Swampier Swamps` support for #160.
+- Added custom mob cards for Cave Spider, Elder Guardian, Fox, Ghast, Illusioner, Llama, Panda,
+  Polar Bear, Shulker, Stray, Strider and Vindicator.
+- Added configurable `farmProgressingTime` to increase/decrease mob drop time.
+- Added lucky drop farm warning message that mobs could escape on unlucky drops.
+- Added Mexican Spanish translation. Thanks to `@TheLegendofSaram` for the contribution.
 - Replaced configuration files with networked synched configuration.
+- Replaced farm progressing speed with human-readable format.
+- Removed hacky and virtual frog mob capture card and corresponding recipes.
 
 # v9.8.0
 
@@ -25,7 +37,7 @@ All notable changes to this project will be documented in this file.
 
 - Fixed #146 by adding redstone signal support for mob farms.
 - Fixed animation issues and other rendering problems.
-- Added hungarian translation. Thanks to '@bayi' for the contribution.
+- Added Hungarian translation. Thanks to `@bayi` for the contribution.
 - Added automatic tests for mob farm redstone signal.
 - Added better support for `Ice and Fire` mod, part of #149.
 - Allows farms to be disabled when receiving a redstone high signal from any side. Thanks to '@bayi'
