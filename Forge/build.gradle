@@ -14,7 +14,6 @@ println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getPro
 minecraft {
   mappings channel: 'official', version: "${project.minecraft_version}"
 
-  reobf = false
   copyIdeResources = true
 
   // Access Transformer
@@ -106,7 +105,7 @@ dependencies {
 
   // Additional helpful Mods for development (runtime dependency)
   if (project.hasProperty('forge_jei_mod') && project.forge_jei_mod) {
-    compileOnly fg.deobf("curse.maven:jei-238222:${project.forge_jei_mod}")
+    // compileOnly fg.deobf("curse.maven:jei-238222:${project.forge_jei_mod}")
     // runtimeOnly fg.deobf("curse.maven:jei-238222:${project.forge_jei_mod}")
   }
   if (project.hasProperty('forge_spark_mod') && project.forge_spark_mod) {
