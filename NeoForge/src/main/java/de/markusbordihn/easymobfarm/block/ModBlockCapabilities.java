@@ -29,7 +29,7 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber()
 public class ModBlockCapabilities {
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);

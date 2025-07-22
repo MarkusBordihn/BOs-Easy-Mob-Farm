@@ -44,7 +44,6 @@ import de.markusbordihn.easymobfarm.loot.LootManager;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import de.markusbordihn.easymobfarm.tags.ModItemTags;
-import de.markusbordihn.easymobfarm.utils.UUIDUtils;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -59,6 +58,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -79,6 +79,9 @@ import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -856,16 +859,19 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
 
   @Override
   public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
-    CompoundTag tag = super.getUpdateTag(provider);
-    ContainerHelper.saveAllItems(tag, this.items, provider);
-    return tag;
+    TagValueOutput valueOutput =
+        TagValueOutput.createWithContext(ProblemReporter.DISCARDING, provider);
+    ContainerHelper.saveAllItems(valueOutput, this.items);
+    return valueOutput.buildResult();
   }
 
   @Override
   public ClientboundBlockEntityDataPacket getUpdatePacket() {
     if (this.provider != null) {
-      CompoundTag tag = new CompoundTag();
-      this.saveAdditional(tag, this.provider);
+      TagValueOutput valueOutput =
+          TagValueOutput.createWithContext(ProblemReporter.DISCARDING, this.provider);
+      this.saveAdditional(valueOutput);
+      CompoundTag tag = valueOutput.buildResult();
     }
     return ClientboundBlockEntityDataPacket.create(this);
   }
@@ -925,52 +931,47 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
   }
 
   @Override
-  public void loadAdditional(final CompoundTag compoundTag, HolderLookup.Provider provider) {
-    super.loadAdditional(compoundTag, provider);
+  public void loadAdditional(final ValueInput valueInput) {
+    super.loadAdditional(valueInput);
 
     // Load items
     this.items.clear();
-    ContainerHelper.loadAllItems(compoundTag, this.items, provider);
+    ContainerHelper.loadAllItems(valueInput, this.items);
 
     // Load additional data
-    if (compoundTag.contains(TIER_LEVEL_TAG) && compoundTag.getInt(TIER_LEVEL_TAG).isPresent()) {
-      this.setFarmTierLevel(compoundTag.getInt(TIER_LEVEL_TAG).get());
-    }
-    if (compoundTag.contains(FARM_TYPE_TAG) && compoundTag.getString(FARM_TYPE_TAG).isPresent()) {
-      this.mobFarmType = MobFarmType.valueOf(compoundTag.getString(FARM_TYPE_TAG).get());
-    }
-    if (compoundTag.contains(CAPTURED_MOB_EXPERIENCE_TAG)
-        && compoundTag.getInt(CAPTURED_MOB_EXPERIENCE_TAG).isPresent()
-        && compoundTag.getInt(CAPTURED_MOB_EXPERIENCE_TAG).orElse(-1) >= 0) {
-      this.capturedMobExperience = compoundTag.getInt(CAPTURED_MOB_EXPERIENCE_TAG).get();
-    }
+    this.farmTierLevel = valueInput.getIntOr(TIER_LEVEL_TAG, this.farmTierLevel);
+    this.mobFarmType =
+        MobFarmType.valueOf(valueInput.getStringOr(FARM_TYPE_TAG, this.mobFarmType.name()));
+    this.capturedMobExperience = valueInput.getIntOr(CAPTURED_MOB_EXPERIENCE_TAG, -1);
 
     // Load owner
-    if (compoundTag.contains(OWNER_TAG)) {
-      this.owner = UUIDUtils.readUUID(compoundTag, OWNER_TAG);
+    String uuidString = valueInput.getStringOr(OWNER_TAG, null);
+    if (uuidString != null) {
+      try {
+        this.owner = UUID.fromString(uuidString);
+      } catch (Exception e) {
+        this.owner = null;
+      }
     }
-
-    // Cache provider
-    this.provider = provider;
   }
 
   @Override
-  public void saveAdditional(final CompoundTag compoundTag, HolderLookup.Provider provider) {
-    super.saveAdditional(compoundTag, provider);
+  public void saveAdditional(final ValueOutput valueOutput) {
+    super.saveAdditional(valueOutput);
 
     // Save items
-    ContainerHelper.saveAllItems(compoundTag, this.items, provider);
+    ContainerHelper.saveAllItems(valueOutput, this.items);
 
     // Save additional data
-    compoundTag.putInt(TIER_LEVEL_TAG, this.farmTierLevel);
-    compoundTag.putString(FARM_TYPE_TAG, this.mobFarmType.name());
+    valueOutput.putInt(TIER_LEVEL_TAG, this.farmTierLevel);
+    valueOutput.putString(FARM_TYPE_TAG, this.mobFarmType.name());
     if (this.capturedMobExperience >= 0) {
-      compoundTag.putInt(CAPTURED_MOB_EXPERIENCE_TAG, this.capturedMobExperience);
+      valueOutput.putInt(CAPTURED_MOB_EXPERIENCE_TAG, this.capturedMobExperience);
     }
 
     // Save owner
     if (this.owner != null) {
-      UUIDUtils.writeUUID(compoundTag, OWNER_TAG, this.owner);
+      valueOutput.putString(OWNER_TAG, this.owner.toString());
     }
   }
 }

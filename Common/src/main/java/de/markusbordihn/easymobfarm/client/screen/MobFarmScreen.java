@@ -39,12 +39,14 @@ import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -85,7 +87,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
   }
 
   @Override
-  protected void renderDefaultScreenBg(GuiGraphics guiGraphics, int leftPos, int topPos) {
+  protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
     Graphics.blit(
         guiGraphics,
         this.menu.getMobFarmStatus() == MobFarmStatus.IDLE ? TEXTURE_UI_IDLE : TEXTURE_UI,
@@ -125,7 +127,9 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
         0,
         36,
         currentWidth,
-        16);
+        16,
+        256,
+        256);
   }
 
   private void renderEntityType(GuiGraphics guiGraphics, int x, int y) {
@@ -143,15 +147,37 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
 
     // Get entity from block position and render it on the screen.
     this.entity = RendererManager.getEntity(blockPos);
-    if (this.entity != null) {
-      ScreenHelper.renderEntity(
+    if (this.entity != null && this.entity instanceof LivingEntity livingEntity) {
+      int entityAreaLeft = this.leftPos + 50;
+      int entityAreaTop = this.topPos + 30;
+      int entityAreaRight = this.leftPos + 94;
+      int entityAreaBottom = this.topPos + 85;
+
+      float entityScale = EntityScalingManager.getUIScale(this.entity);
+      int scaledSize = Math.round(entityScale);
+
+      float entityHeight = livingEntity.getBbHeight();
+      float yOffset;
+
+      if (entityHeight < 1.5F) {
+        float renderAreaHeight = entityAreaBottom - entityAreaTop;
+        yOffset = (renderAreaHeight * 0.8F) / scaledSize;
+        yOffset = Math.max(0.0F, Math.min(yOffset, 1.0F));
+      } else {
+        yOffset = 0.0625F;
+      }
+
+      InventoryScreen.renderEntityInInventoryFollowsMouse(
           guiGraphics,
-          this.leftPos + 72,
-          this.topPos + 80,
-          this.leftPos + 70 - this.xMouse,
-          this.topPos + 40 - this.yMouse,
-          EntityScalingManager.getUIScale(this.entity),
-          this.entity);
+          entityAreaLeft,
+          entityAreaTop,
+          entityAreaRight,
+          entityAreaBottom,
+          scaledSize,
+          yOffset,
+          this.xMouse,
+          this.yMouse,
+          livingEntity);
     } else {
       if (this.entityExperience > 0) {
         this.entityExperience = 0;
@@ -170,7 +196,9 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
             0,
             18,
             18,
-            18);
+            18,
+            256,
+            256);
       }
     }
   }
@@ -323,7 +351,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
                   .withStyle(ChatFormatting.GRAY));
         }
       }
-      guiGraphics.renderComponentTooltip(this.font, infoText, mouseX, mouseY);
+      guiGraphics.setComponentTooltipForNextFrame(this.font, infoText, mouseX, mouseY);
     }
   }
 
@@ -334,6 +362,6 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
       return;
     }
     List<FormattedCharSequence> wrappedText = this.font.split(component, 150);
-    guiGraphics.renderTooltip(this.font, wrappedText, mouseX, mouseY);
+    // guiGraphics.renderTooltip(this.font, wrappedText, mouseX, mouseY);
   }
 }

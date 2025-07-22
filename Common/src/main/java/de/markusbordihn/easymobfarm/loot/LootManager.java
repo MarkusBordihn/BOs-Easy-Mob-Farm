@@ -52,6 +52,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
@@ -68,6 +69,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -246,8 +249,13 @@ public class LootManager {
       return NonNullList.create();
     }
 
+    // Get Mob Capture data as ValueInput.
+    ValueInput valueInput =
+        TagValueInput.create(
+            ProblemReporter.DISCARDING, level.registryAccess(), mobCaptureData.data());
+
     // Load entity data from Mob Capture data
-    entity.load(mobCaptureData.data());
+    entity.load(valueInput);
 
     // Set additional entity properties for sheep entities
     if (entity instanceof Sheep sheepEntity) {

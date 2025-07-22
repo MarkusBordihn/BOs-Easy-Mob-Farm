@@ -25,12 +25,16 @@ import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.animal.AbstractFish;
 import net.minecraft.world.entity.animal.sheep.Sheep;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -125,7 +129,11 @@ public class RendererManager {
     entity.yRotO = entity.getYRot();
 
     // Load entity data from Mob Capture data
-    entity.load(mobCaptureData.data());
+    CompoundTag mobDataTag = mobCaptureData.data();
+    ValueInput valueInput =
+        TagValueInput.create(
+            ProblemReporter.DISCARDING, entity.level().registryAccess(), mobDataTag);
+    entity.load(valueInput);
     entity.tick();
 
     // Set additional entity properties for fish entities

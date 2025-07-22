@@ -2,7 +2,7 @@
   "entity": "minecraft:ender_dragon",
   "model": "minecraft:item/easy_mob_farm/mob_capture_card/ender_dragon",
   "rarity": "epic",
-  "scale": 1.0,
+  "scale": 1.1,
   "requires_killed_by_player": false,
   "requires_animation_tick": false
 }

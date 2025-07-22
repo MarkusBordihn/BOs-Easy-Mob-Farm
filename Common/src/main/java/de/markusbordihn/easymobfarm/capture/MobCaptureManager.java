@@ -28,6 +28,7 @@ import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
@@ -38,6 +39,8 @@ import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.TagValueInput;
+import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -134,9 +137,11 @@ public class MobCaptureManager {
     }
 
     // Copy data from mobCaptureData to entity
-    if (entity instanceof LivingEntity livingEntity) {
-      livingEntity.readAdditionalSaveData(mobCaptureData.data());
-    }
+    CompoundTag mobDataTag = mobCaptureData.data();
+    ValueInput valueInput =
+        TagValueInput.create(
+            ProblemReporter.DISCARDING, entity.level().registryAccess(), mobDataTag);
+    entity.load(valueInput);
 
     // Get safe spawn position.
     BlockPos safeSpawnBlockPos = getSafeSpawnPos(serverLevel, blockPos);

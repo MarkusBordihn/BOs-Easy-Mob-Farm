@@ -21,8 +21,10 @@ package de.markusbordihn.easymobfarm.data.capture;
 
 import java.util.Set;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.storage.TagValueOutput;
 
 public class MobEntityData {
 
@@ -69,8 +71,14 @@ public class MobEntityData {
   }
 
   public static CompoundTag getMobEntityData(LivingEntity livingEntity) {
-    CompoundTag compoundTag = new CompoundTag();
-    livingEntity.saveWithoutId(compoundTag);
+
+    TagValueOutput valueOutput =
+        TagValueOutput.createWithContext(
+            ProblemReporter.DISCARDING, livingEntity.level().registryAccess());
+
+    livingEntity.saveWithoutId(valueOutput);
+
+    CompoundTag compoundTag = valueOutput.buildResult();
 
     // Check if entity is dead or dying and restore health.
     if (livingEntity.isDeadOrDying()) {

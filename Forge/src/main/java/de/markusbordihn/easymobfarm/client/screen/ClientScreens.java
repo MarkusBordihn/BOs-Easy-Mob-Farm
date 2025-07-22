@@ -22,16 +22,21 @@ package de.markusbordihn.easymobfarm.client.screen;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientScreens {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   protected ClientScreens() {}
 
+  @SubscribeEvent
   public static void registerScreens(final FMLClientSetupEvent event) {
     log.info("{} Client Screens ...", Constants.LOG_REGISTER_PREFIX);
 

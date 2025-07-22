@@ -21,7 +21,7 @@ package de.markusbordihn.easymobfarm.commands;
 
 import de.markusbordihn.easymobfarm.commands.manager.CommandManager;
 import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 @EventBusSubscriber

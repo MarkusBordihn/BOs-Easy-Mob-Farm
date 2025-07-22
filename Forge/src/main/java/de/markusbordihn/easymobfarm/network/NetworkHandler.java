@@ -22,8 +22,7 @@ package de.markusbordihn.easymobfarm.network;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.network.message.client.SyncMobCaptureCardDefinitionsMessage;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.network.ChannelBuilder;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.SimpleChannel;
@@ -47,7 +46,11 @@ public class NetworkHandler {
         .consumerNetworkThread(
             (message, context) -> {
               context.enqueueWork(
-                  () -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> message::handleClient));
+                  () -> {
+                    if (FMLEnvironment.dist.isClient()) {
+                      message.handleClient();
+                    }
+                  });
               context.setPacketHandled(true);
             })
         .add();

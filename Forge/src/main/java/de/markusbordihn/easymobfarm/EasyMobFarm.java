@@ -22,6 +22,7 @@ package de.markusbordihn.easymobfarm;
 import cpw.mods.modlauncher.Launcher;
 import cpw.mods.modlauncher.api.IEnvironment;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
+import de.markusbordihn.easymobfarm.client.renderer.item.properties.ModItemProperties;
 import de.markusbordihn.easymobfarm.compat.CompatHandler;
 import de.markusbordihn.easymobfarm.compat.CompatManager;
 import de.markusbordihn.easymobfarm.component.ModDataComponents;
@@ -33,10 +34,10 @@ import de.markusbordihn.easymobfarm.item.ModBlockItems;
 import de.markusbordihn.easymobfarm.item.ModItems;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
 import de.markusbordihn.easymobfarm.network.NetworkHandler;
+import de.markusbordihn.easymobfarm.tabs.ModTabs;
 import java.util.Optional;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.eventbus.api.bus.BusGroup;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
@@ -52,7 +53,7 @@ public class EasyMobFarm {
 
   @SuppressWarnings({"java:S1118", "java:S2440"})
   public EasyMobFarm(FMLJavaModLoadingContext context) {
-    final IEventBus modEventBus = context.getModEventBus();
+    final BusGroup modBusGroup = context.getModBusGroup();
 
     log.info("Initializing {} (Forge) ...", Constants.MOD_NAME);
 
@@ -78,27 +79,31 @@ public class EasyMobFarm {
     ExperienceManager.registerExperienceManager(new ModExperienceManager());
 
     log.info("{} Blocks ...", Constants.LOG_REGISTER_PREFIX);
-    ModBlocks.BLOCKS.register(modEventBus);
+    ModBlocks.BLOCKS.register(modBusGroup);
 
     log.info("{} Blocks Entities ...", Constants.LOG_REGISTER_PREFIX);
-    ModBlocks.BLOCK_ENTITIES.register(modEventBus);
+    ModBlocks.BLOCK_ENTITIES.register(modBusGroup);
 
     log.info("{} Block Items ...", Constants.LOG_REGISTER_PREFIX);
-    ModBlockItems.ITEMS.register(modEventBus);
+    ModBlockItems.ITEMS.register(modBusGroup);
 
     log.info("{} Items ...", Constants.LOG_REGISTER_PREFIX);
-    ModItems.ITEMS.register(modEventBus);
+    ModItems.ITEMS.register(modBusGroup);
 
     log.info("{} Menu Types ...", Constants.LOG_REGISTER_PREFIX);
-    ModMenuTypes.MENU_TYPES.register(modEventBus);
+    ModMenuTypes.MENU_TYPES.register(modBusGroup);
 
     log.info("{} Mod Data Components ...", Constants.LOG_REGISTER_PREFIX);
-    ModDataComponents.DATA_COMPONENTS.register(modEventBus);
+    ModDataComponents.DATA_COMPONENTS.register(modBusGroup);
 
     log.info("{} Network Handler ...", Constants.LOG_REGISTER_PREFIX);
     NetworkHandler.registerClientNetworkMessageHandler();
 
-    // Initialize the client mod initializer
-    DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> new EasyMobFarmClient(modEventBus));
+    log.info("{} Creative Tabs ...", Constants.LOG_REGISTER_PREFIX);
+    ModTabs.CREATIVE_TABS.register(modBusGroup);
+
+    if (FMLEnvironment.dist.isClient()) {
+      ModItemProperties.registerItemProperties();
+    }
   }
 }

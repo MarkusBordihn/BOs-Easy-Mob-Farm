@@ -20,7 +20,7 @@
 package de.markusbordihn.easymobfarm.client.screen.components;
 
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.ResourceLocation;
 
 public class Graphics {
@@ -51,7 +51,7 @@ public class Graphics {
       int textureWidth,
       int textureHeight) {
     guiGraphics.blit(
-        RenderType::guiTextured,
+        RenderPipelines.GUI_TEXTURED,
         texture,
         x,
         y,

@@ -25,7 +25,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemFishedEvent;
 
 @SuppressWarnings("unused")
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.GAME)
+@EventBusSubscriber()
 public class FishingEventHandler {
 
   private FishingEventHandler() {}

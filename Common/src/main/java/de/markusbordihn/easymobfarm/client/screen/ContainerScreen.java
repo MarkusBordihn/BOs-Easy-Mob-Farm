@@ -62,21 +62,33 @@ public class ContainerScreen<T extends MobFarmMenu> extends AbstractContainerScr
 
   @Override
   protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
-    // Render screen background
-    this.renderDefaultScreenBg(guiGraphics, this.leftPos, this.topPos);
-  }
-
-  protected void renderDefaultScreenBg(GuiGraphics guiGraphics, int leftPos, int topPos) {
-    Graphics.blit(guiGraphics, Constants.TEXTURE_DEMO_BACKGROUND, leftPos, topPos, 0, 0, 210, 160);
     Graphics.blit(
-        guiGraphics, Constants.TEXTURE_DEMO_BACKGROUND, leftPos + 203, topPos, 132, 0, 120, 160);
+        guiGraphics, Constants.TEXTURE_DEMO_BACKGROUND, this.leftPos, this.topPos, 0, 0, 210, 160);
     Graphics.blit(
-        guiGraphics, Constants.TEXTURE_DEMO_BACKGROUND, leftPos, topPos + 77, 0, 5, 210, 170);
+        guiGraphics, Constants.TEXTURE_DEMO_BACKGROUND, this.leftPos, this.topPos, 0, 0, 210, 160);
     Graphics.blit(
         guiGraphics,
         Constants.TEXTURE_DEMO_BACKGROUND,
-        leftPos + 203,
-        topPos + 77,
+        this.leftPos + 203,
+        this.topPos,
+        132,
+        0,
+        120,
+        160);
+    Graphics.blit(
+        guiGraphics,
+        Constants.TEXTURE_DEMO_BACKGROUND,
+        this.leftPos,
+        this.topPos + 77,
+        0,
+        5,
+        210,
+        170);
+    Graphics.blit(
+        guiGraphics,
+        Constants.TEXTURE_DEMO_BACKGROUND,
+        this.leftPos + 203,
+        this.topPos + 77,
         132,
         5,
         120,

@@ -92,7 +92,7 @@ public class FishingEvents {
         MobCaptureManager.getMobCaptureCardItem(entityType.get().value(), serverPlayer.level());
     if (itemStack != null) {
       log.debug("Dropped mob capture card {} for {}.", itemStack, entityType);
-      serverPlayer.spawnAtLocation(serverPlayer.serverLevel(), itemStack, 0.5F);
+      serverPlayer.spawnAtLocation(serverPlayer.level(), itemStack, 0.5F);
     } else {
       log.error("Failed to drop mob capture card for {}.", entityType);
     }

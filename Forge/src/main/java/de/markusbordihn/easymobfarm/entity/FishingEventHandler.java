@@ -21,7 +21,7 @@ package de.markusbordihn.easymobfarm.entity;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @SuppressWarnings("unused")

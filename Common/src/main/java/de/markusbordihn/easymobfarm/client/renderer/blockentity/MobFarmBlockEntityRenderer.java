@@ -38,7 +38,6 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.entity.animal.Bee;
@@ -190,8 +189,7 @@ public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
       poseStack.translate(0, 1.30, 0);
     } else if (entity instanceof Phantom) {
       poseStack.translate(0, 0.5, 0);
-    } else if (entity instanceof FlyingMob
-        || (entity instanceof FlyingAnimal flyingAnimal && flyingAnimal.isFlying())
+    } else if ((entity instanceof FlyingAnimal flyingAnimal && flyingAnimal.isFlying())
         || entity instanceof Guardian) {
       poseStack.translate(0, 0.3 / entityScaling, 0);
     } else if (entity instanceof EnderDragon) {

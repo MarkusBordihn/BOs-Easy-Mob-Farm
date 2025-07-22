@@ -24,7 +24,6 @@ import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinitionManager
 import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.monster.ElderGuardian;
 
@@ -81,8 +80,7 @@ public class EntityScalingManager {
           }
           float scaleFactor = Math.max(entityWidth, entityHeight) / MAX_BLOCK_SCALE;
           if (scaleFactor > 1.0f) {
-            if (entity instanceof FlyingMob
-                || (entity instanceof FlyingAnimal flyingAnimal && flyingAnimal.isFlying())) {
+            if ((entity instanceof FlyingAnimal flyingAnimal && flyingAnimal.isFlying())) {
               return MAX_BLOCK_SCALE / scaleFactor * 0.60f;
             }
             return MAX_BLOCK_SCALE / scaleFactor;
