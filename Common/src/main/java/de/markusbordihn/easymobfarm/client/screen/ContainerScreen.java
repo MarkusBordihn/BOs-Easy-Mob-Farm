@@ -26,6 +26,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -33,6 +34,8 @@ import org.apache.logging.log4j.Logger;
 public class ContainerScreen<T extends MobFarmMenu> extends AbstractContainerScreen<T> {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+  protected static final ResourceLocation TEXTURE_DEMO_BACKGROUND =
+      ResourceLocation.withDefaultNamespace("textures/gui/demo_background.png");
 
   protected final T menu;
   protected final Minecraft minecraftInstance;
@@ -62,31 +65,15 @@ public class ContainerScreen<T extends MobFarmMenu> extends AbstractContainerScr
 
   @Override
   protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
+    Graphics.blit(guiGraphics, TEXTURE_DEMO_BACKGROUND, this.leftPos, this.topPos, 0, 0, 210, 160);
+    Graphics.blit(guiGraphics, TEXTURE_DEMO_BACKGROUND, this.leftPos, this.topPos, 0, 0, 210, 160);
     Graphics.blit(
-        guiGraphics, Constants.TEXTURE_DEMO_BACKGROUND, this.leftPos, this.topPos, 0, 0, 210, 160);
+        guiGraphics, TEXTURE_DEMO_BACKGROUND, this.leftPos + 203, this.topPos, 132, 0, 120, 160);
     Graphics.blit(
-        guiGraphics, Constants.TEXTURE_DEMO_BACKGROUND, this.leftPos, this.topPos, 0, 0, 210, 160);
-    Graphics.blit(
-        guiGraphics,
-        Constants.TEXTURE_DEMO_BACKGROUND,
-        this.leftPos + 203,
-        this.topPos,
-        132,
-        0,
-        120,
-        160);
+        guiGraphics, TEXTURE_DEMO_BACKGROUND, this.leftPos, this.topPos + 77, 0, 5, 210, 170);
     Graphics.blit(
         guiGraphics,
-        Constants.TEXTURE_DEMO_BACKGROUND,
-        this.leftPos,
-        this.topPos + 77,
-        0,
-        5,
-        210,
-        170);
-    Graphics.blit(
-        guiGraphics,
-        Constants.TEXTURE_DEMO_BACKGROUND,
+        TEXTURE_DEMO_BACKGROUND,
         this.leftPos + 203,
         this.topPos + 77,
         132,
