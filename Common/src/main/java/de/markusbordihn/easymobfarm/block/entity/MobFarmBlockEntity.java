@@ -56,6 +56,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -350,6 +351,30 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
       return;
     }
 
+    // Verify if the captured mob is valid.
+    EntityType<?> entityType = mobCaptureData.entityType();
+    if (entityType == null) {
+      if (this.level instanceof ServerLevel serverLevel) {
+        log.debug(
+            "Dropping invalid captured mob item {} for mob farm block entity at {}",
+            this.getItem(MobFarmSlot.CAPTURED_MOB),
+            this.getBlockPos());
+        Containers.dropItemStack(
+            serverLevel,
+            this.getBlockPos().getX() + 0.5D,
+            this.getBlockPos().getY() + 0.5D,
+            this.getBlockPos().getZ() + 0.5D,
+            this.takeItem(MobFarmSlot.CAPTURED_MOB.index()));
+      } else {
+        log.error(
+            "Invalid entity type {} for mob farm block entity at {} with captured mob {}",
+            entityType,
+            this.getBlockPos(),
+            mobCaptureData);
+      }
+      return;
+    }
+
     // Update farm status to processing for visual feedback and other mechanics.
     this.farmStatus = MobFarmStatus.PROCESSING;
 
@@ -364,8 +389,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
 
     // Add optional bonus loot drop based on the mob farm, tier level and captured mob.
     ItemStack bonusLootDrop =
-        MobFarmBonusConfig.getBonusDrop(
-            this.getFarmType(), this.getFarmTierLevel(), mobCaptureData.entityType());
+        MobFarmBonusConfig.getBonusDrop(this.getFarmType(), this.getFarmTierLevel(), entityType);
     if (!bonusLootDrop.isEmpty()) {
       log.debug(
           "Adding bonus loot drop {} for {} (tier: {}) block entity at {} with captured mob {}",
@@ -373,7 +397,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
           this.getFarmType(),
           this.getFarmTierLevel(),
           this.getBlockPos(),
-          mobCaptureData.entityType());
+          entityType);
       lootDrops.add(bonusLootDrop.copy());
     }
 

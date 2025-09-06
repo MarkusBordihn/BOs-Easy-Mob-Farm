@@ -31,6 +31,22 @@ public class MobFarmConfig extends Config {
 
  This configuration file allows you to define the general settings for the Mob Farms.
 
+ Configuration Options:
+ ----------------------
+ farmProgressingTime: Time in ticks for farm progression (default: 6000 = 5 minutes)
+
+ tier0progressionUpgradeSpeed: Speed bonus for tier 0 farms (default: 0)
+ tier1progressionUpgradeSpeed: Speed bonus for tier 1 farms (default: 2)
+ tier2progressionUpgradeSpeed: Speed bonus for tier 2 farms (default: 4)
+ tier3progressionUpgradeSpeed: Speed bonus for tier 3 farms (default: 6)
+
+ experienceDropChance: Chance for experience drops (1 in x chance, default: 5)
+ speedEnhancementUpgradeSpeed: Speed bonus from speed enhancement upgrades (default: 6)
+
+ progressingRequiresOwnerToBeOnline: Whether farms only work when owner is online (default: false)
+ luckyDropFarmLuckPercentage: Luck percentage for lucky drop farms (default: 95)
+ enforceLogicalTierProgression: Whether farms must be upgraded in order (default: false)
+
 """;
 
   public static int farmProgressingTime = 6000; // 5 minutes in seconds
@@ -45,6 +61,9 @@ public class MobFarmConfig extends Config {
   public static boolean processingRequiresOwnerToBeOnline = false;
 
   public static int luckyDropFarmLuckPercentage = 95;
+
+  // New config option for logical tier progression
+  public static boolean enforceLogicalTierProgression = false;
 
   public static void registerConfig() {
     registerConfigFile(CONFIG_FILE_NAME, CONFIG_FILE_HEADER);
@@ -79,6 +98,10 @@ public class MobFarmConfig extends Config {
 
     luckyDropFarmLuckPercentage =
         parseConfigValue(properties, "luckyDropFarmLuckPercentage", luckyDropFarmLuckPercentage);
+
+    enforceLogicalTierProgression =
+        parseConfigValue(
+            properties, "enforceLogicalTierProgression", enforceLogicalTierProgression);
 
     // Update config file if needed
     updateConfigFileIfChanged(configFile, CONFIG_FILE_HEADER, properties, unmodifiedProperties);

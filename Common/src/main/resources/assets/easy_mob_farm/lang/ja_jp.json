@@ -161,5 +161,6 @@
   "tooltip.easy_mob_farm.slot_upgrade_slot": "このスロットを使用して、Mobファームの出力スロットをアップグレードします。",
   "tooltip.easy_mob_farm.small_slot_upgrade": "ファーム内のMob保管容量を %s 追加する。",
   "tooltip.easy_mob_farm.speed_enhancement": "アイテムが収集される速度が +%s ティック/秒速くなる。",
-  "tooltip.easy_mob_farm.sword_enhancement": "プレイヤーが剣で殺したかのように戦利品を生成する。"
+  "tooltip.easy_mob_farm.sword_enhancement": "プレイヤーが剣で殺したかのように戦利品を生成する。",
+  "tooltip.easy_mob_farm.mob_capture_card.minecraft.slime.special_mechanics": "ルート量はスライムのサイズに依存します"
 }

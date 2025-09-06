@@ -161,5 +161,6 @@
   "tooltip.easy_mob_farm.slot_upgrade_slot": "Use this slot to upgrade the mob farm's output slots.",
   "tooltip.easy_mob_farm.small_slot_upgrade": "Adds additional mob storage capacity in the farm by %s.",
   "tooltip.easy_mob_farm.speed_enhancement": "Speeds up the rate by +%s ticks/sec at which items are collected.",
-  "tooltip.easy_mob_farm.sword_enhancement": "Generates loot as if killed by a player with a sword."
+  "tooltip.easy_mob_farm.sword_enhancement": "Generates loot as if killed by a player with a sword.",
+  "tooltip.easy_mob_farm.mob_capture_card.minecraft.slime.special_mechanics": "Loot quantity depends on slime size!"
 }

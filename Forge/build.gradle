@@ -151,6 +151,10 @@ dependencies {
   compileOnly fg.deobf("curse.maven:storage-drawers-223852:3807626")
   runtimeOnly fg.deobf("curse.maven:storage-drawers-223852:3807626")
 
+  // Refined Storage: Integration
+  compileOnly fg.deobf("curse.maven:refined-storage-243076:4902316")
+  runtimeOnly fg.deobf("curse.maven:refined-storage-243076:4902316")
+
   // REI: Integration
   // compileOnly fg.deobf("curse.maven:architectury-419699:5137931")
   // runtimeOnly fg.deobf("curse.maven:architectury-419699:5137931")
