@@ -193,5 +193,6 @@
   "tooltip.easy_mob_farm.slot_upgrade_slot": "이 슬롯을 사용하면 몹 팜의 출력 슬롯을 업그레이드 합니다.",
   "tooltip.easy_mob_farm.small_slot_upgrade": "팜의 저장소 용량을 %s 만큼 확장합니다.",
   "tooltip.easy_mob_farm.speed_enhancement": "아이템 수집 속도를 +%s 틱/초 만큼 증가시킵니다.",
-  "tooltip.easy_mob_farm.sword_enhancement": "플레이어가 검으로 죽인 것처럼 전리품을 생성합니다."
+  "tooltip.easy_mob_farm.sword_enhancement": "플레이어가 검으로 죽인 것처럼 전리품을 생성합니다.",
+  "tooltip.easy_mob_farm.mob_capture_card.minecraft.slime.special_mechanics": "전리품 양은 슬라임 크기에 따라 달라집니다!"
 }

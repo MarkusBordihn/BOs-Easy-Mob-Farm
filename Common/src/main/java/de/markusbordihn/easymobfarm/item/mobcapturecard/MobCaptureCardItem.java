@@ -31,6 +31,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -80,6 +81,33 @@ public class MobCaptureCardItem extends Item {
       return TextComponent.getText("Unknown");
     }
     return TextComponent.getTranslatedTextRaw(mobCaptureData.name());
+  }
+
+  private static void addSpecialMechanicsTooltips(
+      final MobCaptureData mobCaptureData, final List<Component> tooltip) {
+    if (mobCaptureData == null || mobCaptureData.name() == null) {
+      return;
+    }
+    MutableComponent specialMechanicsTooltip =
+        tryGetTranslation(
+            TOOLTIP_PREFIX
+                + mobCaptureData.name().replace("entity.", "").replace(":", ".")
+                + ".special_mechanics");
+    if (specialMechanicsTooltip != null) {
+      tooltip.add(specialMechanicsTooltip.withStyle(ChatFormatting.GRAY));
+    }
+  }
+
+  private static MutableComponent tryGetTranslation(final String translationKey) {
+    try {
+      MutableComponent translation = TextComponent.getTranslatedTextRaw(translationKey);
+      if (translation.getString().equals(translationKey)) {
+        return null;
+      }
+      return translation;
+    } catch (Exception e) {
+      return null;
+    }
   }
 
   @Override
@@ -192,5 +220,7 @@ public class MobCaptureCardItem extends Item {
     tooltip.add(
         TextComponent.getTranslatedTextRaw(
             TOOLTIP_PREFIX + "id", String.valueOf(mobCaptureData.getCardId())));
+
+    addSpecialMechanicsTooltips(mobCaptureData, tooltip);
   }
 }

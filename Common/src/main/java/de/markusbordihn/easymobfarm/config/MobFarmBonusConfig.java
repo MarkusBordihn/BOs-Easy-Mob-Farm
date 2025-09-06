@@ -42,16 +42,50 @@ public class MobFarmBonusConfig extends Config {
 
  This configuration file allows you to define the bonus drops for the Mob Farms.
 
-The format is as follows:
-- <mob_farm_name>::<tier_level>::<entity_type> = <item_name>::<amount>::<chance 1 of x>
+ Configuration Format:
+ --------------------
+ <mob_farm_name>::<tier_level>::<entity_type> = <item_name>::<amount>::<chance 1 of x>
 
-Example:
-- bee_hive_farm::0::minecraft:bee = minecraft:honeycomb::1::20
-- bee_hive_farm::1::minecraft:bee = minecraft:honeycomb::1::15
-- bee_hive_farm::2::minecraft:bee = minecraft:honeycomb::1::10
-- bee_hive_farm::3::minecraft:bee = minecraft:honeycomb::1::5
+ Available Mob Farm Types:
+ ------------------------
+ - animal_plains_farm: For animals like cows, sheep, chickens, pigs
+ - bee_hive_farm: For bees and honey production
+ - desert_farm: For desert mobs like husks, rabbits, camels
+ - iron_golem_farm: For iron golems and poppy drops
+ - jungle_farm: For jungle mobs like parrots, pandas, ocelots
+ - monster_plains_cave_farm: For common monsters like zombies, skeletons, spiders
+ - nether_fortress_farm: For nether mobs like blazes, magma cubes, wither skeletons
+ - ocean_farm: For ocean mobs like cod, salmon, squid, guardians
+ - swamp_farm: For swamp mobs like frogs, slimes, witches
 
-To disable a bonus drop for a default definition, set the amount to 0.
+ Tier Levels (better farms = better bonus chances):
+ -------------------------------------------------
+ - 0: Basic tier (lowest bonus chance)
+ - 1: Improved tier (better bonus chance)
+ - 2: Advanced tier (good bonus chance)
+ - 3: Elite tier (highest bonus chance)
+
+ Configuration Examples:
+ ----------------------
+ Basic bee farm with 1 in 20 chance for honeycomb:
+   bee_hive_farm::0::minecraft:bee = minecraft:honeycomb::1::20
+
+ Elite bee farm with 1 in 5 chance for honeycomb:
+   bee_hive_farm::3::minecraft:bee = minecraft:honeycomb::1::5
+
+ Iron golem farm with bonus iron ingots:
+   iron_golem_farm::2::minecraft:iron_golem = minecraft:iron_ingot::2::8
+
+ Multiple bonus items for the same mob (different lines):
+   ocean_farm::1::minecraft:cod = minecraft:cod::1::10
+   ocean_farm::1::minecraft:cod = minecraft:bone_meal::1::25
+
+ Important Notes:
+ ---------------
+ - Lower chance numbers = higher drop probability (1 = always, 100 = 1% chance)
+ - To disable a bonus drop, set the amount to 0
+ - Each mob farm type targets specific biome-appropriate mobs
+ - Higher tier farms have better default bonus chances
 
 """;
   public static final String LOG_PREFIX = "[MobFarmBonusConfig]";
