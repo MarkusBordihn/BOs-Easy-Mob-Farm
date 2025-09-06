@@ -32,6 +32,16 @@ public class MobCaptureCardConfig extends Config {
 
  This configuration file allows you to define the general settings for the Mob Capture Cards.
 
+ Configuration Options:
+ ----------------------
+ dropMobCaptureCardOnKill: Enable mob capture card drops when killing mobs (default: true)
+ dropMobCaptureCardOnFishing: Enable mob capture card drops when fishing (default: true)
+
+ requirePlayerKill: Only drop cards when player kills the mob (default: true)
+ mobCaptureCardKillDropChance: Drop chance for kill drops (0.0-1.0, default: 0.1 = 10%)
+ mobCaptureCardFishingDropChance: Drop chance for fishing drops (0.0-1.0, default: 0.15 = 15%)
+ mobCaptureCardFoilDropChance: Drop chance for foil cards (0.0-1.0, default: 0.01 = 1%)
+
  Allow and Deny list
  -------------------
  If you want to allow or deny specific mobs, you can use the allow and deny list.

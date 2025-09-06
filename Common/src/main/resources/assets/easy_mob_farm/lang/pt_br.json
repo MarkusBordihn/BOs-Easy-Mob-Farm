@@ -193,5 +193,6 @@
   "tooltip.easy_mob_farm.slot_upgrade_slot": "Use este slot para melhorar os slots de saída da fazenda de mobs.",
   "tooltip.easy_mob_farm.small_slot_upgrade": "Adiciona capacidade de armazenamento de mobs na fazenda em %s.",
   "tooltip.easy_mob_farm.speed_enhancement": "Acelera a taxa em +%s ticks/seg na qual os itens são coletados.",
-  "tooltip.easy_mob_farm.sword_enhancement": "Gera saque como se o mob fosse morto por um jogador com uma espada."
+  "tooltip.easy_mob_farm.sword_enhancement": "Gera saque como se o mob fosse morto por um jogador com uma espada.",
+  "tooltip.easy_mob_farm.mob_capture_card.minecraft.slime.special_mechanics": "A quantidade de saque depende do tamanho do slime!"
 }

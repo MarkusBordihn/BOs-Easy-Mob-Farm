@@ -193,5 +193,6 @@
   "tooltip.easy_mob_farm.slot_upgrade_slot": "Usa este espacio para mejorar los espacios de salida de la granja de mobs.",
   "tooltip.easy_mob_farm.small_slot_upgrade": "Añade capacidad adicional de almacenamiento de mobs en la granja en %s.",
   "tooltip.easy_mob_farm.speed_enhancement": "Aumenta la velocidad en +%s ticks/seg para recolectar objetos.",
-  "tooltip.easy_mob_farm.sword_enhancement": "Genera botines como si fueran eliminados por un jugador con una espada."
+  "tooltip.easy_mob_farm.sword_enhancement": "Genera botines como si fueran eliminados por un jugador con una espada.",
+  "tooltip.easy_mob_farm.mob_capture_card.minecraft.slime.special_mechanics": "La cantidad de botín depende del tamaño del slime!"
 }
