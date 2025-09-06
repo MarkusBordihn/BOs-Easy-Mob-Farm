@@ -32,6 +32,37 @@ public class MobCatcherConfig extends Config {
 
  This configuration file allows you to define the general settings for the Mob Catcher.
 
+ Configuration Options for each Mob Catcher:
+ -------------------------------------------
+
+ Enduring Capture Net:
+   EnduringCaptureNet:Enabled - Enable/disable this mob catcher (default: true)
+   EnduringCaptureNet:MaxDurability - Maximum durability before breaking (default: 64)
+   EnduringCaptureNet:RequiredHealthPercentageToCapture - Health % needed to capture (default: 0.5 = 50%)
+   EnduringCaptureNet:MaxEntityHeightToCapture - Maximum entity height to capture (default: 1.4)
+   EnduringCaptureNet:MaxEntityWidthToCapture - Maximum entity width to capture (default: 0.9)
+
+ Ironbound Containment Cage:
+   IronboundContainmentCage:Enabled - Enable/disable this mob catcher (default: true)
+   IronboundContainmentCage:MaxDurability - Maximum durability before breaking (default: 32)
+   IronboundContainmentCage:RequiredHealthPercentageToCapture - Health % needed to capture (default: 0.25 = 25%)
+   IronboundContainmentCage:MaxEntityHeightToCapture - Maximum entity height to capture (default: 2.0)
+   IronboundContainmentCage:MaxEntityWidthToCapture - Maximum entity width to capture (default: 1.5)
+
+ Mystic Binding Crystal:
+   MysticBindingCrystal:Enabled - Enable/disable this mob catcher (default: true)
+   MysticBindingCrystal:MaxDurability - Maximum durability before breaking (default: 32)
+   MysticBindingCrystal:RequiredHealthPercentageToCapture - Health % needed to capture (default: 0.25 = 25%)
+   MysticBindingCrystal:MaxEntityHeightToCapture - Maximum entity height to capture (default: 4.0)
+   MysticBindingCrystal:MaxEntityWidthToCapture - Maximum entity width to capture (default: 3.0)
+
+ Void Binding Chain:
+   VoidBindingChain:Enabled - Enable/disable this mob catcher (default: true)
+   VoidBindingChain:MaxDurability - Maximum durability before breaking (default: 16)
+   VoidBindingChain:RequiredHealthPercentageToCapture - Health % needed to capture (default: 0.20 = 20%)
+   VoidBindingChain:MaxEntityHeightToCapture - Maximum entity height to capture (default: 6.0)
+   VoidBindingChain:MaxEntityWidthToCapture - Maximum entity width to capture (default: 4.0)
+
  Allow and Deny list
  -------------------
  If you want to allow or deny specific mobs, you can use the allow and deny list.

@@ -35,6 +35,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -98,6 +99,33 @@ public class MobCaptureCardItem extends Item {
       return TextComponent.getText("Unknown");
     }
     return TextComponent.getTranslatedTextRaw(mobCaptureData.name());
+  }
+
+  private static void addSpecialMechanicsTooltips(
+      final MobCaptureData mobCaptureData, final Consumer<Component> tooltipConsumer) {
+    if (mobCaptureData == null || mobCaptureData.name() == null) {
+      return;
+    }
+    MutableComponent specialMechanicsTooltip =
+        tryGetTranslation(
+            TOOLTIP_PREFIX
+                + mobCaptureData.name().replace("entity.", "").replace(":", ".")
+                + ".special_mechanics");
+    if (specialMechanicsTooltip != null) {
+      tooltipConsumer.accept(specialMechanicsTooltip.withStyle(ChatFormatting.GRAY));
+    }
+  }
+
+  private static MutableComponent tryGetTranslation(final String translationKey) {
+    try {
+      MutableComponent translation = TextComponent.getTranslatedTextRaw(translationKey);
+      if (translation.getString().equals(translationKey)) {
+        return null;
+      }
+      return translation;
+    } catch (Exception e) {
+      return null;
+    }
   }
 
   public static Rarity getRarity(ItemStack itemStack) {
@@ -250,5 +278,7 @@ public class MobCaptureCardItem extends Item {
     tooltipConsumer.accept(
         TextComponent.getTranslatedTextRaw(
             TOOLTIP_PREFIX + "id", String.valueOf(mobCaptureData.getCardId())));
+
+    addSpecialMechanicsTooltips(mobCaptureData, tooltipConsumer);
   }
 }

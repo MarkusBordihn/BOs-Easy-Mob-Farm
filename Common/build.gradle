@@ -21,3 +21,12 @@ processResources {
     expand buildProps
   }
 }
+
+tasks.register('prepareWorkspace') {
+  description = 'Prepares the workspace for development.'
+  group = 'setup'
+
+  doLast {
+    println 'Workspace prepared for development.'
+  }
+}
