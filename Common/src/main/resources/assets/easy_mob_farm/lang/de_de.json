@@ -193,5 +193,6 @@
   "tooltip.easy_mob_farm.slot_upgrade_slot": "Verwende diesen Slot, um die Ausgabeslots der Mob-Farm zu erweitern.",
   "tooltip.easy_mob_farm.small_slot_upgrade": "Fügt zusätzliche Speicherkapazität für Mobs im Farm um %s hinzu.",
   "tooltip.easy_mob_farm.speed_enhancement": "Erhöht die Geschwindigkeit um +%s ticks/sek, mit der Gegenstände gesammelt werden.",
-  "tooltip.easy_mob_farm.sword_enhancement": "Erzeugt Beute, als ob sie von einem Spieler mit einem Schwert getötet wurde."
+  "tooltip.easy_mob_farm.sword_enhancement": "Erzeugt Beute, als ob sie von einem Spieler mit einem Schwert getötet wurde.",
+  "tooltip.easy_mob_farm.mob_capture_card.minecraft.slime.special_mechanics": "Beutemenge hängt von der Schleimgröße ab!"
 }

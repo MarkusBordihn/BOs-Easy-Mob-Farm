@@ -21,6 +21,7 @@ package de.markusbordihn.easymobfarm.item;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.config.MobCatcherConfig;
+import de.markusbordihn.easymobfarm.config.MobFarmConfig;
 import de.markusbordihn.easymobfarm.item.mobcatcher.EnduringCaptureNetItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.IronboundContainmentCageItem;
 import de.markusbordihn.easymobfarm.item.mobcatcher.MysticBindingCrystalItem;
@@ -39,6 +40,7 @@ public class ModRecipeManager {
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final String LOG_PREFIX = "[Recipe Manager]";
   private static final String MOB_CAPTURE_PREFIX = "mob_catcher/";
+  private static final String MOB_FARM_TEMPLATE_PREFIX = "mob_farm_template/";
 
   private ModRecipeManager() {}
 
@@ -48,16 +50,45 @@ public class ModRecipeManager {
     // Disable recipes based on the given configuration.
     Collection<RecipeHolder<?>> recipes =
         new ArrayList<>(minecraftServer.getRecipeManager().getRecipes());
+
+    // Disable mob catcher recipes if needed
     removeRecipeIfDisabled(
-        recipes, MobCatcherConfig.ENDURING_CAPTURE_NET_ENABLED, EnduringCaptureNetItem.ID);
+        recipes,
+        MobCatcherConfig.ENDURING_CAPTURE_NET_ENABLED,
+        EnduringCaptureNetItem.ID,
+        MOB_CAPTURE_PREFIX);
     removeRecipeIfDisabled(
         recipes,
         MobCatcherConfig.IRONBOUND_CONTAINMENT_CAGE_ENABLED,
-        IronboundContainmentCageItem.ID);
+        IronboundContainmentCageItem.ID,
+        MOB_CAPTURE_PREFIX);
     removeRecipeIfDisabled(
-        recipes, MobCatcherConfig.MYSTIC_BINDING_CRYSTAL_ENABLED, MysticBindingCrystalItem.ID);
+        recipes,
+        MobCatcherConfig.MYSTIC_BINDING_CRYSTAL_ENABLED,
+        MysticBindingCrystalItem.ID,
+        MOB_CAPTURE_PREFIX);
     removeRecipeIfDisabled(
-        recipes, MobCatcherConfig.VOID_BINDING_CHAIN_ENABLED, VoidBindingChainItem.ID);
+        recipes,
+        MobCatcherConfig.VOID_BINDING_CHAIN_ENABLED,
+        VoidBindingChainItem.ID,
+        MOB_CAPTURE_PREFIX);
+
+    // Disable mob farm template recipes if logical tier progression is enforced
+    removeRecipeIfDisabled(
+        recipes,
+        !MobFarmConfig.enforceLogicalTierProgression,
+        "tier1_mob_farm_template",
+        MOB_FARM_TEMPLATE_PREFIX);
+    removeRecipeIfDisabled(
+        recipes,
+        !MobFarmConfig.enforceLogicalTierProgression,
+        "tier2_mob_farm_template",
+        MOB_FARM_TEMPLATE_PREFIX);
+    removeRecipeIfDisabled(
+        recipes,
+        !MobFarmConfig.enforceLogicalTierProgression,
+        "tier3_mob_farm_template",
+        MOB_FARM_TEMPLATE_PREFIX);
 
     if (minecraftServer.getRecipeManager().getRecipes().size() != recipes.size()) {
       // Replace recipes with adjusted recipes.
@@ -79,11 +110,11 @@ public class ModRecipeManager {
   }
 
   private static boolean removeRecipeIfDisabled(
-      Collection<RecipeHolder<?>> recipes, boolean isEnabled, String itemId) {
+      Collection<RecipeHolder<?>> recipes, boolean isEnabled, String itemId, String recipePrefix) {
     if (isEnabled) {
       return false;
     }
-    String recipePath = MOB_CAPTURE_PREFIX + itemId;
+    String recipePath = recipePrefix + itemId;
     boolean removed =
         recipes.removeIf(
             recipeHolder ->

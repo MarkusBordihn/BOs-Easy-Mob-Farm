@@ -62,6 +62,9 @@ dependencies {
   // Immersive Engineering: Integration
   runtimeOnly "curse.maven:immersive-engineering-231951:5828000"
 
+  // Refined Storage: Integration
+  runtimeOnly "curse.maven:refined-storage-243076:6391989"
+
   // Applied Energistics 2: Integration
   runtimeOnly "curse.maven:applied-energistics-2-223794:5729094"
 

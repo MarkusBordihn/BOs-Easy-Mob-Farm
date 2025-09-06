@@ -193,5 +193,6 @@
   "tooltip.easy_mob_farm.slot_upgrade_slot": "Használd ezt a rekeszt a mobfarm kimenetének bővítéséhez.",
   "tooltip.easy_mob_farm.small_slot_upgrade": "Bővíti a mobfarm tárolókapacitását %s-vel.",
   "tooltip.easy_mob_farm.speed_enhancement": "Növeli a farm begyűjtési sebességét +%s t/mp.",
-  "tooltip.easy_mob_farm.sword_enhancement": "Úgy generálja a zsákmányt, mintha egy játékos ölte volna meg karddal."
+  "tooltip.easy_mob_farm.sword_enhancement": "Úgy generálja a zsákmányt, mintha egy játékos ölte volna meg karddal.",
+  "tooltip.easy_mob_farm.mob_capture_card.minecraft.slime.special_mechanics": "A zsákmány mennyisége függ a nyálka méretétől!"
 }
