@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+# v10.2.0
+
+- Fixed #177 by adding `enforceLogicalTierProgression` Mob Farm Config option.
+- Fixed #166 by adding additional tooltips for special mechanics for mob drops.
+- Fixed #163 and #173 by adding balanced custom loot table for specific mobs.
+- Added Brazilian Portuguese (pt_BR) translation. Thanks to `@PrincessStelllar` for the
+  contribution.
+- Improved config file descriptions.
+
+# v10.1.0
+
+- Automatically eject invalid mob capture cards from the mob farm.
+
 # v10.0.0
 
 🚨 **Warning:** Easy Mob Farm version **10.x** uses datapacks and resource packs to define custom mob
