@@ -1,5 +1,5 @@
 plugins {
-  id 'net.neoforged.moddev' version '2.0.72'
+  id 'net.neoforged.moddev' version '2.0.107'
 }
 
 archivesBaseName = "${mod_name}-common-${minecraft_version}"
@@ -19,5 +19,14 @@ processResources {
 
   filesMatching(['pack.mcmeta']) {
     expand buildProps
+  }
+}
+
+tasks.register('prepareWorkspace') {
+  description = 'Prepares the workspace for development.'
+  group = 'setup'
+
+  doLast {
+    println 'Workspace prepared for development.'
   }
 }

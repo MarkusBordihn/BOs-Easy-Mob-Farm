@@ -58,3 +58,159 @@ subprojects {
     }
   }
 }
+
+// Clean and build all modules
+tasks.register('cleanBuild') {
+  description = 'Cleans and builds all modules (Common, Fabric, Forge, NeoForge)'
+  group = "build"
+
+  doLast {
+    println "Starting clean build process..."
+
+    // First clean all .gradle directories
+    println "Cleaning .gradle directories..."
+    def dirsToClean = []
+    rootDir.eachFileRecurse { file ->
+      if (file.isDirectory() && file.name == '.gradle') {
+        dirsToClean << file
+      }
+    }
+    dirsToClean.each { dir ->
+      println "Deleting: ${dir}"
+      dir.deleteDir()
+    }
+    println ".gradle directories deleted: ${dirsToClean.size()}"
+
+    // Define module directories
+    def modules = ['Common', 'Fabric', 'Forge', 'NeoForge']
+
+    // Clean each module
+    println "Cleaning all modules..."
+    modules.each { moduleName ->
+      def moduleDir = file("${rootDir}/${moduleName}")
+
+      if (moduleDir.exists()) {
+        println "Cleaning module: ${moduleName}"
+        def connection = GradleConnector.newConnector()
+            .forProjectDirectory(moduleDir)
+            .connect()
+
+        try {
+          def buildLauncher = connection.newBuild()
+          buildLauncher.forTasks('clean')
+          buildLauncher.setStandardOutput(System.out)
+          buildLauncher.setStandardError(System.err)
+          buildLauncher.run()
+          println "Successfully cleaned module: ${moduleName}"
+        } finally {
+          connection.close()
+        }
+      } else {
+        println "Skipping module: ${moduleName} (directory does not exist)"
+      }
+    }
+
+    // Build each module with refreshed dependencies
+    println "Building all modules with refreshed dependencies..."
+    modules.each { moduleName ->
+      def moduleDir = file("${rootDir}/${moduleName}")
+
+      if (moduleDir.exists()) {
+        println "Building module: ${moduleName}"
+        def connection = GradleConnector.newConnector()
+            .forProjectDirectory(moduleDir)
+            .connect()
+
+        try {
+          def buildLauncher = connection.newBuild()
+          buildLauncher.forTasks('build')
+          buildLauncher.withArguments('--refresh-dependencies')
+          buildLauncher.setStandardOutput(System.out)
+          buildLauncher.setStandardError(System.err)
+          buildLauncher.run()
+          println "Successfully built module: ${moduleName}"
+        } finally {
+          connection.close()
+        }
+      } else {
+        println "Skipping module: ${moduleName} (directory does not exist)"
+      }
+    }
+
+    println "All modules successfully cleaned and built."
+  }
+}
+
+// Remove all .gradle directories in project and subproject folders
+tasks.register('cleanGradleDirs') {
+  description = 'Deletes all .gradle directories in project and subproject folders'
+  group = "build"
+
+  doLast {
+    def dirsToClean = []
+    rootDir.eachFileRecurse { file ->
+      if (file.isDirectory() && file.name == '.gradle') {
+        dirsToClean << file
+      }
+    }
+    dirsToClean.each { dir ->
+      println "Deleting: ${dir}"
+      dir.deleteDir()
+    }
+    println ".gradle directories deleted: ${dirsToClean.size()}"
+  }
+}
+
+// Clean cache and gradle directories without building
+tasks.register('cleanCache') {
+  description = 'Cleans cache, .gradle directories and refreshes dependencies for all modules (Common, Fabric, Forge, NeoForge)'
+  group = "build"
+
+  doLast {
+    // First clean all .gradle directories
+    println "Cleaning .gradle directories..."
+    def dirsToClean = []
+    rootDir.eachFileRecurse { file ->
+      if (file.isDirectory() && file.name == '.gradle') {
+        dirsToClean << file
+      }
+    }
+    dirsToClean.each { dir ->
+      println "Deleting: ${dir}"
+      dir.deleteDir()
+    }
+    println ".gradle directories deleted: ${dirsToClean.size()}"
+
+    // Define module directories
+    def modules = ['Common', 'Fabric', 'Forge', 'NeoForge']
+
+    // Clean each module with refreshed dependencies (no build)
+    println "Cleaning all modules with refreshed dependencies..."
+    modules.each { moduleName ->
+      def moduleDir = file("${rootDir}/${moduleName}")
+
+      if (moduleDir.exists()) {
+        println "Cleaning cache for module: ${moduleName}"
+        def connection = GradleConnector.newConnector()
+            .forProjectDirectory(moduleDir)
+            .connect()
+
+        try {
+          def buildLauncher = connection.newBuild()
+          buildLauncher.forTasks('clean')
+          buildLauncher.withArguments('--refresh-dependencies')
+          buildLauncher.setStandardOutput(System.out)
+          buildLauncher.setStandardError(System.err)
+          buildLauncher.run()
+          println "Successfully cleaned cache for module: ${moduleName}"
+        } finally {
+          connection.close()
+        }
+      } else {
+        println "Skipping module: ${moduleName} (directory does not exist)"
+      }
+    }
+
+    println "All module caches successfully cleaned with refreshed dependencies."
+  }
+}

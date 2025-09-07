@@ -45,6 +45,13 @@ dependencies {
   // modRuntimeOnly("curse.maven:polymer-551890:6012918")
   // modRuntimeOnly("curse.maven:trailier-tales-1124703:5960030")
 
+  // Refined Storage: Integration Tests
+  // modRuntimeOnly "curse.maven:cloth-config-348521:5729125"
+  // modRuntimeOnly "curse.maven:refined-storage-243076:6391988"
+  // modRuntimeOnly('teamreborn:energy:4.1.0') {
+  //  exclude(group: "net.fabricmc.fabric-api")
+  //}
+
   // Create: Integration Tests
   //  modRuntimeOnly "io.github.tropheusj:milk-lib:1.2.60"
   //  modRuntimeOnly "com.jamieswhiteshirt:reach-entity-attributes:2.4.0"
