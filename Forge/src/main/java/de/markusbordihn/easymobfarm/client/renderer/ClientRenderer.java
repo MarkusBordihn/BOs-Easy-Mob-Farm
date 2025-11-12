@@ -21,11 +21,9 @@ package de.markusbordihn.easymobfarm.client.renderer;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
-import de.markusbordihn.easymobfarm.client.renderer.blockentity.MobFarmBlockEntityRenderer;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -38,16 +36,6 @@ public class ClientRenderer {
   public static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   protected ClientRenderer() {}
-
-  @SubscribeEvent
-  public static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-    log.info("{} Block Entity Renderers ...", Constants.LOG_REGISTER_PREFIX);
-
-    event.registerBlockEntityRenderer(
-        ModBlocks.CREATIVE_MOB_FARM_ENTITY.get(), MobFarmBlockEntityRenderer::new);
-    event.registerBlockEntityRenderer(
-        ModBlocks.MOB_FARM_ENTITY.get(), MobFarmBlockEntityRenderer::new);
-  }
 
   @SubscribeEvent
   public static void registerRenderLayers(final FMLClientSetupEvent event) {

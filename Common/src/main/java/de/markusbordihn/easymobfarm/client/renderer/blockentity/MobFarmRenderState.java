@@ -17,27 +17,29 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.client.renderer.item.properties.numeric;
+package de.markusbordihn.easymobfarm.client.renderer.blockentity;
 
-import com.mojang.serialization.MapCodec;
-import de.markusbordihn.easymobfarm.item.MobFarmBlockItem;
-import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.item.properties.numeric.RangeSelectItemModelProperty;
-import net.minecraft.world.entity.ItemOwner;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
+import net.minecraft.core.Direction;
 
-public record MobFarmBlockItemTierLevel() implements RangeSelectItemModelProperty {
+@SuppressWarnings("java:S1104")
+public class MobFarmRenderState extends BlockEntityRenderState {
+  public EntityRenderState entityRenderState;
+  public float entityScaling = 1.0f;
+  public float rotationDegrees = 0.0f;
+  public Direction facing = Direction.NORTH;
+  public boolean isLuckyDropFarm = false;
+  public EntityType entityType = EntityType.GENERIC;
 
-  public static final MapCodec<MobFarmBlockItemTierLevel> MAP_CODEC =
-      MapCodec.unit(new MobFarmBlockItemTierLevel());
-
-  @Override
-  public float get(ItemStack itemStack, ClientLevel clientLevel, ItemOwner itemOwner, int i) {
-    return MobFarmBlockItem.getTierLevel(itemStack).getTierLevel();
-  }
-
-  @Override
-  public MapCodec<MobFarmBlockItemTierLevel> type() {
-    return MAP_CODEC;
+  public enum EntityType {
+    GENERIC,
+    SCHOOLING_FISH,
+    BEE,
+    SQUID,
+    PHANTOM,
+    FLYING_ANIMAL,
+    GUARDIAN,
+    ENDER_DRAGON
   }
 }

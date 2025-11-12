@@ -37,7 +37,7 @@ public class LivingEntityDeathEventMixin {
   public void easyMobFarmLivingDeathEvent(DamageSource damageSource, CallbackInfo callbackInfo) {
     LivingEntity livingEntity = (LivingEntity) (Object) this;
     if (livingEntity == null
-        || livingEntity.level().isClientSide
+        || livingEntity.level().isClientSide()
         || livingEntity instanceof Player
         || !(livingEntity instanceof LivingEntity)) {
       return;

@@ -95,7 +95,7 @@ public class MobCaptureDataSupport {
     // Early return for default mob capture items.
     Item item = itemStack.getItem();
     if (item instanceof SpawnEggItem spawnEggItem && level != null) {
-      return spawnEggItem.getType(level.registryAccess(), itemStack);
+      return spawnEggItem.getType(itemStack);
     }
 
     // Use registry name to identify the entity type.
@@ -106,7 +106,7 @@ public class MobCaptureDataSupport {
 
     // Use compound tag to identify the entity type.
     CompoundTag compoundTag =
-        itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).getUnsafe();
+        itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
     if (MOB_CATCHER_DIAMOND.equals(itemRegistryName)
         || MOB_CATCHER_NETHERITE.equals(itemRegistryName)) {
       if (compoundTag.contains(MOD_DATA_TAG)

@@ -123,7 +123,7 @@ public class MobCatcherItem extends MobFarmItem {
     }
 
     // Release the mob and remove the capture data.
-    if (!level.isClientSide && level instanceof ServerLevel serverLevel) {
+    if (!level.isClientSide() && level instanceof ServerLevel serverLevel) {
 
       MobCaptureData mobCaptureData = itemStack.get(DataComponents.MOB_CAPTURE_DATA);
       if (MobCaptureManager.releaseMob(mobCaptureData, blockPos, serverLevel)) {
@@ -135,7 +135,7 @@ public class MobCatcherItem extends MobFarmItem {
       }
     }
 
-    return level.isClientSide ? InteractionResult.SUCCESS : InteractionResult.FAIL;
+    return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.FAIL;
   }
 
   @Override
@@ -154,8 +154,7 @@ public class MobCatcherItem extends MobFarmItem {
 
     // Check if item should be damaged on use.
     if (getItemDamageOnUse() > 0) {
-      itemStack.hurtAndBreak(
-          getItemDamageOnUse(), player, LivingEntity.getSlotForHand(player.getUsedItemHand()));
+      itemStack.hurtAndBreak(getItemDamageOnUse(), player, hand);
     }
 
     // Check first allow list for mob types.
@@ -219,7 +218,7 @@ public class MobCatcherItem extends MobFarmItem {
 
     // Check if we are on the client side.
     Level level = livingEntity.level();
-    if (level.isClientSide) {
+    if (level.isClientSide()) {
       return InteractionResult.SUCCESS;
     }
 

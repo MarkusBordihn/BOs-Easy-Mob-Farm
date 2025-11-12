@@ -65,7 +65,7 @@ public class MilkBottleItem extends Item {
 
   @Override
   public ItemStack finishUsingItem(ItemStack itemStack, Level level, LivingEntity livingEntity) {
-    if (level.isClientSide || !(livingEntity instanceof Player player)) {
+    if (level.isClientSide() || !(livingEntity instanceof Player player)) {
       return itemStack;
     }
 

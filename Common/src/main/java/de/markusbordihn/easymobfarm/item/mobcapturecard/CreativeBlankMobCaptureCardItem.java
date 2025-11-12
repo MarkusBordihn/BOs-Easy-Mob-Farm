@@ -63,7 +63,7 @@ public class CreativeBlankMobCaptureCardItem extends BlankMobCaptureCardItem {
 
     // Ignore client side.
     Level level = livingEntity.level();
-    if (level.isClientSide) {
+    if (level.isClientSide()) {
       return InteractionResult.SUCCESS;
     }
 

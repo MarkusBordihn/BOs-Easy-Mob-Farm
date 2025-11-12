@@ -29,16 +29,15 @@ import de.markusbordihn.easymobfarm.client.renderer.manager.RendererManager;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinition;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinitionManager;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
-import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import net.minecraft.world.entity.animal.Bee;
 import net.minecraft.world.entity.animal.FlyingAnimal;
@@ -50,152 +49,187 @@ import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
-    implements BlockEntityRenderer<T> {
+public class MobFarmBlockEntityRenderer
+    implements BlockEntityRenderer<MobFarmBlockEntity, MobFarmRenderState> {
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+  private final EntityRenderDispatcher entityRenderer;
 
-  public MobFarmBlockEntityRenderer(BlockEntityRendererProvider.Context context) {}
+  public MobFarmBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
+    this.entityRenderer = context.entityRenderer();
+  }
 
   @Override
-  public void render(
-      T blockEntity,
-      float partialTicks,
-      PoseStack poseStack,
-      MultiBufferSource buffer,
-      int combinedLight,
-      int combinedOverlay,
-      Vec3 vec3) {
+  public MobFarmRenderState createRenderState() {
+    return new MobFarmRenderState();
+  }
 
-    if (!blockEntity.hasCapturedMob()) {
+  @Override
+  public void extractRenderState(
+      MobFarmBlockEntity blockEntity,
+      MobFarmRenderState renderState,
+      float partialTicks,
+      Vec3 cameraPos,
+      ModelFeatureRenderer.CrumblingOverlay crumblingOverlay) {
+    BlockEntityRenderer.super.extractRenderState(
+        blockEntity, renderState, partialTicks, cameraPos, crumblingOverlay);
+
+    if (!blockEntity.hasCapturedMob() || blockEntity.getLevel() == null) {
       RendererManager.removeEntity(blockEntity);
+      renderState.entityRenderState = null;
       return;
     }
 
     // Get entity from cache or create new entity.
     Entity entity = RendererManager.getOrCreateEntity(blockEntity);
     if (entity == null) {
+      renderState.entityRenderState = null;
       return;
     }
 
-    // Try to render entity, if it fails, try to render generic entity.
+    // Extract entity render state
     try {
-      if (entity instanceof LivingEntity livingEntity) {
-        renderLivingEntity(blockEntity, livingEntity, poseStack, buffer, combinedLight);
-      } else if (entity instanceof Entity) {
-        renderGenericEntity(blockEntity, entity, poseStack, buffer, combinedLight);
+      @SuppressWarnings("unchecked")
+      EntityRenderer<Entity, EntityRenderState> renderer =
+          (EntityRenderer<Entity, EntityRenderState>) this.entityRenderer.getRenderer(entity);
+      EntityRenderState entityRenderState = renderer.createRenderState(entity, partialTicks);
+
+      // Animation support
+      entity.tickCount = (int) blockEntity.getLevel().getGameTime();
+      MobCaptureCardDefinition mobCaptureCardDefinition =
+          MobCaptureCardDefinitionManager.get(entity.getType());
+      if ((mobCaptureCardDefinition != null
+              && mobCaptureCardDefinition.requiresAnimationTick()
+              && entity.tickCount % 2 == 0)
+          || entity.tickCount % 200 == 0) {
+        entity.tick();
       }
-    } catch (Exception livingException) {
-      try {
-        renderGenericEntity(blockEntity, entity, poseStack, buffer, combinedLight);
-      } catch (Exception genericException) {
-        log.error(
-            "Failed to render entity {} for block entity {} with exception: {}",
-            entity.getType(),
-            blockEntity.getBlockPos(),
-            genericException.getMessage());
+
+      // Extract render data and pass to rendering state
+      renderer.extractRenderState(entity, entityRenderState, partialTicks);
+
+      // Transfer light coords from block entity render state to entity render state
+      entityRenderState.lightCoords = renderState.lightCoords;
+
+      renderState.entityRenderState = entityRenderState;
+      renderState.facing = blockEntity.getBlockState().getValue(MobFarmBlock.FACING);
+      renderState.isLuckyDropFarm = blockEntity.getFarmType() == MobFarmType.LUCKY_DROP_FARM;
+      renderState.entityScaling = EntityScalingManager.getEntityScale(entity);
+      if (renderState.isLuckyDropFarm) {
+        renderState.entityScaling *= 0.75f;
       }
+
+      // Determine entity type for positioning
+      renderState.entityType = determineEntityType(entity);
+
+      // Calculate rotation based on facing direction
+      renderState.rotationDegrees =
+          switch (renderState.facing) {
+            case NORTH -> 180f;
+            case SOUTH -> 0f;
+            case WEST -> -90f;
+            case EAST -> 90f;
+            default -> 0f;
+          };
+
+    } catch (Exception exception) {
+      log.error(
+          "Failed to extract render state for entity {} at block entity {}: {}",
+          entity.getType(),
+          blockEntity.getBlockPos(),
+          exception.getMessage());
+      renderState.entityRenderState = null;
     }
   }
 
-  private void renderLivingEntity(
-      T blockEntity,
-      LivingEntity entity,
+  @Override
+  public void submit(
+      MobFarmRenderState renderState,
       PoseStack poseStack,
-      MultiBufferSource buffer,
-      int combinedLight) {
+      SubmitNodeCollector submitNodeCollector,
+      CameraRenderState cameraRenderState) {
 
-    EntityRenderDispatcher dispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
-    EntityRenderer<LivingEntity, LivingEntityRenderState> renderer =
-        (EntityRenderer<LivingEntity, LivingEntityRenderState>) dispatcher.getRenderer(entity);
-    LivingEntityRenderState state = renderer.createRenderState(entity, 0);
-
-    // Animation support
-    entity.tickCount = (int) blockEntity.getLevel().getGameTime();
-    MobCaptureCardDefinition mobCaptureCardDefinition =
-        MobCaptureCardDefinitionManager.get(entity.getType());
-    if (mobCaptureCardDefinition != null
-        && mobCaptureCardDefinition.requiresAnimationTick()
-        && entity.tickCount % 2 == 0) {
-      entity.tick();
-    }
-
-    poseStack.pushPose();
-    prepareEntityPose(blockEntity, entity, poseStack);
-    renderer.render(state, poseStack, buffer, combinedLight);
-    poseStack.popPose();
-  }
-
-  private void renderGenericEntity(
-      T blockEntity,
-      Entity entity,
-      PoseStack poseStack,
-      MultiBufferSource buffer,
-      int combinedLight) {
-
-    EntityRenderDispatcher dispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
-    EntityRenderer renderer = dispatcher.getRenderer(entity);
-    Object stateRaw = renderer.createRenderState(entity, 0);
-
-    if (!(stateRaw instanceof EntityRenderState state)) {
+    if (renderState.entityRenderState == null) {
       return;
     }
 
-    entity.tickCount = (int) blockEntity.getLevel().getGameTime();
-
     poseStack.pushPose();
-    prepareEntityPose(blockEntity, entity, poseStack);
-    renderer.render(state, poseStack, buffer, combinedLight);
-    poseStack.popPose();
-  }
 
-  private void prepareEntityPose(T blockEntity, Entity entity, PoseStack poseStack) {
-
-    // Get Mob Farm Type for render adjustments like entity scaling and position.
-    MobFarmType mobFarmType = blockEntity.getFarmType();
-    if (mobFarmType == MobFarmType.LUCKY_DROP_FARM) {
+    // Apply position and scale
+    if (renderState.isLuckyDropFarm) {
       poseStack.translate(0.5, 0.19, 0.5);
     } else {
       poseStack.translate(0.5, 0.08, 0.5);
     }
 
-    // Scale entity to fit into block.
-    float entityScaling = EntityScalingManager.getEntityScale(entity);
-    if (mobFarmType == MobFarmType.LUCKY_DROP_FARM) {
-      entityScaling *= 0.75f;
-    }
-    poseStack.scale(entityScaling, entityScaling, entityScaling);
+    poseStack.scale(
+        renderState.entityScaling, renderState.entityScaling, renderState.entityScaling);
 
-    // Rotate entity based on block facing direction.
-    float rotationDegrees =
-        switch (blockEntity.getBlockState().getValue(MobFarmBlock.FACING)) {
-          case NORTH -> 180f;
-          case SOUTH -> 0f;
-          case WEST -> -90f;
-          case EAST -> 90f;
-          default -> 0f;
-        };
-    poseStack.mulPose(Axis.YP.rotationDegrees(rotationDegrees));
+    // Apply rotation based on facing direction
+    poseStack.mulPose(Axis.YP.rotationDegrees(renderState.rotationDegrees));
 
-    // Rotate and move entity based on entity type.
+    // Apply entity-specific transformations
+    applyEntitySpecificTransformations(renderState, poseStack);
+
+    // Submit entity for rendering
+    this.entityRenderer.submit(
+        renderState.entityRenderState,
+        cameraRenderState,
+        0.0,
+        0.0,
+        0.0,
+        poseStack,
+        submitNodeCollector);
+
+    poseStack.popPose();
+  }
+
+  private MobFarmRenderState.EntityType determineEntityType(Entity entity) {
     if (entity instanceof AbstractSchoolingFish) {
-      poseStack.translate(-0.1, 0.5, 0.1);
-      poseStack.mulPose(Axis.XP.rotationDegrees(2.0F));
-      poseStack.mulPose(Axis.YP.rotationDegrees(15.0F));
-      poseStack.mulPose(Axis.ZP.rotationDegrees(-90.0F));
+      return MobFarmRenderState.EntityType.SCHOOLING_FISH;
     } else if (entity instanceof Bee) {
-      poseStack.translate(0, 0.5, 0);
+      return MobFarmRenderState.EntityType.BEE;
     } else if (entity instanceof Squid) {
-      poseStack.translate(0, 1.30, 0);
+      return MobFarmRenderState.EntityType.SQUID;
     } else if (entity instanceof Phantom) {
-      poseStack.translate(0, 0.5, 0);
+      return MobFarmRenderState.EntityType.PHANTOM;
+    } else if (entity instanceof EnderDragon) {
+      return MobFarmRenderState.EntityType.ENDER_DRAGON;
     } else if ((entity instanceof FlyingAnimal flyingAnimal && flyingAnimal.isFlying())
         || entity instanceof Guardian) {
-      poseStack.translate(0, 0.3 / entityScaling, 0);
-    } else if (entity instanceof EnderDragon) {
-      poseStack.mulPose(Axis.XP.rotationDegrees(0.0F));
-      poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
-      poseStack.mulPose(Axis.ZP.rotationDegrees(0.0F));
+      return MobFarmRenderState.EntityType.FLYING_ANIMAL;
+    }
+    return MobFarmRenderState.EntityType.GENERIC;
+  }
+
+  private void applyEntitySpecificTransformations(
+      MobFarmRenderState renderState, PoseStack poseStack) {
+    switch (renderState.entityType) {
+      case SCHOOLING_FISH:
+        poseStack.translate(-0.1, 0.5, 0.1);
+        poseStack.mulPose(Axis.XP.rotationDegrees(2.0F));
+        poseStack.mulPose(Axis.YP.rotationDegrees(15.0F));
+        poseStack.mulPose(Axis.ZP.rotationDegrees(-90.0F));
+        break;
+      case BEE:
+      case PHANTOM:
+        poseStack.translate(0, 0.5, 0);
+        break;
+      case SQUID:
+        poseStack.translate(0, 1.30, 0);
+        break;
+      case FLYING_ANIMAL:
+        poseStack.translate(0, 0.3 / renderState.entityScaling, 0);
+        break;
+      case ENDER_DRAGON:
+        poseStack.mulPose(Axis.XP.rotationDegrees(0.0F));
+        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
+        poseStack.mulPose(Axis.ZP.rotationDegrees(0.0F));
+        break;
+      case GENERIC:
+      default:
+        // No special transformations
+        break;
     }
   }
 }

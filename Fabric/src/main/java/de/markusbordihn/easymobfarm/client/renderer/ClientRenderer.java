@@ -21,8 +21,8 @@ package de.markusbordihn.easymobfarm.client.renderer;
 
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.client.renderer.blockentity.MobFarmBlockEntityRenderer;
-import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 
 public class ClientRenderer {
@@ -30,10 +30,9 @@ public class ClientRenderer {
   private ClientRenderer() {}
 
   public static void registerBlockEntityRenderers() {
-    BlockEntityRendererRegistry.register(
+    BlockEntityRenderers.register(
         ModBlocks.CREATIVE_MOB_FARM_ENTITY, MobFarmBlockEntityRenderer::new);
-    BlockEntityRendererRegistry.register(
-        ModBlocks.MOB_FARM_ENTITY, MobFarmBlockEntityRenderer::new);
+    BlockEntityRenderers.register(ModBlocks.MOB_FARM_ENTITY, MobFarmBlockEntityRenderer::new);
   }
 
   public static void registerRenderLayers() {

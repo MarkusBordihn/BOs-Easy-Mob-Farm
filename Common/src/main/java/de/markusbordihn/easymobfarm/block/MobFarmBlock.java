@@ -208,7 +208,7 @@ public class MobFarmBlock extends BaseEntityBlock {
       BlockPos blockPos,
       Player player,
       BlockHitResult hitResult) {
-    if (level.isClientSide) {
+    if (level.isClientSide()) {
       return InteractionResult.SUCCESS;
     }
 
@@ -226,7 +226,7 @@ public class MobFarmBlock extends BaseEntityBlock {
       final Player player,
       final InteractionHand interactionHand,
       final BlockHitResult blockHitResult) {
-    if (level.isClientSide) {
+    if (level.isClientSide()) {
       return InteractionResult.SUCCESS;
     }
 
@@ -264,7 +264,7 @@ public class MobFarmBlock extends BaseEntityBlock {
       final Block block,
       final Orientation orientation,
       final boolean isMoving) {
-    if (!level.isClientSide) {
+    if (!level.isClientSide()) {
       boolean isPowered = blockState.getValue(POWERED);
       boolean isPoweredNow = level.hasNeighborSignal(blockPos);
       if (isPowered != isPoweredNow) {

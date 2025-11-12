@@ -9,9 +9,10 @@
     "I": "minecraft:iron_ingot",
     "B": "minecraft:iron_bars",
     "L": "minecraft:lead",
-    "C": "minecraft:chain"
+    "C": "#minecraft:chains"
   },
   "result": {
-    "id": "easy_mob_farm:ironbound_containment_cage"
+    "id": "easy_mob_farm:ironbound_containment_cage",
+    "count": 1
   }
 }

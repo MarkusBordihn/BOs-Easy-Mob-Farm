@@ -704,7 +704,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     this.setChanged();
 
     // Force block update
-    if (this.level != null && !this.level.isClientSide) {
+    if (this.level != null && !this.level.isClientSide()) {
       this.level.sendBlockUpdated(
           this.getBlockPos(), this.getBlockState(), this.getBlockState(), 3);
     }
@@ -729,7 +729,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
   }
 
   public void dropInventoryContents() {
-    if (this.level.isClientSide || this.items.isEmpty()) {
+    if (this.level.isClientSide() || this.items.isEmpty()) {
       return;
     }
     for (ItemStack stack : this.items) {

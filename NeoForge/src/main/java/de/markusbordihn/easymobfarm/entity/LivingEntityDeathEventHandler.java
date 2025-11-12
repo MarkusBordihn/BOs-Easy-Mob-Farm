@@ -34,7 +34,7 @@ public class LivingEntityDeathEventHandler {
   @SubscribeEvent
   public static void onLivingDeathEvent(LivingDeathEvent event) {
     if (event.getEntity() == null
-        || event.getEntity().level().isClientSide
+        || event.getEntity().level().isClientSide()
         || event.getEntity() instanceof Player) {
       return;
     }

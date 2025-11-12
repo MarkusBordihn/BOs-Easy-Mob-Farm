@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Markus Bordihn
+ * Copyright 2022 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -17,27 +17,32 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.tabs;
+package de.markusbordihn.easymobfarm.client.renderer;
 
-import de.markusbordihn.easymobfarm.item.ModBlockItems;
-import net.minecraft.world.item.CreativeModeTabs;
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.block.ModBlocks;
+import de.markusbordihn.easymobfarm.client.renderer.blockentity.MobFarmBlockEntityRenderer;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
-public class MobFarmTemplates {
+@EventBusSubscriber(bus = EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+public class ClientRendererEvents {
 
-  protected MobFarmTemplates() {}
+  public static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+
+  protected ClientRendererEvents() {}
 
   @SubscribeEvent
-  public static void onCreativeTabBuild(BuildCreativeModeTabContentsEvent event) {
-    if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
-      event.accept(ModBlockItems.TIER_0_MOB_FARM_TEMPLATE.get().getDefaultInstance());
-      event.accept(ModBlockItems.TIER_1_MOB_FARM_TEMPLATE.get().getDefaultInstance());
-      event.accept(ModBlockItems.TIER_2_MOB_FARM_TEMPLATE.get().getDefaultInstance());
-      event.accept(ModBlockItems.TIER_3_MOB_FARM_TEMPLATE.get().getDefaultInstance());
-    }
+  public static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+    log.info("{} Block Entity Renderers ...", Constants.LOG_REGISTER_PREFIX);
+
+    event.registerBlockEntityRenderer(
+        ModBlocks.CREATIVE_MOB_FARM_ENTITY.get(), MobFarmBlockEntityRenderer::new);
+    event.registerBlockEntityRenderer(
+        ModBlocks.MOB_FARM_ENTITY.get(), MobFarmBlockEntityRenderer::new);
   }
 }

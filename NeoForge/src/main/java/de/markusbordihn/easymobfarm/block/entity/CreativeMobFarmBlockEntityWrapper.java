@@ -25,9 +25,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.wrapper.SidedInvWrapper;
+import net.neoforged.neoforge.transfer.ResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
+import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 
 public class CreativeMobFarmBlockEntityWrapper extends CreativeMobFarmBlockEntity {
 
@@ -40,7 +42,49 @@ public class CreativeMobFarmBlockEntityWrapper extends CreativeMobFarmBlockEntit
     return new MobFarmMenuWrapper(windowId, inventory, this, this.getContainerData());
   }
 
-  public IItemHandler getItemCapability(final Direction direction) {
-    return new SidedInvWrapper(this, direction);
+  public ResourceHandler<ItemResource> getItemCapability(final Direction direction) {
+    return new WorldlyContainerItemHandler(this, direction);
+  }
+
+  private static class WorldlyContainerItemHandler extends ItemStacksResourceHandler {
+    private final CreativeMobFarmBlockEntity container;
+    private final Direction direction;
+
+    public WorldlyContainerItemHandler(CreativeMobFarmBlockEntity container, Direction direction) {
+      super(container.getContainerSize());
+      this.container = container;
+      this.direction = direction;
+    }
+
+    protected ItemStack getStackUnchecked(int index) {
+      return container.getItem(index);
+    }
+
+    protected void setStackUnchecked(int index, ItemStack stack) {
+      container.setItem(index, stack);
+    }
+
+    @Override
+    public boolean isValid(int index, ItemResource resource) {
+      int[] slots = container.getSlotsForFace(direction);
+      for (int slot : slots) {
+        if (slot == index
+            && container.canPlaceItemThroughFace(index, resource.toStack(), direction)) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    @Override
+    public int getCapacityAsInt(int index, ItemResource resource) {
+      int[] slots = container.getSlotsForFace(direction);
+      for (int slot : slots) {
+        if (slot == index) {
+          return resource.toStack().getMaxStackSize();
+        }
+      }
+      return 0;
+    }
   }
 }

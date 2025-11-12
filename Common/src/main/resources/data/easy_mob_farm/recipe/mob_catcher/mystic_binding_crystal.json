@@ -12,6 +12,7 @@
     "Q": "minecraft:quartz"
   },
   "result": {
-    "id": "easy_mob_farm:mystic_binding_crystal"
+    "id": "easy_mob_farm:mystic_binding_crystal",
+    "count": 1
   }
 }

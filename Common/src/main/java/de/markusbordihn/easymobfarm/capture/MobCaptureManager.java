@@ -81,7 +81,7 @@ public class MobCaptureManager {
   public static ItemStack getMobCaptureCardItem(LivingEntity livingEntity) {
     if (livingEntity == null
         || livingEntity instanceof Player
-        || livingEntity.level().isClientSide) {
+        || livingEntity.level().isClientSide()) {
       return null;
     }
 
@@ -244,7 +244,7 @@ public class MobCaptureManager {
         itemStack,
         itemStack
             .getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, CustomData.EMPTY)
-            .getUnsafe(),
+            .copyTag(),
         level);
   }
 

@@ -19,8 +19,6 @@
 
 package de.markusbordihn.easymobfarm;
 
-import cpw.mods.modlauncher.Launcher;
-import cpw.mods.modlauncher.api.IEnvironment;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.compat.CompatHandler;
 import de.markusbordihn.easymobfarm.compat.CompatManager;
@@ -32,7 +30,6 @@ import de.markusbordihn.easymobfarm.experience.ModExperienceManager;
 import de.markusbordihn.easymobfarm.item.ModBlockItems;
 import de.markusbordihn.easymobfarm.item.ModItems;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
-import java.util.Optional;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -51,11 +48,7 @@ public class EasyMobFarm {
     log.info("Initializing {} (NeoForge) ...", Constants.MOD_NAME);
 
     log.info("{} Debug Manager ...", Constants.LOG_REGISTER_PREFIX);
-    Optional<String> version =
-        Launcher.INSTANCE.environment().getProperty(IEnvironment.Keys.VERSION.get());
-    if (version.isPresent() && "MOD_DEV".equals(version.get())) {
-      DebugManager.setDevelopmentEnvironment(true);
-    }
+    DebugManager.setDevelopmentEnvironment(!FMLEnvironment.isProduction());
     DebugManager.checkForDebugLogging(Constants.LOG_NAME);
 
     log.info("{} Constants ...", Constants.LOG_REGISTER_PREFIX);
@@ -63,7 +56,7 @@ public class EasyMobFarm {
     Constants.CONFIG_DIR = FMLPaths.CONFIGDIR.get();
 
     log.info("{} Configuration ...", Constants.LOG_REGISTER_PREFIX);
-    Config.register(FMLEnvironment.dist == Dist.DEDICATED_SERVER);
+    Config.register(FMLEnvironment.getDist() == Dist.DEDICATED_SERVER);
 
     log.info("{} Compatibility Handler ...", Constants.LOG_REGISTER_PREFIX);
     CompatManager.registerCompatHandler(new CompatHandler());

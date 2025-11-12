@@ -42,7 +42,7 @@ public class CreativeMobFarmBlockWrapper extends CreativeMobFarmBlock {
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
       Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
-    return level.isClientSide
+    return level.isClientSide()
         ? null
         : createTickerHelper(
             blockEntityType,

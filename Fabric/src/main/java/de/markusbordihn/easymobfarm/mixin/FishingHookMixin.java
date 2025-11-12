@@ -54,7 +54,7 @@ public class FishingHookMixin {
 
     FishingHook fishingHook = (FishingHook) (Object) this;
     if (!(fishingHook.getPlayerOwner() instanceof ServerPlayer serverPlayer)
-        || serverPlayer.level().isClientSide) {
+        || serverPlayer.level().isClientSide()) {
       return;
     }
 
