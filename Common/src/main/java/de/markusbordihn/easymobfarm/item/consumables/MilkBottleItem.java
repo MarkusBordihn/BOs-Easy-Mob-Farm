@@ -19,6 +19,7 @@
 
 package de.markusbordihn.easymobfarm.item.consumables;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.List;
@@ -119,10 +120,14 @@ public class MilkBottleItem extends Item {
       Consumer<Component> tooltipConsumer,
       final Component component,
       final ChatFormatting formatting) {
-    List<FormattedText> lines =
-        Minecraft.getInstance().font.getSplitter().splitLines(component, 200, Style.EMPTY);
-    for (FormattedText line : lines) {
-      tooltipConsumer.accept(Component.literal(line.getString()).withStyle(formatting));
+    if (RenderSystem.isOnRenderThread()) {
+      List<FormattedText> lines =
+          Minecraft.getInstance().font.getSplitter().splitLines(component, 200, Style.EMPTY);
+      for (FormattedText line : lines) {
+        tooltipConsumer.accept(Component.literal(line.getString()).withStyle(formatting));
+      }
+    } else {
+      tooltipConsumer.accept(component.copy().withStyle(formatting));
     }
   }
 }

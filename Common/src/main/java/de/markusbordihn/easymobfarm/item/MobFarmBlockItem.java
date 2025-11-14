@@ -29,6 +29,7 @@ import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.List;
 import java.util.function.Consumer;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
@@ -101,10 +102,14 @@ public class MobFarmBlockItem extends BlockItem {
 
     // Add farm description
     Component farmDescription = TextComponent.getTranslatedText(this.farmName);
-    List<FormattedText> lines =
-        Minecraft.getInstance().font.getSplitter().splitLines(farmDescription, 200, Style.EMPTY);
-    for (FormattedText line : lines) {
-      tooltipConsumer.accept(Component.literal(line.getString()).withStyle(ChatFormatting.GRAY));
+    if (RenderSystem.isOnRenderThread()) {
+      List<FormattedText> lines =
+          Minecraft.getInstance().font.getSplitter().splitLines(farmDescription, 200, Style.EMPTY);
+      for (FormattedText line : lines) {
+        tooltipConsumer.accept(Component.literal(line.getString()).withStyle(ChatFormatting.GRAY));
+      }
+    } else {
+      tooltipConsumer.accept(farmDescription.copy().withStyle(ChatFormatting.GRAY));
     }
 
     // Add tier level
