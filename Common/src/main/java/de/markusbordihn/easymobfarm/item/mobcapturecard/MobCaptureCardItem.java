@@ -31,6 +31,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import net.minecraft.ChatFormatting;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -118,11 +119,10 @@ public class MobCaptureCardItem extends Item {
 
   private static MutableComponent tryGetTranslation(final String translationKey) {
     try {
-      MutableComponent translation = TextComponent.getTranslatedTextRaw(translationKey);
-      if (translation.getString().equals(translationKey)) {
+      if (!I18n.exists(translationKey)) {
         return null;
       }
-      return translation;
+      return TextComponent.getTranslatedTextRaw(translationKey);
     } catch (Exception e) {
       return null;
     }

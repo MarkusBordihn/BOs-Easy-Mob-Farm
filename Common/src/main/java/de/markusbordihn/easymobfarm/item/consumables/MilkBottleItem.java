@@ -119,11 +119,10 @@ public class MilkBottleItem extends Item {
       Consumer<Component> tooltipConsumer,
       final Component component,
       final ChatFormatting formatting) {
-    String componentString = component.getString();
     List<FormattedText> lines =
-        Minecraft.getInstance().font.getSplitter().splitLines(componentString, 200, Style.EMPTY);
+        Minecraft.getInstance().font.getSplitter().splitLines(component, 200, Style.EMPTY);
     for (FormattedText line : lines) {
-      tooltipConsumer.accept(TextComponent.getText(line.getString()).withStyle(formatting));
+      tooltipConsumer.accept(Component.literal(line.getString()).withStyle(formatting));
     }
   }
 }

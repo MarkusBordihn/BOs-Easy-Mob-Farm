@@ -102,13 +102,9 @@ public class MobFarmBlockItem extends BlockItem {
     // Add farm description
     Component farmDescription = TextComponent.getTranslatedText(this.farmName);
     List<FormattedText> lines =
-        Minecraft.getInstance()
-            .font
-            .getSplitter()
-            .splitLines(farmDescription.getString(), 200, Style.EMPTY);
+        Minecraft.getInstance().font.getSplitter().splitLines(farmDescription, 200, Style.EMPTY);
     for (FormattedText line : lines) {
-      tooltipConsumer.accept(
-          TextComponent.getText(line.getString()).withStyle(ChatFormatting.GRAY));
+      tooltipConsumer.accept(Component.literal(line.getString()).withStyle(ChatFormatting.GRAY));
     }
 
     // Add tier level
