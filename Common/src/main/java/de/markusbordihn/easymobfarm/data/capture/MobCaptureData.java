@@ -175,14 +175,17 @@ public record MobCaptureData(
   }
 
   public int getCardId() {
-    int namespaceHash =
-        (this.type != null && this.type.contains(TYPE_SEPARATOR))
-            ? this.type.split(TYPE_SEPARATOR)[0].hashCode()
-            : 0;
-    int pathHash =
-        (this.type != null && this.type.contains(TYPE_SEPARATOR))
-            ? this.type.split(TYPE_SEPARATOR)[1].hashCode()
-            : 0;
+    int namespaceHash = 0;
+    int pathHash = 0;
+    if (this.type != null) {
+      String[] parts = this.type.split(":");
+      if (parts.length > 0) {
+        namespaceHash = parts[0].hashCode();
+      }
+      if (parts.length > 1) {
+        pathHash = parts[1].hashCode();
+      }
+    }
     int colorHash = (this.color != null) ? this.color.hashCode() : 0;
     int variantHash = (this.variant != null) ? this.variant.hashCode() : 0;
 

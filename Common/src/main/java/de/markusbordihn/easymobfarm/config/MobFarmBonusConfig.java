@@ -353,7 +353,6 @@ public class MobFarmBonusConfig extends Config {
             return;
           }
           String mobFarmName = keyParts[0];
-          int tierLevel = Integer.parseInt(keyParts[1]);
           String entityType = keyParts[2];
 
           // Parse value to extract item name, amount and chance
@@ -362,10 +361,20 @@ public class MobFarmBonusConfig extends Config {
             return;
           }
           String itemName = valueParts[0];
-          int amount = Integer.parseInt(valueParts[1]);
-          int chance = Integer.parseInt(valueParts[2]);
 
-          addBonusDropEntry(mobFarmName, tierLevel, entityType, chance, itemName, amount);
+          try {
+            int tierLevel = Integer.parseInt(keyParts[1]);
+            int amount = Integer.parseInt(valueParts[1]);
+            int chance = Integer.parseInt(valueParts[2]);
+            addBonusDropEntry(mobFarmName, tierLevel, entityType, chance, itemName, amount);
+          } catch (NumberFormatException e) {
+            log.error(
+                "{} Invalid number format in config file {}: key={}, value={}",
+                LOG_PREFIX,
+                CONFIG_FILE_NAME,
+                key,
+                value);
+          }
         });
 
     // Update config file if needed
