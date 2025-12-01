@@ -295,10 +295,25 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     return slotUpgradeItems;
   }
 
+  public void updateNumberOfOutputSlots() {
+    int slots = MobFarmMenu.MIN_NUMBER_OF_OUTPUT_SLOTS;
+    for (SlotUpgradeItem upgrade : getSlotUpgradeItems()) {
+      slots += upgrade.numberOfUpgradeSlots();
+    }
+    slots =
+        Math.min(
+            Math.max(MobFarmMenu.MIN_NUMBER_OF_OUTPUT_SLOTS, slots),
+            MobFarmMenu.MAX_NUMBER_OF_OUTPUT_SLOTS);
+    if (this.numberOfOutputSlots != slots) {
+      this.numberOfOutputSlots = slots;
+    }
+  }
+
   public boolean canProcessingResults() {
+    this.updateNumberOfOutputSlots();
     int startSlotIndex = MobFarmSlots.RESULT_SLOTS.get(0).index();
     for (int slotIndex = startSlotIndex;
-        slotIndex < startSlotIndex + numberOfOutputSlots;
+        slotIndex < startSlotIndex + this.numberOfOutputSlots;
         slotIndex++) {
       if (this.getItem(slotIndex).isEmpty()
           || this.getItem(slotIndex).getCount() < this.getItem(slotIndex).getMaxStackSize()) {
@@ -771,8 +786,13 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
         entityType != null
             ? (LivingEntity) entityType.create(this.level, EntitySpawnReason.EVENT)
             : null;
-    if (livingEntity != null && level instanceof ServerLevel serverLevel) {
-      this.capturedMobExperience = ExperienceManager.getExperienceReward(livingEntity, serverLevel);
+    if (livingEntity != null && this.level instanceof ServerLevel serverLevel) {
+      try {
+        this.capturedMobExperience =
+            ExperienceManager.getExperienceReward(livingEntity, serverLevel);
+      } finally {
+        livingEntity.discard();
+      }
     } else {
       this.capturedMobExperience = 0;
     }

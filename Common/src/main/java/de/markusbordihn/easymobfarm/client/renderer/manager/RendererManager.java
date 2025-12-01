@@ -42,8 +42,8 @@ import org.apache.logging.log4j.Logger;
 public class RendererManager {
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
-
   private static final Map<BlockPos, Entity> entityMap = new HashMap<>();
+  private static int validationCounter = 0;
 
   private RendererManager() {}
 
@@ -52,24 +52,33 @@ public class RendererManager {
       return null;
     }
 
-    // Check if we have a captured mob.
     BlockPos blockPos = mobFarmBlockEntity.getBlockPos();
     if (!mobFarmBlockEntity.hasCapturedMob()) {
       entityMap.remove(blockPos);
       return null;
     }
 
-    // Early return if entity already exists.
-    if (entityMap.containsKey(blockPos)) {
-      return entityMap.get(blockPos);
+    // Check for cached entity and validate it every 100 calls.
+    Entity cachedEntity = entityMap.get(blockPos);
+    if (cachedEntity != null) {
+      if (++validationCounter >= 100) {
+        validationCounter = 0;
+        MobCaptureData mobCaptureData = mobFarmBlockEntity.getMobCaptureData();
+        if (mobCaptureData != null && cachedEntity.getType() != mobCaptureData.entityType()) {
+          entityMap.remove(blockPos);
+          cachedEntity = null;
+        }
+      }
+      if (cachedEntity != null) {
+        return cachedEntity;
+      }
     }
 
-    // Create new entity
     Entity entity = createEntity(mobFarmBlockEntity);
-    if (entity == null) {
-      return null;
+    if (entity != null) {
+      entityMap.put(blockPos, entity);
     }
-    return entityMap.put(blockPos, entity);
+    return entity;
   }
 
   public static Entity getEntity(final BlockPos blockPos) {
