@@ -35,6 +35,7 @@ import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhanceme
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.FrogCatalystEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyHarvesterFrameEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.KnifeEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LootEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LuckEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.MilkExtractorEnhancementItem;
@@ -70,6 +71,7 @@ public class ModItems {
     registerItem(ExperienceEnhancementItem.ID, Items.EXPERIENCE_ENHANCEMENT);
     registerItem(HoneyExtractorEnhancementItem.ID, Items.HONEY_EXTRACTOR_ENHANCEMENT);
     registerItem(HoneyHarvesterFrameEnhancementItem.ID, Items.HONEY_HARVESTER_FRAME_ENHANCEMENT);
+    registerItem(KnifeEnhancementItem.ID, Items.KNIFE_ENHANCEMENT);
     registerItem(LootEnhancementItem.ID, Items.LOOT_ENHANCEMENT);
     registerItem(LuckEnhancementItem.ID, Items.LUCK_ENHANCEMENT);
     registerItem(MilkExtractorEnhancementItem.ID, Items.MILK_EXTRACTOR_ENHANCEMENT);

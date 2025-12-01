@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "mob_farm_enhancement",
+  "pattern": [
+    " Q ",
+    "QKQ",
+    " Q "
+  ],
+  "key": {
+    "Q": "minecraft:quartz",
+    "K": "#easy_mob_farm:tools/knives"
+  },
+  "result": {
+    "id": "easy_mob_farm:knife_enhancement"
+  }
+}

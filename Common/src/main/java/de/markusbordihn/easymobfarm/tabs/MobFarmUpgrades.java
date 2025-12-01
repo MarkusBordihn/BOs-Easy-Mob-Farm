@@ -61,6 +61,7 @@ public class MobFarmUpgrades implements DisplayItemsGenerator {
 
     output.accept(Items.HONEY_EXTRACTOR_ENHANCEMENT.getDefaultInstance());
     output.accept(Items.HONEY_HARVESTER_FRAME_ENHANCEMENT.getDefaultInstance());
+    output.accept(Items.KNIFE_ENHANCEMENT.getDefaultInstance());
     output.accept(Items.LOOT_ENHANCEMENT.getDefaultInstance());
     output.accept(Items.LUCK_ENHANCEMENT.getDefaultInstance());
     output.accept(Items.MILK_EXTRACTOR_ENHANCEMENT.getDefaultInstance());
