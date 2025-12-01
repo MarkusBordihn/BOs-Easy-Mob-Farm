@@ -141,6 +141,12 @@ public class ModItemsTest {
   }
 
   @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
+  public void testKnifeEnhancementItem(GameTestHelper helper) {
+    ModItemsTestHelper.testModItem(helper, ModItems.KNIFE_ENHANCEMENT.get());
+    helper.succeed();
+  }
+
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
   public void testNoFlowersFilterItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, ModItems.NO_FLOWERS_FILTER.get());
     helper.succeed();

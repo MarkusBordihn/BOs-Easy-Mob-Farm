@@ -19,6 +19,7 @@
 
 package de.markusbordihn.easymobfarm.item;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.component.DataComponents;
@@ -29,7 +30,6 @@ import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.List;
 import java.util.function.Consumer;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
