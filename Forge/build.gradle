@@ -166,6 +166,9 @@ dependencies {
   // Swampier Swamps: Integration
   compileOnly fg.deobf("curse.maven:swampier-swamps-632591:4578599")
   runtimeOnly fg.deobf("curse.maven:swampier-swamps-632591:4578599")
+
+  // Farmers Delight: Integration
+  runtimeOnly fg.deobf("curse.maven:farmers-delight-398521:6917255")
 }
 
 tasks.withType(JavaCompile).configureEach {

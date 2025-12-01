@@ -32,6 +32,7 @@ import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhanceme
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.FrogCatalystEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyHarvesterFrameEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.KnifeEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LootEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LuckEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.MilkExtractorEnhancementItem;
@@ -48,6 +49,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -198,21 +200,20 @@ public class LootManager {
       return NonNullList.create();
     }
 
-    // Load entity data from Mob Capture data
-    entity.load(mobCaptureData.data());
+    try {
+      entity.load(mobCaptureData.data());
 
-    // Set additional entity properties for sheep entities
-    if (entity instanceof Sheep sheepEntity) {
-      sheepEntity.setSheared(false);
-      if (mobCaptureData.hasColor()) {
-        sheepEntity.setColor(mobCaptureData.color());
+      if (entity instanceof Sheep sheepEntity) {
+        sheepEntity.setSheared(false);
+        if (mobCaptureData.hasColor()) {
+          sheepEntity.setColor(mobCaptureData.color());
+        }
       }
-    }
 
-    // Get loot drops for entity
-    NonNullList<ItemStack> drops = getEntityLoot(entity, enhancements, level);
-    entity.discard();
-    return drops;
+      return getEntityLoot(entity, enhancements, level);
+    } finally {
+      entity.discard();
+    }
   }
 
   public static NonNullList<ItemStack> getEntityLoot(
@@ -233,6 +234,10 @@ public class LootManager {
         setSwordEnhancementParameters(lootContextBuilder, fakePlayer, serverLevel);
         additionalLuck += 0.5f;
       }
+      if (enhancement instanceof KnifeEnhancementItem) {
+        setKnifeEnhancementParameters(lootContextBuilder, fakePlayer, serverLevel);
+        additionalLuck += 0.25f;
+      }
       if (enhancement instanceof LootEnhancementItem) {
         additionalRolls += 1;
       }
@@ -248,13 +253,13 @@ public class LootManager {
 
     // Define loot context and loot table.
     ResourceLocation lootTableLocation = getLootTableLocation(livingEntity, enhancements);
-    LootParams lootContext = lootContextBuilder.create(LootContextParamSets.ENTITY);
+    LootParams lootParams = lootContextBuilder.create(LootContextParamSets.ENTITY);
 
     // Get loot items from loot table.
     if (lootTableLocation != null) {
       LootTable lootTable = serverLevel.getServer().getLootData().getLootTable(lootTableLocation);
       for (int i = 0; i <= additionalRolls; i++) {
-        lootTable.getRandomItems(lootContext).stream()
+        lootTable.getRandomItems(lootParams).stream()
             .filter(itemStack -> !itemStack.isEmpty())
             .forEach(drops::add);
         handleSpecialEntityDrops(livingEntity, drops);
@@ -273,7 +278,7 @@ public class LootManager {
             livingEntity,
             customLootTableLocation);
         for (int i = 0; i <= additionalRolls; i++) {
-          customLootTable.getRandomItems(lootContext).stream()
+          customLootTable.getRandomItems(lootParams).stream()
               .filter(itemStack -> !itemStack.isEmpty())
               .forEach(drops::add);
         }
@@ -287,6 +292,9 @@ public class LootManager {
 
     // Handle post drop enhancements.
     handlePostEnhancements(enhancements, livingEntity, fakePlayer, drops);
+
+    // Handle knife enhancement loot tables
+    handleKnifeEnhancementLoot(enhancements, livingEntity, serverLevel, lootParams, drops);
 
     return drops;
   }
@@ -380,12 +388,39 @@ public class LootManager {
 
   private static void setSwordEnhancementParameters(
       LootParams.Builder lootParamsBuilder, FakePlayer fakePlayer, ServerLevel serverLevel) {
+    ItemStack swordItem = new ItemStack(Items.IRON_SWORD);
+    fakePlayer.setItemInHand(InteractionHand.MAIN_HAND, swordItem);
     lootParamsBuilder
         .withParameter(
             LootContextParams.DAMAGE_SOURCE, serverLevel.damageSources().playerAttack(fakePlayer))
         .withParameter(LootContextParams.LAST_DAMAGE_PLAYER, fakePlayer)
         .withParameter(LootContextParams.KILLER_ENTITY, fakePlayer)
         .withParameter(LootContextParams.DIRECT_KILLER_ENTITY, fakePlayer);
+  }
+
+  private static void setKnifeEnhancementParameters(
+      LootParams.Builder lootParamsBuilder, FakePlayer fakePlayer, ServerLevel serverLevel) {
+    ItemStack knifeItem = getKnifeTool();
+    if (!knifeItem.isEmpty()) {
+      fakePlayer.setItemInHand(InteractionHand.MAIN_HAND, knifeItem);
+    }
+    lootParamsBuilder
+        .withParameter(
+            LootContextParams.DAMAGE_SOURCE, serverLevel.damageSources().playerAttack(fakePlayer))
+        .withParameter(LootContextParams.LAST_DAMAGE_PLAYER, fakePlayer)
+        .withParameter(LootContextParams.KILLER_ENTITY, fakePlayer)
+        .withParameter(LootContextParams.DIRECT_KILLER_ENTITY, fakePlayer);
+  }
+
+  private static ItemStack getKnifeTool() {
+    if (CompatConstants.MOD_FARMERS_DELIGHT_LOADED) {
+      Item farmersDelightKnife =
+          BuiltInRegistries.ITEM.get(new ResourceLocation("farmersdelight", "iron_knife"));
+      if (farmersDelightKnife != Items.AIR) {
+        return new ItemStack(farmersDelightKnife);
+      }
+    }
+    return ItemStack.EMPTY;
   }
 
   private static void handlePostEnhancements(
@@ -502,6 +537,43 @@ public class LootManager {
           }
         }
       }
+    }
+  }
+
+  private static void handleKnifeEnhancementLoot(
+      List<EnhancementItem> enhancements,
+      LivingEntity livingEntity,
+      ServerLevel serverLevel,
+      LootParams lootParams,
+      NonNullList<ItemStack> drops) {
+    boolean hasKnifeEnhancement = false;
+    for (EnhancementItem enhancement : enhancements) {
+      if (enhancement instanceof KnifeEnhancementItem) {
+        hasKnifeEnhancement = true;
+        break;
+      }
+    }
+
+    if (!hasKnifeEnhancement) {
+      return;
+    }
+
+    ResourceLocation entityTypeResourceLocation =
+        BuiltInRegistries.ENTITY_TYPE.getKey(livingEntity.getType());
+    ResourceLocation knifeLootTableLocation =
+        new ResourceLocation(
+            Constants.MOD_ID,
+            "enhancement/knife/"
+                + entityTypeResourceLocation.getNamespace()
+                + "/"
+                + entityTypeResourceLocation.getPath());
+
+    LootTable knifeLootTable =
+        serverLevel.getServer().getLootData().getLootTable(knifeLootTableLocation);
+    if (knifeLootTable != LootTable.EMPTY) {
+      knifeLootTable.getRandomItems(lootParams).stream()
+          .filter(itemStack -> !itemStack.isEmpty())
+          .forEach(drops::add);
     }
   }
 
