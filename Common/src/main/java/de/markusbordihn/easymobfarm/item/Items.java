@@ -35,6 +35,7 @@ import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhanceme
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.FrogCatalystEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyHarvesterFrameEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.KnifeEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LootEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LuckEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.MilkExtractorEnhancementItem;
@@ -66,6 +67,7 @@ public class Items {
   public static final Item HONEY_EXTRACTOR_ENHANCEMENT = new HoneyExtractorEnhancementItem();
   public static final Item HONEY_HARVESTER_FRAME_ENHANCEMENT =
       new HoneyHarvesterFrameEnhancementItem();
+  public static final Item KNIFE_ENHANCEMENT = new KnifeEnhancementItem();
   public static final Item LOOT_ENHANCEMENT = new LootEnhancementItem();
   public static final Item LUCK_ENHANCEMENT = new LuckEnhancementItem();
   public static final Item MILK_EXTRACTOR_ENHANCEMENT = new MilkExtractorEnhancementItem();

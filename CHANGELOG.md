@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+# v10.3.0
+
+- Fixed #192 by adding cache validation for displayed mobs.
+- Fixed #191 by adding knife enhancement for mob farms with Farmers Delight support.
+- Fixed #187 by using the corrected numbers of output slots for mob farms.
+- Fixed potential ArrayIndexOutOfBoundsException when processing malformed entity type strings.
+- Fixed memory leak where entities were not properly discarded.
+- Fixed resource leak in mob farm experience calculation by ensuring entities are always discarded.
+- Fixed potential NumberFormatException when parsing malformed bonus drop config entries.
+- Added knife enhancement for mob farms to increase drop rates for specific mobs.
+- Improved sword enhancement support for 3rd party mods.
+
 # v10.2.0
 
 - Fixed #177 by adding `enforceLogicalTierProgression` Mob Farm Config option.

@@ -100,6 +100,7 @@ public class ModTabs {
                   stack.add(Items.FROG_CATALYST_WARM_ENHANCEMENT.getDefaultInstance());
                   stack.add(Items.HONEY_EXTRACTOR_ENHANCEMENT.getDefaultInstance());
                   stack.add(Items.HONEY_HARVESTER_FRAME_ENHANCEMENT.getDefaultInstance());
+                  stack.add(Items.KNIFE_ENHANCEMENT.getDefaultInstance());
                   stack.add(Items.LOOT_ENHANCEMENT.getDefaultInstance());
                   stack.add(Items.LUCK_ENHANCEMENT.getDefaultInstance());
                   stack.add(Items.MILK_EXTRACTOR_ENHANCEMENT.getDefaultInstance());

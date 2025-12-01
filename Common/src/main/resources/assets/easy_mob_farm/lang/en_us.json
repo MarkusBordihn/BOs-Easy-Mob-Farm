@@ -41,6 +41,7 @@
   "item.easy_mob_farm.honey_extractor_enhancement": "Honey Extractor",
   "item.easy_mob_farm.honey_harvester_frame_enhancement": "Honey Harvester Frame",
   "item.easy_mob_farm.ironbound_containment_cage": "Ironbound Containment Cage",
+  "item.easy_mob_farm.knife_enhancement": "Knife Enhancement",
   "item.easy_mob_farm.loot_enhancement": "Loot Enhancement",
   "item.easy_mob_farm.luck_enhancement": "Luck Enhancement",
   "item.easy_mob_farm.milk_bottle": "Milk Bottle",
@@ -162,5 +163,6 @@
   "tooltip.easy_mob_farm.small_slot_upgrade": "Adds additional mob storage capacity in the farm by %s.",
   "tooltip.easy_mob_farm.speed_enhancement": "Speeds up the rate by +%s ticks/sec at which items are collected.",
   "tooltip.easy_mob_farm.sword_enhancement": "Generates loot as if killed by a player with a sword.",
+  "tooltip.easy_mob_farm.knife_enhancement": "Generates additional loot as if butchered with a knife.",
   "tooltip.easy_mob_farm.mob_capture_card.minecraft.slime.special_mechanics": "Loot quantity depends on slime size!"
 }

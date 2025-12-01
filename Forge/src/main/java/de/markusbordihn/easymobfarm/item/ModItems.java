@@ -36,6 +36,7 @@ import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhanceme
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.FrogCatalystEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyHarvesterFrameEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.KnifeEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LootEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LuckEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.MilkExtractorEnhancementItem;
@@ -131,6 +132,11 @@ public class ModItems {
           () ->
               new HoneyHarvesterFrameEnhancementItem(
                   new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
+
+  public static final RegistryObject<Item> KNIFE_ENHANCEMENT =
+      ITEMS.register(
+          KnifeEnhancementItem.ID,
+          () -> new KnifeEnhancementItem(new Item.Properties().tab(ModTabs.TAB_MOB_FARM_UPGRADES)));
 
   public static final RegistryObject<Item> LOOT_ENHANCEMENT =
       ITEMS.register(
