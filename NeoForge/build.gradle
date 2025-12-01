@@ -70,6 +70,9 @@ dependencies {
 
   // Mekanism: Integration
   implementation "curse.maven:mekanism-268560:5680395"
+
+  // Farmers Delight: Integration
+  runtimeOnly "curse.maven:farmers-delight-398521:6917256"
 }
 
 // NeoGradle compiles the game, but we don't want to add our common code to the game's code
