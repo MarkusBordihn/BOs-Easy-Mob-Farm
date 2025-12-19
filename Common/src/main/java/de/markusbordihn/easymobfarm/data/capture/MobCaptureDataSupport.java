@@ -26,7 +26,7 @@ import java.util.Optional;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -175,7 +175,7 @@ public class MobCaptureDataSupport {
       return null;
     }
     Optional<EntityType<?>> entityTypeHolder =
-        BuiltInRegistries.ENTITY_TYPE.getOptional(ResourceLocation.parse(entityName));
+        BuiltInRegistries.ENTITY_TYPE.getOptional(Identifier.parse(entityName));
     return entityTypeHolder.orElse(null);
   }
 

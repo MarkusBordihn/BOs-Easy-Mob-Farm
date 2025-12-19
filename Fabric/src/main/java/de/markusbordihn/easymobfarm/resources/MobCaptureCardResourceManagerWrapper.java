@@ -20,7 +20,7 @@
 package de.markusbordihn.easymobfarm.resources;
 
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class MobCaptureCardResourceManagerWrapper extends MobCaptureCardResourceManager
     implements IdentifiableResourceReloadListener {
@@ -30,7 +30,7 @@ public class MobCaptureCardResourceManagerWrapper extends MobCaptureCardResource
   }
 
   @Override
-  public ResourceLocation getFabricId() {
+  public Identifier getFabricId() {
     return RESOURCE_ID;
   }
 }

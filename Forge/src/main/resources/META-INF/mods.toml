@@ -24,6 +24,6 @@ side = "BOTH"
 [[dependencies.easy_mob_farm]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.21.10,1.22)"
+versionRange = "[1.21.11,1.22)"
 ordering = "NONE"
 side = "BOTH"

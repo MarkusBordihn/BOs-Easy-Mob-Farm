@@ -23,8 +23,8 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.config.MobCatcherConfig;
 import java.util.Set;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 
 public class VoidBindingChainItem extends MobCatcherItem {
 
@@ -35,7 +35,7 @@ public class VoidBindingChainItem extends MobCatcherItem {
         new Properties()
             .setId(
                 ResourceKey.create(
-                    Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, ID))));
+                    Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
   }
 
   public VoidBindingChainItem(Properties properties) {

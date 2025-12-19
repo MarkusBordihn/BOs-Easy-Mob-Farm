@@ -26,8 +26,8 @@ import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.function.Consumer;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipDisplay;
@@ -41,7 +41,7 @@ public class SpeedEnhancementItem extends EnhancementItem {
         new Properties()
             .setId(
                 ResourceKey.create(
-                    Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, ID))));
+                    Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
   }
 
   public SpeedEnhancementItem(Properties properties) {

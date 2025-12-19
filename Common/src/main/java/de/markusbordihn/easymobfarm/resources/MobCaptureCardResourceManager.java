@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import net.minecraft.resources.FileToIdConverter;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.ExtraCodecs;
@@ -40,8 +40,8 @@ import org.apache.logging.log4j.Logger;
 
 public class MobCaptureCardResourceManager extends SimpleJsonResourceReloadListener<JsonElement> {
 
-  public static final ResourceLocation RESOURCE_ID =
-      ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "mob_capture_card_resource_loader");
+  public static final Identifier RESOURCE_ID =
+      Identifier.fromNamespaceAndPath(Constants.MOD_ID, "mob_capture_card_resource_loader");
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   private static final String LOG_PREFIX = "[Mob Capture Card Resource Manager]";
@@ -60,7 +60,7 @@ public class MobCaptureCardResourceManager extends SimpleJsonResourceReloadListe
 
   @Override
   protected void apply(
-      Map<ResourceLocation, JsonElement> objectMap,
+      Map<Identifier, JsonElement> objectMap,
       ResourceManager resourceManager,
       ProfilerFiller profiler) {
 
@@ -73,11 +73,10 @@ public class MobCaptureCardResourceManager extends SimpleJsonResourceReloadListe
             JsonObject json = GsonHelper.convertToJsonObject(element, "mob_capture_card");
             log.debug("{} Parsing definition: {}", LOG_PREFIX, location);
 
-            ResourceLocation entity =
-                ResourceLocation.parse(GsonHelper.getAsString(json, "entity"));
-            ResourceLocation model =
+            Identifier entity = Identifier.parse(GsonHelper.getAsString(json, "entity"));
+            Identifier model =
                 json.has(MODEL_TAG)
-                    ? ResourceLocation.parse(GsonHelper.getAsString(json, MODEL_TAG))
+                    ? Identifier.parse(GsonHelper.getAsString(json, MODEL_TAG))
                     : null;
             Rarity rarity =
                 Rarity.valueOf(
@@ -125,9 +124,9 @@ public class MobCaptureCardResourceManager extends SimpleJsonResourceReloadListe
         .forEach(
             entry -> {
               String color = entry.getKey();
-              ResourceLocation colorModel =
+              Identifier colorModel =
                   json.has(MODEL_TAG)
-                      ? ResourceLocation.parse(
+                      ? Identifier.parse(
                           GsonHelper.getAsString(entry.getValue().getAsJsonObject(), MODEL_TAG))
                       : null;
               colors.put(color, new MobCaptureCardDefinition.Color(colorModel));
@@ -149,9 +148,9 @@ public class MobCaptureCardResourceManager extends SimpleJsonResourceReloadListe
             entry -> {
               String variant = entry.getKey();
               JsonObject variantObj = entry.getValue().getAsJsonObject();
-              ResourceLocation variantModel =
+              Identifier variantModel =
                   json.has(MODEL_TAG)
-                      ? ResourceLocation.parse(GsonHelper.getAsString(variantObj, MODEL_TAG, null))
+                      ? Identifier.parse(GsonHelper.getAsString(variantObj, MODEL_TAG, null))
                       : null;
 
               Map<String, MobCaptureCardDefinition.Color> variantColors = new HashMap<>();
@@ -162,9 +161,9 @@ public class MobCaptureCardResourceManager extends SimpleJsonResourceReloadListe
                     .forEach(
                         colorEntry -> {
                           String color = colorEntry.getKey();
-                          ResourceLocation colorModel =
+                          Identifier colorModel =
                               json.has(MODEL_TAG)
-                                  ? ResourceLocation.parse(
+                                  ? Identifier.parse(
                                       GsonHelper.getAsString(
                                           colorEntry.getValue().getAsJsonObject(), MODEL_TAG))
                                   : null;

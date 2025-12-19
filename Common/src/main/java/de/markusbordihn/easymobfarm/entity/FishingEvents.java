@@ -27,7 +27,7 @@ import java.util.Optional;
 import java.util.Random;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EntityType;
@@ -65,7 +65,7 @@ public class FishingEvents {
     }
 
     // Check if the fish loot could be translated to an entity.
-    ResourceLocation resourceLocation = BuiltInRegistries.ITEM.getKey(fishLoot);
+    Identifier resourceLocation = BuiltInRegistries.ITEM.getKey(fishLoot);
     Optional<Holder.Reference<EntityType<?>>> entityType =
         BuiltInRegistries.ENTITY_TYPE.get(resourceLocation);
     if (entityType.isEmpty()) {

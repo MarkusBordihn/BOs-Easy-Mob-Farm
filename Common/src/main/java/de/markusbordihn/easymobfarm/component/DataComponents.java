@@ -26,7 +26,7 @@ import java.util.function.Supplier;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -44,7 +44,7 @@ public class DataComponents {
     MOB_CAPTURE_DATA =
         Registry.register(
             BuiltInRegistries.DATA_COMPONENT_TYPE,
-            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, MobCaptureData.ID),
+            Identifier.fromNamespaceAndPath(Constants.MOD_ID, MobCaptureData.ID),
             DataComponentType.<MobCaptureData>builder()
                 .persistent(MobCaptureData.CODEC)
                 .networkSynchronized(MobCaptureData.STREAM_CODEC)
@@ -53,7 +53,7 @@ public class DataComponents {
     MOB_FARM_DATA =
         Registry.register(
             BuiltInRegistries.DATA_COMPONENT_TYPE,
-            ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, MobFarmData.ID),
+            Identifier.fromNamespaceAndPath(Constants.MOD_ID, MobFarmData.ID),
             DataComponentType.<MobFarmData>builder()
                 .persistent(MobFarmData.CODEC)
                 .networkSynchronized(MobFarmData.STREAM_CODEC)

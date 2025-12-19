@@ -25,8 +25,8 @@ import java.util.function.Consumer;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -50,7 +50,7 @@ public class MobFarmTemplateItem extends BlockItem {
             .setId(
                 ResourceKey.create(
                     Registries.ITEM,
-                    ResourceLocation.fromNamespaceAndPath(
+                    Identifier.fromNamespaceAndPath(
                         Constants.MOD_ID,
                         switch (tierLevel) {
                           case ID_TIER_1 -> ID_TIER_1;

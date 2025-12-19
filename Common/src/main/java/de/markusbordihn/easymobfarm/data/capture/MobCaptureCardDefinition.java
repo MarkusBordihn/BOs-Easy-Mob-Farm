@@ -22,14 +22,14 @@ package de.markusbordihn.easymobfarm.data.capture;
 import de.markusbordihn.easymobfarm.Constants;
 import java.util.Map;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Rarity;
 
 public record MobCaptureCardDefinition(
-    ResourceLocation entity,
+    Identifier entity,
     EntityType<?> entityType,
-    ResourceLocation model,
+    Identifier model,
     Rarity rarity,
     float scale,
     boolean requiresKilledByPlayer,
@@ -38,8 +38,8 @@ public record MobCaptureCardDefinition(
     Map<String, Color> colors) {
 
   public MobCaptureCardDefinition(
-      ResourceLocation entity,
-      ResourceLocation model,
+      Identifier entity,
+      Identifier model,
       Rarity rarity,
       float scale,
       boolean requiresKilledByPlayer,
@@ -60,8 +60,8 @@ public record MobCaptureCardDefinition(
 
   public static MobCaptureCardDefinition decode(FriendlyByteBuf buffer) {
     // Read basic properties
-    ResourceLocation entity = buffer.readResourceLocation();
-    ResourceLocation model = buffer.readResourceLocation();
+    Identifier entity = buffer.readIdentifier();
+    Identifier model = buffer.readIdentifier();
     Rarity rarity = buffer.readEnum(Rarity.class);
     float scale = buffer.readFloat();
     boolean requiresKilledByPlayer = buffer.readBoolean();
@@ -71,18 +71,18 @@ public record MobCaptureCardDefinition(
     Map<String, MobCaptureCardDefinition.Color> colors =
         buffer.readMap(
             FriendlyByteBuf::readUtf,
-            buf -> new MobCaptureCardDefinition.Color(buf.readResourceLocation()));
+            buf -> new MobCaptureCardDefinition.Color(buf.readIdentifier()));
 
     // Read variants
     Map<String, MobCaptureCardDefinition.Variant> variants =
         buffer.readMap(
             FriendlyByteBuf::readUtf,
             buf -> {
-              ResourceLocation variantModel = buf.readResourceLocation();
+              Identifier variantModel = buf.readIdentifier();
               Map<String, MobCaptureCardDefinition.Color> variantColors =
                   buf.readMap(
                       FriendlyByteBuf::readUtf,
-                      b -> new MobCaptureCardDefinition.Color(b.readResourceLocation()));
+                      b -> new MobCaptureCardDefinition.Color(b.readIdentifier()));
               return new MobCaptureCardDefinition.Variant(variantModel, variantColors);
             });
 
@@ -97,31 +97,29 @@ public record MobCaptureCardDefinition(
         colors);
   }
 
-  public static EntityType<?> getEntityType(ResourceLocation resourceLocation) {
+  public static EntityType<?> getEntityType(Identifier resourceLocation) {
     return EntityType.byString(resourceLocation.toString()).orElse(null);
   }
 
-  public static ResourceLocation getModelResourceLocation(
-      ResourceLocation resourceLocation, Rarity rarity) {
+  public static Identifier getModelResourceLocation(Identifier resourceLocation, Rarity rarity) {
     if (resourceLocation != null) {
       return resourceLocation;
     }
     switch (rarity) {
       case UNCOMMON -> {
-        return ResourceLocation.fromNamespaceAndPath(
+        return Identifier.fromNamespaceAndPath(
             Constants.MOD_ID, "item/mob_capture_card/default_uncommon");
       }
       case RARE -> {
-        return ResourceLocation.fromNamespaceAndPath(
+        return Identifier.fromNamespaceAndPath(
             Constants.MOD_ID, "item/mob_capture_card/default_rare");
       }
       case EPIC -> {
-        return ResourceLocation.fromNamespaceAndPath(
+        return Identifier.fromNamespaceAndPath(
             Constants.MOD_ID, "item/mob_capture_card/default_epic");
       }
       default -> {
-        return ResourceLocation.fromNamespaceAndPath(
-            Constants.MOD_ID, "item/mob_capture_card/default");
+        return Identifier.fromNamespaceAndPath(Constants.MOD_ID, "item/mob_capture_card/default");
       }
     }
   }
@@ -141,8 +139,8 @@ public record MobCaptureCardDefinition(
 
   public void encode(FriendlyByteBuf buffer) {
     // Write basic properties
-    buffer.writeResourceLocation(entity);
-    buffer.writeResourceLocation(model);
+    buffer.writeIdentifier(entity);
+    buffer.writeIdentifier(model);
     buffer.writeEnum(rarity);
     buffer.writeFloat(scale);
     buffer.writeBoolean(requiresKilledByPlayer);
@@ -150,24 +148,22 @@ public record MobCaptureCardDefinition(
 
     // Write colors
     buffer.writeMap(
-        colors,
-        FriendlyByteBuf::writeUtf,
-        (buf, color) -> buf.writeResourceLocation(color.model()));
+        colors, FriendlyByteBuf::writeUtf, (buf, color) -> buf.writeIdentifier(color.model()));
 
     // Write variants
     buffer.writeMap(
         variants,
         FriendlyByteBuf::writeUtf,
         (buf, variant) -> {
-          buf.writeResourceLocation(variant.model());
+          buf.writeIdentifier(variant.model());
           buf.writeMap(
               variant.colors(),
               FriendlyByteBuf::writeUtf,
-              (b, color) -> b.writeResourceLocation(color.model()));
+              (b, color) -> b.writeIdentifier(color.model()));
         });
   }
 
-  public record Variant(ResourceLocation model, Map<String, Color> colors) {}
+  public record Variant(Identifier model, Map<String, Color> colors) {}
 
-  public record Color(ResourceLocation model) {}
+  public record Color(Identifier model) {}
 }

@@ -21,8 +21,8 @@ package de.markusbordihn.easymobfarm.item.mobcapturecard;
 
 import de.markusbordihn.easymobfarm.Constants;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 
 public class BlankMobCaptureCardItem extends Item {
@@ -34,7 +34,7 @@ public class BlankMobCaptureCardItem extends Item {
         new Item.Properties()
             .setId(
                 ResourceKey.create(
-                    Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, ID))));
+                    Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
   }
 
   public BlankMobCaptureCardItem(Properties properties) {

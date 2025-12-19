@@ -24,13 +24,13 @@ import java.util.Locale;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.animal.Cat;
-import net.minecraft.world.entity.animal.CatVariants;
+import net.minecraft.world.entity.animal.feline.Cat;
+import net.minecraft.world.entity.animal.feline.CatVariants;
 import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.entity.animal.frog.FrogVariants;
 import net.minecraft.world.entity.monster.MagmaCube;
 import net.minecraft.world.entity.monster.Slime;
-import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.npc.villager.Villager;
 
 public class MobVariantData {
 
@@ -49,7 +49,7 @@ public class MobVariantData {
   public static String getVariant(final LivingEntity livingEntity) {
     if (livingEntity instanceof Cat cat) {
       return (cat.getVariant().unwrapKey().orElse(CatVariants.BLACK))
-          .location()
+          .identifier()
           .toString()
           .replace("minecraft:", "");
     } else if (livingEntity instanceof Villager villager) {
@@ -61,7 +61,7 @@ public class MobVariantData {
     } else if (livingEntity instanceof Frog frog) {
       String frogVariant =
           (frog.getVariant().unwrapKey().orElse(FrogVariants.TEMPERATE))
-              .location()
+              .identifier()
               .toString()
               .replace("minecraft:", "");
       if (CompatConstants.MOD_SWAMPIER_SWAMPS_LOADED) {

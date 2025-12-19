@@ -30,11 +30,11 @@ import net.minecraft.resources.ResourceLocation;
 @JeiPlugin
 public class EasyMobFarmJeiPlugin implements IModPlugin {
 
-  private static final ResourceLocation pluginId =
-      ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "jei_plugin");
+  private static final Identifier pluginId =
+      Identifier.fromNamespaceAndPath(Constants.MOD_ID, "jei_plugin");
 
   @Override
-  public ResourceLocation getPluginUid() {
+  public Identifier getPluginUid() {
     return pluginId;
   }
 

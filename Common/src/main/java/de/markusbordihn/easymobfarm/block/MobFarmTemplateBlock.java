@@ -21,8 +21,8 @@ package de.markusbordihn.easymobfarm.block;
 
 import de.markusbordihn.easymobfarm.Constants;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -40,7 +40,7 @@ public class MobFarmTemplateBlock extends Block {
         BlockBehaviour.Properties.of()
             .setId(
                 ResourceKey.create(
-                    Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, id)))
+                    Registries.BLOCK, Identifier.fromNamespaceAndPath(Constants.MOD_ID, id)))
             .mapColor(MapColor.STONE)
             .requiresCorrectToolForDrops()
             .strength(3.0F, 6.0F)

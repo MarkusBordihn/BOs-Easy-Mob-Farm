@@ -1,6 +1,10 @@
 {
   "pack": {
     "description": "Easy Mob Farm: Resources",
-    "pack_format": 63
+    "max_format": 94,
+    "min_format": [
+      94,
+      1
+    ]
   }
 }

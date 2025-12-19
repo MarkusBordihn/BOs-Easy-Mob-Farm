@@ -43,7 +43,7 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -53,12 +53,12 @@ import net.minecraft.world.item.ItemStack;
 
 public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
 
-  private static final ResourceLocation TEXTURE_UI =
-      ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "textures/gui/mob_farm.png");
-  private static final ResourceLocation TEXTURE_UI_IDLE =
-      ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "textures/gui/mob_farm_idle.png");
-  private static final ResourceLocation TEXTURE_ELEMENTS =
-      ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "textures/gui/mob_farm_elements.png");
+  private static final Identifier TEXTURE_UI =
+      Identifier.fromNamespaceAndPath(Constants.MOD_ID, "textures/gui/mob_farm.png");
+  private static final Identifier TEXTURE_UI_IDLE =
+      Identifier.fromNamespaceAndPath(Constants.MOD_ID, "textures/gui/mob_farm_idle.png");
+  private static final Identifier TEXTURE_ELEMENTS =
+      Identifier.fromNamespaceAndPath(Constants.MOD_ID, "textures/gui/mob_farm_elements.png");
   protected float xMouse;
   protected float yMouse;
   protected Entity entity;

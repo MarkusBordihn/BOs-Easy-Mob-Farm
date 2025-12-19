@@ -28,7 +28,7 @@ import java.util.Optional;
 import java.util.Properties;
 import java.util.Random;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -394,7 +394,7 @@ public class MobFarmBonusConfig extends Config {
       int amount) {
 
     // Check if item name is valid
-    Optional<Item> item = BuiltInRegistries.ITEM.getOptional(ResourceLocation.tryParse(itemName));
+    Optional<Item> item = BuiltInRegistries.ITEM.getOptional(Identifier.tryParse(itemName));
     if (item.isEmpty() || item.get() == Items.AIR) {
       log.error(
           "{} Invalid item name {} in config file {}", LOG_PREFIX, itemName, CONFIG_FILE_NAME);
@@ -426,9 +426,7 @@ public class MobFarmBonusConfig extends Config {
     }
 
     // Check if entity type is valid
-    if (BuiltInRegistries.ENTITY_TYPE
-        .getOptional(ResourceLocation.tryParse(entityType))
-        .isEmpty()) {
+    if (BuiltInRegistries.ENTITY_TYPE.getOptional(Identifier.tryParse(entityType)).isEmpty()) {
       log.error(
           "{} Invalid entity type {} in config file {}", LOG_PREFIX, entityType, CONFIG_FILE_NAME);
       return;

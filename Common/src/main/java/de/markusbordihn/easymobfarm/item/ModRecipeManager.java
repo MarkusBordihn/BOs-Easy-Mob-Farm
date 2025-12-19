@@ -144,7 +144,7 @@ public class ModRecipeManager {
     String recipePath = Constants.MOD_ID + ":" + recipePrefix + itemId;
     boolean removed =
         recipes.removeIf(
-            recipeHolder -> recipeHolder.id().location().toString().equals(recipePath));
+            recipeHolder -> recipeHolder.id().identifier().toString().equals(recipePath));
     if (removed) {
       log.info("{} Removed {} recipe ...", LOG_PREFIX, recipePath);
     } else {

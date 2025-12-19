@@ -26,7 +26,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,8 +34,8 @@ import org.apache.logging.log4j.Logger;
 public class ContainerScreen<T extends MobFarmMenu> extends AbstractContainerScreen<T> {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
-  protected static final ResourceLocation TEXTURE_DEMO_BACKGROUND =
-      ResourceLocation.withDefaultNamespace("textures/gui/demo_background.png");
+  protected static final Identifier TEXTURE_DEMO_BACKGROUND =
+      Identifier.withDefaultNamespace("textures/gui/demo_background.png");
   protected final T menu;
   protected final Minecraft minecraftInstance;
 

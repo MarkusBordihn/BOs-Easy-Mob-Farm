@@ -1,32 +1,28 @@
 plugins {
-  id 'net.neoforged.moddev' version '2.0.107'
+  id 'net.neoforged.moddev' version '2.0.126'
 }
 
-archivesBaseName = "${mod_name}-common-${minecraft_version}"
+base {
+  archivesName = "${mod_name}-common-${minecraft_version}"
+}
 
 neoForge {
-  neoFormVersion = neo_form_version
+  neoFormVersion = project.neo_form_version
 }
 
 dependencies {
   compileOnly group: 'org.spongepowered', name: 'mixin', version: '0.8.7'
 }
 
-apply from: "$projectDir/../gradle/tasks/generateMobCaptureCardItem.gradle"
-
 processResources {
-  def buildProps = project.properties.clone()
+  inputs.property "version", project.version
 
   filesMatching(['pack.mcmeta']) {
-    expand buildProps
+    expand "version": project.version
   }
 }
 
 tasks.register('prepareWorkspace') {
-  description = 'Prepares the workspace for development.'
-  group = 'setup'
-
-  doLast {
-    println 'Workspace prepared for development.'
-  }
+  description = 'Prepares the workspace (compatibility task for moddev)'
+  group = 'neoforge'
 }

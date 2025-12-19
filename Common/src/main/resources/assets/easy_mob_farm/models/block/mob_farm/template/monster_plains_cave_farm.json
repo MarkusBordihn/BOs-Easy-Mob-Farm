@@ -1,19 +1,20 @@
 {
+  "format_version": "1.21.11",
   "credit": "Made with Blockbench by Markus Bordihn",
-  "render_type": "cutout_mipped",
+  "render_type": "cutout",
   "textures": {
-    "particle": "minecraft:block/stone",
-    "floor_back": "minecraft:block/stone",
-    "floor_front": "minecraft:block/cobblestone",
+    "particle": "block/stone",
+    "floor_back": "block/stone",
+    "floor_front": "block/cobblestone",
     "edge": "easy_mob_farm:block/light_rod",
-    "glass": "minecraft:block/glass",
-    "background": "minecraft:block/deepslate",
-    "gold_ore": "minecraft:block/gold_ore",
-    "clay": "minecraft:block/clay",
-    "cobweb": "minecraft:block/cobweb",
-    "pickaxe": "minecraft:item/iron_pickaxe",
-    "bone": "minecraft:item/bone",
-    "glow_lichen": "minecraft:block/glow_lichen"
+    "glass": "block/glass",
+    "background": "block/deepslate",
+    "gold_ore": "block/gold_ore",
+    "clay": "block/clay",
+    "cobweb": "block/cobweb",
+    "pickaxe": "block/torch",
+    "glow_lichen": "block/glow_lichen",
+    "bone": "block/rail"
   },
   "elements": [
     {
@@ -377,12 +378,12 @@
   ],
   "display": {
     "thirdperson_righthand": {
-      "rotation": [75, 315, 0],
+      "rotation": [75, -45, 0],
       "translation": [0, 2.5, 0],
       "scale": [0.375, 0.375, 0.375]
     },
     "thirdperson_lefthand": {
-      "rotation": [75, 315, 0],
+      "rotation": [75, -45, 0],
       "translation": [0, 2.5, 0],
       "scale": [0.375, 0.375, 0.375]
     },

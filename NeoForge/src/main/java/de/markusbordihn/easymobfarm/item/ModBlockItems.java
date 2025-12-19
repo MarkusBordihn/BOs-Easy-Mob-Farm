@@ -23,8 +23,8 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -70,7 +70,7 @@ public class ModBlockItems {
                       .setId(
                           ResourceKey.create(
                               Registries.ITEM,
-                              ResourceLocation.fromNamespaceAndPath(
+                              Identifier.fromNamespaceAndPath(
                                   Constants.MOD_ID, MobFarmType.CREATIVE_MOB_FARM.getId())))));
 
   public static final DeferredItem<Item> ANIMAL_PLAINS_FARM =

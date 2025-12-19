@@ -29,33 +29,33 @@ import de.markusbordihn.easymobfarm.client.renderer.item.properties.select.MobCa
 import net.minecraft.client.renderer.item.properties.conditional.ConditionalItemModelProperties;
 import net.minecraft.client.renderer.item.properties.numeric.RangeSelectItemModelProperties;
 import net.minecraft.client.renderer.item.properties.select.SelectItemModelProperties;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class ModItemProperties {
 
   public static void registerItemProperties() {
     ConditionalItemModelProperties.ID_MAPPER.put(
-        ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "has_mob_capture_data"),
+        Identifier.fromNamespaceAndPath(Constants.MOD_ID, "has_mob_capture_data"),
         MobCatcherHasMobCaptureData.MAP_CODEC);
 
     RangeSelectItemModelProperties.ID_MAPPER.put(
-        ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "mob_farm_block_item_tier_level"),
+        Identifier.fromNamespaceAndPath(Constants.MOD_ID, "mob_farm_block_item_tier_level"),
         MobFarmBlockItemTierLevel.MAP_CODEC);
 
     SelectItemModelProperties.ID_MAPPER.put(
-        ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "mob_capture_card_entity_color"),
+        Identifier.fromNamespaceAndPath(Constants.MOD_ID, "mob_capture_card_entity_color"),
         MobCaptureCardEntityColor.TYPE);
 
     SelectItemModelProperties.ID_MAPPER.put(
-        ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "mob_capture_card_entity_type"),
+        Identifier.fromNamespaceAndPath(Constants.MOD_ID, "mob_capture_card_entity_type"),
         MobCaptureCardEntityType.TYPE);
 
     SelectItemModelProperties.ID_MAPPER.put(
-        ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "mob_capture_card_entity_variant"),
+        Identifier.fromNamespaceAndPath(Constants.MOD_ID, "mob_capture_card_entity_variant"),
         MobCaptureCardEntityVariant.TYPE);
 
     SelectItemModelProperties.ID_MAPPER.put(
-        ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "mob_capture_card_rarity"),
+        Identifier.fromNamespaceAndPath(Constants.MOD_ID, "mob_capture_card_rarity"),
         MobCaptureCardRarity.TYPE);
   }
 }

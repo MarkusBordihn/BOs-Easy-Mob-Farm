@@ -37,8 +37,8 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
@@ -58,8 +58,8 @@ import net.minecraft.world.level.block.state.BlockState;
 public class MobCaptureCardItem extends Item {
 
   public static final String ID = "mob_capture_card";
-  public static final ResourceLocation RESOURCE_LOCATION =
-      ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, ID);
+  public static final Identifier RESOURCE_LOCATION =
+      Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID);
   public static final String TOOLTIP_PREFIX = Constants.TOOLTIP_PREFIX + ID + ".";
   private Level level;
 
@@ -68,7 +68,7 @@ public class MobCaptureCardItem extends Item {
         new Item.Properties()
             .setId(
                 ResourceKey.create(
-                    Registries.ITEM, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, ID))));
+                    Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
   }
 
   public MobCaptureCardItem(Properties properties) {

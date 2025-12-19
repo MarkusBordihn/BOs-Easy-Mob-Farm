@@ -1,15 +1,16 @@
 {
+  "format_version": "1.21.11",
   "credit": "Made with Blockbench by Markus Bordihn",
-  "render_type": "cutout_mipped",
+  "render_type": "cutout",
   "textures": {
     "edge": "easy_mob_farm:block/iron_rod",
-    "glass": "minecraft:block/glass",
+    "glass": "block/glass",
     "background": "easy_mob_farm:block/background/grass",
-    "particle": "minecraft:block/moss_block",
-    "floor": "minecraft:block/moss_block",
-    "iron_ingot": "minecraft:item/iron_ingot",
-    "poppy": "minecraft:block/poppy",
-    "dirt_path": "minecraft:block/dirt_path_top"
+    "particle": "block/moss_block",
+    "floor": "block/moss_block",
+    "iron_ingot": "block/iron_block",
+    "poppy": "block/poppy",
+    "dirt_path": "block/dirt_path_top"
   },
   "elements": [
     {
@@ -309,12 +310,12 @@
   ],
   "display": {
     "thirdperson_righthand": {
-      "rotation": [75, 315, 0],
+      "rotation": [75, -45, 0],
       "translation": [0, 2.5, 0],
       "scale": [0.375, 0.375, 0.375]
     },
     "thirdperson_lefthand": {
-      "rotation": [75, 315, 0],
+      "rotation": [75, -45, 0],
       "translation": [0, 2.5, 0],
       "scale": [0.375, 0.375, 0.375]
     },

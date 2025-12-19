@@ -26,7 +26,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -36,24 +36,24 @@ public class MobCaptureCardDefinitionManager {
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final String LOG_PREFIX = "[Mob Capture Card Definition Manager]";
 
-  private static final Map<ResourceLocation, MobCaptureCardDefinition> DEFINITIONS =
+  private static final Map<Identifier, MobCaptureCardDefinition> DEFINITIONS =
       new ConcurrentHashMap<>();
   private static final Map<EntityType<?>, MobCaptureCardDefinition> ENTITY_TYPE_DEFINITIONS =
       new ConcurrentHashMap<>();
 
   private MobCaptureCardDefinitionManager() {}
 
-  public static void setDefinitions(Map<ResourceLocation, MobCaptureCardDefinition> definitions) {
+  public static void setDefinitions(Map<Identifier, MobCaptureCardDefinition> definitions) {
     log.debug(
         "{} Set {} definitions with {}", LOG_PREFIX, definitions.size(), definitions.keySet());
     DEFINITIONS.clear();
     ENTITY_TYPE_DEFINITIONS.clear();
-    for (Map.Entry<ResourceLocation, MobCaptureCardDefinition> entry : definitions.entrySet()) {
+    for (Map.Entry<Identifier, MobCaptureCardDefinition> entry : definitions.entrySet()) {
       addDefinition(entry.getKey(), entry.getValue());
     }
   }
 
-  public static void addDefinition(ResourceLocation entity, MobCaptureCardDefinition definition) {
+  public static void addDefinition(Identifier entity, MobCaptureCardDefinition definition) {
 
     // Verify entity type.
     Optional<EntityType<?>> entityType =
@@ -76,7 +76,7 @@ public class MobCaptureCardDefinitionManager {
     ENTITY_TYPE_DEFINITIONS.put(entityType.get(), mobCaptureCardDefinition);
   }
 
-  public static MobCaptureCardDefinition get(ResourceLocation entity) {
+  public static MobCaptureCardDefinition get(Identifier entity) {
     return DEFINITIONS.get(entity);
   }
 
@@ -84,15 +84,15 @@ public class MobCaptureCardDefinitionManager {
     return ENTITY_TYPE_DEFINITIONS.get(entityType);
   }
 
-  public static boolean has(ResourceLocation entity) {
+  public static boolean has(Identifier entity) {
     return DEFINITIONS.containsKey(entity);
   }
 
-  public static Set<ResourceLocation> getDefinedEntities() {
+  public static Set<Identifier> getDefinedEntities() {
     return DEFINITIONS.keySet();
   }
 
-  public static Map<ResourceLocation, MobCaptureCardDefinition> getAll() {
+  public static Map<Identifier, MobCaptureCardDefinition> getAll() {
     return Collections.unmodifiableMap(DEFINITIONS);
   }
 

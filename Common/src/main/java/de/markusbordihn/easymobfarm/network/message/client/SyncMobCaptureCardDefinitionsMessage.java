@@ -29,14 +29,13 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload.Type;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public record SyncMobCaptureCardDefinitionsMessage(
-    Map<ResourceLocation, MobCaptureCardDefinition> definitions) implements NetworkMessageRecord {
+    Map<Identifier, MobCaptureCardDefinition> definitions) implements NetworkMessageRecord {
 
-  public static final ResourceLocation MESSAGE_ID =
-      ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "sync_mob_capture_card_definitions");
+  public static final Identifier MESSAGE_ID =
+      Identifier.fromNamespaceAndPath(Constants.MOD_ID, "sync_mob_capture_card_definitions");
   public static final CustomPacketPayload.Type<SyncMobCaptureCardDefinitionsMessage> PAYLOAD_TYPE =
       new Type<>(MESSAGE_ID);
   public static final StreamCodec<RegistryFriendlyByteBuf, SyncMobCaptureCardDefinitionsMessage>
@@ -47,9 +46,9 @@ public record SyncMobCaptureCardDefinitionsMessage(
 
   public static SyncMobCaptureCardDefinitionsMessage create(FriendlyByteBuf buffer) {
     int size = buffer.readVarInt();
-    Map<ResourceLocation, MobCaptureCardDefinition> definitions = new HashMap<>();
+    Map<Identifier, MobCaptureCardDefinition> definitions = new HashMap<>();
     for (int i = 0; i < size; i++) {
-      ResourceLocation entityId = buffer.readResourceLocation();
+      Identifier entityId = buffer.readIdentifier();
       MobCaptureCardDefinition definition = MobCaptureCardDefinition.decode(buffer);
       definitions.put(entityId, definition);
     }
@@ -59,14 +58,14 @@ public record SyncMobCaptureCardDefinitionsMessage(
   @Override
   public void write(FriendlyByteBuf buffer) {
     buffer.writeVarInt(definitions.size());
-    for (Map.Entry<ResourceLocation, MobCaptureCardDefinition> entry : definitions.entrySet()) {
-      buffer.writeResourceLocation(entry.getKey());
+    for (Map.Entry<Identifier, MobCaptureCardDefinition> entry : definitions.entrySet()) {
+      buffer.writeIdentifier(entry.getKey());
       entry.getValue().encode(buffer);
     }
   }
 
   @Override
-  public ResourceLocation id() {
+  public Identifier id() {
     return MESSAGE_ID;
   }
 

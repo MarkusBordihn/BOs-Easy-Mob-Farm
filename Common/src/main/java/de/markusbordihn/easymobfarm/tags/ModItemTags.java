@@ -21,7 +21,7 @@ package de.markusbordihn.easymobfarm.tags;
 
 import de.markusbordihn.easymobfarm.Constants;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 
@@ -29,13 +29,12 @@ public class ModItemTags {
 
   public static final TagKey<Item> MEAT =
       TagKey.create(
-          BuiltInRegistries.ITEM.key(),
-          ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "meat"));
+          BuiltInRegistries.ITEM.key(), Identifier.fromNamespaceAndPath(Constants.MOD_ID, "meat"));
 
   public static final TagKey<Item> FLOWERS =
       TagKey.create(
           BuiltInRegistries.ITEM.key(),
-          ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "flowers"));
+          Identifier.fromNamespaceAndPath(Constants.MOD_ID, "flowers"));
 
   private ModItemTags() {}
 }

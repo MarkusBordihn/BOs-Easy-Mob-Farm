@@ -29,8 +29,8 @@ import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -82,7 +82,7 @@ public class MobFarmBlock extends BaseEntityBlock {
             .setId(
                 ResourceKey.create(
                     Registries.BLOCK,
-                    ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, mobFarmType.getId())))
+                    Identifier.fromNamespaceAndPath(Constants.MOD_ID, mobFarmType.getId())))
             .mapColor(MapColor.STONE)
             .requiresCorrectToolForDrops()
             .strength(5.0f)

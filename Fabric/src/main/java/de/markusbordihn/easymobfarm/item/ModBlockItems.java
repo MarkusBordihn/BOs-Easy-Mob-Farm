@@ -26,8 +26,8 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
@@ -53,7 +53,7 @@ public class ModBlockItems {
               .setId(
                   ResourceKey.create(
                       Registries.ITEM,
-                      ResourceLocation.fromNamespaceAndPath(
+                      Identifier.fromNamespaceAndPath(
                           Constants.MOD_ID, MobFarmType.CREATIVE_MOB_FARM.getId()))));
   public static final Item ANIMAL_PLAINS_FARM =
       new MobFarmBlockItem(MobFarmType.ANIMAL_PLAINS_FARM, ModBlocks.ANIMAL_PLAINS_FARM);

@@ -21,7 +21,6 @@ package de.markusbordihn.easymobfarm.network;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.network.message.client.SyncMobCaptureCardDefinitionsMessage;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.network.ChannelBuilder;
 import net.minecraftforge.network.NetworkDirection;
@@ -31,7 +30,7 @@ public class NetworkHandler {
   private static final int PROTOCOL_VERSION = 1;
 
   public static final SimpleChannel INSTANCE =
-      ChannelBuilder.named(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "network"))
+      ChannelBuilder.named(Identifier.fromNamespaceAndPath(Constants.MOD_ID, "network"))
           .networkProtocolVersion(PROTOCOL_VERSION)
           .simpleChannel();
 

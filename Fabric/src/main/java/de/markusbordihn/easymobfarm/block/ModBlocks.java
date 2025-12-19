@@ -28,7 +28,7 @@ import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import org.apache.logging.log4j.LogManager;
@@ -87,19 +87,17 @@ public class ModBlocks {
     log.info("{} Mob Farm block entities ...", Constants.LOG_REGISTER_PREFIX);
     Registry.register(
         BuiltInRegistries.BLOCK_ENTITY_TYPE,
-        ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, CreativeMobFarmBlockEntity.ID),
+        Identifier.fromNamespaceAndPath(Constants.MOD_ID, CreativeMobFarmBlockEntity.ID),
         CREATIVE_MOB_FARM_ENTITY);
     Registry.register(
         BuiltInRegistries.BLOCK_ENTITY_TYPE,
-        ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, MobFarmBlockEntity.ID),
+        Identifier.fromNamespaceAndPath(Constants.MOD_ID, MobFarmBlockEntity.ID),
         MOB_FARM_ENTITY);
   }
 
   private static void registerBlock(String id, Block block) {
     Registry.register(
-        BuiltInRegistries.BLOCK,
-        ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, id),
-        block);
+        BuiltInRegistries.BLOCK, Identifier.fromNamespaceAndPath(Constants.MOD_ID, id), block);
   }
 
   public static final BlockEntityType<CreativeMobFarmBlockEntityWrapper> CREATIVE_MOB_FARM_ENTITY =

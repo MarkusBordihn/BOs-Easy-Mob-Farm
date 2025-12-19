@@ -22,7 +22,7 @@ package de.markusbordihn.easymobfarm.menu;
 import de.markusbordihn.easymobfarm.Constants;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.inventory.MenuType;
 import org.apache.logging.log4j.LogManager;
@@ -41,6 +41,6 @@ public class ModMenuTypes {
   public static final MenuType<MobFarmMenuWrapper> MOB_FARM_MENU =
       Registry.register(
           BuiltInRegistries.MENU,
-          ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, MobFarmMenu.ID),
+          Identifier.fromNamespaceAndPath(Constants.MOD_ID, MobFarmMenu.ID),
           new MenuType<>(MobFarmMenuWrapper::new, FeatureFlagSet.of()));
 }
