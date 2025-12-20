@@ -60,19 +60,19 @@ dependencies {
   }
 
   // Immersive Engineering: Integration
-  runtimeOnly "curse.maven:immersive-engineering-231951:5828000"
+  // runtimeOnly "curse.maven:immersive-engineering-231951:5828000"
 
   // Refined Storage: Integration
-  runtimeOnly "curse.maven:refined-storage-243076:6391989"
+  // runtimeOnly "curse.maven:refined-storage-243076:6391989"
 
   // Applied Energistics 2: Integration
-  runtimeOnly "curse.maven:applied-energistics-2-223794:5729094"
+  // runtimeOnly "curse.maven:applied-energistics-2-223794:5729094"
 
   // Mekanism: Integration
-  implementation "curse.maven:mekanism-268560:5680395"
+  // implementation "curse.maven:mekanism-268560:5680395"
 
   // Farmers Delight: Integration
-  runtimeOnly "curse.maven:farmers-delight-398521:6917256"
+  // runtimeOnly "curse.maven:farmers-delight-398521:6917256"
 }
 
 // NeoGradle compiles the game, but we don't want to add our common code to the game's code

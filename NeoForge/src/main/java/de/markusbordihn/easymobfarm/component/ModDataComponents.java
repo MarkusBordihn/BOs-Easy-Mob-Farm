@@ -33,20 +33,24 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
 public class ModDataComponents {
 
-  public static final DeferredRegister.DataComponents DATA_COMPONENTS =
-      DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, Constants.MOD_ID);
+  public static final DeferredRegister<DataComponentType<?>> DATA_COMPONENTS =
+      DeferredRegister.create(Registries.DATA_COMPONENT_TYPE, Constants.MOD_ID);
   public static final Supplier<DataComponentType<MobCaptureData>> MOB_CAPTURE_DATA =
-      DATA_COMPONENTS.registerComponentType(
+      DATA_COMPONENTS.register(
           MobCaptureData.ID,
-          builder ->
-              builder
+          () ->
+              DataComponentType.<MobCaptureData>builder()
                   .persistent(MobCaptureData.CODEC)
-                  .networkSynchronized(MobCaptureData.STREAM_CODEC));
+                  .networkSynchronized(MobCaptureData.STREAM_CODEC)
+                  .build());
   public static final Supplier<DataComponentType<MobFarmData>> MOB_FARM_DATA =
-      DATA_COMPONENTS.registerComponentType(
+      DATA_COMPONENTS.register(
           MobFarmData.ID,
-          builder ->
-              builder.persistent(MobFarmData.CODEC).networkSynchronized(MobFarmData.STREAM_CODEC));
+          () ->
+              DataComponentType.<MobFarmData>builder()
+                  .persistent(MobFarmData.CODEC)
+                  .networkSynchronized(MobFarmData.STREAM_CODEC)
+                  .build());
 
   private ModDataComponents() {}
 

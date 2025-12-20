@@ -51,8 +51,8 @@ public class EasyMobFarm {
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   @SuppressWarnings({"java:S1118", "java:S2440"})
-  public EasyMobFarm(FMLJavaModLoadingContext context) {
-    final IEventBus modEventBus = context.getModEventBus();
+  public EasyMobFarm() {
+    final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
     log.info("Initializing {} (Forge) ...", Constants.MOD_NAME);
 

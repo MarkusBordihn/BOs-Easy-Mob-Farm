@@ -29,8 +29,8 @@ subprojects {
 
   dependencies {
     configurations.configureEach {
-      resolutionStrategy.force 'org.ow2.asm:asm-analysis:9.7'
-      resolutionStrategy.force 'org.ow2.asm:asm-util:9.7'
+      resolutionStrategy.force 'org.ow2.asm:asm-analysis:9.5'
+      resolutionStrategy.force 'org.ow2.asm:asm-util:9.5'
     }
   }
 
