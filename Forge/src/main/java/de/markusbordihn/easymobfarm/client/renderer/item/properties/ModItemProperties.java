@@ -29,6 +29,7 @@ import de.markusbordihn.easymobfarm.client.renderer.item.properties.select.MobCa
 import net.minecraft.client.renderer.item.properties.conditional.ConditionalItemModelProperties;
 import net.minecraft.client.renderer.item.properties.numeric.RangeSelectItemModelProperties;
 import net.minecraft.client.renderer.item.properties.select.SelectItemModelProperties;
+import net.minecraft.resources.Identifier;
 
 public class ModItemProperties {
 

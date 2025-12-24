@@ -58,17 +58,16 @@ public class ModBlocks {
 
   public static final RegistryObject<Block> CREATIVE_MOB_FARM =
       BLOCKS.register(MobFarmType.CREATIVE_MOB_FARM.getId(), CreativeMobFarmBlockWrapper::new);
-  public static final RegistryObject<BlockEntityType<CreativeMobFarmBlockEntityWrapper>>
+  public static final RegistryObject<Block> ANIMAL_PLAINS_FARM =
+      BLOCKS.register(
+          MobFarmType.ANIMAL_PLAINS_FARM.getId(),
+          () -> new MobFarmBlockWrapper(MobFarmType.ANIMAL_PLAINS_FARM));  public static final RegistryObject<BlockEntityType<CreativeMobFarmBlockEntityWrapper>>
       CREATIVE_MOB_FARM_ENTITY =
           BLOCK_ENTITIES.register(
               CreativeMobFarmBlockEntity.ID,
               () ->
                   new BlockEntityType<>(
                       CreativeMobFarmBlockEntityWrapper::new, Set.of(CREATIVE_MOB_FARM.get())));
-  public static final RegistryObject<Block> ANIMAL_PLAINS_FARM =
-      BLOCKS.register(
-          MobFarmType.ANIMAL_PLAINS_FARM.getId(),
-          () -> new MobFarmBlockWrapper(MobFarmType.ANIMAL_PLAINS_FARM));
   public static final RegistryObject<Block> BEE_HIVE_FARM =
       BLOCKS.register(
           MobFarmType.BEE_HIVE_FARM.getId(),
@@ -101,6 +100,7 @@ public class ModBlocks {
   public static final RegistryObject<Block> SWAMP_FARM =
       BLOCKS.register(
           MobFarmType.SWAMP_FARM.getId(), () -> new MobFarmBlockWrapper(MobFarmType.SWAMP_FARM));
+  protected ModBlocks() {}
   public static final RegistryObject<BlockEntityType<MobFarmBlockEntityWrapper>> MOB_FARM_ENTITY =
       BLOCK_ENTITIES.register(
           MobFarmBlockEntity.ID,
@@ -119,5 +119,5 @@ public class ModBlocks {
                       OCEAN_FARM.get(),
                       SWAMP_FARM.get())));
 
-  protected ModBlocks() {}
+
 }
