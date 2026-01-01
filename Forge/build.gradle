@@ -140,12 +140,6 @@ sourceSets.each {
   it.java.destinationDirectory = dir
 }
 
-sourceSets.each {
-  def dir = layout.buildDirectory.dir("sourcesSets/$it.name")
-  it.output.resourcesDir = dir
-  it.java.destinationDirectory = dir
-}
-
 // CurseForge Publishing
 if (project.hasProperty('curseforge_project_id') && project.curseforge_project_id) {
   tasks.register('curseforge', net.darkhax.curseforgegradle.TaskPublishCurseForge) {
