@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["IDI", "D#D", "IDI"],
+  "key": {
+    "I": "minecraft:iron_ingot",
+    "D": "minecraft:diamond",
+    "#": "easy_mob_farm:jungle_farm"
+  },
+  "result": {
+    "id": "easy_mob_farm:jungle_farm",
+    "components": {
+      "easy_mob_farm:mob_farm_data": {
+        "tierLevel": "tier_2"
+      }
+    }
+  }
+}

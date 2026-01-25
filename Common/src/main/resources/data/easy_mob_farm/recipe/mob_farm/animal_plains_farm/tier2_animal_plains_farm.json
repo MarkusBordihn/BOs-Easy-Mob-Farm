@@ -8,7 +8,7 @@
     "W": "minecraft:wheat",
     "S": "minecraft:wheat_seeds",
     "E": "minecraft:egg",
-    "T": "minecraft:white_tulip",
+    "T": "#minecraft:flowers",
     "-": "minecraft:dirt",
     "F": "minecraft:feather"
   },

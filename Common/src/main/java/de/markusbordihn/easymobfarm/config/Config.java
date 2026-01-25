@@ -242,7 +242,9 @@ public class Config {
         log.error("{} Failed to parse Set[String] for key {}:", LOG_PREFIX, key, e);
       }
     }
-    properties.setProperty(key, String.join(",", defaultValue));
+    if (!defaultValue.isEmpty()) {
+      properties.setProperty(key, String.join(",", defaultValue));
+    }
     return defaultValue;
   }
 }

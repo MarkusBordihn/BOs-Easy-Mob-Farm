@@ -8,6 +8,9 @@ base {
 
 neoForge {
   neoFormVersion = project.neo_form_version
+
+  // Add Minecraft classes to test configuration
+  addModdingDependenciesTo(sourceSets.test)
 }
 
 dependencies {

@@ -126,6 +126,7 @@
   "tooltip.easy_mob_farm.farm.no_experience": "No Experience",
   "tooltip.easy_mob_farm.farm.ocean_farm": "Ocean Farm (Tier %s)",
   "tooltip.easy_mob_farm.farm.output_slots": "Output Slots: %s",
+  "tooltip.easy_mob_farm.farm.buffer": "Buffer: %s%% (%s/%s)",
   "tooltip.easy_mob_farm.farm.progress": "Progress: %s/%s",
   "tooltip.easy_mob_farm.farm.progression_speed": "Speed: %s (+%s) ticks/sec",
   "tooltip.easy_mob_farm.farm.status": "Status: %s",
@@ -159,6 +160,7 @@
   "tooltip.easy_mob_farm.frog_catalyst_yellow_enhancement": "A radiant catalyst for sunny yellow Frog Lights.",
   "tooltip.easy_mob_farm.honey_extractor_enhancement": "Extracts honey bottles from processed bees.",
   "tooltip.easy_mob_farm.honey_harvester_frame_enhancement": "Collects honeycombs from processed bees.",
+  "tooltip.easy_mob_farm.knife_enhancement": "Generates additional loot as if butchered with a knife.",
   "tooltip.easy_mob_farm.loot_enhancement": "Enhances the quantity of loot collected by the mob farm.",
   "tooltip.easy_mob_farm.luck_enhancement": "Boosts the chance for rare item drops.",
   "tooltip.easy_mob_farm.milk_bottle": "A bottle of milk, perfect for removing potion effects.",
@@ -172,6 +174,7 @@
   "tooltip.easy_mob_farm.mob_capture_card.description_id": "Description Id: %s",
   "tooltip.easy_mob_farm.mob_capture_card.empty": "Empty Mob Capture Card",
   "tooltip.easy_mob_farm.mob_capture_card.id": "Card Id: %s",
+  "tooltip.easy_mob_farm.mob_capture_card.minecraft.slime.special_mechanics": "Loot quantity depends on slime size!",
   "tooltip.easy_mob_farm.mob_capture_card.name": "Name: %s",
   "tooltip.easy_mob_farm.mob_capture_card.rarity": "Rarity: %s",
   "tooltip.easy_mob_farm.mob_capture_card.type": "Type: %s",
@@ -194,7 +197,5 @@
   "tooltip.easy_mob_farm.slot_upgrade_slot": "Use this slot to upgrade the mob farm's output slots.",
   "tooltip.easy_mob_farm.small_slot_upgrade": "Adds additional mob storage capacity in the farm by %s.",
   "tooltip.easy_mob_farm.speed_enhancement": "Speeds up the rate by +%s ticks/sec at which items are collected.",
-  "tooltip.easy_mob_farm.sword_enhancement": "Generates loot as if killed by a player with a sword.",
-  "tooltip.easy_mob_farm.knife_enhancement": "Generates additional loot as if butchered with a knife.",
-  "tooltip.easy_mob_farm.mob_capture_card.minecraft.slime.special_mechanics": "Loot quantity depends on slime size!"
+  "tooltip.easy_mob_farm.sword_enhancement": "Generates loot as if killed by a player with a sword."
 }

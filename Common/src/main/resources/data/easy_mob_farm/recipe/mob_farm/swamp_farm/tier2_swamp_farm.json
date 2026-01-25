@@ -7,7 +7,7 @@
     "W": "minecraft:water_bucket",
     "-": "minecraft:dirt",
     "D": "minecraft:dead_bush",
-    "B": "minecraft:blue_orchid",
+    "B": "#minecraft:flowers",
     "O": "minecraft:oak_log",
     "M": "minecraft:brown_mushroom"
   },

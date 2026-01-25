@@ -46,7 +46,9 @@ import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import de.markusbordihn.easymobfarm.tags.ModItemTags;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
@@ -94,12 +96,14 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
   public static final String FARM_TYPE_TAG = "FarmType";
   public static final String OWNER_TAG = "Owner";
   public static final String CAPTURED_MOB_EXPERIENCE_TAG = "CapturedMobExperience";
+  public static final String BUFFER_PROCESS_TICK_TAG = "BufferProcessTick";
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final int[] RESULT_SLOTS =
       MobFarmSlots.RESULT_SLOTS.stream().mapToInt(MobFarmSlot::index).toArray();
   private static final Random random = new Random();
   private final ContainerData data;
   private final int processingDelay;
+  private final Queue<ItemStack> itemBuffer = new LinkedList<>();
   protected NonNullList<ItemStack> items =
       NonNullList.withSize(MobFarmMenu.CONTAINER_SIZE, ItemStack.EMPTY);
   private MobFarmType mobFarmType;
@@ -111,6 +115,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
   private int farmStatus = MobFarmStatus.IDLE;
   private int capturedMobExperience = -1;
   private HolderLookup.Provider provider;
+  private int bufferProcessTick = 0;
 
   public MobFarmBlockEntity(
       final BlockEntityType<?> blockEntityType,
@@ -152,6 +157,14 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
       final BlockPos blockPos,
       final BlockState blockState,
       final MobFarmBlockEntity blockEntity) {
+
+    // Process buffered items every bufferProcessInterval ticks (default: 20)
+    if (MobFarmConfig.enableItemBuffer
+        && !blockEntity.itemBuffer.isEmpty()
+        && level.getGameTime() % MobFarmConfig.bufferProcessInterval
+            == blockEntity.bufferProcessTick) {
+      blockEntity.processBufferedItems();
+    }
 
     // Check if redstone power is active.
     if (blockState.getValue(MobFarmBlock.POWERED)) {
@@ -320,6 +333,10 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
         return true;
       }
     }
+
+    if (MobFarmConfig.enableItemBuffer && getBufferSize() < MobFarmConfig.maxBufferSize) {
+      return true;
+    }
     return false;
   }
 
@@ -473,6 +490,10 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
   }
 
   private void storeItemInOutputSlot(final ItemStack itemStack) {
+    if (itemStack.isEmpty()) {
+      return;
+    }
+
     int startSlotIndex = MobFarmSlots.RESULT_SLOTS.get(0).index();
     for (int slotIndex = startSlotIndex;
         slotIndex < startSlotIndex + numberOfOutputSlots;
@@ -481,15 +502,75 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
 
       if (outputSlot.isEmpty()) {
         setItemInSlot(slotIndex, itemStack);
-        break;
+        return;
       }
 
       if (canGrowOutputSlot(outputSlot, itemStack)) {
         growOutputSlot(outputSlot, itemStack);
         if (itemStack.isEmpty()) {
-          break;
+          return;
         }
       }
+    }
+
+    // If item couldn't be placed and buffer is enabled, add to buffer
+    if (MobFarmConfig.enableItemBuffer && !itemStack.isEmpty()) {
+      if (getBufferSize() < MobFarmConfig.maxBufferSize) {
+        log.debug(
+            "Output slots full, adding {} to buffer at {} (buffer size: {}/{})",
+            itemStack,
+            this.getBlockPos(),
+            getBufferSize() + 1,
+            MobFarmConfig.maxBufferSize);
+        itemBuffer.offer(itemStack.copy());
+        itemStack.setCount(0);
+      } else if (MobFarmConfig.dropItemsToWorldWhenBufferFull) {
+        log.warn(
+            "Buffer full at {} ({}/{}), dropping {} to world",
+            this.getBlockPos(),
+            getBufferSize(),
+            MobFarmConfig.maxBufferSize,
+            itemStack);
+        if (this.level instanceof ServerLevel serverLevel) {
+          Containers.dropItemStack(
+              serverLevel,
+              this.worldPosition.getX() + 0.5,
+              this.worldPosition.getY() + 1.0,
+              this.worldPosition.getZ() + 0.5,
+              itemStack.copy());
+        }
+        itemStack.setCount(0);
+      } else {
+        log.warn(
+            "Buffer full at {} ({}/{}), voiding {} (dropItemsToWorldWhenBufferFull=false)",
+            this.getBlockPos(),
+            getBufferSize(),
+            MobFarmConfig.maxBufferSize,
+            itemStack);
+        itemStack.setCount(0);
+      }
+    } else if (!itemStack.isEmpty() && MobFarmConfig.dropItemsToWorldWhenBufferFull) {
+      // Buffer disabled, drop to world if enabled
+      log.warn(
+          "Output slots full and buffer disabled at {}, dropping {} to world",
+          this.getBlockPos(),
+          itemStack);
+      if (this.level instanceof ServerLevel serverLevel) {
+        Containers.dropItemStack(
+            serverLevel,
+            this.worldPosition.getX() + 0.5,
+            this.worldPosition.getY() + 1.0,
+            this.worldPosition.getZ() + 0.5,
+            itemStack.copy());
+      }
+      itemStack.setCount(0);
+    } else if (!itemStack.isEmpty()) {
+      // Buffer disabled and drop disabled, void items
+      log.warn(
+          "Output slots full, buffer disabled, voiding {} at {} (dropItemsToWorldWhenBufferFull=false)",
+          itemStack,
+          this.getBlockPos());
+      itemStack.setCount(0);
     }
   }
 
@@ -942,6 +1023,67 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     return false;
   }
 
+  public int getBufferSize() {
+    return itemBuffer.size();
+  }
+
+  private void processBufferedItems() {
+    if (!MobFarmConfig.enableItemBuffer || itemBuffer.isEmpty()) {
+      return;
+    }
+
+    // Process up to 8 items from buffer per tick to avoid lag
+    int itemsProcessed = 0;
+    while (!itemBuffer.isEmpty() && itemsProcessed < 8) {
+      ItemStack bufferedItem = itemBuffer.peek();
+      if (bufferedItem == null || bufferedItem.isEmpty()) {
+        itemBuffer.poll();
+        continue;
+      }
+
+      // Try to place buffered item in output slots
+      ItemStack itemToPlace = bufferedItem.copy();
+      int startSlotIndex = MobFarmSlots.RESULT_SLOTS.get(0).index();
+      boolean placed = false;
+
+      for (int slotIndex = startSlotIndex;
+          slotIndex < startSlotIndex + numberOfOutputSlots;
+          slotIndex++) {
+        ItemStack outputSlot = this.getItem(slotIndex);
+
+        if (outputSlot.isEmpty()) {
+          setItemInSlot(slotIndex, itemToPlace);
+          itemBuffer.poll();
+          placed = true;
+          break;
+        }
+
+        if (canGrowOutputSlot(outputSlot, itemToPlace)) {
+          growOutputSlot(outputSlot, itemToPlace);
+          if (itemToPlace.isEmpty()) {
+            itemBuffer.poll();
+            placed = true;
+            break;
+          }
+        }
+      }
+
+      if (!placed) {
+        break;
+      }
+
+      itemsProcessed++;
+    }
+
+    if (itemsProcessed > 0) {
+      log.debug(
+          "Processed {} buffered items at {} (remaining: {})",
+          itemsProcessed,
+          this.getBlockPos(),
+          getBufferSize());
+    }
+  }
+
   @Override
   public void preRemoveSideEffects(BlockPos blockPos, BlockState blockState) {
     BlockEntity blockEntity = level.getBlockEntity(blockPos);
@@ -973,6 +1115,13 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
         this.owner = null;
       }
     }
+
+    // Clear buffer on load to prevent item duplication on server restart
+    this.itemBuffer.clear();
+    int bufferProcessTick = valueInput.getIntOr(BUFFER_PROCESS_TICK_TAG, -1);
+    if (bufferProcessTick >= 0) {
+      this.bufferProcessTick = bufferProcessTick;
+    }
   }
 
   @Override
@@ -993,5 +1142,8 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     if (this.owner != null) {
       valueOutput.putString(OWNER_TAG, this.owner.toString());
     }
+
+    // Save buffer process tick
+    valueOutput.putInt(BUFFER_PROCESS_TICK_TAG, this.bufferProcessTick);
   }
 }

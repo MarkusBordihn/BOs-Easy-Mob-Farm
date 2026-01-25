@@ -31,10 +31,12 @@ public class MobFarmDataEntry {
   public static final int CAPTURED_MOB_EXPERIENCE = 8;
   public static final int FARM_PROGRESSION_SPEED = 9;
   public static final int FARM_PROGRESSION_SPEED_BONUS = 10;
+  public static final int BUFFER_SIZE = 11;
+  public static final int BUFFER_MAX_SIZE = 12;
 
   private MobFarmDataEntry() {}
 
   public static int getLastSlotIndex() {
-    return FARM_PROGRESSION_SPEED_BONUS;
+    return BUFFER_MAX_SIZE;
   }
 }

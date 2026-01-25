@@ -6,7 +6,7 @@
     "#": "easy_mob_farm:tier2_mob_farm_template",
     "B": "minecraft:blue_orchid",
     "G": "minecraft:short_grass",
-    "D": "minecraft:oxeye_daisy",
+    "D": "#minecraft:flowers",
     "-": "minecraft:dirt",
     "O": "minecraft:oak_log",
     "H": "minecraft:beehive"

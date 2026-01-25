@@ -24,6 +24,7 @@ import de.markusbordihn.easymobfarm.compat.CompatConstants;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.data.capture.MobVariantData;
 import de.markusbordihn.easymobfarm.data.enhancement.FrogCatalystType;
+import de.markusbordihn.easymobfarm.data.loot.LootTablePriority;
 import de.markusbordihn.easymobfarm.experience.ExperienceManager;
 import de.markusbordihn.easymobfarm.item.consumables.MilkBottleItem;
 import de.markusbordihn.easymobfarm.item.upgrade.EnhancementItem;
@@ -306,7 +307,24 @@ public class LootManager {
     ResourceKey<LootTable> lootTableLocation = getLootTableLocation(livingEntity, enhancements);
     LootParams lootParams = lootContextBuilder.create(LootContextParamSets.ENTITY);
 
-    // Get loot items from loot table.
+    // 1. Try to use overwrite loot table first.
+    if (addLootFromCustomTable(
+        LootTablePriority.OVERWRITE,
+        livingEntity,
+        serverLevel,
+        lootParams,
+        additionalRolls,
+        drops)) {
+      handlePostEnhancements(enhancements, livingEntity, serverLevel, fakePlayer, drops);
+      handleKnifeEnhancementLoot(enhancements, livingEntity, serverLevel, lootParams, drops);
+      return drops;
+    }
+
+    // 2. Then use priority loot table.
+    addLootFromCustomTable(
+        LootTablePriority.PRIORITY, livingEntity, serverLevel, lootParams, additionalRolls, drops);
+
+    // 3. Then use vanilla loot table.
     if (lootTableLocation != null) {
       LootTable lootTable =
           serverLevel.getServer().reloadableRegistries().getLootTable(lootTableLocation);
@@ -318,34 +336,35 @@ public class LootManager {
       }
     }
 
-    // If no loot drops are available, try to get custom loot table.
-    if (drops.isEmpty()) {
-      ResourceKey<LootTable> customLootTableLocation =
-          getCustomLootTableLocation(livingEntity, enhancements);
-      LootTable customLootTable =
-          serverLevel.getServer().reloadableRegistries().getLootTable(customLootTableLocation);
-      if (customLootTable != LootTable.EMPTY) {
-        log.debug(
-            "No loot drops for {} trying custom loot table {}!",
+    // 4. Then use bonus loot table.
+    addLootFromCustomTable(
+        LootTablePriority.BONUS, livingEntity, serverLevel, lootParams, additionalRolls, drops);
+
+    // 5. Finally use fallback loot table, if no drops are available yet.
+    if (drops.isEmpty()
+        && !addLootFromCustomTable(
+            LootTablePriority.FALLBACK,
             livingEntity,
-            customLootTableLocation);
+            serverLevel,
+            lootParams,
+            additionalRolls,
+            drops)) {
+      ResourceKey<LootTable> legacyLocation =
+          getCustomLootTableLocation(livingEntity, LootTablePriority.LEGACY);
+      LootTable legacyTable =
+          serverLevel.getServer().reloadableRegistries().getLootTable(legacyLocation);
+      if (legacyTable != LootTable.EMPTY) {
+        log.warn(
+            "Using legacy loot table path {} - please move to entities/fallback/", legacyLocation);
         for (int i = 0; i <= additionalRolls; i++) {
-          customLootTable.getRandomItems(lootParams).stream()
+          legacyTable.getRandomItems(lootParams).stream()
               .filter(itemStack -> !itemStack.isEmpty())
               .forEach(drops::add);
         }
-      } else {
-        log.debug(
-            "No loot drops for {} and no custom loot table {}!",
-            livingEntity,
-            customLootTableLocation);
       }
     }
 
-    // Handle post drop enhancements.
     handlePostEnhancements(enhancements, livingEntity, serverLevel, fakePlayer, drops);
-
-    // Handle knife enhancement loot tables
     handleKnifeEnhancementLoot(enhancements, livingEntity, serverLevel, lootParams, drops);
 
     return drops;
@@ -435,17 +454,37 @@ public class LootManager {
   }
 
   private static ResourceKey<LootTable> getCustomLootTableLocation(
-      LivingEntity livingEntity, List<EnhancementItem> enhancements) {
+      final LivingEntity livingEntity, final LootTablePriority priority) {
     Identifier entityTypeIdentifier = BuiltInRegistries.ENTITY_TYPE.getKey(livingEntity.getType());
-
+    String path =
+        priority.getPath().isEmpty() ? "entities/" : "entities/" + priority.getPath() + "/";
     return ResourceKey.create(
         Registries.LOOT_TABLE,
         Identifier.fromNamespaceAndPath(
             Constants.MOD_ID,
-            "entities/"
-                + entityTypeIdentifier.getNamespace()
-                + "/"
-                + entityTypeIdentifier.getPath()));
+            path + entityTypeIdentifier.getNamespace() + "/" + entityTypeIdentifier.getPath()));
+  }
+
+  private static boolean addLootFromCustomTable(
+      final LootTablePriority priority,
+      final LivingEntity livingEntity,
+      final ServerLevel serverLevel,
+      final LootParams lootParams,
+      final int additionalRolls,
+      final NonNullList<ItemStack> drops) {
+    ResourceKey<LootTable> customLocation = getCustomLootTableLocation(livingEntity, priority);
+    LootTable customTable =
+        serverLevel.getServer().reloadableRegistries().getLootTable(customLocation);
+    if (customTable != LootTable.EMPTY) {
+      log.debug("Using {} loot table for {}", priority.getPath(), livingEntity.getType());
+      for (int i = 0; i <= additionalRolls; i++) {
+        customTable.getRandomItems(lootParams).stream()
+            .filter(itemStack -> !itemStack.isEmpty())
+            .forEach(drops::add);
+      }
+      return true;
+    }
+    return false;
   }
 
   private static void setSwordEnhancementParameters(

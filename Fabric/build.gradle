@@ -9,6 +9,40 @@ base {
   archivesName = "${mod_id}-fabric-${minecraft_version}"
 }
 
+loom {
+  // Access Widener
+  accessWidenerPath = file("src/main/resources/${mod_namespace}.accesswidener")
+
+  // Run configurations
+  runs {
+    client {
+      client()
+      setConfigName("Fabric Client")
+      property("fabric.logging.markers", "REGISTRIES")
+      property("fabric.log.level", "debug")
+      property("mixin.debug.verbose", "false")
+      property("mixin.debug.export", "false")
+      ideConfigGenerated(true)
+      runDir("run")
+    }
+    server {
+      server()
+      setConfigName("Fabric Server")
+      property("fabric.logging.markers", "REGISTRIES")
+      property("fabric.log.level", "debug")
+      property("mixin.debug.verbose", "false")
+      property("mixin.debug.export", "false")
+      ideConfigGenerated(true)
+      runDir("run")
+    }
+    gameTest {
+      server()
+      name "Game Test"
+      vmArg "-Dfabric-api.gametest"
+    }
+  }
+}
+
 dependencies {
   minecraft "com.mojang:minecraft:${minecraft_version}"
   mappings loom.officialMojangMappings()
@@ -64,40 +98,6 @@ dependencies {
   // modRuntimeOnly "curse.maven:swampier-swamps-fabric-687298:4580758"
 }
 
-loom {
-  // Access Widener
-  accessWidenerPath = file("src/main/resources/${mod_namespace}.accesswidener")
-
-  // Run configurations
-  runs {
-    client {
-      client()
-      setConfigName("Fabric Client")
-      property("fabric.logging.markers", "REGISTRIES")
-      property("fabric.log.level", "debug")
-      property("mixin.debug.verbose", "false")
-      property("mixin.debug.export", "false")
-      ideConfigGenerated(true)
-      runDir("run")
-    }
-    server {
-      server()
-      setConfigName("Fabric Server")
-      property("fabric.logging.markers", "REGISTRIES")
-      property("fabric.log.level", "debug")
-      property("mixin.debug.verbose", "false")
-      property("mixin.debug.export", "false")
-      ideConfigGenerated(true)
-      runDir("run")
-    }
-    gameTest {
-      server()
-      name "Game Test"
-      vmArg "-Dfabric-api.gametest"
-    }
-  }
-}
-
 processResources {
   from project(":Common").sourceSets.main.resources
   inputs.property "version", project.version
@@ -109,6 +109,19 @@ processResources {
 
 tasks.withType(JavaCompile).configureEach {
   source(project(":Common").sourceSets.main.allSource)
+}
+
+tasks.withType(Test).configureEach {
+  failOnNoDiscoveredTests = false
+}
+
+tasks.named('build') {
+  dependsOn 'remapJar'
+}
+
+test {
+  useJUnitPlatform()
+  exclude '**/*'
 }
 
 // CurseForge Publishing
