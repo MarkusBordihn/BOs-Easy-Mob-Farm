@@ -159,6 +159,7 @@
   "tooltip.easy_mob_farm.frog_catalyst_yellow_enhancement": "产出黄色蛙明灯的发光催化剂",
   "tooltip.easy_mob_farm.honey_extractor_enhancement": "将蜂蜜收集为蜂蜜瓶",
   "tooltip.easy_mob_farm.honey_harvester_frame_enhancement": "收集蜜蜂产出的蜜脾",
+  "tooltip.easy_mob_farm.knife_enhancement": "如同厨刀屠宰一样产出战利品",
   "tooltip.easy_mob_farm.loot_enhancement": "提高生物农场收集的战利品数量",
   "tooltip.easy_mob_farm.luck_enhancement": "提高稀有物品掉落几率",
   "tooltip.easy_mob_farm.milk_bottle": "一瓶牛奶，可以解除药水效果",
@@ -172,6 +173,7 @@
   "tooltip.easy_mob_farm.mob_capture_card.description_id": "描述ID：%s",
   "tooltip.easy_mob_farm.mob_capture_card.empty": "空白怪物捕获卡",
   "tooltip.easy_mob_farm.mob_capture_card.id": "卡ID：%s",
+  "tooltip.easy_mob_farm.mob_capture_card.minecraft.slime.special_mechanics": "战利品数量取决于史莱姆的大小！",
   "tooltip.easy_mob_farm.mob_capture_card.name": "名称：%s",
   "tooltip.easy_mob_farm.mob_capture_card.rarity": "稀有度：%s",
   "tooltip.easy_mob_farm.mob_capture_card.type": "种类：%s",
@@ -194,7 +196,5 @@
   "tooltip.easy_mob_farm.slot_upgrade_slot": "使用此栏位升级刷怪塔的产出",
   "tooltip.easy_mob_farm.small_slot_upgrade": "在农场中增加%s生物存储容量",
   "tooltip.easy_mob_farm.speed_enhancement": "加快物品收集产率+%s刻/秒",
-  "tooltip.easy_mob_farm.sword_enhancement": "如同被玩家用剑击杀一样产出战利品",
-  "tooltip.easy_mob_farm.knife_enhancement": "如同厨刀屠宰一样产出战利品",
-  "tooltip.easy_mob_farm.mob_capture_card.minecraft.slime.special_mechanics": "战利品数量取决于史莱姆的大小！"
+  "tooltip.easy_mob_farm.sword_enhancement": "如同被玩家用剑击杀一样产出战利品"
 }

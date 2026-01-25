@@ -351,21 +351,21 @@ public class MobFarmBonusConfig extends Config {
           if (keyParts == null) {
             return;
           }
-          String mobFarmName = keyParts[0];
-          String entityType = keyParts[2];
 
           // Parse value to extract item name, amount and chance
           String[] valueParts = parseValue((String) value);
           if (valueParts == null || valueParts[0].isEmpty()) {
             return;
           }
-          String itemName = valueParts[0];
 
           try {
-            int tierLevel = Integer.parseInt(keyParts[1]);
-            int amount = Integer.parseInt(valueParts[1]);
-            int chance = Integer.parseInt(valueParts[2]);
-            addBonusDropEntry(mobFarmName, tierLevel, entityType, chance, itemName, amount);
+            addBonusDropEntry(
+                keyParts[0],
+                Integer.parseInt(keyParts[1]),
+                keyParts[2],
+                Integer.parseInt(valueParts[2]),
+                valueParts[0],
+                Integer.parseInt(valueParts[1]));
           } catch (NumberFormatException e) {
             log.error(
                 "{} Invalid number format in config file {}: key={}, value={}",
@@ -413,8 +413,11 @@ public class MobFarmBonusConfig extends Config {
   }
 
   public static void addBonusDropEntry(
-      MobFarmType mobFarmType, int tierLevel, String entityType, int chance, ItemStack itemStack) {
-    String mobFarmKey = getMobFarmKey(mobFarmType.getId(), tierLevel, entityType);
+      final MobFarmType mobFarmType,
+      int tierLevel,
+      final String entityType,
+      int chance,
+      final ItemStack itemStack) {
 
     // Check if item stack amount is valid
     if (itemStack.isEmpty()) {
@@ -432,6 +435,56 @@ public class MobFarmBonusConfig extends Config {
       return;
     }
 
+    // Validate tier level (0-3)
+    if (tierLevel < 0 || tierLevel > 3) {
+      log.warn(
+          "{} Tier level {} is outside valid range (0-3) for {} in config file {}",
+          LOG_PREFIX,
+          tierLevel,
+          entityType,
+          CONFIG_FILE_NAME);
+      tierLevel = 0;
+    }
+
+    // Validate chance value (must be >= 1)
+    if (chance < 1) {
+      log.warn(
+          "{} Invalid chance value {} (must be >= 1) for {} in config file {}, using default of 5",
+          LOG_PREFIX,
+          chance,
+          entityType,
+          CONFIG_FILE_NAME);
+      chance = 5;
+    }
+
+    // Validate drop amount against item max stack size
+    int maxStackSize = itemStack.getMaxStackSize();
+    int configuredAmount = itemStack.getCount();
+    int maxAllowedAmount = maxStackSize * MobFarmConfig.maxBonusDropMultiplier;
+
+    if (configuredAmount > maxAllowedAmount) {
+      log.warn(
+          "{} Configured amount {} exceeds maximum allowed {} ({}x stack size of {}) for {} in config file {}, capping to maximum",
+          LOG_PREFIX,
+          configuredAmount,
+          maxAllowedAmount,
+          MobFarmConfig.maxBonusDropMultiplier,
+          maxStackSize,
+          entityType,
+          CONFIG_FILE_NAME);
+      itemStack.setCount(maxAllowedAmount);
+    } else if (configuredAmount > maxStackSize * 10) {
+      log.warn(
+          "{} High drop amount {} configured ({}x stack size of {}) for {} - ensure your modpack supports this with storage mods",
+          LOG_PREFIX,
+          configuredAmount,
+          configuredAmount / maxStackSize,
+          maxStackSize,
+          entityType);
+    }
+
+    // Add bonus drop entry to the map
+    String mobFarmKey = getMobFarmKey(mobFarmType.getId(), tierLevel, entityType);
     log.info(
         "{} Add {} with a chance of 1 of {} for {}.", LOG_PREFIX, mobFarmKey, chance, itemStack);
     mobFarmBonusMap.computeIfAbsent(mobFarmKey, k -> new HashMap<>()).put(chance, itemStack);

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["IDI", "D#D", "IDI"],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "#": {
+      "item": "easy_mob_farm:desert_farm"
+    }
+  },
+  "result": {
+    "id": "easy_mob_farm:desert_farm",
+    "components": {
+      "easy_mob_farm:mob_farm_data": {
+        "tierLevel": "tier_2"
+      },
+      "minecraft:custom_model_data": 2
+    }
+  }
+}

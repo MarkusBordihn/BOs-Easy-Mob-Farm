@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Markus Bordihn
+ * Copyright 2024 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -17,26 +17,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.data.mobfarm;
+package de.markusbordihn.easymobfarm.data.loot;
 
-public class MobFarmDataEntry {
-  public static final int BLOCK_POS_X = 0;
-  public static final int BLOCK_POS_Y = 1;
-  public static final int BLOCK_POS_Z = 2;
-  public static final int NUMBER_OF_OUTPUT_SLOTS = 3;
-  public static final int FARM_PROGRESS = 4;
-  public static final int FARM_STATUS = 5;
-  public static final int FARM_TIER_LEVEL = 6;
-  public static final int FARM_TYPE = 7;
-  public static final int CAPTURED_MOB_EXPERIENCE = 8;
-  public static final int FARM_PROGRESSION_SPEED = 9;
-  public static final int FARM_PROGRESSION_SPEED_BONUS = 10;
-  public static final int BUFFER_SIZE = 11;
-  public static final int BUFFER_MAX_SIZE = 12;
+public enum LootTablePriority {
+  OVERWRITE("overwrite"),
+  PRIORITY("priority"),
+  BONUS("bonus"),
+  FALLBACK("fallback"),
+  LEGACY("");
 
-  private MobFarmDataEntry() {}
+  private final String path;
 
-  public static int getLastSlotIndex() {
-    return BUFFER_MAX_SIZE;
+  LootTablePriority(String path) {
+    this.path = path;
+  }
+
+  public String getPath() {
+    return path;
   }
 }
