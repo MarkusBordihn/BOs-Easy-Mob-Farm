@@ -40,6 +40,8 @@ public class ModRecipeManager {
   private static final String LOG_PREFIX = "[Recipe Manager]";
   private static final String MOB_CAPTURE_PREFIX = "mob_catcher/";
   private static final String MOB_FARM_TEMPLATE_PREFIX = "mob_farm_template/";
+  private static final String MOB_FARM_PREFIX = "mob_farm/";
+  private static final String MOB_FARM_UPGRADE_SUFFIX = "_upgrade";
 
   private ModRecipeManager() {}
 
@@ -87,6 +89,16 @@ public class ModRecipeManager {
         !MobFarmConfig.enforceLogicalTierProgression,
         "tier3_mob_farm_template",
         MOB_FARM_TEMPLATE_PREFIX);
+
+    // Disable mob farm upgrade recipes if disabled in config
+    if (!MobFarmConfig.enableMobFarmUpgradeRecipes) {
+      recipes.removeIf(
+          recipe ->
+              recipe.getId().getNamespace().equals(Constants.MOD_ID)
+                  && recipe.getId().getPath().startsWith(MOB_FARM_PREFIX)
+                  && recipe.getId().getPath().contains(MOB_FARM_UPGRADE_SUFFIX));
+      log.info("{} Disabled mob farm upgrade recipes", LOG_PREFIX);
+    }
 
     if (minecraftServer.getRecipeManager().getRecipes().size() != recipes.size()) {
       // Replace recipes with adjusted recipes.

@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file.
 
+# v10.4.0
+
+- Fixed #200 by adding additional checks to avoid rewrites of the config file.
+- Fixed #199 by allowing all flowers for specific mob farms.
+- Fixed #198 by adding loot table priority system with override, priority, bonus and fallback modes.
+- Fixed #194 by adding item buffer system to prevent item loss when output slots are full.
+- Fixed #190 by adding support for tier farm upgrades with existing mob farms blocks.
+- Fixed critical issue where items were silently lost when output slots were full.
+- Fixed missing validation for extreme bonus drop values.
+- Fixed false positive in `canProcessingResults()` when items couldn't actually fit.
+- Fixed translation issues in mob farm tooltip and descriptions.
+- Added Simplified Chinese translation. Thanks to `@704009905` for the contribution.
+- Added **smart item buffer system** to prevent item loss when output slots are full.
+- Added `enableItemBuffer` - Enable/disable temporary item buffer (default: true)
+- Added `maxBufferSize` - Maximum number of items that can be buffered (default: 128)
+- Added `bufferProcessInterval` - Ticks between buffer processing attempts (default: 20)
+- Added `maxBonusDropMultiplier` - Maximum multiplier for bonus drop amounts vs stack size (default:
+    100)
+- Added `dropItemsToWorldWhenBufferFull` - Drop items to world when buffer is full (default: false,
+  items are voided instead)
+- Added buffer status to mob farm tooltip.
+
 # v10.3.0
 
 - Fixed #192 by adding cache validation for displayed mobs.

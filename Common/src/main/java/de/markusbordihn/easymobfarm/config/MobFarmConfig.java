@@ -46,6 +46,13 @@ public class MobFarmConfig extends Config {
  progressingRequiresOwnerToBeOnline: Whether farms only work when owner is online (default: false)
  luckyDropFarmLuckPercentage: Luck percentage for lucky drop farms (default: 95)
  enforceLogicalTierProgression: Whether farms must be upgraded in order (default: false)
+ enableMobFarmUpgradeRecipes: Enable recipes to upgrade existing mob farms (default: true)
+
+ enableItemBuffer: Enable temporary item buffer when output slots are full (default: true)
+ maxBufferSize: Maximum number of items in buffer (default: 128)
+ bufferProcessInterval: Ticks between buffer processing attempts (default: 20)
+ maxBonusDropMultiplier: Maximum multiplier for bonus drop amounts vs stack size (default: 100)
+ dropItemsToWorldWhenBufferFull: Drop items to world when buffer is full (default: false)
 
 """;
 
@@ -64,6 +71,16 @@ public class MobFarmConfig extends Config {
 
   // New config option for logical tier progression
   public static boolean enforceLogicalTierProgression = false;
+
+  // Config option to enable/disable mob farm upgrade recipes
+  public static boolean enableMobFarmUpgradeRecipes = true;
+
+  // Buffer system configuration
+  public static boolean enableItemBuffer = true;
+  public static int maxBufferSize = 128;
+  public static int bufferProcessInterval = 20;
+  public static int maxBonusDropMultiplier = 100;
+  public static boolean dropItemsToWorldWhenBufferFull = false;
 
   public static void registerConfig() {
     registerConfigFile(CONFIG_FILE_NAME, CONFIG_FILE_HEADER);
@@ -102,6 +119,19 @@ public class MobFarmConfig extends Config {
     enforceLogicalTierProgression =
         parseConfigValue(
             properties, "enforceLogicalTierProgression", enforceLogicalTierProgression);
+
+    enableMobFarmUpgradeRecipes =
+        parseConfigValue(properties, "enableMobFarmUpgradeRecipes", enableMobFarmUpgradeRecipes);
+
+    enableItemBuffer = parseConfigValue(properties, "enableItemBuffer", enableItemBuffer);
+    maxBufferSize = parseConfigValue(properties, "maxBufferSize", maxBufferSize);
+    bufferProcessInterval =
+        parseConfigValue(properties, "bufferProcessInterval", bufferProcessInterval);
+    maxBonusDropMultiplier =
+        parseConfigValue(properties, "maxBonusDropMultiplier", maxBonusDropMultiplier);
+    dropItemsToWorldWhenBufferFull =
+        parseConfigValue(
+            properties, "dropItemsToWorldWhenBufferFull", dropItemsToWorldWhenBufferFull);
 
     // Update config file if needed
     updateConfigFileIfChanged(configFile, CONFIG_FILE_HEADER, properties, unmodifiedProperties);
