@@ -37,7 +37,7 @@ public class MobFarmContainerData implements ContainerData {
   }
 
   @Override
-  public int get(int index) {
+  public int get(final int index) {
     return switch (index) {
       case MobFarmDataEntry.BLOCK_POS_X -> mobFarmEntity.getBlockPos().getX();
       case MobFarmDataEntry.BLOCK_POS_Y -> mobFarmEntity.getBlockPos().getY();
@@ -51,12 +51,15 @@ public class MobFarmContainerData implements ContainerData {
       case MobFarmDataEntry.FARM_TIER_LEVEL -> mobFarmEntity.getFarmTierLevel();
       case MobFarmDataEntry.FARM_TYPE -> mobFarmEntity.getFarmType().ordinal();
       case MobFarmDataEntry.CAPTURED_MOB_EXPERIENCE -> mobFarmEntity.getCapturedMobExperience();
+      case MobFarmDataEntry.BUFFER_SIZE -> mobFarmEntity.getBufferSize();
+      case MobFarmDataEntry.BUFFER_MAX_SIZE ->
+          de.markusbordihn.easymobfarm.config.MobFarmConfig.maxBufferSize;
       default -> 0;
     };
   }
 
   @Override
-  public void set(int index, int value) {
+  public void set(final int index, final int value) {
     switch (index) {
       case MobFarmDataEntry.BLOCK_POS_X,
           MobFarmDataEntry.BLOCK_POS_Y,

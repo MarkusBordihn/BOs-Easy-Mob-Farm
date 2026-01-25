@@ -248,6 +248,20 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
               Constants.TOOLTIP_FARM_PREFIX + "output_slots",
               new Object[] {this.getMenu().getMobFarmNumberOfOutputSlots()}));
 
+      // Add buffer information
+      int bufferSize = this.getMenu().getBufferSize();
+      int bufferMaxSize = this.getMenu().getBufferMaxSize();
+      int bufferPercentage = bufferMaxSize > 0 ? (bufferSize * 100 / bufferMaxSize) : 0;
+      ChatFormatting bufferColor =
+          bufferPercentage >= 80
+              ? ChatFormatting.RED
+              : bufferPercentage >= 50 ? ChatFormatting.YELLOW : ChatFormatting.GREEN;
+      infoText.add(
+          TextComponent.getTranslatedTextRaw(
+                  Constants.TOOLTIP_FARM_PREFIX + "buffer",
+                  new Object[] {bufferPercentage, bufferSize, bufferMaxSize})
+              .withStyle(bufferColor));
+
       // Add additional information for special mob farms.
       if (mobFarmType == MobFarmType.LUCKY_DROP_FARM) {
         infoText.add(

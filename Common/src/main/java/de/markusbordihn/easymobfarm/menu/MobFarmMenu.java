@@ -178,6 +178,14 @@ public class MobFarmMenu extends AbstractContainerMenu {
     return this.data.get(MobFarmDataEntry.CAPTURED_MOB_EXPERIENCE);
   }
 
+  public int getBufferSize() {
+    return this.data.get(MobFarmDataEntry.BUFFER_SIZE);
+  }
+
+  public int getBufferMaxSize() {
+    return this.data.get(MobFarmDataEntry.BUFFER_MAX_SIZE);
+  }
+
   private void defineMobFarmSlots() {
     this.addSlot(
         new CapturedMobSlot(

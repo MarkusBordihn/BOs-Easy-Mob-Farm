@@ -6,13 +6,13 @@
       "item": "easy_mob_farm:tier0_mob_farm_template"
     },
     "B": {
-      "item": "minecraft:blue_orchid"
+      "tag": "minecraft:flowers"
     },
     "G": {
       "item": "minecraft:grass"
     },
     "D": {
-      "item": "minecraft:oxeye_daisy"
+      "tag": "minecraft:flowers"
     },
     "-": {
       "item": "minecraft:dirt"

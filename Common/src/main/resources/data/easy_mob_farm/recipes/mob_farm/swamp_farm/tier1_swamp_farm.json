@@ -15,7 +15,7 @@
       "item": "minecraft:dead_bush"
     },
     "B": {
-      "item": "minecraft:blue_orchid"
+      "tag": "minecraft:flowers"
     },
     "O": {
       "item": "minecraft:oak_log"
