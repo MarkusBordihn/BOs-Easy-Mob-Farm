@@ -509,6 +509,27 @@ public class MobFarmBonusConfig extends Config {
         .orElse(ItemStack.EMPTY);
   }
 
+  public static int getBonusDropChance(
+      MobFarmType mobFarmType, int tierLevel, EntityType<?> entityType) {
+    return getBonusDropChance(
+        mobFarmType.getId(),
+        tierLevel,
+        java.lang.String.valueOf(Registry.ENTITY_TYPE.getKey(entityType)));
+  }
+
+  public static int getBonusDropChance(String mobFarmName, int tierLevel, String entityType) {
+    if (!hasBonusDrop(mobFarmName, tierLevel, entityType)) {
+      return 0;
+    }
+    return mobFarmBonusMap
+        .get(getMobFarmKey(mobFarmName, tierLevel, entityType))
+        .entrySet()
+        .stream()
+        .map(Map.Entry::getKey)
+        .findFirst()
+        .orElse(0);
+  }
+
   public static ItemStack getBonusDrop(
       MobFarmType mobFarmType, int tierLevel, EntityType<?> entityType) {
     return getBonusDrop(

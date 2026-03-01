@@ -42,6 +42,7 @@ public class ModRecipeManager {
   private static final String MOB_FARM_TEMPLATE_PREFIX = "mob_farm_template/";
   private static final String MOB_FARM_PREFIX = "mob_farm/";
   private static final String MOB_FARM_UPGRADE_SUFFIX = "_upgrade";
+  private static final String ENHANCEMENT_PREFIX = "upgrade/enhancement/";
 
   private ModRecipeManager() {}
 
@@ -99,6 +100,50 @@ public class ModRecipeManager {
                   && recipe.getId().getPath().contains(MOB_FARM_UPGRADE_SUFFIX));
       log.info("{} Disabled mob farm upgrade recipes", LOG_PREFIX);
     }
+
+    // Disable individual enhancement recipes if disabled in config
+    removeRecipeIfDisabled(
+        recipes, MobFarmConfig.enableSpeedEnhancement, "speed_enhancement", ENHANCEMENT_PREFIX);
+    removeRecipeIfDisabled(
+        recipes, MobFarmConfig.enableLootEnhancement, "loot_enhancement", ENHANCEMENT_PREFIX);
+    removeRecipeIfDisabled(
+        recipes, MobFarmConfig.enableLuckEnhancement, "luck_enhancement", ENHANCEMENT_PREFIX);
+    removeRecipeIfDisabled(
+        recipes, MobFarmConfig.enableSwordEnhancement, "sword_enhancement", ENHANCEMENT_PREFIX);
+    removeRecipeIfDisabled(
+        recipes, MobFarmConfig.enableKnifeEnhancement, "knife_enhancement", ENHANCEMENT_PREFIX);
+    removeRecipeIfDisabled(
+        recipes,
+        MobFarmConfig.enableExperienceEnhancement,
+        "experience_enhancement",
+        ENHANCEMENT_PREFIX);
+    removeRecipeIfDisabled(
+        recipes,
+        MobFarmConfig.enableEggCollectorEnhancement,
+        "egg_collector_enhancement",
+        ENHANCEMENT_PREFIX);
+    removeRecipeIfDisabled(
+        recipes,
+        MobFarmConfig.enableHoneyExtractorEnhancement,
+        "honey_extractor_enhancement",
+        ENHANCEMENT_PREFIX);
+    removeRecipeIfDisabled(
+        recipes,
+        MobFarmConfig.enableHoneyHarvesterFrameEnhancement,
+        "honey_harvester_frame_enhancement",
+        ENHANCEMENT_PREFIX);
+    removeRecipeIfDisabled(
+        recipes,
+        MobFarmConfig.enableMilkExtractorEnhancement,
+        "milk_extractor_enhancement",
+        ENHANCEMENT_PREFIX);
+    removeRecipeIfDisabled(
+        recipes,
+        MobFarmConfig.enablePollenTrapEnhancement,
+        "pollen_trap_enhancement",
+        ENHANCEMENT_PREFIX);
+    removeRecipeIfDisabled(
+        recipes, MobFarmConfig.enableSheepEnhancement, "sheep_enhancement", ENHANCEMENT_PREFIX);
 
     if (minecraftServer.getRecipeManager().getRecipes().size() != recipes.size()) {
       // Replace recipes with adjusted recipes.

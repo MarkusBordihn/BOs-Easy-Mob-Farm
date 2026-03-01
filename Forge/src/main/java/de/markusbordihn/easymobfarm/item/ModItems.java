@@ -21,6 +21,7 @@ package de.markusbordihn.easymobfarm.item;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.data.enhancement.FrogCatalystType;
+import de.markusbordihn.easymobfarm.item.cardbinder.CardBinderItem;
 import de.markusbordihn.easymobfarm.item.consumables.MilkBottleItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.BlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.CreativeBlankMobCaptureCardItem;
@@ -229,6 +230,11 @@ public class ModItems {
       ITEMS.register(
           MilkBottleItem.ID,
           () -> new MilkBottleItem(new Item.Properties().tab(ModTabs.TAB_MOB_FARM_CONSUMABLES)));
+
+  public static final RegistryObject<Item> CARD_BINDER =
+      ITEMS.register(
+          CardBinderItem.ID,
+          () -> new CardBinderItem(new Item.Properties().tab(ModTabs.TAB_MOB_CAPTURE_CARDS)));
 
   protected ModItems() {}
 }

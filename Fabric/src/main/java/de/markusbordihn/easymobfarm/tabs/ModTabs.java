@@ -57,6 +57,9 @@ public class ModTabs {
                   Set<ItemStack> mobCaptureCards =
                       CustomMobCaptureCards.getCustomMobCaptureCards(Items.MOB_CAPTURE_CARD);
                   stack.addAll(mobCaptureCards);
+
+                  // Card binder
+                  stack.add(Items.CARD_BINDER.getDefaultInstance());
                 })
             .build();
 

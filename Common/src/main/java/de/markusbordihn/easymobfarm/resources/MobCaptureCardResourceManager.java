@@ -51,6 +51,7 @@ public class MobCaptureCardResourceManager extends SimpleJsonResourceReloadListe
   private static final String RARITY_TAG = "rarity";
   private static final String REQUIRES_ANIMATION_TICK_TAG = "requires_animation_tick";
   private static final String REQUIRES_KILLED_BY_PLAYER_TAG = "requires_killed_by_player";
+  private static final String SUPPORTS_KNIFE_ENHANCEMENT_TAG = "supports_knife_enhancement";
   private static final String SCALE_TAG = "scale";
   private static final String COLORS_TAG = "colors";
   private static final String VARIANTS_TAG = "variants";
@@ -87,6 +88,8 @@ public class MobCaptureCardResourceManager extends SimpleJsonResourceReloadListe
                 GsonHelper.getAsBoolean(json, REQUIRES_KILLED_BY_PLAYER_TAG, false);
             boolean requiresAnimationTick =
                 GsonHelper.getAsBoolean(json, REQUIRES_ANIMATION_TICK_TAG, false);
+            boolean supportsKnifeEnhancement =
+                GsonHelper.getAsBoolean(json, SUPPORTS_KNIFE_ENHANCEMENT_TAG, false);
 
             Map<String, MobCaptureCardDefinition.Color> colors = parseColors(json);
             Map<String, MobCaptureCardDefinition.Variant> variants = parseVariants(json);
@@ -99,6 +102,7 @@ public class MobCaptureCardResourceManager extends SimpleJsonResourceReloadListe
                     scale,
                     requiresKilledByPlayer,
                     requiresAnimationTick,
+                    supportsKnifeEnhancement,
                     variants,
                     colors);
 
