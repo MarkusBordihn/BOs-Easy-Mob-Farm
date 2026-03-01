@@ -21,6 +21,7 @@ package de.markusbordihn.easymobfarm.loot;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.compat.CompatConstants;
+import de.markusbordihn.easymobfarm.config.MobFarmConfig;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.data.capture.MobVariantData;
 import de.markusbordihn.easymobfarm.data.enhancement.FrogCatalystType;
@@ -41,7 +42,9 @@ import de.markusbordihn.easymobfarm.item.upgrade.enhancement.PollenTrapEnhanceme
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SheepEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SwordEnhancementItem;
 import de.markusbordihn.easymobfarm.server.player.FakePlayer;
+import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -217,6 +220,40 @@ public class LootManager {
     }
   }
 
+  public static List<ItemStack> getEntityLootPreview(
+      final MobCaptureData mobCaptureData, final Level level) {
+    if (!(level instanceof ServerLevel)
+        || mobCaptureData == null
+        || mobCaptureData.entityType() == null) {
+      return List.of();
+    }
+    EntityType<?> entityType = mobCaptureData.entityType();
+    Entity entity = entityType.create(level);
+    if (entity == null) {
+      return List.of();
+    }
+    try {
+      entity.load(mobCaptureData.data());
+      if (entity instanceof Sheep sheepEntity) {
+        sheepEntity.setSheared(false);
+        if (mobCaptureData.hasColor()) {
+          sheepEntity.setColor(mobCaptureData.color());
+        }
+      }
+      Map<String, ItemStack> uniqueItems = new LinkedHashMap<>();
+      for (int roll = 0; roll < 3; roll++) {
+        NonNullList<ItemStack> loot = getEntityLoot(entity, List.of(), level);
+        for (ItemStack stack : loot) {
+          String key = BuiltInRegistries.ITEM.getKey(stack.getItem()).toString();
+          uniqueItems.putIfAbsent(key, stack.copy());
+        }
+      }
+      return new ArrayList<>(uniqueItems.values());
+    } finally {
+      entity.discard();
+    }
+  }
+
   public static NonNullList<ItemStack> getEntityLoot(
       final Entity entity, final List<EnhancementItem> enhancements, final Level level) {
     NonNullList<ItemStack> drops = NonNullList.create();
@@ -231,19 +268,19 @@ public class LootManager {
     float additionalLuck = 0;
     int additionalRolls = 0;
     for (EnhancementItem enhancement : enhancements) {
-      if (enhancement instanceof SwordEnhancementItem) {
+      if (enhancement instanceof SwordEnhancementItem && MobFarmConfig.enableSwordEnhancement) {
         setSwordEnhancementParameters(lootContextBuilder, fakePlayer, serverLevel);
-        additionalLuck += 0.5f;
+        additionalLuck += MobFarmConfig.swordEnhancementAdditionalLuck;
       }
-      if (enhancement instanceof KnifeEnhancementItem) {
+      if (enhancement instanceof KnifeEnhancementItem && MobFarmConfig.enableKnifeEnhancement) {
         setKnifeEnhancementParameters(lootContextBuilder, fakePlayer, serverLevel);
-        additionalLuck += 0.25f;
+        additionalLuck += MobFarmConfig.knifeEnhancementAdditionalLuck;
       }
-      if (enhancement instanceof LootEnhancementItem) {
-        additionalRolls += 1;
+      if (enhancement instanceof LootEnhancementItem && MobFarmConfig.enableLootEnhancement) {
+        additionalRolls += MobFarmConfig.lootEnhancementAdditionalRolls;
       }
-      if (enhancement instanceof LuckEnhancementItem) {
-        additionalLuck += 1f;
+      if (enhancement instanceof LuckEnhancementItem && MobFarmConfig.enableLuckEnhancement) {
+        additionalLuck += MobFarmConfig.luckEnhancementAdditionalLuck;
       }
     }
 
@@ -382,7 +419,9 @@ public class LootManager {
       LivingEntity livingEntity, List<EnhancementItem> enhancements) {
     ResourceLocation lootTableLocation = livingEntity.getType().getDefaultLootTable();
     for (EnhancementItem enhancement : enhancements) {
-      if (enhancement instanceof SheepEnhancementItem && livingEntity instanceof Sheep sheep) {
+      if (enhancement instanceof SheepEnhancementItem
+          && MobFarmConfig.enableSheepEnhancement
+          && livingEntity instanceof Sheep sheep) {
         DyeColor color = sheep.getColor();
         lootTableLocation = new ResourceLocation("minecraft", "entities/sheep/" + color.getName());
       }
@@ -472,6 +511,7 @@ public class LootManager {
 
       // Handle Experience enhancement
       if (enhancement instanceof ExperienceEnhancementItem experienceEnhancementItem
+          && MobFarmConfig.enableExperienceEnhancement
           && random.nextInt(experienceEnhancementItem.experienceDropChance()) == 0
           && ExperienceManager.shouldDropExperience(livingEntity)) {
         int experience = ExperienceManager.getExperienceReward(livingEntity);
@@ -488,12 +528,17 @@ public class LootManager {
 
       // Handle Mob specific enhancements
       if (livingEntity instanceof Bee) {
-        if (enhancement instanceof HoneyHarvesterFrameEnhancementItem && random.nextInt(4) == 0) {
+        if (enhancement instanceof HoneyHarvesterFrameEnhancementItem
+            && MobFarmConfig.enableHoneyHarvesterFrameEnhancement
+            && random.nextInt(4) == 0) {
           drops.add(new ItemStack(Items.HONEYCOMB));
         } else if (enhancement instanceof HoneyExtractorEnhancementItem
+            && MobFarmConfig.enableHoneyExtractorEnhancement
             && random.nextInt(10) == 0) {
           drops.add(new ItemStack(Items.HONEY_BOTTLE));
-        } else if (enhancement instanceof PollenTrapEnhancementItem && random.nextInt(5) == 0) {
+        } else if (enhancement instanceof PollenTrapEnhancementItem
+            && MobFarmConfig.enablePollenTrapEnhancement
+            && random.nextInt(5) == 0) {
           if (random.nextFloat() < 0.3f) {
             drops.add(getRandomFlower());
           } else {
@@ -502,7 +547,9 @@ public class LootManager {
         }
       } else if (livingEntity instanceof Cow) {
         // Handle MilkExtractor enhancement (50% chance)
-        if (enhancement instanceof MilkExtractorEnhancementItem && random.nextInt(2) == 0) {
+        if (enhancement instanceof MilkExtractorEnhancementItem
+            && MobFarmConfig.enableMilkExtractorEnhancement
+            && random.nextInt(2) == 0) {
           Item milkBottle;
           if (CompatConstants.MOD_FARMERS_DELIGHT_LOADED) {
             milkBottle =
@@ -517,8 +564,13 @@ public class LootManager {
           }
           drops.add(new ItemStack(milkBottle));
         }
-      } else if (livingEntity instanceof Chicken) {
-        if (enhancement instanceof EggCollectorEnhancementItem && random.nextInt(2) == 0) {
+      }
+
+      // Handle egg drops for chicken entities with Egg Collector enhancement (50% chance)
+      if (livingEntity instanceof Chicken) {
+        if (enhancement instanceof EggCollectorEnhancementItem
+            && MobFarmConfig.enableEggCollectorEnhancement
+            && random.nextInt(2) == 0) {
           drops.add(new ItemStack(Items.EGG));
         }
       } else if (livingEntity instanceof Frog) {

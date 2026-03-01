@@ -39,4 +39,8 @@ public class ModMenuTypes {
   public static final MenuType<MobFarmMenuWrapper> MOB_FARM_MENU =
       ScreenHandlerRegistry.registerSimple(
           new ResourceLocation(Constants.MOD_ID, MobFarmMenu.ID), MobFarmMenuWrapper::new);
+
+  public static final MenuType<CardBinderMenuWrapper> CARD_BINDER_MENU =
+      ScreenHandlerRegistry.registerSimple(
+          new ResourceLocation(Constants.MOD_ID, CardBinderMenu.ID), CardBinderMenuWrapper::new);
 }

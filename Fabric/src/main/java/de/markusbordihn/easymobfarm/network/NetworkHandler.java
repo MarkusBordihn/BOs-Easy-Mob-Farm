@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.network;
 
 import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.network.message.client.SyncLootPreviewMessage;
 import de.markusbordihn.easymobfarm.network.message.client.SyncMobCaptureCardDefinitionsMessage;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -31,6 +32,9 @@ public class NetworkHandler {
   public static final ResourceLocation SYNC_MOB_CAPTURE_CARD_DEFINITIONS =
       new ResourceLocation(Constants.MOD_ID, "sync_mob_capture_card_definitions");
 
+  public static final ResourceLocation SYNC_LOOT_PREVIEW =
+      new ResourceLocation(Constants.MOD_ID, "sync_loot_preview");
+
   @Environment(EnvType.CLIENT)
   public static void registerClientNetworkMessageHandler() {
     ClientPlayNetworking.registerGlobalReceiver(
@@ -38,6 +42,13 @@ public class NetworkHandler {
         (client, handler, buffer, responseSender) -> {
           SyncMobCaptureCardDefinitionsMessage message =
               SyncMobCaptureCardDefinitionsMessage.create(buffer);
+          client.execute(message::handleClient);
+        });
+
+    ClientPlayNetworking.registerGlobalReceiver(
+        SYNC_LOOT_PREVIEW,
+        (client, handler, buffer, responseSender) -> {
+          SyncLootPreviewMessage message = SyncLootPreviewMessage.create(buffer);
           client.execute(message::handleClient);
         });
   }

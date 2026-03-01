@@ -28,9 +28,19 @@ import de.markusbordihn.easymobfarm.config.MobFarmBonusConfig;
 import de.markusbordihn.easymobfarm.config.MobFarmConfig;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinition;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinitionManager;
+import de.markusbordihn.easymobfarm.data.loot.LootPreviewCache;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmStatus;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
+import de.markusbordihn.easymobfarm.item.upgrade.EnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.EggCollectorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyHarvesterFrameEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.KnifeEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.MilkExtractorEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.PollenTrapEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SheepEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SwordEnhancementItem;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import de.markusbordihn.easymobfarm.menu.MobFarmSlot;
 import de.markusbordihn.easymobfarm.menu.slots.OutputSlot;
@@ -45,6 +55,10 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.animal.Bee;
+import net.minecraft.world.entity.animal.Chicken;
+import net.minecraft.world.entity.animal.Cow;
+import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -61,6 +75,10 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
   protected float yMouse;
   protected Entity entity;
   protected int entityExperience;
+
+  private List<Component> cachedLootTooltip;
+  private Entity cachedLootEntity;
+  private int cachedEnhancementHash;
 
   public MobFarmScreen(T menu, Inventory inventory, Component component) {
     super(menu, inventory, component);
@@ -110,9 +128,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
   }
 
   @Override
-  protected void renderLabels(GuiGraphics guiGraphics, int x, int y) {
-    // No labels to render.
-  }
+  protected void renderLabels(GuiGraphics guiGraphics, int x, int y) {}
 
   private void renderMobFarmProgress(GuiGraphics guiGraphics, int x, int y) {
     int mobFarmProgress = this.getMenu().getMobFarmProgress();
@@ -337,7 +353,269 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
         }
       }
       guiGraphics.renderComponentTooltip(this.font, infoText, mouseX, mouseY);
+    } else if (isHovering(22, 35, 15, 14, mouseX, mouseY)
+        && this.entity != null
+        && this.getMenu().getMobFarmStatus() != MobFarmStatus.IDLE) {
+      renderLootInfoTooltip(guiGraphics, mouseX, mouseY);
     }
+  }
+
+  private void renderLootInfoTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+    // Use cached tooltip if entity and enhancements haven't changed
+    int enhancementHash = computeEnhancementHash();
+    if (cachedLootTooltip == null
+        || cachedLootEntity != this.entity
+        || cachedEnhancementHash != enhancementHash) {
+      cachedLootTooltip = buildLootInfoTooltip();
+      cachedLootEntity = this.entity;
+      cachedEnhancementHash = enhancementHash;
+    }
+    guiGraphics.renderComponentTooltip(this.font, cachedLootTooltip, mouseX, mouseY);
+  }
+
+  private int computeEnhancementHash() {
+    int hash = 0;
+    for (Slot menuSlot : this.menu.slots) {
+      if (menuSlot instanceof de.markusbordihn.easymobfarm.menu.slots.EnhancementSlot
+          && menuSlot.hasItem()) {
+        hash = hash * 31 + menuSlot.getItem().getItem().hashCode();
+      }
+    }
+    // Include loot preview data in hash for cache invalidation
+    BlockPos farmPos = this.getMenu().getMobFarmBlockPos();
+    if (farmPos != null && !farmPos.equals(BlockPos.ZERO)) {
+      List<ItemStack> preview = LootPreviewCache.getLootPreview(farmPos);
+      hash = hash * 31 + preview.size();
+    }
+    return hash;
+  }
+
+  private List<Component> buildLootInfoTooltip() {
+    List<Component> lootInfo = new java.util.ArrayList<>();
+    lootInfo.add(
+        TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "loot_info_title")
+            .withStyle(ChatFormatting.GOLD));
+
+    // Fetch capture card definition once for reuse
+    MobCaptureCardDefinition mobCaptureCardDefinition =
+        this.entity != null ? MobCaptureCardDefinitionManager.get(this.entity.getType()) : null;
+
+    // Show base loot drops from server preview
+    BlockPos farmPos = this.getMenu().getMobFarmBlockPos();
+    if (farmPos != null && !farmPos.equals(BlockPos.ZERO)) {
+      List<ItemStack> lootPreview = LootPreviewCache.getLootPreview(farmPos);
+      if (!lootPreview.isEmpty()) {
+        lootInfo.add(
+            TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "loot_base_drops")
+                .withStyle(ChatFormatting.WHITE));
+        for (ItemStack item : lootPreview) {
+          lootInfo.add(
+              Component.literal("  \u2022 ")
+                  .append(item.getHoverName())
+                  .withStyle(ChatFormatting.GRAY));
+        }
+      }
+    }
+
+    // Show bonus drop with chance
+    MobFarmType mobFarmType = this.getMenu().getMobFarmType();
+    int tierLevel = this.getMenu().getMobFarmTierLevel();
+    ItemStack bonusDrop =
+        MobFarmBonusConfig.getBonusDropEntry(mobFarmType, tierLevel, this.entity.getType());
+    if (!bonusDrop.isEmpty()) {
+      int chance =
+          MobFarmBonusConfig.getBonusDropChance(mobFarmType, tierLevel, this.entity.getType());
+      if (chance > 0) {
+        lootInfo.add(
+            TextComponent.getTranslatedTextRaw(
+                    Constants.TOOLTIP_FARM_PREFIX + "loot_bonus_chance",
+                    new Object[] {bonusDrop.getDisplayName(), chance})
+                .withStyle(ChatFormatting.GREEN));
+      }
+    }
+
+    // Build active enhancements once and reuse for suggestions
+    List<EnhancementItem> activeEnhancements = getActiveEnhancements();
+    if (!activeEnhancements.isEmpty()) {
+      lootInfo.add(
+          TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "active_enhancements")
+              .withStyle(ChatFormatting.AQUA));
+
+      for (EnhancementItem enhancement : activeEnhancements) {
+        if (enhancement instanceof HoneyHarvesterFrameEnhancementItem
+            && this.entity instanceof Bee) {
+          lootInfo.add(
+              TextComponent.getTranslatedTextRaw(
+                      Constants.TOOLTIP_FARM_PREFIX + "loot_honey_harvester")
+                  .withStyle(ChatFormatting.YELLOW));
+        } else if (enhancement instanceof HoneyExtractorEnhancementItem
+            && this.entity instanceof Bee) {
+          lootInfo.add(
+              TextComponent.getTranslatedTextRaw(
+                      Constants.TOOLTIP_FARM_PREFIX + "loot_honey_extractor")
+                  .withStyle(ChatFormatting.YELLOW));
+        } else if (enhancement instanceof PollenTrapEnhancementItem && this.entity instanceof Bee) {
+          lootInfo.add(
+              TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "loot_pollen_trap")
+                  .withStyle(ChatFormatting.YELLOW));
+        } else if (enhancement instanceof MilkExtractorEnhancementItem
+            && this.entity instanceof Cow) {
+          lootInfo.add(
+              TextComponent.getTranslatedTextRaw(
+                      Constants.TOOLTIP_FARM_PREFIX + "loot_milk_extractor")
+                  .withStyle(ChatFormatting.YELLOW));
+        } else if (enhancement instanceof EggCollectorEnhancementItem
+            && this.entity instanceof Chicken) {
+          lootInfo.add(
+              TextComponent.getTranslatedTextRaw(
+                      Constants.TOOLTIP_FARM_PREFIX + "loot_egg_collector")
+                  .withStyle(ChatFormatting.YELLOW));
+        } else if (enhancement instanceof SheepEnhancementItem && this.entity instanceof Sheep) {
+          lootInfo.add(
+              TextComponent.getTranslatedTextRaw(
+                      Constants.TOOLTIP_FARM_PREFIX + "loot_sheep_enhancement")
+                  .withStyle(ChatFormatting.YELLOW));
+        } else if (enhancement instanceof SwordEnhancementItem
+            && mobCaptureCardDefinition != null
+            && mobCaptureCardDefinition.requiresKilledByPlayer()) {
+          lootInfo.add(
+              TextComponent.getTranslatedTextRaw(
+                      Constants.TOOLTIP_FARM_PREFIX + "loot_sword_enhancement")
+                  .withStyle(ChatFormatting.YELLOW));
+        } else if (enhancement instanceof KnifeEnhancementItem
+            && mobCaptureCardDefinition != null
+            && mobCaptureCardDefinition.supportsKnifeEnhancement()) {
+          lootInfo.add(
+              TextComponent.getTranslatedTextRaw(
+                      Constants.TOOLTIP_FARM_PREFIX + "loot_knife_enhancement")
+                  .withStyle(ChatFormatting.YELLOW));
+        } else if (enhancement instanceof ExperienceEnhancementItem) {
+          lootInfo.add(
+              TextComponent.getTranslatedTextRaw(
+                      Constants.TOOLTIP_FARM_PREFIX + "loot_experience",
+                      new Object[] {MobFarmConfig.experienceDropChance})
+                  .withStyle(ChatFormatting.YELLOW));
+        }
+      }
+    }
+
+    // Show enhancement suggestions, reusing the already-fetched active list
+    List<Component> suggestions = getEnhancementSuggestions(activeEnhancements);
+    if (!suggestions.isEmpty()) {
+      lootInfo.add(
+          TextComponent.getTranslatedTextRaw(
+                  Constants.TOOLTIP_FARM_PREFIX + "enhancement_suggestions")
+              .withStyle(ChatFormatting.GRAY));
+      lootInfo.addAll(suggestions);
+    }
+
+    return lootInfo;
+  }
+
+  private List<EnhancementItem> getActiveEnhancements() {
+    List<EnhancementItem> enhancements = new java.util.ArrayList<>();
+    for (Slot menuSlot : this.menu.slots) {
+      if (menuSlot instanceof de.markusbordihn.easymobfarm.menu.slots.EnhancementSlot
+          && menuSlot.hasItem()
+          && menuSlot.getItem().getItem() instanceof EnhancementItem enhancementItem) {
+        enhancements.add(enhancementItem);
+      }
+    }
+    return enhancements;
+  }
+
+  private List<Component> getEnhancementSuggestions(List<EnhancementItem> active) {
+    List<Component> suggestions = new java.util.ArrayList<>();
+    if (this.entity == null) {
+      return suggestions;
+    }
+    boolean hasEggCollector =
+        active.stream().anyMatch(EggCollectorEnhancementItem.class::isInstance);
+    boolean hasMilkExtractor =
+        active.stream().anyMatch(MilkExtractorEnhancementItem.class::isInstance);
+    boolean hasHoneyHarvester =
+        active.stream().anyMatch(HoneyHarvesterFrameEnhancementItem.class::isInstance);
+    boolean hasHoneyExtractor =
+        active.stream().anyMatch(HoneyExtractorEnhancementItem.class::isInstance);
+    boolean hasPollenTrap = active.stream().anyMatch(PollenTrapEnhancementItem.class::isInstance);
+    boolean hasSheepEnhancement = active.stream().anyMatch(SheepEnhancementItem.class::isInstance);
+    boolean hasSwordEnhancement = active.stream().anyMatch(SwordEnhancementItem.class::isInstance);
+    boolean hasKnifeEnhancement = active.stream().anyMatch(KnifeEnhancementItem.class::isInstance);
+    boolean hasExperienceEnhancement =
+        active.stream().anyMatch(ExperienceEnhancementItem.class::isInstance);
+
+    // Suggest sword enhancement for mobs that require killed-by-player loot
+    MobCaptureCardDefinition mobCaptureCardDefinition =
+        MobCaptureCardDefinitionManager.get(this.entity.getType());
+    if (!hasSwordEnhancement
+        && mobCaptureCardDefinition != null
+        && mobCaptureCardDefinition.requiresKilledByPlayer()) {
+      suggestions.add(
+          TextComponent.getTranslatedTextRaw(
+                  Constants.TOOLTIP_FARM_PREFIX + "suggest_sword_enhancement")
+              .withStyle(ChatFormatting.DARK_GRAY));
+    }
+
+    // Suggest knife enhancement for mobs that support it (e.g. mobs that drop meat/fish)
+    if (!hasKnifeEnhancement
+        && mobCaptureCardDefinition != null
+        && mobCaptureCardDefinition.supportsKnifeEnhancement()) {
+      suggestions.add(
+          TextComponent.getTranslatedTextRaw(
+                  Constants.TOOLTIP_FARM_PREFIX + "suggest_knife_enhancement")
+              .withStyle(ChatFormatting.DARK_GRAY));
+    }
+
+    // Suggest experience enhancement for mobs that yield enough experience
+    int capturedMobExperience = this.getMenu().getCapturedMobExperience();
+    if (!hasExperienceEnhancement
+        && capturedMobExperience >= ExperienceEnhancementItem.MIN_EXPERIENCE_FOR_DROP) {
+      suggestions.add(
+          TextComponent.getTranslatedTextRaw(
+                  Constants.TOOLTIP_FARM_PREFIX + "suggest_experience_enhancement")
+              .withStyle(ChatFormatting.DARK_GRAY));
+    }
+
+    // Use individual if-checks instead of else-if to allow multiple suggestions at once
+    if (this.entity instanceof Chicken && !hasEggCollector) {
+      suggestions.add(
+          TextComponent.getTranslatedTextRaw(
+                  Constants.TOOLTIP_FARM_PREFIX + "suggest_egg_collector")
+              .withStyle(ChatFormatting.DARK_GRAY));
+    }
+    if (this.entity instanceof Cow && !hasMilkExtractor) {
+      suggestions.add(
+          TextComponent.getTranslatedTextRaw(
+                  Constants.TOOLTIP_FARM_PREFIX + "suggest_milk_extractor")
+              .withStyle(ChatFormatting.DARK_GRAY));
+    }
+    if (this.entity instanceof Bee) {
+      if (!hasHoneyHarvester) {
+        suggestions.add(
+            TextComponent.getTranslatedTextRaw(
+                    Constants.TOOLTIP_FARM_PREFIX + "suggest_honey_harvester")
+                .withStyle(ChatFormatting.DARK_GRAY));
+      }
+      if (!hasHoneyExtractor) {
+        suggestions.add(
+            TextComponent.getTranslatedTextRaw(
+                    Constants.TOOLTIP_FARM_PREFIX + "suggest_honey_extractor")
+                .withStyle(ChatFormatting.DARK_GRAY));
+      }
+      if (!hasPollenTrap) {
+        suggestions.add(
+            TextComponent.getTranslatedTextRaw(
+                    Constants.TOOLTIP_FARM_PREFIX + "suggest_pollen_trap")
+                .withStyle(ChatFormatting.DARK_GRAY));
+      }
+    }
+    if (this.entity instanceof Sheep && !hasSheepEnhancement) {
+      suggestions.add(
+          TextComponent.getTranslatedTextRaw(
+                  Constants.TOOLTIP_FARM_PREFIX + "suggest_sheep_enhancement")
+              .withStyle(ChatFormatting.DARK_GRAY));
+    }
+    return suggestions;
   }
 
   private void renderSlotTooltip(

@@ -43,6 +43,27 @@ public class MobFarmConfig extends Config {
  experienceDropChance: Chance for experience drops (1 in x chance, default: 5)
  speedEnhancementUpgradeSpeed: Speed bonus from speed enhancement upgrades (default: 6)
 
+ Enhancement Power Configuration:
+ lootEnhancementAdditionalRolls: Additional loot rolls from loot enhancement (default: 1, set 0 to disable)
+ luckEnhancementAdditionalLuck: Additional luck from luck enhancement (default: 1.0, set 0 to disable)
+ swordEnhancementAdditionalLuck: Additional luck from sword enhancement (default: 0.5, set 0 to disable)
+ knifeEnhancementAdditionalLuck: Additional luck from knife enhancement (default: 0.25, set 0 to disable)
+
+ Enhancement Enable/Disable (set to false to disable the enhancement and hide its recipe):
+ enableSpeedEnhancement: Enable speed enhancement (default: true)
+ enableLootEnhancement: Enable loot enhancement (default: true)
+ enableLuckEnhancement: Enable luck enhancement (default: true)
+ enableSwordEnhancement: Enable sword enhancement (default: true)
+ enableKnifeEnhancement: Enable knife enhancement (default: true)
+ enableExperienceEnhancement: Enable experience enhancement (default: true)
+ enableEggCollectorEnhancement: Enable egg collector enhancement (default: true)
+ enableHoneyExtractorEnhancement: Enable honey extractor enhancement (default: true)
+ enableHoneyHarvesterFrameEnhancement: Enable honey harvester frame enhancement (default: true)
+ enableMilkExtractorEnhancement: Enable milk extractor enhancement (default: true)
+ enablePollenTrapEnhancement: Enable pollen trap enhancement (default: true)
+ enableSheepEnhancement: Enable sheep enhancement (default: true)
+ enableFrogCatalystEnhancement: Enable frog catalyst enhancement (default: true)
+
  progressingRequiresOwnerToBeOnline: Whether farms only work when owner is online (default: false)
  luckyDropFarmLuckPercentage: Luck percentage for lucky drop farms (default: 95)
  enforceLogicalTierProgression: Whether farms must be upgraded in order (default: false)
@@ -64,6 +85,27 @@ public class MobFarmConfig extends Config {
 
   public static int experienceDropChance = 5;
   public static int speedEnhancementUpgradeSpeed = 6;
+
+  // Enhancement power configuration
+  public static int lootEnhancementAdditionalRolls = 1;
+  public static float luckEnhancementAdditionalLuck = 1.0f;
+  public static float swordEnhancementAdditionalLuck = 0.5f;
+  public static float knifeEnhancementAdditionalLuck = 0.25f;
+
+  // Per-enhancement enable/disable flags
+  public static boolean enableSpeedEnhancement = true;
+  public static boolean enableLootEnhancement = true;
+  public static boolean enableLuckEnhancement = true;
+  public static boolean enableSwordEnhancement = true;
+  public static boolean enableKnifeEnhancement = true;
+  public static boolean enableExperienceEnhancement = true;
+  public static boolean enableEggCollectorEnhancement = true;
+  public static boolean enableHoneyExtractorEnhancement = true;
+  public static boolean enableHoneyHarvesterFrameEnhancement = true;
+  public static boolean enableMilkExtractorEnhancement = true;
+  public static boolean enablePollenTrapEnhancement = true;
+  public static boolean enableSheepEnhancement = true;
+  public static boolean enableFrogCatalystEnhancement = true;
 
   public static boolean processingRequiresOwnerToBeOnline = false;
 
@@ -108,6 +150,55 @@ public class MobFarmConfig extends Config {
         parseConfigValue(properties, "experienceDropChance", experienceDropChance);
     speedEnhancementUpgradeSpeed =
         parseConfigValue(properties, "speedEnhancementUpgradeSpeed", speedEnhancementUpgradeSpeed);
+
+    // Enhancement power values
+    lootEnhancementAdditionalRolls =
+        parseConfigValue(
+            properties, "lootEnhancementAdditionalRolls", lootEnhancementAdditionalRolls);
+    luckEnhancementAdditionalLuck =
+        parseConfigValue(
+            properties, "luckEnhancementAdditionalLuck", luckEnhancementAdditionalLuck);
+    swordEnhancementAdditionalLuck =
+        parseConfigValue(
+            properties, "swordEnhancementAdditionalLuck", swordEnhancementAdditionalLuck);
+    knifeEnhancementAdditionalLuck =
+        parseConfigValue(
+            properties, "knifeEnhancementAdditionalLuck", knifeEnhancementAdditionalLuck);
+
+    // Per-enhancement enable/disable
+    enableSpeedEnhancement =
+        parseConfigValue(properties, "enableSpeedEnhancement", enableSpeedEnhancement);
+    enableLootEnhancement =
+        parseConfigValue(properties, "enableLootEnhancement", enableLootEnhancement);
+    enableLuckEnhancement =
+        parseConfigValue(properties, "enableLuckEnhancement", enableLuckEnhancement);
+    enableSwordEnhancement =
+        parseConfigValue(properties, "enableSwordEnhancement", enableSwordEnhancement);
+    enableKnifeEnhancement =
+        parseConfigValue(properties, "enableKnifeEnhancement", enableKnifeEnhancement);
+    enableExperienceEnhancement =
+        parseConfigValue(properties, "enableExperienceEnhancement", enableExperienceEnhancement);
+    enableEggCollectorEnhancement =
+        parseConfigValue(
+            properties, "enableEggCollectorEnhancement", enableEggCollectorEnhancement);
+    enableHoneyExtractorEnhancement =
+        parseConfigValue(
+            properties, "enableHoneyExtractorEnhancement", enableHoneyExtractorEnhancement);
+    enableHoneyHarvesterFrameEnhancement =
+        parseConfigValue(
+            properties,
+            "enableHoneyHarvesterFrameEnhancement",
+            enableHoneyHarvesterFrameEnhancement);
+    enableMilkExtractorEnhancement =
+        parseConfigValue(
+            properties, "enableMilkExtractorEnhancement", enableMilkExtractorEnhancement);
+    enablePollenTrapEnhancement =
+        parseConfigValue(properties, "enablePollenTrapEnhancement", enablePollenTrapEnhancement);
+    enableSheepEnhancement =
+        parseConfigValue(properties, "enableSheepEnhancement", enableSheepEnhancement);
+    enableFrogCatalystEnhancement =
+        parseConfigValue(
+            properties, "enableFrogCatalystEnhancement", enableFrogCatalystEnhancement);
 
     processingRequiresOwnerToBeOnline =
         parseConfigValue(
