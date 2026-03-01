@@ -120,10 +120,10 @@ Please check the [wiki][wiki] for additional information.
 
 [logo]: https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/wiki/images/logo_header.png
 
-[mob_capture_cards]: wiki/images/mob_capture_cards.png
+[mob_capture_cards]: https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/wiki/images/mob_capture_cards.png
 
-[mob_catcher]: wiki/images/mob_catcher.png
+[mob_catcher]: https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/wiki/images/mob_catcher.png
 
-[mob_farm]: wiki/images/mob_farm.png
+[mob_farm]: https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/wiki/images/mob_farm.png
 
-[mob_farm_screen]: wiki/images/mob_farm_screen.png
+[mob_farm_screen]: https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/wiki/images/mob_farm_screen.png
