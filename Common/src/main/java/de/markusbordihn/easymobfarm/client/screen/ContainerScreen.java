@@ -64,20 +64,20 @@ public class ContainerScreen<T extends MobFarmMenu> extends AbstractContainerScr
 
   @Override
   protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
-    Graphics.blit(guiGraphics, TEXTURE_DEMO_BACKGROUND, this.leftPos, this.topPos, 0, 0, 210, 160);
-    Graphics.blit(guiGraphics, TEXTURE_DEMO_BACKGROUND, this.leftPos, this.topPos, 0, 0, 210, 160);
+    Graphics.blit(guiGraphics, TEXTURE_DEMO_BACKGROUND, this.leftPos, this.topPos, 210, 160, 0, 0);
+    Graphics.blit(guiGraphics, TEXTURE_DEMO_BACKGROUND, this.leftPos, this.topPos, 210, 160, 0, 0);
     Graphics.blit(
-        guiGraphics, TEXTURE_DEMO_BACKGROUND, this.leftPos + 203, this.topPos, 132, 0, 120, 160);
+        guiGraphics, TEXTURE_DEMO_BACKGROUND, this.leftPos + 203, this.topPos, 120, 160, 132, 0);
     Graphics.blit(
-        guiGraphics, TEXTURE_DEMO_BACKGROUND, this.leftPos, this.topPos + 77, 0, 5, 210, 170);
+        guiGraphics, TEXTURE_DEMO_BACKGROUND, this.leftPos, this.topPos + 77, 210, 170, 0, 5);
     Graphics.blit(
         guiGraphics,
         TEXTURE_DEMO_BACKGROUND,
         this.leftPos + 203,
         this.topPos + 77,
-        132,
-        5,
         120,
-        170);
+        170,
+        132,
+        5);
   }
 }

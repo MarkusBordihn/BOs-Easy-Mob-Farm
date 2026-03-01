@@ -43,4 +43,10 @@ public class ModMenuTypes {
           BuiltInRegistries.MENU,
           Identifier.fromNamespaceAndPath(Constants.MOD_ID, MobFarmMenu.ID),
           new MenuType<>(MobFarmMenuWrapper::new, FeatureFlagSet.of()));
+
+  public static final MenuType<CardBinderMenuWrapper> CARD_BINDER_MENU =
+      Registry.register(
+          BuiltInRegistries.MENU,
+          Identifier.fromNamespaceAndPath(Constants.MOD_ID, CardBinderMenu.ID),
+          new MenuType<>(CardBinderMenuWrapper::new, FeatureFlagSet.of()));
 }

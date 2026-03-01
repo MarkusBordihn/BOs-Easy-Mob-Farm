@@ -29,12 +29,16 @@ import de.markusbordihn.easymobfarm.experience.ExperienceManager;
 import de.markusbordihn.easymobfarm.experience.ModExperienceManager;
 import de.markusbordihn.easymobfarm.item.ModBlockItems;
 import de.markusbordihn.easymobfarm.item.ModItems;
+import de.markusbordihn.easymobfarm.menu.CardBinderMenu;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
+import de.markusbordihn.easymobfarm.network.message.client.SyncLootPreviewMessage;
+import java.util.Optional;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.fml.loading.FMLPaths;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -78,8 +82,11 @@ public class EasyMobFarm {
 
     log.info("{} Menu Types ...", Constants.LOG_REGISTER_PREFIX);
     ModMenuTypes.MENU_TYPES.register(modEventBus);
+    CardBinderMenu.MENU_TYPE_SUPPLIER = () -> ModMenuTypes.CARD_BINDER_MENU.get();
 
     log.info("{} Mod Data Components ...", Constants.LOG_REGISTER_PREFIX);
     ModDataComponents.DATA_COMPONENTS.register(modEventBus);
+
+    SyncLootPreviewMessage.SENDER = PacketDistributor::sendToPlayer;
   }
 }

@@ -20,31 +20,41 @@ for their loot. With customizable loot tables, experience collection, and automa
 Farm is perfect for those looking to simplify resource gathering while adding fun gameplay
 mechanics.
 
-⚠️ **IMPORTANT DISCLAIMER: Version 8.x Compatibility Notice** ⚠️
+⚠️ **IMPORTANT DISCLAIMER: Major Version Updates** ⚠️
 
-🚨 **Warning:** Easy Mob Farm version **8.x** introduces significant changes and **is NOT
-backward-compatible** with previous versions. ⚠️
+Major version updates (e.g. **8.x → 9.x → 10.x**) may introduce **breaking changes** that are
+**NOT backward-compatible** with previous versions.
 
-If you are upgrading from an older version, please be aware:
+Before upgrading to a new major version, please keep the following in mind:
 
 - 🛑 **Existing setups may break** and require reconfiguration.
 - 🔄 **Data, items, and settings from previous versions** might not work as expected.
-- 💾 **Back up** your world or test on a separate instance before using 8.x in your main game!
+- 💾 **Always back up** your world or test on a separate instance before upgrading!
 
-By proceeding with version 8.x, you acknowledge that **older versions cannot be migrated
-automatically**.
-Make sure to read all release notes carefully to avoid any issues. Happy farming! 🌾
+Make sure to read the [Changelog](CHANGELOG.md) and release notes carefully to avoid any issues.
+Happy farming! 🌾
 
 ![Mob Farm][mob_farm]
 
 ## Features ✨
 
 - **Capture Cards** 📇: Specialized cards to capture mobs easily.
-- **Mob Catcher** 🕸️: A device designed to capture mobs for your farm.
+- **Card Binder** 📦: Organize and store up to 250 Mob Capture Cards in a single item.
+- **Mob Catcher** 🕸️: Multiple capture devices for mobs of all sizes, from small to boss-tier.
 - **Mob Farm** 🏭: Automatically harvest loot from captured mobs.
-- **Custom Loot Tables** 📜: Supports adding your own loot configurations.
-- **Experience Collection** ⭐: Gain experience automatically from farmed mobs.
 - **Tiered Mob Farms** 📈: Upgrade your mob farms to increase efficiency and loot output.
+- **In-Place Tier Upgrades** 🔄: Upgrade existing mob farm blocks to higher tiers without
+  rebuilding.
+- **Custom Loot Tables** 📜: Four loot table modes (overwrite, priority, bonus, fallback) via
+  datapacks.
+- **Experience Collection** ⭐: Gain experience automatically from farmed mobs.
+- **Redstone Control** 🔴: Disable farms with a redstone signal for precise automation.
+- **Item Buffer System** 🛡️: Prevents item loss when output slots are full.
+- **Configurable Enhancements** ⚙️: Enable, disable, and fine-tune each enhancement individually.
+- **Datapack & Resource Pack Support** 📁: Define custom mob capture cards and loot tables via
+  datapacks.
+- **Mod Integration** 🧩: Built-in support for Farmer's Delight, Ice and Fire, Swampier Swamps,
+  and more.
 
 ### Mob Capture Cards 📇
 
@@ -57,7 +67,7 @@ card displays information about the captured mob, including its type, attributes
 - **Color-Coding**: Each rarity level is color-coded for easy identification.
 
 Learn more about capture cards on
-the [MobCaptureCard wiki page](https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/wiki/MobCaptureCard).
+the [Mob Capture Card wiki page](https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/wiki/Mob-Capture-Card).
 
 ### Mob Catcher 🕸️
 
@@ -67,10 +77,11 @@ The Mob Catcher is a special item that enables you to safely and efficiently cap
 Once captured, mobs can be stored in Mob Capture Cards, ready to be processed in the Mob Farm.
 
 - **Simple to Use**: Just aim and catch!
-- **Reusable**: Capture mobs without consuming the item.
+- **Multiple Tiers**: From Enduring Capture Net (small mobs) to Void Binding Chain (boss-tier).
+- **Configurable**: Adjust durability, size limits, and allow/deny lists per capture item.
 
 More details on
-the [MobCatcher wiki page](https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/wiki/MobCatcher).
+the [Mob Catcher wiki page](https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/wiki/Mob-Catcher).
 
 ### Mob Farm 🏭
 
@@ -85,7 +96,7 @@ more.
 - **Visual Customization**: Each tier has a unique visual appearance.
 
 Check out more about the Mob Farm on
-the [MobFarm wiki page](https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/wiki/MobFarm).
+the [Mob Farm wiki page](https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/wiki/Mob-Farm).
 
 ## Installation and Compatibility ⚙️
 
@@ -109,10 +120,10 @@ Please check the [wiki][wiki] for additional information.
 
 [logo]: https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/wiki/images/logo_header.png
 
-[mob_capture_cards]: wiki/images/mob_capture_cards.png
+[mob_capture_cards]: https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/wiki/images/mob_capture_cards.png
 
-[mob_catcher]: wiki/images/mob_catcher.png
+[mob_catcher]: https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/wiki/images/mob_catcher.png
 
-[mob_farm]: wiki/images/mob_farm.png
+[mob_farm]: https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/wiki/images/mob_farm.png
 
-[mob_farm_screen]: wiki/images/mob_farm_screen.png
+[mob_farm_screen]: https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/wiki/images/mob_farm_screen.png

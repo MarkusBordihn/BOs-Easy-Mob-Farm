@@ -19,6 +19,7 @@
 
 package de.markusbordihn.easymobfarm.network;
 
+import de.markusbordihn.easymobfarm.network.message.client.SyncLootPreviewMessage;
 import de.markusbordihn.easymobfarm.network.message.client.SyncMobCaptureCardDefinitionsMessage;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 
@@ -29,5 +30,8 @@ public class NetworkHandler {
         .register(
             SyncMobCaptureCardDefinitionsMessage.PAYLOAD_TYPE,
             SyncMobCaptureCardDefinitionsMessage.STREAM_CODEC);
+
+    PayloadTypeRegistry.playS2C()
+        .register(SyncLootPreviewMessage.PAYLOAD_TYPE, SyncLootPreviewMessage.STREAM_CODEC);
   }
 }

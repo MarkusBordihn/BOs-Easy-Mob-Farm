@@ -1,8 +1,22 @@
 # Changelog for Easy Mob Farm
 
-All notable changes to this project will be documented in this file.
+## Note
 
-# v10.4.0
+This change log includes the summarized changes.
+For the full changelog, please go to the [GitHub History][history] instead.
+
+### 10.5.0 (Quality of Life Updates)
+
+- Fixed #184, #153 by adding a card binder for better handling of mob capture cards.
+- Fixed #170, #104 by adding loot drop overview and enhancement recommendations based on the
+  captured mob.
+- Fixed #144 by adding configurable enhancement power and disable options for better balance and
+  customization.
+- Fixed #102 with former and current adjustments to the mob farm loot tables and drop chances and
+  processing.
+- Smaller bug fixes and improvements.
+
+### 10.4.0
 
 - Fixed #200 by adding additional checks to avoid rewrites of the config file.
 - Fixed #199 by allowing all flowers for specific mob farms.
@@ -24,7 +38,7 @@ All notable changes to this project will be documented in this file.
   items are voided instead)
 - Added buffer status to mob farm tooltip.
 
-# v10.3.0
+### 10.3.0
 
 - Fixed #192 by adding cache validation for displayed mobs.
 - Fixed #191 by adding knife enhancement for mob farms with Farmers Delight support.
@@ -36,7 +50,7 @@ All notable changes to this project will be documented in this file.
 - Added knife enhancement for mob farms to increase drop rates for specific mobs.
 - Improved sword enhancement support for 3rd party mods.
 
-# v10.2.0
+### 10.2.0
 
 - Fixed #177 by adding `enforceLogicalTierProgression` Mob Farm Config option.
 - Fixed #166 by adding additional tooltips for special mechanics for mob drops.
@@ -45,11 +59,11 @@ All notable changes to this project will be documented in this file.
   contribution.
 - Improved config file descriptions.
 
-# v10.1.0
+### 10.1.0
 
 - Automatically eject invalid mob capture cards from the mob farm.
 
-# v10.0.0
+### 10.0.0
 
 🚨 **Warning:** Easy Mob Farm version **10.x** uses datapacks and resource packs to define custom mob
 cards and other data, allowing easier integration with other mods.
@@ -69,7 +83,7 @@ compatible** and must be redefined using datapacks and resource packs. ⚠️
 - Replaced farm progressing speed with human-readable format.
 - Removed hacky and virtual frog mob capture card and corresponding recipes.
 
-# v9.8.0
+### 9.8.0
 
 - Fixed #161 by removing negative status from captured mobs.
 - Fixed #159 by checking existing values for the scaling configuration.
@@ -80,7 +94,7 @@ compatible** and must be redefined using datapacks and resource packs. ⚠️
 - Added custom loot drops over `easy_mob_farm/data/loot_tables/entities/<namespace>/<entity>.json`.
 - Added custom loot drops documentation and example wiki page.
 
-# v9.7.0
+### 9.7.0
 
 - Fixed #146 by adding redstone signal support for mob farms.
 - Fixed animation issues and other rendering problems.
@@ -90,16 +104,16 @@ compatible** and must be redefined using datapacks and resource packs. ⚠️
 - Allows farms to be disabled when receiving a redstone high signal from any side. Thanks to '@bayi'
   for the contribution.
 
-# v9.6.2
+### 9.6.2
 
 - Fixed #147 specific Forge issue with tooltip display.
 
-# v9.6.1
+### 9.6.1
 
 - Fixed #147 by changing loading order of configuration files.
 - Added additional pre-check for Mob Farm Bonus configuration.
 
-# v9.6.0
+### 9.6.0
 
 - Fixed #135 by adding frog light extractor Enhancement.
 - Fixed #113 by adding known requires "killed_by_player" entities as tooltip.
@@ -108,12 +122,12 @@ compatible** and must be redefined using datapacks and resource packs. ⚠️
 - Added crafting support for frog mob capture cards.
 - Smaller bug fixes and improvements.
 
-# v9.5.0
+### 9.5.0
 
 - Fixed #137 by adjusting crafting recipe to use `MobFarmData` instead of
   `DataComponents.CUSTOM_DATA`.
 
-# v9.4.0
+### 9.4.0
 
 - Fixed #134 by adding JEI support for virtual items and blocks.
 - Fixed #133 by adding virtual Mob Farm Block Tier Items for creative tab.
@@ -122,7 +136,7 @@ compatible** and must be redefined using datapacks and resource packs. ⚠️
 - Fixed #128 by making luck for Lucky Drop Farm configurable over `luckyDropFarmLuckPercentage`.
 - Added Japanese translation. Thanks to `@twister716` for the contribution.
 
-# v9.3.0
+### 9.3.0
 
 - Fixed #123 by adding milk extractor enhancement.
 - Fixed #122 by adding configuration for processing mob farms only if owner is online.
@@ -131,24 +145,24 @@ compatible** and must be redefined using datapacks and resource packs. ⚠️
 - Added Owner information to mob farm screen.
 - Smaller bug fixes and improvements.
 
-# v9.2.0
+### 9.2.0
 
 - Added possibility to disable Mob Catcher recipes per configuration.
 - Updated wiki and documentation.
 
-# v9.1.0
+### 9.1.0
 
 - Fixed Spawn Eggs not working with the Mob Farm.
 - Fixed possible null pointer exception with unsupported mob capture items.
 - Smaller Code cleanup.
 
-# v9.0.0
+### 9.0.0
 
 ⚠️ Important Major release with breaking changes for Minecraft 1.21.x and later.
 
 - Fixed #120, #117 by making sure default Render State is set for 3rd party mods.
 - Fixed #103, #118 by adding separate Mob Capture Card Data Component.
-- Fixed smaller Render issues with 1.21.4.
+- Fixed smaller Render issues with 1.21.x.
 - Upgraded wiki and added recipes for each single item.
 
 🚨 Backup your world – Existing Mob Capture Cards will be lost for 1.21.x due #103.
@@ -157,7 +171,7 @@ compatible** and must be redefined using datapacks and resource packs. ⚠️
 
 - Fixed missing Mob Farm Template Blocks in Building Blocks Creative Tab.
 
-# v8.10.0
+### 8.10.0
 
 - Fixed #114 by adjusting cull-faces to make sure that sides are rendered correctly with shaders.
 - Fixed #111 by fixing typo with block registry name.
@@ -172,11 +186,11 @@ compatible** and must be redefined using datapacks and resource packs. ⚠️
 - Cleanup assets and models.
 - Smaller performance improvements and optimizations.
 
-# v8.9.1
+### 8.9.1
 
 - Fixed #105 by correcting .isCreative() condition.
 
-# v8.9.0
+### 8.9.0
 
 - Fixed #101 by making sure tooltips and wiki are up to date.
 - Fixed #100 by making enhancements stackable and consider instant build.
@@ -191,39 +205,39 @@ compatible** and must be redefined using datapacks and resource packs. ⚠️
 - Added bonus drop overview to the mob farm screen.
 - Optimized Mob Capture Card meta-data for better performance and stackability.
 
-# v8.8.0
+### 8.8.0
 
 - Fixed #95 by adding allow and deny list for the Mob Capture Cards.
 - Improved config file list support.
 
-# v8.7.1
+### 8.7.1
 
 - Fixed recipes syntax for 1.21.3 and later.
 - Refactored code for 1.21.4 which requires a new way to handle the relevant block and item models.
 
-# v8.7.0
+### 8.7.0
 
 - Fixed #92 by using List instead of Set for mob farm enhancements.
 - Added speed and bonus speed to Mob Farm Screen info for better usability.
 
-# v8.6.4
+### 8.6.4
 
 - Fixed #94 by adding NeoForge 'Capabilities.ItemHandler.BLOCK' to the mob farms.
 - Fixed issue with Forge only allowing extraction from the bottom.
 
-# v8.6.3
+### 8.6.3
 
 - Fixed #90 by using correct tier reference.
 - Added automatic game tests for mob farm tiers to catch issues early.
 
-# v8.6.1
+### 8.6.1
 
 - Fixed #88 by making sure ItemStack size is considered for Create Funnels.
 - Fixed #87 by adding egg collector upgrade for chicken.
 - Fixed #83 by translating first the name instead of relying on the translation library.
 - Added bonus drops for eggs and chicken in the animal plains farm.
 
-# v8.6.0
+### 8.6.0
 
 - Fixed #86 by adding Fabric NBT support for mob farm recipes.
 - Fixed #85 by adding correct quickMoveStack definition for the mob farm.
@@ -248,13 +262,13 @@ compatible** and must be redefined using datapacks and resource packs. ⚠️
 
 A big thank you to `@Routhinator` for the detailed bug reports and valuable feedback!
 
-# v8.5.1
+### 8.5.1
 
 - Fixed #80 crash by adding additional checks for mob capture cards.
 - Fixed issues with custom spawn eggs not recognized by the mob farm in some cases.
 - Optimized model baking process and model management.
 
-# v8.5.0
+### 8.5.0
 
 - Fixed #78 by using more universal approach for getting relevant experience.
 - Fixed #77 typo in the experience enhancement item description.
@@ -267,7 +281,7 @@ A big thank you to `@Routhinator` for the detailed bug reports and valuable feed
 - Increased the drop change for the experience enhancement item.
 - Improved Loot Manager for better handling of loot tables.
 
-# v8.4.0
+### 8.4.0
 
 - Fixed #73 with better description for the Enchantment Items.
 - Fixed #72 by adding missing loot tables for the mob farms.
@@ -277,7 +291,7 @@ A big thank you to `@Routhinator` for the detailed bug reports and valuable feed
 - Added Mob Farm Configuration to adjust the mob farm settings.
 - Updated wiki and documentation.
 
-# v8.3.0
+### 8.3.0
 
 - Fixed Mob Capture Card config not working.
 - Fixed issue with distributed processing ticks are negative.
@@ -285,7 +299,7 @@ A big thank you to `@Routhinator` for the detailed bug reports and valuable feed
 - Improved text formatting for Mob Cards.
 - Smaller bug fixes and improvements.
 
-# v8.2.0
+### 8.2.0
 
 - Fixed #70 and added support for the latest version of Minecraft.
 - Fixed #68, #69 by adding enchantment items for experience bottle drops.
@@ -310,7 +324,7 @@ A big thank you to `@Routhinator` for the detailed bug reports and valuable feed
 - Improved text and translation support.
 - Improved logging and move messages to debug mode only.
 
-# v8.1.0
+### 8.1.0
 
 - Added debug mode to help with troubleshooting and lower logging outputs.
 - Added Creative Mob Capture item to capture mobs in creative mode.
@@ -321,7 +335,7 @@ A big thank you to `@Routhinator` for the detailed bug reports and valuable feed
 - Improved blank mob capture card texture.
 - Improved translation and tooltip support.
 
-# v8.0.0
+### 8.0.0
 
 First beta release of the next Easy Mob Farm 8.x for Fabric and Forge.
 
@@ -333,3 +347,5 @@ If you are upgrading from an older version, please be aware:
 - 🛑 **Existing setups may break** and require reconfiguration.
 - 🔄 **Data, items, and settings from previous versions** might not work as expected.
 - 💾 **Back up** your world or test on a separate instance before using 8.x in your main game!
+
+[history]: https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/commits/

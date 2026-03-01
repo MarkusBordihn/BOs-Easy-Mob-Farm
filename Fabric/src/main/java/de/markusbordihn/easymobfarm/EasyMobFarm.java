@@ -30,13 +30,16 @@ import de.markusbordihn.easymobfarm.experience.ExperienceManager;
 import de.markusbordihn.easymobfarm.experience.ModExperienceManager;
 import de.markusbordihn.easymobfarm.item.ModBlockItems;
 import de.markusbordihn.easymobfarm.item.ModItems;
+import de.markusbordihn.easymobfarm.menu.CardBinderMenu;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
 import de.markusbordihn.easymobfarm.network.NetworkHandler;
+import de.markusbordihn.easymobfarm.network.message.client.SyncLootPreviewMessage;
 import de.markusbordihn.easymobfarm.resources.MobCaptureCardResourceManagerWrapper;
 import de.markusbordihn.easymobfarm.server.ServerEventHandler;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.packs.PackType;
@@ -93,6 +96,8 @@ public class EasyMobFarm implements ModInitializer {
 
     log.info("{} Menu Types ...", Constants.LOG_REGISTER_PREFIX);
     ModMenuTypes.register();
+    CardBinderMenu.MENU_TYPE_SUPPLIER = () -> ModMenuTypes.CARD_BINDER_MENU;
+    SyncLootPreviewMessage.SENDER = ServerPlayNetworking::send;
 
     log.info("{} Mod Data Components ...", Constants.LOG_REGISTER_PREFIX);
     DataComponents.registerMobCaptureData();

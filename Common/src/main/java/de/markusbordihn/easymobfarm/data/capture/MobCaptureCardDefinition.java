@@ -34,6 +34,7 @@ public record MobCaptureCardDefinition(
     float scale,
     boolean requiresKilledByPlayer,
     boolean requiresAnimationTick,
+    boolean supportsKnifeEnhancement,
     Map<String, Variant> variants,
     Map<String, Color> colors) {
 
@@ -44,6 +45,7 @@ public record MobCaptureCardDefinition(
       float scale,
       boolean requiresKilledByPlayer,
       boolean requiresAnimationTick,
+      boolean supportsKnifeEnhancement,
       Map<String, Variant> variants,
       Map<String, Color> colors) {
     this(
@@ -54,6 +56,7 @@ public record MobCaptureCardDefinition(
         scale >= 0 ? scale : 1.0F,
         requiresKilledByPlayer,
         requiresAnimationTick,
+        supportsKnifeEnhancement,
         variants,
         colors);
   }
@@ -66,6 +69,7 @@ public record MobCaptureCardDefinition(
     float scale = buffer.readFloat();
     boolean requiresKilledByPlayer = buffer.readBoolean();
     boolean requiresAnimationTick = buffer.readBoolean();
+    boolean supportsKnifeEnhancement = buffer.readBoolean();
 
     // Read colors
     Map<String, MobCaptureCardDefinition.Color> colors =
@@ -93,6 +97,7 @@ public record MobCaptureCardDefinition(
         scale,
         requiresKilledByPlayer,
         requiresAnimationTick,
+        supportsKnifeEnhancement,
         variants,
         colors);
   }
@@ -133,6 +138,7 @@ public record MobCaptureCardDefinition(
         this.scale,
         this.requiresKilledByPlayer,
         this.requiresAnimationTick,
+        this.supportsKnifeEnhancement,
         this.variants,
         this.colors);
   }
@@ -145,6 +151,7 @@ public record MobCaptureCardDefinition(
     buffer.writeFloat(scale);
     buffer.writeBoolean(requiresKilledByPlayer);
     buffer.writeBoolean(requiresAnimationTick);
+    buffer.writeBoolean(supportsKnifeEnhancement);
 
     // Write colors
     buffer.writeMap(

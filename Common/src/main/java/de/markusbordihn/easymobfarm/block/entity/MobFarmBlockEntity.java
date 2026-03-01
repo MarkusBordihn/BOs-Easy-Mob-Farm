@@ -268,7 +268,8 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
   public int getFarmProgressionSpeedBonus() {
     int farmProgressionSpeedBonus = 0;
     for (EnhancementItem enhancementItem : this.getEnchantmentItems()) {
-      if (enhancementItem instanceof SpeedEnhancementItem speedEnhancementItem) {
+      if (enhancementItem instanceof SpeedEnhancementItem speedEnhancementItem
+          && MobFarmConfig.enableSpeedEnhancement) {
         farmProgressionSpeedBonus += speedEnhancementItem.getUpgradeSpeed();
       }
     }

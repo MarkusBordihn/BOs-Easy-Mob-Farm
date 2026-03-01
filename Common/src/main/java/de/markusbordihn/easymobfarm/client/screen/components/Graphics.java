@@ -55,10 +55,10 @@ public class Graphics {
         texture,
         x,
         y,
-        width,
-        height,
         textureX,
         textureY,
+        width,
+        height,
         textureWidth,
         textureHeight);
   }

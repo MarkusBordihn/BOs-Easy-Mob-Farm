@@ -21,18 +21,24 @@ package de.markusbordihn.easymobfarm.menu;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
+import de.markusbordihn.easymobfarm.capture.MobCaptureManager;
+import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmDataEntry;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmSlot;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmSlots;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import de.markusbordihn.easymobfarm.item.upgrade.slot.BigSlotUpgradeItem;
 import de.markusbordihn.easymobfarm.item.upgrade.slot.SmallSlotUpgradeItem;
+import de.markusbordihn.easymobfarm.loot.LootManager;
 import de.markusbordihn.easymobfarm.menu.slots.CapturedMobSlot;
 import de.markusbordihn.easymobfarm.menu.slots.EnhancementSlot;
 import de.markusbordihn.easymobfarm.menu.slots.FilterSlot;
 import de.markusbordihn.easymobfarm.menu.slots.OutputSlot;
 import de.markusbordihn.easymobfarm.menu.slots.SlotUpgradeSlot;
+import de.markusbordihn.easymobfarm.network.message.client.SyncLootPreviewMessage;
+import java.util.List;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -43,6 +49,7 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -119,6 +126,20 @@ public class MobFarmMenu extends AbstractContainerMenu {
             "Update number of output slots {} for {}",
             getMobFarmNumberOfOutputSlots(),
             mobFarmBlockEntity);
+      }
+
+      // Send loot preview to client player
+      if (playerInventory.player instanceof ServerPlayer serverPlayer) {
+        Level level = mobFarmBlockEntity.getLevel();
+        if (level != null) {
+          ItemStack capturedMob = this.container.getItem(MobFarmSlot.CAPTURED_MOB.index());
+          MobCaptureData captureData = MobCaptureManager.getMobCaptureData(capturedMob, level);
+          if (captureData != null && captureData.entityType() != null) {
+            List<ItemStack> preview = LootManager.getEntityLootPreview(captureData, level);
+            SyncLootPreviewMessage.sendToPlayer(
+                serverPlayer, mobFarmBlockEntity.getBlockPos(), preview);
+          }
+        }
       }
     }
 

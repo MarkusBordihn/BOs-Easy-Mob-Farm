@@ -35,4 +35,9 @@ public class ModMenuTypes {
 
   public static final DeferredHolder<MenuType<?>, MenuType<MobFarmMenuWrapper>> MOB_FARM_MENU =
       MENU_TYPES.register(MobFarmMenu.ID, () -> IMenuTypeExtension.create(MobFarmMenuWrapper::new));
+
+  public static final DeferredHolder<MenuType<?>, MenuType<CardBinderMenuWrapper>>
+      CARD_BINDER_MENU =
+          MENU_TYPES.register(
+              CardBinderMenu.ID, () -> IMenuTypeExtension.create(CardBinderMenuWrapper::new));
 }

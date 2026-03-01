@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.item;
 
 import de.markusbordihn.easymobfarm.data.enhancement.FrogCatalystType;
+import de.markusbordihn.easymobfarm.item.cardbinder.CardBinderItem;
 import de.markusbordihn.easymobfarm.item.consumables.MilkBottleItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.BlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.CreativeBlankMobCaptureCardItem;
@@ -122,6 +123,8 @@ public class Items {
   public static final Item VOID_BINDING_CHAIN = new VoidBindingChainItem();
 
   public static final Item MILK_BOTTLE = new MilkBottleItem();
+
+  public static final Item CARD_BINDER = new CardBinderItem();
 
   private Items() {}
 }

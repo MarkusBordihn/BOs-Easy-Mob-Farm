@@ -30,13 +30,14 @@ public final class Constants {
   public static final String MOD_PREFIX = MOD_ID + ".";
   public static final String TEXT_PREFIX = "text." + MOD_PREFIX;
   public static final String TEXT_CONFIG_PREFIX = TEXT_PREFIX + "config.";
+  public static final String MINECRAFT_PREFIX = "minecraft";
   public static final String BLOCK_PREFIX = "block." + MOD_PREFIX;
   public static final String MOD_ID_PREFIX = MOD_ID + ":";
   public static final String TOOLTIP_PREFIX = "tooltip." + MOD_ID + ".";
   public static final String TOOLTIP_FARM_PREFIX = Constants.TOOLTIP_PREFIX + "farm.";
   public static final String LOG_NAME = MOD_NAME;
   public static final String LOG_REGISTER_PREFIX = "Register " + MOD_NAME;
-  ;
+
   public static final int FONT_COLOR_DEFAULT = 4210752;
   public static final int FONT_COLOR_RED = 16733525;
 
