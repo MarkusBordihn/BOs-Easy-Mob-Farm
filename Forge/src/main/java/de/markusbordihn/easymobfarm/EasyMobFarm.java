@@ -31,8 +31,10 @@ import de.markusbordihn.easymobfarm.experience.ExperienceManager;
 import de.markusbordihn.easymobfarm.experience.ModExperienceManager;
 import de.markusbordihn.easymobfarm.item.ModBlockItems;
 import de.markusbordihn.easymobfarm.item.ModItems;
+import de.markusbordihn.easymobfarm.menu.CardBinderMenu;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
 import de.markusbordihn.easymobfarm.network.NetworkHandler;
+import de.markusbordihn.easymobfarm.network.message.client.SyncLootPreviewMessage;
 import java.util.Optional;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -91,12 +93,17 @@ public class EasyMobFarm {
 
     log.info("{} Menu Types ...", Constants.LOG_REGISTER_PREFIX);
     ModMenuTypes.MENU_TYPES.register(modEventBus);
+    CardBinderMenu.MENU_TYPE_SUPPLIER = () -> ModMenuTypes.CARD_BINDER_MENU.get();
 
     log.info("{} Mod Data Components ...", Constants.LOG_REGISTER_PREFIX);
     ModDataComponents.DATA_COMPONENTS.register(modEventBus);
 
     log.info("{} Network Handler ...", Constants.LOG_REGISTER_PREFIX);
     NetworkHandler.registerClientNetworkMessageHandler();
+    SyncLootPreviewMessage.SENDER =
+        (player, msg) ->
+            NetworkHandler.INSTANCE.send(
+                msg, net.minecraftforge.network.PacketDistributor.PLAYER.with(player));
 
     // Initialize the client mod initializer
     DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> new EasyMobFarmClient(modEventBus));

@@ -43,5 +43,8 @@ public class MobCaptureCards implements DisplayItemsGenerator {
     for (ItemStack mobCaptureCard : mobCaptureCards) {
       output.accept(mobCaptureCard);
     }
+
+    // Add card binder for better organization of mob capture cards
+    output.accept(Items.CARD_BINDER.getDefaultInstance());
   }
 }

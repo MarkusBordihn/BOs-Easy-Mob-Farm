@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.network;
 
 import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.network.message.client.SyncLootPreviewMessage;
 import de.markusbordihn.easymobfarm.network.message.client.SyncMobCaptureCardDefinitionsMessage;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -29,7 +30,7 @@ import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.SimpleChannel;
 
 public class NetworkHandler {
-  private static final int PROTOCOL_VERSION = 1;
+  private static final int PROTOCOL_VERSION = 2;
 
   public static final SimpleChannel INSTANCE =
       ChannelBuilder.named(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "network"))
@@ -41,9 +42,21 @@ public class NetworkHandler {
   public static void registerClientNetworkMessageHandler() {
     INSTANCE
         .messageBuilder(
-            SyncMobCaptureCardDefinitionsMessage.class, packetId, NetworkDirection.PLAY_TO_CLIENT)
+            SyncMobCaptureCardDefinitionsMessage.class, packetId++, NetworkDirection.PLAY_TO_CLIENT)
         .encoder(SyncMobCaptureCardDefinitionsMessage::write)
         .decoder(SyncMobCaptureCardDefinitionsMessage::create)
+        .consumerNetworkThread(
+            (message, context) -> {
+              context.enqueueWork(
+                  () -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> message::handleClient));
+              context.setPacketHandled(true);
+            })
+        .add();
+
+    INSTANCE
+        .messageBuilder(SyncLootPreviewMessage.class, packetId++, NetworkDirection.PLAY_TO_CLIENT)
+        .encoder(SyncLootPreviewMessage::write)
+        .decoder(SyncLootPreviewMessage::create)
         .consumerNetworkThread(
             (message, context) -> {
               context.enqueueWork(

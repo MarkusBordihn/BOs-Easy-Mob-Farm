@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Markus Bordihn
+ * Copyright 2025 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -17,22 +17,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.client.screen;
+package de.markusbordihn.easymobfarm.menu;
 
-import de.markusbordihn.easymobfarm.Constants;
-import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
-import net.minecraft.client.gui.screens.MenuScreens;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
 
-public class ClientScreens {
+public class CardBinderMenuWrapper extends CardBinderMenu {
 
-  protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
-
-  protected ClientScreens() {}
-
-  public static void registerScreens() {
-    MenuScreens.register(ModMenuTypes.MOB_FARM_MENU, MobFarmScreenWrapper::new);
-    MenuScreens.register(ModMenuTypes.CARD_BINDER_MENU, CardBinderScreenWrapper::new);
+  public CardBinderMenuWrapper(
+      final int windowId,
+      final Inventory playerInventory,
+      @SuppressWarnings("unused") final FriendlyByteBuf buffer) {
+    super(ModMenuTypes.CARD_BINDER_MENU.get(), windowId, playerInventory);
   }
 }

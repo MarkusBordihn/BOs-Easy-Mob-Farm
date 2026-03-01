@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.item;
 
 import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.item.cardbinder.CardBinderItem;
 import de.markusbordihn.easymobfarm.item.consumables.MilkBottleItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.BlankMobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.CreativeBlankMobCaptureCardItem;
@@ -207,6 +208,9 @@ public class ModItems {
 
   public static final DeferredItem<Item> MILK_BOTTLE =
       ITEMS.register(MilkBottleItem.ID, () -> Items.MILK_BOTTLE);
+
+  public static final DeferredItem<Item> CARD_BINDER =
+      ITEMS.register(CardBinderItem.ID, () -> Items.CARD_BINDER);
 
   protected ModItems() {}
 }

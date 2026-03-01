@@ -97,9 +97,9 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
   private static final Random random = new Random();
   private final ContainerData data;
   private final int processingDelay;
+  private final Queue<ItemStack> itemBuffer = new LinkedList<>();
   protected NonNullList<ItemStack> items =
       NonNullList.withSize(MobFarmMenu.CONTAINER_SIZE, ItemStack.EMPTY);
-  private final Queue<ItemStack> itemBuffer = new LinkedList<>();
   private MobFarmType mobFarmType;
   private int farmTierLevel;
   private UUID owner;
@@ -262,7 +262,8 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
   public int getFarmProgressionSpeedBonus() {
     int farmProgressionSpeedBonus = 0;
     for (EnhancementItem enhancementItem : this.getEnchantmentItems()) {
-      if (enhancementItem instanceof SpeedEnhancementItem speedEnhancementItem) {
+      if (enhancementItem instanceof SpeedEnhancementItem speedEnhancementItem
+          && MobFarmConfig.enableSpeedEnhancement) {
         farmProgressionSpeedBonus += speedEnhancementItem.getUpgradeSpeed();
       }
     }
