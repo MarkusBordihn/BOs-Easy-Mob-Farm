@@ -23,6 +23,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.capture.MobCaptureManager;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
+import de.markusbordihn.easymobfarm.data.loot.LootPreviewCache;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmDataEntry;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmSlot;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmSlots;
@@ -41,6 +42,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -49,7 +51,6 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -79,6 +80,7 @@ public class MobFarmMenu extends AbstractContainerMenu {
   private final Container container;
   private final ContainerData data;
   private final Inventory playerInventory;
+  private EntityType<?> lastSentEntityType = null;
 
   public MobFarmMenu(
       final MenuType<?> menuType, final int containerId, final Inventory playerInventory) {
@@ -126,20 +128,6 @@ public class MobFarmMenu extends AbstractContainerMenu {
             "Update number of output slots {} for {}",
             getMobFarmNumberOfOutputSlots(),
             mobFarmBlockEntity);
-      }
-
-      // Send loot preview to client player
-      if (playerInventory.player instanceof ServerPlayer serverPlayer) {
-        Level level = mobFarmBlockEntity.getLevel();
-        if (level != null) {
-          ItemStack capturedMob = this.container.getItem(MobFarmSlot.CAPTURED_MOB.index());
-          MobCaptureData captureData = MobCaptureManager.getMobCaptureData(capturedMob);
-          if (captureData != null && captureData.entityType() != null) {
-            List<ItemStack> preview = LootManager.getEntityLootPreview(captureData, level);
-            SyncLootPreviewMessage.sendToPlayer(
-                serverPlayer, mobFarmBlockEntity.getBlockPos(), preview);
-          }
-        }
       }
     }
 
@@ -331,6 +319,38 @@ public class MobFarmMenu extends AbstractContainerMenu {
 
   public void slotUpgradeChanged(final SlotUpgradeSlot slot) {
     this.updateNumberOfOutputSlots();
+  }
+
+  @Override
+  public void broadcastChanges() {
+    super.broadcastChanges();
+    if (this.container instanceof MobFarmBlockEntity mobFarmBlockEntity
+        && this.playerInventory.player instanceof ServerPlayer serverPlayer) {
+      syncLootPreviewIfChanged(mobFarmBlockEntity, serverPlayer);
+    }
+  }
+
+  private void syncLootPreviewIfChanged(
+      final MobFarmBlockEntity mobFarmBlockEntity, final ServerPlayer serverPlayer) {
+    ItemStack capturedMob = this.container.getItem(MobFarmSlot.CAPTURED_MOB.index());
+    MobCaptureData captureData = MobCaptureManager.getMobCaptureData(capturedMob);
+    EntityType<?> currentEntityType = captureData != null ? captureData.entityType() : null;
+    if (currentEntityType == lastSentEntityType) {
+      return;
+    }
+    lastSentEntityType = currentEntityType;
+    if (currentEntityType == null || mobFarmBlockEntity.getLevel() == null) {
+      return;
+    }
+    List<ItemStack> preview;
+    if (LootPreviewCache.isServerCacheValid(currentEntityType)) {
+      preview = LootPreviewCache.getServerCachedPreview(currentEntityType);
+    } else {
+      preview = LootManager.getEntityLootPreview(captureData, mobFarmBlockEntity.getLevel());
+      LootPreviewCache.setServerCachedPreview(currentEntityType, preview);
+    }
+    SyncLootPreviewMessage.sendToPlayer(
+        serverPlayer, mobFarmBlockEntity.getBlockPos(), currentEntityType, preview);
   }
 
   @Override
