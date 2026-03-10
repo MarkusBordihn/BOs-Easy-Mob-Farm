@@ -123,6 +123,7 @@
   "tooltip.easy_mob_farm.farm.jungle_farm": "Jungle Farm (Tier %s)",
   "tooltip.easy_mob_farm.farm.killed_by_player": "Requires sword enhancement for some loot!",
   "tooltip.easy_mob_farm.farm.loot_base_drops": "Base Loot Drops:",
+  "tooltip.easy_mob_farm.farm.loot_preview_hint": "(Re-open the farm to load loot preview)",
   "tooltip.easy_mob_farm.farm.loot_bonus_chance": "%s (1 in %s chance)",
   "tooltip.easy_mob_farm.farm.loot_egg_collector": "  • Egg (50% chance)",
   "tooltip.easy_mob_farm.farm.loot_experience": "  • XP Bottle (1 in %s chance)",

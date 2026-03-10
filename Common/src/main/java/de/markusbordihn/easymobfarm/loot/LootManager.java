@@ -454,7 +454,6 @@ public class LootManager {
     ResourceLocation customLocation = getCustomLootTableLocation(livingEntity, priority);
     LootTable customTable = serverLevel.getServer().getLootData().getLootTable(customLocation);
     if (customTable != LootTable.EMPTY) {
-      log.debug("Using {} loot table for {}", priority.getPath(), livingEntity.getType());
       for (int i = 0; i <= additionalRolls; i++) {
         customTable.getRandomItems(lootParams).stream()
             .filter(itemStack -> !itemStack.isEmpty())

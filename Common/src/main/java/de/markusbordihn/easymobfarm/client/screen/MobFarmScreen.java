@@ -354,7 +354,6 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
       }
       guiGraphics.renderComponentTooltip(this.font, infoText, mouseX, mouseY);
     } else if (isHovering(22, 35, 15, 14, mouseX, mouseY)
-        && this.entity != null
         && this.getMenu().getMobFarmStatus() != MobFarmStatus.IDLE) {
       renderLootInfoTooltip(guiGraphics, mouseX, mouseY);
     }
@@ -381,11 +380,13 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
         hash = hash * 31 + menuSlot.getItem().getItem().hashCode();
       }
     }
-    // Include loot preview data in hash for cache invalidation
-    BlockPos farmPos = this.getMenu().getMobFarmBlockPos();
-    if (farmPos != null && !farmPos.equals(BlockPos.ZERO)) {
-      List<ItemStack> preview = LootPreviewCache.getLootPreview(farmPos);
-      hash = hash * 31 + preview.size();
+    // Include entity identity and loot preview cache state for invalidation
+    if (this.entity != null) {
+      hash = hash * 31 + this.entity.getType().hashCode();
+      List<ItemStack> preview = LootPreviewCache.getLootPreview(null, this.entity.getType());
+      hash =
+          hash * 31
+              + (LootPreviewCache.hasLootPreview(this.entity.getType()) ? preview.size() + 1 : 0);
     }
     return hash;
   }
@@ -396,14 +397,25 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
         TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "loot_info_title")
             .withStyle(ChatFormatting.GOLD));
 
+    // If entity not yet loaded by renderer, show hint to re-open
+    if (this.entity == null) {
+      lootInfo.add(
+          TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "loot_preview_hint")
+              .withStyle(ChatFormatting.DARK_GRAY));
+      return lootInfo;
+    }
+
     // Fetch capture card definition once for reuse
     MobCaptureCardDefinition mobCaptureCardDefinition =
-        this.entity != null ? MobCaptureCardDefinitionManager.get(this.entity.getType()) : null;
+        MobCaptureCardDefinitionManager.get(this.entity.getType());
 
-    // Show base loot drops from server preview
-    BlockPos farmPos = this.getMenu().getMobFarmBlockPos();
-    if (farmPos != null && !farmPos.equals(BlockPos.ZERO)) {
-      List<ItemStack> lootPreview = LootPreviewCache.getLootPreview(farmPos);
+    // Show base loot drops from server preview (EntityType-based cache, shared across all farms)
+    if (!LootPreviewCache.hasLootPreview(this.entity.getType())) {
+      lootInfo.add(
+          TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "loot_preview_hint")
+              .withStyle(ChatFormatting.DARK_GRAY));
+    } else {
+      List<ItemStack> lootPreview = LootPreviewCache.getLootPreview(null, this.entity.getType());
       if (!lootPreview.isEmpty()) {
         lootInfo.add(
             TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "loot_base_drops")
