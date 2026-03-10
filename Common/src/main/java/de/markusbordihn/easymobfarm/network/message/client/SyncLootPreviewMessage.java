@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -45,7 +45,7 @@ public record SyncLootPreviewMessage(
   public static SyncLootPreviewMessage create(FriendlyByteBuf buffer) {
     BlockPos pos = buffer.readBlockPos();
     ResourceLocation entityTypeId = buffer.readResourceLocation();
-    EntityType<?> type = Registry.ENTITY_TYPE.get(entityTypeId);
+    EntityType<?> type = BuiltInRegistries.ENTITY_TYPE.get(entityTypeId);
     int size = buffer.readVarInt();
     List<ItemStack> items = new ArrayList<>();
     for (int i = 0; i < size; i++) {
@@ -62,7 +62,7 @@ public record SyncLootPreviewMessage(
   @Override
   public void write(FriendlyByteBuf buffer) {
     buffer.writeBlockPos(blockPos);
-    buffer.writeResourceLocation(Registry.ENTITY_TYPE.getKey(entityType));
+    buffer.writeResourceLocation(BuiltInRegistries.ENTITY_TYPE.getKey(entityType));
     buffer.writeVarInt(items.size());
     for (ItemStack item : items) {
       buffer.writeItem(item);
