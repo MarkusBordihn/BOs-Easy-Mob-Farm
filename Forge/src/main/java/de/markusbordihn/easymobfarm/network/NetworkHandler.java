@@ -30,7 +30,7 @@ import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.SimpleChannel;
 
 public class NetworkHandler {
-  private static final int PROTOCOL_VERSION = 2;
+  private static final int PROTOCOL_VERSION = 3;
 
   public static final SimpleChannel INSTANCE =
       ChannelBuilder.named(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "network"))

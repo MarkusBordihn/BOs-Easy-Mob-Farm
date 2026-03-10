@@ -511,7 +511,6 @@ public class LootManager {
     LootTable customTable =
         serverLevel.getServer().reloadableRegistries().getLootTable(customLocation);
     if (customTable != LootTable.EMPTY) {
-      log.debug("Using {} loot table for {}", priority.getPath(), livingEntity.getType());
       for (int i = 0; i <= additionalRolls; i++) {
         customTable.getRandomItems(lootParams).stream()
             .filter(itemStack -> !itemStack.isEmpty())

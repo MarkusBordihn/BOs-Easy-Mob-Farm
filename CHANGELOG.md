@@ -5,6 +5,21 @@
 This change log includes the summarized changes.
 For the full changelog, please go to the [GitHub History][history] instead.
 
+### 10.6.0 (Performance and Stability Improvements)
+
+- Fixed #204 with performance regression from 10.4.0 causing excessive network packets per buffered
+  item.
+- Fixed redundant `getEnchantmentItems()` and `getFilterItems()` calls per tick cycle.
+- Fixed `updateNumberOfOutputSlots()` running every processing cycle instead of on slot changes.
+- Fixed `updateNumberOfOutputSlots()` not being called on world load.
+- Fixed stale loot preview after swapping a mob capture card in an open farm screen.
+- Fixed loot preview hint persisting after re-open for mobs with no base loot (e.g. Axolotl).
+- Fixed redundant `UUID(0, 0)` allocation on every `hasOwner()` call.
+- Added EntityType-based loot preview cache shared across all farms of the same mob type.
+- Added loot preview hint when preview data is not yet available.
+- Improved `syncChanges()` batching — one update per cycle instead of one per item.
+- Removed excessive debug logging running every tick or processing cycle.
+
 ### 10.5.0 (Quality of Life Updates)
 
 - Fixed #184, #153 by adding a card binder for better handling of mob capture cards.

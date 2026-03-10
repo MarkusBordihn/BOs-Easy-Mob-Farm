@@ -34,10 +34,12 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload.Type;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-public record SyncLootPreviewMessage(BlockPos blockPos, List<ItemStack> items)
+public record SyncLootPreviewMessage(
+    BlockPos blockPos, EntityType<?> entityType, List<ItemStack> items)
     implements NetworkMessageRecord {
 
   public static final ResourceLocation MESSAGE_ID =
@@ -51,6 +53,8 @@ public record SyncLootPreviewMessage(BlockPos blockPos, List<ItemStack> items)
 
   public static SyncLootPreviewMessage create(FriendlyByteBuf buffer) {
     BlockPos pos = buffer.readBlockPos();
+    ResourceLocation entityTypeId = buffer.readResourceLocation();
+    EntityType<?> type = BuiltInRegistries.ENTITY_TYPE.get(entityTypeId);
     int size = buffer.readVarInt();
     List<ItemStack> items = new ArrayList<>();
     for (int i = 0; i < size; i++) {
@@ -59,16 +63,18 @@ public record SyncLootPreviewMessage(BlockPos blockPos, List<ItemStack> items)
       Item item = BuiltInRegistries.ITEM.get(itemId);
       items.add(item != null ? new ItemStack(item, count) : ItemStack.EMPTY);
     }
-    return new SyncLootPreviewMessage(pos, items);
+    return new SyncLootPreviewMessage(pos, type, items);
   }
 
-  public static void sendToPlayer(ServerPlayer player, BlockPos pos, List<ItemStack> items) {
-    SENDER.accept(player, new SyncLootPreviewMessage(pos, items));
+  public static void sendToPlayer(
+      ServerPlayer player, BlockPos pos, EntityType<?> entityType, List<ItemStack> items) {
+    SENDER.accept(player, new SyncLootPreviewMessage(pos, entityType, items));
   }
 
   @Override
   public void write(FriendlyByteBuf buffer) {
     buffer.writeBlockPos(blockPos);
+    buffer.writeResourceLocation(BuiltInRegistries.ENTITY_TYPE.getKey(entityType));
     buffer.writeVarInt(items.size());
     for (ItemStack item : items) {
       buffer.writeResourceLocation(BuiltInRegistries.ITEM.getKey(item.getItem()));
@@ -88,9 +94,9 @@ public record SyncLootPreviewMessage(BlockPos blockPos, List<ItemStack> items)
 
   @Override
   public void handleClient() {
-    if (items == null || items.isEmpty()) {
+    if (entityType == null) {
       return;
     }
-    LootPreviewCache.setLootPreview(blockPos, items);
+    LootPreviewCache.setLootPreview(blockPos, entityType, items != null ? items : List.of());
   }
 }

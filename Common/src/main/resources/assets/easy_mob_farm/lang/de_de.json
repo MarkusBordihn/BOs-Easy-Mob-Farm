@@ -123,6 +123,7 @@
   "tooltip.easy_mob_farm.farm.jungle_farm": "Dschungelfarm (Stufe %s)",
   "tooltip.easy_mob_farm.farm.killed_by_player": "Erfordert eine Schwert-Verbesserung für bestimmte Beute!",
   "tooltip.easy_mob_farm.farm.loot_base_drops": "Basis-Beutedrops:",
+  "tooltip.easy_mob_farm.farm.loot_preview_hint": "(Farm erneut öffnen um die Beute-Vorschau zu laden)",
   "tooltip.easy_mob_farm.farm.loot_bonus_chance": "%s (1 von %s Chance)",
   "tooltip.easy_mob_farm.farm.loot_egg_collector": "  • Ei (50% Chance)",
   "tooltip.easy_mob_farm.farm.loot_experience": "  • EP-Flasche (1 von %s Chance)",
