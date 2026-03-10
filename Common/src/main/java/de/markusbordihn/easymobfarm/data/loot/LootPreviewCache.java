@@ -23,23 +23,50 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 
 public class LootPreviewCache {
 
-  private static final Map<BlockPos, List<ItemStack>> cache = new ConcurrentHashMap<>();
+  private static final long SERVER_CACHE_TTL_MS = 60_000L;
+  private static final Map<EntityType<?>, ServerCacheEntry> serverCache = new ConcurrentHashMap<>();
+  private static final Map<EntityType<?>, List<ItemStack>> clientCache = new ConcurrentHashMap<>();
 
   private LootPreviewCache() {}
 
-  public static void setLootPreview(BlockPos pos, List<ItemStack> items) {
-    cache.put(pos, items);
+  public static boolean isServerCacheValid(EntityType<?> entityType) {
+    ServerCacheEntry entry = serverCache.get(entityType);
+    return entry != null && (System.currentTimeMillis() - entry.timestamp()) < SERVER_CACHE_TTL_MS;
   }
 
-  public static List<ItemStack> getLootPreview(BlockPos pos) {
-    return cache.getOrDefault(pos, List.of());
+  public static List<ItemStack> getServerCachedPreview(EntityType<?> entityType) {
+    ServerCacheEntry entry = serverCache.get(entityType);
+    return entry != null ? entry.items() : List.of();
+  }
+
+  public static void setServerCachedPreview(EntityType<?> entityType, List<ItemStack> items) {
+    serverCache.put(entityType, new ServerCacheEntry(items, System.currentTimeMillis()));
+  }
+
+  public static void setLootPreview(BlockPos pos, EntityType<?> entityType, List<ItemStack> items) {
+    clientCache.put(entityType, items);
+  }
+
+  public static List<ItemStack> getLootPreview(BlockPos pos, EntityType<?> entityType) {
+    if (entityType != null) {
+      return clientCache.getOrDefault(entityType, List.of());
+    }
+    return List.of();
+  }
+
+  public static boolean hasLootPreview(EntityType<?> entityType) {
+    return entityType != null && clientCache.containsKey(entityType);
   }
 
   public static void clear() {
-    cache.clear();
+    clientCache.clear();
+    serverCache.clear();
   }
+
+  private record ServerCacheEntry(List<ItemStack> items, long timestamp) {}
 }

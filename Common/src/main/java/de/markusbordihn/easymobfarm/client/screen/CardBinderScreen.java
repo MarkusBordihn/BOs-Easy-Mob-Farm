@@ -44,7 +44,8 @@ import net.minecraft.world.level.storage.TagValueInput;
 public class CardBinderScreen<T extends CardBinderMenu> extends AbstractContainerScreen<T> {
 
   private static final Identifier CHEST_GUI_TEXTURE =
-    Identifier.fromNamespaceAndPath(Constants.MINECRAFT_PREFIX,"textures/gui/container/generic_54.png");
+      Identifier.fromNamespaceAndPath(
+          Constants.MINECRAFT_PREFIX, "textures/gui/container/generic_54.png");
 
   private static final int BOOK_WIDTH = 280;
   private static final int BOOK_HEIGHT = 160;
@@ -215,7 +216,8 @@ public class CardBinderScreen<T extends CardBinderMenu> extends AbstractContaine
     Minecraft mc = Minecraft.getInstance();
     if (selectedSlotIndex < 0 || selectedSlotIndex >= CardBinderMenu.CONTAINER_SIZE) {
       String hint = "Hover a card";
-      guiGraphics.drawString(this.font, hint, 210 - this.font.width(hint) / 2, 75, 0xFFA09080, false);
+      guiGraphics.drawString(
+          this.font, hint, 210 - this.font.width(hint) / 2, 75, 0xFFA09080, false);
       return;
     }
     Slot slot = this.menu.getSlot(selectedSlotIndex);

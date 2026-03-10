@@ -24,8 +24,10 @@ import de.markusbordihn.easymobfarm.data.loot.LootPreviewCache;
 import de.markusbordihn.easymobfarm.network.message.NetworkMessageRecord;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -34,10 +36,11 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload.Type;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 
-public record SyncLootPreviewMessage(BlockPos blockPos, List<ItemStack> items)
+public record SyncLootPreviewMessage(
+    BlockPos blockPos, EntityType<?> entityType, List<ItemStack> items)
     implements NetworkMessageRecord {
 
   public static final Identifier MESSAGE_ID =
@@ -51,6 +54,10 @@ public record SyncLootPreviewMessage(BlockPos blockPos, List<ItemStack> items)
 
   public static SyncLootPreviewMessage create(FriendlyByteBuf buffer) {
     BlockPos pos = buffer.readBlockPos();
+    Identifier entityTypeId = buffer.readIdentifier();
+    Optional<Holder.Reference<EntityType<?>>> entityTypeHolder =
+        BuiltInRegistries.ENTITY_TYPE.get(entityTypeId);
+    EntityType<?> type = entityTypeHolder.map(Holder.Reference::value).orElse(null);
     int size = buffer.readVarInt();
     List<ItemStack> items = new ArrayList<>();
     for (int i = 0; i < size; i++) {
@@ -62,16 +69,18 @@ public record SyncLootPreviewMessage(BlockPos blockPos, List<ItemStack> items)
               ref -> items.add(new ItemStack(ref.value(), count)),
               () -> items.add(ItemStack.EMPTY));
     }
-    return new SyncLootPreviewMessage(pos, items);
+    return new SyncLootPreviewMessage(pos, type, items);
   }
 
-  public static void sendToPlayer(ServerPlayer player, BlockPos pos, List<ItemStack> items) {
-    SENDER.accept(player, new SyncLootPreviewMessage(pos, items));
+  public static void sendToPlayer(
+      ServerPlayer player, BlockPos pos, EntityType<?> entityType, List<ItemStack> items) {
+    SENDER.accept(player, new SyncLootPreviewMessage(pos, entityType, items));
   }
 
   @Override
   public void write(FriendlyByteBuf buffer) {
     buffer.writeBlockPos(blockPos);
+    buffer.writeIdentifier(BuiltInRegistries.ENTITY_TYPE.getKey(entityType));
     buffer.writeVarInt(items.size());
     for (ItemStack item : items) {
       buffer.writeIdentifier(BuiltInRegistries.ITEM.getKey(item.getItem()));
@@ -91,9 +100,9 @@ public record SyncLootPreviewMessage(BlockPos blockPos, List<ItemStack> items)
 
   @Override
   public void handleClient() {
-    if (items == null || items.isEmpty()) {
+    if (entityType == null) {
       return;
     }
-    LootPreviewCache.setLootPreview(blockPos, items);
+    LootPreviewCache.setLootPreview(blockPos, entityType, items != null ? items : List.of());
   }
 }

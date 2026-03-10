@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.network;
 
 import de.markusbordihn.easymobfarm.network.message.NetworkMessageRecord;
+import de.markusbordihn.easymobfarm.network.message.client.SyncLootPreviewMessage;
 import de.markusbordihn.easymobfarm.network.message.client.SyncMobCaptureCardDefinitionsMessage;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -31,6 +32,18 @@ public class ClientNetworkHandler {
   public static void registerClientNetworkMessageHandler() {
     ClientPlayNetworking.registerGlobalReceiver(
         SyncMobCaptureCardDefinitionsMessage.PAYLOAD_TYPE,
+        (payload, context) ->
+            context
+                .client()
+                .execute(
+                    () -> {
+                      if (payload instanceof NetworkMessageRecord networkMessageRecord) {
+                        networkMessageRecord.handleClient();
+                      }
+                    }));
+
+    ClientPlayNetworking.registerGlobalReceiver(
+        SyncLootPreviewMessage.PAYLOAD_TYPE,
         (payload, context) ->
             context
                 .client()

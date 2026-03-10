@@ -37,12 +37,12 @@ public class CardBinderMenu extends AbstractContainerMenu {
   public static final int CONTAINER_SIZE = CardBinderItem.CONTAINER_SIZE;
   public static final int CARDS_PER_PAGE = 25;
   public static final int CARD_COLS = 5;
-  private static final int GRID_START_X = 22;
-  private static final int GRID_START_Y = 24;
-  private static final int SLOT_SPACING = 20;
   public static final int PLAYER_INV_X = 59;
   public static final int PLAYER_INV_Y = 168;
   public static final int PLAYER_HOTBAR_Y = 226;
+  private static final int GRID_START_X = 22;
+  private static final int GRID_START_Y = 24;
+  private static final int SLOT_SPACING = 20;
   public static MenuType<?> MENU_TYPE = null;
   public static Supplier<MenuType<?>> MENU_TYPE_SUPPLIER = () -> MENU_TYPE;
   private final Container cardContainer;

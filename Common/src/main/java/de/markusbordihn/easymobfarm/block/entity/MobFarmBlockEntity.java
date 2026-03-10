@@ -101,6 +101,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
   private static final int[] RESULT_SLOTS =
       MobFarmSlots.RESULT_SLOTS.stream().mapToInt(MobFarmSlot::index).toArray();
   private static final Random random = new Random();
+  private static final UUID EMPTY_UUID = new UUID(0, 0);
   private final ContainerData data;
   private final int processingDelay;
   private final Queue<ItemStack> itemBuffer = new LinkedList<>();
@@ -199,18 +200,13 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
       return;
     }
 
+    // Compute enhancement items once to avoid redundant slot iterations this tick.
+    List<EnhancementItem> enhancementItems = blockEntity.getEnchantmentItems();
+
     // Increase farm progress
     if (blockEntity.farmProgress < MobFarmConfig.farmProgressingTime) {
-      if (blockEntity.farmProgress % 200 == 0) {
-        log.debug(
-            "Mob farm block entity at {} with farm progress {} / {}",
-            blockPos,
-            blockEntity.farmProgress,
-            MobFarmConfig.farmProgressingTime);
-      }
-
       // Calculate farm progression speed and increase farm progress
-      int farmProgressionSpeed = getEffectiveFarmProgressionSpeed(blockEntity);
+      int farmProgressionSpeed = getEffectiveFarmProgressionSpeed(blockEntity, enhancementItems);
       blockEntity.farmProgress =
           Math.min(
               blockEntity.farmProgress + farmProgressionSpeed, MobFarmConfig.farmProgressingTime);
@@ -227,7 +223,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
 
     // Processing results
     if (blockEntity.canProcessingResults()) {
-      blockEntity.processingResults();
+      blockEntity.processingResults(enhancementItems);
     } else {
       log.warn(
           "Mob farm block entity at {} is full and can't process results",
@@ -239,8 +235,10 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     blockEntity.farmProgress = 0;
   }
 
-  private static int getEffectiveFarmProgressionSpeed(MobFarmBlockEntity blockEntity) {
-    return blockEntity.getFarmProgressionSpeed() + blockEntity.getFarmProgressionSpeedBonus();
+  private static int getEffectiveFarmProgressionSpeed(
+      MobFarmBlockEntity blockEntity, List<EnhancementItem> enhancementItems) {
+    return blockEntity.getFarmProgressionSpeed()
+        + blockEntity.getFarmProgressionSpeedBonus(enhancementItems);
   }
 
   public static float getProcessingSpeed(int tierLevel) {
@@ -266,8 +264,12 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
   }
 
   public int getFarmProgressionSpeedBonus() {
+    return getFarmProgressionSpeedBonus(this.getEnchantmentItems());
+  }
+
+  public int getFarmProgressionSpeedBonus(List<EnhancementItem> enhancementItems) {
     int farmProgressionSpeedBonus = 0;
-    for (EnhancementItem enhancementItem : this.getEnchantmentItems()) {
+    for (EnhancementItem enhancementItem : enhancementItems) {
       if (enhancementItem instanceof SpeedEnhancementItem speedEnhancementItem
           && MobFarmConfig.enableSpeedEnhancement) {
         farmProgressionSpeedBonus += speedEnhancementItem.getUpgradeSpeed();
@@ -298,21 +300,13 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     return filterItems;
   }
 
-  public Set<SlotUpgradeItem> getSlotUpgradeItems() {
-    Set<SlotUpgradeItem> slotUpgradeItems = new HashSet<>();
+  public void updateNumberOfOutputSlots() {
+    int slots = MobFarmMenu.MIN_NUMBER_OF_OUTPUT_SLOTS;
     for (MobFarmSlot upgradeSlot : MobFarmSlots.SLOT_UPGRADE_ITEM_SLOTS) {
       ItemStack itemStack = this.getItem(upgradeSlot.index());
       if (!itemStack.isEmpty() && itemStack.getItem() instanceof SlotUpgradeItem slotUpgradeItem) {
-        slotUpgradeItems.add(slotUpgradeItem);
+        slots += slotUpgradeItem.numberOfUpgradeSlots();
       }
-    }
-    return slotUpgradeItems;
-  }
-
-  public void updateNumberOfOutputSlots() {
-    int slots = MobFarmMenu.MIN_NUMBER_OF_OUTPUT_SLOTS;
-    for (SlotUpgradeItem upgrade : getSlotUpgradeItems()) {
-      slots += upgrade.numberOfUpgradeSlots();
     }
     slots =
         Math.min(
@@ -324,21 +318,17 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
   }
 
   public boolean canProcessingResults() {
-    this.updateNumberOfOutputSlots();
     int startSlotIndex = MobFarmSlots.RESULT_SLOTS.get(0).index();
     for (int slotIndex = startSlotIndex;
         slotIndex < startSlotIndex + this.numberOfOutputSlots;
         slotIndex++) {
-      if (this.getItem(slotIndex).isEmpty()
-          || this.getItem(slotIndex).getCount() < this.getItem(slotIndex).getMaxStackSize()) {
+      ItemStack slot = this.getItem(slotIndex);
+      if (slot.isEmpty() || slot.getCount() < slot.getMaxStackSize()) {
         return true;
       }
     }
 
-    if (MobFarmConfig.enableItemBuffer && getBufferSize() < MobFarmConfig.maxBufferSize) {
-      return true;
-    }
-    return false;
+    return MobFarmConfig.enableItemBuffer && getBufferSize() < MobFarmConfig.maxBufferSize;
   }
 
   private boolean processingLuckyDrops(
@@ -350,43 +340,23 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     // 5% Bad lucky drop, spawn captured mob and remove item.
     int luckRoll = random.nextInt(100);
     if (luckRoll > MobFarmConfig.luckyDropFarmLuckPercentage) {
-      log.debug(
-          "Bad lucky drop for {} (tier: {}) block entity at {} with captured mob {}",
-          this.getFarmType(),
-          this.getFarmTierLevel(),
-          this.getBlockPos(),
-          mobCaptureData.entityType());
       this.spawnEntity(mobCaptureData.entityType(), this.level, this.getBlockPos().above());
       this.removeItem(MobFarmSlot.CAPTURED_MOB.index(), 1);
       this.farmStatus = MobFarmStatus.IDLE;
       return true;
     }
 
-    // Add lucky loot drop based on the mob farm, tier level and captured mob.
-    log.debug(
-        "Lucky drop for {} (tier: {}) block entity at {} with captured mob {}",
-        this.getFarmType(),
-        this.getFarmTierLevel(),
-        this.getBlockPos(),
-        mobCaptureData.entityType());
     if (random.nextInt(2) == 0) {
       NonNullList<ItemStack> luckyDrop =
           LootManager.getLuckyLoot(mobCaptureData, this.getBlockPos(), level);
       if (!luckyDrop.isEmpty()) {
-        log.debug(
-            "Adding lucky loot drop {} for {} (tier: {}) block entity at {} with captured mob {}",
-            luckyDrop,
-            this.getFarmType(),
-            this.getFarmTierLevel(),
-            this.getBlockPos(),
-            mobCaptureData.entityType());
         lootDrops.addAll(luckyDrop);
       }
     }
     return false;
   }
 
-  public void processingResults() {
+  public void processingResults(List<EnhancementItem> enhancementItems) {
     MobCaptureData mobCaptureData = this.getMobCaptureData();
     if (mobCaptureData == null) {
       return;
@@ -421,7 +391,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
 
     // Get loot drops for captured mob over loot manager and their loot tables.
     NonNullList<ItemStack> lootDrops =
-        LootManager.getEntityLoot(mobCaptureData, this.getEnchantmentItems(), level);
+        LootManager.getEntityLoot(mobCaptureData, enhancementItems, level);
 
     // Check if lucky drop farm is active and add additional loot drops.
     if (processingLuckyDrops(mobCaptureData, lootDrops)) {
@@ -432,13 +402,6 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     ItemStack bonusLootDrop =
         MobFarmBonusConfig.getBonusDrop(this.getFarmType(), this.getFarmTierLevel(), entityType);
     if (!bonusLootDrop.isEmpty()) {
-      log.debug(
-          "Adding bonus loot drop {} for {} (tier: {}) block entity at {} with captured mob {}",
-          bonusLootDrop,
-          this.getFarmType(),
-          this.getFarmTierLevel(),
-          this.getBlockPos(),
-          entityType);
       lootDrops.add(bonusLootDrop.copy());
     }
 
@@ -453,10 +416,8 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     if (lootDrops == null || lootDrops.isEmpty()) {
       return;
     }
-    log.debug(
-        "Processing loot drops for mob farm block entity at {} with {} loot drops",
-        this.getBlockPos(),
-        lootDrops);
+
+    Set<FilterItem> filterItems = this.getFilterItems();
 
     // Handle loot drops
     for (ItemStack lootDrop : lootDrops) {
@@ -465,7 +426,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
       }
 
       // Handle filter slots items.
-      for (FilterItem filterItem : this.getFilterItems()) {
+      for (FilterItem filterItem : filterItems) {
         if (filterItem instanceof NoMeatFilterItem && lootDrop.is(ModItemTags.MEAT)) {
           lootDrop.setCount(0);
         }
@@ -480,7 +441,6 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
         if (filterItem.isEmpty() || !filterItem.is(lootDrop.getItem())) {
           continue;
         }
-        log.debug("Filter slot {} matches loot drop {}", filterSlot, lootDrop);
         lootDrop.setCount(0);
         break;
       }
@@ -488,6 +448,8 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
       // Handle output slots
       storeItemInOutputSlot(lootDrop);
     }
+
+    this.syncChanges();
   }
 
   private void storeItemInOutputSlot(final ItemStack itemStack) {
@@ -502,7 +464,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
       ItemStack outputSlot = this.getItem(slotIndex);
 
       if (outputSlot.isEmpty()) {
-        setItemInSlot(slotIndex, itemStack);
+        this.items.set(slotIndex, itemStack);
         return;
       }
 
@@ -818,7 +780,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
   }
 
   public boolean hasOwner() {
-    return this.owner != null && !this.owner.equals(new UUID(0, 0));
+    return this.owner != null && !this.owner.equals(EMPTY_UUID);
   }
 
   public ContainerData getContainerData() {
@@ -946,6 +908,11 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     if (index == MobFarmSlot.CAPTURED_MOB.index() && !itemStack.isEmpty()) {
       this.setsMobCaptureItem(itemStack.copy());
     }
+    if (index == MobFarmSlot.SLOT_UPGRADE_ITEM_1.index()
+        || index == MobFarmSlot.SLOT_UPGRADE_ITEM_2.index()
+        || index == MobFarmSlot.SLOT_UPGRADE_ITEM_3.index()) {
+      this.updateNumberOfOutputSlots();
+    }
     this.syncChanges();
   }
 
@@ -1053,7 +1020,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
         ItemStack outputSlot = this.getItem(slotIndex);
 
         if (outputSlot.isEmpty()) {
-          setItemInSlot(slotIndex, itemToPlace);
+          this.items.set(slotIndex, itemToPlace);
           itemBuffer.poll();
           placed = true;
           break;
@@ -1077,11 +1044,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     }
 
     if (itemsProcessed > 0) {
-      log.debug(
-          "Processed {} buffered items at {} (remaining: {})",
-          itemsProcessed,
-          this.getBlockPos(),
-          getBufferSize());
+      this.syncChanges();
     }
   }
 
@@ -1100,6 +1063,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     // Load items
     this.items.clear();
     ContainerHelper.loadAllItems(valueInput, this.items);
+    this.updateNumberOfOutputSlots();
 
     // Load additional data
     this.farmTierLevel = valueInput.getIntOr(TIER_LEVEL_TAG, this.farmTierLevel);
