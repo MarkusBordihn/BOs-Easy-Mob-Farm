@@ -132,8 +132,8 @@ public class RendererManager {
     entity.tick();
 
     // Set random head and body rotation
-    entity.setYHeadRot(mobFarmBlockEntity.getLevel().random.nextFloat() * 60.0F);
-    entity.setYBodyRot(mobFarmBlockEntity.getLevel().random.nextFloat() * 10.0F);
+    entity.setYHeadRot(mobFarmBlockEntity.getLevel().getRandom().nextFloat() * 60.0F);
+    entity.setYBodyRot(mobFarmBlockEntity.getLevel().getRandom().nextFloat() * 10.0F);
     entity.xRotO = entity.getXRot();
     entity.yRotO = entity.getYRot();
 

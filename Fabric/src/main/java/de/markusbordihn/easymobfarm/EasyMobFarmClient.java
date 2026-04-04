@@ -43,9 +43,6 @@ public class EasyMobFarmClient implements ClientModInitializer {
     log.info("{} Block Entity Renderers ...", Constants.LOG_REGISTER_PREFIX);
     ClientRenderer.registerBlockEntityRenderers();
 
-    log.info("{} Render Layers ...", Constants.LOG_REGISTER_PREFIX);
-    ClientRenderer.registerRenderLayers();
-
     log.info("{} Client Screens ...", Constants.LOG_REGISTER_PREFIX);
     ClientScreens.registerScreens();
 

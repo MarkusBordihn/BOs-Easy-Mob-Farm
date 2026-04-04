@@ -32,6 +32,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 
 public class MobFarmBonusConfig extends Config {
@@ -92,233 +93,233 @@ public class MobFarmBonusConfig extends Config {
   public static final String LOG_PREFIX = "[MobFarmBonusConfig]";
 
   private static final Random random = new Random();
-  private static final HashMap<String, HashMap<Integer, ItemStack>> mobFarmBonusMap =
+  private static final HashMap<String, HashMap<Integer, ItemStackTemplate>> mobFarmBonusMap =
       new HashMap<>();
-  private static final HashMap<String, HashMap<Integer, ItemStack>> defaultMobFarmBonusMap =
+  private static final HashMap<String, HashMap<Integer, ItemStackTemplate>> defaultMobFarmBonusMap =
       new HashMap<>();
 
   static {
     // Animal Plains Farm Bonus
     defaultMobFarmBonusMap.put(
         MobFarmType.ANIMAL_PLAINS_FARM.getId() + "::0::minecraft:cow",
-        new HashMap<>(Map.of(20, new ItemStack(Items.LEATHER, 1))));
+        new HashMap<>(Map.of(20, new ItemStackTemplate(Items.LEATHER, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.ANIMAL_PLAINS_FARM.getId() + "::1::minecraft:cow",
-        new HashMap<>(Map.of(15, new ItemStack(Items.LEATHER, 1))));
+        new HashMap<>(Map.of(15, new ItemStackTemplate(Items.LEATHER, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.ANIMAL_PLAINS_FARM.getId() + "::2::minecraft:cow",
-        new HashMap<>(Map.of(10, new ItemStack(Items.LEATHER, 1))));
+        new HashMap<>(Map.of(10, new ItemStackTemplate(Items.LEATHER, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.ANIMAL_PLAINS_FARM.getId() + "::3::minecraft:cow",
-        new HashMap<>(Map.of(5, new ItemStack(Items.LEATHER, 1))));
+        new HashMap<>(Map.of(5, new ItemStackTemplate(Items.LEATHER, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.ANIMAL_PLAINS_FARM.getId() + "::0::minecraft:sheep",
-        new HashMap<>(Map.of(20, new ItemStack(Items.WHITE_WOOL, 1))));
+        new HashMap<>(Map.of(20, new ItemStackTemplate(Items.WHITE_WOOL, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.ANIMAL_PLAINS_FARM.getId() + "::1::minecraft:sheep",
-        new HashMap<>(Map.of(15, new ItemStack(Items.WHITE_WOOL, 1))));
+        new HashMap<>(Map.of(15, new ItemStackTemplate(Items.WHITE_WOOL, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.ANIMAL_PLAINS_FARM.getId() + "::2::minecraft:sheep",
-        new HashMap<>(Map.of(10, new ItemStack(Items.WHITE_WOOL, 1))));
+        new HashMap<>(Map.of(10, new ItemStackTemplate(Items.WHITE_WOOL, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.ANIMAL_PLAINS_FARM.getId() + "::3::minecraft:sheep",
-        new HashMap<>(Map.of(5, new ItemStack(Items.WHITE_WOOL, 1))));
+        new HashMap<>(Map.of(5, new ItemStackTemplate(Items.WHITE_WOOL, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.ANIMAL_PLAINS_FARM.getId() + "::0::minecraft:chicken",
-        new HashMap<>(Map.of(20, new ItemStack(Items.EGG, 1))));
+        new HashMap<>(Map.of(20, new ItemStackTemplate(Items.EGG, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.ANIMAL_PLAINS_FARM.getId() + "::1::minecraft:chicken",
-        new HashMap<>(Map.of(15, new ItemStack(Items.EGG, 1))));
+        new HashMap<>(Map.of(15, new ItemStackTemplate(Items.EGG, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.ANIMAL_PLAINS_FARM.getId() + "::2::minecraft:chicken",
-        new HashMap<>(Map.of(10, new ItemStack(Items.EGG, 1))));
+        new HashMap<>(Map.of(10, new ItemStackTemplate(Items.EGG, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.ANIMAL_PLAINS_FARM.getId() + "::3::minecraft:chicken",
-        new HashMap<>(Map.of(5, new ItemStack(Items.EGG, 1))));
+        new HashMap<>(Map.of(5, new ItemStackTemplate(Items.EGG, 1))));
 
     // Bee Hive Farm Bonus
     defaultMobFarmBonusMap.put(
         MobFarmType.BEE_HIVE_FARM.getId() + "::0::minecraft:bee",
-        new HashMap<>(Map.of(20, new ItemStack(Items.HONEYCOMB, 1))));
+        new HashMap<>(Map.of(20, new ItemStackTemplate(Items.HONEYCOMB, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.BEE_HIVE_FARM.getId() + "::1::minecraft:bee",
-        new HashMap<>(Map.of(15, new ItemStack(Items.HONEYCOMB, 1))));
+        new HashMap<>(Map.of(15, new ItemStackTemplate(Items.HONEYCOMB, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.BEE_HIVE_FARM.getId() + "::2::minecraft:bee",
-        new HashMap<>(Map.of(10, new ItemStack(Items.HONEYCOMB, 1))));
+        new HashMap<>(Map.of(10, new ItemStackTemplate(Items.HONEYCOMB, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.BEE_HIVE_FARM.getId() + "::3::minecraft:bee",
-        new HashMap<>(Map.of(5, new ItemStack(Items.HONEYCOMB, 1))));
+        new HashMap<>(Map.of(5, new ItemStackTemplate(Items.HONEYCOMB, 1))));
 
     // Desert Farm Bonus
     defaultMobFarmBonusMap.put(
         MobFarmType.DESERT_FARM.getId() + "::0::minecraft:husk",
-        new HashMap<>(Map.of(20, new ItemStack(Items.SAND, 1))));
+        new HashMap<>(Map.of(20, new ItemStackTemplate(Items.SAND, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.DESERT_FARM.getId() + "::1::minecraft:husk",
-        new HashMap<>(Map.of(15, new ItemStack(Items.SAND, 1))));
+        new HashMap<>(Map.of(15, new ItemStackTemplate(Items.SAND, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.DESERT_FARM.getId() + "::2::minecraft:husk",
-        new HashMap<>(Map.of(10, new ItemStack(Items.SAND, 1))));
+        new HashMap<>(Map.of(10, new ItemStackTemplate(Items.SAND, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.DESERT_FARM.getId() + "::3::minecraft:husk",
-        new HashMap<>(Map.of(5, new ItemStack(Items.SAND, 1))));
+        new HashMap<>(Map.of(5, new ItemStackTemplate(Items.SAND, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.DESERT_FARM.getId() + "::0::minecraft:rabbit",
-        new HashMap<>(Map.of(20, new ItemStack(Items.RABBIT_HIDE, 1))));
+        new HashMap<>(Map.of(20, new ItemStackTemplate(Items.RABBIT_HIDE, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.DESERT_FARM.getId() + "::1::minecraft:rabbit",
-        new HashMap<>(Map.of(15, new ItemStack(Items.RABBIT_HIDE, 1))));
+        new HashMap<>(Map.of(15, new ItemStackTemplate(Items.RABBIT_HIDE, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.DESERT_FARM.getId() + "::2::minecraft:rabbit",
-        new HashMap<>(Map.of(10, new ItemStack(Items.RABBIT_HIDE, 1))));
+        new HashMap<>(Map.of(10, new ItemStackTemplate(Items.RABBIT_HIDE, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.DESERT_FARM.getId() + "::3::minecraft:rabbit",
-        new HashMap<>(Map.of(5, new ItemStack(Items.RABBIT_HIDE, 1))));
+        new HashMap<>(Map.of(5, new ItemStackTemplate(Items.RABBIT_HIDE, 1))));
 
     // Iron Golem Farm Bonus
     defaultMobFarmBonusMap.put(
         MobFarmType.IRON_GOLEM_FARM.getId() + "::0::minecraft:iron_golem",
-        new HashMap<>(Map.of(20, new ItemStack(Items.IRON_INGOT, 1))));
+        new HashMap<>(Map.of(20, new ItemStackTemplate(Items.IRON_INGOT, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.IRON_GOLEM_FARM.getId() + "::1::minecraft:iron_golem",
-        new HashMap<>(Map.of(15, new ItemStack(Items.IRON_INGOT, 1))));
+        new HashMap<>(Map.of(15, new ItemStackTemplate(Items.IRON_INGOT, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.IRON_GOLEM_FARM.getId() + "::2::minecraft:iron_golem",
-        new HashMap<>(Map.of(10, new ItemStack(Items.IRON_INGOT, 1))));
+        new HashMap<>(Map.of(10, new ItemStackTemplate(Items.IRON_INGOT, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.IRON_GOLEM_FARM.getId() + "::3::minecraft:iron_golem",
-        new HashMap<>(Map.of(5, new ItemStack(Items.IRON_INGOT, 1))));
+        new HashMap<>(Map.of(5, new ItemStackTemplate(Items.IRON_INGOT, 1))));
 
     // Jungle Farm Bonus
     defaultMobFarmBonusMap.put(
         MobFarmType.JUNGLE_FARM.getId() + "::0::minecraft:parrot",
-        new HashMap<>(Map.of(20, new ItemStack(Items.FEATHER, 1))));
+        new HashMap<>(Map.of(20, new ItemStackTemplate(Items.FEATHER, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.JUNGLE_FARM.getId() + "::1::minecraft:parrot",
-        new HashMap<>(Map.of(15, new ItemStack(Items.FEATHER, 1))));
+        new HashMap<>(Map.of(15, new ItemStackTemplate(Items.FEATHER, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.JUNGLE_FARM.getId() + "::2::minecraft:parrot",
-        new HashMap<>(Map.of(10, new ItemStack(Items.FEATHER, 1))));
+        new HashMap<>(Map.of(10, new ItemStackTemplate(Items.FEATHER, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.JUNGLE_FARM.getId() + "::3::minecraft:parrot",
-        new HashMap<>(Map.of(5, new ItemStack(Items.FEATHER, 1))));
+        new HashMap<>(Map.of(5, new ItemStackTemplate(Items.FEATHER, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.JUNGLE_FARM.getId() + "::0::minecraft:panda",
-        new HashMap<>(Map.of(20, new ItemStack(Items.BAMBOO, 1))));
+        new HashMap<>(Map.of(20, new ItemStackTemplate(Items.BAMBOO, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.JUNGLE_FARM.getId() + "::1::minecraft:panda",
-        new HashMap<>(Map.of(15, new ItemStack(Items.BAMBOO, 1))));
+        new HashMap<>(Map.of(15, new ItemStackTemplate(Items.BAMBOO, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.JUNGLE_FARM.getId() + "::2::minecraft:panda",
-        new HashMap<>(Map.of(10, new ItemStack(Items.BAMBOO, 1))));
+        new HashMap<>(Map.of(10, new ItemStackTemplate(Items.BAMBOO, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.JUNGLE_FARM.getId() + "::3::minecraft:panda",
-        new HashMap<>(Map.of(5, new ItemStack(Items.BAMBOO, 1))));
+        new HashMap<>(Map.of(5, new ItemStackTemplate(Items.BAMBOO, 1))));
 
     // Monster Plains Cave Farm Bonus
     defaultMobFarmBonusMap.put(
         MobFarmType.MONSTER_PLAINS_CAVE_FARM.getId() + "::0::minecraft:zombie",
-        new HashMap<>(Map.of(20, new ItemStack(Items.ROTTEN_FLESH, 1))));
+        new HashMap<>(Map.of(20, new ItemStackTemplate(Items.ROTTEN_FLESH, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.MONSTER_PLAINS_CAVE_FARM.getId() + "::1::minecraft:zombie",
-        new HashMap<>(Map.of(15, new ItemStack(Items.ROTTEN_FLESH, 1))));
+        new HashMap<>(Map.of(15, new ItemStackTemplate(Items.ROTTEN_FLESH, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.MONSTER_PLAINS_CAVE_FARM.getId() + "::2::minecraft:zombie",
-        new HashMap<>(Map.of(10, new ItemStack(Items.ROTTEN_FLESH, 1))));
+        new HashMap<>(Map.of(10, new ItemStackTemplate(Items.ROTTEN_FLESH, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.MONSTER_PLAINS_CAVE_FARM.getId() + "::3::minecraft:zombie",
-        new HashMap<>(Map.of(5, new ItemStack(Items.ROTTEN_FLESH, 1))));
+        new HashMap<>(Map.of(5, new ItemStackTemplate(Items.ROTTEN_FLESH, 1))));
 
     // Nether Fortress Farm Bonus
     defaultMobFarmBonusMap.put(
         MobFarmType.NETHER_FORTRESS_FARM.getId() + "::0::minecraft:blaze",
-        new HashMap<>(Map.of(20, new ItemStack(Items.BLAZE_ROD, 1))));
+        new HashMap<>(Map.of(20, new ItemStackTemplate(Items.BLAZE_ROD, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.NETHER_FORTRESS_FARM.getId() + "::1::minecraft:blaze",
-        new HashMap<>(Map.of(15, new ItemStack(Items.BLAZE_ROD, 1))));
+        new HashMap<>(Map.of(15, new ItemStackTemplate(Items.BLAZE_ROD, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.NETHER_FORTRESS_FARM.getId() + "::2::minecraft:blaze",
-        new HashMap<>(Map.of(10, new ItemStack(Items.BLAZE_ROD, 1))));
+        new HashMap<>(Map.of(10, new ItemStackTemplate(Items.BLAZE_ROD, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.NETHER_FORTRESS_FARM.getId() + "::3::minecraft:blaze",
-        new HashMap<>(Map.of(5, new ItemStack(Items.BLAZE_ROD, 1))));
+        new HashMap<>(Map.of(5, new ItemStackTemplate(Items.BLAZE_ROD, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.NETHER_FORTRESS_FARM.getId() + "::0::minecraft:magma_cube",
-        new HashMap<>(Map.of(20, new ItemStack(Items.MAGMA_CREAM, 1))));
+        new HashMap<>(Map.of(20, new ItemStackTemplate(Items.MAGMA_CREAM, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.NETHER_FORTRESS_FARM.getId() + "::1::minecraft:magma_cube",
-        new HashMap<>(Map.of(15, new ItemStack(Items.MAGMA_CREAM, 1))));
+        new HashMap<>(Map.of(15, new ItemStackTemplate(Items.MAGMA_CREAM, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.NETHER_FORTRESS_FARM.getId() + "::2::minecraft:magma_cube",
-        new HashMap<>(Map.of(10, new ItemStack(Items.MAGMA_CREAM, 1))));
+        new HashMap<>(Map.of(10, new ItemStackTemplate(Items.MAGMA_CREAM, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.NETHER_FORTRESS_FARM.getId() + "::3::minecraft:magma_cube",
-        new HashMap<>(Map.of(5, new ItemStack(Items.MAGMA_CREAM, 1))));
+        new HashMap<>(Map.of(5, new ItemStackTemplate(Items.MAGMA_CREAM, 1))));
 
     // Ocean Farm Bonus
     defaultMobFarmBonusMap.put(
         MobFarmType.OCEAN_FARM.getId() + "::0::minecraft:cod",
-        new HashMap<>(Map.of(20, new ItemStack(Items.COD, 1))));
+        new HashMap<>(Map.of(20, new ItemStackTemplate(Items.COD, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.OCEAN_FARM.getId() + "::1::minecraft:cod",
-        new HashMap<>(Map.of(15, new ItemStack(Items.COD, 1))));
+        new HashMap<>(Map.of(15, new ItemStackTemplate(Items.COD, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.OCEAN_FARM.getId() + "::2::minecraft:cod",
-        new HashMap<>(Map.of(10, new ItemStack(Items.COD, 1))));
+        new HashMap<>(Map.of(10, new ItemStackTemplate(Items.COD, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.OCEAN_FARM.getId() + "::3::minecraft:cod",
-        new HashMap<>(Map.of(5, new ItemStack(Items.COD, 1))));
+        new HashMap<>(Map.of(5, new ItemStackTemplate(Items.COD, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.OCEAN_FARM.getId() + "::0::minecraft:squid",
-        new HashMap<>(Map.of(20, new ItemStack(Items.INK_SAC, 1))));
+        new HashMap<>(Map.of(20, new ItemStackTemplate(Items.INK_SAC, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.OCEAN_FARM.getId() + "::1::minecraft:squid",
-        new HashMap<>(Map.of(15, new ItemStack(Items.INK_SAC, 1))));
+        new HashMap<>(Map.of(15, new ItemStackTemplate(Items.INK_SAC, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.OCEAN_FARM.getId() + "::2::minecraft:squid",
-        new HashMap<>(Map.of(10, new ItemStack(Items.INK_SAC, 1))));
+        new HashMap<>(Map.of(10, new ItemStackTemplate(Items.INK_SAC, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.OCEAN_FARM.getId() + "::3::minecraft:squid",
-        new HashMap<>(Map.of(5, new ItemStack(Items.INK_SAC, 1))));
+        new HashMap<>(Map.of(5, new ItemStackTemplate(Items.INK_SAC, 1))));
 
     // Swamp Farm Bonus
     defaultMobFarmBonusMap.put(
         MobFarmType.SWAMP_FARM.getId() + "::0::minecraft:frog",
-        new HashMap<>(Map.of(20, new ItemStack(Items.SLIME_BALL, 1))));
+        new HashMap<>(Map.of(20, new ItemStackTemplate(Items.SLIME_BALL, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.SWAMP_FARM.getId() + "::1::minecraft:frog",
-        new HashMap<>(Map.of(15, new ItemStack(Items.SLIME_BALL, 1))));
+        new HashMap<>(Map.of(15, new ItemStackTemplate(Items.SLIME_BALL, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.SWAMP_FARM.getId() + "::2::minecraft:frog",
-        new HashMap<>(Map.of(10, new ItemStack(Items.SLIME_BALL, 1))));
+        new HashMap<>(Map.of(10, new ItemStackTemplate(Items.SLIME_BALL, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.SWAMP_FARM.getId() + "::3::minecraft:frog",
-        new HashMap<>(Map.of(5, new ItemStack(Items.SLIME_BALL, 1))));
+        new HashMap<>(Map.of(5, new ItemStackTemplate(Items.SLIME_BALL, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.SWAMP_FARM.getId() + "::0::minecraft:slime",
-        new HashMap<>(Map.of(20, new ItemStack(Items.SLIME_BALL, 1))));
+        new HashMap<>(Map.of(20, new ItemStackTemplate(Items.SLIME_BALL, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.SWAMP_FARM.getId() + "::1::minecraft:slime",
-        new HashMap<>(Map.of(15, new ItemStack(Items.SLIME_BALL, 1))));
+        new HashMap<>(Map.of(15, new ItemStackTemplate(Items.SLIME_BALL, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.SWAMP_FARM.getId() + "::2::minecraft:slime",
-        new HashMap<>(Map.of(10, new ItemStack(Items.SLIME_BALL, 1))));
+        new HashMap<>(Map.of(10, new ItemStackTemplate(Items.SLIME_BALL, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.SWAMP_FARM.getId() + "::3::minecraft:slime",
-        new HashMap<>(Map.of(5, new ItemStack(Items.SLIME_BALL, 1))));
+        new HashMap<>(Map.of(5, new ItemStackTemplate(Items.SLIME_BALL, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.SWAMP_FARM.getId() + "::0::minecraft:witch",
-        new HashMap<>(Map.of(20, new ItemStack(Items.REDSTONE, 1))));
+        new HashMap<>(Map.of(20, new ItemStackTemplate(Items.REDSTONE, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.SWAMP_FARM.getId() + "::1::minecraft:witch",
-        new HashMap<>(Map.of(15, new ItemStack(Items.REDSTONE, 1))));
+        new HashMap<>(Map.of(15, new ItemStackTemplate(Items.REDSTONE, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.SWAMP_FARM.getId() + "::2::minecraft:witch",
-        new HashMap<>(Map.of(10, new ItemStack(Items.REDSTONE, 1))));
+        new HashMap<>(Map.of(10, new ItemStackTemplate(Items.REDSTONE, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.SWAMP_FARM.getId() + "::3::minecraft:witch",
-        new HashMap<>(Map.of(5, new ItemStack(Items.REDSTONE, 1))));
+        new HashMap<>(Map.of(5, new ItemStackTemplate(Items.REDSTONE, 1))));
   }
 
   public static void registerConfig() {
@@ -337,8 +338,9 @@ public class MobFarmBonusConfig extends Config {
           if (!properties.containsKey(mobFarmName)) {
             bonusMap.forEach(
                 (chance, itemStack) -> {
-                  String itemName = BuiltInRegistries.ITEM.getKey(itemStack.getItem()).toString();
-                  String value = itemName + "::" + itemStack.getCount() + "::" + chance;
+                  String itemName =
+                      BuiltInRegistries.ITEM.getKey(itemStack.item().value()).toString();
+                  String value = itemName + "::" + itemStack.count() + "::" + chance;
                   properties.setProperty(mobFarmName, value);
                 });
           }
@@ -404,7 +406,7 @@ public class MobFarmBonusConfig extends Config {
     try {
       MobFarmType mobFarmType = MobFarmType.valueOf(mobFarmName.toUpperCase(Locale.ROOT));
       addBonusDropEntry(
-          mobFarmType, tierLevel, entityType, chance, new ItemStack(item.get(), amount));
+          mobFarmType, tierLevel, entityType, chance, new ItemStackTemplate(item.get(), amount));
     } catch (IllegalArgumentException e) {
       log.error(
           "{} Invalid mob farm name {} in config file {}",
@@ -419,12 +421,11 @@ public class MobFarmBonusConfig extends Config {
       int tierLevel,
       final String entityType,
       int chance,
-      final ItemStack itemStack) {
+      final ItemStackTemplate itemStack) {
 
-    // Check if item stack amount is valid
-    if (itemStack.isEmpty()) {
-      log.error(
-          "{} Invalid item stack {} in config file {}", LOG_PREFIX, itemStack, CONFIG_FILE_NAME);
+    // Check if item stack is valid
+    if (itemStack == null) {
+      log.error("{} Invalid item stack in config file {}", LOG_PREFIX, CONFIG_FILE_NAME);
       return;
     }
 
@@ -457,30 +458,15 @@ public class MobFarmBonusConfig extends Config {
       chance = 5;
     }
 
-    // Validate drop amount against item max stack size
-    int maxStackSize = itemStack.getMaxStackSize();
-    int configuredAmount = itemStack.getCount();
-    int maxAllowedAmount = maxStackSize * MobFarmConfig.maxBonusDropMultiplier;
-
-    if (configuredAmount > maxAllowedAmount) {
+    // Validate drop amount (basic sanity check only — item components not yet bound at config time)
+    int configuredAmount = itemStack.count();
+    if (configuredAmount < 1) {
       log.warn(
-          "{} Configured amount {} exceeds maximum allowed {} ({}x stack size of {}) for {} in config file {}, capping to maximum",
+          "{} Invalid drop amount {} for {} in config file {}, using 1",
           LOG_PREFIX,
           configuredAmount,
-          maxAllowedAmount,
-          MobFarmConfig.maxBonusDropMultiplier,
-          maxStackSize,
           entityType,
           CONFIG_FILE_NAME);
-      itemStack.setCount(maxAllowedAmount);
-    } else if (configuredAmount > maxStackSize * 10) {
-      log.warn(
-          "{} High drop amount {} configured ({}x stack size of {}) for {} - ensure your modpack supports this with storage mods",
-          LOG_PREFIX,
-          configuredAmount,
-          configuredAmount / maxStackSize,
-          maxStackSize,
-          entityType);
     }
 
     // Add bonus drop entry to the map
@@ -508,6 +494,7 @@ public class MobFarmBonusConfig extends Config {
         .stream()
         .map(Map.Entry::getValue)
         .findFirst()
+        .map(ItemStackTemplate::create)
         .orElse(ItemStack.EMPTY);
   }
 
@@ -551,6 +538,7 @@ public class MobFarmBonusConfig extends Config {
         .filter(entry -> random.nextInt(entry.getKey()) == 0)
         .map(Map.Entry::getValue)
         .findFirst()
+        .map(ItemStackTemplate::create)
         .orElse(ItemStack.EMPTY);
   }
 

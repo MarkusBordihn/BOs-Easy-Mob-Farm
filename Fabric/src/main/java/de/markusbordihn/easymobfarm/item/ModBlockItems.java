@@ -22,7 +22,7 @@ package de.markusbordihn.easymobfarm.item;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.fabricmc.fabric.api.creativetab.v1.CreativeModeTabEvents;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -87,13 +87,13 @@ public class ModBlockItems {
     registerItem(MobFarmTemplateItem.ID_TIER_1, TIER_1_MOB_FARM_TEMPLATE);
     registerItem(MobFarmTemplateItem.ID_TIER_2, TIER_2_MOB_FARM_TEMPLATE);
     registerItem(MobFarmTemplateItem.ID_TIER_3, TIER_3_MOB_FARM_TEMPLATE);
-    ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.BUILDING_BLOCKS)
+    CreativeModeTabEvents.modifyOutputEvent(CreativeModeTabs.BUILDING_BLOCKS)
         .register(
-            entries -> {
-              entries.accept(TIER_0_MOB_FARM_TEMPLATE);
-              entries.accept(TIER_1_MOB_FARM_TEMPLATE);
-              entries.accept(TIER_2_MOB_FARM_TEMPLATE);
-              entries.accept(TIER_3_MOB_FARM_TEMPLATE);
+            output -> {
+              output.accept(TIER_0_MOB_FARM_TEMPLATE);
+              output.accept(TIER_1_MOB_FARM_TEMPLATE);
+              output.accept(TIER_2_MOB_FARM_TEMPLATE);
+              output.accept(TIER_3_MOB_FARM_TEMPLATE);
             });
 
     log.info("{} Mob Farms items ...", Constants.LOG_REGISTER_PREFIX);

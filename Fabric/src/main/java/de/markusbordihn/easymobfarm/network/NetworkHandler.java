@@ -26,12 +26,12 @@ import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 public class NetworkHandler {
 
   public static void registerNetworkMessageHandler() {
-    PayloadTypeRegistry.playS2C()
+    PayloadTypeRegistry.clientboundPlay()
         .register(
             SyncMobCaptureCardDefinitionsMessage.PAYLOAD_TYPE,
             SyncMobCaptureCardDefinitionsMessage.STREAM_CODEC);
 
-    PayloadTypeRegistry.playS2C()
+    PayloadTypeRegistry.clientboundPlay()
         .register(SyncLootPreviewMessage.PAYLOAD_TYPE, SyncLootPreviewMessage.STREAM_CODEC);
   }
 }

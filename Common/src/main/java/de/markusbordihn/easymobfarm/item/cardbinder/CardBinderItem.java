@@ -95,7 +95,7 @@ public class CardBinderItem extends MobFarmItem {
       TooltipFlag tooltipFlag) {
     ItemContainerContents contents =
         itemStack.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY);
-    int cardCount = (int) contents.stream().filter(stack -> !stack.isEmpty()).count();
+    int cardCount = (int) contents.allItemsCopyStream().filter(stack -> !stack.isEmpty()).count();
     addTooltip(
         tooltipConsumer,
         TextComponent.getTranslatedTextRaw(

@@ -20,16 +20,17 @@
 package de.markusbordihn.easymobfarm.tabs;
 
 import de.markusbordihn.easymobfarm.item.Items;
-import net.minecraft.world.item.CreativeModeTab.DisplayItemsGenerator;
-import net.minecraft.world.item.CreativeModeTab.ItemDisplayParameters;
-import net.minecraft.world.item.CreativeModeTab.Output;
+import java.util.ArrayList;
+import java.util.List;
+import net.minecraft.world.item.ItemStack;
 
-public class MobFarmConsumables implements DisplayItemsGenerator {
+public class MobFarmConsumables {
 
-  protected MobFarmConsumables() {}
+  private MobFarmConsumables() {}
 
-  @Override
-  public void accept(ItemDisplayParameters itemDisplayParameters, Output output) {
-    output.accept(Items.MILK_BOTTLE.getDefaultInstance());
+  public static List<ItemStack> createTabItems() {
+    List<ItemStack> items = new ArrayList<>();
+    items.add(Items.MILK_BOTTLE.getDefaultInstance());
+    return items;
   }
 }

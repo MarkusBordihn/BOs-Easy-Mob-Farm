@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[0,)"
+loaderVersion = "[62,)"
 license = "MIT"
 issueTrackerURL = "https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/issues"
 
@@ -17,13 +17,13 @@ harvest their valuable loot.'''
 [[dependencies.easy_mob_farm]]
 modId = "forge"
 mandatory = true
-versionRange = "[0,)"
+versionRange = "[62.0.9,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.easy_mob_farm]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[1.21.11,1.22)"
+versionRange = "[26.1,26.2)"
 ordering = "NONE"
 side = "BOTH"

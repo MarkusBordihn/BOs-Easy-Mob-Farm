@@ -20,31 +20,26 @@
 package de.markusbordihn.easymobfarm.tabs;
 
 import de.markusbordihn.easymobfarm.item.Items;
-import java.util.Set;
-import net.minecraft.world.item.CreativeModeTab.DisplayItemsGenerator;
-import net.minecraft.world.item.CreativeModeTab.ItemDisplayParameters;
-import net.minecraft.world.item.CreativeModeTab.Output;
+import java.util.ArrayList;
+import java.util.List;
 import net.minecraft.world.item.ItemStack;
 
-public class MobCaptureCards implements DisplayItemsGenerator {
+public class MobCaptureCards {
 
-  protected MobCaptureCards() {}
+  private MobCaptureCards() {}
 
-  @Override
-  public void accept(ItemDisplayParameters itemDisplayParameters, Output output) {
+  public static List<ItemStack> createTabItems() {
+    List<ItemStack> items = new ArrayList<>();
 
     // Default mob capture cards
-    output.accept(Items.BLANK_MOB_CAPTURE_CARD.getDefaultInstance());
-    output.accept(Items.CREATIVE_MOB_CAPTURE_CARD.getDefaultInstance());
+    items.add(Items.BLANK_MOB_CAPTURE_CARD.getDefaultInstance());
+    items.add(Items.CREATIVE_MOB_CAPTURE_CARD.getDefaultInstance());
 
     // Add custom mob capture cards
-    Set<ItemStack> mobCaptureCards =
-        CustomMobCaptureCards.getCustomMobCaptureCards(Items.MOB_CAPTURE_CARD);
-    for (ItemStack mobCaptureCard : mobCaptureCards) {
-      output.accept(mobCaptureCard);
-    }
+    items.addAll(CustomMobCaptureCards.getCustomMobCaptureCards(Items.MOB_CAPTURE_CARD));
 
     // Add card binder for better organization of mob capture cards
-    output.accept(Items.CARD_BINDER.getDefaultInstance());
+    items.add(Items.CARD_BINDER.getDefaultInstance());
+    return items;
   }
 }

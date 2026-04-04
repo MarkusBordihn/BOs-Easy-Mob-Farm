@@ -21,9 +21,7 @@ package de.markusbordihn.easymobfarm.client.renderer;
 
 import de.markusbordihn.easymobfarm.block.ModBlocks;
 import de.markusbordihn.easymobfarm.client.renderer.blockentity.MobFarmBlockEntityRenderer;
-import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
-import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 
 public class ClientRenderer {
 
@@ -33,23 +31,5 @@ public class ClientRenderer {
     BlockEntityRenderers.register(
         ModBlocks.CREATIVE_MOB_FARM_ENTITY, MobFarmBlockEntityRenderer::new);
     BlockEntityRenderers.register(ModBlocks.MOB_FARM_ENTITY, MobFarmBlockEntityRenderer::new);
-  }
-
-  public static void registerRenderLayers() {
-    BlockRenderLayerMap.putBlock(ModBlocks.TIER_0_MOB_FARM_TEMPLATE, ChunkSectionLayer.CUTOUT);
-    BlockRenderLayerMap.putBlock(ModBlocks.TIER_1_MOB_FARM_TEMPLATE, ChunkSectionLayer.CUTOUT);
-    BlockRenderLayerMap.putBlock(ModBlocks.TIER_2_MOB_FARM_TEMPLATE, ChunkSectionLayer.CUTOUT);
-    BlockRenderLayerMap.putBlock(ModBlocks.TIER_3_MOB_FARM_TEMPLATE, ChunkSectionLayer.CUTOUT);
-    BlockRenderLayerMap.putBlock(ModBlocks.CREATIVE_MOB_FARM, ChunkSectionLayer.CUTOUT);
-    BlockRenderLayerMap.putBlock(ModBlocks.ANIMAL_PLAINS_FARM, ChunkSectionLayer.CUTOUT);
-    BlockRenderLayerMap.putBlock(ModBlocks.BEE_HIVE_FARM, ChunkSectionLayer.CUTOUT);
-    BlockRenderLayerMap.putBlock(ModBlocks.DESERT_FARM, ChunkSectionLayer.CUTOUT);
-    BlockRenderLayerMap.putBlock(ModBlocks.IRON_GOLEM_FARM, ChunkSectionLayer.CUTOUT);
-    BlockRenderLayerMap.putBlock(ModBlocks.JUNGLE_FARM, ChunkSectionLayer.CUTOUT);
-    BlockRenderLayerMap.putBlock(ModBlocks.LUCKY_DROP_FARM, ChunkSectionLayer.CUTOUT);
-    BlockRenderLayerMap.putBlock(ModBlocks.MONSTER_PLAINS_CAVE_FARM, ChunkSectionLayer.CUTOUT);
-    BlockRenderLayerMap.putBlock(ModBlocks.NETHER_FORTRESS_FARM, ChunkSectionLayer.CUTOUT);
-    BlockRenderLayerMap.putBlock(ModBlocks.OCEAN_FARM, ChunkSectionLayer.TRANSLUCENT);
-    BlockRenderLayerMap.putBlock(ModBlocks.SWAMP_FARM, ChunkSectionLayer.CUTOUT);
   }
 }

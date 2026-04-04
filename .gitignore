@@ -31,6 +31,9 @@ forge*changelog.txt
 # VSCode
 .vscode/launch.json
 
+# Ghost Reference Index
+.ghost-reference-index
+
 # Template placeholder files
 put_your_*_here
 

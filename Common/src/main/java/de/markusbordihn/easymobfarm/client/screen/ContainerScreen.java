@@ -23,7 +23,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.client.screen.components.Graphics;
 import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -40,7 +40,7 @@ public class ContainerScreen<T extends MobFarmMenu> extends AbstractContainerScr
   protected final Minecraft minecraftInstance;
 
   public ContainerScreen(T menu, Inventory inventory, Component component) {
-    super(menu, inventory, component);
+    super(menu, inventory, component, 243, 256);
 
     // Get menu and screen data
     this.menu = menu;
@@ -51,11 +51,6 @@ public class ContainerScreen<T extends MobFarmMenu> extends AbstractContainerScr
 
   @Override
   protected void init() {
-    super.init();
-
-    // Default stats
-    this.imageHeight = 243;
-    this.imageWidth = 256;
 
     // Core Positions
     this.topPos = ((this.height - this.imageHeight) / 2) + 2;
@@ -63,7 +58,14 @@ public class ContainerScreen<T extends MobFarmMenu> extends AbstractContainerScr
   }
 
   @Override
-  protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
+  public void extractRenderState(
+      GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    this.renderBg(guiGraphics, partialTicks, mouseX, mouseY);
+    super.extractRenderState(guiGraphics, mouseX, mouseY, partialTicks);
+  }
+
+  protected void renderBg(
+      GuiGraphicsExtractor guiGraphics, float partialTicks, int mouseX, int mouseY) {
     Graphics.blit(guiGraphics, TEXTURE_DEMO_BACKGROUND, this.leftPos, this.topPos, 210, 160, 0, 0);
     Graphics.blit(guiGraphics, TEXTURE_DEMO_BACKGROUND, this.leftPos, this.topPos, 210, 160, 0, 0);
     Graphics.blit(

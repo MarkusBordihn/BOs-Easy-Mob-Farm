@@ -22,7 +22,7 @@ package de.markusbordihn.easymobfarm.tabs;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.item.Items;
 import de.markusbordihn.easymobfarm.item.ModBlockItems;
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -41,46 +41,46 @@ public class ModTabs {
     Registry.register(
         BuiltInRegistries.CREATIVE_MODE_TAB,
         Constants.MOD_ID + ":mob_capture_cards",
-        FabricItemGroup.builder()
+        FabricCreativeModeTab.builder()
             .icon(() -> Items.BLANK_MOB_CAPTURE_CARD.asItem().getDefaultInstance())
             .title(Component.translatable("itemGroup.easy_mob_farm.mob_capture_cards"))
-            .displayItems(new MobCaptureCards())
+            .displayItems((params, output) -> output.acceptAll(MobCaptureCards.createTabItems()))
             .build());
 
     Registry.register(
         BuiltInRegistries.CREATIVE_MODE_TAB,
         Constants.MOD_ID + ":mob_farms",
-        FabricItemGroup.builder()
+        FabricCreativeModeTab.builder()
             .icon(() -> ModBlockItems.CREATIVE_MOB_FARM.asItem().getDefaultInstance())
             .title(Component.translatable("itemGroup.easy_mob_farm.mob_farms"))
-            .displayItems(new MobFarms())
+            .displayItems((params, output) -> output.acceptAll(MobFarms.createTabItems()))
             .build());
 
     Registry.register(
         BuiltInRegistries.CREATIVE_MODE_TAB,
         Constants.MOD_ID + ":mob_farm_upgrades",
-        FabricItemGroup.builder()
+        FabricCreativeModeTab.builder()
             .icon(() -> Items.SMALL_SLOT_UPGRADE.asItem().getDefaultInstance())
             .title(Component.translatable("itemGroup.easy_mob_farm.mob_farm_upgrades"))
-            .displayItems(new MobFarmUpgrades())
+            .displayItems((params, output) -> output.acceptAll(MobFarmUpgrades.createTabItems()))
             .build());
 
     Registry.register(
         BuiltInRegistries.CREATIVE_MODE_TAB,
         Constants.MOD_ID + ":mob_catcher",
-        FabricItemGroup.builder()
+        FabricCreativeModeTab.builder()
             .icon(() -> Items.CREATIVE_MOB_CATCHER.asItem().getDefaultInstance())
             .title(Component.translatable("itemGroup.easy_mob_farm.mob_catcher"))
-            .displayItems(new MobCatcher())
+            .displayItems((params, output) -> output.acceptAll(MobCatcher.createTabItems()))
             .build());
 
     Registry.register(
         BuiltInRegistries.CREATIVE_MODE_TAB,
         Constants.MOD_ID + ":mob_farm_consumables",
-        FabricItemGroup.builder()
+        FabricCreativeModeTab.builder()
             .icon(() -> Items.MILK_BOTTLE.asItem().getDefaultInstance())
             .title(Component.translatable("itemGroup.easy_mob_farm.mob_farm_consumables"))
-            .displayItems(new MobFarmConsumables())
+            .displayItems((params, output) -> output.acceptAll(MobFarmConsumables.createTabItems()))
             .build());
   }
 }

@@ -20,48 +20,47 @@
 package de.markusbordihn.easymobfarm.tabs;
 
 import de.markusbordihn.easymobfarm.item.ModBlockItems;
-import net.minecraft.world.item.CreativeModeTab.DisplayItemsGenerator;
-import net.minecraft.world.item.CreativeModeTab.ItemDisplayParameters;
-import net.minecraft.world.item.CreativeModeTab.Output;
+import java.util.ArrayList;
+import java.util.List;
+import net.minecraft.world.item.ItemStack;
 
-public class MobFarms implements DisplayItemsGenerator {
+public class MobFarms {
 
-  protected MobFarms() {}
+  private MobFarms() {}
 
-  @Override
-  public void accept(ItemDisplayParameters itemDisplayParameters, Output output) {
-
-    // Default mob farm items
-    output.accept(ModBlockItems.CREATIVE_MOB_FARM.getDefaultInstance());
-    output.acceptAll(
+  public static List<ItemStack> createTabItems() {
+    List<ItemStack> items = new ArrayList<>();
+    items.add(ModBlockItems.CREATIVE_MOB_FARM.getDefaultInstance());
+    items.addAll(
         CustomMobFarmBlocks.getMobFarmTiers(
             ModBlockItems.ANIMAL_PLAINS_FARM.getDefaultInstance().getItem()));
-    output.acceptAll(
+    items.addAll(
         CustomMobFarmBlocks.getMobFarmTiers(
             ModBlockItems.BEE_HIVE_FARM.getDefaultInstance().getItem()));
-    output.acceptAll(
+    items.addAll(
         CustomMobFarmBlocks.getMobFarmTiers(
             ModBlockItems.DESERT_FARM.getDefaultInstance().getItem()));
-    output.acceptAll(
+    items.addAll(
         CustomMobFarmBlocks.getMobFarmTiers(
             ModBlockItems.IRON_GOLEM_FARM.getDefaultInstance().getItem()));
-    output.acceptAll(
+    items.addAll(
         CustomMobFarmBlocks.getMobFarmTiers(
             ModBlockItems.JUNGLE_FARM.getDefaultInstance().getItem()));
-    output.acceptAll(
+    items.addAll(
         CustomMobFarmBlocks.getMobFarmTiers(
             ModBlockItems.LUCKY_DROP_FARM.getDefaultInstance().getItem()));
-    output.acceptAll(
+    items.addAll(
         CustomMobFarmBlocks.getMobFarmTiers(
             ModBlockItems.MONSTER_PLAINS_CAVE_FARM.getDefaultInstance().getItem()));
-    output.acceptAll(
+    items.addAll(
         CustomMobFarmBlocks.getMobFarmTiers(
             ModBlockItems.NETHER_FORTRESS_FARM.getDefaultInstance().getItem()));
-    output.acceptAll(
+    items.addAll(
         CustomMobFarmBlocks.getMobFarmTiers(
             ModBlockItems.OCEAN_FARM.getDefaultInstance().getItem()));
-    output.acceptAll(
+    items.addAll(
         CustomMobFarmBlocks.getMobFarmTiers(
             ModBlockItems.SWAMP_FARM.getDefaultInstance().getItem()));
+    return items;
   }
 }

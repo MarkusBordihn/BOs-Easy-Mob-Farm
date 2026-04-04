@@ -26,7 +26,7 @@ import de.markusbordihn.easymobfarm.client.screen.components.Graphics;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.menu.CardBinderMenu;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
@@ -63,9 +63,7 @@ public class CardBinderScreen<T extends CardBinderMenu> extends AbstractContaine
   private Button nextPageButton;
 
   public CardBinderScreen(T menu, Inventory inventory, Component title) {
-    super(menu, inventory, title);
-    this.imageWidth = BOOK_WIDTH;
-    this.imageHeight = 244;
+    super(menu, inventory, title, BOOK_WIDTH, 244);
   }
 
   @Override
@@ -106,14 +104,16 @@ public class CardBinderScreen<T extends CardBinderMenu> extends AbstractContaine
   }
 
   @Override
-  public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-    super.render(guiGraphics, mouseX, mouseY, partialTicks);
+  public void extractRenderState(
+      GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    this.renderBg(guiGraphics, partialTicks, mouseX, mouseY);
+    super.extractRenderState(guiGraphics, mouseX, mouseY, partialTicks);
     this.renderRightPagePreview(guiGraphics, mouseX, mouseY);
-    this.renderTooltip(guiGraphics, mouseX, mouseY);
+    this.extractTooltip(guiGraphics, mouseX, mouseY);
   }
 
-  @Override
-  protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
+  protected void renderBg(
+      GuiGraphicsExtractor guiGraphics, float partialTicks, int mouseX, int mouseY) {
     int x = this.leftPos;
     int y = this.topPos;
 
@@ -136,7 +136,7 @@ public class CardBinderScreen<T extends CardBinderMenu> extends AbstractContaine
     renderSelectedHighlight(guiGraphics, x, y);
   }
 
-  private void renderCardSlotPockets(GuiGraphics guiGraphics, int x, int y) {
+  private void renderCardSlotPockets(GuiGraphicsExtractor guiGraphics, int x, int y) {
     Minecraft mc = Minecraft.getInstance();
     for (int i = 0; i < CardBinderMenu.CONTAINER_SIZE; i++) {
       Slot slot = this.menu.getSlot(i);
@@ -174,14 +174,14 @@ public class CardBinderScreen<T extends CardBinderMenu> extends AbstractContaine
     }
   }
 
-  private void renderSelectedHighlight(GuiGraphics guiGraphics, int x, int y) {
+  private void renderSelectedHighlight(GuiGraphicsExtractor guiGraphics, int x, int y) {
     if (selectedSlotIndex < 0 || selectedSlotIndex >= CardBinderMenu.CONTAINER_SIZE) return;
     Slot slot = this.menu.getSlot(selectedSlotIndex);
     if (!slot.isActive() || !slot.hasItem()) return;
     guiGraphics.fill(x + slot.x - 1, y + slot.y - 1, x + slot.x + 17, y + slot.y + 17, 0x6055FFFF);
   }
 
-  private void renderInventorySlotFrames(GuiGraphics guiGraphics, int x, int y) {
+  private void renderInventorySlotFrames(GuiGraphicsExtractor guiGraphics, int x, int y) {
     Graphics.blit(
         guiGraphics,
         CHEST_GUI_TEXTURE,
@@ -194,30 +194,28 @@ public class CardBinderScreen<T extends CardBinderMenu> extends AbstractContaine
   }
 
   @Override
-  protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-    guiGraphics.drawString(this.font, this.title, 12, 12, COLOR_PAGE_TEXT, false);
+  protected void extractLabels(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
+    guiGraphics.text(this.font, this.title, 12, 12, COLOR_PAGE_TEXT, false);
 
     int cardCount = 0;
     for (int i = 0; i < CardBinderMenu.CONTAINER_SIZE; i++) {
       if (this.menu.getSlot(i).hasItem()) cardCount++;
     }
     String countText = cardCount + "/" + CardBinderMenu.CONTAINER_SIZE;
-    guiGraphics.drawString(
-        this.font, countText, 128 - this.font.width(countText), 12, 0xFF808080, false);
+    guiGraphics.text(this.font, countText, 128 - this.font.width(countText), 12, 0xFF808080, false);
 
     String pageText = (currentPage + 1) + "/" + (menu.getMaxPage() + 1);
-    guiGraphics.drawString(
+    guiGraphics.text(
         this.font, pageText, 70 - this.font.width(pageText) / 2, 136, COLOR_PAGE_TEXT, false);
 
     renderCardInfo(guiGraphics);
   }
 
-  private void renderCardInfo(GuiGraphics guiGraphics) {
+  private void renderCardInfo(GuiGraphicsExtractor guiGraphics) {
     Minecraft mc = Minecraft.getInstance();
     if (selectedSlotIndex < 0 || selectedSlotIndex >= CardBinderMenu.CONTAINER_SIZE) {
       String hint = "Hover a card";
-      guiGraphics.drawString(
-          this.font, hint, 210 - this.font.width(hint) / 2, 75, 0xFFA09080, false);
+      guiGraphics.text(this.font, hint, 210 - this.font.width(hint) / 2, 75, 0xFFA09080, false);
       return;
     }
     Slot slot = this.menu.getSlot(selectedSlotIndex);
@@ -241,48 +239,48 @@ public class CardBinderScreen<T extends CardBinderMenu> extends AbstractContaine
             case EPIC -> 0xFFAA00AA;
             default -> 0xFF808080;
           };
-      guiGraphics.drawString(this.font, data.rarity().name(), rightX, infoY, color, false);
+      guiGraphics.text(this.font, data.rarity().name(), rightX, infoY, color, false);
       infoY += 11;
     }
     if (data.type() != null) {
       String typeText =
           data.type().length() > 20 ? data.type().substring(0, 20) + "..." : data.type();
-      guiGraphics.drawString(this.font, typeText, rightX, infoY, 0xFF808080, false);
+      guiGraphics.text(this.font, typeText, rightX, infoY, 0xFF808080, false);
       infoY += 11;
     }
     if (data.hasVariant()) {
-      guiGraphics.drawString(this.font, data.variant(), rightX, infoY, 0xFF808080, false);
+      guiGraphics.text(this.font, data.variant(), rightX, infoY, 0xFF808080, false);
       infoY += 11;
     }
     if (data.hasColor()) {
-      guiGraphics.drawString(this.font, data.color().getName(), rightX, infoY, 0xFF808080, false);
+      guiGraphics.text(this.font, data.color().getName(), rightX, infoY, 0xFF808080, false);
       infoY += 11;
     }
-    guiGraphics.drawString(this.font, "#" + data.getCardId(), rightX, infoY, 0xFFA0A0A0, false);
+    guiGraphics.text(this.font, "#" + data.getCardId(), rightX, infoY, 0xFFA0A0A0, false);
   }
 
   private void drawWordWrap(
-      GuiGraphics guiGraphics, String text, int x, int y, int maxWidth, int color) {
+      GuiGraphicsExtractor guiGraphics, String text, int x, int y, int maxWidth, int color) {
     if (this.font.width(text) <= maxWidth) {
-      guiGraphics.drawString(this.font, text, x, y, color, false);
+      guiGraphics.text(this.font, text, x, y, color, false);
       return;
     }
     StringBuilder line = new StringBuilder();
     int lineY = y;
     for (String word : text.split(" ")) {
       if (this.font.width(line + word) > maxWidth && !line.isEmpty()) {
-        guiGraphics.drawString(this.font, line.toString().trim(), x, lineY, color, false);
+        guiGraphics.text(this.font, line.toString().trim(), x, lineY, color, false);
         lineY += 10;
         line = new StringBuilder();
       }
       line.append(word).append(" ");
     }
     if (!line.isEmpty()) {
-      guiGraphics.drawString(this.font, line.toString().trim(), x, lineY, color, false);
+      guiGraphics.text(this.font, line.toString().trim(), x, lineY, color, false);
     }
   }
 
-  private void renderRightPagePreview(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+  private void renderRightPagePreview(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
     for (int i = 0; i < CardBinderMenu.CONTAINER_SIZE; i++) {
       Slot slot = this.menu.getSlot(i);
       if (slot.isActive() && slot.hasItem() && isHovering(slot.x, slot.y, 16, 16, mouseX, mouseY)) {
@@ -310,7 +308,7 @@ public class CardBinderScreen<T extends CardBinderMenu> extends AbstractContaine
       float entityHeight = livingEntity.getBbHeight();
       float yOffset = entityHeight < 1.5F ? 0.5F : 0.0625F;
 
-      InventoryScreen.renderEntityInInventoryFollowsMouse(
+      InventoryScreen.extractEntityInInventoryFollowsMouse(
           guiGraphics,
           entityAreaLeft,
           entityAreaTop,

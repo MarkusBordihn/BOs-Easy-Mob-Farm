@@ -48,7 +48,7 @@ import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -104,7 +104,8 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
   }
 
   @Override
-  protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
+  protected void renderBg(
+      GuiGraphicsExtractor guiGraphics, float partialTicks, int mouseX, int mouseY) {
     Graphics.blit(
         guiGraphics,
         this.menu.getMobFarmStatus() == MobFarmStatus.IDLE ? TEXTURE_UI_IDLE : TEXTURE_UI,
@@ -117,20 +118,21 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
   }
 
   @Override
-  public void render(GuiGraphics guiGraphics, int x, int y, float partialTicks) {
+  public void extractRenderState(
+      GuiGraphicsExtractor guiGraphics, int x, int y, float partialTicks) {
     this.xMouse = x;
     this.yMouse = y;
-    super.render(guiGraphics, x, y, partialTicks);
+    super.extractRenderState(guiGraphics, x, y, partialTicks);
     this.renderLockedSlot(guiGraphics, x, y);
     this.renderEntityType(guiGraphics, x, y);
     this.renderMobFarmProgress(guiGraphics, x, y);
-    this.renderTooltip(guiGraphics, x, y);
+    this.extractTooltip(guiGraphics, x, y);
   }
 
   @Override
-  protected void renderLabels(GuiGraphics guiGraphics, int x, int y) {}
+  protected void extractLabels(GuiGraphicsExtractor guiGraphics, int x, int y) {}
 
-  private void renderMobFarmProgress(GuiGraphics guiGraphics, int x, int y) {
+  private void renderMobFarmProgress(GuiGraphicsExtractor guiGraphics, int x, int y) {
     int mobFarmProgress = this.getMenu().getMobFarmProgress();
     int currentWidth = (mobFarmProgress * 32) / MobFarmConfig.farmProgressingTime;
     Graphics.blit(
@@ -146,7 +148,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
         256);
   }
 
-  private void renderEntityType(GuiGraphics guiGraphics, int x, int y) {
+  private void renderEntityType(GuiGraphicsExtractor guiGraphics, int x, int y) {
     // Verify block position.
     BlockPos blockPos = this.getMenu().getMobFarmBlockPos();
     if (blockPos == null || blockPos.equals(BlockPos.ZERO)) {
@@ -181,7 +183,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
         yOffset = 0.0625F;
       }
 
-      InventoryScreen.renderEntityInInventoryFollowsMouse(
+      InventoryScreen.extractEntityInInventoryFollowsMouse(
           guiGraphics,
           entityAreaLeft,
           entityAreaTop,
@@ -199,7 +201,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
     }
   }
 
-  private void renderLockedSlot(GuiGraphics guiGraphics, int x, int y) {
+  private void renderLockedSlot(GuiGraphicsExtractor guiGraphics, int x, int y) {
     for (Slot slot : this.menu.slots) {
       if (slot instanceof OutputSlot outputSlot && !outputSlot.isActive()) {
         Graphics.blit(
@@ -218,8 +220,8 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
   }
 
   @Override
-  public void renderTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-    super.renderTooltip(guiGraphics, mouseX, mouseY);
+  public void extractTooltip(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
+    super.extractTooltip(guiGraphics, mouseX, mouseY);
 
     MobFarmType mobFarmType = this.getMenu().getMobFarmType();
     boolean isAdvanced = Minecraft.getInstance().options.advancedItemTooltips;
@@ -386,7 +388,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
     }
   }
 
-  private void renderLootInfoTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+  private void renderLootInfoTooltip(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
     // Use cached tooltip if entity and enhancements haven't changed
     int enhancementHash = computeEnhancementHash();
     if (cachedLootTooltip == null
@@ -658,7 +660,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
   }
 
   private void renderSlotTooltip(
-      GuiGraphics guiGraphics, MobFarmSlot mobFarmSlot, int mouseX, int mouseY) {
+      GuiGraphicsExtractor guiGraphics, MobFarmSlot mobFarmSlot, int mouseX, int mouseY) {
     Component component = mobFarmSlot.getTooltip();
     if (component == null) {
       return;

@@ -20,21 +20,21 @@
 package de.markusbordihn.easymobfarm.tabs;
 
 import de.markusbordihn.easymobfarm.item.Items;
-import net.minecraft.world.item.CreativeModeTab.DisplayItemsGenerator;
-import net.minecraft.world.item.CreativeModeTab.ItemDisplayParameters;
-import net.minecraft.world.item.CreativeModeTab.Output;
+import java.util.ArrayList;
+import java.util.List;
+import net.minecraft.world.item.ItemStack;
 
-public class MobCatcher implements DisplayItemsGenerator {
+public class MobCatcher {
 
-  protected MobCatcher() {}
+  private MobCatcher() {}
 
-  @Override
-  public void accept(ItemDisplayParameters itemDisplayParameters, Output output) {
-    // Default mob capture
-    output.accept(Items.CREATIVE_MOB_CATCHER.getDefaultInstance());
-    output.accept(Items.ENDURING_CAPTURE_NET.getDefaultInstance());
-    output.accept(Items.IRONBOUND_CONTAINMENT_CAGE.getDefaultInstance());
-    output.accept(Items.MYSTIC_BINDING_CRYSTAL.getDefaultInstance());
-    output.accept(Items.VOID_BINDING_CHAIN.getDefaultInstance());
+  public static List<ItemStack> createTabItems() {
+    List<ItemStack> items = new ArrayList<>();
+    items.add(Items.CREATIVE_MOB_CATCHER.getDefaultInstance());
+    items.add(Items.ENDURING_CAPTURE_NET.getDefaultInstance());
+    items.add(Items.IRONBOUND_CONTAINMENT_CAGE.getDefaultInstance());
+    items.add(Items.MYSTIC_BINDING_CRYSTAL.getDefaultInstance());
+    items.add(Items.VOID_BINDING_CHAIN.getDefaultInstance());
+    return items;
   }
 }

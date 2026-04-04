@@ -19,7 +19,7 @@
 
 package de.markusbordihn.easymobfarm.client.screen.components;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
 
@@ -28,7 +28,7 @@ public class Graphics {
   private Graphics() {}
 
   public static void blit(
-      GuiGraphics guiGraphics,
+      GuiGraphicsExtractor guiGraphics,
       Identifier texture,
       int x,
       int y,
@@ -40,7 +40,7 @@ public class Graphics {
   }
 
   public static void blit(
-      GuiGraphics guiGraphics,
+      GuiGraphicsExtractor guiGraphics,
       Identifier texture,
       int x,
       int y,

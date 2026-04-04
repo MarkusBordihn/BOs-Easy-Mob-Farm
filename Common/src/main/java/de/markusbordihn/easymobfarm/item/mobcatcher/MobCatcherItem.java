@@ -162,20 +162,18 @@ public class MobCatcherItem extends MobFarmItem {
     if (!this.getAllowList().isEmpty()) {
       if (!this.getAllowList().contains(entityName)) {
         log.debug("Mob {} is not on the allow list for {}.", entityName, this);
-        player.displayClientMessage(
+        player.sendOverlayMessage(
             TextComponent.getTranslatedText(
-                "mob_is_not_on_allow_list", livingEntity.getDisplayName().getString()),
-            true);
+                "mob_is_not_on_allow_list", livingEntity.getDisplayName().getString()));
         return InteractionResult.FAIL;
       }
     } else {
       // Check deny list for mob types.
       if (!this.getDenyList().isEmpty() && this.getDenyList().contains(entityName)) {
         log.debug("Mob {} is on the deny list for {}.", entityName, this);
-        player.displayClientMessage(
+        player.sendOverlayMessage(
             TextComponent.getTranslatedText(
-                "mob_is_on_deny_list", livingEntity.getDisplayName().getString()),
-            true);
+                "mob_is_on_deny_list", livingEntity.getDisplayName().getString()));
         return InteractionResult.FAIL;
       }
 
@@ -190,10 +188,9 @@ public class MobCatcherItem extends MobFarmItem {
               dimensions.width(),
               dimensions.height(),
               this);
-          player.displayClientMessage(
+          player.sendOverlayMessage(
               TextComponent.getTranslatedText(
-                  "too_large_to_capture", livingEntity.getDisplayName().getString()),
-              true);
+                  "too_large_to_capture", livingEntity.getDisplayName().getString()));
           return InteractionResult.FAIL;
         }
       }
@@ -208,10 +205,9 @@ public class MobCatcherItem extends MobFarmItem {
             entityName,
             healthPercentage,
             this);
-        player.displayClientMessage(
+        player.sendOverlayMessage(
             TextComponent.getTranslatedText(
-                "too_strong_to_capture", livingEntity.getDisplayName().getString()),
-            true);
+                "too_strong_to_capture", livingEntity.getDisplayName().getString()));
         return InteractionResult.FAIL;
       }
     }
@@ -233,10 +229,9 @@ public class MobCatcherItem extends MobFarmItem {
     livingEntity.discard();
 
     // Notify player about the successful capture.
-    player.displayClientMessage(
+    player.sendOverlayMessage(
         TextComponent.getTranslatedText(
-            "captured_mob", mobCaptureData.name(), mobCaptureData.type()),
-        true);
+            "captured_mob", mobCaptureData.name(), mobCaptureData.type()));
 
     return InteractionResult.CONSUME;
   }

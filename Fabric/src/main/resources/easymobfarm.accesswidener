@@ -1,4 +1,4 @@
-accessWidener	v2 named
+accessWidener	v2 official
 accessible field net/minecraft/world/entity/Entity random Lnet/minecraft/util/RandomSource;
 accessible field net/minecraft/world/entity/projectile/FishingHook luck I
 

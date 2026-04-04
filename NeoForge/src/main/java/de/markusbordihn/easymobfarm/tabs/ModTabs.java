@@ -38,7 +38,8 @@ public class ModTabs {
           () ->
               CreativeModeTab.builder()
                   .icon(() -> ModItems.CREATIVE_MOB_CAPTURE_CARD.get().getDefaultInstance())
-                  .displayItems(new MobCaptureCards())
+                  .displayItems(
+                      (params, output) -> output.acceptAll(MobCaptureCards.createTabItems()))
                   .title(Component.translatable("itemGroup.easy_mob_farm.mob_capture_cards"))
                   .build());
   public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TAB_MOB_FARMS =
@@ -47,7 +48,7 @@ public class ModTabs {
           () ->
               CreativeModeTab.builder()
                   .icon(() -> ModBlockItems.CREATIVE_MOB_FARM.get().getDefaultInstance())
-                  .displayItems(new MobFarms())
+                  .displayItems((params, output) -> output.acceptAll(MobFarms.createTabItems()))
                   .title(Component.translatable("itemGroup.easy_mob_farm.mob_farms"))
                   .build());
   public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TAB_MOB_FARM_UPGRADES =
@@ -56,7 +57,8 @@ public class ModTabs {
           () ->
               CreativeModeTab.builder()
                   .icon(() -> ModItems.SMALL_SLOT_UPGRADE.get().getDefaultInstance())
-                  .displayItems(new MobFarmUpgrades())
+                  .displayItems(
+                      (params, output) -> output.acceptAll(MobFarmUpgrades.createTabItems()))
                   .title(Component.translatable("itemGroup.easy_mob_farm.mob_farm_upgrades"))
                   .build());
   public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TAB_MOB_CATCHER =
@@ -65,7 +67,7 @@ public class ModTabs {
           () ->
               CreativeModeTab.builder()
                   .icon(() -> ModItems.CREATIVE_MOB_CATCHER.get().getDefaultInstance())
-                  .displayItems(new MobCatcher())
+                  .displayItems((params, output) -> output.acceptAll(MobCatcher.createTabItems()))
                   .title(Component.translatable("itemGroup.easy_mob_farm.mob_catcher"))
                   .build());
   public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TAB_MOB_FARM_CONSUMABLES =
@@ -74,7 +76,8 @@ public class ModTabs {
           () ->
               CreativeModeTab.builder()
                   .icon(() -> ModItems.MILK_BOTTLE.get().getDefaultInstance())
-                  .displayItems(new MobFarmConsumables())
+                  .displayItems(
+                      (params, output) -> output.acceptAll(MobFarmConsumables.createTabItems()))
                   .title(Component.translatable("itemGroup.easy_mob_farm.mob_farm_consumables"))
                   .build());
 

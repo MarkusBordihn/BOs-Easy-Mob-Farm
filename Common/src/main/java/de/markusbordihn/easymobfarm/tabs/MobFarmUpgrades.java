@@ -21,56 +21,56 @@ package de.markusbordihn.easymobfarm.tabs;
 
 import de.markusbordihn.easymobfarm.compat.CompatConstants;
 import de.markusbordihn.easymobfarm.item.Items;
-import net.minecraft.world.item.CreativeModeTab.DisplayItemsGenerator;
-import net.minecraft.world.item.CreativeModeTab.ItemDisplayParameters;
-import net.minecraft.world.item.CreativeModeTab.Output;
+import java.util.ArrayList;
+import java.util.List;
+import net.minecraft.world.item.ItemStack;
 
-public class MobFarmUpgrades implements DisplayItemsGenerator {
+public class MobFarmUpgrades {
 
-  protected MobFarmUpgrades() {}
+  private MobFarmUpgrades() {}
 
-  @Override
-  public void accept(ItemDisplayParameters itemDisplayParameters, Output output) {
-    // Default mob farm upgrades
-    output.accept(Items.BIG_SLOT_UPGRADE.getDefaultInstance());
-    output.accept(Items.CREATIVE_SPEED_ENHANCEMENT.getDefaultInstance());
-    output.accept(Items.EGG_COLLECTOR_ENHANCEMENT.getDefaultInstance());
-    output.accept(Items.EXPERIENCE_ENHANCEMENT.getDefaultInstance());
-    output.accept(Items.FROG_CATALYST_COLD_ENHANCEMENT.getDefaultInstance());
-    output.accept(Items.FROG_CATALYST_TEMPERATE_ENHANCEMENT.getDefaultInstance());
-    output.accept(Items.FROG_CATALYST_WARM_ENHANCEMENT.getDefaultInstance());
+  public static List<ItemStack> createTabItems() {
+    List<ItemStack> items = new ArrayList<>();
+    items.add(Items.BIG_SLOT_UPGRADE.getDefaultInstance());
+    items.add(Items.CREATIVE_SPEED_ENHANCEMENT.getDefaultInstance());
+    items.add(Items.EGG_COLLECTOR_ENHANCEMENT.getDefaultInstance());
+    items.add(Items.EXPERIENCE_ENHANCEMENT.getDefaultInstance());
+    items.add(Items.FROG_CATALYST_COLD_ENHANCEMENT.getDefaultInstance());
+    items.add(Items.FROG_CATALYST_TEMPERATE_ENHANCEMENT.getDefaultInstance());
+    items.add(Items.FROG_CATALYST_WARM_ENHANCEMENT.getDefaultInstance());
 
     if (CompatConstants.MOD_SWAMPIER_SWAMPS_LOADED) {
-      output.accept(Items.FROG_CATALYST_WHITE_ENHANCEMENT.getDefaultInstance());
-      output.accept(Items.FROG_CATALYST_ORANGE_ENHANCEMENT.getDefaultInstance());
-      output.accept(Items.FROG_CATALYST_MAGENTA_ENHANCEMENT.getDefaultInstance());
-      output.accept(Items.FROG_CATALYST_LIGHT_BLUE_ENHANCEMENT.getDefaultInstance());
-      output.accept(Items.FROG_CATALYST_YELLOW_ENHANCEMENT.getDefaultInstance());
-      output.accept(Items.FROG_CATALYST_LIME_ENHANCEMENT.getDefaultInstance());
-      output.accept(Items.FROG_CATALYST_PINK_ENHANCEMENT.getDefaultInstance());
-      output.accept(Items.FROG_CATALYST_GRAY_ENHANCEMENT.getDefaultInstance());
-      output.accept(Items.FROG_CATALYST_LIGHT_GRAY_ENHANCEMENT.getDefaultInstance());
-      output.accept(Items.FROG_CATALYST_CYAN_ENHANCEMENT.getDefaultInstance());
-      output.accept(Items.FROG_CATALYST_PURPLE_ENHANCEMENT.getDefaultInstance());
-      output.accept(Items.FROG_CATALYST_BLUE_ENHANCEMENT.getDefaultInstance());
-      output.accept(Items.FROG_CATALYST_BROWN_ENHANCEMENT.getDefaultInstance());
-      output.accept(Items.FROG_CATALYST_GREEN_ENHANCEMENT.getDefaultInstance());
-      output.accept(Items.FROG_CATALYST_RED_ENHANCEMENT.getDefaultInstance());
-      output.accept(Items.FROG_CATALYST_BLACK_ENHANCEMENT.getDefaultInstance());
+      items.add(Items.FROG_CATALYST_WHITE_ENHANCEMENT.getDefaultInstance());
+      items.add(Items.FROG_CATALYST_ORANGE_ENHANCEMENT.getDefaultInstance());
+      items.add(Items.FROG_CATALYST_MAGENTA_ENHANCEMENT.getDefaultInstance());
+      items.add(Items.FROG_CATALYST_LIGHT_BLUE_ENHANCEMENT.getDefaultInstance());
+      items.add(Items.FROG_CATALYST_YELLOW_ENHANCEMENT.getDefaultInstance());
+      items.add(Items.FROG_CATALYST_LIME_ENHANCEMENT.getDefaultInstance());
+      items.add(Items.FROG_CATALYST_PINK_ENHANCEMENT.getDefaultInstance());
+      items.add(Items.FROG_CATALYST_GRAY_ENHANCEMENT.getDefaultInstance());
+      items.add(Items.FROG_CATALYST_LIGHT_GRAY_ENHANCEMENT.getDefaultInstance());
+      items.add(Items.FROG_CATALYST_CYAN_ENHANCEMENT.getDefaultInstance());
+      items.add(Items.FROG_CATALYST_PURPLE_ENHANCEMENT.getDefaultInstance());
+      items.add(Items.FROG_CATALYST_BLUE_ENHANCEMENT.getDefaultInstance());
+      items.add(Items.FROG_CATALYST_BROWN_ENHANCEMENT.getDefaultInstance());
+      items.add(Items.FROG_CATALYST_GREEN_ENHANCEMENT.getDefaultInstance());
+      items.add(Items.FROG_CATALYST_RED_ENHANCEMENT.getDefaultInstance());
+      items.add(Items.FROG_CATALYST_BLACK_ENHANCEMENT.getDefaultInstance());
     }
 
-    output.accept(Items.HONEY_EXTRACTOR_ENHANCEMENT.getDefaultInstance());
-    output.accept(Items.HONEY_HARVESTER_FRAME_ENHANCEMENT.getDefaultInstance());
-    output.accept(Items.KNIFE_ENHANCEMENT.getDefaultInstance());
-    output.accept(Items.LOOT_ENHANCEMENT.getDefaultInstance());
-    output.accept(Items.LUCK_ENHANCEMENT.getDefaultInstance());
-    output.accept(Items.MILK_EXTRACTOR_ENHANCEMENT.getDefaultInstance());
-    output.accept(Items.NO_FLOWERS_FILTER.getDefaultInstance());
-    output.accept(Items.NO_MEAT_FILTER.getDefaultInstance());
-    output.accept(Items.POLLEN_TRAP_ENHANCEMENT.getDefaultInstance());
-    output.accept(Items.SHEEP_ENHANCEMENT.getDefaultInstance());
-    output.accept(Items.SMALL_SLOT_UPGRADE.getDefaultInstance());
-    output.accept(Items.SPEED_ENHANCEMENT.getDefaultInstance());
-    output.accept(Items.SWORD_ENHANCEMENT.getDefaultInstance());
+    items.add(Items.HONEY_EXTRACTOR_ENHANCEMENT.getDefaultInstance());
+    items.add(Items.HONEY_HARVESTER_FRAME_ENHANCEMENT.getDefaultInstance());
+    items.add(Items.KNIFE_ENHANCEMENT.getDefaultInstance());
+    items.add(Items.LOOT_ENHANCEMENT.getDefaultInstance());
+    items.add(Items.LUCK_ENHANCEMENT.getDefaultInstance());
+    items.add(Items.MILK_EXTRACTOR_ENHANCEMENT.getDefaultInstance());
+    items.add(Items.NO_FLOWERS_FILTER.getDefaultInstance());
+    items.add(Items.NO_MEAT_FILTER.getDefaultInstance());
+    items.add(Items.POLLEN_TRAP_ENHANCEMENT.getDefaultInstance());
+    items.add(Items.SHEEP_ENHANCEMENT.getDefaultInstance());
+    items.add(Items.SMALL_SLOT_UPGRADE.getDefaultInstance());
+    items.add(Items.SPEED_ENHANCEMENT.getDefaultInstance());
+    items.add(Items.SWORD_ENHANCEMENT.getDefaultInstance());
+    return items;
   }
 }
