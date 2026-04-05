@@ -17,13 +17,13 @@ harvest their valuable loot.'''
 [[dependencies.easy_mob_farm]]
 modId = "neoforge"
 type = "required"
-versionRange = "[26.1,)"
+versionRange = "${neoforge_version_range}"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.easy_mob_farm]]
 modId = "minecraft"
 type = "required"
-versionRange = "[26.1,26.2)"
+versionRange = "${minecraft_version_range}"
 ordering = "NONE"
 side = "BOTH"

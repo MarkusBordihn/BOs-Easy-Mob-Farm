@@ -39,10 +39,10 @@
   ],
   "accessWidener": "easymobfarm.accesswidener",
   "depends": {
-    "fabricloader": ">=0.18",
+    "fabricloader": "${fabric_loader_version_range}",
     "fabric-api": "*",
-    "minecraft": "~26.1-",
-    "java": ">=25"
+    "minecraft": "${fabric_minecraft_version_range}",
+    "java": "${java_version_range}"
   },
   "suggests": {
     "tooltipfix": "*"

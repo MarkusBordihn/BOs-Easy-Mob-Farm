@@ -1,5 +1,5 @@
 modLoader = "javafml"
-loaderVersion = "[62,)"
+loaderVersion = "${forge_loader_version_range}"
 license = "MIT"
 issueTrackerURL = "https://github.com/MarkusBordihn/BOs-Easy-Mob-Farm/issues"
 
@@ -13,17 +13,18 @@ credits = ""
 authors = "Markus Bordihn"
 description = '''The Easy Mob Farm offers a server-friendly solution for capturing various animals and mobs to
 harvest their valuable loot.'''
+features = { java_version = "${java_version_range}" }
 
 [[dependencies.easy_mob_farm]]
 modId = "forge"
 mandatory = true
-versionRange = "[62.0.9,)"
+versionRange = "${forge_version_range}"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.easy_mob_farm]]
 modId = "minecraft"
 mandatory = true
-versionRange = "[26.1,26.2)"
+versionRange = "${minecraft_version_range}"
 ordering = "NONE"
 side = "BOTH"

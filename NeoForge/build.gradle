@@ -100,6 +100,17 @@ tasks.named("sourcesJar", Jar) {
 
 tasks.withType(ProcessResources).matching(notNeoTask).configureEach {
   from project(":Common").sourceSets.main.resources
+  def minecraftVersionParts = project.minecraft_version.tokenize('.')
+  def replaceProperties = [
+      file                   : [jarVersion: '${file.jarVersion}'],
+      neoforge_version_range : "[${project.neoforge_version},)",
+      minecraft_version_range: "[${project.minecraft_version},${minecraftVersionParts[0]}.${(minecraftVersionParts[1] as int) + 1})"
+  ]
+  inputs.properties replaceProperties
+
+  filesMatching("META-INF/neoforge.mods.toml") {
+    expand replaceProperties
+  }
 }
 
 // CurseForge Publishing
@@ -135,4 +146,11 @@ if (project.hasProperty('modrinth_project_id') && project.modrinth_project_id) {
 
 test {
   useJUnitPlatform()
+}
+
+// Merge resources and compiled classes so NeoForge dev runs see a valid mod root.
+sourceSets.each {
+  def dir = layout.buildDirectory.dir("sourcesSets/$it.name")
+  it.output.resourcesDir = dir
+  it.java.destinationDirectory = dir
 }

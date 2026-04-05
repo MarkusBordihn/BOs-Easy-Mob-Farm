@@ -104,6 +104,25 @@ tasks.withType(Test).configureEach {
 
 processResources {
   from project(":Common").sourceSets.main.resources
+  def minecraftVersionParts = project.minecraft_version.tokenize('.')
+  def javaVersion = project.extensions
+      .getByType(org.gradle.api.plugins.JavaPluginExtension)
+      .toolchain
+      .languageVersion
+      .get()
+      .asInt()
+  def replaceProperties = [
+      file                      : [jarVersion: '${file.jarVersion}'],
+      forge_loader_version_range: "[${project.forge_version.tokenize('.')[0]},)",
+      forge_version_range       : "[${project.forge_version},)",
+      minecraft_version_range   : "[${project.minecraft_version},${minecraftVersionParts[0]}.${(minecraftVersionParts[1] as int) + 1})",
+      java_version_range        : "[${javaVersion},)"
+  ]
+  inputs.properties replaceProperties
+
+  filesMatching("META-INF/mods.toml") {
+    expand replaceProperties
+  }
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
