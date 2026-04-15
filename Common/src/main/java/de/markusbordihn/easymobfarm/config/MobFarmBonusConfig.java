@@ -21,17 +21,13 @@ package de.markusbordihn.easymobfarm.config;
 
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.Random;
-import java.util.Set;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
@@ -79,12 +75,8 @@ public class MobFarmBonusConfig extends Config {
 # Elite bee farm with 1 in 5 chance for honeycomb:
 #   bee_hive_farm::3::minecraft:bee = minecraft:honeycomb::1::5
 #
-# Iron golem farm with bonus iron ingots:
-#   iron_golem_farm::2::minecraft:iron_golem = minecraft:iron_ingot::2::8
-#
-# Multiple bonus items for the same mob (different lines):
-#   ocean_farm::1::minecraft:cod = minecraft:cod::1::10
-#   ocean_farm::1::minecraft:cod = minecraft:bone_meal::1::25
+# Multiple bonus items for the same mob (using list syntax):
+#   ocean_farm::1::minecraft:cod = [minecraft:cod::1::10, minecraft:bone_meal::1::25]
 #
 # Important Notes:
 # ---------------
@@ -107,8 +99,6 @@ public class MobFarmBonusConfig extends Config {
       this.itemStack = itemStack;
     }
   }
-
-  private static final HashMap<String, Integer> displayIndexMap = new HashMap<>();
 
   private static final HashMap<String, List<BonusDrop>> mobFarmBonusMap = new HashMap<>();
   private static final HashMap<String, List<BonusDrop>> defaultMobFarmBonusMap = new HashMap<>();
@@ -202,93 +192,78 @@ public class MobFarmBonusConfig extends Config {
   }
 
   public static void registerConfig() {
+    registerConfigFile(CONFIG_FILE_NAME, CONFIG_FILE_HEADER);
     parseConfigFile();
   }
 
   public static void parseConfigFile() {
     File configFile = getConfigFile(CONFIG_FILE_NAME);
+    Properties properties = readConfigFile(configFile);
+    Properties unmodifiedProperties = (Properties) properties.clone();
+
     mobFarmBonusMap.clear();
 
-    List<String> fileLines = new ArrayList<>();
-    
-    try {
-      if (!configFile.exists()) {
-        Files.writeString(configFile.toPath(), CONFIG_FILE_HEADER);
-      } else {
-        fileLines = Files.readAllLines(configFile.toPath());
-      }
-    } catch (Exception e) {
-      log.error("{} Failed to read config file {}", LOG_PREFIX, CONFIG_FILE_NAME, e);
-      return;
-    }
-
-    Set<String> loadedKeys = new HashSet<>();
-
-    for (String line : fileLines) {
-      String trimmed = line.trim();
-      if (trimmed.isEmpty() || trimmed.startsWith("#")) {
-        continue;
-      }
-
-      String cleanLine = trimmed.replace("\\:", ":");
-      String[] parts = cleanLine.split("=", 2);
-      
-      if (parts.length == 2) {
-        String key = parts[0].trim();
-        String value = parts[1].trim();
-
-        String[] keyParts = parseKey(key);
-        String[] valueParts = parseValue(value);
-
-        if (keyParts != null && valueParts != null && !valueParts[0].isEmpty()) {
-          try {
-            String cleanKey = keyParts[0] + "::" + keyParts[1] + "::" + keyParts[2];
-            loadedKeys.add(cleanKey);
-            addBonusDropEntry(
-                keyParts[0],
-                Integer.parseInt(keyParts[1]),
-                keyParts[2],
-                Integer.parseInt(valueParts[2]),
-                valueParts[0],
-                Integer.parseInt(valueParts[1]));
-          } catch (NumberFormatException e) {
-            log.error("{} Invalid number format in config file {}: {}", LOG_PREFIX, CONFIG_FILE_NAME, line);
+    // Add default values to config file, handling the new List syntax
+    defaultMobFarmBonusMap.forEach(
+        (mobFarmName, bonusList) -> {
+          if (!properties.containsKey(mobFarmName)) {
+            if (bonusList.size() == 1) {
+              BonusDrop drop = bonusList.get(0);
+              String itemName = BuiltInRegistries.ITEM.getKey(drop.itemStack.getItem()).toString();
+              String value = itemName + "::" + drop.itemStack.getCount() + "::" + drop.chance;
+              properties.setProperty(mobFarmName, value);
+            } else {
+              StringBuilder sb = new StringBuilder("[");
+              for(int i = 0; i < bonusList.size(); i++) {
+                BonusDrop drop = bonusList.get(i);
+                String itemName = BuiltInRegistries.ITEM.getKey(drop.itemStack.getItem()).toString();
+                sb.append(itemName).append("::").append(drop.itemStack.getCount()).append("::").append(drop.chance);
+                if (i < bonusList.size() - 1) sb.append(", ");
+              }
+              sb.append("]");
+              properties.setProperty(mobFarmName, sb.toString());
+            }
           }
-        }
-      }
-    }
+        });
 
-    boolean needsUpdate = false;
-    List<String> appendLines = new ArrayList<>();
+    // Parse config file supporting both plain string and list [item1, item2] syntax
+    properties.forEach(
+        (key, value) -> {
+          String[] keyParts = parseKey((String) key);
+          if (keyParts == null) return;
 
-    for (Map.Entry<String, List<BonusDrop>> entry : defaultMobFarmBonusMap.entrySet()) {
-      String defaultKey = entry.getKey();
-      if (!loadedKeys.contains(defaultKey)) {
-        needsUpdate = true;
-        for (BonusDrop drop : entry.getValue()) {
-          String itemName = BuiltInRegistries.ITEM.getKey(drop.itemStack.getItem()).toString();
-          String writeKey = defaultKey.replace(":", "\\:");
-          String writeValue = (itemName + "::" + drop.itemStack.getCount() + "::" + drop.chance).replace(":", "\\:");
+          String valStr = ((String) value).trim();
           
-          appendLines.add(writeKey + "=" + writeValue);
+          if (valStr.startsWith("[") && valStr.endsWith("]")) {
+            valStr = valStr.substring(1, valStr.length() - 1);
+            String[] items = valStr.split(",");
+            for (String itemStr : items) {
+              parseAndAddDrop(keyParts, itemStr.trim());
+            }
+          } else {
+            parseAndAddDrop(keyParts, valStr);
+          }
+        });
 
-          addBonusDropEntry(
-              defaultKey.split("::")[0],
-              Integer.parseInt(defaultKey.split("::")[1]),
-              defaultKey.split("::")[2],
-              drop.chance,
-              itemName,
-              drop.itemStack.getCount());
-        }
-      }
-    }
+    // Update config file if needed
+    updateConfigFileIfChanged(configFile, CONFIG_FILE_HEADER, properties, unmodifiedProperties);
+  }
 
-    if (needsUpdate) {
-      try {
-        Files.write(configFile.toPath(), appendLines, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-      } catch (Exception e) {
-        log.error("{} Failed to update config file {}", LOG_PREFIX, CONFIG_FILE_NAME, e);
-      }
+  private static void parseAndAddDrop(String[] keyParts, String valueStr) {
+    String[] valueParts = parseValue(valueStr);
+    if (valueParts == null || valueParts[0].isEmpty()) return;
+
+    try {
+      addBonusDropEntry(
+          keyParts[0],
+          Integer.parseInt(keyParts[1]),
+          keyParts[2],
+          Integer.parseInt(valueParts[2]),
+          valueParts[0],
+          Integer.parseInt(valueParts[1]));
+    } catch (NumberFormatException e) {
+      log.error("{} Invalid number format in config file {}: key={}, value={}",
+          LOG_PREFIX, CONFIG_FILE_NAME, String.join("::", keyParts), valueStr);
     }
   }
 
@@ -365,6 +340,7 @@ public class MobFarmBonusConfig extends Config {
     mobFarmBonusMap.computeIfAbsent(mobFarmKey, k -> new ArrayList<>()).add(new BonusDrop(chance, itemStack));
   }
 
+  // Maintains UI stability by returning the first valid entry found for display
   public static ItemStack getBonusDropEntry(MobFarmType mobFarmType, int tierLevel, EntityType<?> entityType) {
     return getBonusDropEntry(mobFarmType.getId(), tierLevel, String.valueOf(BuiltInRegistries.ENTITY_TYPE.getKey(entityType)));
   }
@@ -374,9 +350,7 @@ public class MobFarmBonusConfig extends Config {
       return ItemStack.EMPTY;
     }
     String key = getMobFarmKey(mobFarmName, tierLevel, entityType);
-    List<BonusDrop> drops = mobFarmBonusMap.get(key);
-    int index = displayIndexMap.computeIfAbsent(key, k -> 0) % drops.size();
-    return drops.get(index).itemStack.copy();
+    return mobFarmBonusMap.get(key).get(0).itemStack.copy();
   }
 
   public static int getBonusDropChance(MobFarmType mobFarmType, int tierLevel, EntityType<?> entityType) {
@@ -388,35 +362,59 @@ public class MobFarmBonusConfig extends Config {
       return 0;
     }
     String key = getMobFarmKey(mobFarmName, tierLevel, entityType);
-    List<BonusDrop> drops = mobFarmBonusMap.get(key);
-    int index = displayIndexMap.computeIfAbsent(key, k -> 0) % drops.size();
-    return drops.get(index).chance;
+    return mobFarmBonusMap.get(key).get(0).chance;
   }
 
-  public static ItemStack getBonusDrop(MobFarmType mobFarmType, int tierLevel, EntityType<?> entityType) {
+  // --- CORE CHANGE: Now returns a List of independent drops ---
+  public static List<ItemStack> getBonusDrop(MobFarmType mobFarmType, int tierLevel, EntityType<?> entityType) {
     return getBonusDrop(mobFarmType.getId(), tierLevel, String.valueOf(BuiltInRegistries.ENTITY_TYPE.getKey(entityType)));
   }
 
-  public static ItemStack getBonusDrop(String mobFarmName, int tierLevel, String entityType) {
+  public static List<ItemStack> getBonusDrop(String mobFarmName, int tierLevel, String entityType) {
+    List<ItemStack> drops = new ArrayList<>();
     if (!hasBonusDrop(mobFarmName, tierLevel, entityType)) {
-      return ItemStack.EMPTY;
+      return drops;
     }
     
     String key = getMobFarmKey(mobFarmName, tierLevel, entityType);
-    List<BonusDrop> drops = mobFarmBonusMap.get(key);
     
-    int currentIndex = displayIndexMap.computeIfAbsent(key, k -> 0) % drops.size();
-    BonusDrop currentDrop = drops.get(currentIndex);
-    
-    displayIndexMap.put(key, (currentIndex + 1) % drops.size());
-    
-    double adjustedProbability = (double) drops.size() / currentDrop.chance;
-    
-    if (random.nextDouble() < adjustedProbability) {
-      return currentDrop.itemStack.copy();
+    // Each item rolls entirely independently
+    for (BonusDrop drop : mobFarmBonusMap.get(key)) {
+      if (random.nextInt(drop.chance) == 0) {
+        drops.add(drop.itemStack.copy());
+      }
     }
     
-    return ItemStack.EMPTY;
+    return drops;
+  }
+
+  public static List<ItemStack> getBonusDropEntries(MobFarmType mobFarmType, int tierLevel, EntityType<?> entityType) {
+    return getBonusDropEntries(mobFarmType.getId(), tierLevel, String.valueOf(BuiltInRegistries.ENTITY_TYPE.getKey(entityType)));
+  }
+
+
+  public static List<BonusDrop> getConfiguredBonusDrops(MobFarmType mobFarmType, int tierLevel, EntityType<?> entityType) {
+    return getConfiguredBonusDrops(mobFarmType.getId(), tierLevel, String.valueOf(BuiltInRegistries.ENTITY_TYPE.getKey(entityType)));
+  }
+
+  public static List<BonusDrop> getConfiguredBonusDrops(String mobFarmName, int tierLevel, String entityType) {
+    if (!hasBonusDrop(mobFarmName, tierLevel, entityType)) {
+      return new ArrayList<>();
+    }
+    String key = getMobFarmKey(mobFarmName, tierLevel, entityType);
+    return mobFarmBonusMap.get(key);
+  }
+
+  public static List<ItemStack> getBonusDropEntries(String mobFarmName, int tierLevel, String entityType) {
+    List<ItemStack> displayItems = new ArrayList<>();
+    if (!hasBonusDrop(mobFarmName, tierLevel, entityType)) {
+      return displayItems;
+    }
+    String key = getMobFarmKey(mobFarmName, tierLevel, entityType);
+    for (BonusDrop drop : mobFarmBonusMap.get(key)) {
+      displayItems.add(drop.itemStack.copy());
+    }
+    return displayItems;
   }
 
   public static boolean hasBonusDrop(String mobFarmName, int tierLevel, EntityType<?> entityType) {
