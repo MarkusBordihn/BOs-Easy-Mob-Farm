@@ -410,7 +410,9 @@ public class MobFarmBonusConfig extends Config {
     
     displayIndexMap.put(key, (currentIndex + 1) % drops.size());
     
-    if (random.nextInt(currentDrop.chance) == 0) {
+    double adjustedProbability = (double) drops.size() / currentDrop.chance;
+    
+    if (random.nextDouble() < adjustedProbability) {
       return currentDrop.itemStack.copy();
     }
     
