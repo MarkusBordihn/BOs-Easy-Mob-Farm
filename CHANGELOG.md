@@ -7,7 +7,7 @@ For the full changelog, please go to the [GitHub History][history] instead.
 
 ### 10.6.0 (Performance and Stability Improvements)
 
-- Fixed #204 with performance regression from 10.4.0 causing excessive network packets per buffered item.
+- Fixed #204 performance regression from 10.4.0 causing excessive network packets per buffered item.
 - Fixed redundant `getEnchantmentItems()` and `getFilterItems()` calls per tick cycle.
 - Fixed `updateNumberOfOutputSlots()` running every processing cycle instead of on slot changes.
 - Fixed `updateNumberOfOutputSlots()` not being called on world load.

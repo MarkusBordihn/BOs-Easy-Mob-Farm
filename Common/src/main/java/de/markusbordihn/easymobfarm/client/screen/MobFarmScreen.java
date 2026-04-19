@@ -335,17 +335,42 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
         }
 
         // Add Bonus drop information, if available.
-        ItemStack bonusLootDrop =
-            MobFarmBonusConfig.getBonusDropEntry(
+        List<ItemStack> bonusLootDrops =
+            MobFarmBonusConfig.getBonusDropEntries(
                 this.getMenu().getMobFarmType(),
                 this.getMenu().getMobFarmTierLevel(),
                 this.entity.getType());
-        if (!bonusLootDrop.isEmpty()) {
+
+        if (!bonusLootDrops.isEmpty()) {
+          List<String> bonusLootDropNames =
+              bonusLootDrops.stream().map(drop -> drop.getDisplayName().getString()).toList();
+          int itemsPerLine = 4;
+          String firstChunk =
+              String.join(
+                  ", ",
+                  bonusLootDropNames.subList(0, Math.min(itemsPerLine, bonusLootDropNames.size())));
+          if (bonusLootDropNames.size() > itemsPerLine) {
+            firstChunk += ",";
+          }
+
           infoText.add(
               TextComponent.getTranslatedTextRaw(
-                      Constants.TOOLTIP_FARM_PREFIX + "bonus_drop",
-                      new Object[] {bonusLootDrop.getDisplayName()})
+                      Constants.TOOLTIP_FARM_PREFIX + "bonus_drop", new Object[] {firstChunk})
                   .withStyle(ChatFormatting.GREEN));
+
+          for (int i = itemsPerLine; i < bonusLootDropNames.size(); i += itemsPerLine) {
+            String nextChunk =
+                String.join(
+                    ", ",
+                    bonusLootDropNames.subList(
+                        i, Math.min(i + itemsPerLine, bonusLootDropNames.size())));
+            if (i + itemsPerLine < bonusLootDropNames.size()) {
+              nextChunk += ",";
+            }
+
+            infoText.add(Component.literal("      " + nextChunk).withStyle(ChatFormatting.GREEN));
+          }
+
         } else {
           infoText.add(
               TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "no_bonus_drop")
@@ -429,19 +454,19 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
       }
     }
 
-    // Show bonus drop with chance
+    // Show bonus drops with chance
     MobFarmType mobFarmType = this.getMenu().getMobFarmType();
     int tierLevel = this.getMenu().getMobFarmTierLevel();
-    ItemStack bonusDrop =
-        MobFarmBonusConfig.getBonusDropEntry(mobFarmType, tierLevel, this.entity.getType());
-    if (!bonusDrop.isEmpty()) {
-      int chance =
-          MobFarmBonusConfig.getBonusDropChance(mobFarmType, tierLevel, this.entity.getType());
-      if (chance > 0) {
+
+    List<MobFarmBonusConfig.BonusDrop> bonusDrops =
+        MobFarmBonusConfig.getConfiguredBonusDrops(mobFarmType, tierLevel, this.entity.getType());
+
+    for (MobFarmBonusConfig.BonusDrop drop : bonusDrops) {
+      if (!drop.itemStack().isEmpty() && drop.chance() > 0) {
         lootInfo.add(
             TextComponent.getTranslatedTextRaw(
                     Constants.TOOLTIP_FARM_PREFIX + "loot_bonus_chance",
-                    new Object[] {bonusDrop.getDisplayName(), chance})
+                    new Object[] {drop.itemStack().getDisplayName(), drop.chance()})
                 .withStyle(ChatFormatting.GREEN));
       }
     }
