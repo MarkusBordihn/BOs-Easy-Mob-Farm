@@ -19,7 +19,9 @@
 
 package de.markusbordihn.easymobfarm.compat;
 
+import de.markusbordihn.easymobfarm.compat.jei.EasyMobFarmJeiPlugin;
 import net.fabricmc.loader.impl.FabricLoaderImpl;
+import net.minecraft.client.Minecraft;
 
 public class CompatHandler implements CompatHandlerInterface {
 
@@ -28,5 +30,14 @@ public class CompatHandler implements CompatHandlerInterface {
   @Override
   public boolean isModLoaded(String modId) {
     return fabricLoader.isModLoaded(modId);
+  }
+
+  @Override
+  public void onMobCaptureCardDefinitionsSynced() {
+    if (!CompatConstants.MOD_JEI_LOADED) {
+      return;
+    }
+
+    Minecraft.getInstance().execute(EasyMobFarmJeiPlugin::refreshMobCaptureCards);
   }
 }

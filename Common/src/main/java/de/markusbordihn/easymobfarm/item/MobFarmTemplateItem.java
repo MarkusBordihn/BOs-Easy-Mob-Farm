@@ -61,5 +61,8 @@ public class MobFarmTemplateItem extends BlockItem {
           default -> TextComponent.getTranslatedText("tier_level", 0, ChatFormatting.WHITE);
         };
     tooltip.add(tierLevelText);
+    tooltip.add(
+        TextComponent.getTranslatedText("mob_farm_template_building_block_hint")
+            .withStyle(ChatFormatting.GRAY));
   }
 }

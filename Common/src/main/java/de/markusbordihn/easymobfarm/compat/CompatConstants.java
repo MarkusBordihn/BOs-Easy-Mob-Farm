@@ -30,7 +30,11 @@ public class CompatConstants {
   public static final String MOD_SWAMPIER_SWAMPS_NAME = "Swampier Swamps";
   public static final String MOD_SWAMPIER_SWAMPS_PREFIX = MOD_SWAMPIER_SWAMPS_ID + ":";
 
+  public static final String MOD_JEI_ID = "jei";
+  public static final String MOD_JEI_NAME = "Just Enough Items";
+
   public static boolean MOD_FARMERS_DELIGHT_LOADED = false;
+  public static boolean MOD_JEI_LOADED = false;
   public static boolean MOD_SWAMPIER_SWAMPS_LOADED = false;
 
   private CompatConstants() {}
