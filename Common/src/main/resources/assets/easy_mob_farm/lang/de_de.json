@@ -87,6 +87,7 @@
   "text.easy_mob_farm.jungle_farm": "Geeignet für Dschungelbewohner, unterstützt exotische und tropische Mobs.",
   "text.easy_mob_farm.lucky_drop_farm": "Farm für Glücksdrops, perfekt für Mobs mit seltenen Gegenständen.",
   "text.easy_mob_farm.mob_farm_template": "Die Basisstruktur für alle Mob-Farmen.",
+  "text.easy_mob_farm.mob_farm_template_building_block_hint": "Dies ist ein dekorativer Baustein und Craftingbestandteil. Er hat keine eigene Funktion.",
   "text.easy_mob_farm.mob_is_not_on_allow_list": "Der Mob %s ist nicht auf der Erlaubnisliste für diesen Gegenstand.",
   "text.easy_mob_farm.mob_is_on_deny_list": "Der Mob %s ist auf der Verweigerungsliste für diesen Gegenstand.",
   "text.easy_mob_farm.monster_plains_cave_farm": "Fokussiert auf Monster der Ebenen, inklusive allgemeiner feindlicher Kreaturen.",

@@ -5,6 +5,13 @@
 This change log includes the summarized changes.
 For the full changelog, please go to the [GitHub History][history] instead.
 
+### 10.7.0
+
+- Fixed #206 by improving JEI support and implementation.
+- Fixed #201 by improved mob farm template tooltip to clarify it is a building block only.
+- Fixed Support multi-line mob_farm_bonus.cfg for bonus drops. Thanks to `@UFOdestiny` for
+  contributing pull request #205.
+
 ### 10.6.0 (Performance and Stability Improvements)
 
 - Fixed #204 with performance regression from 10.4.0 causing excessive network packets per buffered

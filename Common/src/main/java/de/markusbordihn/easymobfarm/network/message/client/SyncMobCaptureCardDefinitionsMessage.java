@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.network.message.client;
 
 import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.compat.CompatManager;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinition;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinitionManager;
 import de.markusbordihn.easymobfarm.network.message.NetworkMessageRecord;
@@ -84,5 +85,10 @@ public record SyncMobCaptureCardDefinitionsMessage(
 
     log.info("Syncing {} mob capture card definitions to client.", definitions.size());
     MobCaptureCardDefinitionManager.setDefinitions(definitions);
+
+    if (CompatManager.getHandler() != null) {
+      log.debug("Notifying compat handler about mob capture card definitions sync.");
+      CompatManager.getHandler().onMobCaptureCardDefinitionsSynced();
+    }
   }
 }

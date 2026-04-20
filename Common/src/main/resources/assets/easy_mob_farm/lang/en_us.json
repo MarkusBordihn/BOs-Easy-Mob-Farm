@@ -87,6 +87,7 @@
   "text.easy_mob_farm.jungle_farm": "Ideal for jungle creatures, supporting exotic and tropical mobs.",
   "text.easy_mob_farm.lucky_drop_farm": "Farm designed for lucky drops, perfect for rare item mobs.",
   "text.easy_mob_farm.mob_farm_template": "The base structure for all mob farms.",
+  "text.easy_mob_farm.mob_farm_template_building_block_hint": "This is a decorative building block and crafting ingredient. It has no functionality on its own.",
   "text.easy_mob_farm.mob_is_not_on_allow_list": "The mob %s is not on the allow list for this item.",
   "text.easy_mob_farm.mob_is_on_deny_list": "The mob %s is on the deny list for this item.",
   "text.easy_mob_farm.monster_plains_cave_farm": "Focused on plains monsters, including common hostile mobs.",

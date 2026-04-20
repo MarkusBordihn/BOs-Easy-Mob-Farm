@@ -20,20 +20,70 @@
 package de.markusbordihn.easymobfarm.compat.jei;
 
 import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinitionManager;
 import de.markusbordihn.easymobfarm.item.Items;
 import de.markusbordihn.easymobfarm.item.ModBlockItems;
+import de.markusbordihn.easymobfarm.tabs.CustomMobCaptureCards;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import mezz.jei.api.IModPlugin;
+import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.ISubtypeRegistration;
+import mezz.jei.api.runtime.IIngredientManager;
+import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 public class EasyMobFarmJeiPlugin implements IModPlugin {
 
+  private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final ResourceLocation pluginId =
       ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "jei_plugin");
+  private static final List<ItemStack> runtimeAddedCards = new ArrayList<>();
+  private static volatile IJeiRuntime jeiRuntime;
+
+  public static void refreshMobCaptureCards() {
+    if (jeiRuntime == null) {
+      log.debug("[JEI Compat] JEI runtime not available yet, skipping mob capture card refresh.");
+      return;
+    }
+
+    IIngredientManager ingredientManager = jeiRuntime.getIngredientManager();
+    if (!runtimeAddedCards.isEmpty()) {
+      ingredientManager.removeIngredientsAtRuntime(
+          VanillaTypes.ITEM_STACK, new ArrayList<>(runtimeAddedCards));
+      runtimeAddedCards.clear();
+    }
+
+    Set<ItemStack> cards = CustomMobCaptureCards.getCustomMobCaptureCards(Items.MOB_CAPTURE_CARD);
+    if (!cards.isEmpty()) {
+      log.info("[JEI Compat] Adding {} mob capture card(s) to JEI at runtime.", cards.size());
+      ingredientManager.addIngredientsAtRuntime(VanillaTypes.ITEM_STACK, cards);
+      runtimeAddedCards.addAll(cards);
+    }
+  }
 
   @Override
-  public ResourceLocation getPluginUid() {
+  public @NotNull ResourceLocation getPluginUid() {
     return pluginId;
+  }
+
+  @Override
+  public void onRuntimeAvailable(@NotNull IJeiRuntime runtime) {
+    EasyMobFarmJeiPlugin.jeiRuntime = runtime;
+    if (!MobCaptureCardDefinitionManager.getAll().isEmpty()) {
+      refreshMobCaptureCards();
+    }
+  }
+
+  @Override
+  public void onRuntimeUnavailable() {
+    EasyMobFarmJeiPlugin.jeiRuntime = null;
+    EasyMobFarmJeiPlugin.runtimeAddedCards.clear();
   }
 
   @Override
