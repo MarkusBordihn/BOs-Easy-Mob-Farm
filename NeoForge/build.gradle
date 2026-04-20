@@ -65,22 +65,11 @@ dependencies {
     compileOnly "curse.maven:jei-238222:${project.neoforge_jei_mod}"
     runtimeOnly "curse.maven:jei-238222:${project.neoforge_jei_mod}"
   }
-
   if (project.hasProperty('neoforge_xaeros_minimap_mod') && project.neoforge_xaeros_minimap_mod) {
     runtimeOnly "curse.maven:xaeros-minimap-263420:${project.neoforge_xaeros_minimap_mod}"
   }
 
-  // Immersive Engineering: Integration
-  // runtimeOnly "curse.maven:immersive-engineering-231951:5828000"
-
-  // Refined Storage: Integration
-  // runtimeOnly "curse.maven:refined-storage-243076:6391989"
-
-  // Applied Energistics 2: Integration
-  // runtimeOnly "curse.maven:applied-energistics-2-223794:5729094"
-
-  // Mekanism: Integration
-  // implementation "curse.maven:mekanism-268560:5680395"
+  // Bug Testing
 }
 
 // NeoGradle compiles the game, but we don't want to add our common code to the game's code

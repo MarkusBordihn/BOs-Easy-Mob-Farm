@@ -398,11 +398,13 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
       return;
     }
 
-    // Add optional bonus loot drop based on the mob farm, tier level and captured mob.
-    ItemStack bonusLootDrop =
+    // Add optional bonus loot drops based on the mob farm, tier level and captured mob.
+    List<ItemStack> bonusLootDrops =
         MobFarmBonusConfig.getBonusDrop(this.getFarmType(), this.getFarmTierLevel(), entityType);
-    if (!bonusLootDrop.isEmpty()) {
-      lootDrops.add(bonusLootDrop.copy());
+    for (ItemStack drop : bonusLootDrops) {
+      if (!drop.isEmpty()) {
+        lootDrops.add(drop.copy());
+      }
     }
 
     // Handle loot drops

@@ -79,17 +79,17 @@ public class ModBlocks {
   public static final RegistryObject<Block> LUCKY_DROP_FARM =
       BLOCKS.register(
           MobFarmType.LUCKY_DROP_FARM.getId(),
-          () -> new MobFarmBlockWrapper(MobFarmType.LUCKY_DROP_FARM));
-  public static final RegistryObject<Block> MONSTER_PLAINS_CAVE_FARM =
-      BLOCKS.register(
-          MobFarmType.MONSTER_PLAINS_CAVE_FARM.getId(),
-          () -> new MobFarmBlockWrapper(MobFarmType.MONSTER_PLAINS_CAVE_FARM));  public static final RegistryObject<BlockEntityType<CreativeMobFarmBlockEntityWrapper>>
+          () -> new MobFarmBlockWrapper(MobFarmType.LUCKY_DROP_FARM));  public static final RegistryObject<BlockEntityType<CreativeMobFarmBlockEntityWrapper>>
       CREATIVE_MOB_FARM_ENTITY =
           BLOCK_ENTITIES.register(
               CreativeMobFarmBlockEntity.ID,
               () ->
                   new BlockEntityType<>(
                       CreativeMobFarmBlockEntityWrapper::new, Set.of(CREATIVE_MOB_FARM.get())));
+  public static final RegistryObject<Block> MONSTER_PLAINS_CAVE_FARM =
+      BLOCKS.register(
+          MobFarmType.MONSTER_PLAINS_CAVE_FARM.getId(),
+          () -> new MobFarmBlockWrapper(MobFarmType.MONSTER_PLAINS_CAVE_FARM));
   public static final RegistryObject<Block> NETHER_FORTRESS_FARM =
       BLOCKS.register(
           MobFarmType.NETHER_FORTRESS_FARM.getId(),

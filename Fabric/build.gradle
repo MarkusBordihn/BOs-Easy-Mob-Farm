@@ -54,48 +54,14 @@ dependencies {
 
   // Additional helpful Mods for development (runtime dependency)
   if (project.hasProperty('fabric_jei_mod') && project.fabric_jei_mod) {
-    modCompileOnlyApi("curse.maven:jei-238222:${project.fabric_jei_mod}")
-    modRuntimeOnly("curse.maven:jei-238222:${project.fabric_jei_mod}")
-  }
-  if (project.hasProperty('fabric_spark_mod') && project.fabric_spark_mod) {
-    modRuntimeOnly("curse.maven:spark-361579:${project.fabric_spark_mod}")
+    compileOnlyApi("curse.maven:jei-238222:${project.fabric_jei_mod}")
+    runtimeOnly("curse.maven:jei-238222:${project.fabric_jei_mod}")
   }
   if (project.hasProperty('fabric_xaeros_minimap_mod') && project.fabric_xaeros_minimap_mod) {
-    modRuntimeOnly("curse.maven:xaeros_minimap-263420:${project.fabric_xaeros_minimap_mod}")
+    runtimeOnly("curse.maven:xaeros_minimap-263420:${project.fabric_xaeros_minimap_mod}")
   }
 
   // Bug Testing
-  // modRuntimeOnly("curse.maven:polymer-551890:6012918")
-  // modRuntimeOnly("curse.maven:trailier-tales-1124703:5960030")
-
-  // Refined Storage: Integration Tests
-  // modRuntimeOnly "curse.maven:cloth-config-348521:5729125"
-  // modRuntimeOnly "curse.maven:refined-storage-243076:6391988"
-  // modRuntimeOnly('teamreborn:energy:4.1.0') {
-  //  exclude(group: "net.fabricmc.fabric-api")
-  //}
-
-  // Create: Integration Tests
-  //  modRuntimeOnly "io.github.tropheusj:milk-lib:1.2.60"
-  //  modRuntimeOnly "com.jamieswhiteshirt:reach-entity-attributes:2.4.0"
-  //  modRuntimeOnly "com.tterrag.registrate:Registrate:MC1.20-1.3.11"
-  //  modRuntimeOnly "io.github.fabricators_of_create.Porting-Lib:accessors:2.3.4+1.20.1"
-  //  modRuntimeOnly "io.github.fabricators_of_create.Porting-Lib:base:2.3.4+1.20.1"
-  //  modRuntimeOnly "io.github.fabricators_of_create.Porting-Lib:entity:2.3.4+1.20.1"
-  //  modRuntimeOnly "io.github.fabricators_of_create.Porting-Lib:extensions:2.3.4+1.20.1"
-  //  modRuntimeOnly "io.github.fabricators_of_create.Porting-Lib:networking:2.3.4+1.20.1"
-  //  modRuntimeOnly "io.github.fabricators_of_create.Porting-Lib:obj_loader:2.3.4+1.20.1"
-  //  modRuntimeOnly "io.github.fabricators_of_create.Porting-Lib:tags:2.3.4+1.20.1"
-  //  modRuntimeOnly "io.github.fabricators_of_create.Porting-Lib:transfer:2.3.4+1.20.1"
-  //  modRuntimeOnly "io.github.fabricators_of_create.Porting-Lib:models:2.3.4+1.20.1"
-  //  modRuntimeOnly "io.github.fabricators_of_create.Porting-Lib:model_generators:2.3.4+1.20.1"
-  //  modRuntimeOnly "io.github.fabricators_of_create.Porting-Lib:client_events:2.3.4+1.20.1"
-  //  modRuntimeOnly "curse.maven:forge-config-api-port-fabric-547434:5902421"
-  //  modRuntimeOnly "curse.maven:create-fabric-624165:5245234"
-
-  // Swampier Swamps Tests
-  // modRuntimeOnly "curse.maven:cloth-config-348521:5729104"
-  // modRuntimeOnly "curse.maven:swampier-swamps-fabric-687298:4580758"
 }
 
 processResources {
