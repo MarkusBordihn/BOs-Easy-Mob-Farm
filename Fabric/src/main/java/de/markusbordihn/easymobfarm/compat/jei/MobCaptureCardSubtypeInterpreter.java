@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Markus Bordihn
+ * Copyright 2024 Markus Bordihn
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
  * associated documentation files (the "Software"), to deal in the Software without restriction,
@@ -17,25 +17,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package de.markusbordihn.easymobfarm.compat;
+package de.markusbordihn.easymobfarm.compat.jei;
 
-import de.markusbordihn.easymobfarm.compat.jei.EasyMobFarmJeiPlugin;
-import net.minecraft.client.Minecraft;
-import net.neoforged.fml.ModList;
+import de.markusbordihn.easymobfarm.capture.MobCaptureManager;
+import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
+import mezz.jei.api.ingredients.subtypes.ISubtypeInterpreter;
+import mezz.jei.api.ingredients.subtypes.UidContext;
+import net.minecraft.world.item.ItemStack;
 
-public class CompatHandler implements CompatHandlerInterface {
+public class MobCaptureCardSubtypeInterpreter implements ISubtypeInterpreter<ItemStack> {
+
+  public static final MobCaptureCardSubtypeInterpreter INSTANCE =
+      new MobCaptureCardSubtypeInterpreter();
 
   @Override
-  public boolean isModLoaded(String modId) {
-    return ModList.get().isLoaded(modId);
-  }
-
-  @Override
-  public void onMobCaptureCardDefinitionsSynced() {
-    if (!CompatConstants.MOD_JEI_LOADED) {
-      return;
+  public Object getSubtypeData(ItemStack itemStack, UidContext uidContext) {
+    if (itemStack.getItem() instanceof MobCaptureCardItem) {
+      return MobCaptureManager.getMobCaptureData(itemStack, null);
     }
 
-    Minecraft.getInstance().execute(EasyMobFarmJeiPlugin::refreshMobCaptureCards);
+    return null;
   }
 }

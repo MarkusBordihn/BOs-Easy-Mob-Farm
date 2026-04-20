@@ -82,9 +82,6 @@ dependencies {
   compileOnly project(":Common")
 
   // Additional helpful Mods for development (runtime dependency)
-  if (project.hasProperty('forge_jei_mod') && project.forge_jei_mod) {
-    runtimeOnly fg.deobf("curse.maven:jei-238222:${project.forge_jei_mod}")
-  }
   if (project.hasProperty('forge_spark_mod') && project.forge_spark_mod) {
     runtimeOnly fg.deobf("curse.maven:spark-361579:${project.forge_spark_mod}")
   }

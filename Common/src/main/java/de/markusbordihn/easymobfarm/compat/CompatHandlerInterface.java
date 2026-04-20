@@ -38,12 +38,20 @@ public interface CompatHandlerInterface {
         CompatConstants.MOD_FARMERS_DELIGHT_ID,
         CompatConstants.MOD_FARMERS_DELIGHT_LOADED);
 
+    CompatConstants.MOD_JEI_LOADED = isModLoaded(CompatConstants.MOD_JEI_ID);
+    logFoundMod(
+        CompatConstants.MOD_JEI_NAME, CompatConstants.MOD_JEI_ID, CompatConstants.MOD_JEI_LOADED);
+
     CompatConstants.MOD_SWAMPIER_SWAMPS_LOADED =
         isModLoaded(CompatConstants.MOD_SWAMPIER_SWAMPS_ID);
     logFoundMod(
         CompatConstants.MOD_SWAMPIER_SWAMPS_NAME,
         CompatConstants.MOD_SWAMPIER_SWAMPS_ID,
         CompatConstants.MOD_SWAMPIER_SWAMPS_LOADED);
+  }
+
+  default void onMobCaptureCardDefinitionsSynced() {
+    log.debug("{} onMobCaptureCardDefinitionsSynced called", COMPAT_LOG_PREFIX);
   }
 
   default void logFoundMod(String modName, String modId, boolean modLoaded) {
