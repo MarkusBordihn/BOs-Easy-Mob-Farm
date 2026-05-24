@@ -44,11 +44,13 @@ import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SwordEnhancementIte
 import de.markusbordihn.easymobfarm.server.player.FakePlayer;
 import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
+import java.util.Set;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder.Reference;
 import net.minecraft.core.NonNullList;
@@ -87,6 +89,7 @@ public class LootManager {
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final Random random = new Random();
+  private static final Set<Identifier> loggedLegacyPaths = new HashSet<>();
   private static final Map<String, Identifier> FROG_CATALYST_RESOURCES =
       Map.ofEntries(
           Map.entry(
@@ -393,8 +396,11 @@ public class LootManager {
       LootTable legacyTable =
           serverLevel.getServer().reloadableRegistries().getLootTable(legacyLocation);
       if (legacyTable != LootTable.EMPTY) {
-        log.warn(
-            "Using legacy loot table path {} - please move to entities/fallback/", legacyLocation);
+        if (loggedLegacyPaths.add(legacyLocation.identifier())) {
+          log.warn(
+              "Using legacy loot table path {} - please move to entities/fallback/",
+              legacyLocation);
+        }
         for (int i = 0; i <= additionalRolls; i++) {
           legacyTable.getRandomItems(lootParams).stream()
               .filter(itemStack -> !itemStack.isEmpty())

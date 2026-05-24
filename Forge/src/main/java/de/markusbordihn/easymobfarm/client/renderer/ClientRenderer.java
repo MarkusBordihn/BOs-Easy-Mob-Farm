@@ -41,7 +41,7 @@ public class ClientRenderer {
   public static void registerRenderLayers(final FMLClientSetupEvent event) {
     event.enqueueWork(
         () -> {
-          log.info("{} Render Layers ...", Constants.LOG_REGISTER_PREFIX);
+          log.debug("{} Render Layers ...", Constants.LOG_REGISTER_PREFIX);
           ItemBlockRenderTypes.setRenderLayer(
               ModBlocks.TIER_0_MOB_FARM_TEMPLATE.get(), ChunkSectionLayer.CUTOUT);
           ItemBlockRenderTypes.setRenderLayer(

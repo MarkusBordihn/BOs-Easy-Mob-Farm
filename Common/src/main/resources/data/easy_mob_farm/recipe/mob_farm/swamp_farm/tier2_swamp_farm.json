@@ -1,6 +1,5 @@
-{
+﻿{
   "type": "minecraft:crafting_shaped",
-  "group": "swamp_farm",
   "pattern": ["ODD", "B#M", "-W-"],
   "key": {
     "#": "easy_mob_farm:tier2_mob_farm_template",
@@ -8,7 +7,7 @@
     "-": "minecraft:dirt",
     "D": "minecraft:dead_bush",
     "B": "#minecraft:flowers",
-    "O": "minecraft:oak_log",
+    "O": "#easy_mob_farm:logs",
     "M": "minecraft:brown_mushroom"
   },
   "result": {

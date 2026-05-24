@@ -42,7 +42,7 @@ public class EasyMobFarmClient {
     modEventBus.addListener(ClientScreens::registerScreens);
     ModTabs.CREATIVE_TABS.register(modEventBus);
 
-    log.info("{} Item Properties ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Item Properties ...", Constants.LOG_REGISTER_PREFIX);
     ModItemProperties.registerItemProperties();
   }
 }

@@ -72,16 +72,16 @@ public class ModBlocks {
   public static final RegistryObject<Block> IRON_GOLEM_FARM =
       BLOCKS.register(
           MobFarmType.IRON_GOLEM_FARM.getId(),
-          () -> new MobFarmBlockWrapper(MobFarmType.IRON_GOLEM_FARM));  public static final RegistryObject<BlockEntityType<CreativeMobFarmBlockEntityWrapper>>
+          () -> new MobFarmBlockWrapper(MobFarmType.IRON_GOLEM_FARM));
+  public static final RegistryObject<Block> JUNGLE_FARM =
+      BLOCKS.register(
+          MobFarmType.JUNGLE_FARM.getId(), () -> new MobFarmBlockWrapper(MobFarmType.JUNGLE_FARM));  public static final RegistryObject<BlockEntityType<CreativeMobFarmBlockEntityWrapper>>
       CREATIVE_MOB_FARM_ENTITY =
           BLOCK_ENTITIES.register(
               CreativeMobFarmBlockEntity.ID,
               () ->
                   new BlockEntityType<>(
                       CreativeMobFarmBlockEntityWrapper::new, Set.of(CREATIVE_MOB_FARM.get())));
-  public static final RegistryObject<Block> JUNGLE_FARM =
-      BLOCKS.register(
-          MobFarmType.JUNGLE_FARM.getId(), () -> new MobFarmBlockWrapper(MobFarmType.JUNGLE_FARM));
   public static final RegistryObject<Block> LUCKY_DROP_FARM =
       BLOCKS.register(
           MobFarmType.LUCKY_DROP_FARM.getId(),

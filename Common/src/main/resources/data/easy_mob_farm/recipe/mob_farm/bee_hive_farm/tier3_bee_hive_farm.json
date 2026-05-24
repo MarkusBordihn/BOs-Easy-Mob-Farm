@@ -1,6 +1,5 @@
-{
+﻿{
   "type": "minecraft:crafting_shaped",
-  "group": "bee_hive_farm",
   "pattern": ["OHD", "O#G", "B--"],
   "key": {
     "#": "easy_mob_farm:tier3_mob_farm_template",
@@ -8,7 +7,7 @@
     "G": "minecraft:short_grass",
     "D": "minecraft:oxeye_daisy",
     "-": "minecraft:dirt",
-    "O": "minecraft:oak_log",
+    "O": "#easy_mob_farm:logs",
     "H": "minecraft:beehive"
   },
   "result": {

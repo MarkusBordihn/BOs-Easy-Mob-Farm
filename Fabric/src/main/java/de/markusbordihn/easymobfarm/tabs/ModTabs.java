@@ -36,7 +36,7 @@ public class ModTabs {
   private ModTabs() {}
 
   public static void registerModTabs() {
-    log.info("{} Registering Mod Tabs ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Registering Mod Tabs ...", Constants.LOG_REGISTER_PREFIX);
 
     Registry.register(
         BuiltInRegistries.CREATIVE_MODE_TAB,

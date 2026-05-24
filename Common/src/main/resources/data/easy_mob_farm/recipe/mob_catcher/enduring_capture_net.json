@@ -1,4 +1,4 @@
-{
+﻿{
   "type": "minecraft:crafting_shaped",
   "pattern": [
     " L ",
@@ -7,11 +7,10 @@
   ],
   "key": {
     "L": "minecraft:lead",
-    "S": "minecraft:string",
+    "S": "#easy_mob_farm:string",
     "F": "minecraft:feather"
   },
   "result": {
-    "id": "easy_mob_farm:enduring_capture_net",
-    "count": 1
+    "id": "easy_mob_farm:enduring_capture_net"
   }
 }

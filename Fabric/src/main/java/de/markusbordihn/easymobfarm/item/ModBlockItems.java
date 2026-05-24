@@ -82,7 +82,7 @@ public class ModBlockItems {
   private ModBlockItems() {}
 
   public static void registerModBlockItems() {
-    log.info("{} Mob Farm Templates items ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Mob Farm Templates items ...", Constants.LOG_REGISTER_PREFIX);
     registerItem(MobFarmTemplateItem.ID_TIER_0, TIER_0_MOB_FARM_TEMPLATE);
     registerItem(MobFarmTemplateItem.ID_TIER_1, TIER_1_MOB_FARM_TEMPLATE);
     registerItem(MobFarmTemplateItem.ID_TIER_2, TIER_2_MOB_FARM_TEMPLATE);
@@ -96,7 +96,7 @@ public class ModBlockItems {
               entries.accept(TIER_3_MOB_FARM_TEMPLATE);
             });
 
-    log.info("{} Mob Farms items ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Mob Farms items ...", Constants.LOG_REGISTER_PREFIX);
     registerItem(MobFarmType.CREATIVE_MOB_FARM.getId(), CREATIVE_MOB_FARM);
     registerItem(MobFarmType.ANIMAL_PLAINS_FARM.getId(), ANIMAL_PLAINS_FARM);
     registerItem(MobFarmType.BEE_HIVE_FARM.getId(), BEE_HIVE_FARM);

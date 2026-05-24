@@ -9,7 +9,7 @@
     "lava": "minecraft:block/lava_still",
     "bricks": "minecraft:block/cracked_polished_blackstone_bricks",
     "iron_bars": "minecraft:block/iron_bars",
-    "chain": "minecraft:block/chain",
+    "chain": "minecraft:block/iron_chain",
     "bone_block": "minecraft:block/bone_block_top",
     "fire": "minecraft:block/campfire_fire",
     "skeleton_heads": "easy_mob_farm:block/skeleton_heads"

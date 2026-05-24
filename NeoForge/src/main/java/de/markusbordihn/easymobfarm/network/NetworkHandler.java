@@ -40,7 +40,7 @@ public class NetworkHandler {
   public static void registerClientNetworkMessageHandler(final RegisterPayloadHandlersEvent event) {
     final PayloadRegistrar registrar = event.registrar(PROTOCOL_VERSION);
 
-    log.info("{} Network Handler with {} ...", Constants.LOG_REGISTER_PREFIX, PROTOCOL_VERSION);
+    log.debug("{} Network Handler with {} ...", Constants.LOG_REGISTER_PREFIX, PROTOCOL_VERSION);
 
     registrar.playToClient(
         SyncMobCaptureCardDefinitionsMessage.PAYLOAD_TYPE,

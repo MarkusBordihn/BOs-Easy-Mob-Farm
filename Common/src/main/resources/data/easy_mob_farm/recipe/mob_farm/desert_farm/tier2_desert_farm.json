@@ -1,6 +1,5 @@
-{
+﻿{
   "type": "minecraft:crafting_shaped",
-  "group": "desert_farm",
   "pattern": [
     "CSD",
     "S#C",
@@ -9,9 +8,9 @@
   "key": {
     "#": "easy_mob_farm:tier2_mob_farm_template",
     "C": "minecraft:cactus",
-    "S": "minecraft:sandstone",
+    "S": "#easy_mob_farm:sandstones",
     "D": "minecraft:dead_bush",
-    "-": "minecraft:sand"
+    "-": "#easy_mob_farm:sand"
   },
   "result": {
     "count": 1,

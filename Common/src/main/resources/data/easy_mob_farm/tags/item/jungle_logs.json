@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#c:jungle_logs",
+      "required": false
+    },
+    {
+      "id": "#forge:jungle_logs",
+      "required": false
+    },
+    "minecraft:jungle_log"
+  ]
+}

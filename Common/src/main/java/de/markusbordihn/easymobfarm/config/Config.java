@@ -55,26 +55,22 @@ public class Config {
   }
 
   public static void registerCommonConfigDeferred() {
-    log.info("{} Registering deferred common configuration ...", LOG_PREFIX);
     MobFarmBonusConfig.registerConfig();
   }
 
   public static void registerCommonConfig() {
-    log.info("{} Registering common configuration ...", LOG_PREFIX);
     MobFarmConfig.registerConfig();
     MobCaptureCardConfig.registerConfig();
     MobCatcherConfig.registerConfig();
   }
 
-  public static void registerServerConfig() {
-    log.info("{} Registering server configuration ...", LOG_PREFIX);
-  }
+  public static void registerServerConfig() {}
 
   public static void prepareConfiguration() {
     // Validate game folder path.
     if (Constants.CONFIG_DIR != null) {
       configPath = Constants.CONFIG_DIR.resolve(Constants.MOD_ID);
-      log.info("{} Updated configuration path to {}", LOG_PREFIX, configPath);
+      log.debug("{} Updated configuration path to {}", LOG_PREFIX, configPath);
     }
 
     // Validate configuration folder
@@ -111,7 +107,6 @@ public class Config {
 
   public static void createConfigFile(final File configFile, final String header) {
     Properties properties = new Properties();
-    log.info("{} Try creating configuration file {}", LOG_PREFIX, configFile);
     try (FileWriter writer = new FileWriter(configFile)) {
       properties.store(writer, header.trim());
       log.info("{} Created configuration file {} ...", LOG_PREFIX, configFile);
@@ -145,7 +140,8 @@ public class Config {
       Properties properties,
       Properties unmodifiedProperties) {
     if (!properties.equals(unmodifiedProperties)) {
-      log.info(
+      log.info("{} Updating configuration file {} ...", LOG_PREFIX, configFile.getName());
+      log.debug(
           "{} Updating configuration file {} {}: {}",
           LOG_PREFIX,
           configFile,
@@ -163,7 +159,7 @@ public class Config {
     } else if (properties.isEmpty()) {
       log.warn("{} Configuration file {} is empty: {}", LOG_PREFIX, configFile, properties);
     } else {
-      log.info("{} {} is up to date: {}", LOG_PREFIX, configFileHeader, properties);
+      log.debug("{} {} is up to date: {}", LOG_PREFIX, configFileHeader, properties);
     }
   }
 

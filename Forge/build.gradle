@@ -37,6 +37,12 @@ minecraft {
       workingDir = project.file('run/server')
     }
 
+    gameTestServer {
+      workingDir = project.file('run/gametest')
+      systemProperty 'forge.enableGameTest', 'true'
+      systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
+    }
+
     data {
       workingDir = project.file('run/data')
       args '--mod', "${project.mod_id}", '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')

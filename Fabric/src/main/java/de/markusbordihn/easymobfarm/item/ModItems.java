@@ -61,12 +61,12 @@ public class ModItems {
   private ModItems() {}
 
   public static void registerModItems() {
-    log.info("{} Mob Capture Card items ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Mob Capture Card items ...", Constants.LOG_REGISTER_PREFIX);
     registerItem(BlankMobCaptureCardItem.ID, Items.BLANK_MOB_CAPTURE_CARD);
     registerItem(CreativeBlankMobCaptureCardItem.ID, Items.CREATIVE_MOB_CAPTURE_CARD);
     registerItem(MobCaptureCardItem.ID, Items.MOB_CAPTURE_CARD);
 
-    log.info("{} Enhancement items ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Enhancement items ...", Constants.LOG_REGISTER_PREFIX);
     registerItem(CreativeSpeedEnhancementItem.ID, Items.CREATIVE_SPEED_ENHANCEMENT);
     registerItem(EggCollectorEnhancementItem.ID, Items.EGG_COLLECTOR_ENHANCEMENT);
     registerItem(ExperienceEnhancementItem.ID, Items.EXPERIENCE_ENHANCEMENT);
@@ -81,7 +81,7 @@ public class ModItems {
     registerItem(SpeedEnhancementItem.ID, Items.SPEED_ENHANCEMENT);
     registerItem(SwordEnhancementItem.ID, Items.SWORD_ENHANCEMENT);
 
-    log.info("{} Enhancement Catalyst items ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Enhancement Catalyst items ...", Constants.LOG_REGISTER_PREFIX);
     registerItem(FrogCatalystEnhancementItem.ID_COLD, Items.FROG_CATALYST_COLD_ENHANCEMENT);
     registerItem(
         FrogCatalystEnhancementItem.ID_TEMPERATE, Items.FROG_CATALYST_TEMPERATE_ENHANCEMENT);
@@ -105,25 +105,25 @@ public class ModItems {
     registerItem(FrogCatalystEnhancementItem.ID_RED, Items.FROG_CATALYST_RED_ENHANCEMENT);
     registerItem(FrogCatalystEnhancementItem.ID_BLACK, Items.FROG_CATALYST_BLACK_ENHANCEMENT);
 
-    log.info("{} Filter items ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Filter items ...", Constants.LOG_REGISTER_PREFIX);
     registerItem(NoFlowersFilterItem.ID, Items.NO_FLOWERS_FILTER);
     registerItem(NoMeatFilterItem.ID, Items.NO_MEAT_FILTER);
 
-    log.info("{} Slot upgrade items ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Slot upgrade items ...", Constants.LOG_REGISTER_PREFIX);
     registerItem(BigSlotUpgradeItem.ID, Items.BIG_SLOT_UPGRADE);
     registerItem(SmallSlotUpgradeItem.ID, Items.SMALL_SLOT_UPGRADE);
 
-    log.info("{} Mob Catcher items ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Mob Catcher items ...", Constants.LOG_REGISTER_PREFIX);
     registerItem(CreativeMobCatcherItem.ID, Items.CREATIVE_MOB_CATCHER);
     registerItem(EnduringCaptureNetItem.ID, Items.ENDURING_CAPTURE_NET);
     registerItem(IronboundContainmentCageItem.ID, Items.IRONBOUND_CONTAINMENT_CAGE);
     registerItem(MysticBindingCrystalItem.ID, Items.MYSTIC_BINDING_CRYSTAL);
     registerItem(VoidBindingChainItem.ID, Items.VOID_BINDING_CHAIN);
 
-    log.info("{} Consumables items ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Consumables items ...", Constants.LOG_REGISTER_PREFIX);
     registerItem(MilkBottleItem.ID, Items.MILK_BOTTLE);
 
-    log.info("{} Card Binder items ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Card Binder items ...", Constants.LOG_REGISTER_PREFIX);
     registerItem(CardBinderItem.ID, Items.CARD_BINDER);
   }
 

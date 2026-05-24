@@ -51,7 +51,7 @@ public class ModRecipeManager {
   private ModRecipeManager() {}
 
   public static void register(MinecraftServer minecraftServer) {
-    log.info("{} Mod Recipe Manager ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Mod Recipe Manager ...", Constants.LOG_REGISTER_PREFIX);
 
     // Disable recipes based on the given configuration.
     Collection<RecipeHolder<?>> recipes =

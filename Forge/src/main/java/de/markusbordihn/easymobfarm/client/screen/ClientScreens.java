@@ -38,7 +38,7 @@ public class ClientScreens {
 
   @SubscribeEvent
   public static void registerScreens(final FMLClientSetupEvent event) {
-    log.info("{} Client Screens ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Client Screens ...", Constants.LOG_REGISTER_PREFIX);
 
     event.enqueueWork(
         () -> {
