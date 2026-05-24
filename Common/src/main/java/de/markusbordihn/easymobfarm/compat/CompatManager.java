@@ -32,7 +32,7 @@ public class CompatManager {
   private CompatManager() {}
 
   public static void registerCompatHandler(CompatHandlerInterface compatHandlerInterface) {
-    log.info("{} Compat Handler ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Compat Handler ...", Constants.LOG_REGISTER_PREFIX);
     CompatManager.compatHandlerInterface = compatHandlerInterface;
     compatHandlerInterface.register();
   }

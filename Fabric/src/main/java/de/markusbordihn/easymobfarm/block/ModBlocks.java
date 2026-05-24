@@ -64,13 +64,13 @@ public class ModBlocks {
   private ModBlocks() {}
 
   public static void registerModBlocks() {
-    log.info("{} Mob Farm Template blocks ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Mob Farm Template blocks ...", Constants.LOG_REGISTER_PREFIX);
     registerBlock(MobFarmTemplateBlock.ID_TIER_0, TIER_0_MOB_FARM_TEMPLATE);
     registerBlock(MobFarmTemplateBlock.ID_TIER_1, TIER_1_MOB_FARM_TEMPLATE);
     registerBlock(MobFarmTemplateBlock.ID_TIER_2, TIER_2_MOB_FARM_TEMPLATE);
     registerBlock(MobFarmTemplateBlock.ID_TIER_3, TIER_3_MOB_FARM_TEMPLATE);
 
-    log.info("{} Mob Farm blocks ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Mob Farm blocks ...", Constants.LOG_REGISTER_PREFIX);
     registerBlock(MobFarmType.CREATIVE_MOB_FARM.getId(), CREATIVE_MOB_FARM);
     registerBlock(MobFarmType.ANIMAL_PLAINS_FARM.getId(), ANIMAL_PLAINS_FARM);
     registerBlock(MobFarmType.BEE_HIVE_FARM.getId(), BEE_HIVE_FARM);
@@ -85,7 +85,7 @@ public class ModBlocks {
   }
 
   public static void registerModBlockEntities() {
-    log.info("{} Mob Farm block entities ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Mob Farm block entities ...", Constants.LOG_REGISTER_PREFIX);
     Registry.register(
         BuiltInRegistries.BLOCK_ENTITY_TYPE,
         ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, CreativeMobFarmBlockEntity.ID),

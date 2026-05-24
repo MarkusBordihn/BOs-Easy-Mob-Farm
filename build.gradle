@@ -3,6 +3,11 @@ plugins {
   id "org.jetbrains.gradle.plugin.idea-ext" version "1.1.8"
 }
 
+apply plugin: 'java'
+
+def ghostRefScript = file(findProperty('ghostRefIndex') ?: '')
+if (ghostRefScript.exists()) apply from: ghostRefScript
+
 tasks.register('runAllGameTests') {
   group = 'verification'
   description = 'Runs both Fabric and Forge game tests.'

@@ -42,7 +42,7 @@ public class ModelEventHandler {
 
     ModelLoadingPlugin.register(
         pluginContext -> {
-          log.info("Registering card models ...");
+          log.debug("Registering card models ...");
 
           // Pre-Loading default models for Mob Capture Card.
           Set.of(
@@ -53,7 +53,7 @@ public class ModelEventHandler {
                   ModelManagerInterface.DEFAULT_FISH_MODEL)
               .forEach(
                   modelResourceLocation -> {
-                    log.info("Registering default model {} ...", modelResourceLocation.id());
+                    log.debug("Registering default model {} ...", modelResourceLocation.id());
                     pluginContext.addModels(modelResourceLocation.id());
                   });
 
@@ -67,7 +67,7 @@ public class ModelEventHandler {
                   .keySet()) {
             ModelResourceLocation modelResourceLocation =
                 ModelManagerInterface.getModelResourceLocation(location);
-            log.info(
+            log.debug(
                 "Automatically registering model {} as {} ...", location, modelResourceLocation);
             pluginContext.addModels(modelResourceLocation.id());
           }
@@ -84,7 +84,7 @@ public class ModelEventHandler {
                     ResourceLocation resourceLocation = modelResourceLocation.id();
                     if (resourceLocation.getNamespace().equals(Constants.MOD_ID)
                         && resourceLocation.getPath().equals("mob_capture_card")) {
-                      log.info("Adjusting baked model for {} ...", modelResourceLocation);
+                      log.debug("Adjusting baked model for {} ...", modelResourceLocation);
                       UnbakedModel unbakedModel =
                           onLoadContext.getOrLoadModel(UnbakedMobCaptureCardModel.MODEL);
                       if (unbakedModel == null) {
@@ -94,7 +94,7 @@ public class ModelEventHandler {
                             UnbakedMobCaptureCardModel.MODEL);
                         return originalModel;
                       }
-                      log.info("Baking unbaked model for {} ...", modelResourceLocation);
+                      log.debug("Baking unbaked model for {} ...", modelResourceLocation);
                       return new UnbakedMobCaptureCardModel(unbakedModel);
                     }
                     return originalModel;

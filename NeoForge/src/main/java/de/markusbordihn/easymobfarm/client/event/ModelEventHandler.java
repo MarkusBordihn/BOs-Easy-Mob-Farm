@@ -51,7 +51,7 @@ public class ModelEventHandler {
   @SuppressWarnings("unused")
   @SubscribeEvent
   public static void onModelRegistry(ModelEvent.RegisterAdditional event) {
-    log.info("Registering card models ...");
+    log.debug("Registering card models ...");
 
     // Pre-Loading default models for Mob Capture Card.
     Set.of(
@@ -63,7 +63,7 @@ public class ModelEventHandler {
             ModelManagerInterface.DEFAULT_FISH_MODEL)
         .forEach(
             resourceLocation -> {
-              log.info("Registering default model {} ...", resourceLocation);
+              log.debug("Registering default model {} ...", resourceLocation);
               event.register(resourceLocation);
             });
 
@@ -77,7 +77,7 @@ public class ModelEventHandler {
             .keySet()) {
       ModelResourceLocation modelResourceLocation =
           ModelManagerInterface.getModelResourceLocation(location);
-      log.info("Automatically registering model {} as {} ...", location, modelResourceLocation);
+      log.debug("Automatically registering model {} as {} ...", location, modelResourceLocation);
       event.register(modelResourceLocation);
     }
   }
@@ -104,10 +104,7 @@ public class ModelEventHandler {
             event.getModelBakery().getModel(UnbakedMobCaptureCardModel.MODEL));
 
     // Bake unbaked model for Mob Capture Card.
-    log.info(
-        "Baking unbaked model for {} with {} ...",
-        mobCaptureCardModelResourceLocation,
-        unbakedModel);
+    log.debug("Baking unbaked model for {} ...", mobCaptureCardModelResourceLocation);
     ModelBaker baker =
         event.getModelBakery()
         .new ModelBakerImpl(

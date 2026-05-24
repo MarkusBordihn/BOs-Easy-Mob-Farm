@@ -16,10 +16,10 @@
       "item": "minecraft:seagrass"
     },
     "S": {
-      "item": "minecraft:sand"
+      "tag": "easy_mob_farm:sand"
     },
     "G": {
-      "item": "minecraft:gravel"
+      "tag": "easy_mob_farm:gravel"
     },
     "L": {
       "item": "minecraft:sea_lantern"

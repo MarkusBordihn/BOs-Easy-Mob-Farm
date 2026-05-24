@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#c:leaves/jungle",
+      "required": false
+    },
+    {
+      "id": "#forge:leaves/jungle",
+      "required": false
+    },
+    "minecraft:jungle_leaves"
+  ]
+}

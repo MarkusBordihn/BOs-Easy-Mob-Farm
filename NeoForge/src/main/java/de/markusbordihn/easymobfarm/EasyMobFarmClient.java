@@ -39,7 +39,7 @@ public class EasyMobFarmClient {
   public EasyMobFarmClient(IEventBus modEventBus) {
     log.info("Initializing {} (NeoForge-Client) ...", Constants.MOD_NAME);
 
-    log.info("{} Model Manager ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Model Manager ...", Constants.LOG_REGISTER_PREFIX);
     ModelManager.registerModelManager(new ModModelManager());
 
     modEventBus.addListener(ClientRenderer::registerBlockEntityRenderers);

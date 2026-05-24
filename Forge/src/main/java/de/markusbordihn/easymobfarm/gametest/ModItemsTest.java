@@ -208,4 +208,10 @@ public class ModItemsTest {
     ModItemsTestHelper.testModItem(helper, ModItems.MILK_BOTTLE.get());
     helper.succeed();
   }
+
+  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  public void testCardBinderItem(GameTestHelper helper) {
+    ModItemsTestHelper.testModItem(helper, ModItems.CARD_BINDER.get());
+    helper.succeed();
+  }
 }

@@ -199,4 +199,16 @@ public class ModItemsTest {
     ModItemsTestHelper.testModItem(helper, Items.MILK_BOTTLE);
     helper.succeed();
   }
+
+  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  public void testKnifeEnhancementItem(GameTestHelper helper) {
+    ModItemsTestHelper.testModItem(helper, Items.KNIFE_ENHANCEMENT);
+    helper.succeed();
+  }
+
+  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  public void testCardBinderItem(GameTestHelper helper) {
+    ModItemsTestHelper.testModItem(helper, Items.CARD_BINDER);
+    helper.succeed();
+  }
 }

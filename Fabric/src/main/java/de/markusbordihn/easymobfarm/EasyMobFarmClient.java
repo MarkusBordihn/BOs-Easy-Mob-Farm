@@ -39,28 +39,28 @@ public class EasyMobFarmClient implements ClientModInitializer {
   public void onInitializeClient() {
     log.info("Initializing {} (Fabric-Client) ...", Constants.MOD_NAME);
 
-    log.info("{} Tabs ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Tabs ...", Constants.LOG_REGISTER_PREFIX);
     ModTabs.registerModTabs();
 
-    log.info("{} Model Manager ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Model Manager ...", Constants.LOG_REGISTER_PREFIX);
     ModelManager.registerModelManager(new ModModelManager());
 
-    log.info("{} Custom Models ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Custom Models ...", Constants.LOG_REGISTER_PREFIX);
     ModelEventHandler.registerModelEventHandler();
 
-    log.info("{} Block Entity Renderers ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Block Entity Renderers ...", Constants.LOG_REGISTER_PREFIX);
     ClientRenderer.registerBlockEntityRenderers();
 
-    log.info("{} Render Layers ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Render Layers ...", Constants.LOG_REGISTER_PREFIX);
     ClientRenderer.registerRenderLayers();
 
-    log.info("{} Client Screens ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Client Screens ...", Constants.LOG_REGISTER_PREFIX);
     ClientScreens.registerScreens();
 
-    log.info("{} Client Event Handler ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Client Event Handler ...", Constants.LOG_REGISTER_PREFIX);
     ClientEventHandler.registerClientEvents();
 
-    log.info("{} Client Network Handler ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Client Network Handler ...", Constants.LOG_REGISTER_PREFIX);
     ClientNetworkHandler.registerClientNetworkMessageHandler();
   }
 }

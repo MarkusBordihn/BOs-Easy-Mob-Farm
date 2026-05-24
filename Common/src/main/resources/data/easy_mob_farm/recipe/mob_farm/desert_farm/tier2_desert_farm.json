@@ -13,13 +13,13 @@
       "item": "minecraft:cactus"
     },
     "S": {
-      "item": "minecraft:sandstone"
+      "tag": "easy_mob_farm:sandstones"
     },
     "D": {
       "item": "minecraft:dead_bush"
     },
     "-": {
-      "item": "minecraft:sand"
+      "tag": "easy_mob_farm:sand"
     }
   },
   "result": {
