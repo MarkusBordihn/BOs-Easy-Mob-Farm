@@ -41,7 +41,7 @@ public class ModelEventHandler {
 
     ModelLoadingRegistry.INSTANCE.registerModelProvider(
         (resourceManager, consumer) -> {
-          log.info("Registering card models ...");
+          log.debug("Registering card models ...");
 
           // Pre-Loading default models for Mob Capture Card.
           Set.of(
@@ -57,11 +57,12 @@ public class ModelEventHandler {
                       resourceLocation =
                           ModelManager.getRegistrationModelResourceLocation(modelResourceLocation);
                     }
-                    log.info("Registering default model {} ...", resourceLocation);
+                    log.debug("Registering default model {} ...", resourceLocation);
                     consumer.accept(resourceLocation);
                   });
 
           // Pre-Loading additional models for Mob Capture Card from the resource folder.
+          int additionalModels = 0;
           for (ResourceLocation location :
               resourceManager
                   .listResources(
@@ -70,10 +71,12 @@ public class ModelEventHandler {
                   .keySet()) {
             ModelResourceLocation modelResourceLocation =
                 ModelManagerInterface.getModelResourceLocation(location);
-            log.info(
+            log.debug(
                 "Automatically registering model {} as {} ...", location, modelResourceLocation);
             consumer.accept(modelResourceLocation);
+            additionalModels++;
           }
+          log.debug("Registered {} additional card models from resource folder.", additionalModels);
         });
 
     ModelLoadingRegistry.INSTANCE.registerResourceProvider(
@@ -81,7 +84,7 @@ public class ModelEventHandler {
             (location, context) -> {
               if (location.getNamespace().equals(Constants.MOD_ID)
                   && location.getPath().equals("item/mob_capture_card")) {
-                log.info("Adjusting baked model for {} ...", location);
+                log.debug("Adjusting baked model for {} ...", location);
                 UnbakedModel unbakedModel = context.loadModel(UnbakedMobCaptureCardModel.MODEL);
                 if (unbakedModel == null) {
                   log.error(
@@ -90,7 +93,7 @@ public class ModelEventHandler {
                       UnbakedMobCaptureCardModel.MODEL);
                   return null;
                 }
-                log.info("Baking unbaked model for {} ...", location);
+                log.debug("Baking unbaked model for {} ...", location);
                 return new UnbakedMobCaptureCardModel(unbakedModel);
               }
               return null;

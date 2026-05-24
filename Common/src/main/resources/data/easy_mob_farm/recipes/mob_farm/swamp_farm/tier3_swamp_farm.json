@@ -18,7 +18,7 @@
       "item": "minecraft:blue_orchid"
     },
     "O": {
-      "item": "minecraft:oak_log"
+      "tag": "easy_mob_farm:logs"
     },
     "M": {
       "item": "minecraft:brown_mushroom"

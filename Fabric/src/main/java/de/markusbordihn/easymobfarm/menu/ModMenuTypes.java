@@ -33,7 +33,7 @@ public class ModMenuTypes {
   private ModMenuTypes() {}
 
   public static void register() {
-    log.info("{} Menu Types ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Menu Types ...", Constants.LOG_REGISTER_PREFIX);
   }
 
   public static final MenuType<MobFarmMenuWrapper> MOB_FARM_MENU =

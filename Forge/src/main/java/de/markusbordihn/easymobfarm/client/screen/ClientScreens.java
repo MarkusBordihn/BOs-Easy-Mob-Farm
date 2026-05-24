@@ -33,7 +33,7 @@ public class ClientScreens {
   protected ClientScreens() {}
 
   public static void registerScreens(final FMLClientSetupEvent event) {
-    log.info("{} Client Screens ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Client Screens ...", Constants.LOG_REGISTER_PREFIX);
 
     event.enqueueWork(
         () -> {

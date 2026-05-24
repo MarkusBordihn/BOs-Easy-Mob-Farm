@@ -33,7 +33,7 @@ public class ClientRenderer {
   protected ClientRenderer() {}
 
   public static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-    log.info("{} Block Entity Renderers ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Block Entity Renderers ...", Constants.LOG_REGISTER_PREFIX);
 
     event.registerBlockEntityRenderer(
         ModBlocks.CREATIVE_MOB_FARM_ENTITY.get(), MobFarmBlockEntityRenderer::new);

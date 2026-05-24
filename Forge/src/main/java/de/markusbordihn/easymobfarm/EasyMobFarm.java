@@ -58,7 +58,7 @@ public class EasyMobFarm {
 
     log.info("Initializing {} (Forge) ...", Constants.MOD_NAME);
 
-    log.info("{} Debug Manager ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Debug Manager ...", Constants.LOG_REGISTER_PREFIX);
     Optional<String> version =
         Launcher.INSTANCE.environment().getProperty(IEnvironment.Keys.VERSION.get());
     if (version.isPresent() && "MOD_DEV".equals(version.get())) {
@@ -66,36 +66,36 @@ public class EasyMobFarm {
     }
     DebugManager.checkForDebugLogging(Constants.LOG_NAME);
 
-    log.info("{} Constants ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Constants ...", Constants.LOG_REGISTER_PREFIX);
     Constants.GAME_DIR = FMLPaths.GAMEDIR.get();
     Constants.CONFIG_DIR = FMLPaths.CONFIGDIR.get();
 
-    log.info("{} Configuration ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Configuration ...", Constants.LOG_REGISTER_PREFIX);
     Config.register(FMLEnvironment.dist == Dist.DEDICATED_SERVER);
 
-    log.info("{} Compatibility Handler ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Compatibility Handler ...", Constants.LOG_REGISTER_PREFIX);
     CompatManager.registerCompatHandler(new CompatHandler());
 
-    log.info("{} Experience Manager ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Experience Manager ...", Constants.LOG_REGISTER_PREFIX);
     ExperienceManager.registerExperienceManager(new ModExperienceManager());
 
-    log.info("{} Blocks ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Blocks ...", Constants.LOG_REGISTER_PREFIX);
     ModBlocks.BLOCKS.register(modEventBus);
 
-    log.info("{} Blocks Entities ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Blocks Entities ...", Constants.LOG_REGISTER_PREFIX);
     ModBlocks.BLOCK_ENTITIES.register(modEventBus);
 
-    log.info("{} Block Items ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Block Items ...", Constants.LOG_REGISTER_PREFIX);
     ModBlockItems.ITEMS.register(modEventBus);
 
-    log.info("{} Items ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Items ...", Constants.LOG_REGISTER_PREFIX);
     ModItems.ITEMS.register(modEventBus);
 
-    log.info("{} Menu Types ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Menu Types ...", Constants.LOG_REGISTER_PREFIX);
     ModMenuTypes.MENU_TYPES.register(modEventBus);
     CardBinderMenu.MENU_TYPE_SUPPLIER = () -> ModMenuTypes.CARD_BINDER_MENU.get();
 
-    log.info("{} Network Handler ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Network Handler ...", Constants.LOG_REGISTER_PREFIX);
     NetworkHandler.registerClientNetworkMessageHandler();
     SyncLootPreviewMessage.SENDER =
         (player, msg) ->

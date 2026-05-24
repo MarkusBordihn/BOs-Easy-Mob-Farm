@@ -381,6 +381,12 @@ public class MobFarmBonusConfig extends Config {
 
     // Update config file if needed
     updateConfigFileIfChanged(configFile, CONFIG_FILE_HEADER, properties, unmodifiedProperties);
+
+    log.info(
+        "{} Loaded {} with {} bonus drop entries.",
+        LOG_PREFIX,
+        CONFIG_FILE_NAME,
+        mobFarmBonusMap.values().stream().mapToInt(List::size).sum());
   }
 
   private static void parseAndAddDrop(String[] keyParts, String valueStr) {
@@ -516,7 +522,7 @@ public class MobFarmBonusConfig extends Config {
 
     // Add bonus drop entry to the map
     String mobFarmKey = getMobFarmKey(mobFarmType.getId(), tierLevel, entityType);
-    log.info(
+    log.debug(
         "{} Add {} with a chance of 1 of {} for {}.", LOG_PREFIX, mobFarmKey, chance, itemStack);
 
     mobFarmBonusMap

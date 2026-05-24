@@ -10,7 +10,7 @@
       "item": "easy_mob_farm:tier2_mob_farm_template"
     },
     "-": {
-      "item": "minecraft:stone"
+      "tag": "easy_mob_farm:stones"
     },
     "G": {
       "item": "minecraft:gold_ingot"

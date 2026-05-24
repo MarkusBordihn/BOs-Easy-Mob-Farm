@@ -7,7 +7,7 @@
   ],
   "key": {
     "L": {"item": "minecraft:lead"},
-    "S": {"item": "minecraft:string"},
+    "S": {"tag": "easy_mob_farm:string"},
     "F": {"item": "minecraft:feather"}
   },
   "result": {

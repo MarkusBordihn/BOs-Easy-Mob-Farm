@@ -153,7 +153,7 @@ public class MobCaptureManager {
     // Spawn entity at safe spawn position.
     entity.moveTo(
         safeSpawnBlockPos.getX() + 0.5D,
-        safeSpawnBlockPos.getY() + 1.0D,
+        safeSpawnBlockPos.getY(),
         safeSpawnBlockPos.getZ() + 0.5D,
         0.0F,
         0.0F);
@@ -250,18 +250,17 @@ public class MobCaptureManager {
   }
 
   public static boolean isSafeSpawnPos(Level level, BlockPos blockPos) {
+    // Target position must be passable (not solid)
+    if (!level.getBlockState(blockPos).getCollisionShape(level, blockPos).isEmpty()) {
+      return false;
+    }
+
+    // Surface directly below must be solid enough to stand on
     BlockState surfaceState = level.getBlockState(blockPos.below());
-    BlockState groundState = level.getBlockState(blockPos.below(2));
-
     VoxelShape surfaceShape = surfaceState.getCollisionShape(level, blockPos.below());
-    VoxelShape groundShape = groundState.getCollisionShape(level, blockPos.below(2));
-
     double surfaceHeight = surfaceShape.isEmpty() ? 0.0 : surfaceShape.bounds().maxY;
-    double groundHeight = groundShape.isEmpty() ? 0.0 : groundShape.bounds().maxY;
 
-    return !(surfaceState.isAir() && surfaceHeight < 0.05)
-        && !groundState.isAir()
-        && groundHeight >= 0.5;
+    return !surfaceState.isAir() && surfaceHeight >= 0.5;
   }
 
   public static BlockPos getSafeSpawnPos(Level level, BlockPos blockPos) {

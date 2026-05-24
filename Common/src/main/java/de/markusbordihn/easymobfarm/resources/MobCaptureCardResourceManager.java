@@ -88,7 +88,6 @@ public class MobCaptureCardResourceManager extends SimpleJsonResourceReloadListe
       ResourceManager resourceManager,
       ProfilerFiller profiler) {
 
-    log.info("{} Loading definitions ... from {}", LOG_PREFIX, SEARCH_PATH);
     MobCaptureCardDefinitionManager.clear();
 
     objectMap.forEach(
@@ -142,6 +141,11 @@ public class MobCaptureCardResourceManager extends SimpleJsonResourceReloadListe
                 e.getMessage());
           }
         });
+
+    log.info(
+        "{} Loaded {} mob capture card definitions.",
+        LOG_PREFIX,
+        MobCaptureCardDefinitionManager.getAll().size());
   }
 
   private Map<String, MobCaptureCardDefinition.Color> parseColors(JsonObject json) {

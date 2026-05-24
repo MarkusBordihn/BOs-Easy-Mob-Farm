@@ -6,7 +6,7 @@
     " W "
   ],
   "key": {
-    "W": {"item": "minecraft:oak_planks"},
+    "W": {"tag": "minecraft:planks"},
     "I": {"item": "minecraft:iron_ingot"},
     "C": {"item": "minecraft:chest"}
   },

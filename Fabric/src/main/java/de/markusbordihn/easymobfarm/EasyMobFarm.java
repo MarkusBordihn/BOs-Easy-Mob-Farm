@@ -54,47 +54,47 @@ public class EasyMobFarm implements ModInitializer {
   public void onInitialize() {
     log.info("Initializing {} (Fabric) ...", Constants.MOD_NAME);
 
-    log.info("{} Debug Manager ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Debug Manager ...", Constants.LOG_REGISTER_PREFIX);
     if (System.getProperty("fabric.development") != null) {
       DebugManager.setDevelopmentEnvironment(true);
     }
     DebugManager.checkForDebugLogging(Constants.LOG_NAME);
 
-    log.info("{} Constants ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Constants ...", Constants.LOG_REGISTER_PREFIX);
     Constants.GAME_DIR = FabricLoader.getInstance().getGameDir();
     Constants.CONFIG_DIR = FabricLoader.getInstance().getConfigDir();
 
-    log.info("{} Configuration ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Configuration ...", Constants.LOG_REGISTER_PREFIX);
     Config.register(FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER);
 
-    log.info("{} Compatibility Handler ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Compatibility Handler ...", Constants.LOG_REGISTER_PREFIX);
     CompatManager.registerCompatHandler(new CompatHandler());
 
-    log.info("{} server-side resource listener ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} server-side resource listener ...", Constants.LOG_REGISTER_PREFIX);
     ResourceManagerHelper.get(PackType.SERVER_DATA)
         .registerReloadListener(new MobCaptureCardResourceManagerWrapper());
 
-    log.info("{} Experience Manager ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Experience Manager ...", Constants.LOG_REGISTER_PREFIX);
     ExperienceManager.registerExperienceManager(new ModExperienceManager());
 
-    log.info("{} Blocks ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Blocks ...", Constants.LOG_REGISTER_PREFIX);
     ModBlocks.registerModBlocks();
 
-    log.info("{} Blocks Entities ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Blocks Entities ...", Constants.LOG_REGISTER_PREFIX);
     ModBlocks.registerModBlockEntities();
 
-    log.info("{} Block Items ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Block Items ...", Constants.LOG_REGISTER_PREFIX);
     ModBlockItems.registerModBlockItems();
 
-    log.info("{} Items ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Items ...", Constants.LOG_REGISTER_PREFIX);
     ModItems.registerModItems();
 
-    log.info("{} Command register event ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Command register event ...", Constants.LOG_REGISTER_PREFIX);
     CommandRegistrationCallback.EVENT.register(
         (dispatcher, commandBuildContext, commandSelection) ->
             CommandManager.registerCommands(dispatcher, commandBuildContext));
 
-    log.info("{} Menu Types ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Menu Types ...", Constants.LOG_REGISTER_PREFIX);
     ModMenuTypes.register();
     CardBinderMenu.MENU_TYPE_SUPPLIER = () -> ModMenuTypes.CARD_BINDER_MENU;
     SyncLootPreviewMessage.SENDER =
@@ -104,7 +104,7 @@ public class EasyMobFarm implements ModInitializer {
           ServerPlayNetworking.send(player, SyncLootPreviewMessage.MESSAGE_ID, buffer);
         };
 
-    log.info("{} Server Event Handler ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Server Event Handler ...", Constants.LOG_REGISTER_PREFIX);
     ServerEventHandler.registerServerEvents();
   }
 }

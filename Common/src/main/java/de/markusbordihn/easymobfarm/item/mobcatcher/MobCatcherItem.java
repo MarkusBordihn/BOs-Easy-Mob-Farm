@@ -42,6 +42,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -103,7 +104,13 @@ public class MobCatcherItem extends MobFarmItem {
   @Override
   public InteractionResult useOn(UseOnContext context) {
     Level level = context.getLevel();
-    BlockPos blockPos = context.getClickedPos();
+    BlockPos clickedPos = context.getClickedPos();
+    BlockState clickedState = level.getBlockState(clickedPos);
+    // Mirror vanilla SpawnEggItem: if clicked block is solid, use the adjacent air position
+    BlockPos blockPos =
+        clickedState.getCollisionShape(level, clickedPos).isEmpty()
+            ? clickedPos
+            : clickedPos.relative(context.getClickedFace());
     ItemStack itemStack = context.getItemInHand();
 
     // Check if we have any mob capture data.

@@ -5,6 +5,13 @@
 This change log includes the summarized changes.
 For the full changelog, please go to the [GitHub History][history] instead.
 
+### 10.8.0
+
+- Fixed #211 by reducing log.info messages during startup and in-game.
+- Fixed #209 by simplify check for releasing captured mobs.
+- Fixed #127 by replacing hard-coded items with item tags in recipes to improve mod compatibility.
+- Added additional unit and game-tests.
+
 ### 10.7.0
 
 - Fixed #206 by improving JEI support and implementation.

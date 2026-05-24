@@ -7,7 +7,7 @@
   ],
   "key": {
     "L": {"item": "minecraft:leather"},
-    "S": {"item": "minecraft:string"},
+    "S": {"tag": "easy_mob_farm:string"},
     "B": {"item": "minecraft:book"}
   },
   "result": {

@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "#c:stones",
+      "required": false
+    },
+    {
+      "id": "#forge:stones",
+      "required": false
+    },
+    "minecraft:stone"
+  ]
+}

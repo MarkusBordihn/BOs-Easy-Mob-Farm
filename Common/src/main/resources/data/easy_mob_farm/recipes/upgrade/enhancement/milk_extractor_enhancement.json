@@ -6,7 +6,7 @@
     " B "
   ],
   "key": {
-    "M": {"item": "minecraft:milk_bucket"},
+    "M": {"tag": "easy_mob_farm:milk"},
     "B": {"item": "minecraft:glass_bottle"},
     "I": {"item": "minecraft:iron_ingot"},
     "C": {"item": "minecraft:copper_ingot"},

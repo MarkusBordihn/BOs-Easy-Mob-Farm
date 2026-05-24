@@ -6,7 +6,7 @@
       "item": "easy_mob_farm:tier0_mob_farm_template"
     },
     "J": {
-      "item": "minecraft:jungle_log"
+      "tag": "easy_mob_farm:jungle_logs"
     },
     "B": {
       "item": "minecraft:bamboo"
@@ -15,7 +15,7 @@
       "item": "minecraft:dirt"
     },
     "L": {
-      "item": "minecraft:jungle_leaves"
+      "tag": "easy_mob_farm:jungle_leaves"
     }
   },
   "result": {
