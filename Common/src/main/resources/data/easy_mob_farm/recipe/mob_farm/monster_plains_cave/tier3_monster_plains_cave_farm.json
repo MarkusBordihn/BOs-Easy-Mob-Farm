@@ -1,6 +1,5 @@
-{
+﻿{
   "type": "minecraft:crafting_shaped",
-  "group": "monster_plains_cave_farm",
   "pattern": [
     "LWG",
     "C#-",
@@ -8,7 +7,7 @@
   ],
   "key": {
     "#": "easy_mob_farm:tier3_mob_farm_template",
-    "-": "minecraft:stone",
+    "-": "#easy_mob_farm:stones",
     "G": "minecraft:gold_ingot",
     "C": "minecraft:clay",
     "L": "minecraft:glow_lichen",

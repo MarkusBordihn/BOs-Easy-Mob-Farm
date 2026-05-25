@@ -1,4 +1,4 @@
-{
+﻿{
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "LSL",
@@ -7,7 +7,7 @@
   ],
   "key": {
     "L": "minecraft:leather",
-    "S": "minecraft:string",
+    "S": "#easy_mob_farm:string",
     "B": "minecraft:book"
   },
   "result": {

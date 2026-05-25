@@ -20,7 +20,6 @@
 package de.markusbordihn.easymobfarm.compat.jei;
 
 import de.markusbordihn.easymobfarm.component.DataComponents;
-import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmData;
 import de.markusbordihn.easymobfarm.item.MobFarmBlockItem;
 import mezz.jei.api.ingredients.subtypes.ISubtypeInterpreter;
 import mezz.jei.api.ingredients.subtypes.UidContext;
@@ -36,6 +35,6 @@ public class MobFarmSubtypeInterpreter implements ISubtypeInterpreter<ItemStack>
       return null;
     }
 
-    return itemStack.getOrDefault(DataComponents.MOB_FARM_DATA, MobFarmData.EMPTY);
+    return itemStack.get(DataComponents.MOB_FARM_DATA);
   }
 }

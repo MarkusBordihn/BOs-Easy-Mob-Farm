@@ -37,22 +37,22 @@ public class EasyMobFarmClient implements ClientModInitializer {
   public void onInitializeClient() {
     log.info("Initializing {} (Fabric-Client) ...", Constants.MOD_NAME);
 
-    log.info("{} Tabs ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Tabs ...", Constants.LOG_REGISTER_PREFIX);
     ModTabs.registerModTabs();
 
-    log.info("{} Block Entity Renderers ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Block Entity Renderers ...", Constants.LOG_REGISTER_PREFIX);
     ClientRenderer.registerBlockEntityRenderers();
 
-    log.info("{} Client Screens ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Client Screens ...", Constants.LOG_REGISTER_PREFIX);
     ClientScreens.registerScreens();
 
-    log.info("{} Client Event Handler ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Client Event Handler ...", Constants.LOG_REGISTER_PREFIX);
     ClientEventHandler.registerClientEvents();
 
-    log.info("{} Item Properties ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Item Properties ...", Constants.LOG_REGISTER_PREFIX);
     ModItemProperties.registerItemProperties();
 
-    log.info("{} Client Network Handler ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Client Network Handler ...", Constants.LOG_REGISTER_PREFIX);
     ClientNetworkHandler.registerClientNetworkMessageHandler();
   }
 }

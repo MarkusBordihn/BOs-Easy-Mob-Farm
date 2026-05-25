@@ -1,13 +1,12 @@
-{
+﻿{
   "type": "minecraft:crafting_shaped",
-  "group": "mob_farm_slot_upgrade",
   "pattern": [
     " W ",
     "ICI",
     " W "
   ],
   "key": {
-    "W": "minecraft:oak_planks",
+    "W": "#minecraft:planks",
     "I": "minecraft:iron_ingot",
     "C": "minecraft:chest"
   },

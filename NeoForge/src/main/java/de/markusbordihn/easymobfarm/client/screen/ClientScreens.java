@@ -13,7 +13,7 @@ public class ClientScreens {
   protected ClientScreens() {}
 
   public static void registerScreens(final RegisterMenuScreensEvent event) {
-    log.info("{} Client Screens ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Client Screens ...", Constants.LOG_REGISTER_PREFIX);
 
     event.register(ModMenuTypes.MOB_FARM_MENU.get(), MobFarmScreenWrapper::new);
     event.register(ModMenuTypes.CARD_BINDER_MENU.get(), CardBinderScreenWrapper::new);

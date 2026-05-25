@@ -36,7 +36,7 @@ public class ModBlockCapabilities {
 
   @SubscribeEvent
   public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-    log.info("{} Block Capabilities for Easy Mob Farm", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} Block Capabilities for Easy Mob Farm", Constants.LOG_REGISTER_PREFIX);
 
     event.registerBlockEntity(
         Capabilities.Item.BLOCK,

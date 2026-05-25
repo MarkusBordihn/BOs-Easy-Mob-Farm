@@ -1,14 +1,13 @@
-{
+﻿{
   "type": "minecraft:crafting_shaped",
-  "group": "bee_hive_farm",
   "pattern": ["OHD", "O#G", "B--"],
   "key": {
     "#": "easy_mob_farm:tier1_mob_farm_template",
-    "B": "minecraft:blue_orchid",
+    "B": "#minecraft:flowers",
     "G": "minecraft:short_grass",
     "D": "#minecraft:flowers",
     "-": "minecraft:dirt",
-    "O": "minecraft:oak_log",
+    "O": "#easy_mob_farm:logs",
     "H": "minecraft:beehive"
   },
   "result": {

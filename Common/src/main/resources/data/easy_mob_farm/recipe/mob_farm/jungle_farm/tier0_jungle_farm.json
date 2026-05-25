@@ -1,13 +1,12 @@
-{
+﻿{
   "type": "minecraft:crafting_shaped",
-  "group": "jungle_farm",
   "pattern": ["JLJ", "J#J", "-B-"],
   "key": {
     "#": "easy_mob_farm:tier0_mob_farm_template",
-    "J": "minecraft:jungle_log",
+    "J": "#easy_mob_farm:jungle_logs",
     "B": "minecraft:bamboo",
     "-": "minecraft:dirt",
-    "L": "minecraft:jungle_leaves"
+    "L": "#easy_mob_farm:jungle_leaves"
   },
   "result": {
     "count": 1,

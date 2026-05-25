@@ -35,7 +35,7 @@ public class ReloadEventHandler {
 
   @SubscribeEvent
   public static void onAddReloadListener(AddReloadListenerEvent event) {
-    log.info("{} server-side resource listener ...", Constants.LOG_REGISTER_PREFIX);
+    log.debug("{} server-side resource listener ...", Constants.LOG_REGISTER_PREFIX);
     event.addListener(new MobCaptureCardResourceManager());
   }
 }

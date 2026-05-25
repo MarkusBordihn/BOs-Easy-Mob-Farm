@@ -32,7 +32,7 @@ subprojects {
   }
 
   tasks.register('wrapper', Wrapper) {
-    gradleVersion = '9.4.1'
+    gradleVersion = '9.5.1'
     distributionType = Wrapper.DistributionType.BIN
   }
 
@@ -56,4 +56,10 @@ subprojects {
       downloadJavadoc = true
     }
   }
+}
+
+tasks.register('allGameTests') {
+  group = 'verification'
+  description = 'Runs Fabric, Forge and NeoForge game tests.'
+  dependsOn ':Fabric:runGameTest', ':Forge:runGameTestServer', ':NeoForge:runGameTestServer'
 }

@@ -177,4 +177,9 @@ public class ModItemsTest {
     ModItemsTestHelper.testModItem(helper, ModItems.MILK_BOTTLE.get());
     helper.succeed();
   }
+
+  public void testCardBinderItem(GameTestHelper helper) {
+    ModItemsTestHelper.testModItem(helper, ModItems.CARD_BINDER.get());
+    helper.succeed();
+  }
 }
