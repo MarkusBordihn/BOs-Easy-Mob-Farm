@@ -8,7 +8,7 @@ apply plugin: 'java'
 def ghostRefScript = file(findProperty('ghostRefIndex') ?: '')
 if (ghostRefScript.exists()) apply from: ghostRefScript
 
-tasks.register('runAllGameTests') {
+tasks.register('allGameTests') {
   group = 'verification'
   description = 'Runs both Fabric and Forge game tests.'
   dependsOn ':Fabric:runGameTest', ':Forge:runGameTestServer', ':NeoForge:runGameTestServer'

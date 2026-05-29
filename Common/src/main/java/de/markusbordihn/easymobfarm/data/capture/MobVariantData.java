@@ -29,6 +29,7 @@ import net.minecraft.world.entity.animal.CatVariant;
 import net.minecraft.world.entity.animal.FrogVariant;
 import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.entity.monster.MagmaCube;
+import net.minecraft.world.entity.monster.Pillager;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.npc.Villager;
 
@@ -36,6 +37,7 @@ public class MobVariantData {
 
   public static final String VARIANT_TAG = "Variant";
   public static final String LARGE_VARIANT = "large";
+  public static final String LEADER_VARIANT = "leader";
   public static final String MEDIUM_VARIANT = "medium";
   public static final String SMALL_VARIANT = "small";
   public static final String TINY_VARIANT = "tiny";
@@ -43,11 +45,13 @@ public class MobVariantData {
   private MobVariantData() {}
 
   public static String getVariant(final EntityType<?> entityType) {
-    return "";
+    return null;
   }
 
   public static String getVariant(final LivingEntity livingEntity) {
-    if (livingEntity instanceof Cat cat) {
+    if (livingEntity instanceof Pillager pillager && pillager.isPatrolLeader()) {
+      return LEADER_VARIANT;
+    } else if (livingEntity instanceof Cat cat) {
       return (cat.getVariant().unwrapKey().orElse(CatVariant.BLACK))
           .location()
           .toString()
@@ -73,12 +77,12 @@ public class MobVariantData {
       }
       return frogVariant;
     }
-    return "";
+    return null;
   }
 
   public static String getVariant(final CompoundTag compoundTag) {
     if (compoundTag == null) {
-      return "";
+      return null;
     }
     if (compoundTag.contains(VARIANT_TAG)) {
       return compoundTag.getString(VARIANT_TAG);
@@ -86,7 +90,7 @@ public class MobVariantData {
     if (compoundTag.contains(VARIANT_TAG.toLowerCase(Locale.ROOT))) {
       return compoundTag.getString(VARIANT_TAG.toLowerCase(Locale.ROOT));
     }
-    return "";
+    return null;
   }
 
   public static String getSizeVariant(float size) {

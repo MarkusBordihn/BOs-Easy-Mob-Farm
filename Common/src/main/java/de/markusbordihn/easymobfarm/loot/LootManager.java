@@ -68,6 +68,7 @@ import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.entity.monster.MagmaCube;
+import net.minecraft.world.entity.monster.Pillager;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -261,6 +262,10 @@ public class LootManager {
           sheepEntity.setColor(mobCaptureData.color().getDyeColor());
         }
       }
+      if (entity instanceof Pillager pillager
+          && MobVariantData.LEADER_VARIANT.equals(mobCaptureData.variant())) {
+        pillager.setPatrolLeader(true);
+      }
 
       return getEntityLoot(entity, enhancements, level);
     } finally {
@@ -287,6 +292,10 @@ public class LootManager {
         if (mobCaptureData.hasColor()) {
           sheepEntity.setColor(mobCaptureData.color().getDyeColor());
         }
+      }
+      if (entity instanceof Pillager pillager
+          && MobVariantData.LEADER_VARIANT.equals(mobCaptureData.variant())) {
+        pillager.setPatrolLeader(true);
       }
       Map<String, ItemStack> uniqueItems = new LinkedHashMap<>();
       for (int roll = 0; roll < 3; roll++) {
@@ -384,7 +393,7 @@ public class LootManager {
             additionalRolls,
             drops)) {
       ResourceKey<LootTable> legacyLocation =
-          getCustomLootTableLocation(livingEntity, LootTablePriority.LEGACY);
+          getCustomLootTableLocation(livingEntity, LootTablePriority.LEGACY, false);
       LootTable legacyTable =
           serverLevel.getServer().reloadableRegistries().getLootTable(legacyLocation);
       if (legacyTable != LootTable.EMPTY) {
@@ -444,6 +453,26 @@ public class LootManager {
     return drops;
   }
 
+  public static void addBonusDrops(
+      NonNullList<ItemStack> drops,
+      List<ItemStack> bonusDrops,
+      List<EnhancementItem> enhancements,
+      EntityType<?> entityType) {
+    for (ItemStack drop : bonusDrops) {
+      if (drop.isEmpty()) {
+        continue;
+      }
+      if (entityType == EntityType.BEE
+          && drop.is(Items.HONEYCOMB)
+          && MobFarmConfig.enableHoneyExtractorEnhancement
+          && enhancements.stream().anyMatch(e -> e instanceof HoneyExtractorEnhancementItem)) {
+        drops.add(new ItemStack(Items.HONEY_BOTTLE));
+      } else {
+        drops.add(drop.copy());
+      }
+    }
+  }
+
   private static void handleSpecialEntityDrops(
       final LivingEntity livingEntity, final NonNullList<ItemStack> drops) {
     if (livingEntity instanceof WitherBoss) {
@@ -491,19 +520,24 @@ public class LootManager {
   }
 
   private static ResourceKey<LootTable> getCustomLootTableLocation(
-      final LivingEntity livingEntity, final LootTablePriority priority) {
+      final LivingEntity livingEntity,
+      final LootTablePriority priority,
+      final boolean withVariant) {
     ResourceLocation entityTypeResourceLocation =
         BuiltInRegistries.ENTITY_TYPE.getKey(livingEntity.getType());
+    String entityPath = entityTypeResourceLocation.getPath();
+    if (withVariant) {
+      String variant = MobVariantData.getVariant(livingEntity);
+      if (variant != null && !variant.isEmpty()) {
+        entityPath = entityPath + "_" + variant;
+      }
+    }
     String path =
         priority.getPath().isEmpty() ? "entities/" : "entities/" + priority.getPath() + "/";
     return ResourceKey.create(
         Registries.LOOT_TABLE,
         ResourceLocation.fromNamespaceAndPath(
-            Constants.MOD_ID,
-            path
-                + entityTypeResourceLocation.getNamespace()
-                + "/"
-                + entityTypeResourceLocation.getPath()));
+            Constants.MOD_ID, path + entityTypeResourceLocation.getNamespace() + "/" + entityPath));
   }
 
   private static boolean addLootFromCustomTable(
@@ -513,9 +547,17 @@ public class LootManager {
       final LootParams lootParams,
       final int additionalRolls,
       final NonNullList<ItemStack> drops) {
-    ResourceKey<LootTable> customLocation = getCustomLootTableLocation(livingEntity, priority);
+    ResourceKey<LootTable> variantLocation =
+        getCustomLootTableLocation(livingEntity, priority, true);
     LootTable customTable =
-        serverLevel.getServer().reloadableRegistries().getLootTable(customLocation);
+        serverLevel.getServer().reloadableRegistries().getLootTable(variantLocation);
+    if (customTable == LootTable.EMPTY) {
+      ResourceKey<LootTable> baseLocation =
+          getCustomLootTableLocation(livingEntity, priority, false);
+      if (!baseLocation.equals(variantLocation)) {
+        customTable = serverLevel.getServer().reloadableRegistries().getLootTable(baseLocation);
+      }
+    }
     if (customTable != LootTable.EMPTY) {
       for (int i = 0; i <= additionalRolls; i++) {
         customTable.getRandomItems(lootParams).stream()
@@ -598,7 +640,7 @@ public class LootManager {
           drops.add(new ItemStack(Items.HONEYCOMB));
         } else if (enhancement instanceof HoneyExtractorEnhancementItem
             && MobFarmConfig.enableHoneyExtractorEnhancement
-            && random.nextInt(10) == 0) {
+            && random.nextInt(4) == 0) {
           drops.add(new ItemStack(Items.HONEY_BOTTLE));
         } else if (enhancement instanceof PollenTrapEnhancementItem
             && MobFarmConfig.enablePollenTrapEnhancement

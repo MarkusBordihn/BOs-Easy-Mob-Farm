@@ -45,7 +45,6 @@ public record MobCaptureData(
 
   public static final String TYPE_SEPARATOR = ":";
   public static final String ID = "mob_capture_data";
-
   public static final MobCaptureData EMPTY =
       new MobCaptureData(
           "",
@@ -100,8 +99,11 @@ public record MobCaptureData(
           ByteBufCodecs.BOOL,
           MobCaptureData::isFoil,
           MobCaptureData::new);
-
   private static final int MAX_ID_LIMIT = 16777216;
+
+  public MobCaptureData {
+    variant = variant != null ? variant : "";
+  }
 
   public MobCaptureData(final String name, final EntityType<?> entityType, final Rarity rarity) {
     this(

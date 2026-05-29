@@ -60,11 +60,9 @@ public class MobFarmBlockItem extends BlockItem {
 
   public static void updateCustomModelData(ItemStack itemStack) {
     int tierLevel = getTierLevel(itemStack).getTierLevel();
-    if (tierLevel > 0) {
-      itemStack.set(
-          net.minecraft.core.component.DataComponents.CUSTOM_MODEL_DATA,
-          new CustomModelData(tierLevel));
-    }
+    itemStack.set(
+        net.minecraft.core.component.DataComponents.CUSTOM_MODEL_DATA,
+        new CustomModelData(tierLevel));
   }
 
   public static MobFarmTierLevel getTierLevel(ItemStack itemStack) {
