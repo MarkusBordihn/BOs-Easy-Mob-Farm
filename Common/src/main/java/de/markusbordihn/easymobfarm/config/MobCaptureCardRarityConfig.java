@@ -60,34 +60,45 @@ public class MobCaptureCardRarityConfig extends Config {
     defaultRarity.put("minecraft:bat", Rarity.COMMON);
     defaultRarity.put("minecraft:cat", Rarity.COMMON);
     defaultRarity.put("minecraft:chicken", Rarity.COMMON);
+    defaultRarity.put("minecraft:cod", Rarity.COMMON);
     defaultRarity.put("minecraft:cow", Rarity.COMMON);
     defaultRarity.put("minecraft:creeper", Rarity.COMMON);
     defaultRarity.put("minecraft:drowned", Rarity.COMMON);
     defaultRarity.put("minecraft:horse", Rarity.COMMON);
     defaultRarity.put("minecraft:pig", Rarity.COMMON);
     defaultRarity.put("minecraft:pillager", Rarity.COMMON);
+    defaultRarity.put("minecraft:salmon", Rarity.COMMON);
     defaultRarity.put("minecraft:sheep", Rarity.COMMON);
     defaultRarity.put("minecraft:skeleton", Rarity.COMMON);
     defaultRarity.put("minecraft:spider", Rarity.COMMON);
     defaultRarity.put("minecraft:squid", Rarity.COMMON);
+    defaultRarity.put("minecraft:tropical_fish", Rarity.COMMON);
     defaultRarity.put("minecraft:villager", Rarity.COMMON);
     defaultRarity.put("minecraft:witch", Rarity.COMMON);
     defaultRarity.put("minecraft:wolf", Rarity.COMMON);
     defaultRarity.put("minecraft:zombie", Rarity.COMMON);
+    defaultRarity.put("minecraft:zombie_villager", Rarity.COMMON);
 
     // UNCOMMON mobs
+    defaultRarity.put("minecraft:allay", Rarity.UNCOMMON);
+    defaultRarity.put("minecraft:axolotl", Rarity.UNCOMMON);
     defaultRarity.put("minecraft:cave_spider", Rarity.UNCOMMON);
     defaultRarity.put("minecraft:enderman", Rarity.UNCOMMON);
+    defaultRarity.put("minecraft:endermite", Rarity.UNCOMMON);
     defaultRarity.put("minecraft:evoker", Rarity.UNCOMMON);
     defaultRarity.put("minecraft:fox", Rarity.UNCOMMON);
+    defaultRarity.put("minecraft:goat", Rarity.UNCOMMON);
+    defaultRarity.put("minecraft:hoglin", Rarity.UNCOMMON);
     defaultRarity.put("minecraft:husk", Rarity.UNCOMMON);
     defaultRarity.put("minecraft:llama", Rarity.UNCOMMON);
+    defaultRarity.put("minecraft:mooshroom", Rarity.UNCOMMON);
     defaultRarity.put("minecraft:panda", Rarity.UNCOMMON);
     defaultRarity.put("minecraft:polar_bear", Rarity.UNCOMMON);
+    defaultRarity.put("minecraft:pufferfish", Rarity.UNCOMMON);
     defaultRarity.put("minecraft:slime", Rarity.UNCOMMON);
     defaultRarity.put("minecraft:stray", Rarity.UNCOMMON);
+    defaultRarity.put("minecraft:zoglin", Rarity.UNCOMMON);
     defaultRarity.put("minecraft:zombified_piglin", Rarity.UNCOMMON);
-    defaultRarity.put("minecraft:zombified_villager", Rarity.UNCOMMON);
 
     // RARE mobs
     defaultRarity.put("minecraft:blaze", Rarity.RARE);

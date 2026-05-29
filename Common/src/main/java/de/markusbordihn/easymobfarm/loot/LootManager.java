@@ -394,6 +394,26 @@ public class LootManager {
     return drops;
   }
 
+  public static void addBonusDrops(
+      NonNullList<ItemStack> drops,
+      List<ItemStack> bonusDrops,
+      List<EnhancementItem> enhancements,
+      EntityType<?> entityType) {
+    for (ItemStack drop : bonusDrops) {
+      if (drop.isEmpty()) {
+        continue;
+      }
+      if (entityType == EntityType.BEE
+          && drop.is(Items.HONEYCOMB)
+          && MobFarmConfig.enableHoneyExtractorEnhancement
+          && enhancements.stream().anyMatch(e -> e instanceof HoneyExtractorEnhancementItem)) {
+        drops.add(new ItemStack(Items.HONEY_BOTTLE));
+      } else {
+        drops.add(drop.copy());
+      }
+    }
+  }
+
   private static void handleSpecialEntityDrops(
       final LivingEntity livingEntity, final NonNullList<ItemStack> drops) {
     if (livingEntity instanceof WitherBoss) {
@@ -539,7 +559,7 @@ public class LootManager {
           drops.add(new ItemStack(Items.HONEYCOMB));
         } else if (enhancement instanceof HoneyExtractorEnhancementItem
             && MobFarmConfig.enableHoneyExtractorEnhancement
-            && random.nextInt(10) == 0) {
+            && random.nextInt(4) == 0) {
           drops.add(new ItemStack(Items.HONEY_BOTTLE));
         } else if (enhancement instanceof PollenTrapEnhancementItem
             && MobFarmConfig.enablePollenTrapEnhancement
