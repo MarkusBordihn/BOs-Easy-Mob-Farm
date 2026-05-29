@@ -42,6 +42,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.CustomModelData;
 import net.minecraft.world.item.component.TooltipDisplay;
 import net.minecraft.world.level.block.Block;
 
@@ -67,6 +68,13 @@ public class MobFarmBlockItem extends BlockItem {
     super(block, properties);
     this.mobFarmType = mobFarmType;
     this.farmName = mobFarmType.getId();
+  }
+
+  public static void updateCustomModelData(ItemStack itemStack) {
+    int tierLevel = getTierLevel(itemStack).getTierLevel();
+    itemStack.set(
+        net.minecraft.core.component.DataComponents.CUSTOM_MODEL_DATA,
+        new CustomModelData(List.of((float) tierLevel), List.of(), List.of(), List.of()));
   }
 
   public static MobFarmTierLevel getTierLevel(ItemStack itemStack) {

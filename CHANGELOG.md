@@ -5,6 +5,20 @@
 This change log includes the summarized changes.
 For the full changelog, please go to the [GitHub History][history] instead.
 
+### 10.9.0
+
+- Fixed #213 by adding Pillager Leader (Patrol Leader) detection via `isPatrolLeader()` with a
+  dedicated mob capture card variant.
+- Fixed #207 by ensuring Tier 0 mob farms are assigned `CustomModelData:0`, matching their recipe
+  output so JEI can correctly display their crafting recipes.
+- Fixed #196 by converting bee farm bonus honeycomb drops to honey bottles when Honey Extractor is
+  installed and increasing its drop chance from 10% to 25%.
+- Fixed Pillager Leader display in farm by automatically equipping the Ominous Banner.
+- Fixed invalid `minecraft:zombified_villager` card definition referencing a non-existent entity.
+- Added mob capture cards for Mooshroom, Hoglin, Goat, Salmon, Pufferfish, Axolotl, Tropical Fish,
+  Allay, Zoglin and Endermite.
+- Added fallback loot table for Goat with a rare chance to drop one of the four regular Goat Horn.
+
 ### 10.8.0
 
 - Fixed #211 by reducing log.info messages during startup and in-game.

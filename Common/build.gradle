@@ -15,6 +15,13 @@ neoForge {
 
 dependencies {
   compileOnly group: 'org.spongepowered', name: 'mixin', version: '0.8.7'
+  testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+  testImplementation 'org.mockito:mockito-core:5.11.0'
+  testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+  useJUnitPlatform()
 }
 
 processResources {

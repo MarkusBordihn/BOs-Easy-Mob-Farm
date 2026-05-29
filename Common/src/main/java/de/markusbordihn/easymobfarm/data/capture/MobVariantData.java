@@ -29,6 +29,7 @@ import net.minecraft.world.entity.animal.feline.CatVariants;
 import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.entity.animal.frog.FrogVariants;
 import net.minecraft.world.entity.monster.MagmaCube;
+import net.minecraft.world.entity.monster.illager.Pillager;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.npc.villager.Villager;
 
@@ -36,6 +37,7 @@ public class MobVariantData {
 
   public static final String VARIANT_TAG = "Variant";
   public static final String LARGE_VARIANT = "large";
+  public static final String LEADER_VARIANT = "leader";
   public static final String MEDIUM_VARIANT = "medium";
   public static final String SMALL_VARIANT = "small";
   public static final String TINY_VARIANT = "tiny";
@@ -43,17 +45,19 @@ public class MobVariantData {
   private MobVariantData() {}
 
   public static String getVariant(final EntityType<?> entityType) {
-    return "";
+    return null;
   }
 
   public static String getVariant(final LivingEntity livingEntity) {
-    if (livingEntity instanceof Cat cat) {
+    if (livingEntity instanceof Pillager pillager && pillager.isPatrolLeader()) {
+      return LEADER_VARIANT;
+    } else if (livingEntity instanceof Cat cat) {
       return (cat.getVariant().unwrapKey().orElse(CatVariants.BLACK))
           .identifier()
           .toString()
           .replace("minecraft:", "");
     } else if (livingEntity instanceof Villager villager) {
-      return villager.getVillagerData().profession().getRegisteredName();
+      return villager.getVillagerData().profession().getRegisteredName().replace("minecraft:", "");
     } else if (livingEntity instanceof MagmaCube magmaCube) {
       return getSizeVariant(magmaCube.getSize());
     } else if (livingEntity instanceof Slime slime) {
@@ -73,12 +77,12 @@ public class MobVariantData {
       }
       return frogVariant;
     }
-    return "";
+    return null;
   }
 
   public static String getVariant(final CompoundTag compoundTag) {
     if (compoundTag == null) {
-      return "";
+      return null;
     }
     if (compoundTag.contains(VARIANT_TAG)) {
       return compoundTag.getString(VARIANT_TAG).orElse("");
@@ -86,7 +90,7 @@ public class MobVariantData {
     if (compoundTag.contains(VARIANT_TAG.toLowerCase(Locale.ROOT))) {
       return compoundTag.getString(VARIANT_TAG.toLowerCase(Locale.ROOT)).orElse("");
     }
-    return "";
+    return null;
   }
 
   public static String getSizeVariant(float size) {

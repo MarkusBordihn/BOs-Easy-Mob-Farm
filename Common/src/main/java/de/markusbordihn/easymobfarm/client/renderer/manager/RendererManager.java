@@ -22,17 +22,22 @@ package de.markusbordihn.easymobfarm.client.renderer.manager;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
+import de.markusbordihn.easymobfarm.data.capture.MobVariantData;
 import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.animal.fish.AbstractFish;
 import net.minecraft.world.entity.animal.sheep.Sheep;
+import net.minecraft.world.entity.monster.illager.Pillager;
+import net.minecraft.world.entity.raid.Raid;
 import net.minecraft.world.level.storage.TagValueInput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.phys.Vec3;
@@ -157,6 +162,19 @@ public class RendererManager {
       if (mobCaptureData.hasColor()) {
         sheepEntity.setColor(mobCaptureData.color().getDyeColor());
       }
+    }
+
+    // Ensure Pillager Leaders always display with the Ominous Banner.
+    if (entity instanceof Pillager pillager
+        && MobVariantData.LEADER_VARIANT.equals(mobCaptureData.variant())
+        && pillager.getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
+      pillager.setItemSlot(
+          EquipmentSlot.HEAD,
+          Raid.getOminousBannerInstance(
+              mobFarmBlockEntity
+                  .getLevel()
+                  .registryAccess()
+                  .lookupOrThrow(Registries.BANNER_PATTERN)));
     }
 
     // Disable AI for the entity and other performance improvements
