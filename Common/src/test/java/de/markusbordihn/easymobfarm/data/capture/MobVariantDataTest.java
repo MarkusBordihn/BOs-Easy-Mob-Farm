@@ -19,11 +19,20 @@
 
 package de.markusbordihn.easymobfarm.data.capture;
 
+import net.minecraft.SharedConstants;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.Bootstrap;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class MobVariantDataTest {
+
+  @BeforeAll
+  static void bootstrap() {
+    SharedConstants.tryDetectVersion();
+    Bootstrap.bootStrap();
+  }
 
   @Test
   void sizeOneIsTiny() {

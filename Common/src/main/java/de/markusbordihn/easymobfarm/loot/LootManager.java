@@ -66,6 +66,7 @@ import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.entity.monster.MagmaCube;
+import net.minecraft.world.entity.monster.Pillager;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -216,6 +217,10 @@ public class LootManager {
           sheepEntity.setColor(mobCaptureData.color());
         }
       }
+      if (entity instanceof Pillager pillager
+          && MobVariantData.LEADER_VARIANT.equals(mobCaptureData.variant())) {
+        pillager.setPatrolLeader(true);
+      }
 
       return getEntityLoot(entity, enhancements, level);
     } finally {
@@ -242,6 +247,10 @@ public class LootManager {
         if (mobCaptureData.hasColor()) {
           sheepEntity.setColor(mobCaptureData.color());
         }
+      }
+      if (entity instanceof Pillager pillager
+          && MobVariantData.LEADER_VARIANT.equals(mobCaptureData.variant())) {
+        pillager.setPatrolLeader(true);
       }
       Map<String, ItemStack> uniqueItems = new LinkedHashMap<>();
       for (int roll = 0; roll < 3; roll++) {
@@ -338,7 +347,7 @@ public class LootManager {
             additionalRolls,
             drops)) {
       ResourceLocation legacyLocation =
-          getCustomLootTableLocation(livingEntity, LootTablePriority.LEGACY);
+          getCustomLootTableLocation(livingEntity, LootTablePriority.LEGACY, false);
       LootTable legacyTable = serverLevel.getServer().getLootData().getLootTable(legacyLocation);
       if (legacyTable != LootTable.EMPTY) {
         if (loggedLegacyPaths.add(legacyLocation)) {
@@ -457,17 +466,22 @@ public class LootManager {
   }
 
   private static ResourceLocation getCustomLootTableLocation(
-      final LivingEntity livingEntity, final LootTablePriority priority) {
+      final LivingEntity livingEntity,
+      final LootTablePriority priority,
+      final boolean withVariant) {
     ResourceLocation entityTypeResourceLocation =
         BuiltInRegistries.ENTITY_TYPE.getKey(livingEntity.getType());
+    String entityPath = entityTypeResourceLocation.getPath();
+    if (withVariant) {
+      String variant = MobVariantData.getVariant(livingEntity);
+      if (variant != null && !variant.isEmpty()) {
+        entityPath = entityPath + "_" + variant;
+      }
+    }
     String path =
         priority.getPath().isEmpty() ? "entities/" : "entities/" + priority.getPath() + "/";
     return new ResourceLocation(
-        Constants.MOD_ID,
-        path
-            + entityTypeResourceLocation.getNamespace()
-            + "/"
-            + entityTypeResourceLocation.getPath());
+        Constants.MOD_ID, path + entityTypeResourceLocation.getNamespace() + "/" + entityPath);
   }
 
   private static boolean addLootFromCustomTable(
@@ -477,8 +491,14 @@ public class LootManager {
       final LootParams lootParams,
       final int additionalRolls,
       final NonNullList<ItemStack> drops) {
-    ResourceLocation customLocation = getCustomLootTableLocation(livingEntity, priority);
-    LootTable customTable = serverLevel.getServer().getLootData().getLootTable(customLocation);
+    ResourceLocation variantLocation = getCustomLootTableLocation(livingEntity, priority, true);
+    LootTable customTable = serverLevel.getServer().getLootData().getLootTable(variantLocation);
+    if (customTable == LootTable.EMPTY) {
+      ResourceLocation baseLocation = getCustomLootTableLocation(livingEntity, priority, false);
+      if (!baseLocation.equals(variantLocation)) {
+        customTable = serverLevel.getServer().getLootData().getLootTable(baseLocation);
+      }
+    }
     if (customTable != LootTable.EMPTY) {
       for (int i = 0; i <= additionalRolls; i++) {
         customTable.getRandomItems(lootParams).stream()

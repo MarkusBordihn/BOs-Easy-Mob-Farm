@@ -22,6 +22,7 @@ package de.markusbordihn.easymobfarm.loot;
 import de.markusbordihn.easymobfarm.item.upgrade.EnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhancementItem;
 import java.util.List;
+import net.minecraft.SharedConstants;
 import net.minecraft.core.NonNullList;
 import net.minecraft.server.Bootstrap;
 import net.minecraft.world.entity.EntityType;
@@ -30,11 +31,13 @@ import net.minecraft.world.item.Items;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 class LootManagerTest {
 
   @BeforeAll
   static void bootstrap() {
+    SharedConstants.tryDetectVersion();
     Bootstrap.bootStrap();
   }
 
@@ -42,7 +45,7 @@ class LootManagerTest {
   void honeyExtractorConvertsBonusHoneycomb() {
     NonNullList<ItemStack> drops = NonNullList.create();
     List<ItemStack> bonusDrops = List.of(new ItemStack(Items.HONEYCOMB));
-    List<EnhancementItem> enhancements = List.of(new HoneyExtractorEnhancementItem());
+    List<EnhancementItem> enhancements = List.of(Mockito.mock(HoneyExtractorEnhancementItem.class));
 
     LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityType.BEE);
 
@@ -65,7 +68,7 @@ class LootManagerTest {
   void honeyExtractorDoesNotConvertForNonBee() {
     NonNullList<ItemStack> drops = NonNullList.create();
     List<ItemStack> bonusDrops = List.of(new ItemStack(Items.HONEYCOMB));
-    List<EnhancementItem> enhancements = List.of(new HoneyExtractorEnhancementItem());
+    List<EnhancementItem> enhancements = List.of(Mockito.mock(HoneyExtractorEnhancementItem.class));
 
     LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityType.COW);
 
@@ -76,7 +79,7 @@ class LootManagerTest {
   @Test
   void emptyBonusDropsProducesNoDrops() {
     NonNullList<ItemStack> drops = NonNullList.create();
-    List<EnhancementItem> enhancements = List.of(new HoneyExtractorEnhancementItem());
+    List<EnhancementItem> enhancements = List.of(Mockito.mock(HoneyExtractorEnhancementItem.class));
 
     LootManager.addBonusDrops(drops, List.of(), enhancements, EntityType.BEE);
 
@@ -87,7 +90,7 @@ class LootManagerTest {
   void nonHoneycombItemPassesThroughWithExtractor() {
     NonNullList<ItemStack> drops = NonNullList.create();
     List<ItemStack> bonusDrops = List.of(new ItemStack(Items.STICK));
-    List<EnhancementItem> enhancements = List.of(new HoneyExtractorEnhancementItem());
+    List<EnhancementItem> enhancements = List.of(Mockito.mock(HoneyExtractorEnhancementItem.class));
 
     LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityType.BEE);
 
