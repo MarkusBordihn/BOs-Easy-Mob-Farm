@@ -28,6 +28,8 @@
       "de.markusbordihn.easymobfarm.gametest.ModItemsTest",
       "de.markusbordihn.easymobfarm.gametest.MobFarmBlockItemsTest",
       "de.markusbordihn.easymobfarm.gametest.LootTablesTest",
+      "de.markusbordihn.easymobfarm.gametest.LootManagerTest",
+      "de.markusbordihn.easymobfarm.gametest.MobVariantDataTest",
       "de.markusbordihn.easymobfarm.gametest.RedstoneSignalTest"
     ],
     "jei_mod_plugin": [

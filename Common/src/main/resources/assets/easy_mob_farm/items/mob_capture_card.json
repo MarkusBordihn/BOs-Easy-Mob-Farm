@@ -32,6 +32,20 @@
         }
       },
       {
+        "when": "minecraft:allay",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/allay"
+        }
+      },
+      {
+        "when": "minecraft:axolotl",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/axolotl"
+        }
+      },
+      {
         "when": "minecraft:bee",
         "model": {
           "type": "minecraft:model",
@@ -192,6 +206,13 @@
         }
       },
       {
+        "when": "minecraft:endermite",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/endermite"
+        }
+      },
+      {
         "when": "minecraft:evoker",
         "model": {
           "type": "minecraft:model",
@@ -254,10 +275,24 @@
         }
       },
       {
+        "when": "minecraft:goat",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/goat"
+        }
+      },
+      {
         "when": "minecraft:guardian",
         "model": {
           "type": "minecraft:model",
           "model": "minecraft:item/easy_mob_farm/mob_capture_card/guardian"
+        }
+      },
+      {
+        "when": "minecraft:hoglin",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/hoglin"
         }
       },
       {
@@ -293,6 +328,13 @@
         "model": {
           "type": "minecraft:model",
           "model": "minecraft:item/easy_mob_farm/mob_capture_card/magma_cube"
+        }
+      },
+      {
+        "when": "minecraft:mooshroom",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/mooshroom"
         }
       },
       {
@@ -333,8 +375,21 @@
       {
         "when": "minecraft:pillager",
         "model": {
-          "type": "minecraft:model",
-          "model": "minecraft:item/easy_mob_farm/mob_capture_card/pillager"
+          "type": "minecraft:select",
+          "property": "easy_mob_farm:mob_capture_card_entity_variant",
+          "cases": [
+            {
+              "when": "leader",
+              "model": {
+                "type": "minecraft:model",
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/pillager_leader"
+              }
+            }
+          ],
+          "fallback": {
+            "type": "minecraft:model",
+            "model": "minecraft:item/easy_mob_farm/mob_capture_card/pillager"
+          }
         }
       },
       {
@@ -345,10 +400,24 @@
         }
       },
       {
+        "when": "minecraft:pufferfish",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/pufferfish"
+        }
+      },
+      {
         "when": "minecraft:rabbit",
         "model": {
           "type": "minecraft:model",
           "model": "minecraft:item/easy_mob_farm/mob_capture_card/rabbit"
+        }
+      },
+      {
+        "when": "minecraft:salmon",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/salmon"
         }
       },
       {
@@ -526,6 +595,13 @@
         }
       },
       {
+        "when": "minecraft:tropical_fish",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/tropical_fish"
+        }
+      },
+      {
         "when": "minecraft:turtle",
         "model": {
           "type": "minecraft:model",
@@ -572,6 +648,13 @@
         "model": {
           "type": "minecraft:model",
           "model": "minecraft:item/easy_mob_farm/mob_capture_card/wither_skeleton"
+        }
+      },
+      {
+        "when": "minecraft:zoglin",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/zoglin"
         }
       },
       {
