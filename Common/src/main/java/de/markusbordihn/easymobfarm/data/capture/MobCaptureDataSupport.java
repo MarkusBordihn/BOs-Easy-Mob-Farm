@@ -28,6 +28,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
@@ -101,7 +102,7 @@ public class MobCaptureDataSupport {
     // Use registry name to identify the entity type.
     String itemRegistryName = getItemRegistryName(item);
     if (CREATE_BLAZE_BURNER.equals(itemRegistryName)) {
-      return EntityType.BLAZE;
+      return EntityTypes.BLAZE;
     }
 
     // Use compound tag to identify the entity type.
@@ -175,7 +176,7 @@ public class MobCaptureDataSupport {
       return null;
     }
     Optional<EntityType<?>> entityTypeHolder =
-        BuiltInRegistries.ENTITY_TYPE.getOptional(Identifier.parse(entityName));
+        BuiltInRegistries.ENTITY_TYPE.getOptional(Identifier.tryParse(entityName));
     return entityTypeHolder.orElse(null);
   }
 

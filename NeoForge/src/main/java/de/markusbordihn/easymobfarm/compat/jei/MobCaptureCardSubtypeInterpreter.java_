@@ -35,6 +35,7 @@ public class MobCaptureCardSubtypeInterpreter implements ISubtypeInterpreter<Ite
     if (itemStack.getItem() instanceof MobCaptureCardItem) {
       return MobCaptureManager.getMobCaptureData(itemStack, null);
     }
+
     return null;
   }
 }

@@ -24,7 +24,7 @@ import de.markusbordihn.easymobfarm.loot.LootManager;
 import java.util.List;
 import net.minecraft.core.NonNullList;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
@@ -39,7 +39,7 @@ public class LootManagerTestHelper {
         List.of(
             (EnhancementItem) de.markusbordihn.easymobfarm.item.Items.HONEY_EXTRACTOR_ENHANCEMENT);
 
-    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityType.BEE);
+    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityTypes.BEE);
 
     GameTestHelpers.assertTrue(
         helper,
@@ -52,7 +52,7 @@ public class LootManagerTestHelper {
     NonNullList<ItemStack> drops = NonNullList.create();
     List<ItemStack> bonusDrops = List.of(new ItemStack(Items.HONEYCOMB));
 
-    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityType.BEE);
+    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityTypes.BEE);
 
     GameTestHelpers.assertTrue(
         helper,
@@ -68,7 +68,7 @@ public class LootManagerTestHelper {
         List.of(
             (EnhancementItem) de.markusbordihn.easymobfarm.item.Items.HONEY_EXTRACTOR_ENHANCEMENT);
 
-    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityType.COW);
+    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityTypes.COW);
 
     GameTestHelpers.assertTrue(
         helper,

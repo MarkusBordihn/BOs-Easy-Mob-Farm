@@ -32,6 +32,7 @@ import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -200,7 +201,7 @@ public class MobCaptureManager {
     // Set variant and corresponding data.
     if (variant != null && !variant.isEmpty()) {
       mobCaptureData = mobCaptureData.withVariant(variant);
-      if (entityType == EntityType.CAT || entityType == EntityType.FROG) {
+      if (entityType == EntityTypes.CAT || entityType == EntityTypes.FROG) {
         compoundTag.putString(VARIANT_TAG, variant);
       }
     }
@@ -219,6 +220,21 @@ public class MobCaptureManager {
     if (itemStack == null || itemStack.isEmpty() || mobCaptureData == null) {
       return;
     }
+
+    // Guard against a null entity type. Storing such a component would throw later during NBT
+    // serialization (byNameCodec encode -> NPE) and abort the whole block entity save, wiping all
+    // slots. Skip writing and log enough context to diagnose the source.
+    if (mobCaptureData.entityType() == null) {
+      log.error(
+          "{} Refusing to write mob capture data with null entity type to {} (type='{}', data={}). "
+              + "This would corrupt saving - please report this with the surrounding actions.",
+          LOG_PREFIX,
+          itemStack,
+          mobCaptureData.type(),
+          mobCaptureData.data());
+      return;
+    }
+
     itemStack.set(DataComponents.MOB_CAPTURE_DATA, mobCaptureData);
   }
 

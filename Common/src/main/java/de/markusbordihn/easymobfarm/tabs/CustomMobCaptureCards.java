@@ -29,7 +29,7 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Set;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.ItemLike;
@@ -52,19 +52,19 @@ public class CustomMobCaptureCards {
     result.add(
         MobCaptureManager.createMobCaptureCard(
             mobCaptureCardItem,
-            new MobCaptureData("Common Card", EntityType.ARMOR_STAND, Rarity.COMMON)));
+            new MobCaptureData("Common Card", EntityTypes.ARMOR_STAND, Rarity.COMMON)));
     result.add(
         MobCaptureManager.createMobCaptureCard(
             mobCaptureCardItem,
-            new MobCaptureData("Uncommon Card", EntityType.ARMOR_STAND, Rarity.UNCOMMON)));
+            new MobCaptureData("Uncommon Card", EntityTypes.ARMOR_STAND, Rarity.UNCOMMON)));
     result.add(
         MobCaptureManager.createMobCaptureCard(
             mobCaptureCardItem,
-            new MobCaptureData("Rare Card", EntityType.ARMOR_STAND, Rarity.RARE)));
+            new MobCaptureData("Rare Card", EntityTypes.ARMOR_STAND, Rarity.RARE)));
     result.add(
         MobCaptureManager.createMobCaptureCard(
             mobCaptureCardItem,
-            new MobCaptureData("Epic Card", EntityType.ARMOR_STAND, Rarity.EPIC)));
+            new MobCaptureData("Epic Card", EntityTypes.ARMOR_STAND, Rarity.EPIC)));
 
     // Extract mob capture cards from MobCaptureCardResourceManager.
     MobCaptureCardDefinitionManager.getAll()

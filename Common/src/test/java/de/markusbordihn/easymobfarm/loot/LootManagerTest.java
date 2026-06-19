@@ -21,20 +21,20 @@ package de.markusbordihn.easymobfarm.loot;
 
 import de.markusbordihn.easymobfarm.item.upgrade.EnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhancementItem;
+import java.lang.reflect.Field;
 import java.util.List;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.server.Bootstrap;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import sun.misc.Unsafe;
-import java.lang.reflect.Field;
 
 class LootManagerTest {
 
@@ -43,7 +43,7 @@ class LootManagerTest {
   static {
     SharedConstants.tryDetectVersion();
     Bootstrap.bootStrap();
-    // Bootstrap.bootStrap() in MC 26.1.2 does not bind DataComponents to item holders.
+    // Bootstrap.bootStrap() in MC 26.2 does not bind DataComponents to item holders.
     // Holder.Reference.bindComponents() is a public method — call it directly.
     for (Item item : List.of(Items.HONEYCOMB, Items.STICK, Items.HONEY_BOTTLE)) {
       Holder<?> holder = item.builtInRegistryHolder();
@@ -59,7 +59,8 @@ class LootManagerTest {
       unsafeField.setAccessible(true);
       Unsafe unsafe = (Unsafe) unsafeField.get(null);
       HONEY_EXTRACTOR =
-          (HoneyExtractorEnhancementItem) unsafe.allocateInstance(HoneyExtractorEnhancementItem.class);
+          (HoneyExtractorEnhancementItem)
+              unsafe.allocateInstance(HoneyExtractorEnhancementItem.class);
     } catch (ReflectiveOperationException e) {
       throw new ExceptionInInitializerError(e);
     }
@@ -71,7 +72,7 @@ class LootManagerTest {
     List<ItemStack> bonusDrops = List.of(new ItemStack(Items.HONEYCOMB));
     List<EnhancementItem> enhancements = List.of(HONEY_EXTRACTOR);
 
-    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityType.BEE);
+    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityTypes.BEE);
 
     Assertions.assertEquals(1, drops.size());
     Assertions.assertTrue(drops.get(0).is(Items.HONEY_BOTTLE));
@@ -82,7 +83,7 @@ class LootManagerTest {
     NonNullList<ItemStack> drops = NonNullList.create();
     List<ItemStack> bonusDrops = List.of(new ItemStack(Items.HONEYCOMB));
 
-    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityType.BEE);
+    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityTypes.BEE);
 
     Assertions.assertEquals(1, drops.size());
     Assertions.assertTrue(drops.get(0).is(Items.HONEYCOMB));
@@ -94,7 +95,7 @@ class LootManagerTest {
     List<ItemStack> bonusDrops = List.of(new ItemStack(Items.HONEYCOMB));
     List<EnhancementItem> enhancements = List.of(HONEY_EXTRACTOR);
 
-    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityType.COW);
+    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityTypes.COW);
 
     Assertions.assertEquals(1, drops.size());
     Assertions.assertTrue(drops.get(0).is(Items.HONEYCOMB));
@@ -104,7 +105,7 @@ class LootManagerTest {
   void emptyBonusDropsProducesNoDrops() {
     NonNullList<ItemStack> drops = NonNullList.create();
 
-    LootManager.addBonusDrops(drops, List.of(), List.of(HONEY_EXTRACTOR), EntityType.BEE);
+    LootManager.addBonusDrops(drops, List.of(), List.of(HONEY_EXTRACTOR), EntityTypes.BEE);
 
     Assertions.assertTrue(drops.isEmpty());
   }
@@ -115,7 +116,7 @@ class LootManagerTest {
     List<ItemStack> bonusDrops = List.of(new ItemStack(Items.STICK));
     List<EnhancementItem> enhancements = List.of(HONEY_EXTRACTOR);
 
-    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityType.BEE);
+    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityTypes.BEE);
 
     Assertions.assertEquals(1, drops.size());
     Assertions.assertTrue(drops.get(0).is(Items.STICK));

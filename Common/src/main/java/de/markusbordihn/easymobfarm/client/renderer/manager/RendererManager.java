@@ -25,6 +25,7 @@ import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.data.capture.MobVariantData;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -48,9 +49,15 @@ public class RendererManager {
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final Map<BlockPos, Entity> entityMap = new HashMap<>();
+  private static final AtomicInteger renderEntityIdCounter =
+      new AtomicInteger(Integer.MAX_VALUE - 100000);
   private static int validationCounter = 0;
 
   private RendererManager() {}
+
+  public static void assignRenderEntityId(Entity entity) {
+    entity.setId(renderEntityIdCounter.getAndDecrement());
+  }
 
   public static Entity getOrCreateEntity(final MobFarmBlockEntity mobFarmBlockEntity) {
     if (mobFarmBlockEntity == null) {
@@ -124,6 +131,10 @@ public class RendererManager {
       log.error("Unable to create entity for entity type {}", entityType);
       return null;
     }
+
+    // In MC 26.2, ClientLevel.getNextEntityId() returns 0, but Entity.getId() throws when id==0.
+    // Assign a unique render-only ID so extractRenderState() can safely call getId().
+    assignRenderEntityId(entity);
 
     // Reset entity position and movement to prevent unwanted animations.
     entity.tick();

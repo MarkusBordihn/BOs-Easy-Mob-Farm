@@ -115,7 +115,6 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
   private int farmProgressionSpeed = DEFAULT_PROCESSING_TICKS;
   private int farmStatus = MobFarmStatus.IDLE;
   private int capturedMobExperience = -1;
-  private HolderLookup.Provider provider;
   private int bufferProcessTick = 0;
 
   public MobFarmBlockEntity(
@@ -934,12 +933,6 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
 
   @Override
   public ClientboundBlockEntityDataPacket getUpdatePacket() {
-    if (this.provider != null) {
-      TagValueOutput valueOutput =
-          TagValueOutput.createWithContext(ProblemReporter.DISCARDING, this.provider);
-      this.saveAdditional(valueOutput);
-      CompoundTag tag = valueOutput.buildResult();
-    }
     return ClientboundBlockEntityDataPacket.create(this);
   }
 

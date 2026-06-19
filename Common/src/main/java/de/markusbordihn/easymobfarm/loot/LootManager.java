@@ -64,6 +64,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.bee.Bee;
 import net.minecraft.world.entity.animal.chicken.Chicken;
@@ -71,7 +72,7 @@ import net.minecraft.world.entity.animal.cow.Cow;
 import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.entity.animal.sheep.Sheep;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
-import net.minecraft.world.entity.monster.MagmaCube;
+import net.minecraft.world.entity.monster.cubemob.MagmaCube;
 import net.minecraft.world.entity.monster.illager.Pillager;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
@@ -470,7 +471,7 @@ public class LootManager {
       if (drop.isEmpty()) {
         continue;
       }
-      if (entityType == EntityType.BEE
+      if (entityType == EntityTypes.BEE
           && drop.is(Items.HONEYCOMB)
           && MobFarmConfig.enableHoneyExtractorEnhancement
           && enhancements.stream().anyMatch(e -> e instanceof HoneyExtractorEnhancementItem)) {
@@ -817,13 +818,13 @@ public class LootManager {
   private static ItemStack getRandomDye() {
     List<Item> dyes =
         List.of(
-            Items.YELLOW_DYE,
-            Items.RED_DYE,
-            Items.BLUE_DYE,
-            Items.ORANGE_DYE,
-            Items.PINK_DYE,
-            Items.WHITE_DYE,
-            Items.BLACK_DYE);
+            Items.DYE.yellow(),
+            Items.DYE.red(),
+            Items.DYE.blue(),
+            Items.DYE.orange(),
+            Items.DYE.pink(),
+            Items.DYE.white(),
+            Items.DYE.black());
     return new ItemStack(dyes.get(new Random().nextInt(dyes.size())));
   }
 }

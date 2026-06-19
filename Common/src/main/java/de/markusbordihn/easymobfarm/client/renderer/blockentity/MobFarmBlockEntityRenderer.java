@@ -38,7 +38,6 @@ import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.animal.bee.Bee;
 import net.minecraft.world.entity.animal.fish.AbstractSchoolingFish;
 import net.minecraft.world.entity.animal.squid.Squid;
@@ -195,8 +194,7 @@ public class MobFarmBlockEntityRenderer
       return MobFarmRenderState.EntityType.PHANTOM;
     } else if (entity instanceof EnderDragon) {
       return MobFarmRenderState.EntityType.ENDER_DRAGON;
-    } else if ((entity instanceof FlyingAnimal flyingAnimal && flyingAnimal.isFlying())
-        || entity instanceof Guardian) {
+    } else if (entity instanceof Guardian) {
       return MobFarmRenderState.EntityType.FLYING_ANIMAL;
     }
     return MobFarmRenderState.EntityType.GENERIC;

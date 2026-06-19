@@ -22,7 +22,7 @@ package de.markusbordihn.easymobfarm.gametest;
 import de.markusbordihn.easymobfarm.data.capture.MobVariantData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.monster.illager.Pillager;
 
 public class MobVariantDataTestHelper {
@@ -32,7 +32,7 @@ public class MobVariantDataTestHelper {
   public static void testPillagerVariantDetection(GameTestHelper helper) {
     BlockPos blockPos = new BlockPos(1, 2, 1);
 
-    Pillager pillager = (Pillager) helper.spawn(EntityType.PILLAGER, blockPos);
+    Pillager pillager = (Pillager) helper.spawn(EntityTypes.PILLAGER, blockPos);
     GameTestHelpers.assertFalse(
         helper,
         "Regular Pillager should not return leader variant, got: "
@@ -40,7 +40,7 @@ public class MobVariantDataTestHelper {
         MobVariantData.LEADER_VARIANT.equals(MobVariantData.getVariant(pillager)));
     pillager.discard();
 
-    Pillager patrolLeader = (Pillager) helper.spawn(EntityType.PILLAGER, blockPos);
+    Pillager patrolLeader = (Pillager) helper.spawn(EntityTypes.PILLAGER, blockPos);
     patrolLeader.setPatrolLeader(true);
     GameTestHelpers.assertTrue(
         helper,

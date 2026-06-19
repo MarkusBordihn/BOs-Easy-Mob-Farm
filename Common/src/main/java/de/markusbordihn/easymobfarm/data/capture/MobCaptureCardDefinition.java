@@ -21,6 +21,7 @@ package de.markusbordihn.easymobfarm.data.capture;
 
 import de.markusbordihn.easymobfarm.Constants;
 import java.util.Map;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
@@ -103,7 +104,7 @@ public record MobCaptureCardDefinition(
   }
 
   public static EntityType<?> getEntityType(Identifier resourceLocation) {
-    return EntityType.byString(resourceLocation.toString()).orElse(null);
+    return BuiltInRegistries.ENTITY_TYPE.getOptional(resourceLocation).orElse(null);
   }
 
   public static Identifier getModelResourceLocation(Identifier resourceLocation, Rarity rarity) {

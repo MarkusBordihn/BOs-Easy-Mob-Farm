@@ -28,6 +28,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
@@ -50,7 +51,7 @@ public record MobCaptureData(
       new MobCaptureData(
           "",
           "",
-          EntityType.ARMOR_STAND,
+          EntityTypes.ARMOR_STAND,
           new CompoundTag(),
           MobColor.NONE,
           "",

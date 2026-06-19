@@ -22,6 +22,7 @@ package de.markusbordihn.easymobfarm.client.screen;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.capture.MobCaptureManager;
 import de.markusbordihn.easymobfarm.client.renderer.manager.EntityScalingManager;
+import de.markusbordihn.easymobfarm.client.renderer.manager.RendererManager;
 import de.markusbordihn.easymobfarm.client.screen.components.Graphics;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.menu.CardBinderMenu;
@@ -338,12 +339,15 @@ public class CardBinderScreen<T extends CardBinderMenu> extends AbstractContaine
     MobCaptureData data = MobCaptureManager.getMobCaptureData(cardStack, mc.level);
     if (data != null && data.entityType() != null) {
       previewEntity = data.entityType().create(mc.level, EntitySpawnReason.EVENT);
-      if (previewEntity != null && data.hasData()) {
-        try {
-          previewEntity.load(
-              TagValueInput.create(
-                  ProblemReporter.DISCARDING, mc.level.registryAccess(), data.data()));
-        } catch (Exception ignored) {
+      if (previewEntity != null) {
+        RendererManager.assignRenderEntityId(previewEntity);
+        if (data.hasData()) {
+          try {
+            previewEntity.load(
+                TagValueInput.create(
+                    ProblemReporter.DISCARDING, mc.level.registryAccess(), data.data()));
+          } catch (Exception ignored) {
+          }
         }
       }
     }

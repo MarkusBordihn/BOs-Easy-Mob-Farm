@@ -19,9 +19,10 @@
 
 package de.markusbordihn.easymobfarm.compat;
 
-import de.markusbordihn.easymobfarm.compat.jei.EasyMobFarmJeiPlugin;
+// import de.markusbordihn.easymobfarm.compat.jei.EasyMobFarmJeiPlugin;
 import net.fabricmc.loader.impl.FabricLoaderImpl;
-import net.minecraft.client.Minecraft;
+
+// import net.minecraft.client.Minecraft;
 
 public class CompatHandler implements CompatHandlerInterface {
 
@@ -38,6 +39,6 @@ public class CompatHandler implements CompatHandlerInterface {
       return;
     }
 
-    Minecraft.getInstance().execute(EasyMobFarmJeiPlugin::refreshMobCaptureCards);
+    // Minecraft.getInstance().execute(EasyMobFarmJeiPlugin::refreshMobCaptureCards);
   }
 }

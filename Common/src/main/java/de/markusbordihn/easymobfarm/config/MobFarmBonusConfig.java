@@ -113,16 +113,16 @@ public class MobFarmBonusConfig extends Config {
         List.of(new DefaultDrop(5, new ItemStackTemplate(Items.LEATHER, 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.ANIMAL_PLAINS_FARM.getId() + "::0::minecraft:sheep",
-        List.of(new DefaultDrop(20, new ItemStackTemplate(Items.WHITE_WOOL, 1))));
+        List.of(new DefaultDrop(20, new ItemStackTemplate(Items.WOOL.white(), 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.ANIMAL_PLAINS_FARM.getId() + "::1::minecraft:sheep",
-        List.of(new DefaultDrop(15, new ItemStackTemplate(Items.WHITE_WOOL, 1))));
+        List.of(new DefaultDrop(15, new ItemStackTemplate(Items.WOOL.white(), 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.ANIMAL_PLAINS_FARM.getId() + "::2::minecraft:sheep",
-        List.of(new DefaultDrop(10, new ItemStackTemplate(Items.WHITE_WOOL, 1))));
+        List.of(new DefaultDrop(10, new ItemStackTemplate(Items.WOOL.white(), 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.ANIMAL_PLAINS_FARM.getId() + "::3::minecraft:sheep",
-        List.of(new DefaultDrop(5, new ItemStackTemplate(Items.WHITE_WOOL, 1))));
+        List.of(new DefaultDrop(5, new ItemStackTemplate(Items.WOOL.white(), 1))));
     defaultMobFarmBonusMap.put(
         MobFarmType.ANIMAL_PLAINS_FARM.getId() + "::0::minecraft:chicken",
         List.of(new DefaultDrop(20, new ItemStackTemplate(Items.EGG, 1))));

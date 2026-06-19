@@ -1,4 +1,4 @@
-# Changelog for Easy Mob Farm
+# Changelog for Easy Mob Farm 26.2
 
 ## Note
 

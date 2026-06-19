@@ -21,6 +21,7 @@ package de.markusbordihn.easymobfarm.data.capture;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -105,9 +106,11 @@ public class MobEntityTypeData {
 
   public static EntityType<?> getEntityType(CompoundTag compoundTag) {
     String entityTypeName = getEntityTypeName(compoundTag);
-    if (entityTypeName != null) {
-      return EntityType.byString(entityTypeName).orElse(null);
+    if (entityTypeName == null || entityTypeName.isEmpty()) {
+      return null;
     }
-    return null;
+    return BuiltInRegistries.ENTITY_TYPE
+        .getOptional(Identifier.tryParse(entityTypeName))
+        .orElse(null);
   }
 }

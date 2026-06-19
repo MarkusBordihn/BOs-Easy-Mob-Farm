@@ -20,7 +20,9 @@
 package de.markusbordihn.easymobfarm.data.capture;
 
 import java.util.Locale;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 
@@ -62,7 +64,8 @@ public class MobNameData {
     }
 
     // Get Name over entity type, if possible.
-    EntityType<?> entityType = EntityType.byString(entityTypeName).orElse(null);
+    EntityType<?> entityType =
+        BuiltInRegistries.ENTITY_TYPE.getOptional(Identifier.tryParse(entityTypeName)).orElse(null);
     return entityType != null ? entityType.getDescriptionId() : "";
   }
 }
