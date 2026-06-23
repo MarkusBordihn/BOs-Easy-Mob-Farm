@@ -43,4 +43,5 @@ generated
 *.clip
 *.stackdump
 *.log
+*.log.gz
 *.bak
