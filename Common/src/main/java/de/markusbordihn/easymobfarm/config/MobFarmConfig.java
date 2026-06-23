@@ -19,7 +19,23 @@
 
 package de.markusbordihn.easymobfarm.config;
 
+import de.markusbordihn.easymobfarm.item.upgrade.EnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.EggCollectorEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.FrogCatalystEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyHarvesterFrameEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.KnifeEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LootEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.LuckEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.MilkExtractorEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.PollenTrapEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SheepEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SpeedEnhancementItem;
+import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SwordEnhancementItem;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 public class MobFarmConfig extends Config {
@@ -46,8 +62,23 @@ public class MobFarmConfig extends Config {
  Enhancement Power Configuration:
  lootEnhancementAdditionalRolls: Additional loot rolls from loot enhancement (default: 1, set 0 to disable)
  luckEnhancementAdditionalLuck: Additional luck from luck enhancement (default: 1.0, set 0 to disable)
- swordEnhancementAdditionalLuck: Additional luck from sword enhancement (default: 0.5, set 0 to disable)
- knifeEnhancementAdditionalLuck: Additional luck from knife enhancement (default: 0.25, set 0 to disable)
+ speedEnhancementUpgradeSpeed: Speed bonus from speed enhancement upgrades (default: 6, set 0 to disable)
+ swordEnhancementAdditionalLuck: Additional luck from sword enhancement (default: 0.5)
+ knifeEnhancementAdditionalLuck: Additional luck from knife enhancement (default: 0.25)
+
+ Duplicate Enhancement Limits:
+ tier0MaxSpeedEnhancements: Maximum speed enhancements for tier 0 farms (default: 4)
+ tier1MaxSpeedEnhancements: Maximum speed enhancements for tier 1 farms (default: 4)
+ tier2MaxSpeedEnhancements: Maximum speed enhancements for tier 2 farms (default: 4)
+ tier3MaxSpeedEnhancements: Maximum speed enhancements for tier 3 farms (default: 4)
+ tier0MaxLootEnhancements: Maximum loot enhancements for tier 0 farms (default: 4)
+ tier1MaxLootEnhancements: Maximum loot enhancements for tier 1 farms (default: 4)
+ tier2MaxLootEnhancements: Maximum loot enhancements for tier 2 farms (default: 4)
+ tier3MaxLootEnhancements: Maximum loot enhancements for tier 3 farms (default: 4)
+ tier0MaxLuckEnhancements: Maximum luck enhancements for tier 0 farms (default: 4)
+ tier1MaxLuckEnhancements: Maximum luck enhancements for tier 1 farms (default: 4)
+ tier2MaxLuckEnhancements: Maximum luck enhancements for tier 2 farms (default: 4)
+ tier3MaxLuckEnhancements: Maximum luck enhancements for tier 3 farms (default: 4)
 
  Enhancement Enable/Disable (set to false to disable the enhancement and hide its recipe):
  enableSpeedEnhancement: Enable speed enhancement (default: true)
@@ -91,6 +122,19 @@ public class MobFarmConfig extends Config {
   public static float luckEnhancementAdditionalLuck = 1.0f;
   public static float swordEnhancementAdditionalLuck = 0.5f;
   public static float knifeEnhancementAdditionalLuck = 0.25f;
+
+  public static int tier0MaxSpeedEnhancements = 4;
+  public static int tier1MaxSpeedEnhancements = 4;
+  public static int tier2MaxSpeedEnhancements = 4;
+  public static int tier3MaxSpeedEnhancements = 4;
+  public static int tier0MaxLootEnhancements = 4;
+  public static int tier1MaxLootEnhancements = 4;
+  public static int tier2MaxLootEnhancements = 4;
+  public static int tier3MaxLootEnhancements = 4;
+  public static int tier0MaxLuckEnhancements = 4;
+  public static int tier1MaxLuckEnhancements = 4;
+  public static int tier2MaxLuckEnhancements = 4;
+  public static int tier3MaxLuckEnhancements = 4;
 
   // Per-enhancement enable/disable flags
   public static boolean enableSpeedEnhancement = true;
@@ -165,6 +209,32 @@ public class MobFarmConfig extends Config {
         parseConfigValue(
             properties, "knifeEnhancementAdditionalLuck", knifeEnhancementAdditionalLuck);
 
+    // Enhancement limits
+    tier0MaxSpeedEnhancements =
+        parseConfigValue(properties, "tier0MaxSpeedEnhancements", tier0MaxSpeedEnhancements);
+    tier1MaxSpeedEnhancements =
+        parseConfigValue(properties, "tier1MaxSpeedEnhancements", tier1MaxSpeedEnhancements);
+    tier2MaxSpeedEnhancements =
+        parseConfigValue(properties, "tier2MaxSpeedEnhancements", tier2MaxSpeedEnhancements);
+    tier3MaxSpeedEnhancements =
+        parseConfigValue(properties, "tier3MaxSpeedEnhancements", tier3MaxSpeedEnhancements);
+    tier0MaxLootEnhancements =
+        parseConfigValue(properties, "tier0MaxLootEnhancements", tier0MaxLootEnhancements);
+    tier1MaxLootEnhancements =
+        parseConfigValue(properties, "tier1MaxLootEnhancements", tier1MaxLootEnhancements);
+    tier2MaxLootEnhancements =
+        parseConfigValue(properties, "tier2MaxLootEnhancements", tier2MaxLootEnhancements);
+    tier3MaxLootEnhancements =
+        parseConfigValue(properties, "tier3MaxLootEnhancements", tier3MaxLootEnhancements);
+    tier0MaxLuckEnhancements =
+        parseConfigValue(properties, "tier0MaxLuckEnhancements", tier0MaxLuckEnhancements);
+    tier1MaxLuckEnhancements =
+        parseConfigValue(properties, "tier1MaxLuckEnhancements", tier1MaxLuckEnhancements);
+    tier2MaxLuckEnhancements =
+        parseConfigValue(properties, "tier2MaxLuckEnhancements", tier2MaxLuckEnhancements);
+    tier3MaxLuckEnhancements =
+        parseConfigValue(properties, "tier3MaxLuckEnhancements", tier3MaxLuckEnhancements);
+
     // Per-enhancement enable/disable
     enableSpeedEnhancement =
         parseConfigValue(properties, "enableSpeedEnhancement", enableSpeedEnhancement);
@@ -236,5 +306,228 @@ public class MobFarmConfig extends Config {
       case 3 -> MobFarmConfig.tier3progressionUpgradeSpeed;
       default -> 0;
     };
+  }
+
+  public static boolean isSpeedEnhancementEnabled() {
+    return enableSpeedEnhancement && speedEnhancementUpgradeSpeed > 0;
+  }
+
+  public static boolean isLootEnhancementEnabled() {
+    return enableLootEnhancement && lootEnhancementAdditionalRolls > 0;
+  }
+
+  public static boolean isLuckEnhancementEnabled() {
+    return enableLuckEnhancement && luckEnhancementAdditionalLuck > 0;
+  }
+
+  public static boolean isSwordEnhancementEnabled() {
+    return enableSwordEnhancement;
+  }
+
+  public static boolean isKnifeEnhancementEnabled() {
+    return enableKnifeEnhancement;
+  }
+
+  public static boolean isEnhancementEnabled(EnhancementItem enhancementItem) {
+    return isEnhancementTypeEnabled(enhancementItem.getClass());
+  }
+
+  static boolean isEnhancementTypeEnabled(Class<? extends EnhancementItem> enhancementType) {
+    if (SpeedEnhancementItem.class.isAssignableFrom(enhancementType)) {
+      return isSpeedEnhancementEnabled();
+    }
+    if (LootEnhancementItem.class.isAssignableFrom(enhancementType)) {
+      return isLootEnhancementEnabled();
+    }
+    if (LuckEnhancementItem.class.isAssignableFrom(enhancementType)) {
+      return isLuckEnhancementEnabled();
+    }
+    if (SwordEnhancementItem.class.isAssignableFrom(enhancementType)) {
+      return isSwordEnhancementEnabled();
+    }
+    if (KnifeEnhancementItem.class.isAssignableFrom(enhancementType)) {
+      return isKnifeEnhancementEnabled();
+    }
+    if (ExperienceEnhancementItem.class.isAssignableFrom(enhancementType)) {
+      return enableExperienceEnhancement;
+    }
+    if (EggCollectorEnhancementItem.class.isAssignableFrom(enhancementType)) {
+      return enableEggCollectorEnhancement;
+    }
+    if (HoneyExtractorEnhancementItem.class.isAssignableFrom(enhancementType)) {
+      return enableHoneyExtractorEnhancement;
+    }
+    if (HoneyHarvesterFrameEnhancementItem.class.isAssignableFrom(enhancementType)) {
+      return enableHoneyHarvesterFrameEnhancement;
+    }
+    if (MilkExtractorEnhancementItem.class.isAssignableFrom(enhancementType)) {
+      return enableMilkExtractorEnhancement;
+    }
+    if (PollenTrapEnhancementItem.class.isAssignableFrom(enhancementType)) {
+      return enablePollenTrapEnhancement;
+    }
+    if (SheepEnhancementItem.class.isAssignableFrom(enhancementType)) {
+      return enableSheepEnhancement;
+    }
+    if (FrogCatalystEnhancementItem.class.isAssignableFrom(enhancementType)) {
+      return enableFrogCatalystEnhancement;
+    }
+    return true;
+  }
+
+  public static int getMaxSpeedEnhancements(int tierLevel) {
+    return switch (tierLevel) {
+      case 0 -> Math.max(0, tier0MaxSpeedEnhancements);
+      case 1 -> Math.max(0, tier1MaxSpeedEnhancements);
+      case 2 -> Math.max(0, tier2MaxSpeedEnhancements);
+      case 3 -> Math.max(0, tier3MaxSpeedEnhancements);
+      default -> Math.max(0, tier0MaxSpeedEnhancements);
+    };
+  }
+
+  public static int getMaxLootEnhancements(int tierLevel) {
+    return switch (tierLevel) {
+      case 0 -> Math.max(0, tier0MaxLootEnhancements);
+      case 1 -> Math.max(0, tier1MaxLootEnhancements);
+      case 2 -> Math.max(0, tier2MaxLootEnhancements);
+      case 3 -> Math.max(0, tier3MaxLootEnhancements);
+      default -> Math.max(0, tier0MaxLootEnhancements);
+    };
+  }
+
+  public static int getMaxLuckEnhancements(int tierLevel) {
+    return switch (tierLevel) {
+      case 0 -> Math.max(0, tier0MaxLuckEnhancements);
+      case 1 -> Math.max(0, tier1MaxLuckEnhancements);
+      case 2 -> Math.max(0, tier2MaxLuckEnhancements);
+      case 3 -> Math.max(0, tier3MaxLuckEnhancements);
+      default -> Math.max(0, tier0MaxLuckEnhancements);
+    };
+  }
+
+  public static int getMaxDuplicateEnhancements(EnhancementItem enhancementItem, int tierLevel) {
+    return getMaxDuplicateEnhancements(enhancementItem.getClass(), tierLevel);
+  }
+
+  static int getMaxDuplicateEnhancements(
+      Class<? extends EnhancementItem> enhancementType, int tierLevel) {
+    if (SpeedEnhancementItem.class.isAssignableFrom(enhancementType)) {
+      return getMaxSpeedEnhancements(tierLevel);
+    }
+    if (LootEnhancementItem.class.isAssignableFrom(enhancementType)) {
+      return getMaxLootEnhancements(tierLevel);
+    }
+    if (LuckEnhancementItem.class.isAssignableFrom(enhancementType)) {
+      return getMaxLuckEnhancements(tierLevel);
+    }
+    return Integer.MAX_VALUE;
+  }
+
+  public static boolean canAddEnhancement(
+      EnhancementItem enhancementItem, List<EnhancementItem> existingEnhancements, int tierLevel) {
+    return canAddEnhancementType(
+        enhancementItem.getClass(),
+        existingEnhancements.stream().map(EnhancementItem::getClass).toList(),
+        tierLevel);
+  }
+
+  static boolean canAddEnhancementType(
+      Class<? extends EnhancementItem> enhancementType,
+      List<Class<? extends EnhancementItem>> existingEnhancementTypes,
+      int tierLevel) {
+    if (!isEnhancementTypeEnabled(enhancementType)) {
+      return false;
+    }
+    int maxEnhancements = getMaxDuplicateEnhancements(enhancementType, tierLevel);
+    if (maxEnhancements == Integer.MAX_VALUE) {
+      return true;
+    }
+    return countMatchingEnhancementTypes(existingEnhancementTypes, enhancementType, maxEnhancements)
+        < maxEnhancements;
+  }
+
+  public static List<EnhancementItem> getEffectiveEnhancements(
+      List<EnhancementItem> enhancements, int tierLevel) {
+    List<EnhancementItem> effectiveEnhancements = new ArrayList<>();
+    List<Class<? extends EnhancementItem>> effectiveEnhancementTypes =
+        getEffectiveEnhancementTypes(
+            enhancements.stream().map(EnhancementItem::getClass).toList(), tierLevel);
+    for (EnhancementItem enhancement : enhancements) {
+      if (effectiveEnhancementTypes.remove(enhancement.getClass())) {
+        effectiveEnhancements.add(enhancement);
+      }
+    }
+    return effectiveEnhancements;
+  }
+
+  static List<Class<? extends EnhancementItem>> getEffectiveEnhancementTypes(
+      List<Class<? extends EnhancementItem>> enhancementTypes, int tierLevel) {
+    List<Class<? extends EnhancementItem>> effectiveEnhancementTypes = new ArrayList<>();
+    int speedEnhancements = 0;
+    int lootEnhancements = 0;
+    int luckEnhancements = 0;
+    int maxSpeedEnhancements = getMaxSpeedEnhancements(tierLevel);
+    int maxLootEnhancements = getMaxLootEnhancements(tierLevel);
+    int maxLuckEnhancements = getMaxLuckEnhancements(tierLevel);
+    for (Class<? extends EnhancementItem> enhancementType : enhancementTypes) {
+      if (!isEnhancementTypeEnabled(enhancementType)) {
+        continue;
+      }
+      if (SpeedEnhancementItem.class.isAssignableFrom(enhancementType)) {
+        if (speedEnhancements++ >= maxSpeedEnhancements) {
+          continue;
+        }
+      } else if (LootEnhancementItem.class.isAssignableFrom(enhancementType)) {
+        if (lootEnhancements++ >= maxLootEnhancements) {
+          continue;
+        }
+      } else if (LuckEnhancementItem.class.isAssignableFrom(enhancementType)) {
+        if (luckEnhancements++ >= maxLuckEnhancements) {
+          continue;
+        }
+      }
+      effectiveEnhancementTypes.add(enhancementType);
+    }
+    return effectiveEnhancementTypes;
+  }
+
+  public static int countMatchingEnhancements(
+      List<EnhancementItem> enhancements, EnhancementItem enhancementItem, int maxCount) {
+    return countMatchingEnhancementTypes(
+        enhancements.stream().map(EnhancementItem::getClass).toList(),
+        enhancementItem.getClass(),
+        maxCount);
+  }
+
+  static int countMatchingEnhancementTypes(
+      List<Class<? extends EnhancementItem>> enhancementTypes,
+      Class<? extends EnhancementItem> enhancementType,
+      int maxCount) {
+    int count = 0;
+    for (Class<? extends EnhancementItem> existingEnhancementType : enhancementTypes) {
+      if (isSameLimitedEnhancementType(existingEnhancementType, enhancementType)
+          && ++count >= maxCount) {
+        return count;
+      }
+    }
+    return count;
+  }
+
+  private static boolean isSameLimitedEnhancementType(
+      Class<? extends EnhancementItem> firstEnhancementType,
+      Class<? extends EnhancementItem> secondEnhancementType) {
+    if (SpeedEnhancementItem.class.isAssignableFrom(firstEnhancementType)
+        && SpeedEnhancementItem.class.isAssignableFrom(secondEnhancementType)) {
+      return true;
+    }
+    if (LootEnhancementItem.class.isAssignableFrom(firstEnhancementType)
+        && LootEnhancementItem.class.isAssignableFrom(secondEnhancementType)) {
+      return true;
+    }
+    if (LuckEnhancementItem.class.isAssignableFrom(firstEnhancementType)
+        && LuckEnhancementItem.class.isAssignableFrom(secondEnhancementType)) {
+      return true;
+    }
+    return firstEnhancementType.equals(secondEnhancementType);
   }
 }

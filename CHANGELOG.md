@@ -5,6 +5,14 @@
 This change log includes the summarized changes.
 For the full changelog, please go to the [GitHub History][history] instead.
 
+### 10.10.0
+
+- Fixed #216 by adding additional safeguards for 3rd party mods and Card Binder in hand checks.
+- Fixed #144 by adding configurable per-tier duplicate limits for speed, loot and luck enhancements
+  and treating zero-power values as disabled.
+- Fixed #145 by saving Card Binder cards to the correct held item and validating the menu against the
+  hand it was opened from.
+
 ### 10.9.0
 
 - Fixed #213 by adding Pillager Leader (Patrol Leader) detection via `isPatrolLeader()` with a

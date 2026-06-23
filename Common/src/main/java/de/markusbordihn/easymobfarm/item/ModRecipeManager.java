@@ -103,15 +103,30 @@ public class ModRecipeManager {
 
     // Disable individual enhancement recipes if disabled in config
     removeRecipeIfDisabled(
-        recipes, MobFarmConfig.enableSpeedEnhancement, "speed_enhancement", ENHANCEMENT_PREFIX);
+        recipes,
+        MobFarmConfig.isSpeedEnhancementEnabled(),
+        "speed_enhancement",
+        ENHANCEMENT_PREFIX);
     removeRecipeIfDisabled(
-        recipes, MobFarmConfig.enableLootEnhancement, "loot_enhancement", ENHANCEMENT_PREFIX);
+        recipes,
+        MobFarmConfig.isLootEnhancementEnabled(),
+        "loot_enhancement",
+        ENHANCEMENT_PREFIX);
     removeRecipeIfDisabled(
-        recipes, MobFarmConfig.enableLuckEnhancement, "luck_enhancement", ENHANCEMENT_PREFIX);
+        recipes,
+        MobFarmConfig.isLuckEnhancementEnabled(),
+        "luck_enhancement",
+        ENHANCEMENT_PREFIX);
     removeRecipeIfDisabled(
-        recipes, MobFarmConfig.enableSwordEnhancement, "sword_enhancement", ENHANCEMENT_PREFIX);
+        recipes,
+        MobFarmConfig.isSwordEnhancementEnabled(),
+        "sword_enhancement",
+        ENHANCEMENT_PREFIX);
     removeRecipeIfDisabled(
-        recipes, MobFarmConfig.enableKnifeEnhancement, "knife_enhancement", ENHANCEMENT_PREFIX);
+        recipes,
+        MobFarmConfig.isKnifeEnhancementEnabled(),
+        "knife_enhancement",
+        ENHANCEMENT_PREFIX);
     removeRecipeIfDisabled(
         recipes,
         MobFarmConfig.enableExperienceEnhancement,

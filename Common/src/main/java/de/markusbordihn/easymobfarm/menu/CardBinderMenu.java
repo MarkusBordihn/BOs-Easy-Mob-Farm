@@ -23,6 +23,7 @@ import de.markusbordihn.easymobfarm.item.cardbinder.CardBinderItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
 import java.util.function.Supplier;
 import net.minecraft.world.Container;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -47,6 +48,7 @@ public class CardBinderMenu extends AbstractContainerMenu {
   public static Supplier<MenuType<?>> MENU_TYPE_SUPPLIER = () -> MENU_TYPE;
   private final Container cardContainer;
   private final ItemStack binderStack;
+  private final InteractionHand binderHand;
   private int lockedSlotIndex = -1;
   private int currentPage = 0;
 
@@ -78,6 +80,10 @@ public class CardBinderMenu extends AbstractContainerMenu {
     super(menuType, containerId);
     this.cardContainer = container;
     this.binderStack = binderStack;
+    this.binderHand =
+        playerInventory.player.getOffhandItem() == binderStack
+            ? InteractionHand.OFF_HAND
+            : InteractionHand.MAIN_HAND;
 
     for (int i = 0; i < CONTAINER_SIZE; i++) {
       int posOnPage = i % CARDS_PER_PAGE;
@@ -139,15 +145,17 @@ public class CardBinderMenu extends AbstractContainerMenu {
     if (binderStack.isEmpty()) {
       return true;
     }
-    return player.getMainHandItem() == binderStack || player.getOffhandItem() == binderStack;
+    ItemStack heldStack = player.getItemInHand(binderHand);
+    return heldStack == binderStack;
   }
 
   @Override
   public void removed(Player player) {
     super.removed(player);
-    if (!binderStack.isEmpty()) {
-      CardBinderItem.saveCards(binderStack, (SimpleContainer) cardContainer);
+    if (binderStack.isEmpty()) {
+      return;
     }
+    CardBinderItem.saveCards(binderStack, (SimpleContainer) cardContainer);
   }
 
   @Override
