@@ -269,9 +269,9 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
 
   public int getFarmProgressionSpeedBonus(List<EnhancementItem> enhancementItems) {
     int farmProgressionSpeedBonus = 0;
-    for (EnhancementItem enhancementItem : enhancementItems) {
-      if (enhancementItem instanceof SpeedEnhancementItem speedEnhancementItem
-          && MobFarmConfig.enableSpeedEnhancement) {
+    for (EnhancementItem enhancementItem :
+        MobFarmConfig.getEffectiveEnhancements(enhancementItems, this.getFarmTierLevel())) {
+      if (enhancementItem instanceof SpeedEnhancementItem speedEnhancementItem) {
         farmProgressionSpeedBonus += speedEnhancementItem.getUpgradeSpeed();
       }
     }
@@ -279,8 +279,15 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
   }
 
   public List<EnhancementItem> getEnchantmentItems() {
+    return getEnchantmentItemsExcept(-1);
+  }
+
+  public List<EnhancementItem> getEnchantmentItemsExcept(int slotIndexToIgnore) {
     List<EnhancementItem> enchantmentItems = new ArrayList<>();
     for (MobFarmSlot upgradeSlot : MobFarmSlots.ENHANCEMENT_ITEM_SLOTS) {
+      if (upgradeSlot.index() == slotIndexToIgnore) {
+        continue;
+      }
       ItemStack itemStack = this.getItem(upgradeSlot.index());
       if (!itemStack.isEmpty() && itemStack.getItem() instanceof EnhancementItem enhancementItem) {
         enchantmentItems.add(enhancementItem);
@@ -298,6 +305,17 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
       }
     }
     return filterItems;
+  }
+
+  public boolean canAddEnhancementItem(EnhancementItem enhancementItem) {
+    return canAddEnhancementItem(enhancementItem, -1);
+  }
+
+  public boolean canAddEnhancementItem(EnhancementItem enhancementItem, int slotIndexToIgnore) {
+    return MobFarmConfig.canAddEnhancement(
+        enhancementItem,
+        this.getEnchantmentItemsExcept(slotIndexToIgnore),
+        this.getFarmTierLevel());
   }
 
   public void updateNumberOfOutputSlots() {
@@ -357,6 +375,8 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
   }
 
   public void processingResults(List<EnhancementItem> enhancementItems) {
+    List<EnhancementItem> effectiveEnhancementItems =
+        MobFarmConfig.getEffectiveEnhancements(enhancementItems, this.getFarmTierLevel());
     MobCaptureData mobCaptureData = this.getMobCaptureData();
     if (mobCaptureData == null) {
       return;
@@ -391,7 +411,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
 
     // Get loot drops for captured mob over loot manager and their loot tables.
     NonNullList<ItemStack> lootDrops =
-        LootManager.getEntityLoot(mobCaptureData, enhancementItems, level);
+        LootManager.getEntityLoot(mobCaptureData, effectiveEnhancementItems, level);
 
     // Check if lucky drop farm is active and add additional loot drops.
     if (processingLuckyDrops(mobCaptureData, lootDrops)) {
@@ -401,7 +421,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     // Add optional bonus loot drops based on the mob farm, tier level and captured mob.
     List<ItemStack> bonusLootDrops =
         MobFarmBonusConfig.getBonusDrop(this.getFarmType(), this.getFarmTierLevel(), entityType);
-    LootManager.addBonusDrops(lootDrops, bonusLootDrops, enhancementItems, entityType);
+    LootManager.addBonusDrops(lootDrops, bonusLootDrops, effectiveEnhancementItems, entityType);
     // Handle loot drops
     this.handleLootDrops(lootDrops);
 
@@ -631,7 +651,8 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     }
 
     Item handItem = handItemStack.getItem();
-    if (handItem instanceof EnhancementItem) {
+    if (handItem instanceof EnhancementItem enhancementItem
+        && canAddEnhancementItem(enhancementItem)) {
       for (MobFarmSlot upgradeSlot : MobFarmSlots.ENHANCEMENT_ITEM_SLOTS) {
         ItemStack itemStack = this.getItem(upgradeSlot.index());
         if (itemStack.isEmpty()) {

@@ -29,8 +29,8 @@ import net.minecraft.world.entity.animal.feline.CatVariants;
 import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.entity.animal.frog.FrogVariants;
 import net.minecraft.world.entity.monster.MagmaCube;
-import net.minecraft.world.entity.monster.illager.Pillager;
 import net.minecraft.world.entity.monster.Slime;
+import net.minecraft.world.entity.monster.illager.Pillager;
 import net.minecraft.world.entity.npc.villager.Villager;
 
 public class MobVariantData {
