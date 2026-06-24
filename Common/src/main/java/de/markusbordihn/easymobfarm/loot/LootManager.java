@@ -334,18 +334,20 @@ public class LootManager {
     float additionalLuck = 0;
     int additionalRolls = 0;
     for (EnhancementItem enhancement : enhancements) {
-      if (enhancement instanceof SwordEnhancementItem && MobFarmConfig.enableSwordEnhancement) {
+      if (enhancement instanceof SwordEnhancementItem
+          && MobFarmConfig.isSwordEnhancementEnabled()) {
         setSwordEnhancementParameters(lootContextBuilder, fakePlayer, serverLevel);
         additionalLuck += MobFarmConfig.swordEnhancementAdditionalLuck;
       }
-      if (enhancement instanceof KnifeEnhancementItem && MobFarmConfig.enableKnifeEnhancement) {
+      if (enhancement instanceof KnifeEnhancementItem
+          && MobFarmConfig.isKnifeEnhancementEnabled()) {
         setKnifeEnhancementParameters(lootContextBuilder, fakePlayer, serverLevel);
         additionalLuck += MobFarmConfig.knifeEnhancementAdditionalLuck;
       }
-      if (enhancement instanceof LootEnhancementItem && MobFarmConfig.enableLootEnhancement) {
+      if (enhancement instanceof LootEnhancementItem && MobFarmConfig.isLootEnhancementEnabled()) {
         additionalRolls += MobFarmConfig.lootEnhancementAdditionalRolls;
       }
-      if (enhancement instanceof LuckEnhancementItem && MobFarmConfig.enableLuckEnhancement) {
+      if (enhancement instanceof LuckEnhancementItem && MobFarmConfig.isLuckEnhancementEnabled()) {
         additionalLuck += MobFarmConfig.luckEnhancementAdditionalLuck;
       }
     }
@@ -473,8 +475,11 @@ public class LootManager {
       }
       if (entityType == EntityTypes.BEE
           && drop.is(Items.HONEYCOMB)
-          && MobFarmConfig.enableHoneyExtractorEnhancement
-          && enhancements.stream().anyMatch(e -> e instanceof HoneyExtractorEnhancementItem)) {
+          && enhancements.stream()
+              .anyMatch(
+                  enhancement ->
+                      enhancement instanceof HoneyExtractorEnhancementItem
+                          && MobFarmConfig.isEnhancementEnabled(enhancement))) {
         drops.add(new ItemStack(Items.HONEY_BOTTLE));
       } else {
         drops.add(drop.copy());
@@ -515,7 +520,7 @@ public class LootManager {
         livingEntity.getType().getDefaultLootTable();
     for (EnhancementItem enhancement : enhancements) {
       if (enhancement instanceof SheepEnhancementItem
-          && MobFarmConfig.enableSheepEnhancement
+          && MobFarmConfig.isEnhancementEnabled(enhancement)
           && livingEntity instanceof Sheep sheep) {
         DyeColor color = sheep.getColor();
         lootTableLocation =
@@ -627,7 +632,7 @@ public class LootManager {
 
       // Handle Experience enhancement
       if (enhancement instanceof ExperienceEnhancementItem experienceEnhancementItem
-          && MobFarmConfig.enableExperienceEnhancement
+          && MobFarmConfig.isEnhancementEnabled(enhancement)
           && random.nextInt(experienceEnhancementItem.experienceDropChance()) == 0
           && ExperienceManager.shouldDropExperience(livingEntity)) {
         int experience = ExperienceManager.getExperienceReward(livingEntity, serverLevel);
@@ -645,15 +650,15 @@ public class LootManager {
       // Handle Mob specific enhancements
       if (livingEntity instanceof Bee) {
         if (enhancement instanceof HoneyHarvesterFrameEnhancementItem
-            && MobFarmConfig.enableHoneyHarvesterFrameEnhancement
+            && MobFarmConfig.isEnhancementEnabled(enhancement)
             && random.nextInt(4) == 0) {
           drops.add(new ItemStack(Items.HONEYCOMB));
         } else if (enhancement instanceof HoneyExtractorEnhancementItem
-            && MobFarmConfig.enableHoneyExtractorEnhancement
+            && MobFarmConfig.isEnhancementEnabled(enhancement)
             && random.nextInt(4) == 0) {
           drops.add(new ItemStack(Items.HONEY_BOTTLE));
         } else if (enhancement instanceof PollenTrapEnhancementItem
-            && MobFarmConfig.enablePollenTrapEnhancement
+            && MobFarmConfig.isEnhancementEnabled(enhancement)
             && random.nextInt(5) == 0) {
           if (random.nextFloat() < 0.3f) {
             drops.add(getRandomFlower());
@@ -664,7 +669,7 @@ public class LootManager {
       } else if (livingEntity instanceof Cow) {
         // Handle MilkExtractor enhancement (50% chance)
         if (enhancement instanceof MilkExtractorEnhancementItem
-            && MobFarmConfig.enableMilkExtractorEnhancement
+            && MobFarmConfig.isEnhancementEnabled(enhancement)
             && random.nextInt(2) == 0) {
           Optional<Reference<Item>> milkBottle;
           if (CompatConstants.MOD_FARMERS_DELIGHT_LOADED) {
@@ -685,7 +690,7 @@ public class LootManager {
       // Handle egg drops for chicken entities with Egg Collector enhancement (50% chance)
       if (livingEntity instanceof Chicken) {
         if (enhancement instanceof EggCollectorEnhancementItem
-            && MobFarmConfig.enableEggCollectorEnhancement
+            && MobFarmConfig.isEnhancementEnabled(enhancement)
             && random.nextInt(2) == 0) {
           drops.add(new ItemStack(Items.EGG));
         }
@@ -718,6 +723,7 @@ public class LootManager {
 
         // Adding additional Frog Light drop with a 50% chance with frog catalyst enhancement.
         if (enhancement instanceof FrogCatalystEnhancementItem frogCatalystEnhancementItem
+            && MobFarmConfig.isEnhancementEnabled(enhancement)
             && random.nextInt(2) == 0) {
           FrogCatalystType frogCatalystType = frogCatalystEnhancementItem.getFrogCatalystType();
           // Handle basic frog catalyst drops based on type.
@@ -759,7 +765,8 @@ public class LootManager {
       NonNullList<ItemStack> drops) {
     boolean hasKnifeEnhancement = false;
     for (EnhancementItem enhancement : enhancements) {
-      if (enhancement instanceof KnifeEnhancementItem) {
+      if (enhancement instanceof KnifeEnhancementItem
+          && MobFarmConfig.isEnhancementEnabled(enhancement)) {
         hasKnifeEnhancement = true;
         break;
       }

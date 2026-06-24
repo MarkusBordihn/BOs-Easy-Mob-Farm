@@ -90,19 +90,19 @@ public class ModBlocks {
           () -> new MobFarmBlockWrapper(MobFarmType.NETHER_FORTRESS_FARM));
   public static final RegistryObject<Block> OCEAN_FARM =
       BLOCKS.register(
-          MobFarmType.OCEAN_FARM.getId(), () -> new MobFarmBlockWrapper(MobFarmType.OCEAN_FARM));  public static final RegistryObject<BlockEntityType<CreativeMobFarmBlockEntityWrapper>>
+          MobFarmType.OCEAN_FARM.getId(), () -> new MobFarmBlockWrapper(MobFarmType.OCEAN_FARM));
+  public static final RegistryObject<Block> SWAMP_FARM =
+      BLOCKS.register(
+          MobFarmType.SWAMP_FARM.getId(), () -> new MobFarmBlockWrapper(MobFarmType.SWAMP_FARM));
+  public static final RegistryObject<BlockEntityType<CreativeMobFarmBlockEntityWrapper>>
       CREATIVE_MOB_FARM_ENTITY =
           BLOCK_ENTITIES.register(
               CreativeMobFarmBlockEntity.ID,
               () ->
                   new BlockEntityType<>(
                       CreativeMobFarmBlockEntityWrapper::new, Set.of(CREATIVE_MOB_FARM.get())));
-  public static final RegistryObject<Block> SWAMP_FARM =
-      BLOCKS.register(
-          MobFarmType.SWAMP_FARM.getId(), () -> new MobFarmBlockWrapper(MobFarmType.SWAMP_FARM));
+
   protected ModBlocks() {}
-
-
 
   public static final RegistryObject<BlockEntityType<MobFarmBlockEntityWrapper>> MOB_FARM_ENTITY =
       BLOCK_ENTITIES.register(
