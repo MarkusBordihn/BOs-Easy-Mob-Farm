@@ -21,6 +21,7 @@ package de.markusbordihn.easymobfarm.loot;
 
 import de.markusbordihn.easymobfarm.item.upgrade.EnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhancementItem;
+import java.lang.reflect.Field;
 import java.util.List;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.Holder;
@@ -34,7 +35,6 @@ import net.minecraft.world.item.Items;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import sun.misc.Unsafe;
-import java.lang.reflect.Field;
 
 class LootManagerTest {
 
@@ -59,7 +59,8 @@ class LootManagerTest {
       unsafeField.setAccessible(true);
       Unsafe unsafe = (Unsafe) unsafeField.get(null);
       HONEY_EXTRACTOR =
-          (HoneyExtractorEnhancementItem) unsafe.allocateInstance(HoneyExtractorEnhancementItem.class);
+          (HoneyExtractorEnhancementItem)
+              unsafe.allocateInstance(HoneyExtractorEnhancementItem.class);
     } catch (ReflectiveOperationException e) {
       throw new ExceptionInInitializerError(e);
     }
