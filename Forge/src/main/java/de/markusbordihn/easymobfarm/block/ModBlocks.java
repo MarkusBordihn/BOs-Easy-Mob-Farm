@@ -94,7 +94,7 @@ public class ModBlocks {
   public static final RegistryObject<Block> SWAMP_FARM =
       BLOCKS.register(
           MobFarmType.SWAMP_FARM.getId(), () -> new MobFarmBlockWrapper(MobFarmType.SWAMP_FARM));
-  public static final RegistryObject<BlockEntityType<CreativeMobFarmBlockEntityWrapper>>
+  protected ModBlocks() {}  public static final RegistryObject<BlockEntityType<CreativeMobFarmBlockEntityWrapper>>
       CREATIVE_MOB_FARM_ENTITY =
           BLOCK_ENTITIES.register(
               CreativeMobFarmBlockEntity.ID,
@@ -102,7 +102,7 @@ public class ModBlocks {
                   new BlockEntityType<>(
                       CreativeMobFarmBlockEntityWrapper::new, Set.of(CREATIVE_MOB_FARM.get())));
 
-  protected ModBlocks() {}
+
 
   public static final RegistryObject<BlockEntityType<MobFarmBlockEntityWrapper>> MOB_FARM_ENTITY =
       BLOCK_ENTITIES.register(

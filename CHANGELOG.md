@@ -5,6 +5,10 @@
 This change log includes the summarized changes.
 For the full changelog, please go to the [GitHub History][history] instead.
 
+### 10.10.1
+
+- Fixed #218 by re-enabling JEI integration for 26.2
+
 ### 10.10.0
 
 - Fixed #216 by adding additional safeguards for 3rd party mods and Card Binder in hand checks.
