@@ -79,6 +79,9 @@ dependencies {
 
   // Mekanism: Integration
   // implementation "curse.maven:mekanism-268560:5680395"
+
+  // Pipez: Integration
+  runtimeOnly "curse.maven:pipez-443900:8351633"
 }
 
 // NeoGradle compiles the game, but we don't want to add our common code to the game's code
