@@ -25,11 +25,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.item.ItemResource;
-import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
+import net.neoforged.neoforge.transfer.item.WorldlyContainerWrapper;
 
 public class MobFarmBlockEntityWrapper extends MobFarmBlockEntity {
 
@@ -43,48 +42,6 @@ public class MobFarmBlockEntityWrapper extends MobFarmBlockEntity {
   }
 
   public ResourceHandler<ItemResource> getItemCapability(final Direction direction) {
-    return new WorldlyContainerItemHandler(this, direction);
-  }
-
-  private static class WorldlyContainerItemHandler extends ItemStacksResourceHandler {
-    private final MobFarmBlockEntity container;
-    private final Direction direction;
-
-    public WorldlyContainerItemHandler(MobFarmBlockEntity container, Direction direction) {
-      super(container.getContainerSize());
-      this.container = container;
-      this.direction = direction;
-    }
-
-    protected ItemStack getStackUnchecked(int index) {
-      return container.getItem(index);
-    }
-
-    protected void setStackUnchecked(int index, ItemStack stack) {
-      container.setItem(index, stack);
-    }
-
-    @Override
-    public boolean isValid(int index, ItemResource resource) {
-      int[] slots = container.getSlotsForFace(direction);
-      for (int slot : slots) {
-        if (slot == index
-            && container.canPlaceItemThroughFace(index, resource.toStack(), direction)) {
-          return true;
-        }
-      }
-      return false;
-    }
-
-    @Override
-    public int getCapacityAsInt(int index, ItemResource resource) {
-      int[] slots = container.getSlotsForFace(direction);
-      for (int slot : slots) {
-        if (slot == index) {
-          return resource.toStack().getMaxStackSize();
-        }
-      }
-      return 0;
-    }
+    return new WorldlyContainerWrapper(this, direction == null ? Direction.DOWN : direction);
   }
 }
