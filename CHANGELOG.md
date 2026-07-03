@@ -5,6 +5,12 @@
 This change log includes the summarized changes.
 For the full changelog, please go to the [GitHub History][history] instead.
 
+### 10.11.0
+
+- Fixed #220 with NeoForge's `WorldlyContainerWrapper`, so Pipez, RS2, Sophisticated Storage and 
+  other mods can extract loot through the item capability.
+- Added game test covering item capability extraction to prevent regressions.
+
 ### 10.10.0
 
 - Fixed #216 by adding additional safeguards for 3rd party mods and Card Binder in hand checks.
