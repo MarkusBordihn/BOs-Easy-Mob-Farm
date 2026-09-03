@@ -108,15 +108,9 @@ public class ModRecipeManager {
         "speed_enhancement",
         ENHANCEMENT_PREFIX);
     removeRecipeIfDisabled(
-        recipes,
-        MobFarmConfig.isLootEnhancementEnabled(),
-        "loot_enhancement",
-        ENHANCEMENT_PREFIX);
+        recipes, MobFarmConfig.isLootEnhancementEnabled(), "loot_enhancement", ENHANCEMENT_PREFIX);
     removeRecipeIfDisabled(
-        recipes,
-        MobFarmConfig.isLuckEnhancementEnabled(),
-        "luck_enhancement",
-        ENHANCEMENT_PREFIX);
+        recipes, MobFarmConfig.isLuckEnhancementEnabled(), "luck_enhancement", ENHANCEMENT_PREFIX);
     removeRecipeIfDisabled(
         recipes,
         MobFarmConfig.isSwordEnhancementEnabled(),

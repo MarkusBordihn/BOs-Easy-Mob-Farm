@@ -22,6 +22,7 @@ package de.markusbordihn.easymobfarm.data.capture;
 import net.minecraft.SharedConstants;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.Bootstrap;
+import net.minecraft.world.entity.animal.FrogVariant;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -57,6 +58,21 @@ class MobVariantDataTest {
   @Test
   void sizeZeroIsTiny() {
     Assertions.assertEquals(MobVariantData.TINY_VARIANT, MobVariantData.getSizeVariant(0.0f));
+  }
+
+  @Test
+  void sizeAboveFourIsLarge() {
+    Assertions.assertEquals(MobVariantData.LARGE_VARIANT, MobVariantData.getSizeVariant(16.0f));
+  }
+
+  @Test
+  void nullVariantReturnsTemperateFrog() {
+    Assertions.assertEquals(FrogVariant.TEMPERATE, MobVariantData.getFrogVariant(null));
+  }
+
+  @Test
+  void knownVariantReturnsMatchingFrogVariant() {
+    Assertions.assertEquals(FrogVariant.COLD, MobVariantData.getFrogVariant("cold"));
   }
 
   @Test

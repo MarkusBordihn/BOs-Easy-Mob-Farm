@@ -58,5 +58,7 @@ public class ClientRenderer {
         ModBlocks.NETHER_FORTRESS_FARM, RenderType.cutoutMipped());
     BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.OCEAN_FARM, RenderType.translucent());
     BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.SWAMP_FARM, RenderType.cutoutMipped());
+    BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.END_FARM, RenderType.cutoutMipped());
+    BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.NETHER_WASTES_FARM, RenderType.cutoutMipped());
   }
 }

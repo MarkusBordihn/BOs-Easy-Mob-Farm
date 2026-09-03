@@ -79,6 +79,6 @@ public record SyncLootPreviewMessage(
     if (entityType == null) {
       return;
     }
-    LootPreviewCache.setLootPreview(blockPos, entityType, items != null ? items : List.of());
+    LootPreviewCache.setLootPreview(entityType, items != null ? items : List.of());
   }
 }

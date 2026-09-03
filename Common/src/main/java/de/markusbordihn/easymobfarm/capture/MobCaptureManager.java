@@ -22,6 +22,7 @@ package de.markusbordihn.easymobfarm.capture;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.data.capture.MobEntityData;
+import de.markusbordihn.easymobfarm.data.capture.MobEntityTypeData;
 import de.markusbordihn.easymobfarm.data.capture.MobVariantData;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
 import net.minecraft.core.BlockPos;
@@ -120,11 +121,7 @@ public class MobCaptureManager {
       return false;
     }
 
-    // Validate EntityType
     EntityType<?> entityType = mobCaptureData.entityType();
-    if (entityType == null) {
-      return false;
-    }
 
     // Create entity from EntityType
     Entity entity = entityType.create(serverLevel);
@@ -247,6 +244,19 @@ public class MobCaptureManager {
 
     // Try to get mob capture data from item stack.
     return new MobCaptureData(itemStack, tag);
+  }
+
+  public static EntityType<?> getEntityType(ItemStack itemStack) {
+    if (itemStack == null || itemStack.isEmpty()) {
+      return null;
+    }
+
+    CompoundTag tag = itemStack.getTag();
+    if (tag != null && tag.contains(MOB_CAPTURE_DATA_TAG)) {
+      return MobEntityTypeData.getEntityType(tag.getCompound(MOB_CAPTURE_DATA_TAG));
+    }
+
+    return MobEntityTypeData.getEntityType(itemStack, tag);
   }
 
   public static boolean isSafeSpawnPos(Level level, BlockPos blockPos) {

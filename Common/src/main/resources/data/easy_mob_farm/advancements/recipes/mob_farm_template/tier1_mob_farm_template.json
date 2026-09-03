@@ -52,7 +52,8 @@
   ],
   "rewards": {
     "recipes": [
-      "easy_mob_farm:mob_farm_template/tier1_mob_farm_template"
+      "easy_mob_farm:mob_farm_template/tier1_mob_farm_template",
+      "easy_mob_farm:mob_farm_template/tier0_mob_farm_template_tier1"
     ]
   }
 }

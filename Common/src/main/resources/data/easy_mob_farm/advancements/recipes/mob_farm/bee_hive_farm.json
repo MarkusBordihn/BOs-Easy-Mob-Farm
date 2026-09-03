@@ -55,7 +55,10 @@
       "easy_mob_farm:mob_farm/bee_hive_farm/tier0_bee_hive_farm",
       "easy_mob_farm:mob_farm/bee_hive_farm/tier1_bee_hive_farm",
       "easy_mob_farm:mob_farm/bee_hive_farm/tier2_bee_hive_farm",
-      "easy_mob_farm:mob_farm/bee_hive_farm/tier3_bee_hive_farm"
+      "easy_mob_farm:mob_farm/bee_hive_farm/tier3_bee_hive_farm",
+      "easy_mob_farm:mob_farm/bee_hive_farm/tier1_bee_hive_farm_upgrade",
+      "easy_mob_farm:mob_farm/bee_hive_farm/tier2_bee_hive_farm_upgrade",
+      "easy_mob_farm:mob_farm/bee_hive_farm/tier3_bee_hive_farm_upgrade"
     ]
   }
 }

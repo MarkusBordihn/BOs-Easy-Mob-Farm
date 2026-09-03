@@ -59,6 +59,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -172,6 +173,11 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
       if (blockEntity.farmStatus != MobFarmStatus.IDLE) {
         blockEntity.farmStatus = MobFarmStatus.IDLE;
       }
+      return;
+    }
+
+    if (!blockEntity.hasCapturedMobEntity()) {
+      blockEntity.updateUnusableCapturedMobStatus();
       return;
     }
 
@@ -377,24 +383,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     // Verify if the captured mob is valid.
     EntityType<?> entityType = mobCaptureData.entityType();
     if (entityType == null) {
-      if (this.level instanceof ServerLevel serverLevel) {
-        log.debug(
-            "Dropping invalid captured mob item {} for mob farm block entity at {}",
-            this.getItem(MobFarmSlot.CAPTURED_MOB),
-            this.getBlockPos());
-        Containers.dropItemStack(
-            serverLevel,
-            this.getBlockPos().getX() + 0.5D,
-            this.getBlockPos().getY() + 0.5D,
-            this.getBlockPos().getZ() + 0.5D,
-            this.takeItem(MobFarmSlot.CAPTURED_MOB.index()));
-      } else {
-        log.error(
-            "Invalid entity type {} for mob farm block entity at {} with captured mob {}",
-            entityType,
-            this.getBlockPos(),
-            mobCaptureData);
-      }
+      this.updateUnusableCapturedMobStatus();
       return;
     }
 
@@ -413,7 +402,8 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     // Add optional bonus loot drops based on the mob farm, tier level and captured mob.
     List<ItemStack> bonusLootDrops =
         MobFarmBonusConfig.getBonusDrop(this.getFarmType(), this.getFarmTierLevel(), entityType);
-    LootManager.addBonusDrops(lootDrops, bonusLootDrops, effectiveEnhancementItems, entityType);
+    LootManager.addBonusDrops(
+        lootDrops, bonusLootDrops, effectiveEnhancementItems, entityType, mobCaptureData.color());
     // Handle loot drops
     this.handleLootDrops(lootDrops);
 
@@ -546,10 +536,6 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     }
   }
 
-  private void setItemInSlot(int slotIndex, ItemStack itemStack) {
-    this.setItem(slotIndex, itemStack);
-  }
-
   private boolean canGrowOutputSlot(ItemStack outputSlot, ItemStack itemStack) {
     return outputSlot.is(itemStack.getItem())
         && outputSlot.getCount() < outputSlot.getMaxStackSize();
@@ -568,6 +554,28 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
 
   public boolean hasCapturedMob() {
     return !this.getItem(MobFarmSlot.CAPTURED_MOB).isEmpty();
+  }
+
+  public boolean hasCapturedMobEntity() {
+    return MobCaptureManager.getEntityType(this.getItem(MobFarmSlot.CAPTURED_MOB)) != null;
+  }
+
+  private void updateUnusableCapturedMobStatus() {
+    ItemStack capturedMob = this.getCapturedMob();
+    int unusableStatus =
+        MobCaptureManager.hasMobCaptureData(capturedMob) ? MobFarmStatus.ERROR : MobFarmStatus.IDLE;
+    this.farmProgress = 0;
+    if (this.farmStatus == unusableStatus) {
+      return;
+    }
+
+    this.farmStatus = unusableStatus;
+    if (unusableStatus == MobFarmStatus.ERROR) {
+      log.warn(
+          "Captured mob {} at {} has no valid entity type and will not be processed!",
+          capturedMob,
+          this.getBlockPos());
+    }
   }
 
   public ItemStack takeItem(final int index) {
@@ -833,19 +841,22 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     log.debug(
         "Sets mob capture item {} in mob farm block entity at {}", itemStack, this.getBlockPos());
 
-    // Create mob entity to get experience reward and other additional data.
     MobCaptureData mobCaptureData = this.getMobCaptureData();
     EntityType<?> entityType = mobCaptureData != null ? mobCaptureData.entityType() : null;
-    LivingEntity livingEntity =
-        entityType != null ? (LivingEntity) entityType.create(this.level) : null;
-    if (livingEntity != null) {
-      try {
-        this.capturedMobExperience = ExperienceManager.getExperienceReward(livingEntity);
-      } finally {
-        livingEntity.discard();
-      }
-    } else {
+    Entity entity = entityType != null ? entityType.create(this.level) : null;
+    if (entity == null) {
       this.capturedMobExperience = 0;
+      return;
+    }
+
+    try {
+      if (entity instanceof LivingEntity livingEntity) {
+        this.capturedMobExperience = ExperienceManager.getExperienceReward(livingEntity);
+      } else {
+        this.capturedMobExperience = 0;
+      }
+    } finally {
+      entity.discard();
     }
   }
 
@@ -932,14 +943,12 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
 
   @Override
   public ClientboundBlockEntityDataPacket getUpdatePacket() {
-    CompoundTag tag = new CompoundTag();
-    this.saveAdditional(tag);
     return ClientboundBlockEntityDataPacket.create(this);
   }
 
   @Override
   public boolean stillValid(final Player player) {
-    return player.isAlive();
+    return Container.stillValidBlockEntity(this, player);
   }
 
   @Override
@@ -1054,7 +1063,16 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
       this.setFarmTierLevel(compoundTag.getInt(TIER_LEVEL_TAG));
     }
     if (compoundTag.contains(FARM_TYPE_TAG)) {
-      this.mobFarmType = MobFarmType.valueOf(compoundTag.getString(FARM_TYPE_TAG));
+      String farmTypeName = compoundTag.getString(FARM_TYPE_TAG);
+      try {
+        this.mobFarmType = MobFarmType.valueOf(farmTypeName);
+      } catch (IllegalArgumentException e) {
+        log.error(
+            "Unknown mob farm type {} for mob farm block entity at {}, using {} instead!",
+            farmTypeName,
+            this.getBlockPos(),
+            this.mobFarmType);
+      }
     }
     if (compoundTag.contains(CAPTURED_MOB_EXPERIENCE_TAG)
         && compoundTag.getInt(CAPTURED_MOB_EXPERIENCE_TAG) >= 0) {

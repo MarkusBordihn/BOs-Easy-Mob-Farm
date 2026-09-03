@@ -55,7 +55,10 @@
       "easy_mob_farm:mob_farm/nether_fortress_farm/tier0_nether_fortress_farm",
       "easy_mob_farm:mob_farm/nether_fortress_farm/tier1_nether_fortress_farm",
       "easy_mob_farm:mob_farm/nether_fortress_farm/tier2_nether_fortress_farm",
-      "easy_mob_farm:mob_farm/nether_fortress_farm/tier3_nether_fortress_farm"
+      "easy_mob_farm:mob_farm/nether_fortress_farm/tier3_nether_fortress_farm",
+      "easy_mob_farm:mob_farm/nether_fortress_farm/tier1_nether_fortress_farm_upgrade",
+      "easy_mob_farm:mob_farm/nether_fortress_farm/tier2_nether_fortress_farm_upgrade",
+      "easy_mob_farm:mob_farm/nether_fortress_farm/tier3_nether_fortress_farm_upgrade"
     ]
   }
 }

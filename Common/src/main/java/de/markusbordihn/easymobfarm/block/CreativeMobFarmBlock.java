@@ -23,7 +23,7 @@ import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.MapColor;
 
-public class CreativeMobFarmBlock extends MobFarmBlock {
+public abstract class CreativeMobFarmBlock extends MobFarmBlock {
 
   public CreativeMobFarmBlock() {
     this(

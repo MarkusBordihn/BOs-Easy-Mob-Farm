@@ -22,8 +22,8 @@ mechanics.
 
 ⚠️ **IMPORTANT DISCLAIMER: Major Version Updates** ⚠️
 
-Major version updates (e.g. **8.x → 9.x → 10.x**) may introduce **breaking changes** that are
-**NOT backward-compatible** with previous versions.
+Major version updates (e.g. **8.x → 9.x → 10.x**) may introduce **breaking changes** that are **NOT
+backward-compatible** with previous versions.
 
 Before upgrading to a new major version, please keep the following in mind:
 
@@ -43,8 +43,7 @@ Happy farming! 🌾
 - **Mob Catcher** 🕸️: Multiple capture devices for mobs of all sizes, from small to boss-tier.
 - **Mob Farm** 🏭: Automatically harvest loot from captured mobs.
 - **Tiered Mob Farms** 📈: Upgrade your mob farms to increase efficiency and loot output.
-- **In-Place Tier Upgrades** 🔄: Upgrade existing mob farm blocks to higher tiers without
-  rebuilding.
+- **In-Place Tier Upgrades** 🔄: Upgrade existing mob farm blocks to higher tiers without rebuilding.
 - **Custom Loot Tables** 📜: Four loot table modes (overwrite, priority, bonus, fallback) via
   datapacks.
 - **Experience Collection** ⭐: Gain experience automatically from farmed mobs.
@@ -53,8 +52,8 @@ Happy farming! 🌾
 - **Configurable Enhancements** ⚙️: Enable, disable, and fine-tune each enhancement individually.
 - **Datapack & Resource Pack Support** 📁: Define custom mob capture cards and loot tables via
   datapacks.
-- **Mod Integration** 🧩: Built-in support for Farmer's Delight, Ice and Fire, Swampier Swamps,
-  and more.
+- **Mod Integration** 🧩: Built-in support for Farmer's Delight, Ice and Fire, Swampier Swamps, and
+  more.
 
 ### Mob Capture Cards 📇
 
@@ -73,8 +72,8 @@ the [Mob Capture Card wiki page](https://github.com/MarkusBordihn/BOs-Easy-Mob-F
 
 ![Mob Catcher][mob_catcher]
 
-The Mob Catcher is a special item that enables you to safely and efficiently capture mobs.
-Once captured, mobs can be stored in Mob Capture Cards, ready to be processed in the Mob Farm.
+The Mob Catcher is a special item that enables you to safely and efficiently capture mobs. Once
+captured, mobs can be stored in Mob Capture Cards, ready to be processed in the Mob Farm.
 
 - **Simple to Use**: Just aim and catch!
 - **Multiple Tiers**: From Enduring Capture Net (small mobs) to Void Binding Chain (boss-tier).
@@ -105,8 +104,8 @@ versions and other mods.
 
 ## License ⚖️
 
-The [MIT LICENSE](LICENSE.md) applies only to the code in this repository.
-Images, models and other assets are explicitly excluded.
+The [MIT LICENSE](LICENSE.md) applies only to the code in this repository. Images, models and other
+assets are explicitly excluded.
 
 ## More Information ℹ️
 

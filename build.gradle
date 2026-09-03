@@ -10,6 +10,35 @@ tasks.register('fullCheck') {
   dependsOn ':Common:check', ':Fabric:check', ':Forge:check', 'allGameTests'
 }
 
+tasks.register('publishModrinth') {
+  group = 'publishing'
+  description = 'Publishes Forge and Fabric to Modrinth.'
+  dependsOn ':Forge:modrinth', ':Fabric:modrinth'
+  mustRunAfter 'fullCheck'
+}
+
+tasks.register('publishDelay') {
+  description = 'Pauses between Modrinth and CurseForge uploads so logs do not interfere.'
+  mustRunAfter 'publishModrinth'
+  doLast {
+    println 'Waiting 5 seconds before CurseForge upload...'
+    sleep(5000)
+  }
+}
+
+tasks.register('publishCurseForge') {
+  group = 'publishing'
+  description = 'Publishes Forge and Fabric to CurseForge.'
+  dependsOn ':Forge:curseforge', ':Fabric:curseforge'
+  mustRunAfter 'publishDelay'
+}
+
+tasks.register('publishMods') {
+  group = 'publishing'
+  description = 'Builds, runs full checks, then publishes to Modrinth and (after a 5s pause) CurseForge.'
+  dependsOn 'fullCheck', 'publishModrinth', 'publishDelay', 'publishCurseForge'
+}
+
 subprojects {
 
   apply plugin: 'java'

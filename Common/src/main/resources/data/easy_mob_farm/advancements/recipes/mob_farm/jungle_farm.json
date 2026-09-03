@@ -55,7 +55,10 @@
       "easy_mob_farm:mob_farm/jungle_farm/tier0_jungle_farm",
       "easy_mob_farm:mob_farm/jungle_farm/tier1_jungle_farm",
       "easy_mob_farm:mob_farm/jungle_farm/tier2_jungle_farm",
-      "easy_mob_farm:mob_farm/jungle_farm/tier3_jungle_farm"
+      "easy_mob_farm:mob_farm/jungle_farm/tier3_jungle_farm",
+      "easy_mob_farm:mob_farm/jungle_farm/tier1_jungle_farm_upgrade",
+      "easy_mob_farm:mob_farm/jungle_farm/tier2_jungle_farm_upgrade",
+      "easy_mob_farm:mob_farm/jungle_farm/tier3_jungle_farm_upgrade"
     ]
   }
 }

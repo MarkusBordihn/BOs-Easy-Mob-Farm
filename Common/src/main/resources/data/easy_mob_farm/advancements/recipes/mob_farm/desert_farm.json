@@ -55,7 +55,10 @@
       "easy_mob_farm:mob_farm/desert_farm/tier0_desert_farm",
       "easy_mob_farm:mob_farm/desert_farm/tier1_desert_farm",
       "easy_mob_farm:mob_farm/desert_farm/tier2_desert_farm",
-      "easy_mob_farm:mob_farm/desert_farm/tier3_desert_farm"
+      "easy_mob_farm:mob_farm/desert_farm/tier3_desert_farm",
+      "easy_mob_farm:mob_farm/desert_farm/tier1_desert_farm_upgrade",
+      "easy_mob_farm:mob_farm/desert_farm/tier2_desert_farm_upgrade",
+      "easy_mob_farm:mob_farm/desert_farm/tier3_desert_farm_upgrade"
     ]
   }
 }

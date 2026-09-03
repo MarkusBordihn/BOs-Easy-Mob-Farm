@@ -33,7 +33,9 @@ public enum MobFarmType implements StringRepresentable {
   MONSTER_PLAINS_CAVE_FARM,
   NETHER_FORTRESS_FARM,
   OCEAN_FARM,
-  SWAMP_FARM;
+  SWAMP_FARM,
+  END_FARM,
+  NETHER_WASTES_FARM;
 
   private final String name;
 

@@ -66,6 +66,10 @@ public class ModBlockItems {
       new MobFarmBlockItem(MobFarmType.OCEAN_FARM.getId(), ModBlocks.OCEAN_FARM);
   public static final Item SWAMP_FARM =
       new MobFarmBlockItem(MobFarmType.SWAMP_FARM.getId(), ModBlocks.SWAMP_FARM);
+  public static final Item END_FARM =
+      new MobFarmBlockItem(MobFarmType.END_FARM.getId(), ModBlocks.END_FARM);
+  public static final Item NETHER_WASTES_FARM =
+      new MobFarmBlockItem(MobFarmType.NETHER_WASTES_FARM.getId(), ModBlocks.NETHER_WASTES_FARM);
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
@@ -98,6 +102,8 @@ public class ModBlockItems {
     registerItem(MobFarmType.NETHER_FORTRESS_FARM.getId(), NETHER_FORTRESS_FARM);
     registerItem(MobFarmType.OCEAN_FARM.getId(), OCEAN_FARM);
     registerItem(MobFarmType.SWAMP_FARM.getId(), SWAMP_FARM);
+    registerItem(MobFarmType.END_FARM.getId(), END_FARM);
+    registerItem(MobFarmType.NETHER_WASTES_FARM.getId(), NETHER_WASTES_FARM);
   }
 
   private static void registerItem(final String id, final Item item) {

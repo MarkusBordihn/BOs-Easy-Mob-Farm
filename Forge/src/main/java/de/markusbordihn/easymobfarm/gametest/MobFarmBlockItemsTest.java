@@ -459,4 +459,88 @@ public class MobFarmBlockItemsTest {
         helper, ModBlockItems.SWAMP_FARM.get().asItem(), 3, ModBlocks.SWAMP_FARM.get());
     helper.succeed();
   }
+
+  @GameTest(template = "gametest.1x1x1")
+  public void testEndFarm(GameTestHelper helper) {
+    MobFarmBlockItemTestHelper.testMobFarmBlockItem(
+        helper, ModBlockItems.END_FARM.get().asItem(), ModBlocks.END_FARM.get());
+    helper.succeed();
+  }
+
+  @GameTest(template = "gametest.1x1x1")
+  public void testEndFarmTier0(GameTestHelper helper) {
+    MobFarmBlockItemTestHelper.testMobFarmBlockItem(
+        helper, ModBlockItems.END_FARM.get().asItem(), 0, ModBlocks.END_FARM.get());
+    helper.succeed();
+  }
+
+  @GameTest(template = "gametest.1x1x1")
+  public void testEndFarmTier1(GameTestHelper helper) {
+    MobFarmBlockItemTestHelper.testMobFarmBlockItem(
+        helper, ModBlockItems.END_FARM.get().asItem(), 1, ModBlocks.END_FARM.get());
+    helper.succeed();
+  }
+
+  @GameTest(template = "gametest.1x1x1")
+  public void testEndFarmTier2(GameTestHelper helper) {
+    MobFarmBlockItemTestHelper.testMobFarmBlockItem(
+        helper, ModBlockItems.END_FARM.get().asItem(), 2, ModBlocks.END_FARM.get());
+    helper.succeed();
+  }
+
+  @GameTest(template = "gametest.1x1x1")
+  public void testEndFarmTier3(GameTestHelper helper) {
+    MobFarmBlockItemTestHelper.testMobFarmBlockItem(
+        helper, ModBlockItems.END_FARM.get().asItem(), 3, ModBlocks.END_FARM.get());
+    helper.succeed();
+  }
+
+  @GameTest(template = "gametest.1x1x1")
+  public void testNetherWastesFarm(GameTestHelper helper) {
+    MobFarmBlockItemTestHelper.testMobFarmBlockItem(
+        helper,
+        ModBlockItems.NETHER_WASTES_FARM.get().asItem(),
+        ModBlocks.NETHER_WASTES_FARM.get());
+    helper.succeed();
+  }
+
+  @GameTest(template = "gametest.1x1x1")
+  public void testNetherWastesFarmTier0(GameTestHelper helper) {
+    MobFarmBlockItemTestHelper.testMobFarmBlockItem(
+        helper,
+        ModBlockItems.NETHER_WASTES_FARM.get().asItem(),
+        0,
+        ModBlocks.NETHER_WASTES_FARM.get());
+    helper.succeed();
+  }
+
+  @GameTest(template = "gametest.1x1x1")
+  public void testNetherWastesFarmTier1(GameTestHelper helper) {
+    MobFarmBlockItemTestHelper.testMobFarmBlockItem(
+        helper,
+        ModBlockItems.NETHER_WASTES_FARM.get().asItem(),
+        1,
+        ModBlocks.NETHER_WASTES_FARM.get());
+    helper.succeed();
+  }
+
+  @GameTest(template = "gametest.1x1x1")
+  public void testNetherWastesFarmTier2(GameTestHelper helper) {
+    MobFarmBlockItemTestHelper.testMobFarmBlockItem(
+        helper,
+        ModBlockItems.NETHER_WASTES_FARM.get().asItem(),
+        2,
+        ModBlocks.NETHER_WASTES_FARM.get());
+    helper.succeed();
+  }
+
+  @GameTest(template = "gametest.1x1x1")
+  public void testNetherWastesFarmTier3(GameTestHelper helper) {
+    MobFarmBlockItemTestHelper.testMobFarmBlockItem(
+        helper,
+        ModBlockItems.NETHER_WASTES_FARM.get().asItem(),
+        3,
+        ModBlocks.NETHER_WASTES_FARM.get());
+    helper.succeed();
+  }
 }

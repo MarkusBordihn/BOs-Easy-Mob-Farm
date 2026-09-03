@@ -19,13 +19,25 @@
 
 package de.markusbordihn.easymobfarm.data.capture;
 
+import net.minecraft.SharedConstants;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.Bootstrap;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Rarity;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class MobCaptureDataTest {
 
   private static final int MAX_ID_LIMIT = 16777216;
+
+  @BeforeAll
+  static void bootstrap() {
+    SharedConstants.tryDetectVersion();
+    Bootstrap.bootStrap();
+  }
 
   private static MobCaptureData card(String type, String variant, boolean isFoil) {
     return new MobCaptureData(null, type, null, null, null, variant, Rarity.COMMON, isFoil);
@@ -70,5 +82,58 @@ class MobCaptureDataTest {
     int id = data.getCardId();
     Assertions.assertTrue(id >= 0 && id < MAX_ID_LIMIT);
     Assertions.assertEquals(id, data.getCardId());
+  }
+
+  @Test
+  void writeWithOnlyNullFieldsKeepsTagEmptyExceptFoil() {
+    MobCaptureData data = new MobCaptureData(null, null, null, null, null, null, null, false);
+
+    CompoundTag compoundTag = Assertions.assertDoesNotThrow(data::createTag);
+
+    Assertions.assertFalse(compoundTag.contains(MobNameData.NAME_TAG));
+    Assertions.assertFalse(compoundTag.contains(MobEntityTypeData.TYPE_TAG));
+    Assertions.assertFalse(compoundTag.contains(MobEntityData.DATA_TAG));
+    Assertions.assertFalse(compoundTag.contains(MobColorData.COLOR_TAG));
+    Assertions.assertFalse(compoundTag.contains(MobVariantData.VARIANT_TAG));
+    Assertions.assertFalse(compoundTag.contains(MobRarityData.RARITY_TAG));
+    Assertions.assertFalse(compoundTag.getBoolean(MobFoilData.FOIL_TAG));
+  }
+
+  @Test
+  void writeKeepsEmptyDataCompound() {
+    MobCaptureData data =
+        new MobCaptureData(
+            "Bee", "minecraft:bee", EntityType.BEE, new CompoundTag(), null, null, null, false);
+
+    CompoundTag compoundTag = data.createTag();
+
+    Assertions.assertTrue(compoundTag.contains(MobEntityData.DATA_TAG));
+    Assertions.assertTrue(compoundTag.getCompound(MobEntityData.DATA_TAG).isEmpty());
+  }
+
+  @Test
+  void writeStoresAllPresentFields() {
+    CompoundTag entityData = new CompoundTag();
+    entityData.putString("id", "minecraft:sheep");
+    MobCaptureData data =
+        new MobCaptureData(
+            "Sheep",
+            "minecraft:sheep",
+            EntityType.SHEEP,
+            entityData,
+            DyeColor.BLACK,
+            "leader",
+            Rarity.RARE,
+            true);
+
+    CompoundTag compoundTag = data.createTag();
+
+    Assertions.assertEquals("Sheep", compoundTag.getString(MobNameData.NAME_TAG));
+    Assertions.assertEquals("minecraft:sheep", compoundTag.getString(MobEntityTypeData.TYPE_TAG));
+    Assertions.assertEquals("black", compoundTag.getString(MobColorData.COLOR_TAG));
+    Assertions.assertEquals("leader", compoundTag.getString(MobVariantData.VARIANT_TAG));
+    Assertions.assertEquals("RARE", compoundTag.getString(MobRarityData.RARITY_TAG));
+    Assertions.assertTrue(compoundTag.getBoolean(MobFoilData.FOIL_TAG));
+    Assertions.assertEquals(entityData, compoundTag.getCompound(MobEntityData.DATA_TAG));
   }
 }

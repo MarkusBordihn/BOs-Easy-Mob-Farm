@@ -26,6 +26,7 @@ import net.minecraft.SharedConstants;
 import net.minecraft.core.NonNullList;
 import net.minecraft.server.Bootstrap;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import org.junit.jupiter.api.Assertions;
@@ -47,7 +48,7 @@ class LootManagerTest {
     List<ItemStack> bonusDrops = List.of(new ItemStack(Items.HONEYCOMB));
     List<EnhancementItem> enhancements = List.of(Mockito.mock(HoneyExtractorEnhancementItem.class));
 
-    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityType.BEE);
+    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityType.BEE, null);
 
     Assertions.assertEquals(1, drops.size());
     Assertions.assertTrue(drops.get(0).is(Items.HONEY_BOTTLE));
@@ -58,7 +59,7 @@ class LootManagerTest {
     NonNullList<ItemStack> drops = NonNullList.create();
     List<ItemStack> bonusDrops = List.of(new ItemStack(Items.HONEYCOMB));
 
-    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityType.BEE);
+    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityType.BEE, null);
 
     Assertions.assertEquals(1, drops.size());
     Assertions.assertTrue(drops.get(0).is(Items.HONEYCOMB));
@@ -70,7 +71,7 @@ class LootManagerTest {
     List<ItemStack> bonusDrops = List.of(new ItemStack(Items.HONEYCOMB));
     List<EnhancementItem> enhancements = List.of(Mockito.mock(HoneyExtractorEnhancementItem.class));
 
-    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityType.COW);
+    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityType.COW, null);
 
     Assertions.assertEquals(1, drops.size());
     Assertions.assertTrue(drops.get(0).is(Items.HONEYCOMB));
@@ -81,7 +82,7 @@ class LootManagerTest {
     NonNullList<ItemStack> drops = NonNullList.create();
     List<EnhancementItem> enhancements = List.of(Mockito.mock(HoneyExtractorEnhancementItem.class));
 
-    LootManager.addBonusDrops(drops, List.of(), enhancements, EntityType.BEE);
+    LootManager.addBonusDrops(drops, List.of(), enhancements, EntityType.BEE, null);
 
     Assertions.assertTrue(drops.isEmpty());
   }
@@ -92,9 +93,65 @@ class LootManagerTest {
     List<ItemStack> bonusDrops = List.of(new ItemStack(Items.STICK));
     List<EnhancementItem> enhancements = List.of(Mockito.mock(HoneyExtractorEnhancementItem.class));
 
-    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityType.BEE);
+    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityType.BEE, null);
 
     Assertions.assertEquals(1, drops.size());
     Assertions.assertTrue(drops.get(0).is(Items.STICK));
+  }
+
+  @Test
+  void sheepColorReplacesBonusWhiteWool() {
+    NonNullList<ItemStack> drops = NonNullList.create();
+    List<ItemStack> bonusDrops = List.of(new ItemStack(Items.WHITE_WOOL, 3));
+
+    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityType.SHEEP, DyeColor.BLACK);
+
+    Assertions.assertEquals(1, drops.size());
+    Assertions.assertTrue(drops.get(0).is(Items.BLACK_WOOL));
+    Assertions.assertEquals(3, drops.get(0).getCount());
+  }
+
+  @Test
+  void sheepWithoutColorKeepsBonusWhiteWool() {
+    NonNullList<ItemStack> drops = NonNullList.create();
+    List<ItemStack> bonusDrops = List.of(new ItemStack(Items.WHITE_WOOL));
+
+    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityType.SHEEP, null);
+
+    Assertions.assertEquals(1, drops.size());
+    Assertions.assertTrue(drops.get(0).is(Items.WHITE_WOOL));
+  }
+
+  @Test
+  void sheepColorKeepsExplicitlyConfiguredWoolColor() {
+    NonNullList<ItemStack> drops = NonNullList.create();
+    List<ItemStack> bonusDrops = List.of(new ItemStack(Items.BLACK_WOOL));
+
+    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityType.SHEEP, DyeColor.RED);
+
+    Assertions.assertEquals(1, drops.size());
+    Assertions.assertTrue(drops.get(0).is(Items.BLACK_WOOL));
+  }
+
+  @Test
+  void sheepColorKeepsNonWoolBonusDrops() {
+    NonNullList<ItemStack> drops = NonNullList.create();
+    List<ItemStack> bonusDrops = List.of(new ItemStack(Items.STICK));
+
+    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityType.SHEEP, DyeColor.BLACK);
+
+    Assertions.assertEquals(1, drops.size());
+    Assertions.assertTrue(drops.get(0).is(Items.STICK));
+  }
+
+  @Test
+  void colorDoesNotReplaceWhiteWoolForNonSheep() {
+    NonNullList<ItemStack> drops = NonNullList.create();
+    List<ItemStack> bonusDrops = List.of(new ItemStack(Items.WHITE_WOOL));
+
+    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityType.COW, DyeColor.BLACK);
+
+    Assertions.assertEquals(1, drops.size());
+    Assertions.assertTrue(drops.get(0).is(Items.WHITE_WOOL));
   }
 }

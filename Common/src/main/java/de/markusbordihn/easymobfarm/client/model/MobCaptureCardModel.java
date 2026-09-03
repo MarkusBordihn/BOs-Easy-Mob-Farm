@@ -97,7 +97,7 @@ public class MobCaptureCardModel implements BakedModel {
 
   @Override
   public ItemTransforms getTransforms() {
-    return ItemTransforms.NO_TRANSFORMS;
+    return this.originalModel.getTransforms();
   }
 
   @Override

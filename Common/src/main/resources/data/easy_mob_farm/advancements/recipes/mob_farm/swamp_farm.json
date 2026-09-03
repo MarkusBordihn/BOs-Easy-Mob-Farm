@@ -55,7 +55,10 @@
       "easy_mob_farm:mob_farm/swamp_farm/tier0_swamp_farm",
       "easy_mob_farm:mob_farm/swamp_farm/tier1_swamp_farm",
       "easy_mob_farm:mob_farm/swamp_farm/tier2_swamp_farm",
-      "easy_mob_farm:mob_farm/swamp_farm/tier3_swamp_farm"
+      "easy_mob_farm:mob_farm/swamp_farm/tier3_swamp_farm",
+      "easy_mob_farm:mob_farm/swamp_farm/tier1_swamp_farm_upgrade",
+      "easy_mob_farm:mob_farm/swamp_farm/tier2_swamp_farm_upgrade",
+      "easy_mob_farm:mob_farm/swamp_farm/tier3_swamp_farm_upgrade"
     ]
   }
 }

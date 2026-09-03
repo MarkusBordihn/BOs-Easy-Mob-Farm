@@ -91,11 +91,13 @@ public class EasyMobFarmJeiPlugin implements IModPlugin {
     registration.useNbtForSubtypes(ModBlockItems.ANIMAL_PLAINS_FARM.get());
     registration.useNbtForSubtypes(ModBlockItems.BEE_HIVE_FARM.get());
     registration.useNbtForSubtypes(ModBlockItems.DESERT_FARM.get());
+    registration.useNbtForSubtypes(ModBlockItems.END_FARM.get());
     registration.useNbtForSubtypes(ModBlockItems.IRON_GOLEM_FARM.get());
     registration.useNbtForSubtypes(ModBlockItems.JUNGLE_FARM.get());
     registration.useNbtForSubtypes(ModBlockItems.LUCKY_DROP_FARM.get());
     registration.useNbtForSubtypes(ModBlockItems.MONSTER_PLAINS_CAVE_FARM.get());
     registration.useNbtForSubtypes(ModBlockItems.NETHER_FORTRESS_FARM.get());
+    registration.useNbtForSubtypes(ModBlockItems.NETHER_WASTES_FARM.get());
     registration.useNbtForSubtypes(ModBlockItems.OCEAN_FARM.get());
     registration.useNbtForSubtypes(ModBlockItems.SWAMP_FARM.get());
   }

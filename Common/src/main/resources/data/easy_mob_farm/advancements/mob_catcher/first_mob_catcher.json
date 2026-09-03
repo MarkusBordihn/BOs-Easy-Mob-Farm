@@ -1,0 +1,38 @@
+{
+  "parent": "easy_mob_farm:root",
+  "display": {
+    "icon": {
+      "item": "easy_mob_farm:enduring_capture_net"
+    },
+    "title": {
+      "translate": "advancement.easy_mob_farm.first_mob_catcher.title"
+    },
+    "description": {
+      "translate": "advancement.easy_mob_farm.first_mob_catcher.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_mob_catcher": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "easy_mob_farm:enduring_capture_net",
+              "easy_mob_farm:ironbound_containment_cage",
+              "easy_mob_farm:mystic_binding_crystal",
+              "easy_mob_farm:void_binding_chain"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    ["has_mob_catcher"]
+  ]
+}

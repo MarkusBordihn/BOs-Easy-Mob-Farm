@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["IDI", "D#D", "IDI"],
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "#": {
+      "item": "easy_mob_farm:nether_wastes_farm"
+    }
+  },
+  "result": {
+    "item": "easy_mob_farm:nether_wastes_farm",
+    "nbt": "{TierLevel:2,CustomModelData:2}"
+  }
+}

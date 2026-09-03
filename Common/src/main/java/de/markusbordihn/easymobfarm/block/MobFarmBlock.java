@@ -50,7 +50,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class MobFarmBlock extends BaseEntityBlock {
+public abstract class MobFarmBlock extends BaseEntityBlock {
 
   public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
   public static final BooleanProperty WORKING = BooleanProperty.create("working");
@@ -100,11 +100,6 @@ public class MobFarmBlock extends BaseEntityBlock {
     return blockState.getValue(MobFarmBlock.FARM_TYPE);
   }
 
-  public BlockEntity newBlockEntity(
-      final BlockPos blockPos, final BlockState blockState, MobFarmType mobFarmType) {
-    throw new UnsupportedOperationException("This method must be overridden by a subclass!");
-  }
-
   @Override
   public void onRemove(
       BlockState state, Level level, BlockPos blockPos, BlockState newState, boolean isMoving) {
@@ -116,11 +111,6 @@ public class MobFarmBlock extends BaseEntityBlock {
       }
       super.onRemove(state, level, blockPos, newState, isMoving);
     }
-  }
-
-  @Override
-  public BlockEntity newBlockEntity(final BlockPos blockPos, final BlockState blockState) {
-    return newBlockEntity(blockPos, blockState, getFarmType(blockState));
   }
 
   @Override
@@ -158,7 +148,7 @@ public class MobFarmBlock extends BaseEntityBlock {
 
       // Set tier level from item stack
       int tierLevel = itemStack.getOrCreateTag().getInt(MobFarmBlockEntity.TIER_LEVEL_TAG);
-      if (tierLevel >= 0) {
+      if (TIER_LEVEL.getPossibleValues().contains(tierLevel)) {
         newBlockState = newBlockState.setValue(TIER_LEVEL, tierLevel);
         blockEntityInstance.setFarmTierLevel(tierLevel);
       }

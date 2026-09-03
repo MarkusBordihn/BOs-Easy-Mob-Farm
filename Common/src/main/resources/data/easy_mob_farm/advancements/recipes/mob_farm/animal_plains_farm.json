@@ -55,7 +55,10 @@
       "easy_mob_farm:mob_farm/animal_plains_farm/tier0_animal_plains_farm",
       "easy_mob_farm:mob_farm/animal_plains_farm/tier1_animal_plains_farm",
       "easy_mob_farm:mob_farm/animal_plains_farm/tier2_animal_plains_farm",
-      "easy_mob_farm:mob_farm/animal_plains_farm/tier3_animal_plains_farm"
+      "easy_mob_farm:mob_farm/animal_plains_farm/tier3_animal_plains_farm",
+      "easy_mob_farm:mob_farm/animal_plains_farm/tier1_animal_plains_farm_upgrade",
+      "easy_mob_farm:mob_farm/animal_plains_farm/tier2_animal_plains_farm_upgrade",
+      "easy_mob_farm:mob_farm/animal_plains_farm/tier3_animal_plains_farm_upgrade"
     ]
   }
 }

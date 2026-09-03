@@ -1,0 +1,33 @@
+{
+  "parent": "easy_mob_farm:mob_catcher/first_mob_catcher",
+  "display": {
+    "icon": {
+      "item": "easy_mob_farm:mob_capture_card"
+    },
+    "title": {
+      "translate": "advancement.easy_mob_farm.first_capture_card.title"
+    },
+    "description": {
+      "translate": "advancement.easy_mob_farm.first_capture_card.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_mob_capture_card": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["easy_mob_farm:mob_capture_card"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    ["has_mob_capture_card"]
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "parent": "easy_mob_farm:mob_farm/first_mob_farm",
+  "display": {
+    "icon": {
+      "item": "easy_mob_farm:nether_fortress_farm"
+    },
+    "title": {
+      "translate": "advancement.easy_mob_farm.tier3_mob_farm.title"
+    },
+    "description": {
+      "translate": "advancement.easy_mob_farm.tier3_mob_farm.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_tier3_mob_farm": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "easy_mob_farm:animal_plains_farm",
+              "easy_mob_farm:bee_hive_farm",
+              "easy_mob_farm:desert_farm",
+              "easy_mob_farm:end_farm",
+              "easy_mob_farm:iron_golem_farm",
+              "easy_mob_farm:jungle_farm",
+              "easy_mob_farm:lucky_drop_farm",
+              "easy_mob_farm:monster_plains_cave_farm",
+              "easy_mob_farm:nether_fortress_farm",
+              "easy_mob_farm:nether_wastes_farm",
+              "easy_mob_farm:ocean_farm",
+              "easy_mob_farm:swamp_farm"
+            ],
+            "nbt": "{TierLevel:3}"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    ["has_tier3_mob_farm"]
+  ]
+}

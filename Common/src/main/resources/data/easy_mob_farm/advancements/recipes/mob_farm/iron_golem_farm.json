@@ -55,7 +55,10 @@
       "easy_mob_farm:mob_farm/iron_golem_farm/tier0_iron_golem_farm",
       "easy_mob_farm:mob_farm/iron_golem_farm/tier1_iron_golem_farm",
       "easy_mob_farm:mob_farm/iron_golem_farm/tier2_iron_golem_farm",
-      "easy_mob_farm:mob_farm/iron_golem_farm/tier3_iron_golem_farm"
+      "easy_mob_farm:mob_farm/iron_golem_farm/tier3_iron_golem_farm",
+      "easy_mob_farm:mob_farm/iron_golem_farm/tier1_iron_golem_farm_upgrade",
+      "easy_mob_farm:mob_farm/iron_golem_farm/tier2_iron_golem_farm_upgrade",
+      "easy_mob_farm:mob_farm/iron_golem_farm/tier3_iron_golem_farm_upgrade"
     ]
   }
 }

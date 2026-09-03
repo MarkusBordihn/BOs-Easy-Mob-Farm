@@ -159,6 +159,10 @@ public class MobVariantData {
   }
 
   public static FrogVariant getFrogVariant(final String variant) {
+    if (variant == null) {
+      return FrogVariant.TEMPERATE;
+    }
+
     // Check for vanilla frog variants
     for (Map.Entry<FrogVariant, String> entry : FROG_VARIANT_MAP.entrySet()) {
       if (entry.getValue().equals(variant)) {
@@ -202,9 +206,7 @@ public class MobVariantData {
     if (size < 4.0f) {
       return MEDIUM_VARIANT;
     }
-    if (size >= 4.0f) {
-      return LARGE_VARIANT;
-    }
-    return "";
+
+    return LARGE_VARIANT;
   }
 }

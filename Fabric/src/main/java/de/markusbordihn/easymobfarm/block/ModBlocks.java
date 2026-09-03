@@ -58,6 +58,28 @@ public class ModBlocks {
       new MobFarmBlockWrapper(MobFarmType.NETHER_FORTRESS_FARM);
   public static final Block OCEAN_FARM = new MobFarmBlockWrapper(MobFarmType.OCEAN_FARM);
   public static final Block SWAMP_FARM = new MobFarmBlockWrapper(MobFarmType.SWAMP_FARM);
+  public static final Block END_FARM = new MobFarmBlockWrapper(MobFarmType.END_FARM);
+  public static final Block NETHER_WASTES_FARM =
+      new MobFarmBlockWrapper(MobFarmType.NETHER_WASTES_FARM);
+  public static final BlockEntityType<CreativeMobFarmBlockEntityWrapper> CREATIVE_MOB_FARM_ENTITY =
+      FabricBlockEntityTypeBuilder.create(CreativeMobFarmBlockEntityWrapper::new, CREATIVE_MOB_FARM)
+          .build();
+  public static final BlockEntityType<MobFarmBlockEntityWrapper> MOB_FARM_ENTITY =
+      FabricBlockEntityTypeBuilder.create(
+              MobFarmBlockEntityWrapper::new,
+              ANIMAL_PLAINS_FARM,
+              BEE_HIVE_FARM,
+              DESERT_FARM,
+              IRON_GOLEM_FARM,
+              JUNGLE_FARM,
+              LUCKY_DROP_FARM,
+              MONSTER_PLAINS_CAVE_FARM,
+              NETHER_FORTRESS_FARM,
+              OCEAN_FARM,
+              SWAMP_FARM,
+              END_FARM,
+              NETHER_WASTES_FARM)
+          .build();
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   private ModBlocks() {}
@@ -81,6 +103,8 @@ public class ModBlocks {
     registerBlock(MobFarmType.NETHER_FORTRESS_FARM.getId(), NETHER_FORTRESS_FARM);
     registerBlock(MobFarmType.OCEAN_FARM.getId(), OCEAN_FARM);
     registerBlock(MobFarmType.SWAMP_FARM.getId(), SWAMP_FARM);
+    registerBlock(MobFarmType.END_FARM.getId(), END_FARM);
+    registerBlock(MobFarmType.NETHER_WASTES_FARM.getId(), NETHER_WASTES_FARM);
   }
 
   public static void registerModBlockEntities() {
@@ -98,23 +122,4 @@ public class ModBlocks {
   private static void registerBlock(String id, Block block) {
     Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(Constants.MOD_ID, id), block);
   }
-
-  public static final BlockEntityType<CreativeMobFarmBlockEntityWrapper> CREATIVE_MOB_FARM_ENTITY =
-      FabricBlockEntityTypeBuilder.create(CreativeMobFarmBlockEntityWrapper::new, CREATIVE_MOB_FARM)
-          .build();
-
-  public static final BlockEntityType<MobFarmBlockEntityWrapper> MOB_FARM_ENTITY =
-      FabricBlockEntityTypeBuilder.create(
-              MobFarmBlockEntityWrapper::new,
-              ANIMAL_PLAINS_FARM,
-              BEE_HIVE_FARM,
-              DESERT_FARM,
-              IRON_GOLEM_FARM,
-              JUNGLE_FARM,
-              LUCKY_DROP_FARM,
-              MONSTER_PLAINS_CAVE_FARM,
-              NETHER_FORTRESS_FARM,
-              OCEAN_FARM,
-              SWAMP_FARM)
-          .build();
 }

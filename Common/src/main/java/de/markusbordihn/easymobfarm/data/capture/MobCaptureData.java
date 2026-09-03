@@ -111,7 +111,7 @@ public record MobCaptureData(
         pathHash = parts[1].hashCode();
       }
     }
-    int colorHash = (this.color != null) ? this.color.hashCode() : 0;
+    int colorHash = (this.color != null) ? this.color.getName().hashCode() : 0;
     int variantHash = (this.variant != null) ? this.variant.hashCode() : 0;
 
     int result = 17;
@@ -162,18 +162,26 @@ public record MobCaptureData(
   }
 
   public CompoundTag write(final CompoundTag compoundTag) {
-    compoundTag.putString(MobNameData.NAME_TAG, this.name);
-    compoundTag.putString(
-        MobEntityTypeData.TYPE_TAG,
-        BuiltInRegistries.ENTITY_TYPE.getKey(this.entityType).toString());
-    compoundTag.put(MobEntityData.DATA_TAG, this.data);
+    if (this.name != null) {
+      compoundTag.putString(MobNameData.NAME_TAG, this.name);
+    }
+    if (this.entityType != null) {
+      compoundTag.putString(
+          MobEntityTypeData.TYPE_TAG,
+          BuiltInRegistries.ENTITY_TYPE.getKey(this.entityType).toString());
+    }
+    if (this.data != null) {
+      compoundTag.put(MobEntityData.DATA_TAG, this.data);
+    }
     if (this.hasColor()) {
       compoundTag.putString(MobColorData.COLOR_TAG, this.color.getName());
     }
     if (this.hasVariant()) {
       compoundTag.putString(MobVariantData.VARIANT_TAG, this.variant);
     }
-    compoundTag.putString(MobRarityData.RARITY_TAG, this.rarity.name());
+    if (this.hasRarity()) {
+      compoundTag.putString(MobRarityData.RARITY_TAG, this.rarity.name());
+    }
     compoundTag.putBoolean(MobFoilData.FOIL_TAG, this.isFoil);
     return compoundTag;
   }

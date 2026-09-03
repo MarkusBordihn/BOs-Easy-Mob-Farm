@@ -125,16 +125,11 @@ class MobFarmConfigTest {
             0);
 
     Assertions.assertEquals(
-        1,
-        effectiveEnhancementTypes.stream()
-            .filter(SpeedEnhancementItem.class::equals)
-            .count());
+        1, effectiveEnhancementTypes.stream().filter(SpeedEnhancementItem.class::equals).count());
     Assertions.assertEquals(
-        2,
-        effectiveEnhancementTypes.stream().filter(LootEnhancementItem.class::equals).count());
+        2, effectiveEnhancementTypes.stream().filter(LootEnhancementItem.class::equals).count());
     Assertions.assertEquals(
-        1,
-        effectiveEnhancementTypes.stream().filter(LuckEnhancementItem.class::equals).count());
+        1, effectiveEnhancementTypes.stream().filter(LuckEnhancementItem.class::equals).count());
   }
 
   @Test
