@@ -24,6 +24,7 @@ import de.markusbordihn.easymobfarm.component.DataComponents;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.data.capture.MobColor;
 import de.markusbordihn.easymobfarm.data.capture.MobEntityData;
+import de.markusbordihn.easymobfarm.data.capture.MobEntityTypeData;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -119,11 +120,7 @@ public class MobCaptureManager {
       return false;
     }
 
-    // Validate EntityType
     EntityType<?> entityType = mobCaptureData.entityType();
-    if (entityType == null) {
-      return false;
-    }
 
     // Create entity from EntityType
     Entity entity = entityType.create(serverLevel);
@@ -235,6 +232,22 @@ public class MobCaptureManager {
 
     // Try to get mob capture data from item stack like spawn eggs or similar.
     return new MobCaptureData(
+        itemStack,
+        itemStack
+            .getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, CustomData.EMPTY)
+            .getUnsafe());
+  }
+
+  public static EntityType<?> getEntityType(ItemStack itemStack) {
+    if (itemStack == null || itemStack.isEmpty()) {
+      return null;
+    }
+
+    if (itemStack.has(DataComponents.MOB_CAPTURE_DATA)) {
+      return itemStack.get(DataComponents.MOB_CAPTURE_DATA).entityType();
+    }
+
+    return MobEntityTypeData.getEntityType(
         itemStack,
         itemStack
             .getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, CustomData.EMPTY)

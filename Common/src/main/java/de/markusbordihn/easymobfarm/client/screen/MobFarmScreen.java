@@ -409,7 +409,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
     // Include entity identity and loot preview cache state for invalidation
     if (this.entity != null) {
       hash = hash * 31 + this.entity.getType().hashCode();
-      List<ItemStack> preview = LootPreviewCache.getLootPreview(null, this.entity.getType());
+      List<ItemStack> preview = LootPreviewCache.getLootPreview(this.entity.getType());
       hash =
           hash * 31
               + (LootPreviewCache.hasLootPreview(this.entity.getType()) ? preview.size() + 1 : 0);
@@ -441,7 +441,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
           TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "loot_preview_hint")
               .withStyle(ChatFormatting.DARK_GRAY));
     } else {
-      List<ItemStack> lootPreview = LootPreviewCache.getLootPreview(null, this.entity.getType());
+      List<ItemStack> lootPreview = LootPreviewCache.getLootPreview(this.entity.getType());
       if (!lootPreview.isEmpty()) {
         lootInfo.add(
             TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "loot_base_drops")

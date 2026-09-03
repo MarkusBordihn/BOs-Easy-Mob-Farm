@@ -52,10 +52,13 @@
   ],
   "rewards": {
     "recipes": [
-      "easy_mob_farm:mob_farm/monster_plains_cave_farm/tier0_monster_plains_cave_farm",
-      "easy_mob_farm:mob_farm/monster_plains_cave_farm/tier1_monster_plains_cave_farm",
-      "easy_mob_farm:mob_farm/monster_plains_cave_farm/tier2_monster_plains_cave_farm",
-      "easy_mob_farm:mob_farm/monster_plains_cave_farm/tier3_monster_plains_cave_farm"
+      "easy_mob_farm:mob_farm/monster_plains_cave/tier0_monster_plains_cave_farm",
+      "easy_mob_farm:mob_farm/monster_plains_cave/tier1_monster_plains_cave_farm",
+      "easy_mob_farm:mob_farm/monster_plains_cave/tier2_monster_plains_cave_farm",
+      "easy_mob_farm:mob_farm/monster_plains_cave/tier3_monster_plains_cave_farm",
+      "easy_mob_farm:mob_farm/monster_plains_cave/tier1_monster_plains_cave_farm_upgrade",
+      "easy_mob_farm:mob_farm/monster_plains_cave/tier2_monster_plains_cave_farm_upgrade",
+      "easy_mob_farm:mob_farm/monster_plains_cave/tier3_monster_plains_cave_farm_upgrade"
     ]
   }
 }

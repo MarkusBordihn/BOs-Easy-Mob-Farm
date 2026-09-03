@@ -79,8 +79,8 @@ public class FishingEvents {
     }
 
     // Check the drop chance for the mob capture card.
-    if (MobCaptureCardConfig.mobCaptureCardFishingDropChance > 0.0f
-        && RANDOM.nextFloat() > MobCaptureCardConfig.mobCaptureCardFishingDropChance) {
+    float dropChance = MobCaptureCardConfig.mobCaptureCardFishingDropChance;
+    if (dropChance <= 0.0f || RANDOM.nextFloat() > dropChance) {
       return;
     }
 

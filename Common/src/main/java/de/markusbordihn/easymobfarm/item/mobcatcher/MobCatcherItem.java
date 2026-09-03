@@ -154,12 +154,6 @@ public class MobCatcherItem extends MobFarmItem {
       return InteractionResult.FAIL;
     }
 
-    // Check if item should be damaged on use.
-    if (getItemDamageOnUse() > 0) {
-      itemStack.hurtAndBreak(
-          getItemDamageOnUse(), player, LivingEntity.getSlotForHand(player.getUsedItemHand()));
-    }
-
     // Check first allow list for mob types.
     String entityName = BuiltInRegistries.ENTITY_TYPE.getKey(livingEntity.getType()).toString();
     if (!this.getAllowList().isEmpty()) {
@@ -223,6 +217,14 @@ public class MobCatcherItem extends MobFarmItem {
     Level level = livingEntity.level();
     if (level.isClientSide) {
       return InteractionResult.SUCCESS;
+    }
+
+    if (this.getItemDamageOnUse() > 0) {
+      itemStack.hurtAndBreak(
+          this.getItemDamageOnUse(), player, LivingEntity.getSlotForHand(hand));
+      if (itemStack.isEmpty()) {
+        return InteractionResult.FAIL;
+      }
     }
 
     // Capture the entity and store the data.

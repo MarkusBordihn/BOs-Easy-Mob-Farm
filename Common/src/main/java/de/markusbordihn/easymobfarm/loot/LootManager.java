@@ -86,6 +86,7 @@ public class LootManager {
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final Random random = new Random();
   private static final Set<ResourceLocation> loggedLegacyPaths = new HashSet<>();
+  private static final Set<String> loggedLootFailures = new HashSet<>();
   private static final Map<String, ResourceLocation> FROG_CATALYST_RESOURCES =
       Map.ofEntries(
           Map.entry(
@@ -244,12 +245,12 @@ public class LootManager {
       final Level level) {
     EntityType<?> entityType = mobCaptureData.entityType();
     if (entityType == null) {
-      log.error("Unable to get entity type from Mob Capture data: {}", mobCaptureData);
+      logLootFailure("Unable to get entity type from Mob Capture data", mobCaptureData);
       return NonNullList.create();
     }
     Entity entity = entityType.create(level);
     if (entity == null) {
-      log.error("Unable to create entity {}!", entityType);
+      logLootFailure("Unable to create entity for Mob Capture data", mobCaptureData);
       return NonNullList.create();
     }
 
@@ -268,6 +269,9 @@ public class LootManager {
       }
 
       return getEntityLoot(entity, enhancements, level);
+    } catch (Exception e) {
+      logLootFailure("Unable to get loot for Mob Capture data", mobCaptureData, e);
+      return NonNullList.create();
     } finally {
       entity.discard();
     }
@@ -306,9 +310,32 @@ public class LootManager {
         }
       }
       return new ArrayList<>(uniqueItems.values());
+    } catch (Exception e) {
+      logLootFailure("Unable to get loot preview for Mob Capture data", mobCaptureData, e);
+      return List.of();
     } finally {
       entity.discard();
     }
+  }
+
+  private static void logLootFailure(final String reason, final MobCaptureData mobCaptureData) {
+    if (loggedLootFailures.add(reason + ":" + mobCaptureData.entityType())) {
+      log.error("{} {}!", reason, mobCaptureData);
+      return;
+    }
+
+    log.debug("{} {}!", reason, mobCaptureData);
+  }
+
+  private static void logLootFailure(
+      final String reason, final MobCaptureData mobCaptureData, final Exception exception) {
+    String failureKey = mobCaptureData.entityType() + ":" + exception.getClass().getName();
+    if (loggedLootFailures.add(failureKey)) {
+      log.error("{} {}:", reason, mobCaptureData, exception);
+      return;
+    }
+
+    log.debug("{} {}: {}", reason, mobCaptureData, exception.getMessage());
   }
 
   public static NonNullList<ItemStack> getEntityLoot(
@@ -377,8 +404,8 @@ public class LootManager {
         lootTable.getRandomItems(lootParams).stream()
             .filter(itemStack -> !itemStack.isEmpty())
             .forEach(drops::add);
-        handleSpecialEntityDrops(livingEntity, drops);
       }
+      handleSpecialEntityDrops(livingEntity, drops);
     }
 
     // 4. Then use bonus loot table.
@@ -419,9 +446,9 @@ public class LootManager {
   }
 
   public static NonNullList<ItemStack> getLuckyLoot(
-      final MobCaptureData mobCaptureData, final BlockPos blockPos, final Level Level) {
+      final MobCaptureData mobCaptureData, final BlockPos blockPos, final Level level) {
     NonNullList<ItemStack> drops = NonNullList.create();
-    if (!(Level instanceof ServerLevel serverLevel)) {
+    if (!(level instanceof ServerLevel serverLevel)) {
       return drops;
     }
 
@@ -459,12 +486,15 @@ public class LootManager {
       NonNullList<ItemStack> drops,
       List<ItemStack> bonusDrops,
       List<EnhancementItem> enhancements,
-      EntityType<?> entityType) {
+      EntityType<?> entityType,
+      DyeColor color) {
     for (ItemStack drop : bonusDrops) {
       if (drop.isEmpty()) {
         continue;
       }
-      if (entityType == EntityType.BEE
+      if (entityType == EntityType.SHEEP && color != null && drop.is(Items.WHITE_WOOL)) {
+        drops.add(new ItemStack(getWoolItem(color), drop.getCount()));
+      } else if (entityType == EntityType.BEE
           && drop.is(Items.HONEYCOMB)
           && enhancements.stream()
               .anyMatch(
@@ -476,6 +506,16 @@ public class LootManager {
         drops.add(drop.copy());
       }
     }
+  }
+
+  private static Item getWoolItem(final DyeColor color) {
+    Item woolItem =
+        BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(color.getName() + "_wool"));
+    if (woolItem == Items.AIR) {
+      return Items.WHITE_WOOL;
+    }
+
+    return woolItem;
   }
 
   private static void handleSpecialEntityDrops(
@@ -787,9 +827,11 @@ public class LootManager {
   private static FakePlayer getFakePlayer(ServerLevel level, BlockPos blockPos) {
     if (FakePlayer.isInvalidFakePlayer(fakePlayer)) {
       fakePlayer = new FakePlayer(level, blockPos);
-      return fakePlayer;
+    } else {
+      fakePlayer.updatePosition(level, blockPos);
     }
-    return fakePlayer.updatePosition(level, blockPos);
+    fakePlayer.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
+    return fakePlayer;
   }
 
   private static ItemStack getRandomFlower() {

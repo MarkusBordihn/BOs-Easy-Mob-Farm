@@ -55,7 +55,10 @@
       "easy_mob_farm:mob_farm/ocean_farm/tier0_ocean_farm",
       "easy_mob_farm:mob_farm/ocean_farm/tier1_ocean_farm",
       "easy_mob_farm:mob_farm/ocean_farm/tier2_ocean_farm",
-      "easy_mob_farm:mob_farm/ocean_farm/tier3_ocean_farm"
+      "easy_mob_farm:mob_farm/ocean_farm/tier3_ocean_farm",
+      "easy_mob_farm:mob_farm/ocean_farm/tier1_ocean_farm_upgrade",
+      "easy_mob_farm:mob_farm/ocean_farm/tier2_ocean_farm_upgrade",
+      "easy_mob_farm:mob_farm/ocean_farm/tier3_ocean_farm_upgrade"
     ]
   }
 }

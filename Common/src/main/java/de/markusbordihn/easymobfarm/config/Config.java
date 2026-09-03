@@ -202,6 +202,23 @@ public class Config {
     return defaultValue;
   }
 
+  protected static int parseConfigValue(
+      final Properties properties, final String key, final int defaultValue, final int minValue) {
+    int value = parseConfigValue(properties, key, defaultValue);
+    if (value < minValue) {
+      log.warn(
+          "{} Value {} for key {} is below the minimum of {}, using default value {} instead!",
+          LOG_PREFIX,
+          value,
+          key,
+          minValue,
+          defaultValue);
+      properties.setProperty(key, Integer.toString(defaultValue));
+      return defaultValue;
+    }
+    return value;
+  }
+
   protected static float parseConfigValue(
       final Properties properties, final String key, final float defaultValue) {
     if (properties.containsKey(key)) {
@@ -213,6 +230,28 @@ public class Config {
     }
     properties.setProperty(key, Float.toString(defaultValue));
     return defaultValue;
+  }
+
+  protected static float parseConfigValue(
+      final Properties properties,
+      final String key,
+      final float defaultValue,
+      final float minValue,
+      final float maxValue) {
+    float value = parseConfigValue(properties, key, defaultValue);
+    if (value < minValue || value > maxValue) {
+      log.warn(
+          "{} Value {} for key {} is outside of the range {} - {}, using default value {} instead!",
+          LOG_PREFIX,
+          value,
+          key,
+          minValue,
+          maxValue,
+          defaultValue);
+      properties.setProperty(key, Float.toString(defaultValue));
+      return defaultValue;
+    }
+    return value;
   }
 
   protected static boolean parseConfigValue(

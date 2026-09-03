@@ -54,10 +54,12 @@ public class MobFarmBonusConfig extends Config {
  - animal_plains_farm: For animals like cows, sheep, chickens, pigs
  - bee_hive_farm: For bees and honey production
  - desert_farm: For desert mobs like husks, rabbits, camels
+ - end_farm: For end mobs like endermen, shulkers, endermites
  - iron_golem_farm: For iron golems and poppy drops
  - jungle_farm: For jungle mobs like parrots, pandas, ocelots
  - monster_plains_cave_farm: For common monsters like zombies, skeletons, spiders
  - nether_fortress_farm: For nether mobs like blazes, magma cubes, wither skeletons
+ - nether_wastes_farm: For nether mobs like piglins, hoglins, striders, ghasts
  - ocean_farm: For ocean mobs like cod, salmon, squid, guardians
  - swamp_farm: For swamp mobs like frogs, slimes, witches
 
@@ -326,6 +328,109 @@ public class MobFarmBonusConfig extends Config {
     defaultMobFarmBonusMap.put(
         MobFarmType.SWAMP_FARM.getId() + "::3::minecraft:witch",
         List.of(new BonusDrop(5, new ItemStack(Items.REDSTONE, 1))));
+
+    defaultMobFarmBonusMap.put(
+        MobFarmType.END_FARM.getId() + "::0::minecraft:enderman",
+        List.of(new BonusDrop(20, new ItemStack(Items.ENDER_PEARL, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.END_FARM.getId() + "::1::minecraft:enderman",
+        List.of(new BonusDrop(15, new ItemStack(Items.ENDER_PEARL, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.END_FARM.getId() + "::2::minecraft:enderman",
+        List.of(new BonusDrop(10, new ItemStack(Items.ENDER_PEARL, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.END_FARM.getId() + "::3::minecraft:enderman",
+        List.of(new BonusDrop(5, new ItemStack(Items.ENDER_PEARL, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.END_FARM.getId() + "::0::minecraft:shulker",
+        List.of(new BonusDrop(20, new ItemStack(Items.SHULKER_SHELL, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.END_FARM.getId() + "::1::minecraft:shulker",
+        List.of(new BonusDrop(15, new ItemStack(Items.SHULKER_SHELL, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.END_FARM.getId() + "::2::minecraft:shulker",
+        List.of(new BonusDrop(10, new ItemStack(Items.SHULKER_SHELL, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.END_FARM.getId() + "::3::minecraft:shulker",
+        List.of(new BonusDrop(5, new ItemStack(Items.SHULKER_SHELL, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.END_FARM.getId() + "::0::minecraft:endermite",
+        List.of(new BonusDrop(20, new ItemStack(Items.CHORUS_FRUIT, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.END_FARM.getId() + "::1::minecraft:endermite",
+        List.of(new BonusDrop(15, new ItemStack(Items.CHORUS_FRUIT, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.END_FARM.getId() + "::2::minecraft:endermite",
+        List.of(new BonusDrop(10, new ItemStack(Items.CHORUS_FRUIT, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.END_FARM.getId() + "::3::minecraft:endermite",
+        List.of(new BonusDrop(5, new ItemStack(Items.CHORUS_FRUIT, 1))));
+
+    defaultMobFarmBonusMap.put(
+        MobFarmType.NETHER_WASTES_FARM.getId() + "::0::minecraft:piglin",
+        List.of(new BonusDrop(20, new ItemStack(Items.GOLD_NUGGET, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.NETHER_WASTES_FARM.getId() + "::1::minecraft:piglin",
+        List.of(new BonusDrop(15, new ItemStack(Items.GOLD_NUGGET, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.NETHER_WASTES_FARM.getId() + "::2::minecraft:piglin",
+        List.of(new BonusDrop(10, new ItemStack(Items.GOLD_NUGGET, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.NETHER_WASTES_FARM.getId() + "::3::minecraft:piglin",
+        List.of(new BonusDrop(5, new ItemStack(Items.GOLD_NUGGET, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.NETHER_WASTES_FARM.getId() + "::0::minecraft:zombified_piglin",
+        List.of(new BonusDrop(20, new ItemStack(Items.GOLD_NUGGET, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.NETHER_WASTES_FARM.getId() + "::1::minecraft:zombified_piglin",
+        List.of(new BonusDrop(15, new ItemStack(Items.GOLD_NUGGET, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.NETHER_WASTES_FARM.getId() + "::2::minecraft:zombified_piglin",
+        List.of(new BonusDrop(10, new ItemStack(Items.GOLD_NUGGET, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.NETHER_WASTES_FARM.getId() + "::3::minecraft:zombified_piglin",
+        List.of(new BonusDrop(5, new ItemStack(Items.GOLD_NUGGET, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.NETHER_WASTES_FARM.getId() + "::0::minecraft:hoglin",
+        List.of(new BonusDrop(20, new ItemStack(Items.LEATHER, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.NETHER_WASTES_FARM.getId() + "::1::minecraft:hoglin",
+        List.of(new BonusDrop(15, new ItemStack(Items.LEATHER, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.NETHER_WASTES_FARM.getId() + "::2::minecraft:hoglin",
+        List.of(new BonusDrop(10, new ItemStack(Items.LEATHER, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.NETHER_WASTES_FARM.getId() + "::3::minecraft:hoglin",
+        List.of(new BonusDrop(5, new ItemStack(Items.LEATHER, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.NETHER_WASTES_FARM.getId() + "::0::minecraft:strider",
+        List.of(new BonusDrop(20, new ItemStack(Items.STRING, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.NETHER_WASTES_FARM.getId() + "::1::minecraft:strider",
+        List.of(new BonusDrop(15, new ItemStack(Items.STRING, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.NETHER_WASTES_FARM.getId() + "::2::minecraft:strider",
+        List.of(new BonusDrop(10, new ItemStack(Items.STRING, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.NETHER_WASTES_FARM.getId() + "::3::minecraft:strider",
+        List.of(new BonusDrop(5, new ItemStack(Items.STRING, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.NETHER_WASTES_FARM.getId() + "::0::minecraft:ghast",
+        List.of(new BonusDrop(20, new ItemStack(Items.GUNPOWDER, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.NETHER_WASTES_FARM.getId() + "::1::minecraft:ghast",
+        List.of(new BonusDrop(15, new ItemStack(Items.GUNPOWDER, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.NETHER_WASTES_FARM.getId() + "::2::minecraft:ghast",
+        List.of(new BonusDrop(10, new ItemStack(Items.GUNPOWDER, 1))));
+    defaultMobFarmBonusMap.put(
+        MobFarmType.NETHER_WASTES_FARM.getId() + "::3::minecraft:ghast",
+        List.of(new BonusDrop(5, new ItemStack(Items.GUNPOWDER, 1))));
+  }
+
+  static List<BonusDrop> getDefaultBonusDrops(String mobFarmId, int tierLevel, String entityId) {
+    return defaultMobFarmBonusMap.getOrDefault(
+        mobFarmId + "::" + tierLevel + "::" + entityId, List.of());
   }
 
   public static void registerConfig() {
@@ -557,6 +662,10 @@ public class MobFarmBonusConfig extends Config {
 
   public static List<ItemStack> getBonusDropEntries(
       MobFarmType mobFarmType, int tierLevel, EntityType<?> entityType) {
+    if (mobFarmType == null || entityType == null) {
+      return List.of();
+    }
+
     return getBonusDropEntries(
         mobFarmType.getId(),
         tierLevel,
@@ -565,6 +674,10 @@ public class MobFarmBonusConfig extends Config {
 
   public static List<BonusDrop> getConfiguredBonusDrops(
       MobFarmType mobFarmType, int tierLevel, EntityType<?> entityType) {
+    if (mobFarmType == null || entityType == null) {
+      return List.of();
+    }
+
     return getConfiguredBonusDrops(
         mobFarmType.getId(),
         tierLevel,

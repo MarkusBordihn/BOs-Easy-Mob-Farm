@@ -76,6 +76,15 @@ public class MobFarmMenu extends AbstractContainerMenu {
   public static final int MIN_NUMBER_OF_OUTPUT_SLOTS = 6;
   public static final int MAX_NUMBER_OF_OUTPUT_SLOTS = 27;
 
+  private static final int CAPTURED_MOB_SLOT_COUNT = 1;
+  private static final int MOB_FARM_INPUT_SLOT_COUNT =
+      CAPTURED_MOB_SLOT_COUNT
+          + MobFarmSlots.ENHANCEMENT_ITEM_SLOTS.size()
+          + MobFarmSlots.FILTER_ITEM_SLOTS.size()
+          + MobFarmSlots.SLOT_UPGRADE_ITEM_SLOTS.size();
+  private static final int MOB_FARM_SLOT_COUNT =
+      MOB_FARM_INPUT_SLOT_COUNT + MobFarmSlots.RESULT_SLOTS.size();
+
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private final Container container;
   private final ContainerData data;
@@ -178,9 +187,11 @@ public class MobFarmMenu extends AbstractContainerMenu {
 
   public MobFarmType getMobFarmType() {
     int mobFarmTypeIndex = this.data.get(MobFarmDataEntry.FARM_TYPE);
-    return mobFarmTypeIndex >= 0
-        ? MobFarmType.values()[this.data.get(MobFarmDataEntry.FARM_TYPE)]
-        : null;
+    if (mobFarmTypeIndex < 0 || mobFarmTypeIndex >= MobFarmType.values().length) {
+      return null;
+    }
+
+    return MobFarmType.values()[mobFarmTypeIndex];
   }
 
   public int getCapturedMobExperience() {
@@ -221,7 +232,7 @@ public class MobFarmMenu extends AbstractContainerMenu {
 
   private void defineFilterSlots() {
     int slotId = 0;
-    for (int row = 0; row < 4; ++row) {
+    for (int row = 0; row < MobFarmSlots.FILTER_ITEM_SLOTS.size(); ++row) {
       this.addSlot(
           new FilterSlot(
               this.container,
@@ -355,6 +366,10 @@ public class MobFarmMenu extends AbstractContainerMenu {
 
   @Override
   public boolean stillValid(final Player player) {
+    if (this.container instanceof MobFarmBlockEntity mobFarmBlockEntity) {
+      return mobFarmBlockEntity.stillValid(player);
+    }
+
     return player.isAlive();
   }
 
@@ -371,12 +386,12 @@ public class MobFarmMenu extends AbstractContainerMenu {
     // Handle moving items between different slot groups
     if (slot.container == this.container) {
       // Move from Mob Farm (container) to Player Inventory or Hotbar
-      if (!this.moveItemStackTo(itemStack, 36, this.slots.size(), true)) {
+      if (!this.moveItemStackTo(itemStack, MOB_FARM_SLOT_COUNT, this.slots.size(), true)) {
         return ItemStack.EMPTY;
       }
     } else if (slot.container == this.playerInventory) {
       // Prevent moving items to Output Slots
-      for (Slot targetSlot : this.slots.subList(0, MobFarmSlots.RESULT_SLOTS.size())) {
+      for (Slot targetSlot : this.slots.subList(0, MOB_FARM_INPUT_SLOT_COUNT)) {
         // Skip Output Slots and ensure the target slot is empty or below max stack size
         if (!(targetSlot instanceof OutputSlot)
             && !targetSlot.hasItem()

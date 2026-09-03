@@ -127,4 +127,17 @@ public class LootTablesTest {
     LootTableTestHelper.testBlockDropItem(helper, ModBlocks.SWAMP_FARM, ModBlockItems.SWAMP_FARM);
     helper.succeed();
   }
+
+  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  public void testEndFarmDrop(GameTestHelper helper) {
+    LootTableTestHelper.testBlockDropItem(helper, ModBlocks.END_FARM, ModBlockItems.END_FARM);
+    helper.succeed();
+  }
+
+  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  public void testNetherWastesFarmDrop(GameTestHelper helper) {
+    LootTableTestHelper.testBlockDropItem(
+        helper, ModBlocks.NETHER_WASTES_FARM, ModBlockItems.NETHER_WASTES_FARM);
+    helper.succeed();
+  }
 }

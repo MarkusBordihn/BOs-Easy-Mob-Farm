@@ -55,7 +55,10 @@
       "easy_mob_farm:mob_farm/lucky_drop_farm/tier0_lucky_drop_farm",
       "easy_mob_farm:mob_farm/lucky_drop_farm/tier1_lucky_drop_farm",
       "easy_mob_farm:mob_farm/lucky_drop_farm/tier2_lucky_drop_farm",
-      "easy_mob_farm:mob_farm/lucky_drop_farm/tier3_lucky_drop_farm"
+      "easy_mob_farm:mob_farm/lucky_drop_farm/tier3_lucky_drop_farm",
+      "easy_mob_farm:mob_farm/lucky_drop_farm/tier1_lucky_drop_farm_upgrade",
+      "easy_mob_farm:mob_farm/lucky_drop_farm/tier2_lucky_drop_farm_upgrade",
+      "easy_mob_farm:mob_farm/lucky_drop_farm/tier3_lucky_drop_farm_upgrade"
     ]
   }
 }

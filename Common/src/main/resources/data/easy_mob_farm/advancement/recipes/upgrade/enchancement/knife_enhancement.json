@@ -1,0 +1,41 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_knife_enhancement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["easy_mob_farm:knife_enhancement"]
+          }
+        ]
+      }
+    },
+    "has_quartz": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:quartz"]
+          }
+        ]
+      }
+    },
+    "has_knife": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "easy_mob_farm:tools/knives"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    ["has_knife_enhancement", "has_quartz", "has_knife"]
+  ],
+  "rewards": {
+    "recipes": ["easy_mob_farm:upgrade/enhancement/knife_enhancement"]
+  }
+}

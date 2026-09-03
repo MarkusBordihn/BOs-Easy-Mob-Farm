@@ -22,7 +22,6 @@ package de.markusbordihn.easymobfarm.data.loot;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 
@@ -48,15 +47,16 @@ public class LootPreviewCache {
     serverCache.put(entityType, new ServerCacheEntry(items, System.currentTimeMillis()));
   }
 
-  public static void setLootPreview(BlockPos pos, EntityType<?> entityType, List<ItemStack> items) {
+  public static void setLootPreview(EntityType<?> entityType, List<ItemStack> items) {
     clientCache.put(entityType, items);
   }
 
-  public static List<ItemStack> getLootPreview(BlockPos pos, EntityType<?> entityType) {
-    if (entityType != null) {
-      return clientCache.getOrDefault(entityType, List.of());
+  public static List<ItemStack> getLootPreview(EntityType<?> entityType) {
+    if (entityType == null) {
+      return List.of();
     }
-    return List.of();
+
+    return clientCache.getOrDefault(entityType, List.of());
   }
 
   public static boolean hasLootPreview(EntityType<?> entityType) {

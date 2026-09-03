@@ -115,4 +115,16 @@ public class ModBlockItemsTest {
     ModItemsTestHelper.testModItem(helper, ModBlockItems.SWAMP_FARM);
     helper.succeed();
   }
+
+  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  public void testEndFarmItem(GameTestHelper helper) {
+    ModItemsTestHelper.testModItem(helper, ModBlockItems.END_FARM);
+    helper.succeed();
+  }
+
+  @GameTest(template = "easy_mob_farm:gametest.1x1x1")
+  public void testNetherWastesFarmItem(GameTestHelper helper) {
+    ModItemsTestHelper.testModItem(helper, ModBlockItems.NETHER_WASTES_FARM);
+    helper.succeed();
+  }
 }

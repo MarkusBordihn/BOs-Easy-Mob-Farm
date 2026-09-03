@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["FGF", "S#S", "NNN"],
+  "key": {
+    "#": {
+      "item": "easy_mob_farm:tier0_mob_farm_template"
+    },
+    "F": {
+      "item": "minecraft:crimson_fungus"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "S": {
+      "tag": "minecraft:crimson_stems"
+    },
+    "N": {
+      "item": "minecraft:netherrack"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "easy_mob_farm:nether_wastes_farm",
+    "components": {
+      "easy_mob_farm:mob_farm_data": {
+        "tierLevel": "tier_0"
+      },
+      "minecraft:custom_model_data": 0
+    }
+  }
+}

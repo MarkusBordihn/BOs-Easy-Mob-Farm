@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["DND", "N#N", "DND"],
+  "key": {
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "N": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "#": {
+      "item": "easy_mob_farm:end_farm"
+    }
+  },
+  "result": {
+    "id": "easy_mob_farm:end_farm",
+    "components": {
+      "easy_mob_farm:mob_farm_data": {
+        "tierLevel": "tier_3"
+      },
+      "minecraft:custom_model_data": 3
+    }
+  }
+}

@@ -29,6 +29,8 @@ import de.markusbordihn.easymobfarm.client.renderer.manager.RendererManager;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinition;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinitionManager;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
+import java.util.HashSet;
+import java.util.Set;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -36,6 +38,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
@@ -52,6 +55,7 @@ public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
     implements BlockEntityRenderer<T> {
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+  private static final Set<EntityType<?>> loggedRenderFailures = new HashSet<>();
 
   public MobFarmBlockEntityRenderer(BlockEntityRendererProvider.Context context) {}
 
@@ -86,11 +90,13 @@ public class MobFarmBlockEntityRenderer<T extends MobFarmBlockEntity>
       try {
         renderGenericEntity(blockEntity, entity, poseStack, buffer, combinedLight);
       } catch (Exception genericException) {
-        log.error(
-            "Failed to render entity {} for block entity {} with exception: {}",
-            entity.getType(),
-            blockEntity.getBlockPos(),
-            genericException.getMessage());
+        if (loggedRenderFailures.add(entity.getType())) {
+          log.error(
+              "Failed to render entity {} for block entity {} with exception: {}",
+              entity.getType(),
+              blockEntity.getBlockPos(),
+              genericException.getMessage());
+        }
       }
     }
   }

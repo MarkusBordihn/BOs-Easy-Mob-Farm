@@ -35,6 +35,7 @@ import net.minecraft.world.entity.animal.AbstractFish;
 import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.monster.Pillager;
 import net.minecraft.world.entity.raid.Raid;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -43,6 +44,7 @@ public class RendererManager {
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final Map<BlockPos, Entity> entityMap = new HashMap<>();
+  private static final Map<BlockPos, ItemStack> unusableCapturedMobs = new HashMap<>();
   private static int validationCounter = 0;
 
   private RendererManager() {}
@@ -55,6 +57,7 @@ public class RendererManager {
     BlockPos blockPos = mobFarmBlockEntity.getBlockPos();
     if (!mobFarmBlockEntity.hasCapturedMob()) {
       entityMap.remove(blockPos);
+      unusableCapturedMobs.remove(blockPos);
       return null;
     }
 
@@ -74,11 +77,23 @@ public class RendererManager {
       }
     }
 
+    ItemStack capturedMob = mobFarmBlockEntity.getCapturedMob();
+    if (wasAlreadyRejected(blockPos, capturedMob)) {
+      return null;
+    }
+
     Entity entity = createEntity(mobFarmBlockEntity);
     if (entity != null) {
       entityMap.put(blockPos, entity);
+      unusableCapturedMobs.remove(blockPos);
+    } else {
+      unusableCapturedMobs.put(blockPos, capturedMob);
     }
     return entity;
+  }
+
+  private static boolean wasAlreadyRejected(final BlockPos blockPos, final ItemStack capturedMob) {
+    return unusableCapturedMobs.get(blockPos) == capturedMob;
   }
 
   public static Entity getEntity(final BlockPos blockPos) {
@@ -91,6 +106,7 @@ public class RendererManager {
 
   public static void removeEntity(final BlockPos blockPos) {
     entityMap.remove(blockPos);
+    unusableCapturedMobs.remove(blockPos);
   }
 
   private static Entity createEntity(final MobFarmBlockEntity mobFarmBlockEntity) {
@@ -109,7 +125,7 @@ public class RendererManager {
     // Get and validate entity type
     EntityType<?> entityType = mobCaptureData.entityType();
     if (entityType == null) {
-      log.error("Unable to get entity type from Mob Capture data {}", mobCaptureData);
+      log.debug("Unable to get entity type from Mob Capture data {}", mobCaptureData);
       return null;
     }
 

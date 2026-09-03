@@ -1,0 +1,59 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_end_farm": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["easy_mob_farm:end_farm"]
+          }
+        ]
+      }
+    },
+    "has_mob_farm_template": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "easy_mob_farm:mob_farm_templates"
+          }
+        ]
+      }
+    },
+    "has_ender_pearl": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:ender_pearl"]
+          }
+        ]
+      }
+    },
+    "has_end_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:end_stone"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    ["has_end_farm", "has_mob_farm_template", "has_ender_pearl", "has_end_stone"]
+  ],
+  "rewards": {
+    "recipes": [
+      "easy_mob_farm:mob_farm/end_farm/tier0_end_farm",
+      "easy_mob_farm:mob_farm/end_farm/tier1_end_farm",
+      "easy_mob_farm:mob_farm/end_farm/tier2_end_farm",
+      "easy_mob_farm:mob_farm/end_farm/tier3_end_farm",
+      "easy_mob_farm:mob_farm/end_farm/tier1_end_farm_upgrade",
+      "easy_mob_farm:mob_farm/end_farm/tier2_end_farm_upgrade",
+      "easy_mob_farm:mob_farm/end_farm/tier3_end_farm_upgrade"
+    ]
+  }
+}

@@ -100,6 +100,8 @@ public class EasyMobFarmJeiPlugin implements IModPlugin {
     registration.registerSubtypeInterpreter(
         ModBlockItems.DESERT_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
     registration.registerSubtypeInterpreter(
+        ModBlockItems.END_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
+    registration.registerSubtypeInterpreter(
         ModBlockItems.IRON_GOLEM_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
     registration.registerSubtypeInterpreter(
         ModBlockItems.JUNGLE_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
@@ -109,6 +111,8 @@ public class EasyMobFarmJeiPlugin implements IModPlugin {
         ModBlockItems.MONSTER_PLAINS_CAVE_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
     registration.registerSubtypeInterpreter(
         ModBlockItems.NETHER_FORTRESS_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
+    registration.registerSubtypeInterpreter(
+        ModBlockItems.NETHER_WASTES_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
     registration.registerSubtypeInterpreter(
         ModBlockItems.OCEAN_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
     registration.registerSubtypeInterpreter(

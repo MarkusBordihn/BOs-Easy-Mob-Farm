@@ -2,8 +2,30 @@
 
 ## Note
 
-This change log includes the summarized changes.
-For the full changelog, please go to the [GitHub History][history] instead.
+This change log includes the summarized changes. For the full changelog, please go to
+the [GitHub History][history] instead.
+
+### 10.12.0
+
+- Fixed crashes and load failures caused by broken data in farms, cards and the configuration.
+- Fixed farms starting to work when an empty capture item was inserted.
+- Fixed log spam from empty capture items and from mobs that could not be rendered or looted.
+- Fixed cards for mobs from uninstalled mods showing up as a pig instead of being rejected.
+- Fixed mob capture cards always dropping when their drop chance was set to 0.
+- Fixed mob capture cards without mob data rendering as an empty slot.
+- Fixed mob catchers losing durability on rejected captures and deleting the mob when breaking.
+- Fixed tools of a farm leaking into the loot calculation of neighboring farms.
+- Fixed shift-clicking from a mob farm moving items back into its own output slots.
+- Fixed Monster Cave Farm, tier upgrade and several item recipes missing from the recipe book.
+- Changed colored mob capture cards to a new, stable card number that differs from before.
+- Changed Wither farms to drop at most one Nether Star and Wither Rose per cycle again.
+- Changed out-of-range configuration values to reset to their default with a warning.
+- Changed the farm screen to close when the farm is broken or the player moves too far away.
+- Changed bonus wool drops to match the color of the captured sheep instead of always white.
+- Changed unusable capture cards to stay in the farm with an error status instead of dropping,
+  so they are no longer lost when the mod that adds the mob is missing.
+- Added End Farm and Nether Wastes Farm with bonus drops for their End and Nether mobs.
+- Added advancements for catching your first mob, placing farms and crafting enhancements.
 
 ### 10.10.0
 
@@ -84,7 +106,7 @@ For the full changelog, please go to the [GitHub History][history] instead.
 - Added `maxBufferSize` - Maximum number of items that can be buffered (default: 128)
 - Added `bufferProcessInterval` - Ticks between buffer processing attempts (default: 20)
 - Added `maxBonusDropMultiplier` - Maximum multiplier for bonus drop amounts vs stack size (default:
-    100)
+  100)
 - Added `dropItemsToWorldWhenBufferFull` - Drop items to world when buffer is full (default: false,
   items are voided instead)
 - Added buffer status to mob farm tooltip.
@@ -117,9 +139,9 @@ For the full changelog, please go to the [GitHub History][history] instead.
 ### 10.0.0
 
 🚨 **Warning:** Easy Mob Farm version **10.x** uses datapacks and resource packs to define custom mob
-cards and other data, allowing easier integration with other mods.
-However, custom mob cards defined in the old config file `mob_capture_card_models.cfg` are **NOT
-compatible** and must be redefined using datapacks and resource packs. ⚠️
+cards and other data, allowing easier integration with other mods. However, custom mob cards defined
+in the old config file `mob_capture_card_models.cfg` are **NOT compatible** and must be redefined
+using datapacks and resource packs. ⚠️
 
 - Fixed missing sheep mob capture card.
 - Fixed #160 by adding full support for `Swampier Swamps`.
@@ -239,7 +261,7 @@ compatible** and must be redefined using datapacks and resource packs. ⚠️
 
 ### 8.9.1
 
-- Fixed #105 by correcting .isCreative() condition.
+- Fixed #105 by correcting .isCreative () condition.
 
 ### 8.9.0
 

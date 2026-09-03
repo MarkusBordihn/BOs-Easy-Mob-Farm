@@ -25,7 +25,6 @@ import java.util.Locale;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -105,6 +104,9 @@ public class MobCaptureDataSupport {
     // Use compound tag to identify the entity type.
     CompoundTag compoundTag =
         itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).getUnsafe();
+    if (compoundTag.isEmpty()) {
+      return null;
+    }
     if (MOB_CATCHER_DIAMOND.equals(itemRegistryName)
         || MOB_CATCHER_NETHERITE.equals(itemRegistryName)) {
       if (compoundTag.contains(MOD_DATA_TAG)
@@ -149,7 +151,7 @@ public class MobCaptureDataSupport {
     if (entityName == null || entityName.isEmpty()) {
       return null;
     }
-    return BuiltInRegistries.ENTITY_TYPE.get(ResourceLocation.parse(entityName));
+    return EntityType.byString(entityName).orElse(null);
   }
 
   public static String getEntityTypeName(ItemStack itemStack) {

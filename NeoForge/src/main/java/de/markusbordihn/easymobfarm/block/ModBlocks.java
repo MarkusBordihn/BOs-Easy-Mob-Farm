@@ -94,8 +94,13 @@ public class ModBlocks {
   public static final DeferredBlock<Block> SWAMP_FARM =
       BLOCKS.register(
           MobFarmType.SWAMP_FARM.getId(), () -> new MobFarmBlockWrapper(MobFarmType.SWAMP_FARM));
-
-  protected ModBlocks() {}
+  public static final DeferredBlock<Block> END_FARM =
+      BLOCKS.register(
+          MobFarmType.END_FARM.getId(), () -> new MobFarmBlockWrapper(MobFarmType.END_FARM));
+  public static final DeferredBlock<Block> NETHER_WASTES_FARM =
+      BLOCKS.register(
+          MobFarmType.NETHER_WASTES_FARM.getId(),
+          () -> new MobFarmBlockWrapper(MobFarmType.NETHER_WASTES_FARM));
 
   public static final DeferredHolder<
           BlockEntityType<?>, BlockEntityType<CreativeMobFarmBlockEntityWrapper>>
@@ -123,6 +128,10 @@ public class ModBlocks {
                           MONSTER_PLAINS_CAVE_FARM.get(),
                           NETHER_FORTRESS_FARM.get(),
                           OCEAN_FARM.get(),
-                          SWAMP_FARM.get())
+                          SWAMP_FARM.get(),
+                          END_FARM.get(),
+                          NETHER_WASTES_FARM.get())
                       .build(null));
+
+  protected ModBlocks() {}
 }

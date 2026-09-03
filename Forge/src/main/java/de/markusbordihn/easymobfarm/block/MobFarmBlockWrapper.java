@@ -19,7 +19,7 @@
 
 package de.markusbordihn.easymobfarm.block;
 
-import de.markusbordihn.easymobfarm.block.entity.CreativeMobFarmBlockEntity;
+import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntityWrapper;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import net.minecraft.core.BlockPos;
@@ -46,8 +46,6 @@ public class MobFarmBlockWrapper extends MobFarmBlock {
     return level.isClientSide
         ? null
         : createTickerHelper(
-            blockEntityType,
-            ModBlocks.MOB_FARM_ENTITY.get(),
-            CreativeMobFarmBlockEntity::serverTick);
+            blockEntityType, ModBlocks.MOB_FARM_ENTITY.get(), MobFarmBlockEntity::serverTick);
   }
 }
