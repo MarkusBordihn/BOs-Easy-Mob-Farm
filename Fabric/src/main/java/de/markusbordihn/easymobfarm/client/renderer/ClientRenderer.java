@@ -51,5 +51,7 @@ public class ClientRenderer {
     BlockRenderLayerMap.putBlock(ModBlocks.NETHER_FORTRESS_FARM, ChunkSectionLayer.CUTOUT);
     BlockRenderLayerMap.putBlock(ModBlocks.OCEAN_FARM, ChunkSectionLayer.TRANSLUCENT);
     BlockRenderLayerMap.putBlock(ModBlocks.SWAMP_FARM, ChunkSectionLayer.CUTOUT);
+    BlockRenderLayerMap.putBlock(ModBlocks.END_FARM, ChunkSectionLayer.CUTOUT);
+    BlockRenderLayerMap.putBlock(ModBlocks.NETHER_WASTES_FARM, ChunkSectionLayer.CUTOUT);
   }
 }

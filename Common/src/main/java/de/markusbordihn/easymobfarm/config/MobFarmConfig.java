@@ -179,26 +179,32 @@ public class MobFarmConfig extends Config {
     Properties unmodifiedProperties = (Properties) properties.clone();
 
     // Config entries
-    farmProgressingTime = parseConfigValue(properties, "farmProgressingTime", farmProgressingTime);
+    farmProgressingTime =
+        parseConfigValue(properties, "farmProgressingTime", farmProgressingTime, 1);
 
     tier0progressionUpgradeSpeed =
-        parseConfigValue(properties, "tier0progressionUpgradeSpeed", tier0progressionUpgradeSpeed);
+        parseConfigValue(
+            properties, "tier0progressionUpgradeSpeed", tier0progressionUpgradeSpeed, 0);
     tier1progressionUpgradeSpeed =
-        parseConfigValue(properties, "tier1progressionUpgradeSpeed", tier1progressionUpgradeSpeed);
+        parseConfigValue(
+            properties, "tier1progressionUpgradeSpeed", tier1progressionUpgradeSpeed, 0);
     tier2progressionUpgradeSpeed =
-        parseConfigValue(properties, "tier2progressionUpgradeSpeed", tier2progressionUpgradeSpeed);
+        parseConfigValue(
+            properties, "tier2progressionUpgradeSpeed", tier2progressionUpgradeSpeed, 0);
     tier3progressionUpgradeSpeed =
-        parseConfigValue(properties, "tier3progressionUpgradeSpeed", tier3progressionUpgradeSpeed);
+        parseConfigValue(
+            properties, "tier3progressionUpgradeSpeed", tier3progressionUpgradeSpeed, 0);
 
     experienceDropChance =
-        parseConfigValue(properties, "experienceDropChance", experienceDropChance);
+        parseConfigValue(properties, "experienceDropChance", experienceDropChance, 1);
     speedEnhancementUpgradeSpeed =
-        parseConfigValue(properties, "speedEnhancementUpgradeSpeed", speedEnhancementUpgradeSpeed);
+        parseConfigValue(
+            properties, "speedEnhancementUpgradeSpeed", speedEnhancementUpgradeSpeed, 0);
 
     // Enhancement power values
     lootEnhancementAdditionalRolls =
         parseConfigValue(
-            properties, "lootEnhancementAdditionalRolls", lootEnhancementAdditionalRolls);
+            properties, "lootEnhancementAdditionalRolls", lootEnhancementAdditionalRolls, 0);
     luckEnhancementAdditionalLuck =
         parseConfigValue(
             properties, "luckEnhancementAdditionalLuck", luckEnhancementAdditionalLuck);
@@ -211,29 +217,29 @@ public class MobFarmConfig extends Config {
 
     // Enhancement limits
     tier0MaxSpeedEnhancements =
-        parseConfigValue(properties, "tier0MaxSpeedEnhancements", tier0MaxSpeedEnhancements);
+        parseConfigValue(properties, "tier0MaxSpeedEnhancements", tier0MaxSpeedEnhancements, 0);
     tier1MaxSpeedEnhancements =
-        parseConfigValue(properties, "tier1MaxSpeedEnhancements", tier1MaxSpeedEnhancements);
+        parseConfigValue(properties, "tier1MaxSpeedEnhancements", tier1MaxSpeedEnhancements, 0);
     tier2MaxSpeedEnhancements =
-        parseConfigValue(properties, "tier2MaxSpeedEnhancements", tier2MaxSpeedEnhancements);
+        parseConfigValue(properties, "tier2MaxSpeedEnhancements", tier2MaxSpeedEnhancements, 0);
     tier3MaxSpeedEnhancements =
-        parseConfigValue(properties, "tier3MaxSpeedEnhancements", tier3MaxSpeedEnhancements);
+        parseConfigValue(properties, "tier3MaxSpeedEnhancements", tier3MaxSpeedEnhancements, 0);
     tier0MaxLootEnhancements =
-        parseConfigValue(properties, "tier0MaxLootEnhancements", tier0MaxLootEnhancements);
+        parseConfigValue(properties, "tier0MaxLootEnhancements", tier0MaxLootEnhancements, 0);
     tier1MaxLootEnhancements =
-        parseConfigValue(properties, "tier1MaxLootEnhancements", tier1MaxLootEnhancements);
+        parseConfigValue(properties, "tier1MaxLootEnhancements", tier1MaxLootEnhancements, 0);
     tier2MaxLootEnhancements =
-        parseConfigValue(properties, "tier2MaxLootEnhancements", tier2MaxLootEnhancements);
+        parseConfigValue(properties, "tier2MaxLootEnhancements", tier2MaxLootEnhancements, 0);
     tier3MaxLootEnhancements =
-        parseConfigValue(properties, "tier3MaxLootEnhancements", tier3MaxLootEnhancements);
+        parseConfigValue(properties, "tier3MaxLootEnhancements", tier3MaxLootEnhancements, 0);
     tier0MaxLuckEnhancements =
-        parseConfigValue(properties, "tier0MaxLuckEnhancements", tier0MaxLuckEnhancements);
+        parseConfigValue(properties, "tier0MaxLuckEnhancements", tier0MaxLuckEnhancements, 0);
     tier1MaxLuckEnhancements =
-        parseConfigValue(properties, "tier1MaxLuckEnhancements", tier1MaxLuckEnhancements);
+        parseConfigValue(properties, "tier1MaxLuckEnhancements", tier1MaxLuckEnhancements, 0);
     tier2MaxLuckEnhancements =
-        parseConfigValue(properties, "tier2MaxLuckEnhancements", tier2MaxLuckEnhancements);
+        parseConfigValue(properties, "tier2MaxLuckEnhancements", tier2MaxLuckEnhancements, 0);
     tier3MaxLuckEnhancements =
-        parseConfigValue(properties, "tier3MaxLuckEnhancements", tier3MaxLuckEnhancements);
+        parseConfigValue(properties, "tier3MaxLuckEnhancements", tier3MaxLuckEnhancements, 0);
 
     // Per-enhancement enable/disable
     enableSpeedEnhancement =
@@ -285,11 +291,11 @@ public class MobFarmConfig extends Config {
         parseConfigValue(properties, "enableMobFarmUpgradeRecipes", enableMobFarmUpgradeRecipes);
 
     enableItemBuffer = parseConfigValue(properties, "enableItemBuffer", enableItemBuffer);
-    maxBufferSize = parseConfigValue(properties, "maxBufferSize", maxBufferSize);
+    maxBufferSize = parseConfigValue(properties, "maxBufferSize", maxBufferSize, 1);
     bufferProcessInterval =
-        parseConfigValue(properties, "bufferProcessInterval", bufferProcessInterval);
+        parseConfigValue(properties, "bufferProcessInterval", bufferProcessInterval, 1);
     maxBonusDropMultiplier =
-        parseConfigValue(properties, "maxBonusDropMultiplier", maxBonusDropMultiplier);
+        parseConfigValue(properties, "maxBonusDropMultiplier", maxBonusDropMultiplier, 1);
     dropItemsToWorldWhenBufferFull =
         parseConfigValue(
             properties, "dropItemsToWorldWhenBufferFull", dropItemsToWorldWhenBufferFull);

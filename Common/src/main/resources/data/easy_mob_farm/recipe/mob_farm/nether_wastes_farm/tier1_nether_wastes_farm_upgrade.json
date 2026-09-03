@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["GIG", "I#I", "GIG"],
+  "key": {
+    "G": "minecraft:gold_ingot",
+    "I": "minecraft:iron_ingot",
+    "#": "easy_mob_farm:nether_wastes_farm"
+  },
+  "result": {
+    "id": "easy_mob_farm:nether_wastes_farm",
+    "components": {
+      "easy_mob_farm:mob_farm_data": {
+        "tierLevel": "tier_1"
+      }
+    }
+  }
+}

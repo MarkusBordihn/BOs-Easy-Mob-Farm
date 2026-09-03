@@ -1,0 +1,31 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_milk_bottle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["easy_mob_farm:milk_bottle"]
+          }
+        ]
+      }
+    },
+    "has_bucket": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:bucket"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    ["has_milk_bottle", "has_bucket"]
+  ],
+  "rewards": {
+    "recipes": ["easy_mob_farm:consumable/milk_bucket_from_bottles"]
+  }
+}

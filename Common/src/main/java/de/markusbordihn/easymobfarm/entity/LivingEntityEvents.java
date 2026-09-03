@@ -62,8 +62,8 @@ public class LivingEntityEvents {
     }
 
     // Check the drop chance for the mob capture card.
-    if (MobCaptureCardConfig.mobCaptureCardKillDropChance > 0.0f
-        && RANDOM.nextFloat() > MobCaptureCardConfig.mobCaptureCardKillDropChance) {
+    float dropChance = MobCaptureCardConfig.mobCaptureCardKillDropChance;
+    if (dropChance <= 0.0f || RANDOM.nextFloat() > dropChance) {
       return;
     }
 

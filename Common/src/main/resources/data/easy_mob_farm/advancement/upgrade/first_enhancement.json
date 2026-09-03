@@ -1,0 +1,46 @@
+{
+  "parent": "easy_mob_farm:mob_farm/first_mob_farm",
+  "display": {
+    "icon": {
+      "id": "easy_mob_farm:speed_enhancement"
+    },
+    "title": {
+      "translate": "advancement.easy_mob_farm.first_enhancement.title"
+    },
+    "description": {
+      "translate": "advancement.easy_mob_farm.first_enhancement.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "has_enhancement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "easy_mob_farm:egg_collector_enhancement",
+              "easy_mob_farm:experience_enhancement",
+              "easy_mob_farm:honey_extractor_enhancement",
+              "easy_mob_farm:honey_harvester_frame_enhancement",
+              "easy_mob_farm:knife_enhancement",
+              "easy_mob_farm:loot_enhancement",
+              "easy_mob_farm:luck_enhancement",
+              "easy_mob_farm:milk_extractor_enhancement",
+              "easy_mob_farm:pollen_trap_enhancement",
+              "easy_mob_farm:sheep_enhancement",
+              "easy_mob_farm:speed_enhancement",
+              "easy_mob_farm:sword_enhancement"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    ["has_enhancement"]
+  ]
+}

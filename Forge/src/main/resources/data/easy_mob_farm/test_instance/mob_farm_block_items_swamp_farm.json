@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:function",
+  "function": "easy_mob_farm:mob_farm_block_items_swamp_farm",
+  "environment": "minecraft:default",
+  "structure": "easy_mob_farm:gametest.1x1x1",
+  "max_ticks": 100
+}

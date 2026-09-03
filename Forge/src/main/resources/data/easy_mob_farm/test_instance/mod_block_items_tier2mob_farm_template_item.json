@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:function",
+  "function": "easy_mob_farm:mod_block_items_tier2mob_farm_template_item",
+  "environment": "minecraft:default",
+  "structure": "easy_mob_farm:gametest.1x1x1",
+  "max_ticks": 100
+}

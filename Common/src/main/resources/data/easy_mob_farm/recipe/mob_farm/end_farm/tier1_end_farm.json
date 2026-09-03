@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["CPC", "O#O", "EEE"],
+  "key": {
+    "#": "easy_mob_farm:tier1_mob_farm_template",
+    "C": "minecraft:chorus_fruit",
+    "P": "minecraft:ender_pearl",
+    "O": "minecraft:obsidian",
+    "E": "minecraft:end_stone"
+  },
+  "result": {
+    "count": 1,
+    "id": "easy_mob_farm:end_farm",
+    "components": {
+      "easy_mob_farm:mob_farm_data": {
+        "tierLevel": "tier_1"
+      }
+    }
+  }
+}

@@ -59,6 +59,7 @@ public class ClientRenderer {
               ModBlocks.CREATIVE_MOB_FARM.get(), ChunkSectionLayer.CUTOUT);
           ItemBlockRenderTypes.setRenderLayer(
               ModBlocks.DESERT_FARM.get(), ChunkSectionLayer.CUTOUT);
+          ItemBlockRenderTypes.setRenderLayer(ModBlocks.END_FARM.get(), ChunkSectionLayer.CUTOUT);
           ItemBlockRenderTypes.setRenderLayer(
               ModBlocks.IRON_GOLEM_FARM.get(), ChunkSectionLayer.CUTOUT);
           ItemBlockRenderTypes.setRenderLayer(
@@ -69,6 +70,8 @@ public class ClientRenderer {
               ModBlocks.MONSTER_PLAINS_CAVE_FARM.get(), ChunkSectionLayer.CUTOUT);
           ItemBlockRenderTypes.setRenderLayer(
               ModBlocks.NETHER_FORTRESS_FARM.get(), ChunkSectionLayer.CUTOUT);
+          ItemBlockRenderTypes.setRenderLayer(
+              ModBlocks.NETHER_WASTES_FARM.get(), ChunkSectionLayer.CUTOUT);
           ItemBlockRenderTypes.setRenderLayer(
               ModBlocks.OCEAN_FARM.get(), ChunkSectionLayer.TRANSLUCENT);
           ItemBlockRenderTypes.setRenderLayer(ModBlocks.SWAMP_FARM.get(), ChunkSectionLayer.CUTOUT);

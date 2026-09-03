@@ -63,5 +63,10 @@ public class MobFarms implements DisplayItemsGenerator {
     output.acceptAll(
         CustomMobFarmBlocks.getMobFarmTiers(
             ModBlockItems.SWAMP_FARM.getDefaultInstance().getItem()));
+    output.acceptAll(
+        CustomMobFarmBlocks.getMobFarmTiers(ModBlockItems.END_FARM.getDefaultInstance().getItem()));
+    output.acceptAll(
+        CustomMobFarmBlocks.getMobFarmTiers(
+            ModBlockItems.NETHER_WASTES_FARM.getDefaultInstance().getItem()));
   }
 }

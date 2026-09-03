@@ -25,7 +25,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 @SuppressWarnings("unused")
 public class MobVariantDataTest {
 
-  @GameTest(structure = "easy_mob_farm:gametest.3x3x3")
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
   public void testPillagerVariantDetection(GameTestHelper helper) {
     MobVariantDataTestHelper.testPillagerVariantDetection(helper);
     helper.succeed();

@@ -42,4 +42,16 @@ public class LootManagerTest {
     LootManagerTestHelper.testHoneyExtractorDoesNotConvertForNonBee(helper);
     helper.succeed();
   }
+
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3")
+  public void testWitherSpecialDropsAreNotMultiplied(GameTestHelper helper) {
+    LootManagerTestHelper.testWitherSpecialDropsAreNotMultiplied(helper);
+    helper.succeed();
+  }
+
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3")
+  public void testMalformedCaptureDataDoesNotThrow(GameTestHelper helper) {
+    LootManagerTestHelper.testMalformedCaptureDataDoesNotThrow(helper);
+    helper.succeed();
+  }
 }

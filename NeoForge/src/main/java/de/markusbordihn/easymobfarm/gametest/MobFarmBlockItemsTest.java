@@ -452,4 +452,90 @@ public class MobFarmBlockItemsTest {
         ModBlocks.SWAMP_FARM.get());
     helper.succeed();
   }
+
+  public void testEndFarm(GameTestHelper helper) {
+    MobFarmBlockItemTestHelper.testMobFarmBlockItem(
+        helper, ModBlockItems.END_FARM.get().asItem(), ModBlocks.END_FARM.get());
+    helper.succeed();
+  }
+
+  public void testEndFarmTier0(GameTestHelper helper) {
+    MobFarmBlockItemTestHelper.testMobFarmBlockItem(
+        helper,
+        ModBlockItems.END_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_0,
+        ModBlocks.END_FARM.get());
+    helper.succeed();
+  }
+
+  public void testEndFarmTier1(GameTestHelper helper) {
+    MobFarmBlockItemTestHelper.testMobFarmBlockItem(
+        helper,
+        ModBlockItems.END_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_1,
+        ModBlocks.END_FARM.get());
+    helper.succeed();
+  }
+
+  public void testEndFarmTier2(GameTestHelper helper) {
+    MobFarmBlockItemTestHelper.testMobFarmBlockItem(
+        helper,
+        ModBlockItems.END_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_2,
+        ModBlocks.END_FARM.get());
+    helper.succeed();
+  }
+
+  public void testEndFarmTier3(GameTestHelper helper) {
+    MobFarmBlockItemTestHelper.testMobFarmBlockItem(
+        helper,
+        ModBlockItems.END_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_3,
+        ModBlocks.END_FARM.get());
+    helper.succeed();
+  }
+
+  public void testNetherWastesFarm(GameTestHelper helper) {
+    MobFarmBlockItemTestHelper.testMobFarmBlockItem(
+        helper,
+        ModBlockItems.NETHER_WASTES_FARM.get().asItem(),
+        ModBlocks.NETHER_WASTES_FARM.get());
+    helper.succeed();
+  }
+
+  public void testNetherWastesFarmTier0(GameTestHelper helper) {
+    MobFarmBlockItemTestHelper.testMobFarmBlockItem(
+        helper,
+        ModBlockItems.NETHER_WASTES_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_0,
+        ModBlocks.NETHER_WASTES_FARM.get());
+    helper.succeed();
+  }
+
+  public void testNetherWastesFarmTier1(GameTestHelper helper) {
+    MobFarmBlockItemTestHelper.testMobFarmBlockItem(
+        helper,
+        ModBlockItems.NETHER_WASTES_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_1,
+        ModBlocks.NETHER_WASTES_FARM.get());
+    helper.succeed();
+  }
+
+  public void testNetherWastesFarmTier2(GameTestHelper helper) {
+    MobFarmBlockItemTestHelper.testMobFarmBlockItem(
+        helper,
+        ModBlockItems.NETHER_WASTES_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_2,
+        ModBlocks.NETHER_WASTES_FARM.get());
+    helper.succeed();
+  }
+
+  public void testNetherWastesFarmTier3(GameTestHelper helper) {
+    MobFarmBlockItemTestHelper.testMobFarmBlockItem(
+        helper,
+        ModBlockItems.NETHER_WASTES_FARM.get().asItem(),
+        MobFarmTierLevel.TIER_3,
+        ModBlocks.NETHER_WASTES_FARM.get());
+    helper.succeed();
+  }
 }

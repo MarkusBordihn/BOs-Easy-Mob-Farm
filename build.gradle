@@ -6,6 +6,47 @@ plugins {
 def ghostRefScript = file(findProperty('ghostRefIndex') ?: '')
 if (ghostRefScript.exists()) apply from: ghostRefScript
 
+tasks.register('allGameTests') {
+  group = 'verification'
+  description = 'Runs Fabric, Forge and NeoForge game tests.'
+  dependsOn ':Fabric:runGameTest', ':Forge:runGameTestServer', ':NeoForge:runGameTestServer'
+}
+
+tasks.register('fullCheck') {
+  group = 'verification'
+  description = 'Runs the standard checks and Fabric, Forge and NeoForge game tests.'
+  dependsOn ':Common:check', ':Fabric:check', ':Forge:check', ':NeoForge:check', 'allGameTests'
+}
+
+tasks.register('publishModrinth') {
+  group = 'publishing'
+  description = 'Publishes Forge, NeoForge and Fabric to Modrinth.'
+  dependsOn ':Forge:modrinth', ':NeoForge:modrinth', ':Fabric:modrinth'
+  mustRunAfter 'fullCheck'
+}
+
+tasks.register('publishDelay') {
+  description = 'Pauses between Modrinth and CurseForge uploads so logs do not interfere.'
+  mustRunAfter 'publishModrinth'
+  doLast {
+    println 'Waiting 5 seconds before CurseForge upload...'
+    sleep(5000)
+  }
+}
+
+tasks.register('publishCurseForge') {
+  group = 'publishing'
+  description = 'Publishes Forge, NeoForge and Fabric to CurseForge.'
+  dependsOn ':Forge:curseforge', ':NeoForge:curseforge', ':Fabric:curseforge'
+  mustRunAfter 'publishDelay'
+}
+
+tasks.register('publishMods') {
+  group = 'publishing'
+  description = 'Builds, runs full checks, then publishes to Modrinth and (after a 5s pause) CurseForge.'
+  dependsOn 'fullCheck', 'publishModrinth', 'publishDelay', 'publishCurseForge'
+}
+
 subprojects {
 
   apply plugin: 'java'
@@ -32,7 +73,7 @@ subprojects {
   }
 
   tasks.register('wrapper', Wrapper) {
-    gradleVersion = '9.6.0'
+    gradleVersion = '9.7.1'
     distributionType = Wrapper.DistributionType.BIN
   }
 
@@ -56,16 +97,4 @@ subprojects {
       downloadJavadoc = true
     }
   }
-}
-
-tasks.register('allGameTests') {
-  group = 'verification'
-  description = 'Runs Fabric, Forge and NeoForge game tests.'
-  dependsOn ':Fabric:runGameTest', ':Forge:runGameTestServer', ':NeoForge:runGameTestServer'
-}
-
-tasks.register('fullCheck') {
-  group = 'verification'
-  description = 'Runs the standard checks and Fabric and Forge game tests.'
-  dependsOn ':Common:check', ':Fabric:check', ':Forge:check', 'allGameTests'
 }

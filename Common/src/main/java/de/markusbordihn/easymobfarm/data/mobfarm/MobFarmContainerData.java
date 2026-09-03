@@ -66,7 +66,11 @@ public class MobFarmContainerData implements ContainerData {
           MobFarmDataEntry.BLOCK_POS_Z,
           MobFarmDataEntry.FARM_TIER_LEVEL,
           MobFarmDataEntry.FARM_TYPE,
-          MobFarmDataEntry.CAPTURED_MOB_EXPERIENCE ->
+          MobFarmDataEntry.CAPTURED_MOB_EXPERIENCE,
+          MobFarmDataEntry.FARM_PROGRESSION_SPEED,
+          MobFarmDataEntry.FARM_PROGRESSION_SPEED_BONUS,
+          MobFarmDataEntry.BUFFER_SIZE,
+          MobFarmDataEntry.BUFFER_MAX_SIZE ->
           log.warn("Trying to set read-only data index {} for {}", index, this);
       case MobFarmDataEntry.NUMBER_OF_OUTPUT_SLOTS -> mobFarmEntity.setNumberOfOutputSlots(value);
       case MobFarmDataEntry.FARM_PROGRESS -> mobFarmEntity.setFarmProgress(value);

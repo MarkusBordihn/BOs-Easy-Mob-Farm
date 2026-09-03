@@ -1,0 +1,56 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_milk_extractor_enhancement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["easy_mob_farm:milk_extractor_enhancement"]
+          }
+        ]
+      }
+    },
+    "has_milk": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "easy_mob_farm:milk"
+          }
+        ]
+      }
+    },
+    "has_copper_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:copper_ingot"]
+          }
+        ]
+      }
+    },
+    "has_piston": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": ["minecraft:piston"]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_milk_extractor_enhancement",
+      "has_milk",
+      "has_copper_ingot",
+      "has_piston"
+    ]
+  ],
+  "rewards": {
+    "recipes": ["easy_mob_farm:upgrade/enhancement/milk_extractor_enhancement"]
+  }
+}

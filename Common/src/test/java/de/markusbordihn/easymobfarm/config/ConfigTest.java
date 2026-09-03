@@ -57,6 +57,35 @@ class ConfigTest {
   }
 
   @Test
+  void integerAboveMinimumIsKept() {
+    Properties props = new Properties();
+    props.setProperty("key", "5");
+    Assertions.assertEquals(5, Config.parseConfigValue(props, "key", 10, 1));
+  }
+
+  @Test
+  void integerBelowMinimumReturnsDefaultAndRewritesProperty() {
+    Properties props = new Properties();
+    props.setProperty("key", "0");
+    Assertions.assertEquals(10, Config.parseConfigValue(props, "key", 10, 1));
+    Assertions.assertEquals("10", props.getProperty("key"));
+  }
+
+  @Test
+  void integerEqualToMinimumIsKept() {
+    Properties props = new Properties();
+    props.setProperty("key", "1");
+    Assertions.assertEquals(1, Config.parseConfigValue(props, "key", 10, 1));
+  }
+
+  @Test
+  void negativeIntegerBelowMinimumReturnsDefault() {
+    Properties props = new Properties();
+    props.setProperty("key", "-5");
+    Assertions.assertEquals(4, Config.parseConfigValue(props, "key", 4, 0));
+  }
+
+  @Test
   void validFloatIsParsed() {
     Properties props = new Properties();
     props.setProperty("key", "1.5");
@@ -68,6 +97,37 @@ class ConfigTest {
     Properties props = new Properties();
     props.setProperty("key", "abc");
     Assertions.assertEquals(2.0f, Config.parseConfigValue(props, "key", 2.0f));
+  }
+
+  @Test
+  void floatInsideRangeIsKept() {
+    Properties props = new Properties();
+    props.setProperty("key", "0.25");
+    Assertions.assertEquals(0.25f, Config.parseConfigValue(props, "key", 0.1f, 0.0f, 1.0f));
+  }
+
+  @Test
+  void floatBelowRangeReturnsDefaultAndRewritesProperty() {
+    Properties props = new Properties();
+    props.setProperty("key", "-0.5");
+    Assertions.assertEquals(0.1f, Config.parseConfigValue(props, "key", 0.1f, 0.0f, 1.0f));
+    Assertions.assertEquals("0.1", props.getProperty("key"));
+  }
+
+  @Test
+  void floatAboveRangeReturnsDefault() {
+    Properties props = new Properties();
+    props.setProperty("key", "1.5");
+    Assertions.assertEquals(0.1f, Config.parseConfigValue(props, "key", 0.1f, 0.0f, 1.0f));
+  }
+
+  @Test
+  void floatAtRangeBoundsIsKept() {
+    Properties props = new Properties();
+    props.setProperty("key", "0.0");
+    Assertions.assertEquals(0.0f, Config.parseConfigValue(props, "key", 0.1f, 0.0f, 1.0f));
+    props.setProperty("key", "1.0");
+    Assertions.assertEquals(1.0f, Config.parseConfigValue(props, "key", 0.1f, 0.0f, 1.0f));
   }
 
   @Test
