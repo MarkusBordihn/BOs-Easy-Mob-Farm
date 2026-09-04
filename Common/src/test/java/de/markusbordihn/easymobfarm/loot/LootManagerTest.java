@@ -19,17 +19,14 @@
 
 package de.markusbordihn.easymobfarm.loot;
 
+import de.markusbordihn.easymobfarm.TestBootstrap;
 import de.markusbordihn.easymobfarm.item.upgrade.EnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.HoneyExtractorEnhancementItem;
 import java.lang.reflect.Field;
 import java.util.List;
-import net.minecraft.SharedConstants;
-import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.component.DataComponentMap;
-import net.minecraft.server.Bootstrap;
 import net.minecraft.world.entity.EntityTypes;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import org.junit.jupiter.api.Assertions;
@@ -41,16 +38,7 @@ class LootManagerTest {
   private static final HoneyExtractorEnhancementItem HONEY_EXTRACTOR;
 
   static {
-    SharedConstants.tryDetectVersion();
-    Bootstrap.bootStrap();
-    // Bootstrap.bootStrap() in MC 26.2 does not bind DataComponents to item holders.
-    // Holder.Reference.bindComponents() is a public method — call it directly.
-    for (Item item : List.of(Items.HONEYCOMB, Items.STICK, Items.HONEY_BOTTLE)) {
-      Holder<?> holder = item.builtInRegistryHolder();
-      if (holder instanceof Holder.Reference<?> reference && !reference.areComponentsBound()) {
-        reference.bindComponents(DataComponentMap.EMPTY);
-      }
-    }
+    TestBootstrap.bootstrapWithBoundItemComponents();
     // The item registry is frozen after Bootstrap, so new Item instances cannot be created
     // via the normal constructor (createIntrusiveHolder would fail). Use Unsafe to allocate
     // an instance without invoking any constructor — sufficient for instanceof checks.
@@ -72,7 +60,7 @@ class LootManagerTest {
     List<ItemStack> bonusDrops = List.of(new ItemStack(Items.HONEYCOMB));
     List<EnhancementItem> enhancements = List.of(HONEY_EXTRACTOR);
 
-    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityTypes.BEE);
+    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityTypes.BEE, null);
 
     Assertions.assertEquals(1, drops.size());
     Assertions.assertTrue(drops.get(0).is(Items.HONEY_BOTTLE));
@@ -83,7 +71,7 @@ class LootManagerTest {
     NonNullList<ItemStack> drops = NonNullList.create();
     List<ItemStack> bonusDrops = List.of(new ItemStack(Items.HONEYCOMB));
 
-    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityTypes.BEE);
+    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityTypes.BEE, null);
 
     Assertions.assertEquals(1, drops.size());
     Assertions.assertTrue(drops.get(0).is(Items.HONEYCOMB));
@@ -95,7 +83,7 @@ class LootManagerTest {
     List<ItemStack> bonusDrops = List.of(new ItemStack(Items.HONEYCOMB));
     List<EnhancementItem> enhancements = List.of(HONEY_EXTRACTOR);
 
-    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityTypes.COW);
+    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityTypes.COW, null);
 
     Assertions.assertEquals(1, drops.size());
     Assertions.assertTrue(drops.get(0).is(Items.HONEYCOMB));
@@ -105,7 +93,7 @@ class LootManagerTest {
   void emptyBonusDropsProducesNoDrops() {
     NonNullList<ItemStack> drops = NonNullList.create();
 
-    LootManager.addBonusDrops(drops, List.of(), List.of(HONEY_EXTRACTOR), EntityTypes.BEE);
+    LootManager.addBonusDrops(drops, List.of(), List.of(HONEY_EXTRACTOR), EntityTypes.BEE, null);
 
     Assertions.assertTrue(drops.isEmpty());
   }
@@ -116,9 +104,65 @@ class LootManagerTest {
     List<ItemStack> bonusDrops = List.of(new ItemStack(Items.STICK));
     List<EnhancementItem> enhancements = List.of(HONEY_EXTRACTOR);
 
-    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityTypes.BEE);
+    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityTypes.BEE, null);
 
     Assertions.assertEquals(1, drops.size());
     Assertions.assertTrue(drops.get(0).is(Items.STICK));
+  }
+
+  @Test
+  void sheepColorReplacesBonusWhiteWool() {
+    NonNullList<ItemStack> drops = NonNullList.create();
+    List<ItemStack> bonusDrops = List.of(new ItemStack(Items.WOOL.white(), 3));
+
+    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityTypes.SHEEP, DyeColor.BLACK);
+
+    Assertions.assertEquals(1, drops.size());
+    Assertions.assertTrue(drops.get(0).is(Items.WOOL.black()));
+    Assertions.assertEquals(3, drops.get(0).getCount());
+  }
+
+  @Test
+  void sheepWithoutColorKeepsBonusWhiteWool() {
+    NonNullList<ItemStack> drops = NonNullList.create();
+    List<ItemStack> bonusDrops = List.of(new ItemStack(Items.WOOL.white()));
+
+    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityTypes.SHEEP, null);
+
+    Assertions.assertEquals(1, drops.size());
+    Assertions.assertTrue(drops.get(0).is(Items.WOOL.white()));
+  }
+
+  @Test
+  void sheepColorKeepsExplicitlyConfiguredWoolColor() {
+    NonNullList<ItemStack> drops = NonNullList.create();
+    List<ItemStack> bonusDrops = List.of(new ItemStack(Items.WOOL.black()));
+
+    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityTypes.SHEEP, DyeColor.RED);
+
+    Assertions.assertEquals(1, drops.size());
+    Assertions.assertTrue(drops.get(0).is(Items.WOOL.black()));
+  }
+
+  @Test
+  void sheepColorKeepsNonWoolBonusDrops() {
+    NonNullList<ItemStack> drops = NonNullList.create();
+    List<ItemStack> bonusDrops = List.of(new ItemStack(Items.STICK));
+
+    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityTypes.SHEEP, DyeColor.BLACK);
+
+    Assertions.assertEquals(1, drops.size());
+    Assertions.assertTrue(drops.get(0).is(Items.STICK));
+  }
+
+  @Test
+  void colorDoesNotReplaceWhiteWoolForNonSheep() {
+    NonNullList<ItemStack> drops = NonNullList.create();
+    List<ItemStack> bonusDrops = List.of(new ItemStack(Items.WOOL.white()));
+
+    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityTypes.COW, DyeColor.BLACK);
+
+    Assertions.assertEquals(1, drops.size());
+    Assertions.assertTrue(drops.get(0).is(Items.WOOL.white()));
   }
 }

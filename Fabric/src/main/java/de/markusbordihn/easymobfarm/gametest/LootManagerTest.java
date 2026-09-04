@@ -25,21 +25,33 @@ import net.minecraft.gametest.framework.GameTestHelper;
 @SuppressWarnings("unused")
 public class LootManagerTest {
 
-  @GameTest(structure = "easy_mob_farm:gametest.3x3x3")
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
   public void testHoneyExtractorConvertsBonusHoneycomb(GameTestHelper helper) {
     LootManagerTestHelper.testHoneyExtractorConvertsBonusHoneycomb(helper);
     helper.succeed();
   }
 
-  @GameTest(structure = "easy_mob_farm:gametest.3x3x3")
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
   public void testBonusHoneycombPassesThroughWithoutExtractor(GameTestHelper helper) {
     LootManagerTestHelper.testBonusHoneycombPassesThroughWithoutExtractor(helper);
     helper.succeed();
   }
 
-  @GameTest(structure = "easy_mob_farm:gametest.3x3x3")
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
   public void testHoneyExtractorDoesNotConvertForNonBee(GameTestHelper helper) {
     LootManagerTestHelper.testHoneyExtractorDoesNotConvertForNonBee(helper);
+    helper.succeed();
+  }
+
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
+  public void testWitherSpecialDropsAreNotMultiplied(GameTestHelper helper) {
+    LootManagerTestHelper.testWitherSpecialDropsAreNotMultiplied(helper);
+    helper.succeed();
+  }
+
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
+  public void testMalformedCaptureDataDoesNotThrow(GameTestHelper helper) {
+    LootManagerTestHelper.testMalformedCaptureDataDoesNotThrow(helper);
     helper.succeed();
   }
 }

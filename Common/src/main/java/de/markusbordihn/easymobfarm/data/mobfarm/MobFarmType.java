@@ -42,12 +42,13 @@ public enum MobFarmType implements StringRepresentable {
   MONSTER_PLAINS_CAVE_FARM,
   NETHER_FORTRESS_FARM,
   OCEAN_FARM,
-  SWAMP_FARM;
-
-  public static final Codec<MobFarmType> CODEC =
-      Codec.STRING.xmap(MobFarmType::valueOf, MobFarmType::name);
+  SWAMP_FARM,
+  END_FARM,
+  NETHER_WASTES_FARM;
 
   private static final MobFarmType[] VALUES = values();
+  public static final Codec<MobFarmType> CODEC =
+      Codec.STRING.xmap(MobFarmType::valueOf, MobFarmType::name);
   public static final StreamCodec<ByteBuf, MobFarmType> STREAM_CODEC =
       ByteBufCodecs.idMapper(index -> VALUES[index], MobFarmType::ordinal);
   private static final Map<String, MobFarmType> BY_NAME =

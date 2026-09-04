@@ -20,7 +20,11 @@
 package de.markusbordihn.easymobfarm.data.capture;
 
 import net.minecraft.SharedConstants;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.Tag;
 import net.minecraft.server.Bootstrap;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.item.Rarity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -38,6 +42,11 @@ class MobCaptureDataTest {
 
   private static MobCaptureData card(String type, String variant, boolean isFoil) {
     return new MobCaptureData(null, type, null, null, null, variant, Rarity.COMMON, isFoil);
+  }
+
+  private static MobCaptureData roundTrip(MobCaptureData mobCaptureData) {
+    Tag tag = MobCaptureData.CODEC.encodeStart(NbtOps.INSTANCE, mobCaptureData).getOrThrow();
+    return MobCaptureData.CODEC.parse(NbtOps.INSTANCE, tag).getOrThrow();
   }
 
   @Test
@@ -79,5 +88,39 @@ class MobCaptureDataTest {
     int id = data.getCardId();
     Assertions.assertTrue(id >= 0 && id < MAX_ID_LIMIT);
     Assertions.assertEquals(id, data.getCardId());
+  }
+
+  @Test
+  void codecKeepsEmptyDataCompound() {
+    MobCaptureData data =
+        new MobCaptureData(
+            "Bee",
+            "minecraft:bee",
+            EntityTypes.BEE,
+            new CompoundTag(),
+            MobColor.NONE,
+            "",
+            Rarity.COMMON,
+            false);
+
+    Assertions.assertEquals(data, roundTrip(data));
+  }
+
+  @Test
+  void codecStoresAllPresentFields() {
+    CompoundTag entityData = new CompoundTag();
+    entityData.putString("id", "minecraft:sheep");
+    MobCaptureData data =
+        new MobCaptureData(
+            "Sheep",
+            "minecraft:sheep",
+            EntityTypes.SHEEP,
+            entityData,
+            MobColor.BLACK,
+            "leader",
+            Rarity.RARE,
+            true);
+
+    Assertions.assertEquals(data, roundTrip(data));
   }
 }

@@ -26,43 +26,43 @@ import net.minecraft.gametest.framework.GameTestHelper;
 @SuppressWarnings("unused")
 public class ModItemsTest {
 
-  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1", maxTicks = 100)
   public void testBlankMobCaptureCardItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.BLANK_MOB_CAPTURE_CARD);
     helper.succeed();
   }
 
-  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1", maxTicks = 100)
   public void testCreativeMobCaptureCardItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.CREATIVE_MOB_CAPTURE_CARD);
     helper.succeed();
   }
 
-  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1", maxTicks = 100)
   public void testMobCaptureCardItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.MOB_CAPTURE_CARD);
     helper.succeed();
   }
 
-  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1", maxTicks = 100)
   public void testCreativeSpeedEnhancementItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.CREATIVE_SPEED_ENHANCEMENT);
     helper.succeed();
   }
 
-  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1", maxTicks = 100)
   public void testEggCollectorEnhancementItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.EGG_COLLECTOR_ENHANCEMENT);
     helper.succeed();
   }
 
-  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1", maxTicks = 100)
   public void testExperienceEnhancementItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.EXPERIENCE_ENHANCEMENT);
     helper.succeed();
   }
 
-  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1", maxTicks = 100)
   public void testFrogCatalystEnhancementItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.FROG_CATALYST_COLD_ENHANCEMENT);
     ModItemsTestHelper.testModItem(helper, Items.FROG_CATALYST_TEMPERATE_ENHANCEMENT);
@@ -86,127 +86,127 @@ public class ModItemsTest {
     helper.succeed();
   }
 
-  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1", maxTicks = 100)
   public void testHoneyExtractorEnhancementItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.HONEY_EXTRACTOR_ENHANCEMENT);
     helper.succeed();
   }
 
-  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1", maxTicks = 100)
   public void testHoneyHarvesterFrameEnhancementItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.HONEY_HARVESTER_FRAME_ENHANCEMENT);
     helper.succeed();
   }
 
-  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1", maxTicks = 100)
   public void testLootEnhancementItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.LOOT_ENHANCEMENT);
     helper.succeed();
   }
 
-  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1", maxTicks = 100)
   public void testLuckEnhancementItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.LUCK_ENHANCEMENT);
     helper.succeed();
   }
 
-  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1", maxTicks = 100)
   public void testMilkExtractorEnhancementItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.MILK_EXTRACTOR_ENHANCEMENT);
     helper.succeed();
   }
 
-  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1", maxTicks = 100)
   public void testPollenTrapEnhancementItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.POLLEN_TRAP_ENHANCEMENT);
     helper.succeed();
   }
 
-  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1", maxTicks = 100)
   public void testSheepEnhancementItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.SHEEP_ENHANCEMENT);
     helper.succeed();
   }
 
-  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1", maxTicks = 100)
   public void testSpeedEnhancementItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.SPEED_ENHANCEMENT);
     helper.succeed();
   }
 
-  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1", maxTicks = 100)
   public void testSwordEnhancementItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.SWORD_ENHANCEMENT);
     helper.succeed();
   }
 
-  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1", maxTicks = 100)
   public void testNoFlowersFilterItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.NO_FLOWERS_FILTER);
     helper.succeed();
   }
 
-  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1", maxTicks = 100)
   public void testNoMeatFilterItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.NO_MEAT_FILTER);
     helper.succeed();
   }
 
-  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1", maxTicks = 100)
   public void testBigSlotUpgradeItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.BIG_SLOT_UPGRADE);
     helper.succeed();
   }
 
-  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1", maxTicks = 100)
   public void testSmallSlotUpgradeItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.SMALL_SLOT_UPGRADE);
     helper.succeed();
   }
 
-  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1", maxTicks = 100)
   public void testCreativeMobCatcherItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.CREATIVE_MOB_CATCHER);
     helper.succeed();
   }
 
-  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1", maxTicks = 100)
   public void testEnduringCaptureNetItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.ENDURING_CAPTURE_NET);
     helper.succeed();
   }
 
-  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1", maxTicks = 100)
   public void testIronboundContainmentCageItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.IRONBOUND_CONTAINMENT_CAGE);
     helper.succeed();
   }
 
-  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1", maxTicks = 100)
   public void testMysticBindingCrystalItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.MYSTIC_BINDING_CRYSTAL);
     helper.succeed();
   }
 
-  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1", maxTicks = 100)
   public void testVoidBindingChainItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.VOID_BINDING_CHAIN);
     helper.succeed();
   }
 
-  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1", maxTicks = 100)
   public void testMilkBottleItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.MILK_BOTTLE);
     helper.succeed();
   }
 
-  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1", maxTicks = 100)
   public void testKnifeEnhancementItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.KNIFE_ENHANCEMENT);
     helper.succeed();
   }
 
-  @GameTest(structure = "easy_mob_farm:gametest.1x1x1")
+  @GameTest(structure = "easy_mob_farm:gametest.1x1x1", maxTicks = 100)
   public void testCardBinderItem(GameTestHelper helper) {
     ModItemsTestHelper.testModItem(helper, Items.CARD_BINDER);
     helper.succeed();

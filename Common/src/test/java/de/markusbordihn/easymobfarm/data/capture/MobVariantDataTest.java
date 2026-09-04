@@ -60,6 +60,11 @@ class MobVariantDataTest {
   }
 
   @Test
+  void sizeAboveFourIsLarge() {
+    Assertions.assertEquals(MobVariantData.LARGE_VARIANT, MobVariantData.getSizeVariant(16.0f));
+  }
+
+  @Test
   void nullTagReturnsNull() {
     Assertions.assertNull(MobVariantData.getVariant((CompoundTag) null));
   }

@@ -88,7 +88,7 @@ public class EasyMobFarm {
     ModDataComponents.DATA_COMPONENTS.register(modEventBus);
 
     log.debug("{} Game Test Functions ...", Constants.LOG_REGISTER_PREFIX);
-    ModGameTests.TEST_FUNCTIONS.register(modEventBus);
+    ModGameTests.register(modEventBus);
 
     SyncLootPreviewMessage.SENDER = PacketDistributor::sendToPlayer;
   }

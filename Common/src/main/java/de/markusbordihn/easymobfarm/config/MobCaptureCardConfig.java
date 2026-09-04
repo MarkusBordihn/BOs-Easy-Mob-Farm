@@ -95,13 +95,19 @@ public class MobCaptureCardConfig extends Config {
 
     requirePlayerKill = parseConfigValue(properties, "requirePlayerKill", requirePlayerKill);
     mobCaptureCardKillDropChance =
-        parseConfigValue(properties, "mobCaptureCardKillDropChance", mobCaptureCardKillDropChance);
+        parseConfigValue(
+            properties, "mobCaptureCardKillDropChance", mobCaptureCardKillDropChance, 0.0f, 1.0f);
 
     mobCaptureCardFishingDropChance =
         parseConfigValue(
-            properties, "mobCaptureCardFishingDropChance", mobCaptureCardFishingDropChance);
+            properties,
+            "mobCaptureCardFishingDropChance",
+            mobCaptureCardFishingDropChance,
+            0.0f,
+            1.0f);
     mobCaptureCardFoilDropChance =
-        parseConfigValue(properties, "mobCaptureCardFoilDropChance", mobCaptureCardFoilDropChance);
+        parseConfigValue(
+            properties, "mobCaptureCardFoilDropChance", mobCaptureCardFoilDropChance, 0.0f, 1.0f);
 
     mobCaptureCardKillDropAllowList =
         parseConfigValue(

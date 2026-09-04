@@ -61,6 +61,12 @@ public class MobFarms {
     items.addAll(
         CustomMobFarmBlocks.getMobFarmTiers(
             ModBlockItems.SWAMP_FARM.get().getDefaultInstance().getItem()));
+    items.addAll(
+        CustomMobFarmBlocks.getMobFarmTiers(
+            ModBlockItems.END_FARM.get().getDefaultInstance().getItem()));
+    items.addAll(
+        CustomMobFarmBlocks.getMobFarmTiers(
+            ModBlockItems.NETHER_WASTES_FARM.get().getDefaultInstance().getItem()));
     return items;
   }
 }

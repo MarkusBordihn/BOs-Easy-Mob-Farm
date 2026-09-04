@@ -103,9 +103,7 @@ public class MobVariantData {
     if (size < 4.0f) {
       return MEDIUM_VARIANT;
     }
-    if (size >= 4.0f) {
-      return LARGE_VARIANT;
-    }
-    return "";
+
+    return LARGE_VARIANT;
   }
 }

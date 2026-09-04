@@ -27,7 +27,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 @SuppressWarnings("unused")
 public class SmokeTest {
 
-  @GameTest(structure = "easy_mob_farm:gametest.3x3x3")
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
   public void testModRegistered(GameTestHelper helper) {
     GameTestHelpers.assertTrue(
         helper,

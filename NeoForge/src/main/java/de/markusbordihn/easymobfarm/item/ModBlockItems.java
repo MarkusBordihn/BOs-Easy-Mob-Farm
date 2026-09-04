@@ -129,5 +129,17 @@ public class ModBlockItems {
           MobFarmType.SWAMP_FARM.getId(),
           () -> new MobFarmBlockItem(MobFarmType.SWAMP_FARM, ModBlocks.SWAMP_FARM.get()));
 
+  public static final DeferredItem<Item> END_FARM =
+      ITEMS.register(
+          MobFarmType.END_FARM.getId(),
+          () -> new MobFarmBlockItem(MobFarmType.END_FARM, ModBlocks.END_FARM.get()));
+
+  public static final DeferredItem<Item> NETHER_WASTES_FARM =
+      ITEMS.register(
+          MobFarmType.NETHER_WASTES_FARM.getId(),
+          () ->
+              new MobFarmBlockItem(
+                  MobFarmType.NETHER_WASTES_FARM, ModBlocks.NETHER_WASTES_FARM.get()));
+
   protected ModBlockItems() {}
 }
