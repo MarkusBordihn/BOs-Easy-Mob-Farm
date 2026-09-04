@@ -99,4 +99,14 @@ public class ModBlocksTest {
     ModBlocksTestHelper.testModBlock(helper, ModBlocks.SWAMP_FARM.get());
     helper.succeed();
   }
+
+  public void testEndFarm(GameTestHelper helper) {
+    ModBlocksTestHelper.testModBlock(helper, ModBlocks.END_FARM.get());
+    helper.succeed();
+  }
+
+  public void testNetherWastesFarm(GameTestHelper helper) {
+    ModBlocksTestHelper.testModBlock(helper, ModBlocks.NETHER_WASTES_FARM.get());
+    helper.succeed();
+  }
 }

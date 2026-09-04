@@ -61,6 +61,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.ProblemReporter;
+import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
@@ -115,7 +116,6 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
   private int farmProgressionSpeed = DEFAULT_PROCESSING_TICKS;
   private int farmStatus = MobFarmStatus.IDLE;
   private int capturedMobExperience = -1;
-  private HolderLookup.Provider provider;
   private int bufferProcessTick = 0;
 
   public MobFarmBlockEntity(
@@ -197,6 +197,11 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
 
     // Checks only run every 20 ticks, for performance reasons.
     if (level.getGameTime() % DEFAULT_PROCESSING_TICKS != blockEntity.processingDelay) {
+      return;
+    }
+
+    if (!blockEntity.hasCapturedMobEntity()) {
+      blockEntity.updateUnusableCapturedMobStatus();
       return;
     }
 
@@ -385,24 +390,7 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     // Verify if the captured mob is valid.
     EntityType<?> entityType = mobCaptureData.entityType();
     if (entityType == null) {
-      if (this.level instanceof ServerLevel serverLevel) {
-        log.debug(
-            "Dropping invalid captured mob item {} for mob farm block entity at {}",
-            this.getItem(MobFarmSlot.CAPTURED_MOB),
-            this.getBlockPos());
-        Containers.dropItemStack(
-            serverLevel,
-            this.getBlockPos().getX() + 0.5D,
-            this.getBlockPos().getY() + 0.5D,
-            this.getBlockPos().getZ() + 0.5D,
-            this.takeItem(MobFarmSlot.CAPTURED_MOB.index()));
-      } else {
-        log.error(
-            "Invalid entity type {} for mob farm block entity at {} with captured mob {}",
-            entityType,
-            this.getBlockPos(),
-            mobCaptureData);
-      }
+      this.updateUnusableCapturedMobStatus();
       return;
     }
 
@@ -421,7 +409,12 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     // Add optional bonus loot drops based on the mob farm, tier level and captured mob.
     List<ItemStack> bonusLootDrops =
         MobFarmBonusConfig.getBonusDrop(this.getFarmType(), this.getFarmTierLevel(), entityType);
-    LootManager.addBonusDrops(lootDrops, bonusLootDrops, effectiveEnhancementItems, entityType);
+    LootManager.addBonusDrops(
+        lootDrops,
+        bonusLootDrops,
+        effectiveEnhancementItems,
+        entityType,
+        mobCaptureData.hasColor() ? mobCaptureData.color().getDyeColor() : null);
 
     // Handle loot drops
     this.handleLootDrops(lootDrops);
@@ -555,10 +548,6 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     }
   }
 
-  private void setItemInSlot(int slotIndex, ItemStack itemStack) {
-    this.setItem(slotIndex, itemStack);
-  }
-
   private boolean canGrowOutputSlot(ItemStack outputSlot, ItemStack itemStack) {
     return outputSlot.is(itemStack.getItem())
         && outputSlot.getCount() < outputSlot.getMaxStackSize();
@@ -577,6 +566,29 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
 
   public boolean hasCapturedMob() {
     return !this.getItem(MobFarmSlot.CAPTURED_MOB).isEmpty();
+  }
+
+  public boolean hasCapturedMobEntity() {
+    return MobCaptureManager.getEntityType(this.getItem(MobFarmSlot.CAPTURED_MOB), this.level)
+        != null;
+  }
+
+  private void updateUnusableCapturedMobStatus() {
+    ItemStack capturedMob = this.getCapturedMob();
+    int unusableStatus =
+        MobCaptureManager.hasMobCaptureData(capturedMob) ? MobFarmStatus.ERROR : MobFarmStatus.IDLE;
+    this.farmProgress = 0;
+    if (this.farmStatus == unusableStatus) {
+      return;
+    }
+
+    this.farmStatus = unusableStatus;
+    if (unusableStatus == MobFarmStatus.ERROR) {
+      log.warn(
+          "Captured mob {} at {} has no valid entity type and will not be processed!",
+          capturedMob,
+          this.getBlockPos());
+    }
   }
 
   public ItemStack takeItem(final int index) {
@@ -842,22 +854,25 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     log.debug(
         "Sets mob capture item {} in mob farm block entity at {}", itemStack, this.getBlockPos());
 
-    // Create mob entity to get experience reward and other additional data.
     MobCaptureData mobCaptureData = this.getMobCaptureData();
     EntityType<?> entityType = mobCaptureData != null ? mobCaptureData.entityType() : null;
-    LivingEntity livingEntity =
-        entityType != null
-            ? (LivingEntity) entityType.create(this.level, EntitySpawnReason.EVENT)
-            : null;
-    if (livingEntity != null && this.level instanceof ServerLevel serverLevel) {
-      try {
+    Entity entity =
+        entityType != null ? entityType.create(this.level, EntitySpawnReason.EVENT) : null;
+    if (entity == null) {
+      this.capturedMobExperience = 0;
+      return;
+    }
+
+    try {
+      if (entity instanceof LivingEntity livingEntity
+          && this.level instanceof ServerLevel serverLevel) {
         this.capturedMobExperience =
             ExperienceManager.getExperienceReward(livingEntity, serverLevel);
-      } finally {
-        livingEntity.discard();
+      } else {
+        this.capturedMobExperience = 0;
       }
-    } else {
-      this.capturedMobExperience = 0;
+    } finally {
+      entity.discard();
     }
   }
 
@@ -955,18 +970,12 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
 
   @Override
   public ClientboundBlockEntityDataPacket getUpdatePacket() {
-    if (this.provider != null) {
-      TagValueOutput valueOutput =
-          TagValueOutput.createWithContext(ProblemReporter.DISCARDING, this.provider);
-      this.saveAdditional(valueOutput);
-      CompoundTag tag = valueOutput.buildResult();
-    }
     return ClientboundBlockEntityDataPacket.create(this);
   }
 
   @Override
   public boolean stillValid(final Player player) {
-    return player.isAlive();
+    return Container.stillValidBlockEntity(this, player);
   }
 
   @Override
@@ -1086,8 +1095,16 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
 
     // Load additional data
     this.farmTierLevel = valueInput.getIntOr(TIER_LEVEL_TAG, this.farmTierLevel);
-    this.mobFarmType =
-        MobFarmType.valueOf(valueInput.getStringOr(FARM_TYPE_TAG, this.mobFarmType.name()));
+    String farmTypeName = valueInput.getStringOr(FARM_TYPE_TAG, this.mobFarmType.name());
+    try {
+      this.mobFarmType = MobFarmType.valueOf(farmTypeName);
+    } catch (IllegalArgumentException e) {
+      log.error(
+          "Unknown mob farm type {} for mob farm block entity at {}, using {} instead!",
+          farmTypeName,
+          this.getBlockPos(),
+          this.mobFarmType);
+    }
     this.capturedMobExperience = valueInput.getIntOr(CAPTURED_MOB_EXPERIENCE_TAG, -1);
 
     // Load owner

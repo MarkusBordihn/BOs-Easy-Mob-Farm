@@ -107,6 +107,9 @@ public class MobCaptureDataSupport {
     // Use compound tag to identify the entity type.
     CompoundTag compoundTag =
         itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY).copyTag();
+    if (compoundTag.isEmpty()) {
+      return null;
+    }
     if (MOB_CATCHER_DIAMOND.equals(itemRegistryName)
         || MOB_CATCHER_NETHERITE.equals(itemRegistryName)) {
       if (compoundTag.contains(MOD_DATA_TAG)
@@ -174,8 +177,13 @@ public class MobCaptureDataSupport {
     if (entityName == null || entityName.isEmpty()) {
       return null;
     }
+    Identifier entityIdentifier = Identifier.tryParse(entityName);
+    if (entityIdentifier == null) {
+      return null;
+    }
+
     Optional<EntityType<?>> entityTypeHolder =
-        BuiltInRegistries.ENTITY_TYPE.getOptional(Identifier.parse(entityName));
+        BuiltInRegistries.ENTITY_TYPE.getOptional(entityIdentifier);
     return entityTypeHolder.orElse(null);
   }
 

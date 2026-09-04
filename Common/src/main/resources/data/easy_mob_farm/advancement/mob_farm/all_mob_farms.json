@@ -1,0 +1,169 @@
+{
+  "parent": "easy_mob_farm:mob_farm/first_mob_farm",
+  "display": {
+    "icon": {
+      "id": "easy_mob_farm:lucky_drop_farm"
+    },
+    "title": {
+      "translate": "advancement.easy_mob_farm.all_mob_farms.title"
+    },
+    "description": {
+      "translate": "advancement.easy_mob_farm.all_mob_farms.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "placed_animal_plains_farm": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:block_state_property",
+            "block": "easy_mob_farm:animal_plains_farm"
+          }
+        ]
+      }
+    },
+    "placed_bee_hive_farm": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:block_state_property",
+            "block": "easy_mob_farm:bee_hive_farm"
+          }
+        ]
+      }
+    },
+    "placed_desert_farm": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:block_state_property",
+            "block": "easy_mob_farm:desert_farm"
+          }
+        ]
+      }
+    },
+    "placed_end_farm": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:block_state_property",
+            "block": "easy_mob_farm:end_farm"
+          }
+        ]
+      }
+    },
+    "placed_iron_golem_farm": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:block_state_property",
+            "block": "easy_mob_farm:iron_golem_farm"
+          }
+        ]
+      }
+    },
+    "placed_jungle_farm": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:block_state_property",
+            "block": "easy_mob_farm:jungle_farm"
+          }
+        ]
+      }
+    },
+    "placed_lucky_drop_farm": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:block_state_property",
+            "block": "easy_mob_farm:lucky_drop_farm"
+          }
+        ]
+      }
+    },
+    "placed_monster_plains_cave_farm": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:block_state_property",
+            "block": "easy_mob_farm:monster_plains_cave_farm"
+          }
+        ]
+      }
+    },
+    "placed_nether_fortress_farm": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:block_state_property",
+            "block": "easy_mob_farm:nether_fortress_farm"
+          }
+        ]
+      }
+    },
+    "placed_nether_wastes_farm": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:block_state_property",
+            "block": "easy_mob_farm:nether_wastes_farm"
+          }
+        ]
+      }
+    },
+    "placed_ocean_farm": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:block_state_property",
+            "block": "easy_mob_farm:ocean_farm"
+          }
+        ]
+      }
+    },
+    "placed_swamp_farm": {
+      "trigger": "minecraft:placed_block",
+      "conditions": {
+        "location": [
+          {
+            "condition": "minecraft:block_state_property",
+            "block": "easy_mob_farm:swamp_farm"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    ["placed_animal_plains_farm"],
+    ["placed_bee_hive_farm"],
+    ["placed_desert_farm"],
+    ["placed_end_farm"],
+    ["placed_iron_golem_farm"],
+    ["placed_jungle_farm"],
+    ["placed_lucky_drop_farm"],
+    ["placed_monster_plains_cave_farm"],
+    ["placed_nether_fortress_farm"],
+    ["placed_nether_wastes_farm"],
+    ["placed_ocean_farm"],
+    ["placed_swamp_farm"]
+  ],
+  "rewards": {
+    "experience": 100
+  }
+}

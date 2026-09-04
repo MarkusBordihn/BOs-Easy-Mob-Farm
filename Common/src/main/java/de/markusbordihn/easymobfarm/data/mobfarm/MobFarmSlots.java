@@ -39,9 +39,7 @@ public class MobFarmSlots {
               MobFarmSlot.FILTER_ITEM_1,
               MobFarmSlot.FILTER_ITEM_2,
               MobFarmSlot.FILTER_ITEM_3,
-              MobFarmSlot.FILTER_ITEM_4,
-              MobFarmSlot.FILTER_ITEM_5,
-              MobFarmSlot.FILTER_ITEM_6));
+              MobFarmSlot.FILTER_ITEM_4));
 
   public static final List<MobFarmSlot> SLOT_UPGRADE_ITEM_SLOTS =
       new ArrayList<>(

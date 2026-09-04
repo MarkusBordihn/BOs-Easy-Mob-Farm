@@ -33,7 +33,7 @@ import net.minecraft.world.level.block.state.properties.AttachFace;
 @SuppressWarnings("unused")
 public class RedstoneSignalTest {
 
-  @GameTest(structure = "easy_mob_farm:gametest.3x3x3")
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
   public void testRedstoneSignalWithLever(GameTestHelper helper) {
 
     BlockPos mobFarmPos = new BlockPos(0, 1, 0);
@@ -75,7 +75,7 @@ public class RedstoneSignalTest {
         });
   }
 
-  @GameTest(structure = "easy_mob_farm:gametest.3x3x3")
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
   public void testRedstoneSignalWithRedstoneBlock(GameTestHelper helper) {
 
     BlockPos mobFarmPos = new BlockPos(0, 1, 0);

@@ -131,6 +131,11 @@ public class MobFarmBlock extends BaseEntityBlock {
   }
 
   @Override
+  public BlockEntity newBlockEntity(final BlockPos blockPos, final BlockState blockState) {
+    return newBlockEntity(blockPos, blockState, getFarmType(blockState));
+  }
+
+  @Override
   public void affectNeighborsAfterRemoval(
       BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, boolean isMoving) {
     BlockEntity blockEntity = serverLevel.getBlockEntity(blockPos);
@@ -138,11 +143,6 @@ public class MobFarmBlock extends BaseEntityBlock {
       serverLevel.updateNeighbourForOutputSignal(blockPos, this);
     }
     super.affectNeighborsAfterRemoval(blockState, serverLevel, blockPos, isMoving);
-  }
-
-  @Override
-  public BlockEntity newBlockEntity(final BlockPos blockPos, final BlockState blockState) {
-    return newBlockEntity(blockPos, blockState, getFarmType(blockState));
   }
 
   @Override
@@ -182,7 +182,7 @@ public class MobFarmBlock extends BaseEntityBlock {
       MobFarmData mobFarmData =
           itemStack.getOrDefault(DataComponents.MOB_FARM_DATA, MobFarmData.EMPTY);
       int tierLevel = mobFarmData.tierLevel().getTierLevel();
-      if (tierLevel >= 0) {
+      if (TIER_LEVEL.getPossibleValues().contains(tierLevel)) {
         newBlockState = newBlockState.setValue(TIER_LEVEL, tierLevel);
         blockEntityInstance.setFarmTierLevel(tierLevel);
       }

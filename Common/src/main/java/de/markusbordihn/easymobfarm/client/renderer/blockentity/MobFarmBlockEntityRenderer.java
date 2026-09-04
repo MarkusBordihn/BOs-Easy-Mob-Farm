@@ -29,6 +29,8 @@ import de.markusbordihn.easymobfarm.client.renderer.manager.RendererManager;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinition;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinitionManager;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
+import java.util.HashSet;
+import java.util.Set;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
@@ -38,6 +40,7 @@ import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.animal.bee.Bee;
 import net.minecraft.world.entity.animal.fish.AbstractSchoolingFish;
@@ -53,6 +56,7 @@ public class MobFarmBlockEntityRenderer
     implements BlockEntityRenderer<MobFarmBlockEntity, MobFarmRenderState> {
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+  private static final Set<EntityType<?>> loggedRenderFailures = new HashSet<>();
   private final EntityRenderDispatcher entityRenderer;
 
   public MobFarmBlockEntityRenderer(BlockEntityRendererProvider.Context context) {
@@ -133,11 +137,13 @@ public class MobFarmBlockEntityRenderer
           };
 
     } catch (Exception exception) {
-      log.error(
-          "Failed to extract render state for entity {} at block entity {}: {}",
-          entity.getType(),
-          blockEntity.getBlockPos(),
-          exception.getMessage());
+      if (loggedRenderFailures.add(entity.getType())) {
+        log.error(
+            "Failed to extract render state for entity {} at block entity {}: {}",
+            entity.getType(),
+            blockEntity.getBlockPos(),
+            exception.getMessage());
+      }
       renderState.entityRenderState = null;
     }
   }

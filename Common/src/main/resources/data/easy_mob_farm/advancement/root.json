@@ -3,7 +3,7 @@
     "icon": {"id": "easy_mob_farm:tier0_mob_farm_template"},
     "title": {"translate": "advancement.easy_mob_farm.root.title"},
     "description": {"translate": "advancement.easy_mob_farm.root.description"},
-    "background": "minecraft:textures/block/stone.png",
+    "background": "minecraft:block/stone",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false

@@ -190,7 +190,7 @@ public record MobCaptureData(
         pathHash = parts[1].hashCode();
       }
     }
-    int colorHash = (this.color != null) ? this.color.hashCode() : 0;
+    int colorHash = (this.color != null) ? this.color.getName().hashCode() : 0;
     int variantHash = (this.variant != null) ? this.variant.hashCode() : 0;
 
     int result = 17;
