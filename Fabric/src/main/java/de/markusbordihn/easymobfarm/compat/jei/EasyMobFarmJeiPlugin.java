@@ -21,6 +21,7 @@ package de.markusbordihn.easymobfarm.compat.jei;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinitionManager;
+import de.markusbordihn.easymobfarm.data.loot.MobFarmLootDisplay;
 import de.markusbordihn.easymobfarm.item.Items;
 import de.markusbordihn.easymobfarm.item.ModBlockItems;
 import de.markusbordihn.easymobfarm.tabs.CustomMobCaptureCards;
@@ -29,11 +30,16 @@ import java.util.List;
 import java.util.Set;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.recipe.IRecipeManager;
+import mezz.jei.api.registration.IRecipeCatalystRegistration;
+import mezz.jei.api.registration.IRecipeCategoryRegistration;
+import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
 import mezz.jei.api.runtime.IIngredientManager;
 import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
@@ -44,6 +50,7 @@ public class EasyMobFarmJeiPlugin implements IModPlugin {
   private static final ResourceLocation pluginId =
       ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "jei_plugin");
   private static final List<ItemStack> runtimeAddedCards = new ArrayList<>();
+  private static final List<MobFarmLootDisplay> runtimeAddedLootDisplays = new ArrayList<>();
   private static volatile IJeiRuntime jeiRuntime;
 
   public static void refreshMobCaptureCards() {
@@ -65,6 +72,23 @@ public class EasyMobFarmJeiPlugin implements IModPlugin {
       ingredientManager.addIngredientsAtRuntime(VanillaTypes.ITEM_STACK, cards);
       runtimeAddedCards.addAll(cards);
     }
+
+    refreshMobFarmLootDisplays();
+  }
+
+  private static void refreshMobFarmLootDisplays() {
+    IRecipeManager recipeManager = jeiRuntime.getRecipeManager();
+    if (!runtimeAddedLootDisplays.isEmpty()) {
+      recipeManager.hideRecipes(
+          MobFarmLootCategory.RECIPE_TYPE, new ArrayList<>(runtimeAddedLootDisplays));
+      runtimeAddedLootDisplays.clear();
+    }
+
+    List<MobFarmLootDisplay> lootDisplays = MobFarmLootDisplay.createAll(Items.MOB_CAPTURE_CARD);
+    if (!lootDisplays.isEmpty()) {
+      recipeManager.addRecipes(MobFarmLootCategory.RECIPE_TYPE, lootDisplays);
+      runtimeAddedLootDisplays.addAll(lootDisplays);
+    }
   }
 
   @Override
@@ -84,6 +108,41 @@ public class EasyMobFarmJeiPlugin implements IModPlugin {
   public void onRuntimeUnavailable() {
     EasyMobFarmJeiPlugin.jeiRuntime = null;
     EasyMobFarmJeiPlugin.runtimeAddedCards.clear();
+    EasyMobFarmJeiPlugin.runtimeAddedLootDisplays.clear();
+  }
+
+  @Override
+  public void registerCategories(IRecipeCategoryRegistration registration) {
+    registration.addRecipeCategories(
+        new MobFarmLootCategory(
+            registration.getJeiHelpers().getGuiHelper(), ModBlockItems.ANIMAL_PLAINS_FARM));
+  }
+
+  @Override
+  public void registerRecipes(IRecipeRegistration registration) {
+    registration.addRecipes(
+        MobFarmLootCategory.RECIPE_TYPE, MobFarmLootDisplay.createAll(Items.MOB_CAPTURE_CARD));
+  }
+
+  @Override
+  public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
+    List<ItemLike> mobFarmItems =
+        List.of(
+            ModBlockItems.ANIMAL_PLAINS_FARM,
+            ModBlockItems.BEE_HIVE_FARM,
+            ModBlockItems.DESERT_FARM,
+            ModBlockItems.END_FARM,
+            ModBlockItems.IRON_GOLEM_FARM,
+            ModBlockItems.JUNGLE_FARM,
+            ModBlockItems.LUCKY_DROP_FARM,
+            ModBlockItems.MONSTER_PLAINS_CAVE_FARM,
+            ModBlockItems.NETHER_FORTRESS_FARM,
+            ModBlockItems.NETHER_WASTES_FARM,
+            ModBlockItems.OCEAN_FARM,
+            ModBlockItems.SWAMP_FARM);
+    for (ItemLike mobFarmItem : mobFarmItems) {
+      registration.addRecipeCatalyst(new ItemStack(mobFarmItem), MobFarmLootCategory.RECIPE_TYPE);
+    }
   }
 
   @Override

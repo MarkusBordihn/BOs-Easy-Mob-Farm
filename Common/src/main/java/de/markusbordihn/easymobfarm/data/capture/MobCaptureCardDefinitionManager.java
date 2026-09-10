@@ -92,6 +92,10 @@ public class MobCaptureCardDefinitionManager {
     return DEFINITIONS.keySet();
   }
 
+  public static Set<EntityType<?>> getDefinedEntityTypes() {
+    return ENTITY_TYPE_DEFINITIONS.keySet();
+  }
+
   public static Map<ResourceLocation, MobCaptureCardDefinition> getAll() {
     return Collections.unmodifiableMap(DEFINITIONS);
   }
@@ -99,5 +103,6 @@ public class MobCaptureCardDefinitionManager {
   public static void clear() {
     log.debug("{} Clear {} definitions ...", LOG_PREFIX, DEFINITIONS.size());
     DEFINITIONS.clear();
+    ENTITY_TYPE_DEFINITIONS.clear();
   }
 }

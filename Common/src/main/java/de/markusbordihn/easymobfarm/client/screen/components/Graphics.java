@@ -31,14 +31,152 @@ public class Graphics {
       ResourceLocation texture,
       int x,
       int y,
-      int width,
-      int height,
       int textureX,
-      int textureY) {
-    blit(guiGraphics, texture, x, y, width, height, textureX, textureY, 256, 256);
+      int textureY,
+      int width,
+      int height) {
+    blit(guiGraphics, texture, x, y, textureX, textureY, width, height, 256, 256);
   }
 
   public static void blit(
+      GuiGraphics guiGraphics,
+      ResourceLocation texture,
+      int x,
+      int y,
+      int textureX,
+      int textureY,
+      int width,
+      int height,
+      int textureWidth,
+      int textureHeight) {
+    guiGraphics.blit(texture, x, y, textureX, textureY, width, height, textureWidth, textureHeight);
+  }
+
+  public static void blitNineSliced(
+      GuiGraphics guiGraphics,
+      ResourceLocation texture,
+      int x,
+      int y,
+      int width,
+      int height,
+      int sliceSize,
+      int textureWidth,
+      int textureHeight,
+      int textureX,
+      int textureY) {
+    int sliceWidth = Math.min(sliceSize, width / 2);
+    int sliceHeight = Math.min(sliceSize, height / 2);
+    int innerWidth = width - 2 * sliceWidth;
+    int innerHeight = height - 2 * sliceHeight;
+    int innerTextureWidth = textureWidth - 2 * sliceSize;
+    int innerTextureHeight = textureHeight - 2 * sliceSize;
+    int rightTextureX = textureX + textureWidth - sliceSize;
+    int bottomTextureY = textureY + textureHeight - sliceSize;
+    int rightX = x + width - sliceWidth;
+    int bottomY = y + height - sliceHeight;
+
+    blitStretched(
+        guiGraphics,
+        texture,
+        x,
+        y,
+        sliceWidth,
+        sliceHeight,
+        textureX,
+        textureY,
+        sliceSize,
+        sliceSize);
+    blitStretched(
+        guiGraphics,
+        texture,
+        rightX,
+        y,
+        sliceWidth,
+        sliceHeight,
+        rightTextureX,
+        textureY,
+        sliceSize,
+        sliceSize);
+    blitStretched(
+        guiGraphics,
+        texture,
+        x,
+        bottomY,
+        sliceWidth,
+        sliceHeight,
+        textureX,
+        bottomTextureY,
+        sliceSize,
+        sliceSize);
+    blitStretched(
+        guiGraphics,
+        texture,
+        rightX,
+        bottomY,
+        sliceWidth,
+        sliceHeight,
+        rightTextureX,
+        bottomTextureY,
+        sliceSize,
+        sliceSize);
+    blitStretched(
+        guiGraphics,
+        texture,
+        x + sliceWidth,
+        y,
+        innerWidth,
+        sliceHeight,
+        textureX + sliceSize,
+        textureY,
+        innerTextureWidth,
+        sliceSize);
+    blitStretched(
+        guiGraphics,
+        texture,
+        x + sliceWidth,
+        bottomY,
+        innerWidth,
+        sliceHeight,
+        textureX + sliceSize,
+        bottomTextureY,
+        innerTextureWidth,
+        sliceSize);
+    blitStretched(
+        guiGraphics,
+        texture,
+        x,
+        y + sliceHeight,
+        sliceWidth,
+        innerHeight,
+        textureX,
+        textureY + sliceSize,
+        sliceSize,
+        innerTextureHeight);
+    blitStretched(
+        guiGraphics,
+        texture,
+        rightX,
+        y + sliceHeight,
+        sliceWidth,
+        innerHeight,
+        rightTextureX,
+        textureY + sliceSize,
+        sliceSize,
+        innerTextureHeight);
+    blitStretched(
+        guiGraphics,
+        texture,
+        x + sliceWidth,
+        y + sliceHeight,
+        innerWidth,
+        innerHeight,
+        textureX + sliceSize,
+        textureY + sliceSize,
+        innerTextureWidth,
+        innerTextureHeight);
+  }
+
+  private static void blitStretched(
       GuiGraphics guiGraphics,
       ResourceLocation texture,
       int x,
@@ -47,8 +185,12 @@ public class Graphics {
       int height,
       int textureX,
       int textureY,
-      int textureWidth,
-      int textureHeight) {
-    guiGraphics.blit(texture, x, y, width, height, textureX, textureY, textureWidth, textureHeight);
+      int sourceWidth,
+      int sourceHeight) {
+    if (width <= 0 || height <= 0 || sourceWidth <= 0 || sourceHeight <= 0) {
+      return;
+    }
+    guiGraphics.blit(
+        texture, x, y, width, height, textureX, textureY, sourceWidth, sourceHeight, 256, 256);
   }
 }

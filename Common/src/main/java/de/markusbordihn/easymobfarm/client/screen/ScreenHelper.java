@@ -119,7 +119,7 @@ public class ScreenHelper {
       guiGraphics.pose().translate(0, 0.5, 0);
     } else if (livingEntity instanceof FlyingMob
         || (livingEntity instanceof FlyingAnimal flyingAnimal && flyingAnimal.isFlying())) {
-      guiGraphics.pose().translate(0, 1.0 * scale, 0);
+      guiGraphics.pose().translate(0, 1.0, 0);
     }
 
     Lighting.setupForEntityInInventory();

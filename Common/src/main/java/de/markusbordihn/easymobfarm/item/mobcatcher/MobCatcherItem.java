@@ -220,8 +220,7 @@ public class MobCatcherItem extends MobFarmItem {
     }
 
     if (this.getItemDamageOnUse() > 0) {
-      itemStack.hurtAndBreak(
-          this.getItemDamageOnUse(), player, LivingEntity.getSlotForHand(hand));
+      itemStack.hurtAndBreak(this.getItemDamageOnUse(), player, LivingEntity.getSlotForHand(hand));
       if (itemStack.isEmpty()) {
         return InteractionResult.FAIL;
       }

@@ -33,6 +33,7 @@ import de.markusbordihn.easymobfarm.item.ModItems;
 import de.markusbordihn.easymobfarm.menu.CardBinderMenu;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
 import de.markusbordihn.easymobfarm.network.NetworkHandler;
+import de.markusbordihn.easymobfarm.network.message.client.SyncLootPreviewBatchMessage;
 import de.markusbordihn.easymobfarm.network.message.client.SyncLootPreviewMessage;
 import de.markusbordihn.easymobfarm.resources.MobCaptureCardResourceManagerWrapper;
 import de.markusbordihn.easymobfarm.server.ServerEventHandler;
@@ -98,6 +99,7 @@ public class EasyMobFarm implements ModInitializer {
     ModMenuTypes.register();
     CardBinderMenu.MENU_TYPE_SUPPLIER = () -> ModMenuTypes.CARD_BINDER_MENU;
     SyncLootPreviewMessage.SENDER = ServerPlayNetworking::send;
+    SyncLootPreviewBatchMessage.SENDER = ServerPlayNetworking::send;
 
     log.debug("{} Mod Data Components ...", Constants.LOG_REGISTER_PREFIX);
     DataComponents.registerMobCaptureData();

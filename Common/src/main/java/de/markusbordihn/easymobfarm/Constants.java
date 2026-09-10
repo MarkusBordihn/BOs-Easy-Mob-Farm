@@ -39,6 +39,8 @@ public final class Constants {
   public static final String LOG_REGISTER_PREFIX = "Register " + MOD_NAME;
   public static final ResourceLocation TEXTURE_DEMO_BACKGROUND =
       ResourceLocation.withDefaultNamespace("textures/gui/demo_background.png");
+  public static final ResourceLocation TEXTURE_GENERIC_54 =
+      ResourceLocation.withDefaultNamespace("textures/gui/container/generic_54.png");
   public static final int FONT_COLOR_DEFAULT = 4210752;
   public static final int FONT_COLOR_RED = 16733525;
 

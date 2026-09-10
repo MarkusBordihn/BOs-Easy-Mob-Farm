@@ -44,6 +44,11 @@ class MobCaptureDataTest {
     return new MobCaptureData(null, type, null, null, null, variant, Rarity.COMMON, isFoil);
   }
 
+  private static MobCaptureData roundTrip(MobCaptureData mobCaptureData) {
+    Tag tag = MobCaptureData.CODEC.encodeStart(NbtOps.INSTANCE, mobCaptureData).getOrThrow();
+    return MobCaptureData.CODEC.parse(NbtOps.INSTANCE, tag).getOrThrow();
+  }
+
   @Test
   void cardIdIsConsistentForSameInputs() {
     MobCaptureData data = card("minecraft:bee", null, false);
@@ -117,10 +122,5 @@ class MobCaptureDataTest {
             true);
 
     Assertions.assertEquals(data, roundTrip(data));
-  }
-
-  private static MobCaptureData roundTrip(MobCaptureData mobCaptureData) {
-    Tag tag = MobCaptureData.CODEC.encodeStart(NbtOps.INSTANCE, mobCaptureData).getOrThrow();
-    return MobCaptureData.CODEC.parse(NbtOps.INSTANCE, tag).getOrThrow();
   }
 }

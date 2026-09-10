@@ -278,7 +278,7 @@ public class LootManager {
   }
 
   public static List<ItemStack> getEntityLootPreview(
-      final MobCaptureData mobCaptureData, final Level level) {
+      final MobCaptureData mobCaptureData, final Level level, final int sampleRolls) {
     if (!(level instanceof ServerLevel)
         || mobCaptureData == null
         || mobCaptureData.entityType() == null) {
@@ -302,7 +302,7 @@ public class LootManager {
         pillager.setPatrolLeader(true);
       }
       Map<String, ItemStack> uniqueItems = new LinkedHashMap<>();
-      for (int roll = 0; roll < 3; roll++) {
+      for (int roll = 0; roll < Math.max(sampleRolls, 1); roll++) {
         NonNullList<ItemStack> loot = getEntityLoot(entity, List.of(), level);
         for (ItemStack stack : loot) {
           String key = BuiltInRegistries.ITEM.getKey(stack.getItem()).toString();
@@ -510,7 +510,8 @@ public class LootManager {
 
   private static Item getWoolItem(final DyeColor color) {
     Item woolItem =
-        BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(color.getName() + "_wool"));
+        BuiltInRegistries.ITEM.get(
+            ResourceLocation.withDefaultNamespace(color.getName() + "_wool"));
     if (woolItem == Items.AIR) {
       return Items.WHITE_WOOL;
     }

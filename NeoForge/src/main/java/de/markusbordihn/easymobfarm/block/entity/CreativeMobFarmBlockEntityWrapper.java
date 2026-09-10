@@ -41,6 +41,15 @@ public class CreativeMobFarmBlockEntityWrapper extends CreativeMobFarmBlockEntit
   }
 
   public IItemHandler getItemCapability(final Direction direction) {
+    if (direction == Direction.UP) {
+      return null;
+    }
+
     return new SidedInvWrapper(this, direction);
+  }
+
+  @Override
+  protected void refreshOutputCapabilities() {
+    this.invalidateCapabilities();
   }
 }

@@ -19,6 +19,7 @@
 
 package de.markusbordihn.easymobfarm.data.capture;
 
+import de.markusbordihn.easymobfarm.config.MobCaptureCardConfig;
 import java.util.Set;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
@@ -27,7 +28,10 @@ import net.minecraft.world.entity.LivingEntity;
 public class MobEntityData {
 
   public static final String DATA_TAG = "Data";
+  protected static final String AGE_TAG = "Age";
   protected static final String HEALTH_TAG = "Health";
+  protected static final String INVENTORY_TAG = "Inventory";
+  protected static final int NORMALIZED_BABY_AGE = -24000;
   protected static final Set<String> SAFE_TO_REMOVE_BASE_TAGS =
       Set.of(
           "Air",
@@ -60,7 +64,22 @@ public class MobEntityData {
           "Invulnerable",
           "LeftHanded",
           "PersistenceRequired",
-          "TimeInOverworld");
+          "TimeInOverworld",
+          "Attributes",
+          "Bred",
+          "EatingHaystack",
+          "ForcedAge",
+          "Glowing",
+          "InLove",
+          "Leash",
+          "LoveCause",
+          "NoAI",
+          "NoGravity",
+          "Owner",
+          "Silent",
+          "Temper",
+          "TicksFrozen",
+          "UUID");
 
   private MobEntityData() {}
 
@@ -120,14 +139,18 @@ public class MobEntityData {
   public static CompoundTag removeSafeToRemoveMobCaptureCardTags(CompoundTag compoundTag) {
     CompoundTag cleanedCompoundTag = new CompoundTag();
     for (String key : compoundTag.getAllKeys()) {
-      if (SAFE_TO_REMOVE_MOB_CAPTURE_CARD_TAGS.contains(key)) {
+      if (SAFE_TO_REMOVE_MOB_CAPTURE_CARD_TAGS.contains(key)
+          || MobCaptureCardConfig.additionalCardTagsToRemove.contains(key)) {
         continue;
       }
 
-      // Keep inventory data if available, otherwise remove it.
-      if (key.equals("Inventory")) {
+      if (key.equals(INVENTORY_TAG)) {
         if (compoundTag.get(key) != null && !compoundTag.getList(key, 10).isEmpty()) {
           cleanedCompoundTag.put(key, compoundTag.get(key));
+        }
+      } else if (key.equals(AGE_TAG)) {
+        if (compoundTag.getInt(AGE_TAG) < 0) {
+          cleanedCompoundTag.putInt(AGE_TAG, NORMALIZED_BABY_AGE);
         }
       } else {
         cleanedCompoundTag.put(key, compoundTag.get(key));

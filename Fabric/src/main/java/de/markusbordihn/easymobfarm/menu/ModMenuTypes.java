@@ -30,6 +30,16 @@ import org.apache.logging.log4j.Logger;
 
 public class ModMenuTypes {
 
+  public static final MenuType<MobFarmMenuWrapper> MOB_FARM_MENU =
+      Registry.register(
+          BuiltInRegistries.MENU,
+          ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, MobFarmMenu.ID),
+          new MenuType<>(MobFarmMenuWrapper::new, FeatureFlagSet.of()));
+  public static final MenuType<CardBinderMenuWrapper> CARD_BINDER_MENU =
+      Registry.register(
+          BuiltInRegistries.MENU,
+          ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, CardBinderMenu.ID),
+          new MenuType<>(CardBinderMenuWrapper::new, FeatureFlagSet.of()));
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   private ModMenuTypes() {}
@@ -37,16 +47,4 @@ public class ModMenuTypes {
   public static void register() {
     log.debug("{} Menu Types ...", Constants.LOG_REGISTER_PREFIX);
   }
-
-  public static final MenuType<MobFarmMenuWrapper> MOB_FARM_MENU =
-      Registry.register(
-          BuiltInRegistries.MENU,
-          ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, MobFarmMenu.ID),
-          new MenuType<>(MobFarmMenuWrapper::new, FeatureFlagSet.of()));
-
-  public static final MenuType<CardBinderMenuWrapper> CARD_BINDER_MENU =
-      Registry.register(
-          BuiltInRegistries.MENU,
-          ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, CardBinderMenu.ID),
-          new MenuType<>(CardBinderMenuWrapper::new, FeatureFlagSet.of()));
 }

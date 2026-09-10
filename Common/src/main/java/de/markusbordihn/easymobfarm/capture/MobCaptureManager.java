@@ -213,6 +213,27 @@ public class MobCaptureManager {
     itemStack.set(DataComponents.MOB_CAPTURE_DATA, mobCaptureData);
   }
 
+  public static boolean upgradeMobCaptureCard(ItemStack itemStack) {
+    if (!hasMobCaptureData(itemStack)) {
+      return false;
+    }
+
+    MobCaptureData mobCaptureData = getMobCaptureData(itemStack);
+    if (mobCaptureData == null) {
+      return false;
+    }
+
+    MobCaptureData upgradedMobCaptureData =
+        mobCaptureData.withData(
+            MobEntityData.removeSafeToRemoveMobCaptureCardTags(mobCaptureData.data()));
+    if (upgradedMobCaptureData.equals(mobCaptureData)) {
+      return false;
+    }
+
+    writeMobCaptureData(itemStack, upgradedMobCaptureData);
+    return true;
+  }
+
   public static boolean hasMobCaptureData(ItemStack itemStack) {
     return itemStack != null
         && !itemStack.isEmpty()

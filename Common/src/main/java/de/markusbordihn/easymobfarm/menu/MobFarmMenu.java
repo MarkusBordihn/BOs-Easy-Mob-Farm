@@ -23,14 +23,14 @@ import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.capture.MobCaptureManager;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
-import de.markusbordihn.easymobfarm.data.loot.LootPreviewCache;
+import de.markusbordihn.easymobfarm.data.loot.LootPreviewManager;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmDataEntry;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmSlot;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmSlots;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
+import de.markusbordihn.easymobfarm.data.mobfarm.RedstoneMode;
 import de.markusbordihn.easymobfarm.item.upgrade.slot.BigSlotUpgradeItem;
 import de.markusbordihn.easymobfarm.item.upgrade.slot.SmallSlotUpgradeItem;
-import de.markusbordihn.easymobfarm.loot.LootManager;
 import de.markusbordihn.easymobfarm.menu.slots.CapturedMobSlot;
 import de.markusbordihn.easymobfarm.menu.slots.EnhancementSlot;
 import de.markusbordihn.easymobfarm.menu.slots.FilterSlot;
@@ -75,6 +75,7 @@ public class MobFarmMenu extends AbstractContainerMenu {
   public static final int CONTAINER_DATA_SIZE = MobFarmDataEntry.getLastSlotIndex() + 1;
   public static final int MIN_NUMBER_OF_OUTPUT_SLOTS = 6;
   public static final int MAX_NUMBER_OF_OUTPUT_SLOTS = 27;
+  public static final int TOGGLE_REDSTONE_MODE_BUTTON = 0;
 
   private static final int CAPTURED_MOB_SLOT_COUNT = 1;
   private static final int MOB_FARM_INPUT_SLOT_COUNT =
@@ -204,6 +205,23 @@ public class MobFarmMenu extends AbstractContainerMenu {
 
   public int getBufferMaxSize() {
     return this.data.get(MobFarmDataEntry.BUFFER_MAX_SIZE);
+  }
+
+  public RedstoneMode getRedstoneMode() {
+    return RedstoneMode.byOrdinal(this.data.get(MobFarmDataEntry.REDSTONE_MODE));
+  }
+
+  @Override
+  public boolean clickMenuButton(final Player player, final int buttonId) {
+    if (buttonId != TOGGLE_REDSTONE_MODE_BUTTON
+        || !this.stillValid(player)
+        || !(this.container instanceof MobFarmBlockEntity mobFarmBlockEntity)) {
+      return false;
+    }
+
+    mobFarmBlockEntity.setRedstoneMode(mobFarmBlockEntity.getRedstoneMode().next());
+    this.broadcastChanges();
+    return true;
   }
 
   private void defineMobFarmSlots() {
@@ -353,13 +371,8 @@ public class MobFarmMenu extends AbstractContainerMenu {
     if (currentEntityType == null || mobFarmBlockEntity.getLevel() == null) {
       return;
     }
-    List<ItemStack> preview;
-    if (LootPreviewCache.isServerCacheValid(currentEntityType)) {
-      preview = LootPreviewCache.getServerCachedPreview(currentEntityType);
-    } else {
-      preview = LootManager.getEntityLootPreview(captureData, mobFarmBlockEntity.getLevel());
-      LootPreviewCache.setServerCachedPreview(currentEntityType, preview);
-    }
+    List<ItemStack> preview =
+        LootPreviewManager.getOrCompute(captureData, mobFarmBlockEntity.getLevel());
     SyncLootPreviewMessage.sendToPlayer(
         serverPlayer, mobFarmBlockEntity.getBlockPos(), currentEntityType, preview);
   }
