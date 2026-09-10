@@ -45,6 +45,8 @@ import org.apache.logging.log4j.Logger;
 public class MobCaptureManager {
 
   public static final String MOB_CAPTURE_DATA_TAG = "MobCaptureData";
+  public static final String CARD_DATA_VERSION_TAG = "CardDataVersion";
+  public static final int CARD_DATA_VERSION = 1;
   public static final String COLOR_TAG = "Color";
   public static final String VARIANT_TAG = "variant";
 
@@ -219,7 +221,26 @@ public class MobCaptureManager {
     }
     CompoundTag compoundTag = itemStack.getOrCreateTag();
     compoundTag.put(MOB_CAPTURE_DATA_TAG, mobCaptureData.createTag());
+    compoundTag.putInt(CARD_DATA_VERSION_TAG, CARD_DATA_VERSION);
     itemStack.setTag(compoundTag);
+  }
+
+  public static boolean upgradeMobCaptureCard(ItemStack itemStack) {
+    if (!hasMobCaptureData(itemStack)
+        || itemStack.getTag().getInt(CARD_DATA_VERSION_TAG) >= CARD_DATA_VERSION) {
+      return false;
+    }
+
+    MobCaptureData mobCaptureData = getMobCaptureData(itemStack);
+    if (mobCaptureData == null) {
+      return false;
+    }
+
+    writeMobCaptureData(
+        itemStack,
+        mobCaptureData.withData(
+            MobEntityData.removeSafeToRemoveMobCaptureCardTags(mobCaptureData.data())));
+    return true;
   }
 
   public static boolean hasMobCaptureData(ItemStack itemStack) {

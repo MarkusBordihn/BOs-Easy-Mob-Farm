@@ -31,6 +31,7 @@ import de.markusbordihn.easymobfarm.item.ModBlockItems;
 import de.markusbordihn.easymobfarm.item.ModItems;
 import de.markusbordihn.easymobfarm.menu.CardBinderMenu;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
+import de.markusbordihn.easymobfarm.network.message.client.SyncLootPreviewBatchMessage;
 import de.markusbordihn.easymobfarm.network.message.client.SyncLootPreviewMessage;
 import de.markusbordihn.easymobfarm.resources.MobCaptureCardResourceManagerWrapper;
 import de.markusbordihn.easymobfarm.server.ServerEventHandler;
@@ -102,6 +103,12 @@ public class EasyMobFarm implements ModInitializer {
           FriendlyByteBuf buffer = PacketByteBufs.create();
           msg.write(buffer);
           ServerPlayNetworking.send(player, SyncLootPreviewMessage.MESSAGE_ID, buffer);
+        };
+    SyncLootPreviewBatchMessage.SENDER =
+        (player, msg) -> {
+          FriendlyByteBuf buffer = PacketByteBufs.create();
+          msg.write(buffer);
+          ServerPlayNetworking.send(player, SyncLootPreviewBatchMessage.MESSAGE_ID, buffer);
         };
 
     log.debug("{} Server Event Handler ...", Constants.LOG_REGISTER_PREFIX);

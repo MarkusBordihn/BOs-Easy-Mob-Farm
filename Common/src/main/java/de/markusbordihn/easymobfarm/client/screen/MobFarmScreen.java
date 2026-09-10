@@ -21,9 +21,11 @@ package de.markusbordihn.easymobfarm.client.screen;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
-import de.markusbordihn.easymobfarm.client.renderer.manager.EntityScalingManager;
 import de.markusbordihn.easymobfarm.client.renderer.manager.RendererManager;
 import de.markusbordihn.easymobfarm.client.screen.components.Graphics;
+import de.markusbordihn.easymobfarm.client.screen.components.SlotHintRenderer;
+import de.markusbordihn.easymobfarm.client.screen.theme.MobFarmScreenTheme;
+import de.markusbordihn.easymobfarm.config.ClientConfig;
 import de.markusbordihn.easymobfarm.config.MobFarmBonusConfig;
 import de.markusbordihn.easymobfarm.config.MobFarmConfig;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinition;
@@ -31,6 +33,7 @@ import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinitionManager
 import de.markusbordihn.easymobfarm.data.loot.LootPreviewCache;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmStatus;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
+import de.markusbordihn.easymobfarm.data.mobfarm.RedstoneMode;
 import de.markusbordihn.easymobfarm.item.upgrade.EnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.EggCollectorEnhancementItem;
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.ExperienceEnhancementItem;
@@ -45,14 +48,18 @@ import de.markusbordihn.easymobfarm.menu.MobFarmMenu;
 import de.markusbordihn.easymobfarm.menu.MobFarmSlot;
 import de.markusbordihn.easymobfarm.menu.slots.OutputSlot;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
+import java.util.ArrayList;
 import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Bee;
@@ -62,26 +69,41 @@ import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
 
-  private static final ResourceLocation TEXTURE_UI =
-      new ResourceLocation(Constants.MOD_ID, "textures/gui/mob_farm.png");
-  private static final ResourceLocation TEXTURE_UI_IDLE =
-      new ResourceLocation(Constants.MOD_ID, "textures/gui/mob_farm_idle.png");
   private static final ResourceLocation TEXTURE_ELEMENTS =
       new ResourceLocation(Constants.MOD_ID, "textures/gui/mob_farm_elements.png");
+  private static final int STATUS_COLUMN_X = 21;
+  private static final int STATUS_COLUMN_STEP = 18;
+  private static final int FARM_TYPE_ICON_Y = 12;
+  private static final int LOOT_ICON_Y = FARM_TYPE_ICON_Y + STATUS_COLUMN_STEP;
+  private static final int REDSTONE_MODE_BUTTON_Y = LOOT_ICON_Y + 2 * STATUS_COLUMN_STEP;
+  private static final String FARM_TYPE_ICON_BADGE = "i";
+  private static final ItemStack LOOT_ICON = new ItemStack(Items.BUNDLE);
+  private static final float LOOT_ICON_SCALE = 0.75F;
+  private static final int THEME_BUTTON_X = 219;
+  private static final int THEME_BUTTON_Y = 126;
+  private static final ItemStack REDSTONE_MODE_ICON_DISABLE_ON_SIGNAL =
+      new ItemStack(Items.REDSTONE_TORCH);
+  private static final ItemStack REDSTONE_MODE_ICON_ENABLE_ON_SIGNAL = new ItemStack(Items.LEVER);
+  private static final ItemStack REDSTONE_MODE_ICON_IGNORE = new ItemStack(Items.BARRIER);
+  private final SlotHintRenderer slotHints = new SlotHintRenderer();
   protected float xMouse;
   protected float yMouse;
   protected Entity entity;
   protected int entityExperience;
-
   private List<Component> cachedLootTooltip;
   private Entity cachedLootEntity;
   private int cachedEnhancementHash;
+  private MobFarmScreenTheme theme;
+  private MobFarmType cachedFarmTypeIconType;
+  private ItemStack cachedFarmTypeIcon = ItemStack.EMPTY;
 
   public MobFarmScreen(T menu, Inventory inventory, Component component) {
     super(menu, inventory, component);
+    this.theme = MobFarmScreenTheme.fromId(ClientConfig.mobFarmScreenTheme);
   }
 
   public static MutableComponent getLocalizedRemainingTimeComponent(
@@ -102,17 +124,25 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
     }
   }
 
+  private static ItemStack getRedstoneModeIcon(RedstoneMode redstoneMode) {
+    return switch (redstoneMode) {
+      case ENABLE_ON_SIGNAL -> REDSTONE_MODE_ICON_ENABLE_ON_SIGNAL;
+      case IGNORE -> REDSTONE_MODE_ICON_IGNORE;
+      default -> REDSTONE_MODE_ICON_DISABLE_ON_SIGNAL;
+    };
+  }
+
   @Override
   protected void renderDefaultScreenBg(GuiGraphics guiGraphics, int leftPos, int topPos) {
-    Graphics.blit(
-        guiGraphics,
-        this.menu.getMobFarmStatus() == MobFarmStatus.IDLE ? TEXTURE_UI_IDLE : TEXTURE_UI,
-        leftPos,
-        topPos,
-        0,
-        0,
-        256,
-        243);
+    this.theme
+        .getRenderer()
+        .renderBackground(
+            guiGraphics,
+            leftPos,
+            topPos,
+            this.menu.getMobFarmStatus() == MobFarmStatus.IDLE,
+            this.menu.slots);
+    this.slotHints.render(guiGraphics, this.menu.slots, this.entity, this.leftPos, this.topPos);
   }
 
   @Override
@@ -121,52 +151,123 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
     this.yMouse = y;
     this.renderBackground(guiGraphics);
     super.render(guiGraphics, x, y, partialTicks);
-    this.renderLockedSlot(guiGraphics, x, y);
-    this.renderEntityType(guiGraphics, x, y);
-    this.renderMobFarmProgress(guiGraphics, x, y);
+    this.renderLockedSlot(guiGraphics);
+    this.renderEntityType(guiGraphics);
+    this.renderMobFarmProgress(guiGraphics);
+    this.renderRedstoneModeButton(guiGraphics);
+    this.renderFarmTypeIcon(guiGraphics);
+    this.renderLootIcon(guiGraphics);
+    this.renderThemeButton(guiGraphics);
     this.renderTooltip(guiGraphics, x, y);
   }
 
   @Override
-  protected void renderLabels(GuiGraphics guiGraphics, int x, int y) {}
+  public boolean mouseClicked(double mouseX, double mouseY, int button) {
+    if (isHovering(THEME_BUTTON_X, THEME_BUTTON_Y, 16, 16, mouseX, mouseY)) {
+      this.theme = this.theme.next();
+      ClientConfig.setMobFarmScreenTheme(this.theme.getId());
+      this.minecraftInstance
+          .getSoundManager()
+          .play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+      return true;
+    }
 
-  private void renderMobFarmProgress(GuiGraphics guiGraphics, int x, int y) {
-    int mobFarmProgress = this.getMenu().getMobFarmProgress();
-    int currentWidth = (mobFarmProgress * 32) / MobFarmConfig.farmProgressingTime;
-    Graphics.blit(
-        guiGraphics,
-        TEXTURE_ELEMENTS,
-        this.leftPos + 113,
-        this.topPos + 78,
-        0,
-        36,
-        currentWidth,
-        16);
+    if (isHovering(STATUS_COLUMN_X, REDSTONE_MODE_BUTTON_Y, 16, 16, mouseX, mouseY)
+        && this.minecraftInstance.gameMode != null) {
+      this.minecraftInstance.gameMode.handleInventoryButtonClick(
+          this.menu.containerId, MobFarmMenu.TOGGLE_REDSTONE_MODE_BUTTON);
+      this.minecraftInstance
+          .getSoundManager()
+          .play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+      return true;
+    }
+
+    return super.mouseClicked(mouseX, mouseY, button);
   }
 
-  private void renderEntityType(GuiGraphics guiGraphics, int x, int y) {
+  @Override
+  protected void renderLabels(GuiGraphics guiGraphics, int x, int y) {
+    this.theme.getRenderer().renderLabels(guiGraphics, this.font, this.title);
+  }
+
+  private void renderRedstoneModeButton(GuiGraphics guiGraphics) {
+    guiGraphics.renderItem(
+        getRedstoneModeIcon(this.getMenu().getRedstoneMode()),
+        this.leftPos + STATUS_COLUMN_X,
+        this.topPos + REDSTONE_MODE_BUTTON_Y);
+  }
+
+  private void renderFarmTypeIcon(GuiGraphics guiGraphics) {
+    MobFarmType mobFarmType = this.getMenu().getMobFarmType();
+    if (mobFarmType == null) {
+      return;
+    }
+
+    if (mobFarmType != this.cachedFarmTypeIconType) {
+      this.cachedFarmTypeIconType = mobFarmType;
+      this.cachedFarmTypeIcon =
+          new ItemStack(
+              BuiltInRegistries.ITEM.get(
+                  new ResourceLocation(Constants.MOD_ID, mobFarmType.getId())));
+    }
+    if (!this.cachedFarmTypeIcon.isEmpty()) {
+      int iconX = this.leftPos + STATUS_COLUMN_X;
+      int iconY = this.topPos + FARM_TYPE_ICON_Y;
+      guiGraphics.renderItem(this.cachedFarmTypeIcon, iconX, iconY);
+      guiGraphics.renderItemDecorations(
+          this.font, this.cachedFarmTypeIcon, iconX, iconY, FARM_TYPE_ICON_BADGE);
+    }
+  }
+
+  private void renderLootIcon(GuiGraphics guiGraphics) {
+    float inset = (16.0F - 16.0F * LOOT_ICON_SCALE) / 2.0F;
+    guiGraphics.pose().pushPose();
+    try {
+      guiGraphics
+          .pose()
+          .translate(this.leftPos + STATUS_COLUMN_X + inset, this.topPos + LOOT_ICON_Y + inset, 0);
+      guiGraphics.pose().scale(LOOT_ICON_SCALE, LOOT_ICON_SCALE, 1.0F);
+      guiGraphics.renderItem(LOOT_ICON, 0, 0);
+    } finally {
+      guiGraphics.pose().popPose();
+    }
+  }
+
+  private void renderThemeButton(GuiGraphics guiGraphics) {
+    guiGraphics.renderItem(
+        this.theme.getIcon(), this.leftPos + THEME_BUTTON_X, this.topPos + THEME_BUTTON_Y);
+  }
+
+  private void renderMobFarmProgress(GuiGraphics guiGraphics) {
+    float progress =
+        MobFarmConfig.farmProgressingTime > 0
+            ? (float) this.getMenu().getMobFarmProgress() / MobFarmConfig.farmProgressingTime
+            : 0.0F;
+    this.theme.getRenderer().renderProgress(guiGraphics, this.leftPos, this.topPos, progress);
+  }
+
+  private void renderEntityType(GuiGraphics guiGraphics) {
     // Verify block position.
     BlockPos blockPos = this.getMenu().getMobFarmBlockPos();
     if (blockPos == null || blockPos.equals(BlockPos.ZERO)) {
+      this.entity = null;
       return;
     }
 
     // Check mob farm status and render it on the screen.
     int mobFarmStatus = this.getMenu().getMobFarmStatus();
     if (mobFarmStatus == MobFarmStatus.IDLE) {
+      this.entity = null;
       return;
     }
 
     // Get entity from block position and render it on the screen.
     this.entity = RendererManager.getEntity(blockPos);
     if (this.entity != null) {
-      ScreenHelper.renderEntity(
-          this.leftPos + 72,
-          this.topPos + 80,
-          this.leftPos + 70 - this.xMouse,
-          this.topPos + 40 - this.yMouse,
-          EntityScalingManager.getUIScale(this.entity),
-          this.entity);
+      this.theme
+          .getRenderer()
+          .entityPreview()
+          .render(guiGraphics, this.entity, this.leftPos, this.topPos, this.xMouse, this.yMouse);
     } else {
       if (this.entityExperience > 0) {
         this.entityExperience = 0;
@@ -174,7 +275,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
     }
   }
 
-  private void renderLockedSlot(GuiGraphics guiGraphics, int x, int y) {
+  private void renderLockedSlot(GuiGraphics guiGraphics) {
     for (Slot slot : this.menu.slots) {
       if (slot instanceof OutputSlot outputSlot && !outputSlot.isActive()) {
         Graphics.blit(
@@ -207,9 +308,16 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
       }
     }
 
+    if (this.theme.getRenderer().isHoveringProgress(mouseX - this.leftPos, mouseY - this.topPos)) {
+      List<Component> progressText = new ArrayList<>();
+      this.appendProgressInfo(progressText, isAdvanced);
+      guiGraphics.renderComponentTooltip(this.font, progressText, mouseX, mouseY);
+      return;
+    }
+
     // Render tooltip for the "info" button.
-    if (isHovering(24, 17, 10, 13, mouseX, mouseY)) {
-      List<Component> infoText = new java.util.ArrayList<>(List.of());
+    if (isHovering(STATUS_COLUMN_X, FARM_TYPE_ICON_Y, 16, 16, mouseX, mouseY)) {
+      List<Component> infoText = new ArrayList<>();
       if (mobFarmType != null) {
         infoText.add(
             TextComponent.getTranslatedTextRaw(
@@ -227,28 +335,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
           TextComponent.getTranslatedTextRaw(
               Constants.TOOLTIP_FARM_PREFIX + "tier",
               new Object[] {this.getMenu().getMobFarmTierLevel()}));
-      infoText.add(
-          TextComponent.getTranslatedTextRaw(
-              Constants.TOOLTIP_FARM_PREFIX + "status",
-              TextComponent.getTranslatedTextRaw(
-                  Constants.TOOLTIP_FARM_PREFIX + "status_" + this.getMenu().getMobFarmStatus())));
-
-      if (this.getMenu().getMobFarmStatus() == MobFarmStatus.WORKING) {
-        infoText.add(
-            getLocalizedRemainingTimeComponent(
-                MobFarmConfig.farmProgressingTime,
-                this.getMenu().getMobFarmProgress(),
-                this.getMenu().getMobFarmProgressionSpeed(),
-                this.getMenu().getMobFarmProgressionSpeedBonus()));
-      }
-      if (isAdvanced) {
-        infoText.add(
-            TextComponent.getTranslatedTextRaw(
-                Constants.TOOLTIP_FARM_PREFIX + "progress",
-                new Object[] {
-                  this.getMenu().getMobFarmProgress(), MobFarmConfig.farmProgressingTime
-                }));
-      }
+      this.appendProgressInfo(infoText, isAdvanced);
 
       infoText.add(
           TextComponent.getTranslatedText(
@@ -309,9 +396,17 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
         MobCaptureCardDefinition mobCaptureCardDefinition =
             MobCaptureCardDefinitionManager.get(this.entity.getType());
         if (mobCaptureCardDefinition != null && mobCaptureCardDefinition.requiresKilledByPlayer()) {
-          infoText.add(
-              TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "killed_by_player")
-                  .withStyle(ChatFormatting.RED));
+          if (hasPlayerKillEnhancement()) {
+            infoText.add(
+                TextComponent.getTranslatedTextRaw(
+                        Constants.TOOLTIP_FARM_PREFIX + "killed_by_player_fulfilled")
+                    .withStyle(ChatFormatting.GREEN));
+          } else {
+            infoText.add(
+                TextComponent.getTranslatedTextRaw(
+                        Constants.TOOLTIP_FARM_PREFIX + "killed_by_player")
+                    .withStyle(ChatFormatting.RED));
+          }
         }
 
         // Add experience information to the tooltip, if available.
@@ -378,10 +473,65 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
         }
       }
       guiGraphics.renderComponentTooltip(this.font, infoText, mouseX, mouseY);
-    } else if (isHovering(22, 35, 15, 14, mouseX, mouseY)
+    } else if (isHovering(STATUS_COLUMN_X, LOOT_ICON_Y, 16, 16, mouseX, mouseY)
         && this.getMenu().getMobFarmStatus() != MobFarmStatus.IDLE) {
       renderLootInfoTooltip(guiGraphics, mouseX, mouseY);
+    } else if (isHovering(STATUS_COLUMN_X, REDSTONE_MODE_BUTTON_Y, 16, 16, mouseX, mouseY)) {
+      renderRedstoneModeTooltip(guiGraphics, mouseX, mouseY);
+    } else if (isHovering(THEME_BUTTON_X, THEME_BUTTON_Y, 16, 16, mouseX, mouseY)) {
+      renderThemeTooltip(guiGraphics, mouseX, mouseY);
     }
+  }
+
+  private void appendProgressInfo(List<Component> infoText, boolean isAdvanced) {
+    infoText.add(
+        TextComponent.getTranslatedTextRaw(
+            Constants.TOOLTIP_FARM_PREFIX + "status",
+            TextComponent.getTranslatedTextRaw(
+                Constants.TOOLTIP_FARM_PREFIX + "status_" + this.getMenu().getMobFarmStatus())));
+
+    if (this.getMenu().getMobFarmStatus() == MobFarmStatus.WORKING) {
+      infoText.add(
+          getLocalizedRemainingTimeComponent(
+              MobFarmConfig.farmProgressingTime,
+              this.getMenu().getMobFarmProgress(),
+              this.getMenu().getMobFarmProgressionSpeed(),
+              this.getMenu().getMobFarmProgressionSpeedBonus()));
+    }
+    if (isAdvanced) {
+      infoText.add(
+          TextComponent.getTranslatedTextRaw(
+              Constants.TOOLTIP_FARM_PREFIX + "progress",
+              new Object[] {
+                this.getMenu().getMobFarmProgress(), MobFarmConfig.farmProgressingTime
+              }));
+    }
+  }
+
+  private void renderThemeTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+    guiGraphics.renderComponentTooltip(
+        this.font,
+        List.of(
+            TextComponent.getTranslatedTextRaw(
+                Constants.TOOLTIP_FARM_PREFIX + "theme",
+                TextComponent.getTranslatedTextRaw(this.theme.getTranslationKey())),
+            TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "theme_hint")
+                .withStyle(ChatFormatting.GRAY)),
+        mouseX,
+        mouseY);
+  }
+
+  private void renderRedstoneModeTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+    RedstoneMode redstoneMode = this.getMenu().getRedstoneMode();
+    guiGraphics.renderComponentTooltip(
+        this.font,
+        List.of(
+            TextComponent.getTranslatedTextRaw(
+                Constants.TOOLTIP_FARM_PREFIX + "redstone_mode_" + redstoneMode.getId()),
+            TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "redstone_mode_hint")
+                .withStyle(ChatFormatting.GRAY)),
+        mouseX,
+        mouseY);
   }
 
   private void renderLootInfoTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
@@ -417,7 +567,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
   }
 
   private List<Component> buildLootInfoTooltip() {
-    List<Component> lootInfo = new java.util.ArrayList<>();
+    List<Component> lootInfo = new ArrayList<>();
     lootInfo.add(
         TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "loot_info_title")
             .withStyle(ChatFormatting.GOLD));
@@ -468,6 +618,22 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
                     Constants.TOOLTIP_FARM_PREFIX + "loot_bonus_chance",
                     new Object[] {drop.itemStack().getDisplayName(), drop.chance()})
                 .withStyle(ChatFormatting.GREEN));
+      }
+    }
+
+    if (bonusDrops.isEmpty()) {
+      for (MobFarmType bonusDropFarmType :
+          MobFarmBonusConfig.getMobFarmTypesWithBonusDrop(this.entity.getType())) {
+        if (bonusDropFarmType == mobFarmType) {
+          continue;
+        }
+        lootInfo.add(
+            TextComponent.getTranslatedTextRaw(
+                    Constants.TOOLTIP_FARM_PREFIX + "loot_bonus_other_farm",
+                    new Object[] {
+                      Component.translatable(Constants.BLOCK_PREFIX + bonusDropFarmType.getId())
+                    })
+                .withStyle(ChatFormatting.YELLOW));
       }
     }
 
@@ -550,7 +716,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
   }
 
   private List<EnhancementItem> getActiveEnhancements() {
-    List<EnhancementItem> enhancements = new java.util.ArrayList<>();
+    List<EnhancementItem> enhancements = new ArrayList<>();
     for (Slot menuSlot : this.menu.slots) {
       if (menuSlot instanceof de.markusbordihn.easymobfarm.menu.slots.EnhancementSlot
           && menuSlot.hasItem()
@@ -561,8 +727,16 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
     return enhancements;
   }
 
+  private boolean hasPlayerKillEnhancement() {
+    return getActiveEnhancements().stream()
+        .anyMatch(
+            enhancement ->
+                enhancement instanceof SwordEnhancementItem
+                    || enhancement instanceof KnifeEnhancementItem);
+  }
+
   private List<Component> getEnhancementSuggestions(List<EnhancementItem> active) {
-    List<Component> suggestions = new java.util.ArrayList<>();
+    List<Component> suggestions = new ArrayList<>();
     if (this.entity == null) {
       return suggestions;
     }

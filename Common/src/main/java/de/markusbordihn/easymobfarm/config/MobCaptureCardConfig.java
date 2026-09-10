@@ -42,6 +42,18 @@ public class MobCaptureCardConfig extends Config {
  mobCaptureCardFishingDropChance: Drop chance for fishing drops (0.0-1.0, default: 0.15 = 15%)
  mobCaptureCardFoilDropChance: Drop chance for foil cards (0.0-1.0, default: 0.01 = 1%)
 
+ Card stacking
+ -------------
+ Cards only stack when their stored mob data is identical, so per mob data like the age or the
+ owner is removed when a card is created. Existing cards are cleaned up once when they are held
+ in an inventory.
+
+ upgradeExistingMobCaptureCards: Clean up cards from older versions on load (default: true)
+ additionalCardTagsToRemove: Extra mob data tags to remove, for mobs from other mods
+
+  Example:
+    additionalCardTagsToRemove=SomeModTimer,SomeModRandomSeed
+
  Allow and Deny list
  -------------------
  If you want to allow or deny specific mobs, you can use the allow and deny list.
@@ -70,6 +82,9 @@ public class MobCaptureCardConfig extends Config {
   public static float mobCaptureCardKillDropChance = 10 / 100f;
   public static float mobCaptureCardFishingDropChance = 15 / 100f;
   public static float mobCaptureCardFoilDropChance = 1 / 100f;
+
+  public static boolean upgradeExistingMobCaptureCards = true;
+  public static Set<String> additionalCardTagsToRemove = Set.of();
 
   public static Set<String> mobCaptureCardKillDropAllowList = Set.of();
   public static Set<String> mobCaptureCardKillDropDenyList = Set.of();
@@ -108,6 +123,12 @@ public class MobCaptureCardConfig extends Config {
     mobCaptureCardFoilDropChance =
         parseConfigValue(
             properties, "mobCaptureCardFoilDropChance", mobCaptureCardFoilDropChance, 0.0f, 1.0f);
+
+    upgradeExistingMobCaptureCards =
+        parseConfigValue(
+            properties, "upgradeExistingMobCaptureCards", upgradeExistingMobCaptureCards);
+    additionalCardTagsToRemove =
+        parseConfigValue(properties, "additionalCardTagsToRemove", additionalCardTagsToRemove);
 
     mobCaptureCardKillDropAllowList =
         parseConfigValue(

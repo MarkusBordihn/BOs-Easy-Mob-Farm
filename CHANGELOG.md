@@ -5,6 +5,24 @@
 This change log includes the summarized changes. For the full changelog, please go to
 the [GitHub History][history] instead.
 
+### 10.13.0
+
+- Fixed #178 by removing per-mob data from capture cards so identical mobs stack again.
+- Fixed #155 by adding three redstone modes to mob farms, switchable in the farm screen.
+- Fixed #115 by showing when a mob needs a sword enhancement and which farm gives bonus drops.
+- Fixed #208 and #168 by adding a JEI category that reuses the farm's own loot preview.
+- Fixed buffered items being duplicated on partial insert and lost on reload or when broken.
+- Fixed storage mods getting stuck and never pulling results out of a farm again.
+- Changed existing capture cards to be cleaned up once on load so they stack with new cards.
+- Changed powered farms to stay disabled by default, matching the previous redstone behavior.
+- Changed loot previews to be cached for a day and filled in the background for JEI.
+- Changed the top side of a farm to no longer hand out results to automation.
+- Changed the default farm screen theme to "Technology"; the old look is now the "Technical" theme.
+- Changed the farm screen info icon to the farm's block and the loot preview icon to a bag.
+- Changed the redstone mode button of the farm screen to sit one row below the info icons.
+- Added six new farm screen themes, selectable in the new client configuration.
+- Added rotating faded example items to the empty mob, enhancement, filter and upgrade slots.
+
 ### 10.12.0
 
 - Fixed crashes and load failures caused by broken data in farms, cards and the configuration.

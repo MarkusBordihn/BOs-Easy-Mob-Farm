@@ -689,6 +689,28 @@ public class MobFarmBonusConfig extends Config {
     return List.copyOf(mobFarmBonusMap.get(getMobFarmKey(mobFarmName, tierLevel, entityType)));
   }
 
+  public static List<MobFarmType> getMobFarmTypesWithBonusDrop(EntityType<?> entityType) {
+    if (entityType == null) {
+      return List.of();
+    }
+
+    String mobFarmKeySuffix = "::" + BuiltInRegistries.ENTITY_TYPE.getKey(entityType);
+    List<MobFarmType> mobFarmTypes = new ArrayList<>();
+    for (MobFarmType mobFarmType : MobFarmType.values()) {
+      String mobFarmKeyPrefix = mobFarmType.getId() + "::";
+      boolean hasBonusDrop =
+          mobFarmBonusMap.keySet().stream()
+              .anyMatch(
+                  mobFarmKey ->
+                      mobFarmKey.startsWith(mobFarmKeyPrefix)
+                          && mobFarmKey.endsWith(mobFarmKeySuffix));
+      if (hasBonusDrop) {
+        mobFarmTypes.add(mobFarmType);
+      }
+    }
+    return mobFarmTypes;
+  }
+
   public static List<ItemStack> getBonusDropEntries(
       String mobFarmName, int tierLevel, String entityType) {
     if (!hasBonusDrop(mobFarmName, tierLevel, entityType)) {

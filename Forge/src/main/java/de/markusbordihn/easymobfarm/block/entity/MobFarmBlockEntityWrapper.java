@@ -26,10 +26,15 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
 public class MobFarmBlockEntityWrapper extends MobFarmBlockEntity {
+
+  private final SidedOutputItemHandlers itemHandlers = new SidedOutputItemHandlers(this);
 
   public MobFarmBlockEntityWrapper(BlockPos blockPos, BlockState blockState) {
     super(ModBlocks.MOB_FARM_ENTITY.get(), blockPos, blockState);
@@ -43,5 +48,25 @@ public class MobFarmBlockEntityWrapper extends MobFarmBlockEntity {
   @Override
   protected IItemHandler createUnSidedHandler() {
     return new SidedInvWrapper(this, Direction.DOWN);
+  }
+
+  @Override
+  public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction direction) {
+    if (capability == ForgeCapabilities.ITEM_HANDLER && direction != null) {
+      return this.itemHandlers.get(direction);
+    }
+
+    return super.getCapability(capability, direction);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    super.invalidateCaps();
+    this.itemHandlers.invalidate();
+  }
+
+  @Override
+  protected void refreshOutputCapabilities() {
+    this.itemHandlers.refresh();
   }
 }

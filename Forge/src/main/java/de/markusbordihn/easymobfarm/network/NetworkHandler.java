@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.network;
 
 import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.network.message.client.SyncLootPreviewBatchMessage;
 import de.markusbordihn.easymobfarm.network.message.client.SyncLootPreviewMessage;
 import de.markusbordihn.easymobfarm.network.message.client.SyncMobCaptureCardDefinitionsMessage;
 import net.minecraft.resources.ResourceLocation;
@@ -57,6 +58,18 @@ public class NetworkHandler {
         SyncLootPreviewMessage.class,
         SyncLootPreviewMessage::write,
         SyncLootPreviewMessage::create,
+        (message, contextSupplier) -> {
+          NetworkEvent.Context context = contextSupplier.get();
+          context.enqueueWork(
+              () -> DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> message::handleClient));
+          context.setPacketHandled(true);
+        });
+
+    INSTANCE.registerMessage(
+        packetId++,
+        SyncLootPreviewBatchMessage.class,
+        SyncLootPreviewBatchMessage::write,
+        SyncLootPreviewBatchMessage::create,
         (message, contextSupplier) -> {
           NetworkEvent.Context context = contextSupplier.get();
           context.enqueueWork(

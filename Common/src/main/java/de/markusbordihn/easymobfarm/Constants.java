@@ -40,6 +40,8 @@ public final class Constants {
   public static final String MINECRAFT_PREFIX = "minecraft";
   public static final ResourceLocation TEXTURE_DEMO_BACKGROUND =
       new ResourceLocation(MINECRAFT_PREFIX, "textures/gui/demo_background.png");
+  public static final ResourceLocation TEXTURE_GENERIC_54 =
+      new ResourceLocation(MINECRAFT_PREFIX, "textures/gui/container/generic_54.png");
   public static final int FONT_COLOR_DEFAULT = 4210752;
   public static final int FONT_COLOR_RED = 16733525;
 

@@ -99,7 +99,7 @@ public class ScreenHelper {
       poseStack1.translate(0, 0.5, 0);
     } else if (livingEntity instanceof FlyingMob
         || (livingEntity instanceof FlyingAnimal flyingAnimal && flyingAnimal.isFlying())) {
-      poseStack1.translate(0, 1.0 * scale, 0);
+      poseStack1.translate(0, 1.0, 0);
     }
 
     // Hide gui elements or remove custom name

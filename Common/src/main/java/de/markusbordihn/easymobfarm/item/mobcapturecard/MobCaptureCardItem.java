@@ -21,6 +21,7 @@ package de.markusbordihn.easymobfarm.item.mobcapturecard;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.capture.MobCaptureManager;
+import de.markusbordihn.easymobfarm.config.MobCaptureCardConfig;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
 import java.util.Arrays;
@@ -33,6 +34,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -124,6 +126,14 @@ public class MobCaptureCardItem extends Item {
   public boolean canAttackBlock(
       BlockState blockState, Level level, BlockPos blockPos, Player player) {
     return false;
+  }
+
+  @Override
+  public void inventoryTick(
+      ItemStack itemStack, Level level, Entity entity, int slotIndex, boolean isSelected) {
+    if (!level.isClientSide && MobCaptureCardConfig.upgradeExistingMobCaptureCards) {
+      MobCaptureManager.upgradeMobCaptureCard(itemStack);
+    }
   }
 
   @Override

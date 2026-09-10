@@ -51,4 +51,20 @@ public class Graphics {
       int textureHeight) {
     guiGraphics.blit(texture, x, y, width, height, textureX, textureY, textureWidth, textureHeight);
   }
+
+  public static void blitNineSliced(
+      GuiGraphics guiGraphics,
+      ResourceLocation texture,
+      int x,
+      int y,
+      int width,
+      int height,
+      int sliceSize,
+      int textureWidth,
+      int textureHeight,
+      int textureX,
+      int textureY) {
+    guiGraphics.blitNineSliced(
+        texture, x, y, width, height, sliceSize, textureWidth, textureHeight, textureX, textureY);
+  }
 }

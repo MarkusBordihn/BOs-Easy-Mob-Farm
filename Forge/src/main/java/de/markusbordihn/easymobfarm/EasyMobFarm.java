@@ -33,6 +33,7 @@ import de.markusbordihn.easymobfarm.item.ModItems;
 import de.markusbordihn.easymobfarm.menu.CardBinderMenu;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
 import de.markusbordihn.easymobfarm.network.NetworkHandler;
+import de.markusbordihn.easymobfarm.network.message.client.SyncLootPreviewBatchMessage;
 import de.markusbordihn.easymobfarm.network.message.client.SyncLootPreviewMessage;
 import java.util.Optional;
 import net.minecraftforge.api.distmarker.Dist;
@@ -98,6 +99,10 @@ public class EasyMobFarm {
     log.debug("{} Network Handler ...", Constants.LOG_REGISTER_PREFIX);
     NetworkHandler.registerClientNetworkMessageHandler();
     SyncLootPreviewMessage.SENDER =
+        (player, msg) ->
+            NetworkHandler.INSTANCE.sendTo(
+                msg, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
+    SyncLootPreviewBatchMessage.SENDER =
         (player, msg) ->
             NetworkHandler.INSTANCE.sendTo(
                 msg, player.connection.connection, NetworkDirection.PLAY_TO_CLIENT);
