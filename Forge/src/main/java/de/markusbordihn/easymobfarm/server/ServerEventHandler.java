@@ -23,6 +23,7 @@ import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinitionManager
 import de.markusbordihn.easymobfarm.network.NetworkHandler;
 import de.markusbordihn.easymobfarm.network.message.client.SyncMobCaptureCardDefinitionsMessage;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -55,5 +56,12 @@ public class ServerEventHandler {
     NetworkHandler.INSTANCE.send(
         new SyncMobCaptureCardDefinitionsMessage(MobCaptureCardDefinitionManager.getAll()),
         PacketDistributor.PLAYER.with(serverPlayer));
+
+    ServerEvents.handlePlayerLoginEvent(serverPlayer);
+  }
+
+  @SubscribeEvent
+  public static void onServerTick(TickEvent.ServerTickEvent.Post event) {
+    ServerEvents.handleServerTickEvent(event.server());
   }
 }

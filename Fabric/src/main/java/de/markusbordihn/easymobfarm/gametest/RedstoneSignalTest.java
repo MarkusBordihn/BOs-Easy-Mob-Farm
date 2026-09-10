@@ -21,6 +21,7 @@ package de.markusbordihn.easymobfarm.gametest;
 
 import de.markusbordihn.easymobfarm.block.MobFarmBlock;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
+import de.markusbordihn.easymobfarm.data.mobfarm.RedstoneMode;
 import de.markusbordihn.easymobfarm.item.ModBlockItems;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.core.BlockPos;
@@ -110,5 +111,49 @@ public class RedstoneSignalTest {
               helper.getBlockState(mobFarmPos).getValue(MobFarmBlock.POWERED));
           helper.succeed();
         });
+  }
+
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
+  public void testRedstoneModeDisableOnSignal(GameTestHelper helper) {
+    MobFarmRedstoneModeTestHelper.testRedstoneMode(
+        helper,
+        ModBlockItems.ANIMAL_PLAINS_FARM.asItem(),
+        ModBlocks.ANIMAL_PLAINS_FARM,
+        RedstoneMode.DISABLE_ON_SIGNAL,
+        true,
+        true);
+  }
+
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
+  public void testRedstoneModeEnableOnSignal(GameTestHelper helper) {
+    MobFarmRedstoneModeTestHelper.testRedstoneMode(
+        helper,
+        ModBlockItems.ANIMAL_PLAINS_FARM.asItem(),
+        ModBlocks.ANIMAL_PLAINS_FARM,
+        RedstoneMode.ENABLE_ON_SIGNAL,
+        true,
+        false);
+  }
+
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
+  public void testRedstoneModeEnableOnSignalWithoutSignal(GameTestHelper helper) {
+    MobFarmRedstoneModeTestHelper.testRedstoneMode(
+        helper,
+        ModBlockItems.ANIMAL_PLAINS_FARM.asItem(),
+        ModBlocks.ANIMAL_PLAINS_FARM,
+        RedstoneMode.ENABLE_ON_SIGNAL,
+        false,
+        true);
+  }
+
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
+  public void testRedstoneModeIgnore(GameTestHelper helper) {
+    MobFarmRedstoneModeTestHelper.testRedstoneMode(
+        helper,
+        ModBlockItems.ANIMAL_PLAINS_FARM.asItem(),
+        ModBlocks.ANIMAL_PLAINS_FARM,
+        RedstoneMode.IGNORE,
+        true,
+        false);
   }
 }

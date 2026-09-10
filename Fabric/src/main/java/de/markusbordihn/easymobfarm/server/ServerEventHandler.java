@@ -22,6 +22,7 @@ package de.markusbordihn.easymobfarm.server;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinitionManager;
 import de.markusbordihn.easymobfarm.network.message.client.SyncMobCaptureCardDefinitionsMessage;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
@@ -38,6 +39,7 @@ public class ServerEventHandler {
     ServerLifecycleEvents.SERVER_STARTED.register(ServerEventHandler::onServerStarted);
     ServerLifecycleEvents.SERVER_STARTING.register(ServerEventHandler::onServerStarting);
     ServerPlayConnectionEvents.JOIN.register(ServerEventHandler::onPlayerLogin);
+    ServerTickEvents.END_SERVER_TICK.register(ServerEvents::handleServerTickEvent);
   }
 
   private static void onServerStarted(MinecraftServer server) {
@@ -59,5 +61,7 @@ public class ServerEventHandler {
     message.write(buffer);
 
     ServerPlayNetworking.send(serverGamePacketListener.getPlayer(), message);
+
+    ServerEvents.handlePlayerLoginEvent(serverGamePacketListener.getPlayer());
   }
 }

@@ -33,10 +33,11 @@ public class MobFarmDataEntry {
   public static final int FARM_PROGRESSION_SPEED_BONUS = 10;
   public static final int BUFFER_SIZE = 11;
   public static final int BUFFER_MAX_SIZE = 12;
+  public static final int REDSTONE_MODE = 13;
 
   private MobFarmDataEntry() {}
 
   public static int getLastSlotIndex() {
-    return BUFFER_MAX_SIZE;
+    return REDSTONE_MODE;
   }
 }

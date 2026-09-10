@@ -106,6 +106,11 @@ public class MobFarmConfig extends Config {
  maxBonusDropMultiplier: Maximum multiplier for bonus drop amounts vs stack size (default: 100)
  dropItemsToWorldWhenBufferFull: Drop items to world when buffer is full (default: false)
 
+ lootPreviewWarmupEnabled: Pre-calculate loot previews for recipe viewers like JEI (default: true)
+ lootPreviewBatchSize: Number of mobs processed per warmup batch (default: 2)
+ lootPreviewBatchIntervalTicks: Ticks between warmup batches (default: 100 = 5 seconds)
+ lootPreviewSampleRolls: Loot table rolls used for the pre-calculated preview (default: 25)
+
 """;
 
   public static int farmProgressingTime = 6000; // 5 minutes in seconds
@@ -167,6 +172,11 @@ public class MobFarmConfig extends Config {
   public static int bufferProcessInterval = 20;
   public static int maxBonusDropMultiplier = 100;
   public static boolean dropItemsToWorldWhenBufferFull = false;
+
+  public static boolean lootPreviewWarmupEnabled = true;
+  public static int lootPreviewBatchSize = 2;
+  public static int lootPreviewBatchIntervalTicks = 100;
+  public static int lootPreviewSampleRolls = 25;
 
   public static void registerConfig() {
     registerConfigFile(CONFIG_FILE_NAME, CONFIG_FILE_HEADER);
@@ -299,6 +309,16 @@ public class MobFarmConfig extends Config {
     dropItemsToWorldWhenBufferFull =
         parseConfigValue(
             properties, "dropItemsToWorldWhenBufferFull", dropItemsToWorldWhenBufferFull);
+
+    lootPreviewWarmupEnabled =
+        parseConfigValue(properties, "lootPreviewWarmupEnabled", lootPreviewWarmupEnabled);
+    lootPreviewBatchSize =
+        parseConfigValue(properties, "lootPreviewBatchSize", lootPreviewBatchSize, 1);
+    lootPreviewBatchIntervalTicks =
+        parseConfigValue(
+            properties, "lootPreviewBatchIntervalTicks", lootPreviewBatchIntervalTicks, 1);
+    lootPreviewSampleRolls =
+        parseConfigValue(properties, "lootPreviewSampleRolls", lootPreviewSampleRolls, 1);
 
     // Update config file if needed
     updateConfigFileIfChanged(configFile, CONFIG_FILE_HEADER, properties, unmodifiedProperties);

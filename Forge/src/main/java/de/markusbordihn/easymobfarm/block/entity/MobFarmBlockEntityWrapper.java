@@ -34,6 +34,8 @@ import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
 public class MobFarmBlockEntityWrapper extends MobFarmBlockEntity {
 
+  private final SidedOutputItemHandlers itemHandlers = new SidedOutputItemHandlers(this);
+
   public MobFarmBlockEntityWrapper(BlockPos blockPos, BlockState blockState) {
     super(ModBlocks.MOB_FARM_ENTITY.get(), blockPos, blockState);
   }
@@ -50,11 +52,21 @@ public class MobFarmBlockEntityWrapper extends MobFarmBlockEntity {
 
   @Override
   public <T> LazyOptional<T> getCapability(Capability<T> capability, Direction direction) {
-    if (capability == ForgeCapabilities.ITEM_HANDLER) {
-      if (direction != null && direction != Direction.UP) {
-        return LazyOptional.of(() -> new SidedInvWrapper(this, direction)).cast();
-      }
+    if (capability == ForgeCapabilities.ITEM_HANDLER && direction != null) {
+      return this.itemHandlers.get(direction);
     }
+
     return super.getCapability(capability, direction);
+  }
+
+  @Override
+  public void invalidateCaps() {
+    super.invalidateCaps();
+    this.itemHandlers.invalidate();
+  }
+
+  @Override
+  protected void refreshOutputCapabilities() {
+    this.itemHandlers.refresh();
   }
 }
