@@ -70,7 +70,8 @@ public class Text {
     if (text == null) {
       return;
     }
-    drawErrorMessage(guiGraphics, font, text, x, y, width);
+
+    drawErrorMessage(guiGraphics, font, Component.literal(text), x, y, width);
   }
 
   public static void drawErrorMessage(
