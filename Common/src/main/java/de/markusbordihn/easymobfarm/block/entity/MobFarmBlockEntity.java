@@ -32,6 +32,7 @@ import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmSlot;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmSlots;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmStatus;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
+import de.markusbordihn.easymobfarm.data.mobfarm.RedstoneMode;
 import de.markusbordihn.easymobfarm.experience.ExperienceManager;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
 import de.markusbordihn.easymobfarm.item.upgrade.EnhancementItem;
@@ -98,7 +99,10 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
   public static final String OWNER_TAG = "Owner";
   public static final String CAPTURED_MOB_EXPERIENCE_TAG = "CapturedMobExperience";
   public static final String BUFFER_PROCESS_TICK_TAG = "BufferProcessTick";
+  public static final String ITEM_BUFFER_TAG = "ItemBuffer";
+  public static final String REDSTONE_MODE_TAG = "RedstoneMode";
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+  private static final int MAX_BUFFERED_ITEMS_PER_TICK = 8;
   private static final int[] RESULT_SLOTS =
       MobFarmSlots.RESULT_SLOTS.stream().mapToInt(MobFarmSlot::index).toArray();
   private static final Random random = new Random();
@@ -117,6 +121,8 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
   private int farmStatus = MobFarmStatus.IDLE;
   private int capturedMobExperience = -1;
   private int bufferProcessTick = 0;
+  private int lastResultItemCount = -1;
+  private RedstoneMode redstoneMode = RedstoneMode.DEFAULT;
 
   public MobFarmBlockEntity(
       final BlockEntityType<?> blockEntityType,
@@ -167,8 +173,12 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
       blockEntity.processBufferedItems();
     }
 
+    if (level.getGameTime() % DEFAULT_RECHECK_TICKS == blockEntity.processingDelay) {
+      blockEntity.refreshStalledOutputCapabilities();
+    }
+
     // Check if redstone power is active.
-    if (blockState.getValue(MobFarmBlock.POWERED)) {
+    if (!blockEntity.redstoneMode.allowsProcessing(blockState.getValue(MobFarmBlock.POWERED))) {
       if (blockEntity.farmStatus != MobFarmStatus.DISABLED) {
         blockEntity.farmStatus = MobFarmStatus.DISABLED;
       }
@@ -757,6 +767,18 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     this.farmStatus = farmStatus;
   }
 
+  public RedstoneMode getRedstoneMode() {
+    return this.redstoneMode;
+  }
+
+  public void setRedstoneMode(RedstoneMode redstoneMode) {
+    if (redstoneMode == null || this.redstoneMode == redstoneMode) {
+      return;
+    }
+    this.redstoneMode = redstoneMode;
+    this.syncChanges();
+  }
+
   public int getFarmTierLevel() {
     return this.farmTierLevel;
   }
@@ -832,6 +854,17 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
             stack);
       }
     }
+    for (ItemStack bufferedItem : this.itemBuffer) {
+      if (!bufferedItem.isEmpty()) {
+        Containers.dropItemStack(
+            this.level,
+            this.worldPosition.getX(),
+            this.worldPosition.getY(),
+            this.worldPosition.getZ(),
+            bufferedItem);
+      }
+    }
+    this.itemBuffer.clear();
   }
 
   private void spawnEntity(EntityType<?> entityType, Level level, BlockPos position) {
@@ -1023,55 +1056,72 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     return itemBuffer.size();
   }
 
+  private void refreshStalledOutputCapabilities() {
+    int resultItemCount = this.getResultItemCount();
+    if (resultItemCount > 0 && resultItemCount >= this.lastResultItemCount) {
+      this.refreshOutputCapabilities();
+    }
+    this.lastResultItemCount = resultItemCount;
+  }
+
+  private int getResultItemCount() {
+    int resultItemCount = 0;
+    int startSlotIndex = MobFarmSlots.RESULT_SLOTS.get(0).index();
+    for (int slotIndex = startSlotIndex;
+        slotIndex < startSlotIndex + numberOfOutputSlots;
+        slotIndex++) {
+      resultItemCount += this.getItem(slotIndex).getCount();
+    }
+    return resultItemCount;
+  }
+
+  protected void refreshOutputCapabilities() {}
+
   private void processBufferedItems() {
     if (!MobFarmConfig.enableItemBuffer || itemBuffer.isEmpty()) {
       return;
     }
 
-    // Process up to 8 items from buffer per tick to avoid lag
     int itemsProcessed = 0;
-    while (!itemBuffer.isEmpty() && itemsProcessed < 8) {
+    boolean transferredItems = false;
+    while (!itemBuffer.isEmpty() && itemsProcessed < MAX_BUFFERED_ITEMS_PER_TICK) {
       ItemStack bufferedItem = itemBuffer.peek();
       if (bufferedItem == null || bufferedItem.isEmpty()) {
         itemBuffer.poll();
         continue;
       }
 
-      // Try to place buffered item in output slots
-      ItemStack itemToPlace = bufferedItem.copy();
       int startSlotIndex = MobFarmSlots.RESULT_SLOTS.get(0).index();
-      boolean placed = false;
-
       for (int slotIndex = startSlotIndex;
           slotIndex < startSlotIndex + numberOfOutputSlots;
           slotIndex++) {
         ItemStack outputSlot = this.getItem(slotIndex);
 
         if (outputSlot.isEmpty()) {
-          this.items.set(slotIndex, itemToPlace);
-          itemBuffer.poll();
-          placed = true;
+          this.items.set(slotIndex, bufferedItem.copy());
+          bufferedItem.setCount(0);
+          transferredItems = true;
           break;
         }
 
-        if (canGrowOutputSlot(outputSlot, itemToPlace)) {
-          growOutputSlot(outputSlot, itemToPlace);
-          if (itemToPlace.isEmpty()) {
-            itemBuffer.poll();
-            placed = true;
+        if (canGrowOutputSlot(outputSlot, bufferedItem)) {
+          growOutputSlot(outputSlot, bufferedItem);
+          transferredItems = true;
+          if (bufferedItem.isEmpty()) {
             break;
           }
         }
       }
 
-      if (!placed) {
+      if (!bufferedItem.isEmpty()) {
         break;
       }
 
+      itemBuffer.poll();
       itemsProcessed++;
     }
 
-    if (itemsProcessed > 0) {
+    if (transferredItems) {
       this.syncChanges();
     }
   }
@@ -1117,12 +1167,19 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
       }
     }
 
-    // Clear buffer on load to prevent item duplication on server restart
     this.itemBuffer.clear();
+    for (ItemStack bufferedItem : valueInput.listOrEmpty(ITEM_BUFFER_TAG, ItemStack.CODEC)) {
+      if (!bufferedItem.isEmpty()) {
+        this.itemBuffer.offer(bufferedItem);
+      }
+    }
     int bufferProcessTick = valueInput.getIntOr(BUFFER_PROCESS_TICK_TAG, -1);
     if (bufferProcessTick >= 0) {
       this.bufferProcessTick = bufferProcessTick;
     }
+
+    this.redstoneMode =
+        RedstoneMode.byName(valueInput.getStringOr(REDSTONE_MODE_TAG, this.redstoneMode.name()));
   }
 
   @Override
@@ -1144,7 +1201,15 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
       valueOutput.putString(OWNER_TAG, this.owner.toString());
     }
 
-    // Save buffer process tick
+    ValueOutput.TypedOutputList<ItemStack> itemBufferOutput =
+        valueOutput.list(ITEM_BUFFER_TAG, ItemStack.CODEC);
+    for (ItemStack bufferedItem : this.itemBuffer) {
+      if (!bufferedItem.isEmpty()) {
+        itemBufferOutput.add(bufferedItem);
+      }
+    }
+
     valueOutput.putInt(BUFFER_PROCESS_TICK_TAG, this.bufferProcessTick);
+    valueOutput.putString(REDSTONE_MODE_TAG, this.redstoneMode.name());
   }
 }

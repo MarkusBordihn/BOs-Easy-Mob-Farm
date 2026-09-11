@@ -42,6 +42,15 @@ public class MobFarmBlockEntityWrapper extends MobFarmBlockEntity {
   }
 
   public ResourceHandler<ItemResource> getItemCapability(final Direction direction) {
+    if (direction == Direction.UP) {
+      return null;
+    }
+
     return new WorldlyContainerWrapper(this, direction == null ? Direction.DOWN : direction);
+  }
+
+  @Override
+  protected void refreshOutputCapabilities() {
+    this.invalidateCapabilities();
   }
 }

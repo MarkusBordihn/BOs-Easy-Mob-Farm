@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.network;
 
 import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.network.message.client.SyncLootPreviewBatchMessage;
 import de.markusbordihn.easymobfarm.network.message.client.SyncLootPreviewMessage;
 import de.markusbordihn.easymobfarm.network.message.client.SyncMobCaptureCardDefinitionsMessage;
 import net.minecraft.resources.Identifier;
@@ -60,6 +61,23 @@ public class NetworkHandler {
         .messageBuilder(SyncLootPreviewMessage.class, packetId++, NetworkDirection.PLAY_TO_CLIENT)
         .encoder(SyncLootPreviewMessage::write)
         .decoder(SyncLootPreviewMessage::create)
+        .consumerNetworkThread(
+            (message, context) -> {
+              context.enqueueWork(
+                  () -> {
+                    if (FMLEnvironment.dist.isClient()) {
+                      message.handleClient();
+                    }
+                  });
+              context.setPacketHandled(true);
+            })
+        .add();
+
+    INSTANCE
+        .messageBuilder(
+            SyncLootPreviewBatchMessage.class, packetId++, NetworkDirection.PLAY_TO_CLIENT)
+        .encoder(SyncLootPreviewBatchMessage::write)
+        .decoder(SyncLootPreviewBatchMessage::create)
         .consumerNetworkThread(
             (message, context) -> {
               context.enqueueWork(

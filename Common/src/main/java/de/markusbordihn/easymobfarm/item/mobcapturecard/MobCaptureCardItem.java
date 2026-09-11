@@ -22,6 +22,7 @@ package de.markusbordihn.easymobfarm.item.mobcapturecard;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.capture.MobCaptureManager;
 import de.markusbordihn.easymobfarm.capture.MobCaptureManagerClient;
+import de.markusbordihn.easymobfarm.config.MobCaptureCardConfig;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.data.capture.MobColor;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
@@ -171,6 +172,9 @@ public class MobCaptureCardItem extends Item {
       ItemStack itemStack, ServerLevel serverLevel, Entity entity, EquipmentSlot equipmentSlot) {
     if (entity instanceof Player && this.level == null) {
       this.level = serverLevel;
+    }
+    if (MobCaptureCardConfig.upgradeExistingMobCaptureCards) {
+      MobCaptureManager.upgradeMobCaptureCard(itemStack);
     }
     super.inventoryTick(itemStack, serverLevel, entity, equipmentSlot);
   }

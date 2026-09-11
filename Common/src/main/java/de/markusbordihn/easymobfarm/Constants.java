@@ -21,6 +21,7 @@ package de.markusbordihn.easymobfarm;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import net.minecraft.resources.Identifier;
 
 public final class Constants {
 
@@ -37,7 +38,10 @@ public final class Constants {
   public static final String TOOLTIP_FARM_PREFIX = Constants.TOOLTIP_PREFIX + "farm.";
   public static final String LOG_NAME = MOD_NAME;
   public static final String LOG_REGISTER_PREFIX = "Register " + MOD_NAME;
-
+  public static final Identifier TEXTURE_DEMO_BACKGROUND =
+      Identifier.withDefaultNamespace("textures/gui/demo_background.png");
+  public static final Identifier TEXTURE_GENERIC_54 =
+      Identifier.withDefaultNamespace("textures/gui/container/generic_54.png");
   public static final int FONT_COLOR_DEFAULT = 4210752;
   public static final int FONT_COLOR_RED = 16733525;
 

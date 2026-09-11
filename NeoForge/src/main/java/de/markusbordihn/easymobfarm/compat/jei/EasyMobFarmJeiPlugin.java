@@ -21,6 +21,7 @@ package de.markusbordihn.easymobfarm.compat.jei;
 
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinitionManager;
+import de.markusbordihn.easymobfarm.data.loot.MobFarmLootDisplay;
 import de.markusbordihn.easymobfarm.item.ModBlockItems;
 import de.markusbordihn.easymobfarm.item.ModItems;
 import de.markusbordihn.easymobfarm.tabs.CustomMobCaptureCards;
@@ -30,6 +31,10 @@ import java.util.Set;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.recipe.IRecipeManager;
+import mezz.jei.api.registration.IRecipeCatalystRegistration;
+import mezz.jei.api.registration.IRecipeCategoryRegistration;
+import mezz.jei.api.registration.IRecipeRegistration;
 import mezz.jei.api.registration.ISubtypeRegistration;
 import mezz.jei.api.runtime.IIngredientManager;
 import mezz.jei.api.runtime.IJeiRuntime;
@@ -46,6 +51,7 @@ public class EasyMobFarmJeiPlugin implements IModPlugin {
   private static final Identifier pluginId =
       Identifier.fromNamespaceAndPath(Constants.MOD_ID, "jei_plugin");
   private static final List<ItemStack> runtimeAddedCards = new ArrayList<>();
+  private static final List<MobFarmLootDisplay> runtimeAddedLootDisplays = new ArrayList<>();
   private static volatile IJeiRuntime jeiRuntime;
 
   public static void refreshMobCaptureCards() {
@@ -68,6 +74,24 @@ public class EasyMobFarmJeiPlugin implements IModPlugin {
       ingredientManager.addIngredientsAtRuntime(VanillaTypes.ITEM_STACK, cards);
       runtimeAddedCards.addAll(cards);
     }
+
+    refreshMobFarmLootDisplays();
+  }
+
+  private static void refreshMobFarmLootDisplays() {
+    IRecipeManager recipeManager = jeiRuntime.getRecipeManager();
+    if (!runtimeAddedLootDisplays.isEmpty()) {
+      recipeManager.hideRecipes(
+          MobFarmLootCategory.RECIPE_TYPE, new ArrayList<>(runtimeAddedLootDisplays));
+      runtimeAddedLootDisplays.clear();
+    }
+
+    List<MobFarmLootDisplay> lootDisplays =
+        MobFarmLootDisplay.createAll(ModItems.MOB_CAPTURE_CARD.get());
+    if (!lootDisplays.isEmpty()) {
+      recipeManager.addRecipes(MobFarmLootCategory.RECIPE_TYPE, lootDisplays);
+      runtimeAddedLootDisplays.addAll(lootDisplays);
+    }
   }
 
   @Override
@@ -87,6 +111,39 @@ public class EasyMobFarmJeiPlugin implements IModPlugin {
   public void onRuntimeUnavailable() {
     EasyMobFarmJeiPlugin.jeiRuntime = null;
     EasyMobFarmJeiPlugin.runtimeAddedCards.clear();
+    EasyMobFarmJeiPlugin.runtimeAddedLootDisplays.clear();
+  }
+
+  @Override
+  public void registerCategories(IRecipeCategoryRegistration registration) {
+    registration.addRecipeCategories(
+        new MobFarmLootCategory(
+            registration.getJeiHelpers().getGuiHelper(), ModBlockItems.ANIMAL_PLAINS_FARM.get()));
+  }
+
+  @Override
+  public void registerRecipes(IRecipeRegistration registration) {
+    registration.addRecipes(
+        MobFarmLootCategory.RECIPE_TYPE,
+        MobFarmLootDisplay.createAll(ModItems.MOB_CAPTURE_CARD.get()));
+  }
+
+  @Override
+  public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
+    registration.addCraftingStation(
+        MobFarmLootCategory.RECIPE_TYPE,
+        ModBlockItems.ANIMAL_PLAINS_FARM.get(),
+        ModBlockItems.BEE_HIVE_FARM.get(),
+        ModBlockItems.DESERT_FARM.get(),
+        ModBlockItems.END_FARM.get(),
+        ModBlockItems.IRON_GOLEM_FARM.get(),
+        ModBlockItems.JUNGLE_FARM.get(),
+        ModBlockItems.LUCKY_DROP_FARM.get(),
+        ModBlockItems.MONSTER_PLAINS_CAVE_FARM.get(),
+        ModBlockItems.NETHER_FORTRESS_FARM.get(),
+        ModBlockItems.NETHER_WASTES_FARM.get(),
+        ModBlockItems.OCEAN_FARM.get(),
+        ModBlockItems.SWAMP_FARM.get());
   }
 
   @Override

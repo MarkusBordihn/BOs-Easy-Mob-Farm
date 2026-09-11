@@ -48,7 +48,6 @@ public enum MobFarmType implements StringRepresentable {
 
   public static final Codec<MobFarmType> CODEC =
       Codec.STRING.xmap(MobFarmType::valueOf, MobFarmType::name);
-
   private static final MobFarmType[] VALUES = values();
   public static final StreamCodec<ByteBuf, MobFarmType> STREAM_CODEC =
       ByteBufCodecs.idMapper(index -> VALUES[index], MobFarmType::ordinal);

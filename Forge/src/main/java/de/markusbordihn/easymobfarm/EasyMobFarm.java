@@ -36,6 +36,7 @@ import de.markusbordihn.easymobfarm.item.ModItems;
 import de.markusbordihn.easymobfarm.menu.CardBinderMenu;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
 import de.markusbordihn.easymobfarm.network.NetworkHandler;
+import de.markusbordihn.easymobfarm.network.message.client.SyncLootPreviewBatchMessage;
 import de.markusbordihn.easymobfarm.network.message.client.SyncLootPreviewMessage;
 import de.markusbordihn.easymobfarm.tabs.ModTabs;
 import java.util.Optional;
@@ -45,6 +46,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.fml.loading.FMLPaths;
+import net.minecraftforge.network.PacketDistributor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -106,9 +108,9 @@ public class EasyMobFarm {
     log.debug("{} Network Handler ...", Constants.LOG_REGISTER_PREFIX);
     NetworkHandler.registerClientNetworkMessageHandler();
     SyncLootPreviewMessage.SENDER =
-        (player, msg) ->
-            NetworkHandler.INSTANCE.send(
-                msg, net.minecraftforge.network.PacketDistributor.PLAYER.with(player));
+        (player, msg) -> NetworkHandler.INSTANCE.send(msg, PacketDistributor.PLAYER.with(player));
+    SyncLootPreviewBatchMessage.SENDER =
+        (player, msg) -> NetworkHandler.INSTANCE.send(msg, PacketDistributor.PLAYER.with(player));
 
     log.info("{} Creative Tabs ...", Constants.LOG_REGISTER_PREFIX);
     ModTabs.CREATIVE_TABS.register(modBusGroup);

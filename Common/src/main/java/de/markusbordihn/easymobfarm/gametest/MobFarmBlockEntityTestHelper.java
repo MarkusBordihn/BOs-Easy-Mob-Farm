@@ -162,18 +162,10 @@ public class MobFarmBlockEntityTestHelper {
     return createCaptureCard("Arrow", "minecraft:arrow", EntityType.ARROW);
   }
 
-  private static ItemStack createCaptureCard(
-      String name, String type, EntityType<?> entityType) {
+  private static ItemStack createCaptureCard(String name, String type, EntityType<?> entityType) {
     MobCaptureData mobCaptureData =
         new MobCaptureData(
-            name,
-            type,
-            entityType,
-            new CompoundTag(),
-            MobColor.NONE,
-            "",
-            Rarity.COMMON,
-            false);
+            name, type, entityType, new CompoundTag(), MobColor.NONE, "", Rarity.COMMON, false);
     return MobCaptureManager.createMobCaptureCard(
         MobCaptureCardItem.getMobCaptureCardItem(), mobCaptureData);
   }

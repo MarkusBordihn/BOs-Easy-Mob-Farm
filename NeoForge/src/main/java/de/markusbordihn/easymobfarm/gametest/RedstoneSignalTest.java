@@ -21,6 +21,7 @@ package de.markusbordihn.easymobfarm.gametest;
 
 import de.markusbordihn.easymobfarm.block.MobFarmBlock;
 import de.markusbordihn.easymobfarm.block.ModBlocks;
+import de.markusbordihn.easymobfarm.data.mobfarm.RedstoneMode;
 import de.markusbordihn.easymobfarm.item.ModBlockItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -107,5 +108,45 @@ public class RedstoneSignalTest {
               helper.getBlockState(mobFarmPos).getValue(MobFarmBlock.POWERED));
           helper.succeed();
         });
+  }
+
+  public void testRedstoneModeDisableOnSignal(GameTestHelper helper) {
+    MobFarmRedstoneModeTestHelper.testRedstoneMode(
+        helper,
+        ModBlockItems.ANIMAL_PLAINS_FARM.get().asItem(),
+        ModBlocks.ANIMAL_PLAINS_FARM.get(),
+        RedstoneMode.DISABLE_ON_SIGNAL,
+        true,
+        true);
+  }
+
+  public void testRedstoneModeEnableOnSignal(GameTestHelper helper) {
+    MobFarmRedstoneModeTestHelper.testRedstoneMode(
+        helper,
+        ModBlockItems.ANIMAL_PLAINS_FARM.get().asItem(),
+        ModBlocks.ANIMAL_PLAINS_FARM.get(),
+        RedstoneMode.ENABLE_ON_SIGNAL,
+        true,
+        false);
+  }
+
+  public void testRedstoneModeEnableOnSignalWithoutSignal(GameTestHelper helper) {
+    MobFarmRedstoneModeTestHelper.testRedstoneMode(
+        helper,
+        ModBlockItems.ANIMAL_PLAINS_FARM.get().asItem(),
+        ModBlocks.ANIMAL_PLAINS_FARM.get(),
+        RedstoneMode.ENABLE_ON_SIGNAL,
+        false,
+        true);
+  }
+
+  public void testRedstoneModeIgnore(GameTestHelper helper) {
+    MobFarmRedstoneModeTestHelper.testRedstoneMode(
+        helper,
+        ModBlockItems.ANIMAL_PLAINS_FARM.get().asItem(),
+        ModBlocks.ANIMAL_PLAINS_FARM.get(),
+        RedstoneMode.IGNORE,
+        true,
+        false);
   }
 }
