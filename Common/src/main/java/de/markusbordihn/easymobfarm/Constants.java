@@ -42,8 +42,8 @@ public final class Constants {
       Identifier.withDefaultNamespace("textures/gui/demo_background.png");
   public static final Identifier TEXTURE_GENERIC_54 =
       Identifier.withDefaultNamespace("textures/gui/container/generic_54.png");
-  public static final int FONT_COLOR_DEFAULT = 4210752;
-  public static final int FONT_COLOR_RED = 16733525;
+  public static final int FONT_COLOR_DEFAULT = 0xFF404040;
+  public static final int FONT_COLOR_RED = 0xFFFF5555;
 
   public static boolean EXPERIMENTAL_MODE = true;
 
