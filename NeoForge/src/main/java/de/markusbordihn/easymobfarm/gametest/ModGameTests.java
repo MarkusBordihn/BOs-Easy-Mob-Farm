@@ -640,6 +640,22 @@ public final class ModGameTests {
         "redstone_signal_redstone_signal_with_redstone_block",
         REDSTONE_SIGNAL_TESTS::testRedstoneSignalWithRedstoneBlock,
         STRUCTURE_3X3X3);
+    register(
+        "redstone_signal_redstone_mode_disable_on_signal",
+        REDSTONE_SIGNAL_TESTS::testRedstoneModeDisableOnSignal,
+        STRUCTURE_3X3X3);
+    register(
+        "redstone_signal_redstone_mode_enable_on_signal",
+        REDSTONE_SIGNAL_TESTS::testRedstoneModeEnableOnSignal,
+        STRUCTURE_3X3X3);
+    register(
+        "redstone_signal_redstone_mode_enable_on_signal_without_signal",
+        REDSTONE_SIGNAL_TESTS::testRedstoneModeEnableOnSignalWithoutSignal,
+        STRUCTURE_3X3X3);
+    register(
+        "redstone_signal_redstone_mode_ignore",
+        REDSTONE_SIGNAL_TESTS::testRedstoneModeIgnore,
+        STRUCTURE_3X3X3);
     register("smoke_mod_registered", SMOKE_TESTS::testModRegistered, STRUCTURE_3X3X3);
     register(
         "item_capability_extraction",

@@ -47,6 +47,8 @@ public class Config {
     registerCommonConfig();
     if (isServer) {
       registerServerConfig();
+    } else {
+      registerClientConfig();
     }
   }
 
@@ -65,6 +67,10 @@ public class Config {
   }
 
   public static void registerServerConfig() {}
+
+  public static void registerClientConfig() {
+    ClientConfig.registerConfig();
+  }
 
   public static void prepareConfiguration() {
     // Validate game folder path.
@@ -161,6 +167,22 @@ public class Config {
     } else {
       log.debug("{} {} is up to date: {}", LOG_PREFIX, configFileHeader, properties);
     }
+  }
+
+  public static void updateConfigValue(
+      final String configFileName,
+      final String configFileHeader,
+      final String key,
+      final String value) {
+    File configFile = getConfigFile(configFileName);
+    if (configFile == null) {
+      return;
+    }
+
+    Properties properties = readConfigFile(configFile);
+    Properties unmodifiedProperties = (Properties) properties.clone();
+    properties.setProperty(key, value);
+    updateConfigFileIfChanged(configFile, configFileHeader, properties, unmodifiedProperties);
   }
 
   protected static String parseConfigValue(

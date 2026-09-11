@@ -32,6 +32,7 @@ import de.markusbordihn.easymobfarm.item.ModBlockItems;
 import de.markusbordihn.easymobfarm.item.ModItems;
 import de.markusbordihn.easymobfarm.menu.CardBinderMenu;
 import de.markusbordihn.easymobfarm.menu.ModMenuTypes;
+import de.markusbordihn.easymobfarm.network.message.client.SyncLootPreviewBatchMessage;
 import de.markusbordihn.easymobfarm.network.message.client.SyncLootPreviewMessage;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -91,5 +92,6 @@ public class EasyMobFarm {
     ModGameTests.register(modEventBus);
 
     SyncLootPreviewMessage.SENDER = PacketDistributor::sendToPlayer;
+    SyncLootPreviewBatchMessage.SENDER = PacketDistributor::sendToPlayer;
   }
 }

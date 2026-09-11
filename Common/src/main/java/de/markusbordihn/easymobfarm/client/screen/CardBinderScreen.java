@@ -188,10 +188,10 @@ public class CardBinderScreen<T extends CardBinderMenu> extends AbstractContaine
         CHEST_GUI_TEXTURE,
         x + CardBinderMenu.PLAYER_INV_X - 8,
         y + CardBinderMenu.PLAYER_INV_Y - 15,
-        176,
-        96,
         0,
-        125);
+        125,
+        176,
+        96);
   }
 
   @Override

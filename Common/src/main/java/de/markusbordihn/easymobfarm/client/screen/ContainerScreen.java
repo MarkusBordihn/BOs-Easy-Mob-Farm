@@ -26,7 +26,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,8 +33,6 @@ import org.apache.logging.log4j.Logger;
 public class ContainerScreen<T extends MobFarmMenu> extends AbstractContainerScreen<T> {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
-  protected static final Identifier TEXTURE_DEMO_BACKGROUND =
-      Identifier.withDefaultNamespace("textures/gui/demo_background.png");
   protected final T menu;
   protected final Minecraft minecraftInstance;
 
@@ -66,20 +63,23 @@ public class ContainerScreen<T extends MobFarmMenu> extends AbstractContainerScr
 
   protected void renderBg(
       GuiGraphicsExtractor guiGraphics, float partialTicks, int mouseX, int mouseY) {
-    Graphics.blit(guiGraphics, TEXTURE_DEMO_BACKGROUND, this.leftPos, this.topPos, 210, 160, 0, 0);
-    Graphics.blit(guiGraphics, TEXTURE_DEMO_BACKGROUND, this.leftPos, this.topPos, 210, 160, 0, 0);
+    this.renderDefaultScreenBg(guiGraphics, this.leftPos, this.topPos);
+  }
+
+  protected void renderDefaultScreenBg(GuiGraphicsExtractor guiGraphics, int leftPos, int topPos) {
+    Graphics.blit(guiGraphics, Constants.TEXTURE_DEMO_BACKGROUND, leftPos, topPos, 0, 0, 210, 160);
     Graphics.blit(
-        guiGraphics, TEXTURE_DEMO_BACKGROUND, this.leftPos + 203, this.topPos, 120, 160, 132, 0);
+        guiGraphics, Constants.TEXTURE_DEMO_BACKGROUND, leftPos + 203, topPos, 132, 0, 120, 160);
     Graphics.blit(
-        guiGraphics, TEXTURE_DEMO_BACKGROUND, this.leftPos, this.topPos + 77, 210, 170, 0, 5);
+        guiGraphics, Constants.TEXTURE_DEMO_BACKGROUND, leftPos, topPos + 77, 0, 5, 210, 170);
     Graphics.blit(
         guiGraphics,
-        TEXTURE_DEMO_BACKGROUND,
-        this.leftPos + 203,
-        this.topPos + 77,
-        120,
-        170,
+        Constants.TEXTURE_DEMO_BACKGROUND,
+        leftPos + 203,
+        topPos + 77,
         132,
-        5);
+        5,
+        120,
+        170);
   }
 }

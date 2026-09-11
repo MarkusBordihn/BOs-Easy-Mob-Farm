@@ -54,6 +54,7 @@ public class MobFarmContainerData implements ContainerData {
       case MobFarmDataEntry.BUFFER_SIZE -> mobFarmEntity.getBufferSize();
       case MobFarmDataEntry.BUFFER_MAX_SIZE ->
           de.markusbordihn.easymobfarm.config.MobFarmConfig.maxBufferSize;
+      case MobFarmDataEntry.REDSTONE_MODE -> mobFarmEntity.getRedstoneMode().ordinal();
       default -> 0;
     };
   }
@@ -70,7 +71,8 @@ public class MobFarmContainerData implements ContainerData {
           MobFarmDataEntry.FARM_PROGRESSION_SPEED,
           MobFarmDataEntry.FARM_PROGRESSION_SPEED_BONUS,
           MobFarmDataEntry.BUFFER_SIZE,
-          MobFarmDataEntry.BUFFER_MAX_SIZE ->
+          MobFarmDataEntry.BUFFER_MAX_SIZE,
+          MobFarmDataEntry.REDSTONE_MODE ->
           log.warn("Trying to set read-only data index {} for {}", index, this);
       case MobFarmDataEntry.NUMBER_OF_OUTPUT_SLOTS -> mobFarmEntity.setNumberOfOutputSlots(value);
       case MobFarmDataEntry.FARM_PROGRESS -> mobFarmEntity.setFarmProgress(value);

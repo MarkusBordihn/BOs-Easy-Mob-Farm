@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.network;
 
 import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.network.message.client.SyncLootPreviewBatchMessage;
 import de.markusbordihn.easymobfarm.network.message.client.SyncLootPreviewMessage;
 import de.markusbordihn.easymobfarm.network.message.client.SyncMobCaptureCardDefinitionsMessage;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -52,6 +53,13 @@ public class NetworkHandler {
     registrar.playToClient(
         SyncLootPreviewMessage.PAYLOAD_TYPE,
         SyncLootPreviewMessage.STREAM_CODEC,
+        (customPacketPayload, playPayloadContext) -> {
+          customPacketPayload.handleClient();
+        });
+
+    registrar.playToClient(
+        SyncLootPreviewBatchMessage.PAYLOAD_TYPE,
+        SyncLootPreviewBatchMessage.STREAM_CODEC,
         (customPacketPayload, playPayloadContext) -> {
           customPacketPayload.handleClient();
         });

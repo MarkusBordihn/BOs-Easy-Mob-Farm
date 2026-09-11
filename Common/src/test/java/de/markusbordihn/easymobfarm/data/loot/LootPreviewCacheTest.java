@@ -65,10 +65,29 @@ class LootPreviewCacheTest {
 
   @Test
   void serverCacheIsValidAfterStoringPreview() {
-    LootPreviewCache.setServerCachedPreview(EntityTypes.COW, List.of(new ItemStack(Items.LEATHER)));
+    LootPreviewCache.setServerCachedPreview(
+        EntityTypes.COW, List.of(new ItemStack(Items.LEATHER)), 3);
 
-    Assertions.assertTrue(LootPreviewCache.isServerCacheValid(EntityTypes.COW));
-    Assertions.assertFalse(LootPreviewCache.isServerCacheValid(EntityTypes.PIG));
+    Assertions.assertTrue(LootPreviewCache.isServerCacheValid(EntityTypes.COW, 3));
+    Assertions.assertFalse(LootPreviewCache.isServerCacheValid(EntityTypes.PIG, 3));
     Assertions.assertTrue(LootPreviewCache.getServerCachedPreview(EntityTypes.PIG).isEmpty());
+  }
+
+  @Test
+  void serverCacheIsInvalidForHigherSampleRollRequirement() {
+    LootPreviewCache.setServerCachedPreview(
+        EntityTypes.COW, List.of(new ItemStack(Items.LEATHER)), 3);
+
+    Assertions.assertFalse(LootPreviewCache.isServerCacheValid(EntityTypes.COW, 25));
+  }
+
+  @Test
+  void serverCachedPreviewsContainStoredEntityTypes() {
+    LootPreviewCache.setServerCachedPreview(
+        EntityTypes.COW, List.of(new ItemStack(Items.LEATHER)), 25);
+    LootPreviewCache.setServerCachedPreview(
+        EntityTypes.PIG, List.of(new ItemStack(Items.PORKCHOP)), 25);
+
+    Assertions.assertEquals(2, LootPreviewCache.getServerCachedPreviews().size());
   }
 }

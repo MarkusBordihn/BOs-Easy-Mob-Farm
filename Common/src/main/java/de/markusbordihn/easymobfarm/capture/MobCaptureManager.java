@@ -235,11 +235,40 @@ public class MobCaptureManager {
     itemStack.set(DataComponents.MOB_CAPTURE_DATA, mobCaptureData);
   }
 
+  public static boolean upgradeMobCaptureCard(ItemStack itemStack) {
+    if (!hasMobCaptureData(itemStack)) {
+      return false;
+    }
+
+    MobCaptureData mobCaptureData = getMobCaptureData(itemStack);
+    if (mobCaptureData == null) {
+      return false;
+    }
+
+    MobCaptureData upgradedMobCaptureData =
+        mobCaptureData.withData(
+            MobEntityData.removeSafeToRemoveMobCaptureCardTags(mobCaptureData.data()));
+    if (upgradedMobCaptureData.equals(mobCaptureData)) {
+      return false;
+    }
+
+    writeMobCaptureData(itemStack, upgradedMobCaptureData);
+    return true;
+  }
+
   public static boolean hasMobCaptureData(ItemStack itemStack) {
     return itemStack != null
         && !itemStack.isEmpty()
         && itemStack.has(DataComponents.MOB_CAPTURE_DATA)
         && !itemStack.getOrDefault(DataComponents.MOB_CAPTURE_DATA, MobCaptureData.EMPTY).isEmpty();
+  }
+
+  public static MobCaptureData getMobCaptureData(ItemStack itemStack) {
+    if (itemStack == null || itemStack.isEmpty()) {
+      return null;
+    }
+
+    return itemStack.get(DataComponents.MOB_CAPTURE_DATA);
   }
 
   public static MobCaptureData getMobCaptureData(ItemStack itemStack, Level level) {

@@ -27,6 +27,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 @EventBusSubscriber
@@ -54,5 +55,12 @@ public class ServerEventHandler {
     PacketDistributor.sendToPlayer(
         serverPlayer,
         new SyncMobCaptureCardDefinitionsMessage(MobCaptureCardDefinitionManager.getAll()));
+
+    ServerEvents.handlePlayerLoginEvent(serverPlayer);
+  }
+
+  @SubscribeEvent
+  public static void onServerTick(ServerTickEvent.Post event) {
+    ServerEvents.handleServerTickEvent(event.getServer());
   }
 }

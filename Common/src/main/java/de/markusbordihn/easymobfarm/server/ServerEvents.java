@@ -20,8 +20,10 @@
 package de.markusbordihn.easymobfarm.server;
 
 import de.markusbordihn.easymobfarm.config.Config;
+import de.markusbordihn.easymobfarm.data.loot.LootPreviewManager;
 import de.markusbordihn.easymobfarm.item.ModRecipeManager;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerPlayer;
 
 public class ServerEvents {
 
@@ -31,5 +33,14 @@ public class ServerEvents {
 
   public static void handleServerStartingEvent(MinecraftServer minecraftServer) {
     Config.registerDeferred(true);
+    LootPreviewManager.reset();
+  }
+
+  public static void handleServerTickEvent(MinecraftServer minecraftServer) {
+    LootPreviewManager.handleServerTick(minecraftServer);
+  }
+
+  public static void handlePlayerLoginEvent(ServerPlayer serverPlayer) {
+    LootPreviewManager.sendCachedPreviews(serverPlayer);
   }
 }
