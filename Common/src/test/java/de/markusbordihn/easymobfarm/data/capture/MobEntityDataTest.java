@@ -87,6 +87,18 @@ class MobEntityDataTest {
   }
 
   @Test
+  void chickensWithDifferentEggLayTimeProduceIdenticalData() {
+    CompoundTag firstChicken = pig(0, UUID.randomUUID());
+    firstChicken.putInt("EggLayTime", 6000);
+    CompoundTag secondChicken = pig(0, UUID.randomUUID());
+    secondChicken.putInt("EggLayTime", 11999);
+
+    Assertions.assertEquals(
+        MobEntityData.removeSafeToRemoveMobCaptureCardTags(firstChicken),
+        MobEntityData.removeSafeToRemoveMobCaptureCardTags(secondChicken));
+  }
+
+  @Test
   void customNameIsKept() {
     CompoundTag namedPig = pig(0, UUID.randomUUID());
     namedPig.putString("CustomName", "{\"text\":\"Rosi\"}");

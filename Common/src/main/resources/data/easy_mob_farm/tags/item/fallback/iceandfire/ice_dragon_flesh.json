@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "iceandfire:ice_dragon_flesh",
+      "required": false
+    }
+  ]
+}

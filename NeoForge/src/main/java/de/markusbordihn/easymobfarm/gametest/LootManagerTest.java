@@ -59,4 +59,34 @@ public class LootManagerTest {
     LootManagerTestHelper.testMalformedCaptureDataDoesNotThrow(helper);
     helper.succeed();
   }
+
+  @GameTest(template = "gametest.3x3x3")
+  public void testCapturedMobsDropTheirKeyItems(GameTestHelper helper) {
+    LootManagerTestHelper.testCapturedMobsDropTheirKeyItems(helper);
+  }
+
+  @GameTest(template = "gametest.3x3x3")
+  public void testEveryDefinedMobProducesFarmLoot(GameTestHelper helper) {
+    LootManagerTestHelper.testEveryDefinedMobProducesFarmLoot(helper);
+  }
+
+  @GameTest(template = "gametest.3x3x3")
+  public void testCapturedMagmaCubeKeepsSizeForMagmaCream(GameTestHelper helper) {
+    LootManagerTestHelper.testCapturedMagmaCubeKeepsSizeForMagmaCream(helper);
+  }
+
+  @GameTest(template = "gametest.3x3x3")
+  public void testCapturedRedSheepDropsRedWool(GameTestHelper helper) {
+    LootManagerTestHelper.testCapturedRedSheepDropsRedWool(helper);
+  }
+
+  @GameTest(template = "gametest.3x3x3")
+  public void testExperienceEnhancementDropsExperienceBottles(GameTestHelper helper) {
+    LootManagerTestHelper.testExperienceEnhancementDropsExperienceBottles(helper);
+  }
+
+  @GameTest(template = "gametest.3x3x3")
+  public void testAllEnhancementsWorkForProblemMobs(GameTestHelper helper) {
+    LootManagerTestHelper.testAllEnhancementsWorkForProblemMobs(helper);
+  }
 }

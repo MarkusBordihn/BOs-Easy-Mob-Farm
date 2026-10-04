@@ -174,7 +174,7 @@ public class CardBinderMenu extends AbstractContainerMenu {
         return ItemStack.EMPTY;
       }
     } else if (slotStack.getItem() instanceof MobCaptureCardItem) {
-      if (!this.moveItemStackTo(slotStack, 0, CONTAINER_SIZE, false)) {
+      if (!this.moveCardsToEmptyCardSlots(slotStack)) {
         return ItemStack.EMPTY;
       }
     } else {
@@ -189,6 +189,18 @@ public class CardBinderMenu extends AbstractContainerMenu {
       slot.setChanged();
     }
     return result;
+  }
+
+  private boolean moveCardsToEmptyCardSlots(final ItemStack cards) {
+    boolean moved = false;
+    for (int i = 0; i < CONTAINER_SIZE && !cards.isEmpty(); i++) {
+      Slot cardSlot = this.slots.get(i);
+      if (!cardSlot.hasItem() && cardSlot.mayPlace(cards)) {
+        cardSlot.set(cards.split(cardSlot.getMaxStackSize()));
+        moved = true;
+      }
+    }
+    return moved;
   }
 
   private static class CardSlot extends Slot {

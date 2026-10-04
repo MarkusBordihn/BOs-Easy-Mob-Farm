@@ -58,8 +58,18 @@ public class MobCaptureCardResourceManager extends SimpleJsonResourceReloadListe
   private static final String COLORS_TAG = "colors";
   private static final String VARIANTS_TAG = "variants";
 
+  private static final ResourceLocation CHICKEN_RESOURCE_LOCATION =
+      ResourceLocation.fromNamespaceAndPath("minecraft", "chicken");
   private static final ResourceLocation FROG_RESOURCE_LOCATION =
       ResourceLocation.fromNamespaceAndPath("minecraft", "frog");
+  private static final Map<String, String> CHICKEN_VARIANT_MODELS =
+      Map.of(
+          "cold",
+          "minecraft:item/easy_mob_farm/mob_capture_card/chicken_cold",
+          "temperate",
+          "minecraft:item/easy_mob_farm/mob_capture_card/chicken",
+          "warm",
+          "minecraft:item/easy_mob_farm/mob_capture_card/chicken_warm");
 
   public MobCaptureCardResourceManager() {
     super(GSON, SEARCH_PATH);
@@ -69,7 +79,20 @@ public class MobCaptureCardResourceManager extends SimpleJsonResourceReloadListe
       ResourceLocation entity, Map<String, MobCaptureCardDefinition.Variant> variants) {
     if (CompatConstants.MOD_SWAMPIER_SWAMPS_LOADED && FROG_RESOURCE_LOCATION.equals(entity)) {
       addAdditionalFrogVariants(variants);
+    } else if (CompatConstants.MOD_VANILLA_BACKPORT_LOADED
+        && CHICKEN_RESOURCE_LOCATION.equals(entity)) {
+      addAdditionalChickenVariants(variants);
     }
+  }
+
+  private static void addAdditionalChickenVariants(
+      Map<String, MobCaptureCardDefinition.Variant> variants) {
+    CHICKEN_VARIANT_MODELS.forEach(
+        (variantName, model) ->
+            variants.put(
+                variantName,
+                new MobCaptureCardDefinition.Variant(
+                    ResourceLocation.parse(model), new HashMap<>())));
   }
 
   private static void addAdditionalFrogVariants(

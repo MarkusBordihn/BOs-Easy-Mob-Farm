@@ -1,6 +1,6 @@
 plugins {
   id 'maven-publish'
-  id 'net.neoforged.gradle.userdev' version '7.0.145'
+  id 'net.neoforged.gradle.userdev' version '7.1.39'
   id 'net.darkhax.curseforgegradle' version '1.1.28'
   id 'nu.studer.credentials' version '3.0'
   id "com.modrinth.minotaur" version "2.+"
@@ -28,6 +28,13 @@ runs {
     configure('client')
     workingDirectory project.file('runs/client2')
     programArguments.addAll '--username', 'guest_player'
+  }
+
+  if (clientToolkitAvailable) {
+    clientTest {
+      configure('client')
+      workingDirectory project.file('runs/clientTest')
+    }
   }
 
   server {
@@ -73,6 +80,21 @@ dependencies {
 
   // Farmers Delight: Integration
   runtimeOnly "curse.maven:farmers-delight-398521:6917256"
+
+  // Sophisticated Storage: Integration
+  runtimeOnly "curse.maven:sophisticated-core-618298:9039572"
+  runtimeOnly "curse.maven:sophisticated-storage-619320:9036665"
+
+  // Storage Drawers: Integration
+  runtimeOnly "curse.maven:storage-drawers-223852:6995432"
+
+  // Create: Integration
+  runtimeOnly "curse.maven:create-328085:7963363"
+
+  // Client Runtime Interface Toolkit (runtime dependency, only for client tests)
+  if (clientToolkitAvailable && isClientTestRun) {
+    runtimeOnly clientToolkitCoordinate('neoforge')
+  }
 }
 
 // NeoGradle compiles the game, but we don't want to add our common code to the game's code

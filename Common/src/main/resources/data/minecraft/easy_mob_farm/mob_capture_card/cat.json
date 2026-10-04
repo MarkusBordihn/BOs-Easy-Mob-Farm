@@ -12,6 +12,9 @@
     "black": {
       "model": "minecraft:item/easy_mob_farm/mob_capture_card/cat_black"
     },
+    "british_shorthair": {
+      "model": "minecraft:item/easy_mob_farm/mob_capture_card/cat_british_shorthair"
+    },
     "calico": {
       "model": "minecraft:item/easy_mob_farm/mob_capture_card/cat_calico"
     },

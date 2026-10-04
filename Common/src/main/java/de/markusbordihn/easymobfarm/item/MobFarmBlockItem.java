@@ -19,6 +19,7 @@
 
 package de.markusbordihn.easymobfarm.item;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.component.DataComponents;
@@ -103,13 +104,17 @@ public class MobFarmBlockItem extends BlockItem {
 
     // Add farm description
     Component farmDescription = TextComponent.getTranslatedText(this.farmName);
-    List<FormattedText> lines =
-        Minecraft.getInstance()
-            .font
-            .getSplitter()
-            .splitLines(farmDescription.getString(), 200, Style.EMPTY);
-    for (FormattedText line : lines) {
-      tooltip.add(TextComponent.getText(line.getString()).withStyle(ChatFormatting.GRAY));
+    if (RenderSystem.isOnRenderThread()) {
+      List<FormattedText> lines =
+          Minecraft.getInstance()
+              .font
+              .getSplitter()
+              .splitLines(farmDescription.getString(), 200, Style.EMPTY);
+      for (FormattedText line : lines) {
+        tooltip.add(TextComponent.getText(line.getString()).withStyle(ChatFormatting.GRAY));
+      }
+    } else {
+      tooltip.add(farmDescription.copy().withStyle(ChatFormatting.GRAY));
     }
 
     // Add tier level

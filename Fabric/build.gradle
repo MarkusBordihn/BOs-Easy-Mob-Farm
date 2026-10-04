@@ -18,6 +18,12 @@ repositories {
   maven { url = "https://mvn.devos.one/snapshots/" }
   maven { url = "https://mvn.devos.one/releases/" }
   maven { url = "https://maven.tterrag.com/" }
+  maven {
+    url = "https://api.modrinth.com/maven"
+    content {
+      includeGroup "maven.modrinth"
+    }
+  }
 }
 
 dependencies {
@@ -33,12 +39,7 @@ dependencies {
   if (project.hasProperty('fabric_jei_mod') && project.fabric_jei_mod) {
     modCompileOnlyApi("curse.maven:jei-238222:${project.fabric_jei_mod}")
     modRuntimeOnly("curse.maven:jei-238222:${project.fabric_jei_mod}")
-  }
-  if (project.hasProperty('fabric_spark_mod') && project.fabric_spark_mod) {
-    modRuntimeOnly("curse.maven:spark-361579:${project.fabric_spark_mod}")
-  }
-  if (project.hasProperty('fabric_xaeros_minimap_mod') && project.fabric_xaeros_minimap_mod) {
-    modRuntimeOnly("curse.maven:xaeros_minimap-263420:${project.fabric_xaeros_minimap_mod}")
+    modRuntimeOnly("curse.maven:mezzconfig-1689768:8887102")
   }
 
   // Bug Testing
@@ -51,6 +52,23 @@ dependencies {
   modRuntimeOnly('teamreborn:energy:4.1.0') {
     exclude(group: "net.fabricmc.fabric-api")
   }
+
+  // Storage Drawers: Integration Tests
+  modRuntimeOnly "curse.maven:storage-drawers-223852:6995424"
+  runtimeOnly "com.electronwill.night-config:core:3.8.1"
+  runtimeOnly "com.electronwill.night-config:toml:3.8.1"
+
+  // Sophisticated Storage (unofficial Fabric port, Modrinth only): Integration Tests
+  // Loom strips the Porting Lib jars nested in Sophisticated Core, so they are declared here.
+  ["conditions", "core", "fluids", "item_abilities", "lazy_registration", "level_events", "loot",
+   "model_loader", "render_types", "transfer"].each { portingLibModule ->
+    modRuntimeOnly("io.github.fabricators_of_create.Porting-Lib:${portingLibModule}:3.1.0-beta.47+1.21.1") {
+      transitive = false
+    }
+  }
+  modRuntimeOnly "maven.modrinth:ohNO6lps:N5qzq0XV"
+  modRuntimeOnly "maven.modrinth:9jxwkYQL:ZLVrtF0Q"
+  modRuntimeOnly "maven.modrinth:iHtpVwJL:kjNlOByJ"
 
   // Create: Integration Tests
   //  modRuntimeOnly "io.github.tropheusj:milk-lib:1.2.60"
@@ -73,6 +91,11 @@ dependencies {
   // Swampier Swamps Tests
   // modRuntimeOnly "curse.maven:cloth-config-348521:5729104"
   // modRuntimeOnly "curse.maven:swampier-swamps-fabric-687298:4580758"
+
+  // Client Runtime Interface Toolkit (runtime dependency, only for client tests)
+  if (clientToolkitAvailable && isClientTestRun) {
+    modLocalRuntime clientToolkitCoordinate('fabric')
+  }
 }
 
 loom {
@@ -105,6 +128,13 @@ loom {
       server()
       name "Game Test"
       vmArg "-Dfabric-api.gametest"
+    }
+    if (clientToolkitAvailable) {
+      clientTest {
+        client()
+        setConfigName("Fabric Client Test")
+        runDir("run/clienttest")
+      }
     }
   }
 }

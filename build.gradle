@@ -99,4 +99,11 @@ subprojects {
       downloadJavadoc = true
     }
   }
+
+  // The toolkit opens a control socket in the client, so it only joins the runtime of client tests.
+  ext.isClientTestRun = gradle.startParameter.taskNames.any {
+    return it.toLowerCase().contains('clienttest')
+  }
 }
+
+apply from: 'gradle/tasks/clientTest.gradle'

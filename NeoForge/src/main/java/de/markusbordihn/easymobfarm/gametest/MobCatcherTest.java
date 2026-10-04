@@ -41,4 +41,19 @@ public class MobCatcherTest {
     MobCatcherTestHelper.testSuccessfulCaptureUsesDurability(helper);
     helper.succeed();
   }
+
+  @GameTest(template = "gametest.3x3x3")
+  public void testDenyListRejectsCapture(GameTestHelper helper) {
+    MobCatcherTestHelper.testDenyListRejectsCapture(helper);
+  }
+
+  @GameTest(template = "gametest.3x3x3")
+  public void testAllowListRejectsOtherMobs(GameTestHelper helper) {
+    MobCatcherTestHelper.testAllowListRejectsOtherMobs(helper);
+  }
+
+  @GameTest(template = "gametest.3x3x3")
+  public void testCapturedMobCanBeReleased(GameTestHelper helper) {
+    MobCatcherTestHelper.testCapturedMobCanBeReleased(helper);
+  }
 }

@@ -26,6 +26,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.entity.animal.CatVariant;
+import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.animal.FrogVariant;
 import net.minecraft.world.entity.animal.frog.Frog;
 import net.minecraft.world.entity.monster.MagmaCube;
@@ -62,6 +63,8 @@ public class MobVariantData {
       return getSizeVariant(magmaCube.getSize());
     } else if (livingEntity instanceof Slime slime) {
       return getSizeVariant(slime.getSize());
+    } else if (livingEntity instanceof Chicken) {
+      return getBackportedVariant(livingEntity);
     } else if (livingEntity instanceof Frog frog) {
       String frogVariant =
           (frog.getVariant().unwrapKey().orElse(FrogVariant.TEMPERATE))
@@ -78,6 +81,20 @@ public class MobVariantData {
       return frogVariant;
     }
     return null;
+  }
+
+  private static String getBackportedVariant(final LivingEntity livingEntity) {
+    if (!CompatConstants.MOD_VANILLA_BACKPORT_LOADED) {
+      return null;
+    }
+
+    // Vanilla Backport has no API, it only writes the variant id into the entity data.
+    String variant = getVariant(livingEntity.saveWithoutId(new CompoundTag()));
+    if (variant == null || variant.isEmpty()) {
+      return null;
+    }
+
+    return variant.replace("minecraft:", "");
   }
 
   public static String getVariant(final CompoundTag compoundTag) {
