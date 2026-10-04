@@ -34,12 +34,6 @@ dependencies {
     modCompileOnlyApi("curse.maven:jei-238222:${project.fabric_jei_mod}")
     modRuntimeOnly("curse.maven:jei-238222:${project.fabric_jei_mod}")
   }
-  if (project.hasProperty('fabric_spark_mod') && project.fabric_spark_mod) {
-    modRuntimeOnly("curse.maven:spark-361579:${project.fabric_spark_mod}")
-  }
-  if (project.hasProperty('fabric_xaeros_minimap_mod') && project.fabric_xaeros_minimap_mod) {
-    modRuntimeOnly("curse.maven:xaeros_minimap-263420:${project.fabric_xaeros_minimap_mod}")
-  }
 
   // Create: Integration Tests
   //  modRuntimeOnly "io.github.tropheusj:milk-lib:1.2.60"
@@ -62,6 +56,11 @@ dependencies {
   // Swampier Swamps Tests
   // modRuntimeOnly "curse.maven:cloth-config-348521:5729104"
   // modRuntimeOnly "curse.maven:swampier-swamps-fabric-687298:4580758"
+
+  // Client Runtime Interface Toolkit (runtime dependency, only for client tests)
+  if (clientToolkitAvailable && isClientTestRun) {
+    modLocalRuntime clientToolkitCoordinate('fabric')
+  }
 }
 
 loom {
@@ -94,6 +93,13 @@ loom {
       server()
       name "Game Test"
       vmArg "-Dfabric-api.gametest"
+    }
+    if (clientToolkitAvailable) {
+      clientTest {
+        client()
+        setConfigName("Fabric Client Test")
+        runDir("run/clienttest")
+      }
     }
   }
 }

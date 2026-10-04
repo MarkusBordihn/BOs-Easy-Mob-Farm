@@ -20,7 +20,16 @@
 package de.markusbordihn.easymobfarm.gametest;
 
 import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinitionManager;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -44,5 +53,27 @@ public class GameTestHelpers {
 
   public static void assertNotNull(GameTestHelper helper, String message, Object object) {
     assertTrue(helper, message, object != null);
+  }
+
+  public static List<EntityType<?>> definedMobCaptureCardEntityTypes(GameTestHelper helper) {
+    List<EntityType<?>> entityTypes =
+        new ArrayList<>(MobCaptureCardDefinitionManager.getDefinedEntityTypes());
+    helper.assertTrue(!entityTypes.isEmpty(), "No mob capture card definitions are loaded");
+    entityTypes.sort(
+        Comparator.comparing(
+            entityType -> BuiltInRegistries.ENTITY_TYPE.getKey(entityType).toString()));
+    return entityTypes;
+  }
+
+  public static int menuSlotIndex(
+      AbstractContainerMenu menu, Container container, int containerSlotIndex) {
+    for (Slot slot : menu.slots) {
+      if (slot.container == container && slot.getContainerSlot() == containerSlotIndex) {
+        return slot.index;
+      }
+    }
+
+    throw new IllegalArgumentException(
+        "Menu " + menu + " has no slot for container slot " + containerSlotIndex);
   }
 }

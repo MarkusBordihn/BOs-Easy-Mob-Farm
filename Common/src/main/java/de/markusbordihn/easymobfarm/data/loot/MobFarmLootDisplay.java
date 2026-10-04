@@ -26,8 +26,10 @@ import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinitionManager
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmTierLevel;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
+import de.markusbordihn.easymobfarm.loot.LootManager;
 import de.markusbordihn.easymobfarm.tabs.CustomMobCaptureCards;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -76,12 +78,13 @@ public record MobFarmLootDisplay(
                   getSpawnEggs(entityType),
                   definition.requiresKilledByPlayer(),
                   definition.supportsKnifeEnhancement(),
-                  getBonusDrops(entityType)));
+                  getBonusDrops(entityType, definition.variants().keySet())));
         });
     return displays;
   }
 
-  private static List<BonusDrop> getBonusDrops(final EntityType<?> entityType) {
+  private static List<BonusDrop> getBonusDrops(
+      final EntityType<?> entityType, final Collection<String> variants) {
     Map<String, ItemStack> itemsByKey = new LinkedHashMap<>();
     Map<String, List<MobFarmType>> mobFarmTypesByKey = new LinkedHashMap<>();
     for (MobFarmType mobFarmType : MobFarmBonusConfig.getMobFarmTypesWithBonusDrop(entityType)) {
@@ -89,12 +92,10 @@ public record MobFarmLootDisplay(
         for (ItemStack item :
             MobFarmBonusConfig.getBonusDropEntries(
                 mobFarmType, tierLevel.getTierLevel(), entityType)) {
-          String key = getItemKey(item);
-          itemsByKey.putIfAbsent(key, item);
-          List<MobFarmType> mobFarmTypes =
-              mobFarmTypesByKey.computeIfAbsent(key, itemKey -> new ArrayList<>());
-          if (!mobFarmTypes.contains(mobFarmType)) {
-            mobFarmTypes.add(mobFarmType);
+          collectBonusDrop(itemsByKey, mobFarmTypesByKey, mobFarmType, item);
+          for (ItemStack variantItem :
+              LootManager.getVariantBonusDrops(entityType, item, variants)) {
+            collectBonusDrop(itemsByKey, mobFarmTypesByKey, mobFarmType, variantItem);
           }
         }
       }
@@ -105,6 +106,20 @@ public record MobFarmLootDisplay(
         (key, item) ->
             bonusDrops.add(new BonusDrop(item, List.copyOf(mobFarmTypesByKey.get(key)))));
     return bonusDrops;
+  }
+
+  private static void collectBonusDrop(
+      final Map<String, ItemStack> itemsByKey,
+      final Map<String, List<MobFarmType>> mobFarmTypesByKey,
+      final MobFarmType mobFarmType,
+      final ItemStack item) {
+    String key = getItemKey(item);
+    itemsByKey.putIfAbsent(key, item);
+    List<MobFarmType> mobFarmTypes =
+        mobFarmTypesByKey.computeIfAbsent(key, itemKey -> new ArrayList<>());
+    if (!mobFarmTypes.contains(mobFarmType)) {
+      mobFarmTypes.add(mobFarmType);
+    }
   }
 
   private static String getItemKey(final ItemStack itemStack) {

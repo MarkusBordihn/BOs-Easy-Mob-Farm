@@ -46,7 +46,7 @@ public class MobCaptureManager {
 
   public static final String MOB_CAPTURE_DATA_TAG = "MobCaptureData";
   public static final String CARD_DATA_VERSION_TAG = "CardDataVersion";
-  public static final int CARD_DATA_VERSION = 1;
+  public static final int CARD_DATA_VERSION = 2;
   public static final String COLOR_TAG = "Color";
   public static final String VARIANT_TAG = "variant";
 

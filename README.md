@@ -52,8 +52,8 @@ Happy farming! 🌾
 - **Configurable Enhancements** ⚙️: Enable, disable, and fine-tune each enhancement individually.
 - **Datapack & Resource Pack Support** 📁: Define custom mob capture cards and loot tables via
   datapacks.
-- **Mod Integration** 🧩: Built-in support for Farmer's Delight, Ice and Fire, Swampier Swamps, and
-  more.
+- **Mod Integration** 🧩: Built-in support for Farmer's Delight, Ice and Fire, Swampier Swamps,
+  Vanilla Backport, and more.
 
 ### Mob Capture Cards 📇
 

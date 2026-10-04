@@ -60,6 +60,7 @@ public class MobEntityData {
           "CanUpdate",
           "CurativeItems",
           "DrownedConversionTime",
+          "EggLayTime",
           "Health",
           "Invulnerable",
           "LeftHanded",

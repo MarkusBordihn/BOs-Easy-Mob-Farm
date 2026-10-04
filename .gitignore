@@ -18,6 +18,7 @@ out
 build
 run
 .gradle
+.client_test
 *local.properties
 
 # NodeJs

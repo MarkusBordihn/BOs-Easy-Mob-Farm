@@ -415,7 +415,12 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
     List<ItemStack> bonusLootDrops =
         MobFarmBonusConfig.getBonusDrop(this.getFarmType(), this.getFarmTierLevel(), entityType);
     LootManager.addBonusDrops(
-        lootDrops, bonusLootDrops, effectiveEnhancementItems, entityType, mobCaptureData.color());
+        lootDrops,
+        bonusLootDrops,
+        effectiveEnhancementItems,
+        entityType,
+        mobCaptureData.color(),
+        mobCaptureData.variant());
     // Handle loot drops
     this.handleLootDrops(lootDrops);
 

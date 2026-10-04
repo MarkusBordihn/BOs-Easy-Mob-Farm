@@ -5,6 +5,24 @@
 This change log includes the summarized changes. For the full changelog, please go to
 the [GitHub History][history] instead.
 
+### 11.0.0
+
+- Fixed #225 by giving cold and warm chickens their own cards and blue or brown eggs.
+- Fixed British Shorthair cats using the calico card instead of their own card.
+- Fixed a crash when other mods list mob farm tooltips in the background.
+- Fixed shift-clicking a stack of cards into the card binder putting all of them into one slot.
+- Fixed locked output slots of the farm screen not matching the selected theme.
+- Fixed Ice and Fire dragon loot causing log errors when Ice and Fire is not installed.
+- Fixed fishing on Fabric dropping cards for a different catch than the one actually reeled in.
+- Fixed modded fish without a matching mob dropping a pig card when fishing.
+- Fixed chicken capture cards not stacking; existing ones are cleaned up once on load.
+- Changed all mob capture cards to a reworked card design.
+- Changed the blank, creative and default rarity cards to match the reworked card design.
+- Changed the "Steampunk" progress gauge to a steadier pointer with even steps.
+- Changed Ice and Fire dragon farms to roll bones, flesh, scales and blood separately each cycle.
+- Added support for "Vanilla Backport", which unlocks the new chicken and Armadillo cards.
+- Added an Armadillo card and Armadillo scutes as a Desert Farm bonus drop.
+
 ### 10.13.0
 
 - Fixed #178 by removing per-mob data from capture cards so identical mobs stack again.

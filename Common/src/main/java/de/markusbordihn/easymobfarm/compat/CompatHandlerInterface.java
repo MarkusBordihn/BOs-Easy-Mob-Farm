@@ -48,6 +48,13 @@ public interface CompatHandlerInterface {
         CompatConstants.MOD_SWAMPIER_SWAMPS_NAME,
         CompatConstants.MOD_SWAMPIER_SWAMPS_ID,
         CompatConstants.MOD_SWAMPIER_SWAMPS_LOADED);
+
+    CompatConstants.MOD_VANILLA_BACKPORT_LOADED =
+        isModLoaded(CompatConstants.MOD_VANILLA_BACKPORT_ID);
+    logFoundMod(
+        CompatConstants.MOD_VANILLA_BACKPORT_NAME,
+        CompatConstants.MOD_VANILLA_BACKPORT_ID,
+        CompatConstants.MOD_VANILLA_BACKPORT_LOADED);
   }
 
   default void onMobCaptureCardDefinitionsSynced() {

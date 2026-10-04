@@ -20,59 +20,32 @@
 package de.markusbordihn.easymobfarm.mixin;
 
 import de.markusbordihn.easymobfarm.entity.FishingEvents;
-import java.util.List;
-import net.minecraft.server.level.ServerLevel;
+import java.util.Collection;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.storage.loot.BuiltInLootTables;
-import net.minecraft.world.level.storage.loot.LootParams;
-import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(FishingHook.class)
 public class FishingHookMixin {
 
-  @Inject(
+  @ModifyArg(
       method = "retrieve",
       at =
           @At(
               value = "INVOKE",
               target =
-                  "Lnet/minecraft/world/level/storage/loot/LootTable;getRandomItems(Lnet/minecraft/world/level/storage/loot/LootParams;)Lit/unimi/dsi/fastutil/objects/ObjectArrayList;",
-              shift = At.Shift.AFTER))
-  private void easyMobFarmOnRetrieve(
-      ItemStack itemStack, CallbackInfoReturnable<Integer> callbackInfoReturnable) {
-    if (itemStack == null || itemStack.isEmpty()) {
-      return;
-    }
-
-    FishingHook fishingHook = (FishingHook) (Object) this;
-    if (!(fishingHook.getPlayerOwner() instanceof ServerPlayer serverPlayer)
-        || serverPlayer.level().isClientSide) {
-      return;
-    }
-
-    // Because we have no direct access to the loot table, we have to reproduce the loot table
-    // behavior to get the similar loot.
-    LootParams.Builder builder =
-        new LootParams.Builder((ServerLevel) fishingHook.level())
-            .withParameter(LootContextParams.ORIGIN, fishingHook.position())
-            .withParameter(LootContextParams.TOOL, itemStack)
-            .withParameter(LootContextParams.THIS_ENTITY, fishingHook)
-            .withLuck(fishingHook.luck + serverPlayer.getLuck());
-
-    LootTable lootTable =
-        fishingHook.level().getServer().getLootData().getLootTable(BuiltInLootTables.FISHING);
-    List<ItemStack> reproducedLoot =
-        lootTable.getRandomItems(builder.create(LootContextParamSets.FISHING));
-    if (!reproducedLoot.isEmpty()) {
-      FishingEvents.handleItemFishedEvent(serverPlayer, reproducedLoot);
-    }
+                  "Lnet/minecraft/advancements/critereon/FishingRodHookedTrigger;trigger(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/projectile/FishingHook;Ljava/util/Collection;)V",
+              ordinal = 1),
+      index = 3)
+  private Collection<ItemStack> easyMobFarmOnRetrieve(
+      ServerPlayer serverPlayer,
+      ItemStack fishingRod,
+      FishingHook fishingHook,
+      Collection<ItemStack> fishingLoot) {
+    FishingEvents.handleItemFishedEvent(serverPlayer, fishingLoot);
+    return fishingLoot;
   }
 }

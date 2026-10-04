@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "iceandfire:dragonscales_electric",
+      "required": false
+    }
+  ]
+}

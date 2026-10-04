@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.data.capture;
 
 import de.markusbordihn.easymobfarm.Constants;
+import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -37,6 +38,9 @@ public record MobCaptureCardDefinition(
     boolean supportsKnifeEnhancement,
     Map<String, Variant> variants,
     Map<String, Color> colors) {
+
+  public static final int MAXIMUM_COLORS = 64;
+  public static final int MAXIMUM_VARIANTS = 64;
 
   public MobCaptureCardDefinition(
       ResourceLocation entity,
@@ -74,17 +78,20 @@ public record MobCaptureCardDefinition(
     // Read colors
     Map<String, MobCaptureCardDefinition.Color> colors =
         buffer.readMap(
+            FriendlyByteBuf.limitValue(HashMap::new, MAXIMUM_COLORS),
             FriendlyByteBuf::readUtf,
             buf -> new MobCaptureCardDefinition.Color(buf.readResourceLocation()));
 
     // Read variants
     Map<String, MobCaptureCardDefinition.Variant> variants =
         buffer.readMap(
+            FriendlyByteBuf.limitValue(HashMap::new, MAXIMUM_VARIANTS),
             FriendlyByteBuf::readUtf,
             buf -> {
               ResourceLocation variantModel = buf.readResourceLocation();
               Map<String, MobCaptureCardDefinition.Color> variantColors =
                   buf.readMap(
+                      FriendlyByteBuf.limitValue(HashMap::new, MAXIMUM_COLORS),
                       FriendlyByteBuf::readUtf,
                       b -> new MobCaptureCardDefinition.Color(b.readResourceLocation()));
               return new MobCaptureCardDefinition.Variant(variantModel, variantColors);

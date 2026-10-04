@@ -33,9 +33,14 @@ public class CompatConstants {
   public static final String MOD_JEI_ID = "jei";
   public static final String MOD_JEI_NAME = "Just Enough Items";
 
+  // Vanilla Backport registers its content under the vanilla namespace, only the mod id differs.
+  public static final String MOD_VANILLA_BACKPORT_ID = "vanillabackport";
+  public static final String MOD_VANILLA_BACKPORT_NAME = "Vanilla Backport";
+
   public static boolean MOD_FARMERS_DELIGHT_LOADED = false;
   public static boolean MOD_JEI_LOADED = false;
   public static boolean MOD_SWAMPIER_SWAMPS_LOADED = false;
+  public static boolean MOD_VANILLA_BACKPORT_LOADED = false;
 
   private CompatConstants() {}
 }

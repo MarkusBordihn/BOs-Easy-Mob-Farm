@@ -44,6 +44,13 @@ minecraft {
       args '--username', 'guest_player'
     }
 
+    if (clientToolkitAvailable) {
+      clientTest {
+        parent minecraft.runs.client
+        workingDirectory project.file('run/clienttest')
+      }
+    }
+
     server {
       jvmArgs "-XX:+AllowEnhancedClassRedefinition"
       workingDirectory project.file('run/server')
@@ -109,21 +116,6 @@ dependencies {
     compileOnly fg.deobf("curse.maven:jei-238222:${project.forge_jei_mod}")
     runtimeOnly fg.deobf("curse.maven:jei-238222:${project.forge_jei_mod}")
   }
-  if (project.hasProperty('forge_spark_mod') && project.forge_spark_mod) {
-    runtimeOnly fg.deobf("curse.maven:spark-361579:${project.forge_spark_mod}")
-  }
-  if (project.hasProperty('forge_xaeros_minimap_mod') && project.forge_xaeros_minimap_mod) {
-    runtimeOnly fg.deobf("curse.maven:xaeros_minimap-263420:${project.forge_xaeros_minimap_mod}")
-  }
-  if (project.hasProperty('forge_jade_mod') && project.forge_jade_mod) {
-    runtimeOnly fg.deobf("curse.maven:jade-324717:${project.forge_jade_mod}")
-  }
-
-  // Geckolib: Dependency
-  runtimeOnly fg.deobf("curse.maven:geckolib-388172:6333474")
-
-  // Naturalist: Integration
-  runtimeOnly fg.deobf("curse.maven:naturalist-627986:6322818")
 
   // Mob Catcher: Integration
   // compileOnly fg.deobf("curse.maven:mob-catcher-498389:4026567")
@@ -134,16 +126,24 @@ dependencies {
   // runtimeOnly fg.deobf("curse.maven:mobcatcher-324347:4083095")
 
   // Create: Integration
-  compileOnly fg.deobf("curse.maven:create-328085:5838779")
-  runtimeOnly fg.deobf("curse.maven:create-328085:5838779")
+  compileOnly fg.deobf("curse.maven:create-328085:7178761")
+  runtimeOnly fg.deobf("curse.maven:create-328085:7178761")
+
+  // Sophisticated Storage: Automation client test
+  runtimeOnly fg.deobf("curse.maven:sophisticated-core-618298:8705513")
+  runtimeOnly fg.deobf("curse.maven:sophisticated-storage-619320:8719374")
 
   // Mob Capturing Tool: Integration
   // compileOnly fg.deobf("curse.maven:mob-capturing-tool-630272:3834440")
   // runtimeOnly fg.deobf("curse.maven:mob-capturing-tool-630272:3834440")
 
-  // Storage Drawer: Integration
-  // compileOnly fg.deobf("curse.maven:storage-drawers-223852:3807626")
-  // runtimeOnly fg.deobf("curse.maven:storage-drawers-223852:3807626")
+  // Storage Drawers: Automation client test
+  runtimeOnly fg.deobf("curse.maven:storage-drawers-223852:6865761")
+
+  // Applied Energistics 2: Automation client test
+  // Pinned to 15.3.6: 15.4+ requires GuideME 20.1.x, which reads its client config during the first
+  // resource reload and randomly crashes the Forge dev client with "config value before loaded".
+  runtimeOnly fg.deobf("curse.maven:applied-energistics-2-223794:6492979")
 
   // Productive Bees: Integration
   // compileOnly fg.deobf("curse.maven:productivebees-377897:4257307")
@@ -169,6 +169,11 @@ dependencies {
 
   // Farmers Delight: Integration
   runtimeOnly fg.deobf("curse.maven:farmers-delight-398521:6917255")
+
+  // Client Runtime Interface Toolkit (runtime dependency, only for client tests)
+  if (clientToolkitAvailable && isClientTestRun) {
+    runtimeOnly fg.deobf(clientToolkitCoordinate('forge'))
+  }
 }
 
 tasks.withType(JavaCompile).configureEach {
