@@ -171,7 +171,7 @@ public class MobFarmBlockEntityRenderer
         renderState.entityScaling, renderState.entityScaling, renderState.entityScaling);
 
     // Apply rotation based on facing direction
-    poseStack.mulPose(Axis.YP.rotationDegrees(renderState.rotationDegrees));
+    poseStack.rotateDegrees(Axis.YP, renderState.rotationDegrees);
 
     // Apply entity-specific transformations
     applyEntitySpecificTransformations(renderState, poseStack);
@@ -211,9 +211,9 @@ public class MobFarmBlockEntityRenderer
     switch (renderState.entityType) {
       case SCHOOLING_FISH:
         poseStack.translate(-0.1, 0.5, 0.1);
-        poseStack.mulPose(Axis.XP.rotationDegrees(2.0F));
-        poseStack.mulPose(Axis.YP.rotationDegrees(15.0F));
-        poseStack.mulPose(Axis.ZP.rotationDegrees(-90.0F));
+        poseStack.rotateDegrees(Axis.XP, 2.0F);
+        poseStack.rotateDegrees(Axis.YP, 15.0F);
+        poseStack.rotateDegrees(Axis.ZP, -90.0F);
         break;
       case BEE:
       case PHANTOM:
@@ -226,9 +226,9 @@ public class MobFarmBlockEntityRenderer
         poseStack.translate(0, 0.3 / renderState.entityScaling, 0);
         break;
       case ENDER_DRAGON:
-        poseStack.mulPose(Axis.XP.rotationDegrees(0.0F));
-        poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
-        poseStack.mulPose(Axis.ZP.rotationDegrees(0.0F));
+        poseStack.rotateDegrees(Axis.XP, 0.0F);
+        poseStack.rotateDegrees(Axis.YP, 180.0F);
+        poseStack.rotateDegrees(Axis.ZP, 0.0F);
         break;
       case GENERIC:
       default:

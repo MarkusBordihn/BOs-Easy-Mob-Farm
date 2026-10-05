@@ -6,7 +6,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["easy_mob_farm:milk_extractor_enhancement"]
+            "items": [
+              "easy_mob_farm:milk_extractor_enhancement"
+            ]
           }
         ]
       }
@@ -16,7 +18,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "easy_mob_farm:milk"
+            "items": "#easy_mob_farm:milk"
           }
         ]
       }
@@ -26,7 +28,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["minecraft:copper_ingot"]
+            "items": [
+              "minecraft:copper_ingot"
+            ]
           }
         ]
       }
@@ -36,7 +40,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["minecraft:piston"]
+            "items": [
+              "minecraft:piston"
+            ]
           }
         ]
       }
@@ -51,6 +57,8 @@
     ]
   ],
   "rewards": {
-    "recipes": ["easy_mob_farm:upgrade/enhancement/milk_extractor_enhancement"]
+    "recipes": [
+      "easy_mob_farm:upgrade/enhancement/milk_extractor_enhancement"
+    ]
   }
 }

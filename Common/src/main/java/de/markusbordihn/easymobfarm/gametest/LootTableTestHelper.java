@@ -23,7 +23,7 @@ import de.markusbordihn.easymobfarm.Constants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -57,7 +57,7 @@ public class LootTableTestHelper {
       GameTestHelper helper, Block block, Item item, Item miningTool, BlockPos blockPos) {
     // Define itemStack and mock player
     ItemStack itemStack = new ItemStack(miningTool);
-    Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+    ServerPlayer player = (ServerPlayer) helper.makeMockServerPlayer(GameType.SURVIVAL);
     player.setItemInHand(InteractionHand.MAIN_HAND, itemStack);
 
     // Set block and prepare for drop

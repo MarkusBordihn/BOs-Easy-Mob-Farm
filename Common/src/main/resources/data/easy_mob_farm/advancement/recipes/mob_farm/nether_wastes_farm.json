@@ -6,7 +6,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["easy_mob_farm:nether_wastes_farm"]
+            "items": [
+              "easy_mob_farm:nether_wastes_farm"
+            ]
           }
         ]
       }
@@ -16,7 +18,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "easy_mob_farm:mob_farm_templates"
+            "items": "#easy_mob_farm:mob_farm_templates"
           }
         ]
       }
@@ -26,7 +28,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["minecraft:crimson_fungus"]
+            "items": [
+              "minecraft:crimson_fungus"
+            ]
           }
         ]
       }
@@ -36,14 +40,21 @@
       "conditions": {
         "items": [
           {
-            "items": ["minecraft:netherrack"]
+            "items": [
+              "minecraft:netherrack"
+            ]
           }
         ]
       }
     }
   },
   "requirements": [
-    ["has_nether_wastes_farm", "has_mob_farm_template", "has_crimson_fungus", "has_netherrack"]
+    [
+      "has_nether_wastes_farm",
+      "has_mob_farm_template",
+      "has_crimson_fungus",
+      "has_netherrack"
+    ]
   ],
   "rewards": {
     "recipes": [

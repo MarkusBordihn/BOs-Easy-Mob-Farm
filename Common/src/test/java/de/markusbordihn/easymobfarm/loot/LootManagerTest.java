@@ -189,4 +189,60 @@ class LootManagerTest {
     Assertions.assertEquals(1, drops.size());
     Assertions.assertTrue(drops.get(0).is(Items.EGG));
   }
+
+  @Test
+  void warmChickenReplacesEggWithBrownEgg() {
+    NonNullList<ItemStack> drops = NonNullList.create();
+    List<ItemStack> bonusDrops = List.of(new ItemStack(Items.EGG));
+
+    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityTypes.CHICKEN, null, "warm");
+
+    Assertions.assertEquals(1, drops.size());
+    Assertions.assertTrue(drops.get(0).is(Items.BROWN_EGG));
+  }
+
+  @Test
+  void variantEggDoesNotReplaceEggForNonChicken() {
+    NonNullList<ItemStack> drops = NonNullList.create();
+    List<ItemStack> bonusDrops = List.of(new ItemStack(Items.EGG));
+
+    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityTypes.COW, null, "cold");
+
+    Assertions.assertEquals(1, drops.size());
+    Assertions.assertTrue(drops.get(0).is(Items.EGG));
+  }
+
+  @Test
+  void unknownOrMissingVariantYieldsPlainEgg() {
+    Assertions.assertSame(Items.EGG, LootManager.getEggItem(null));
+    Assertions.assertSame(Items.EGG, LootManager.getEggItem("temperate"));
+    Assertions.assertSame(Items.EGG, LootManager.getEggItem("unknown"));
+  }
+
+  @Test
+  void variantBonusDropsListBlueAndBrownEggsForChicken() {
+    List<ItemStack> variantBonusDrops =
+        LootManager.getVariantBonusDrops(
+            EntityTypes.CHICKEN, new ItemStack(Items.EGG, 2), List.of("temperate", "cold", "warm"));
+
+    Assertions.assertEquals(2, variantBonusDrops.size());
+    Assertions.assertTrue(
+        variantBonusDrops.stream().anyMatch(itemStack -> itemStack.is(Items.BLUE_EGG)));
+    Assertions.assertTrue(
+        variantBonusDrops.stream().anyMatch(itemStack -> itemStack.is(Items.BROWN_EGG)));
+    Assertions.assertTrue(
+        variantBonusDrops.stream().allMatch(itemStack -> itemStack.getCount() == 2));
+  }
+
+  @Test
+  void variantBonusDropsAreEmptyForNonChickenOrNonEgg() {
+    Assertions.assertTrue(
+        LootManager.getVariantBonusDrops(
+                EntityTypes.COW, new ItemStack(Items.EGG), List.of("cold", "warm"))
+            .isEmpty());
+    Assertions.assertTrue(
+        LootManager.getVariantBonusDrops(
+                EntityTypes.CHICKEN, new ItemStack(Items.FEATHER), List.of("cold", "warm"))
+            .isEmpty());
+  }
 }

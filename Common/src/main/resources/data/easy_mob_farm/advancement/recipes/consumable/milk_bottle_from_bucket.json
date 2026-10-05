@@ -6,7 +6,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["easy_mob_farm:milk_bottle"]
+            "items": [
+              "easy_mob_farm:milk_bottle"
+            ]
           }
         ]
       }
@@ -16,7 +18,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "easy_mob_farm:milk"
+            "items": "#easy_mob_farm:milk"
           }
         ]
       }
@@ -26,16 +28,24 @@
       "conditions": {
         "items": [
           {
-            "items": ["minecraft:glass_bottle"]
+            "items": [
+              "minecraft:glass_bottle"
+            ]
           }
         ]
       }
     }
   },
   "requirements": [
-    ["has_milk_bottle", "has_milk", "has_glass_bottle"]
+    [
+      "has_milk_bottle",
+      "has_milk",
+      "has_glass_bottle"
+    ]
   ],
   "rewards": {
-    "recipes": ["easy_mob_farm:consumable/milk_bottle_from_bucket"]
+    "recipes": [
+      "easy_mob_farm:consumable/milk_bottle_from_bucket"
+    ]
   }
 }

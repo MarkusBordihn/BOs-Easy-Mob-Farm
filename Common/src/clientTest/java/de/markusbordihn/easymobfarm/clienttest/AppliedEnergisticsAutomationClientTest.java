@@ -56,7 +56,7 @@ class AppliedEnergisticsAutomationClientTest extends AutomationClientTestBase {
   @Test
   @DisplayName("Applied Energistics 2 import bus stores farm results in a chest")
   void importBusStoresResultsThroughStorageBus() throws IOException {
-    assumeRuntimeMod("Applied Energistics 2", "neoforge");
+    assumeRuntimeMod("Applied Energistics 2", "applied_energistics");
     buildStage(SKY_STONE_HALL, "ME System", "Import Bus");
     decorateSkyStoneHall();
     setblock(-2, GROUND_Y, SCENE_Z, "ae2:drive");

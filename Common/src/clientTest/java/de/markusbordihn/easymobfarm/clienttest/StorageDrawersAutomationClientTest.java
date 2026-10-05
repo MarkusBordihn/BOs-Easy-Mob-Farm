@@ -94,7 +94,7 @@ class StorageDrawersAutomationClientTest extends AutomationClientTestBase {
   @Test
   @DisplayName("Hopper fills a Storage Drawers wall with farm results")
   void hopperFillsDrawerWall() throws IOException {
-    assumeRuntimeMod("Storage Drawers", "fabric", "neoforge");
+    assumeRuntimeMod("Storage Drawers", "storage_drawers");
     buildStage(STOREROOM, "Storage Drawers", "Hopper to Drawer");
     decorateStoreroom();
     buildDrawerWall();

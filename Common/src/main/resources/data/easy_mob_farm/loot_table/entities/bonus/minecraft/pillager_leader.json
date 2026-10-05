@@ -7,46 +7,64 @@
         {
           "type": "item",
           "name": "minecraft:ominous_bottle",
-          "functions": [
-            {
-              "function": "minecraft:set_components",
-              "components": {
-                "minecraft:ominous_bottle_amplifier": 0
-              }
+          "modifier": {
+            "type": "minecraft:set_components",
+            "components": {
+              "minecraft:ominous_bottle_amplifier": 0
             }
-          ]
+          }
         }
       ]
     },
     {
       "rolls": 1,
-      "conditions": [
-        {
-          "condition": "minecraft:random_chance",
-          "chance": 0.5
-        }
-      ],
+      "condition": {
+        "type": "minecraft:random_chance",
+        "chance": 0.5
+      },
       "entries": [
         {
           "type": "item",
           "name": "minecraft:white_banner",
-          "functions": [
-            {
-              "function": "minecraft:set_components",
-              "components": {
-                "minecraft:banner_patterns": [
-                  {"pattern": "minecraft:rhombus", "color": "cyan"},
-                  {"pattern": "minecraft:stripe_bottom", "color": "light_gray"},
-                  {"pattern": "minecraft:stripe_center", "color": "gray"},
-                  {"pattern": "minecraft:border", "color": "light_gray"},
-                  {"pattern": "minecraft:stripe_middle", "color": "black"},
-                  {"pattern": "minecraft:half_horizontal", "color": "light_gray"},
-                  {"pattern": "minecraft:circle", "color": "light_gray"},
-                  {"pattern": "minecraft:border", "color": "black"}
-                ]
-              }
+          "modifier": {
+            "type": "minecraft:set_components",
+            "components": {
+              "minecraft:banner_patterns": [
+                {
+                  "pattern": "minecraft:rhombus",
+                  "color": "cyan"
+                },
+                {
+                  "pattern": "minecraft:stripe_bottom",
+                  "color": "light_gray"
+                },
+                {
+                  "pattern": "minecraft:stripe_center",
+                  "color": "gray"
+                },
+                {
+                  "pattern": "minecraft:border",
+                  "color": "light_gray"
+                },
+                {
+                  "pattern": "minecraft:stripe_middle",
+                  "color": "black"
+                },
+                {
+                  "pattern": "minecraft:half_horizontal",
+                  "color": "light_gray"
+                },
+                {
+                  "pattern": "minecraft:circle",
+                  "color": "light_gray"
+                },
+                {
+                  "pattern": "minecraft:border",
+                  "color": "black"
+                }
+              ]
             }
-          ]
+          }
         }
       ]
     }

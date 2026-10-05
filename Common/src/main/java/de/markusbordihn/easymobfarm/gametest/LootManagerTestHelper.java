@@ -19,7 +19,6 @@
 
 package de.markusbordihn.easymobfarm.gametest;
 
-import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.capture.MobCaptureManager;
 import de.markusbordihn.easymobfarm.config.MobFarmBonusConfig;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
@@ -31,6 +30,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -50,12 +50,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class LootManagerTestHelper {
 
-  private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final int FARM_LOOT_RUNS = 32;
   private static final int SPECIAL_DROP_RUNS = 200;
   private static final int LOOT_ENHANCEMENT_COUNT = 4;
@@ -63,6 +60,19 @@ public class LootManagerTestHelper {
   private static final int EXPERIENCE_DROP_RUNS = 100;
   private static final int MAX_TIER_LEVEL = 3;
   private static final Map<EntityType<?>, Item> KEY_DROPS = createKeyDrops();
+  private static final Set<EntityType<?>> MOBS_WITHOUT_VANILLA_LOOT =
+      Set.of(
+          EntityTypes.ALLAY,
+          EntityTypes.ARMADILLO,
+          EntityTypes.AXOLOTL,
+          EntityTypes.BEE,
+          EntityTypes.ENDERMITE,
+          EntityTypes.FOX,
+          EntityTypes.FROG,
+          EntityTypes.GOAT,
+          EntityTypes.PIGLIN,
+          EntityTypes.PIGLIN_BRUTE,
+          EntityTypes.VILLAGER);
   private static final List<EntityType<?>> ENHANCEMENT_TEST_ENTITY_TYPES =
       List.of(
           EntityTypes.BEE,
@@ -222,19 +232,17 @@ public class LootManagerTestHelper {
               MobCaptureManager.getMobCaptureCardItem(entityType, helper.getLevel()));
       if (mobCaptureData == null) {
         mobsWithoutCard.add(entityType.toShortString());
-      } else if (!producesLoot(helper, mobCaptureData, enhancements)) {
+      } else if (!MOBS_WITHOUT_VANILLA_LOOT.contains(entityType)
+          && !producesLoot(helper, mobCaptureData, enhancements)) {
         mobsWithoutLoot.add(entityType.toShortString());
       }
     }
 
-    if (!mobsWithoutLoot.isEmpty()) {
-      log.warn(
-          "[Game Test] Captured mobs produced no farm loot in {} runs: {}",
-          FARM_LOOT_RUNS,
-          mobsWithoutLoot);
-    }
     helper.assertTrue(
         mobsWithoutCard.isEmpty(), "No mob capture card could be created for: " + mobsWithoutCard);
+    helper.assertTrue(
+        mobsWithoutLoot.isEmpty(),
+        "Captured mobs produced no farm loot in " + FARM_LOOT_RUNS + " runs: " + mobsWithoutLoot);
     helper.succeed();
   }
 

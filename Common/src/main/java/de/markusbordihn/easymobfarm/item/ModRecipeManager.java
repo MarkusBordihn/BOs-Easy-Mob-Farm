@@ -29,9 +29,14 @@ import de.markusbordihn.easymobfarm.item.mobcatcher.VoidBindingChainItem;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.IdentityHashMap;
+import java.util.Set;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.protocol.game.ClientboundUpdateRecipesPacket;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeMap;
@@ -162,7 +167,15 @@ public class ModRecipeManager {
     if (minecraftServer.getRecipeManager().getRecipes().size() != recipes.size()) {
       // Replace recipes with adjusted recipes.
       log.info("Updating recipes with adjusted recipes ...");
-      RecipeMap recipeMap = RecipeMap.create(recipes);
+      Set<Recipe<?>> remainingRecipes = Collections.newSetFromMap(new IdentityHashMap<>());
+      recipes.forEach(recipeHolder -> remainingRecipes.add(recipeHolder.value()));
+      RecipeMap recipeMap =
+          RecipeMap.create(
+              minecraftServer
+                  .reloadableRegistries()
+                  .lookup()
+                  .lookupOrThrow(Registries.RECIPE)
+                  .filterElements(remainingRecipes::contains));
 
       // Use reflection to set the recipes.
       setRecipes(minecraftServer.getRecipeManager(), recipeMap);

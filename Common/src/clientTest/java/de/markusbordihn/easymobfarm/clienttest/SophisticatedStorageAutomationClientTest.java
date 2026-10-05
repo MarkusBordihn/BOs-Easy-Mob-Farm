@@ -63,7 +63,7 @@ class SophisticatedStorageAutomationClientTest extends AutomationClientTestBase 
   @Test
   @DisplayName("Sophisticated Storage hopper upgrade pulls results from three farm types")
   void hopperUpgradePullsResultsFromThreeFarmTypes() throws IOException {
-    assumeRuntimeMod("Sophisticated Storage", "neoforge");
+    assumeRuntimeMod("Sophisticated Storage", "sophisticated_storage");
     buildStage(WAREHOUSE, "Sophisticated", "Hopper Upgrade");
     decorateWarehouse();
     placeBarrelFarm("animal_plains_farm", "chicken", -BARREL_SPACING);

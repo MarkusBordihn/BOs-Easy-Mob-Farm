@@ -7,13 +7,13 @@
         {
           "type": "minecraft:item",
           "name": "easy_mob_farm:nether_wastes_farm",
-          "functions": [
+          "modifier": [
             {
-              "function": "minecraft:copy_name",
+              "type": "minecraft:copy_name",
               "source": "block_entity"
             },
             {
-              "function": "minecraft:copy_components",
+              "type": "minecraft:copy_components",
               "source": "block_entity",
               "ops": [
                 {
@@ -26,11 +26,9 @@
           ]
         }
       ],
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
-        }
-      ]
+      "condition": {
+        "type": "minecraft:survives_explosion"
+      }
     }
   ]
 }

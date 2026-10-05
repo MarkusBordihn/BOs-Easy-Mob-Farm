@@ -15,51 +15,57 @@ task generateMobCaptureCardModel {
     def jsonSlurper = new JsonSlurper()
     def cases = []
 
-    // Recursively read all JSON files in the input directory
+    def definitionFiles = []
     inputDir.eachFileRecurse { file ->
       if (file.name.endsWith(".json") && file.parentFile.name == "mob_capture_card") {
-        def data = jsonSlurper.parse(file)
-        def entity = data.entity
-        def baseModel = data.model
-        def variants = data.variants ?: [:]
-        def colors = data.colors ?: [:]
+        definitionFiles << file
+      }
+    }
+    // File system order differs between NTFS and Linux; sort for a stable output.
+    definitionFiles.sort { it.path.replace('\\', '/') }
 
-        if (!entity || !baseModel) return
+    definitionFiles.each { file ->
+      def data = jsonSlurper.parse(file)
+      def entity = data.entity
+      def baseModel = data.model
+      def variants = data.variants ?: [:]
+      def colors = data.colors ?: [:]
 
-        if (!variants.isEmpty()) {
-          def variantCases = variants.collect { key, value ->
-            [when: key, model: [type: "minecraft:model", model: value.model ?: baseModel]]
-          }
-          def fallback = variants.values().first().model ?: baseModel
-          cases << [
-              when : entity,
-              model: [
-                  type    : "minecraft:select",
-                  property: "easy_mob_farm:mob_capture_card_entity_variant",
-                  cases   : variantCases,
-                  fallback: [type: "minecraft:model", model: fallback]
-              ]
-          ]
-        } else if (!colors.isEmpty()) {
-          def colorCases = colors.collect { key, value ->
-            [when: key, model: [type: "minecraft:model", model: value.model ?: baseModel]]
-          }
-          def fallback = colors.values().first().model ?: baseModel
-          cases << [
-              when : entity,
-              model: [
-                  type    : "minecraft:select",
-                  property: "easy_mob_farm:mob_capture_card_entity_color",
-                  cases   : colorCases,
-                  fallback: [type: "minecraft:model", model: fallback]
-              ]
-          ]
-        } else {
-          cases << [
-              when : entity,
-              model: [type: "minecraft:model", model: baseModel]
-          ]
+      if (!entity || !baseModel) return
+
+      // Cards without a variant or color (regular Pillager, old chicken cards) must keep the
+      // definition's own model instead of the first listed variant or color.
+      if (!variants.isEmpty()) {
+        def variantCases = variants.collect { key, value ->
+          [when: key, model: [type: "minecraft:model", model: value.model ?: baseModel]]
         }
+        cases << [
+            when : entity,
+            model: [
+                type    : "minecraft:select",
+                property: "easy_mob_farm:mob_capture_card_entity_variant",
+                cases   : variantCases,
+                fallback: [type: "minecraft:model", model: baseModel]
+            ]
+        ]
+      } else if (!colors.isEmpty()) {
+        def colorCases = colors.collect { key, value ->
+          [when: key, model: [type: "minecraft:model", model: value.model ?: baseModel]]
+        }
+        cases << [
+            when : entity,
+            model: [
+                type    : "minecraft:select",
+                property: "easy_mob_farm:mob_capture_card_entity_color",
+                cases   : colorCases,
+                fallback: [type: "minecraft:model", model: baseModel]
+            ]
+        ]
+      } else {
+        cases << [
+            when : entity,
+            model: [type: "minecraft:model", model: baseModel]
+        ]
       }
     }
 

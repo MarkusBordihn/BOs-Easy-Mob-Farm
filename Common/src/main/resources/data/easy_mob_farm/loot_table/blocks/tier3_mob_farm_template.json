@@ -9,11 +9,9 @@
           "name": "easy_mob_farm:tier3_mob_farm_template"
         }
       ],
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
-        }
-      ]
+      "condition": {
+        "type": "minecraft:survives_explosion"
+      }
     }
   ]
 }

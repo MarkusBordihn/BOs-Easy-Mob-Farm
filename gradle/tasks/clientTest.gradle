@@ -57,6 +57,10 @@ clientTestGameDirectories.each { loaderName, gameDirectoryPath ->
     def gameDirectory = file(gameDirectoryPath)
     def screenshotDirectory = file("${gameDirectory}/clienttest-screenshots")
     def reportDirectory = rootProject.file(".client_test/${loaderName.toLowerCase()}")
+    def runtimeModPrefix = "${loaderName.toLowerCase()}_"
+    def runtimeMods = project.properties
+        .findAll { name, fileId -> name.startsWith(runtimeModPrefix) && name.endsWith('_mod') && fileId }
+        .collect { name, fileId -> name.substring(runtimeModPrefix.length(), name.length() - '_mod'.length()) }
 
     def clientTestRuntimeConfiguration = configurations.create('clientTestRuntime')
     dependencies {
@@ -110,6 +114,7 @@ clientTestGameDirectories.each { loaderName, gameDirectoryPath ->
       systemProperty 'clientruntime.projectDirectory', rootProject.projectDir.absolutePath
       systemProperty 'clientruntime.gameDirectory', gameDirectory.absolutePath
       systemProperty 'clientruntime.loader', loaderName.toLowerCase()
+      systemProperty 'clientruntime.runtimeMods', runtimeMods.join(',')
       systemProperty 'clientruntime.screenshotDirectory', screenshotDirectory.absolutePath
       // Loom runs the client on the Gradle JVM and the Mixin of fabric-loader 0.16 fails on Java 25.
       environment 'GRADLE_OPTS', "-Dorg.gradle.java.home=${System.getProperty('java.home')}"

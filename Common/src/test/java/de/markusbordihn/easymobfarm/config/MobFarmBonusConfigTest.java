@@ -80,6 +80,13 @@ class MobFarmBonusConfigTest {
   }
 
   @Test
+  @DisplayName("Desert Farm has an Armadillo scute bonus drop on every tier")
+  void desertFarmArmadilloDefaults() {
+    assertDefaultBonusDropsForAllTiers(
+        MobFarmType.DESERT_FARM, "minecraft:armadillo", Items.ARMADILLO_SCUTE);
+  }
+
+  @Test
   @DisplayName("Existing Swamp Farm defaults are unchanged")
   void swampFarmDefaultsUnchanged() {
     assertDefaultBonusDropsForAllTiers(MobFarmType.SWAMP_FARM, "minecraft:witch", Items.REDSTONE);

@@ -1,4 +1,4 @@
-# Changelog for Easy Mob Farm 26.2
+# Changelog for Easy Mob Farm 26.3
 
 ## Note
 
@@ -20,6 +20,7 @@ the [GitHub History][history] instead.
 - Changed the blank, creative and default rarity cards to match the reworked card design.
 - Changed the "Steampunk" progress gauge to a steadier pointer with even steps.
 - Changed Ice and Fire dragon farms to roll bones, flesh, scales and blood separately each cycle.
+- Changed the mod to Minecraft 26.3.
 - Added an Armadillo card and Armadillo scutes as a Desert Farm bonus drop.
 
 ### 10.13.0

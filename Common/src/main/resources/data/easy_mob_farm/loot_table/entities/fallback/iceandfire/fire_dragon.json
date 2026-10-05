@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:tag",
-          "name": "easy_mob_farm:fallback/iceandfire/dragonbone",
+          "items": "#easy_mob_farm:fallback/iceandfire/dragonbone",
           "expand": false
         }
       ]
@@ -16,39 +16,42 @@
       "entries": [
         {
           "type": "minecraft:tag",
-          "name": "easy_mob_farm:fallback/iceandfire/fire_dragon_flesh",
+          "items": "#easy_mob_farm:fallback/iceandfire/fire_dragon_flesh",
           "expand": false
         }
       ],
-      "conditions": [
-        {"condition": "minecraft:random_chance", "chance": 0.8}
-      ]
+      "condition": {
+        "type": "minecraft:random_chance",
+        "chance": 0.8
+      }
     },
     {
       "rolls": 1,
       "entries": [
         {
           "type": "minecraft:tag",
-          "name": "easy_mob_farm:fallback/iceandfire/dragonscales_red",
+          "items": "#easy_mob_farm:fallback/iceandfire/dragonscales_red",
           "expand": false
         }
       ],
-      "conditions": [
-        {"condition": "minecraft:random_chance", "chance": 0.6}
-      ]
+      "condition": {
+        "type": "minecraft:random_chance",
+        "chance": 0.6
+      }
     },
     {
       "rolls": 1,
       "entries": [
         {
           "type": "minecraft:tag",
-          "name": "easy_mob_farm:fallback/iceandfire/fire_dragon_blood",
+          "items": "#easy_mob_farm:fallback/iceandfire/fire_dragon_blood",
           "expand": false
         }
       ],
-      "conditions": [
-        {"condition": "minecraft:random_chance", "chance": 0.35}
-      ]
+      "condition": {
+        "type": "minecraft:random_chance",
+        "chance": 0.35
+      }
     }
   ]
 }

@@ -6,7 +6,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["easy_mob_farm:card_binder"]
+            "items": [
+              "easy_mob_farm:card_binder"
+            ]
           }
         ]
       }
@@ -16,7 +18,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["minecraft:leather"]
+            "items": [
+              "minecraft:leather"
+            ]
           }
         ]
       }
@@ -26,7 +30,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["minecraft:book"]
+            "items": [
+              "minecraft:book"
+            ]
           }
         ]
       }
@@ -36,16 +42,23 @@
       "conditions": {
         "items": [
           {
-            "tag": "easy_mob_farm:string"
+            "items": "#easy_mob_farm:string"
           }
         ]
       }
     }
   },
   "requirements": [
-    ["has_card_binder", "has_leather", "has_book", "has_string"]
+    [
+      "has_card_binder",
+      "has_leather",
+      "has_book",
+      "has_string"
+    ]
   ],
   "rewards": {
-    "recipes": ["easy_mob_farm:card_binder"]
+    "recipes": [
+      "easy_mob_farm:card_binder"
+    ]
   }
 }

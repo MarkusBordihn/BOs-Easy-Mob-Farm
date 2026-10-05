@@ -45,11 +45,13 @@ abstract class AutomationClientTestBase extends ClientTestBase {
   private static final int VANTAGE_Y = GROUND_Y + 3;
   private static final int VANTAGE_Z = STAGE_MIN_Z - 4;
 
-  static void assumeRuntimeMod(String modName, String... loadersWithMod) {
+  static void assumeRuntimeMod(String modName, String runtimeModKey) {
     String loader = System.getProperty("clientruntime.loader");
+    List<String> runtimeMods =
+        List.of(System.getProperty("clientruntime.runtimeMods", "").split(","));
     Assumptions.assumeTrue(
-        List.of(loadersWithMod).contains(loader),
-        modName + " is not part of the " + loader + " runtime");
+        runtimeMods.contains(runtimeModKey),
+        modName + " has no " + loader + "_" + runtimeModKey + "_mod version for this runtime");
   }
 
   static void setblock(int x, int y, int z, String block) {

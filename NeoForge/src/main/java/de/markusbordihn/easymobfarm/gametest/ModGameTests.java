@@ -808,6 +808,20 @@ public final class ModGameTests {
         STRUCTURE_3X3X3);
     register("smoke_mod_registered", SMOKE_TESTS::testModRegistered, STRUCTURE_3X3X3);
     register(
+        "smoke_every_mod_advancement_is_loaded",
+        SMOKE_TESTS::testEveryModAdvancementIsLoaded,
+        STRUCTURE_3X3X3);
+    register(
+        "smoke_every_mod_loot_table_is_loaded",
+        SMOKE_TESTS::testEveryModLootTableIsLoaded,
+        STRUCTURE_3X3X3);
+    register(
+        "smoke_every_mod_recipe_is_loaded", SMOKE_TESTS::testEveryModRecipeIsLoaded, STRUCTURE_3X3X3);
+    register(
+        "smoke_disabled_enhancement_recipe_is_removed",
+        SMOKE_TESTS::testDisabledEnhancementRecipeIsRemoved,
+        STRUCTURE_3X3X3);
+    register(
         "item_capability_extraction",
         ItemCapabilityTest::testItemCapabilityExtraction,
         STRUCTURE_3X3X3);

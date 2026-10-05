@@ -16,7 +16,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "easy_mob_farm:mob_farm_templates"
+            "items": "#easy_mob_farm:mob_farm_templates"
           }
         ]
       }

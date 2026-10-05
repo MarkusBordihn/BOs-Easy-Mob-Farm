@@ -73,18 +73,31 @@ dependencies {
   }
 
   // Bug Testing
-  runtimeOnly "curse.maven:pipez-443900:8630085"
+  if (project.hasProperty('neoforge_pipez_mod') && project.neoforge_pipez_mod) {
+    runtimeOnly "curse.maven:pipez-443900:${project.neoforge_pipez_mod}"
+  }
 
   // Applied Energistics 2: Integration
-  runtimeOnly "curse.maven:guideme-1173950:9025718"
-  runtimeOnly "curse.maven:applied-energistics-2-223794:9031936"
+  if (project.hasProperty('neoforge_applied_energistics_mod') && project.neoforge_applied_energistics_mod) {
+    runtimeOnly "curse.maven:guideme-1173950:${project.neoforge_guideme_mod}"
+    runtimeOnly "curse.maven:applied-energistics-2-223794:${project.neoforge_applied_energistics_mod}"
+  }
 
   // Sophisticated Storage: Integration
-  runtimeOnly "curse.maven:sophisticated-core-618298:9039560"
-  runtimeOnly "curse.maven:sophisticated-storage-619320:9022448"
+  if (project.hasProperty('neoforge_sophisticated_storage_mod') && project.neoforge_sophisticated_storage_mod) {
+    runtimeOnly "curse.maven:sophisticated-core-618298:${project.neoforge_sophisticated_core_mod}"
+    runtimeOnly "curse.maven:sophisticated-storage-619320:${project.neoforge_sophisticated_storage_mod}"
+  }
 
   // Storage Drawers: Integration
-  runtimeOnly "curse.maven:storage-drawers-223852:8917172"
+  if (project.hasProperty('neoforge_storage_drawers_mod') && project.neoforge_storage_drawers_mod) {
+    runtimeOnly "curse.maven:storage-drawers-223852:${project.neoforge_storage_drawers_mod}"
+  }
+
+  // Create: Integration
+  if (project.hasProperty('neoforge_create_mod') && project.neoforge_create_mod) {
+    runtimeOnly "curse.maven:create-328085:${project.neoforge_create_mod}"
+  }
 
   // Client Runtime Interface Toolkit (runtime dependency, only for client tests)
   if (clientToolkitAvailable && isClientTestRun) {

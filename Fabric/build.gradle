@@ -68,7 +68,9 @@ dependencies {
   // Bug Testing
 
   // Storage Drawers: Integration Tests
-  runtimeOnly "curse.maven:storage-drawers-223852:8917166"
+  if (project.hasProperty('fabric_storage_drawers_mod') && project.fabric_storage_drawers_mod) {
+    runtimeOnly "curse.maven:storage-drawers-223852:${project.fabric_storage_drawers_mod}"
+  }
 
   // Client Runtime Interface Toolkit (runtime dependency, only for client tests)
   if (clientToolkitAvailable && isClientTestRun) {

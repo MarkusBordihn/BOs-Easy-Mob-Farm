@@ -102,7 +102,7 @@ class CreateAutomationClientTest extends AutomationClientTestBase {
   @Test
   @DisplayName("Create mechanical arm moves belt results of three farms into a chest")
   void beltCarriesResultsOfThreeFarms() throws IOException {
-    assumeRuntimeMod("Create");
+    assumeRuntimeMod("Create", "create");
     buildStage(WORKSHOP, "Create", "Belt and Arm");
     decorateWorkshop();
     setblock(BELT_START_X, GROUND_Y, SCENE_Z, "create:shaft[axis=z]");
@@ -129,7 +129,7 @@ class CreateAutomationClientTest extends AutomationClientTestBase {
   @Test
   @DisplayName("Create chutes drop farm results into a chest")
   void chutesDropResultsIntoChest() throws IOException {
-    assumeRuntimeMod("Create");
+    assumeRuntimeMod("Create", "create");
     buildStage(WORKSHOP, "Create", "Chute Tower");
     decorateWorkshop();
     setblock(0, GROUND_Y, SCENE_Z, "minecraft:chest[facing=north]");

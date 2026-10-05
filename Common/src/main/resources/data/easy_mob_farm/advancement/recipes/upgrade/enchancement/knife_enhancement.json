@@ -6,7 +6,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["easy_mob_farm:knife_enhancement"]
+            "items": [
+              "easy_mob_farm:knife_enhancement"
+            ]
           }
         ]
       }
@@ -16,7 +18,9 @@
       "conditions": {
         "items": [
           {
-            "items": ["minecraft:quartz"]
+            "items": [
+              "minecraft:quartz"
+            ]
           }
         ]
       }
@@ -26,16 +30,22 @@
       "conditions": {
         "items": [
           {
-            "tag": "easy_mob_farm:tools/knives"
+            "items": "#easy_mob_farm:tools/knives"
           }
         ]
       }
     }
   },
   "requirements": [
-    ["has_knife_enhancement", "has_quartz", "has_knife"]
+    [
+      "has_knife_enhancement",
+      "has_quartz",
+      "has_knife"
+    ]
   ],
   "rewards": {
-    "recipes": ["easy_mob_farm:upgrade/enhancement/knife_enhancement"]
+    "recipes": [
+      "easy_mob_farm:upgrade/enhancement/knife_enhancement"
+    ]
   }
 }

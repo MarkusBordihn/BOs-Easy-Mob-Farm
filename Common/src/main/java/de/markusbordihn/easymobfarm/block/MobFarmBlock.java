@@ -19,8 +19,6 @@
 
 package de.markusbordihn.easymobfarm.block;
 
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.component.DataComponents;
@@ -65,15 +63,6 @@ public class MobFarmBlock extends BaseEntityBlock {
   public static final BooleanProperty POWERED = BooleanProperty.create("powered");
   public static final EnumProperty<MobFarmType> FARM_TYPE =
       EnumProperty.create("farm_type", MobFarmType.class);
-  public static final MapCodec<MobFarmBlock> CODEC =
-      RecordCodecBuilder.mapCodec(
-          instance ->
-              instance
-                  .group(
-                      MobFarmType.CODEC
-                          .fieldOf("mobFarmType")
-                          .forGetter(block -> getFarmType(block.defaultBlockState())))
-                  .apply(instance, MobFarmBlock::new));
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   public MobFarmBlock(final MobFarmType mobFarmType) {
@@ -123,11 +112,6 @@ public class MobFarmBlock extends BaseEntityBlock {
   public BlockEntity newBlockEntity(
       final BlockPos blockPos, final BlockState blockState, MobFarmType mobFarmType) {
     throw new UnsupportedOperationException("This method must be overridden by a subclass!");
-  }
-
-  @Override
-  protected MapCodec<? extends BaseEntityBlock> codec() {
-    return CODEC;
   }
 
   @Override

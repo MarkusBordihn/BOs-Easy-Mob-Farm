@@ -20,10 +20,13 @@
 package de.markusbordihn.easymobfarm.data.capture;
 
 import de.markusbordihn.easymobfarm.Constants;
+import io.netty.buffer.ByteBuf;
 import java.util.HashMap;
 import java.util.Map;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Rarity;
@@ -42,6 +45,23 @@ public record MobCaptureCardDefinition(
 
   public static final int MAXIMUM_COLORS = 64;
   public static final int MAXIMUM_VARIANTS = 64;
+  private static final StreamCodec<ByteBuf, Map<String, Color>> COLORS_STREAM_CODEC =
+      ByteBufCodecs.map(
+          HashMap::new,
+          ByteBufCodecs.STRING_UTF8,
+          Identifier.STREAM_CODEC.map(Color::new, Color::model),
+          MAXIMUM_COLORS);
+  private static final StreamCodec<ByteBuf, Map<String, Variant>> VARIANTS_STREAM_CODEC =
+      ByteBufCodecs.map(
+          HashMap::new,
+          ByteBufCodecs.STRING_UTF8,
+          StreamCodec.composite(
+              Identifier.STREAM_CODEC,
+              Variant::model,
+              COLORS_STREAM_CODEC,
+              Variant::colors,
+              Variant::new),
+          MAXIMUM_VARIANTS);
 
   public MobCaptureCardDefinition(
       Identifier entity,
@@ -76,27 +96,8 @@ public record MobCaptureCardDefinition(
     boolean requiresAnimationTick = buffer.readBoolean();
     boolean supportsKnifeEnhancement = buffer.readBoolean();
 
-    // Read colors
-    Map<String, MobCaptureCardDefinition.Color> colors =
-        buffer.readMap(
-            FriendlyByteBuf.limitValue(HashMap::new, MAXIMUM_COLORS),
-            FriendlyByteBuf::readUtf,
-            buf -> new MobCaptureCardDefinition.Color(buf.readIdentifier()));
-
-    // Read variants
-    Map<String, MobCaptureCardDefinition.Variant> variants =
-        buffer.readMap(
-            FriendlyByteBuf.limitValue(HashMap::new, MAXIMUM_VARIANTS),
-            FriendlyByteBuf::readUtf,
-            buf -> {
-              Identifier variantModel = buf.readIdentifier();
-              Map<String, MobCaptureCardDefinition.Color> variantColors =
-                  buf.readMap(
-                      FriendlyByteBuf.limitValue(HashMap::new, MAXIMUM_COLORS),
-                      FriendlyByteBuf::readUtf,
-                      b -> new MobCaptureCardDefinition.Color(b.readIdentifier()));
-              return new MobCaptureCardDefinition.Variant(variantModel, variantColors);
-            });
+    Map<String, Color> colors = COLORS_STREAM_CODEC.decode(buffer);
+    Map<String, Variant> variants = VARIANTS_STREAM_CODEC.decode(buffer);
 
     return new MobCaptureCardDefinition(
         entity,
@@ -161,21 +162,8 @@ public record MobCaptureCardDefinition(
     buffer.writeBoolean(requiresAnimationTick);
     buffer.writeBoolean(supportsKnifeEnhancement);
 
-    // Write colors
-    buffer.writeMap(
-        colors, FriendlyByteBuf::writeUtf, (buf, color) -> buf.writeIdentifier(color.model()));
-
-    // Write variants
-    buffer.writeMap(
-        variants,
-        FriendlyByteBuf::writeUtf,
-        (buf, variant) -> {
-          buf.writeIdentifier(variant.model());
-          buf.writeMap(
-              variant.colors(),
-              FriendlyByteBuf::writeUtf,
-              (b, color) -> b.writeIdentifier(color.model()));
-        });
+    COLORS_STREAM_CODEC.encode(buffer, colors);
+    VARIANTS_STREAM_CODEC.encode(buffer, variants);
   }
 
   public record Variant(Identifier model, Map<String, Color> colors) {}

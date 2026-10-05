@@ -493,6 +493,13 @@ public final class ModGameTests {
     register(
         "redstone_signal_redstone_mode_ignore", REDSTONE_SIGNAL_TESTS::testRedstoneModeIgnore);
     register("smoke_mod_registered", SMOKE_TESTS::testModRegistered);
+    register(
+        "smoke_every_mod_advancement_is_loaded", SMOKE_TESTS::testEveryModAdvancementIsLoaded);
+    register("smoke_every_mod_loot_table_is_loaded", SMOKE_TESTS::testEveryModLootTableIsLoaded);
+    register("smoke_every_mod_recipe_is_loaded", SMOKE_TESTS::testEveryModRecipeIsLoaded);
+    register(
+        "smoke_disabled_enhancement_recipe_is_removed",
+        SMOKE_TESTS::testDisabledEnhancementRecipeIsRemoved);
   }
 
   private ModGameTests() {}

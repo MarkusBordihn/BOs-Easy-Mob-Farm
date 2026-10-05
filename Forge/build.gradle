@@ -21,7 +21,8 @@ def configureAsClient = { run ->
   run.mainClass = 'net.minecraftforge.bootstrap.ForgeBootstrap'
   run.args '--launchTarget', 'forge_userdev_client', '--version', 'MOD_DEV', '--assetIndex',
       '{asset_index}', '--assetsDir', '{assets_root}', '--gameDir', '.'
-  run.jvmArgs '-Djava.net.preferIPv6Addresses=system'
+  run.jvmArgs '-Djava.net.preferIPv6Addresses=system', '-XX:+UseCompactObjectHeaders',
+      '-XX:StackShadowPages=32'
   run.environment(['MCP_MAPPINGS': '{mcp_mappings}'])
 }
 
@@ -36,14 +37,18 @@ minecraft {
       systemProperty 'eventbus.api.strictRuntimeChecks', 'true'
     }
 
+    // Storage Drawers 26.3.0.0 and 26.3.0.1 fail strict checks: ClientModBusSubscriber.replaceBlock
+    // lacks @SubscribeEvent, which aborts mod loading of the client and leaves its blocks unregistered.
     client {
       workingDir = project.file('run/client')
+      systemProperty 'eventbus.api.strictRuntimeChecks', 'false'
     }
 
     if (clientToolkitAvailable) {
       clientTest {
         configureAsClient(it)
         workingDir = project.file('run/clienttest')
+        systemProperty 'eventbus.api.strictRuntimeChecks', 'false'
       }
     }
 
@@ -103,6 +108,11 @@ dependencies {
   compileOnly project(":Common")
 
   // Bug Testing
+
+  // Storage Drawers: Integration Tests
+  if (project.hasProperty('forge_storage_drawers_mod') && project.forge_storage_drawers_mod) {
+    runtimeOnly "curse.maven:storage-drawers-223852:${project.forge_storage_drawers_mod}"
+  }
 
   // Hack fix for now, force jopt-simple to be exactly 5.0.4 because Mojang ships that version, but some transitive dependencies request 6.0+
   implementation('net.sf.jopt-simple:jopt-simple:5.0.4') { version { strictly '5.0.4' } }
