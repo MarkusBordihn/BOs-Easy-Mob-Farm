@@ -36,4 +36,19 @@ public class MobCatcherTest {
     MobCatcherTestHelper.testSuccessfulCaptureUsesDurability(helper);
     helper.succeed();
   }
+
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
+  public void testDenyListRejectsCapture(GameTestHelper helper) {
+    MobCatcherTestHelper.testDenyListRejectsCapture(helper);
+  }
+
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
+  public void testAllowListRejectsOtherMobs(GameTestHelper helper) {
+    MobCatcherTestHelper.testAllowListRejectsOtherMobs(helper);
+  }
+
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
+  public void testCapturedMobCanBeReleased(GameTestHelper helper) {
+    MobCatcherTestHelper.testCapturedMobCanBeReleased(helper);
+  }
 }

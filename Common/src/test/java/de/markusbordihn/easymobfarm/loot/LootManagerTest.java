@@ -60,7 +60,7 @@ class LootManagerTest {
     List<ItemStack> bonusDrops = List.of(new ItemStack(Items.HONEYCOMB));
     List<EnhancementItem> enhancements = List.of(HONEY_EXTRACTOR);
 
-    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityType.BEE, null);
+    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityType.BEE, null, null);
 
     Assertions.assertEquals(1, drops.size());
     Assertions.assertTrue(drops.get(0).is(Items.HONEY_BOTTLE));
@@ -71,7 +71,7 @@ class LootManagerTest {
     NonNullList<ItemStack> drops = NonNullList.create();
     List<ItemStack> bonusDrops = List.of(new ItemStack(Items.HONEYCOMB));
 
-    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityType.BEE, null);
+    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityType.BEE, null, null);
 
     Assertions.assertEquals(1, drops.size());
     Assertions.assertTrue(drops.get(0).is(Items.HONEYCOMB));
@@ -83,7 +83,7 @@ class LootManagerTest {
     List<ItemStack> bonusDrops = List.of(new ItemStack(Items.HONEYCOMB));
     List<EnhancementItem> enhancements = List.of(HONEY_EXTRACTOR);
 
-    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityType.COW, null);
+    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityType.COW, null, null);
 
     Assertions.assertEquals(1, drops.size());
     Assertions.assertTrue(drops.get(0).is(Items.HONEYCOMB));
@@ -93,7 +93,8 @@ class LootManagerTest {
   void emptyBonusDropsProducesNoDrops() {
     NonNullList<ItemStack> drops = NonNullList.create();
 
-    LootManager.addBonusDrops(drops, List.of(), List.of(HONEY_EXTRACTOR), EntityType.BEE, null);
+    LootManager.addBonusDrops(
+        drops, List.of(), List.of(HONEY_EXTRACTOR), EntityType.BEE, null, null);
 
     Assertions.assertTrue(drops.isEmpty());
   }
@@ -104,7 +105,7 @@ class LootManagerTest {
     List<ItemStack> bonusDrops = List.of(new ItemStack(Items.STICK));
     List<EnhancementItem> enhancements = List.of(HONEY_EXTRACTOR);
 
-    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityType.BEE, null);
+    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityType.BEE, null, null);
 
     Assertions.assertEquals(1, drops.size());
     Assertions.assertTrue(drops.get(0).is(Items.STICK));
@@ -115,7 +116,7 @@ class LootManagerTest {
     NonNullList<ItemStack> drops = NonNullList.create();
     List<ItemStack> bonusDrops = List.of(new ItemStack(Items.WHITE_WOOL, 3));
 
-    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityType.SHEEP, DyeColor.BLACK);
+    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityType.SHEEP, DyeColor.BLACK, null);
 
     Assertions.assertEquals(1, drops.size());
     Assertions.assertTrue(drops.get(0).is(Items.BLACK_WOOL));
@@ -127,7 +128,7 @@ class LootManagerTest {
     NonNullList<ItemStack> drops = NonNullList.create();
     List<ItemStack> bonusDrops = List.of(new ItemStack(Items.WHITE_WOOL));
 
-    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityType.SHEEP, null);
+    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityType.SHEEP, null, null);
 
     Assertions.assertEquals(1, drops.size());
     Assertions.assertTrue(drops.get(0).is(Items.WHITE_WOOL));
@@ -138,7 +139,7 @@ class LootManagerTest {
     NonNullList<ItemStack> drops = NonNullList.create();
     List<ItemStack> bonusDrops = List.of(new ItemStack(Items.BLACK_WOOL));
 
-    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityType.SHEEP, DyeColor.RED);
+    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityType.SHEEP, DyeColor.RED, null);
 
     Assertions.assertEquals(1, drops.size());
     Assertions.assertTrue(drops.get(0).is(Items.BLACK_WOOL));
@@ -149,7 +150,7 @@ class LootManagerTest {
     NonNullList<ItemStack> drops = NonNullList.create();
     List<ItemStack> bonusDrops = List.of(new ItemStack(Items.STICK));
 
-    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityType.SHEEP, DyeColor.BLACK);
+    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityType.SHEEP, DyeColor.BLACK, null);
 
     Assertions.assertEquals(1, drops.size());
     Assertions.assertTrue(drops.get(0).is(Items.STICK));
@@ -160,9 +161,32 @@ class LootManagerTest {
     NonNullList<ItemStack> drops = NonNullList.create();
     List<ItemStack> bonusDrops = List.of(new ItemStack(Items.WHITE_WOOL));
 
-    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityType.COW, DyeColor.BLACK);
+    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityType.COW, DyeColor.BLACK, null);
 
     Assertions.assertEquals(1, drops.size());
     Assertions.assertTrue(drops.get(0).is(Items.WHITE_WOOL));
+  }
+
+  @Test
+  void coldChickenReplacesEggWithBlueEgg() {
+    NonNullList<ItemStack> drops = NonNullList.create();
+    List<ItemStack> bonusDrops = List.of(new ItemStack(Items.EGG, 2));
+
+    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityType.CHICKEN, null, "cold");
+
+    Assertions.assertEquals(1, drops.size());
+    Assertions.assertTrue(drops.get(0).is(Items.BLUE_EGG));
+    Assertions.assertEquals(2, drops.get(0).getCount());
+  }
+
+  @Test
+  void chickenWithoutVariantKeepsPlainEgg() {
+    NonNullList<ItemStack> drops = NonNullList.create();
+    List<ItemStack> bonusDrops = List.of(new ItemStack(Items.EGG));
+
+    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityType.CHICKEN, null, null);
+
+    Assertions.assertEquals(1, drops.size());
+    Assertions.assertTrue(drops.get(0).is(Items.EGG));
   }
 }

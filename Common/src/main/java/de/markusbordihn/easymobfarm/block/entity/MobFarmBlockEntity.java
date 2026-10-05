@@ -22,15 +22,18 @@ package de.markusbordihn.easymobfarm.block.entity;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.MobFarmBlock;
 import de.markusbordihn.easymobfarm.capture.MobCaptureManager;
+import de.markusbordihn.easymobfarm.component.DataComponents;
 import de.markusbordihn.easymobfarm.config.MobFarmBonusConfig;
 import de.markusbordihn.easymobfarm.config.MobFarmConfig;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureDataSupport;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmContainerData;
+import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmData;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmDataEntry;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmSlot;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmSlots;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmStatus;
+import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmTierLevel;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import de.markusbordihn.easymobfarm.data.mobfarm.RedstoneMode;
 import de.markusbordihn.easymobfarm.experience.ExperienceManager;
@@ -57,6 +60,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -424,7 +428,8 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
         bonusLootDrops,
         effectiveEnhancementItems,
         entityType,
-        mobCaptureData.hasColor() ? mobCaptureData.color().getDyeColor() : null);
+        mobCaptureData.hasColor() ? mobCaptureData.color().getDyeColor() : null,
+        mobCaptureData.variant());
 
     // Handle loot drops
     this.handleLootDrops(lootDrops);
@@ -999,6 +1004,14 @@ public class MobFarmBlockEntity extends BaseContainerBlockEntity implements Worl
         TagValueOutput.createWithContext(ProblemReporter.DISCARDING, provider);
     ContainerHelper.saveAllItems(valueOutput, this.items);
     return valueOutput.buildResult();
+  }
+
+  @Override
+  protected void collectImplicitComponents(DataComponentMap.Builder components) {
+    super.collectImplicitComponents(components);
+    components.set(
+        DataComponents.MOB_FARM_DATA,
+        new MobFarmData(MobFarmTierLevel.getTierLevel(this.farmTierLevel)));
   }
 
   @Override

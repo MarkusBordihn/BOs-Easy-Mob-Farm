@@ -19,6 +19,7 @@
 
 package de.markusbordihn.easymobfarm.gametest;
 
+import de.markusbordihn.easymobfarm.config.Config;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraftforge.gametest.GameTest;
 
@@ -53,5 +54,37 @@ public class LootManagerTest {
   public void testMalformedCaptureDataDoesNotThrow(GameTestHelper helper) {
     LootManagerTestHelper.testMalformedCaptureDataDoesNotThrow(helper);
     helper.succeed();
+  }
+
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
+  public void testCapturedMobsDropTheirKeyItems(GameTestHelper helper) {
+    LootManagerTestHelper.testCapturedMobsDropTheirKeyItems(helper);
+  }
+
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
+  public void testEveryDefinedMobProducesFarmLoot(GameTestHelper helper) {
+    LootManagerTestHelper.testEveryDefinedMobProducesFarmLoot(helper);
+  }
+
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
+  public void testCapturedMagmaCubeKeepsSizeForMagmaCream(GameTestHelper helper) {
+    LootManagerTestHelper.testCapturedMagmaCubeKeepsSizeForMagmaCream(helper);
+  }
+
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
+  public void testCapturedRedSheepDropsRedWool(GameTestHelper helper) {
+    // Forge 1.21.1 GameTestServer fires no ServerStartingEvent, which loads the bonus config.
+    Config.registerDeferred(true);
+    LootManagerTestHelper.testCapturedRedSheepDropsRedWool(helper);
+  }
+
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
+  public void testExperienceEnhancementDropsExperienceBottles(GameTestHelper helper) {
+    LootManagerTestHelper.testExperienceEnhancementDropsExperienceBottles(helper);
+  }
+
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
+  public void testAllEnhancementsWorkForProblemMobs(GameTestHelper helper) {
+    LootManagerTestHelper.testAllEnhancementsWorkForProblemMobs(helper);
   }
 }

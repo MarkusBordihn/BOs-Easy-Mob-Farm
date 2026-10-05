@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "iceandfire:lightning_dragon_blood",
+      "required": false
+    }
+  ]
+}
