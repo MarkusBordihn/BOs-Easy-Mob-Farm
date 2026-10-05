@@ -33,7 +33,9 @@
       "de.markusbordihn.easymobfarm.gametest.MobVariantDataTest",
       "de.markusbordihn.easymobfarm.gametest.MobCaptureCardDropTest",
       "de.markusbordihn.easymobfarm.gametest.MobFarmBlockEntityTest",
-      "de.markusbordihn.easymobfarm.gametest.MobCatcherTest"
+      "de.markusbordihn.easymobfarm.gametest.MobCatcherTest",
+      "de.markusbordihn.easymobfarm.gametest.MenuSlotTest",
+      "de.markusbordihn.easymobfarm.gametest.MobFarmInventoryTest"
     ],
     "jei_mod_plugin": [
       "de.markusbordihn.easymobfarm.compat.jei.EasyMobFarmJeiPlugin"

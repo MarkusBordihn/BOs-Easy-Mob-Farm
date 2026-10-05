@@ -40,6 +40,13 @@ loom {
       name "Game Test"
       vmArg "-Dfabric-api.gametest"
     }
+    if (clientToolkitAvailable) {
+      clientTest {
+        client()
+        setConfigName("Fabric Client Test")
+        runDir("run/clienttest")
+      }
+    }
   }
 }
 
@@ -56,12 +63,7 @@ dependencies {
   if (project.hasProperty('fabric_jei_mod') && project.fabric_jei_mod) {
     modCompileOnlyApi("curse.maven:jei-238222:${project.fabric_jei_mod}")
     modRuntimeOnly("curse.maven:jei-238222:${project.fabric_jei_mod}")
-  }
-  if (project.hasProperty('fabric_spark_mod') && project.fabric_spark_mod) {
-    modRuntimeOnly("curse.maven:spark-361579:${project.fabric_spark_mod}")
-  }
-  if (project.hasProperty('fabric_xaeros_minimap_mod') && project.fabric_xaeros_minimap_mod) {
-    modRuntimeOnly("curse.maven:xaeros_minimap-263420:${project.fabric_xaeros_minimap_mod}")
+    modRuntimeOnly("curse.maven:mezzconfig-1689768:9048668")
   }
 
   // Bug Testing
@@ -74,6 +76,9 @@ dependencies {
   // modRuntimeOnly('teamreborn:energy:4.1.0') {
   //  exclude(group: "net.fabricmc.fabric-api")
   //}
+
+  // Storage Drawers: Integration Tests
+  modRuntimeOnly "curse.maven:storage-drawers-223852:8861400"
 
   // Create: Integration Tests
   //  modRuntimeOnly "io.github.tropheusj:milk-lib:1.2.60"
@@ -96,6 +101,11 @@ dependencies {
   // Swampier Swamps Tests
   // modRuntimeOnly "curse.maven:cloth-config-348521:5729104"
   // modRuntimeOnly "curse.maven:swampier-swamps-fabric-687298:4580758"
+
+  // Client Runtime Interface Toolkit (runtime dependency, only for client tests)
+  if (clientToolkitAvailable && isClientTestRun) {
+    modLocalRuntime clientToolkitCoordinate('fabric')
+  }
 }
 
 processResources {

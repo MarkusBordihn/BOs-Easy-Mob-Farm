@@ -35,6 +35,8 @@ import net.minecraft.resources.Identifier;
 public record SyncMobCaptureCardDefinitionsMessage(
     Map<Identifier, MobCaptureCardDefinition> definitions) implements NetworkMessageRecord {
 
+  public static final int MAXIMUM_DEFINITIONS = 1024;
+
   public static final Identifier MESSAGE_ID =
       Identifier.fromNamespaceAndPath(Constants.MOD_ID, "sync_mob_capture_card_definitions");
   public static final CustomPacketPayload.Type<SyncMobCaptureCardDefinitionsMessage> PAYLOAD_TYPE =
@@ -46,13 +48,11 @@ public record SyncMobCaptureCardDefinitionsMessage(
               SyncMobCaptureCardDefinitionsMessage::create);
 
   public static SyncMobCaptureCardDefinitionsMessage create(FriendlyByteBuf buffer) {
-    int size = buffer.readVarInt();
-    Map<Identifier, MobCaptureCardDefinition> definitions = new HashMap<>();
-    for (int i = 0; i < size; i++) {
-      Identifier entityId = buffer.readIdentifier();
-      MobCaptureCardDefinition definition = MobCaptureCardDefinition.decode(buffer);
-      definitions.put(entityId, definition);
-    }
+    Map<Identifier, MobCaptureCardDefinition> definitions =
+        buffer.readMap(
+            FriendlyByteBuf.limitValue(HashMap::new, MAXIMUM_DEFINITIONS),
+            FriendlyByteBuf::readIdentifier,
+            MobCaptureCardDefinition::decode);
     return new SyncMobCaptureCardDefinitionsMessage(definitions);
   }
 

@@ -19,6 +19,7 @@ build
 run
 NeoForge/runs
 .gradle
+.client_test
 *local.properties
 
 # NodeJs

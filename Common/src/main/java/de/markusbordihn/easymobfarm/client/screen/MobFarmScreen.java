@@ -22,7 +22,7 @@ package de.markusbordihn.easymobfarm.client.screen;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
 import de.markusbordihn.easymobfarm.client.renderer.manager.RendererManager;
-import de.markusbordihn.easymobfarm.client.screen.components.Graphics;
+import de.markusbordihn.easymobfarm.client.screen.components.ItemIconButton;
 import de.markusbordihn.easymobfarm.client.screen.components.SlotHintRenderer;
 import de.markusbordihn.easymobfarm.client.screen.theme.MobFarmScreenTheme;
 import de.markusbordihn.easymobfarm.config.ClientConfig;
@@ -53,14 +53,11 @@ import java.util.List;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.input.MouseButtonEvent;
-import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.bee.Bee;
 import net.minecraft.world.entity.animal.chicken.Chicken;
@@ -73,8 +70,8 @@ import net.minecraft.world.item.Items;
 
 public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
 
-  private static final Identifier TEXTURE_ELEMENTS =
-      Identifier.fromNamespaceAndPath(Constants.MOD_ID, "textures/gui/mob_farm_elements.png");
+  private static final int SLOT_SIZE = 16;
+  private static final int LOCKED_SLOT_OVERLAY_COLOR = 0xA0000000;
   private static final int STATUS_COLUMN_X = 21;
   private static final int STATUS_COLUMN_STEP = 18;
   private static final int FARM_TYPE_ICON_Y = 12;
@@ -100,6 +97,9 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
   private MobFarmScreenTheme theme;
   private MobFarmType cachedFarmTypeIconType;
   private ItemStack cachedFarmTypeIcon = ItemStack.EMPTY;
+  private ItemIconButton redstoneModeButton;
+  private ItemIconButton themeButton;
+  private RedstoneMode shownRedstoneMode;
 
   public MobFarmScreen(T menu, Inventory inventory, Component component) {
     super(menu, inventory, component);
@@ -132,6 +132,11 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
     };
   }
 
+  private static MutableComponent getRedstoneModeMessage(RedstoneMode redstoneMode) {
+    return TextComponent.getTranslatedTextRaw(
+        Constants.TOOLTIP_FARM_PREFIX + "redstone_mode_" + redstoneMode.getId());
+  }
+
   @Override
   protected void renderDefaultScreenBg(GuiGraphics guiGraphics, int leftPos, int topPos) {
     int mobFarmStatus = this.menu.getMobFarmStatus();
@@ -154,49 +159,67 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
     this.renderLockedSlot(guiGraphics);
     this.renderEntityType(guiGraphics);
     this.renderMobFarmProgress(guiGraphics);
-    this.renderRedstoneModeButton(guiGraphics);
     this.renderFarmTypeIcon(guiGraphics);
     this.renderLootIcon(guiGraphics);
-    this.renderThemeButton(guiGraphics);
     this.renderTooltip(guiGraphics, x, y);
   }
 
   @Override
-  public boolean mouseClicked(MouseButtonEvent mouseButtonEvent, boolean doubleClick) {
-    double mouseX = mouseButtonEvent.x();
-    double mouseY = mouseButtonEvent.y();
-    if (isHovering(THEME_BUTTON_X, THEME_BUTTON_Y, 16, 16, mouseX, mouseY)) {
-      this.theme = this.theme.next();
-      ClientConfig.setMobFarmScreenTheme(this.theme.getId());
-      this.minecraftInstance
-          .getSoundManager()
-          .play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
-      return true;
-    }
+  protected void init() {
+    super.init();
+    this.shownRedstoneMode = this.getMenu().getRedstoneMode();
+    this.redstoneModeButton =
+        this.addRenderableWidget(
+            new ItemIconButton(
+                this.leftPos + STATUS_COLUMN_X,
+                this.topPos + REDSTONE_MODE_BUTTON_Y,
+                getRedstoneModeIcon(this.shownRedstoneMode),
+                getRedstoneModeMessage(this.shownRedstoneMode),
+                button -> this.toggleRedstoneMode()));
+    this.themeButton =
+        this.addRenderableWidget(
+            new ItemIconButton(
+                this.leftPos + THEME_BUTTON_X,
+                this.topPos + THEME_BUTTON_Y,
+                this.theme.getIcon(),
+                this.getThemeMessage(),
+                this::switchTheme));
+  }
 
-    if (isHovering(STATUS_COLUMN_X, REDSTONE_MODE_BUTTON_Y, 16, 16, mouseX, mouseY)
-        && this.minecraftInstance.gameMode != null) {
+  @Override
+  protected void containerTick() {
+    super.containerTick();
+    RedstoneMode redstoneMode = this.getMenu().getRedstoneMode();
+    if (redstoneMode != this.shownRedstoneMode) {
+      this.shownRedstoneMode = redstoneMode;
+      this.redstoneModeButton.setIcon(getRedstoneModeIcon(redstoneMode));
+      this.redstoneModeButton.setMessage(getRedstoneModeMessage(redstoneMode));
+    }
+  }
+
+  private void toggleRedstoneMode() {
+    if (this.minecraftInstance.gameMode != null) {
       this.minecraftInstance.gameMode.handleInventoryButtonClick(
           this.menu.containerId, MobFarmMenu.TOGGLE_REDSTONE_MODE_BUTTON);
-      this.minecraftInstance
-          .getSoundManager()
-          .play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
-      return true;
     }
+  }
 
-    return super.mouseClicked(mouseButtonEvent, doubleClick);
+  private void switchTheme(ItemIconButton button) {
+    this.theme = this.theme.next();
+    ClientConfig.setMobFarmScreenTheme(this.theme.getId());
+    button.setIcon(this.theme.getIcon());
+    button.setMessage(this.getThemeMessage());
+  }
+
+  private MutableComponent getThemeMessage() {
+    return TextComponent.getTranslatedTextRaw(
+        Constants.TOOLTIP_FARM_PREFIX + "theme",
+        TextComponent.getTranslatedTextRaw(this.theme.getTranslationKey()));
   }
 
   @Override
   protected void renderLabels(GuiGraphics guiGraphics, int x, int y) {
     this.theme.getRenderer().renderLabels(guiGraphics, this.font, this.title);
-  }
-
-  private void renderRedstoneModeButton(GuiGraphics guiGraphics) {
-    guiGraphics.renderItem(
-        getRedstoneModeIcon(this.getMenu().getRedstoneMode()),
-        this.leftPos + STATUS_COLUMN_X,
-        this.topPos + REDSTONE_MODE_BUTTON_Y);
   }
 
   private void renderFarmTypeIcon(GuiGraphics guiGraphics) {
@@ -234,11 +257,6 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
     } finally {
       guiGraphics.pose().popMatrix();
     }
-  }
-
-  private void renderThemeButton(GuiGraphics guiGraphics) {
-    guiGraphics.renderItem(
-        this.theme.getIcon(), this.leftPos + THEME_BUTTON_X, this.topPos + THEME_BUTTON_Y);
   }
 
   private void renderMobFarmProgress(GuiGraphics guiGraphics) {
@@ -281,15 +299,10 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
   private void renderLockedSlot(GuiGraphics guiGraphics) {
     for (Slot slot : this.menu.slots) {
       if (slot instanceof OutputSlot outputSlot && !outputSlot.isActive()) {
-        Graphics.blit(
-            guiGraphics,
-            TEXTURE_ELEMENTS,
-            this.leftPos + slot.x - 1,
-            this.topPos + slot.y - 1,
-            0,
-            18,
-            18,
-            18);
+        int slotX = this.leftPos + slot.x;
+        int slotY = this.topPos + slot.y;
+        guiGraphics.fill(
+            slotX, slotY, slotX + SLOT_SIZE, slotY + SLOT_SIZE, LOCKED_SLOT_OVERLAY_COLOR);
       }
     }
   }
@@ -479,9 +492,9 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
     } else if (isHovering(STATUS_COLUMN_X, LOOT_ICON_Y, 16, 16, mouseX, mouseY)
         && this.getMenu().getMobFarmStatus() != MobFarmStatus.IDLE) {
       renderLootInfoTooltip(guiGraphics, mouseX, mouseY);
-    } else if (isHovering(STATUS_COLUMN_X, REDSTONE_MODE_BUTTON_Y, 16, 16, mouseX, mouseY)) {
+    } else if (this.redstoneModeButton.isHovered()) {
       renderRedstoneModeTooltip(guiGraphics, mouseX, mouseY);
-    } else if (isHovering(THEME_BUTTON_X, THEME_BUTTON_Y, 16, 16, mouseX, mouseY)) {
+    } else if (this.themeButton.isHovered()) {
       renderThemeTooltip(guiGraphics, mouseX, mouseY);
     }
   }
@@ -519,9 +532,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
     guiGraphics.setComponentTooltipForNextFrame(
         this.font,
         List.of(
-            TextComponent.getTranslatedTextRaw(
-                Constants.TOOLTIP_FARM_PREFIX + "theme",
-                TextComponent.getTranslatedTextRaw(this.theme.getTranslationKey())),
+            this.themeButton.getMessage(),
             TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "theme_hint")
                 .withStyle(ChatFormatting.GRAY)),
         mouseX,
@@ -529,12 +540,10 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
   }
 
   private void renderRedstoneModeTooltip(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-    RedstoneMode redstoneMode = this.getMenu().getRedstoneMode();
     guiGraphics.setComponentTooltipForNextFrame(
         this.font,
         List.of(
-            TextComponent.getTranslatedTextRaw(
-                Constants.TOOLTIP_FARM_PREFIX + "redstone_mode_" + redstoneMode.getId()),
+            this.redstoneModeButton.getMessage(),
             TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "redstone_mode_hint")
                 .withStyle(ChatFormatting.GRAY)),
         mouseX,
