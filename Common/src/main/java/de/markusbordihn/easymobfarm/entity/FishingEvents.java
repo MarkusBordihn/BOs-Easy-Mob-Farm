@@ -22,16 +22,14 @@ package de.markusbordihn.easymobfarm.entity;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.capture.MobCaptureManager;
 import de.markusbordihn.easymobfarm.config.MobCaptureCardConfig;
-import java.util.List;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.Random;
-import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.Identifier;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -43,37 +41,18 @@ public class FishingEvents {
 
   private FishingEvents() {}
 
-  public static void handleItemFishedEvent(ServerPlayer serverPlayer, List<ItemStack> lootList) {
-    // Check if mob capture card drop is enabled.
-    if (!MobCaptureCardConfig.dropMobCaptureCardOnFishing) {
+  public static void handleItemFishedEvent(Player player, Collection<ItemStack> fishingLoot) {
+    if (!MobCaptureCardConfig.dropMobCaptureCardOnFishing
+        || !(player.level() instanceof ServerLevel serverLevel)) {
       return;
     }
 
-    // Check if we got any fish loot
-    Item fishLoot = null;
-    for (ItemStack itemStack : lootList) {
-      if (itemStack.isEmpty()) {
-        continue;
-      }
-      if (itemStack.is(ItemTags.FISHES)) {
-        fishLoot = itemStack.getItem();
-        break;
-      }
-    }
-    if (fishLoot == null) {
+    EntityType<?> entityType = findFishedEntityType(fishingLoot);
+    if (entityType == null) {
       return;
     }
 
-    // Check if the fish loot could be translated to an entity.
-    Identifier resourceLocation = BuiltInRegistries.ITEM.getKey(fishLoot);
-    Optional<Holder.Reference<EntityType<?>>> entityType =
-        BuiltInRegistries.ENTITY_TYPE.get(resourceLocation);
-    if (entityType.isEmpty()) {
-      return;
-    }
-
-    // Check allow and deny list for drops.
-    String entityName = BuiltInRegistries.ENTITY_TYPE.getKey(entityType.get().value()).toString();
+    String entityName = BuiltInRegistries.ENTITY_TYPE.getKey(entityType).toString();
     if (MobCaptureCardConfig.mobCaptureCardFishingDropDenyList.contains(entityName)
         || (!MobCaptureCardConfig.mobCaptureCardFishingDropAllowList.isEmpty()
             && !MobCaptureCardConfig.mobCaptureCardFishingDropAllowList.contains(entityName))) {
@@ -81,20 +60,32 @@ public class FishingEvents {
       return;
     }
 
-    // Check the drop chance for the mob capture card.
     float dropChance = MobCaptureCardConfig.mobCaptureCardFishingDropChance;
     if (dropChance <= 0.0f || RANDOM.nextFloat() > dropChance) {
       return;
     }
 
-    // Drop the mob capture card.
-    ItemStack itemStack =
-        MobCaptureManager.getMobCaptureCardItem(entityType.get().value(), serverPlayer.level());
+    ItemStack itemStack = MobCaptureManager.getMobCaptureCardItem(entityType, serverLevel);
     if (itemStack != null) {
       log.debug("Dropped mob capture card {} for {}.", itemStack, entityType);
-      serverPlayer.spawnAtLocation(serverPlayer.level(), itemStack, 0.5F);
+      player.spawnAtLocation(serverLevel, itemStack, 0.5F);
     } else {
       log.error("Failed to drop mob capture card for {}.", entityType);
     }
+  }
+
+  private static EntityType<?> findFishedEntityType(Collection<ItemStack> fishingLoot) {
+    for (ItemStack itemStack : fishingLoot) {
+      if (itemStack.isEmpty() || !itemStack.is(ItemTags.FISHES)) {
+        continue;
+      }
+      Optional<EntityType<?>> entityType =
+          BuiltInRegistries.ENTITY_TYPE.getOptional(
+              BuiltInRegistries.ITEM.getKey(itemStack.getItem()));
+      if (entityType.isPresent()) {
+        return entityType.get();
+      }
+    }
+    return null;
   }
 }

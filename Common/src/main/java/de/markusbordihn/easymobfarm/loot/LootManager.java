@@ -43,6 +43,7 @@ import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SheepEnhancementIte
 import de.markusbordihn.easymobfarm.item.upgrade.enhancement.SwordEnhancementItem;
 import de.markusbordihn.easymobfarm.server.player.FakePlayer;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -93,6 +94,8 @@ public class LootManager {
   private static final Random random = new Random();
   private static final Set<Identifier> loggedLegacyPaths = new HashSet<>();
   private static final Set<String> loggedLootFailures = new HashSet<>();
+  private static final Map<String, Item> CHICKEN_VARIANT_EGGS =
+      Map.of("cold", Items.BLUE_EGG, "warm", Items.BROWN_EGG);
   private static final Map<String, Identifier> FROG_CATALYST_RESOURCES =
       Map.ofEntries(
           Map.entry(
@@ -497,13 +500,16 @@ public class LootManager {
       List<ItemStack> bonusDrops,
       List<EnhancementItem> enhancements,
       EntityType<?> entityType,
-      DyeColor color) {
+      DyeColor color,
+      String variant) {
     for (ItemStack drop : bonusDrops) {
       if (drop.isEmpty()) {
         continue;
       }
       if (entityType == EntityTypes.SHEEP && color != null && drop.is(Items.WOOL.white())) {
         drops.add(new ItemStack(Items.WOOL.pick(color), drop.getCount()));
+      } else if (entityType == EntityTypes.CHICKEN && drop.is(Items.EGG)) {
+        drops.add(new ItemStack(getEggItem(variant), drop.getCount()));
       } else if (entityType == EntityTypes.BEE
           && drop.is(Items.HONEYCOMB)
           && enhancements.stream()
@@ -516,6 +522,33 @@ public class LootManager {
         drops.add(drop.copy());
       }
     }
+  }
+
+  public static List<ItemStack> getVariantBonusDrops(
+      final EntityType<?> entityType,
+      final ItemStack bonusDrop,
+      final Collection<String> variants) {
+    if (entityType != EntityTypes.CHICKEN || !bonusDrop.is(Items.EGG)) {
+      return List.of();
+    }
+
+    List<ItemStack> variantBonusDrops = new ArrayList<>();
+    for (String variant : variants) {
+      Item eggItem = getEggItem(variant);
+      if (eggItem != Items.EGG) {
+        variantBonusDrops.add(new ItemStack(eggItem, bonusDrop.getCount()));
+      }
+    }
+
+    return variantBonusDrops;
+  }
+
+  public static Item getEggItem(final String variant) {
+    if (variant == null) {
+      return Items.EGG;
+    }
+
+    return CHICKEN_VARIANT_EGGS.getOrDefault(variant, Items.EGG);
   }
 
   private static void handleSpecialEntityDrops(
@@ -723,7 +756,7 @@ public class LootManager {
         if (enhancement instanceof EggCollectorEnhancementItem
             && MobFarmConfig.isEnhancementEnabled(enhancement)
             && random.nextInt(2) == 0) {
-          drops.add(new ItemStack(Items.EGG));
+          drops.add(new ItemStack(getEggItem(MobVariantData.getVariant(livingEntity))));
         }
       } else if (livingEntity instanceof Frog) {
         // Dropping frog catalyst with a 2.5% change for the corresponding variant.

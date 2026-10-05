@@ -36,4 +36,22 @@ public class MobCaptureCardDropTest {
     MobCaptureCardDropTestHelper.testSingleCardDropWithFullChance(helper);
     helper.succeed();
   }
+
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
+  public void testEveryDefinedMobDropsItsOwnCardOnKill(GameTestHelper helper) {
+    MobCaptureCardDropTestHelper.testEveryDefinedMobDropsItsOwnCardOnKill(helper);
+    helper.succeed();
+  }
+
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
+  public void testEveryFishDropsItsOwnCardOnFishing(GameTestHelper helper) {
+    MobCaptureCardDropTestHelper.testEveryFishDropsItsOwnCardOnFishing(helper);
+    helper.succeed();
+  }
+
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
+  public void testFishingCardDropRespectsConfiguration(GameTestHelper helper) {
+    MobCaptureCardDropTestHelper.testFishingCardDropRespectsConfiguration(helper);
+    helper.succeed();
+  }
 }

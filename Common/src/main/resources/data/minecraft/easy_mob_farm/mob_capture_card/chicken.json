@@ -5,5 +5,16 @@
   "scale": 1.0,
   "requires_killed_by_player": false,
   "requires_animation_tick": false,
-  "supports_knife_enhancement": true
+  "supports_knife_enhancement": true,
+  "variants": {
+    "cold": {
+      "model": "minecraft:item/easy_mob_farm/mob_capture_card/chicken_cold"
+    },
+    "temperate": {
+      "model": "minecraft:item/easy_mob_farm/mob_capture_card/chicken"
+    },
+    "warm": {
+      "model": "minecraft:item/easy_mob_farm/mob_capture_card/chicken_warm"
+    }
+  }
 }

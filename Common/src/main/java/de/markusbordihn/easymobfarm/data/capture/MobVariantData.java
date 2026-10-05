@@ -24,6 +24,8 @@ import java.util.Locale;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.chicken.Chicken;
+import net.minecraft.world.entity.animal.chicken.ChickenVariants;
 import net.minecraft.world.entity.animal.feline.Cat;
 import net.minecraft.world.entity.animal.feline.CatVariants;
 import net.minecraft.world.entity.animal.frog.Frog;
@@ -62,6 +64,11 @@ public class MobVariantData {
       return getSizeVariant(magmaCube.getSize());
     } else if (livingEntity instanceof Slime slime) {
       return getSizeVariant(slime.getSize());
+    } else if (livingEntity instanceof Chicken chicken) {
+      return (chicken.getVariant().unwrapKey().orElse(ChickenVariants.TEMPERATE))
+          .identifier()
+          .toString()
+          .replace("minecraft:", "");
     } else if (livingEntity instanceof Frog frog) {
       String frogVariant =
           (frog.getVariant().unwrapKey().orElse(FrogVariants.TEMPERATE))

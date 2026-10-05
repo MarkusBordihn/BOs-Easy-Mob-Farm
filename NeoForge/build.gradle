@@ -1,5 +1,5 @@
 plugins {
-  id 'net.neoforged.moddev' version '2.0.141'
+  id 'net.neoforged.moddev' version '2.0.148'
   id 'net.darkhax.curseforgegradle' version '1.2.30'
   id 'nu.studer.credentials' version '3.0'
   id "com.modrinth.minotaur" version "2.+"
@@ -45,6 +45,13 @@ neoForge {
       type = 'gameTestServer'
       systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
     }
+
+    if (clientToolkitAvailable) {
+      clientTest {
+        client()
+        gameDirectory = project.file('runs/clientTest')
+      }
+    }
   }
 
   mods {
@@ -52,7 +59,6 @@ neoForge {
       sourceSet sourceSets.main
     }
   }
-
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
@@ -65,12 +71,25 @@ dependencies {
     compileOnly "curse.maven:jei-238222:${project.neoforge_jei_mod}"
     runtimeOnly "curse.maven:jei-238222:${project.neoforge_jei_mod}"
   }
-  if (project.hasProperty('neoforge_xaeros_minimap_mod') && project.neoforge_xaeros_minimap_mod) {
-    runtimeOnly "curse.maven:xaeros-minimap-263420:${project.neoforge_xaeros_minimap_mod}"
-  }
 
   // Bug Testing
-  runtimeOnly "curse.maven:pipez-443900:8351639"
+  runtimeOnly "curse.maven:pipez-443900:8630085"
+
+  // Applied Energistics 2: Integration
+  runtimeOnly "curse.maven:guideme-1173950:9025718"
+  runtimeOnly "curse.maven:applied-energistics-2-223794:9031936"
+
+  // Sophisticated Storage: Integration
+  runtimeOnly "curse.maven:sophisticated-core-618298:9039560"
+  runtimeOnly "curse.maven:sophisticated-storage-619320:9022448"
+
+  // Storage Drawers: Integration
+  runtimeOnly "curse.maven:storage-drawers-223852:8917172"
+
+  // Client Runtime Interface Toolkit (runtime dependency, only for client tests)
+  if (clientToolkitAvailable && isClientTestRun) {
+    runtimeOnly clientToolkitCoordinate('neoforge')
+  }
 }
 
 // NeoGradle compiles the game, but we don't want to add our common code to the game's code

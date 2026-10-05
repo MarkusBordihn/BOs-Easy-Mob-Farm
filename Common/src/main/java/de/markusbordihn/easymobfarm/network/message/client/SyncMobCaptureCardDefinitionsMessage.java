@@ -35,6 +35,8 @@ import net.minecraft.resources.Identifier;
 public record SyncMobCaptureCardDefinitionsMessage(
     Map<Identifier, MobCaptureCardDefinition> definitions) implements NetworkMessageRecord {
 
+  public static final int MAXIMUM_DEFINITIONS = 1024;
+
   public static final Identifier MESSAGE_ID =
       Identifier.fromNamespaceAndPath(Constants.MOD_ID, "sync_mob_capture_card_definitions");
   public static final CustomPacketPayload.Type<SyncMobCaptureCardDefinitionsMessage> PAYLOAD_TYPE =

@@ -58,7 +58,7 @@ public enum MobFarmScreenTheme {
       "steampunk",
       TextureThemeRenderer.of(
           "mob_farm_steampunk",
-          ThemeProgressBar.frames("mob_farm_steampunk_progress", 116, 60, 28, 26, 33, 8, 32, 28),
+          ThemeProgressBar.frames("mob_farm_steampunk_progress", 116, 60, 28, 26, 19, 8, 32, 28),
           EntityPreview.centered(56, 29, 42, 44, 5, 0.7F)),
       Items.COPPER_BLOCK.weathering().unaffected()),
   CREATE(

@@ -33,4 +33,19 @@ public class MobCaptureCardDropTest {
     MobCaptureCardDropTestHelper.testSingleCardDropWithFullChance(helper);
     helper.succeed();
   }
+
+  public void testEveryDefinedMobDropsItsOwnCardOnKill(GameTestHelper helper) {
+    MobCaptureCardDropTestHelper.testEveryDefinedMobDropsItsOwnCardOnKill(helper);
+    helper.succeed();
+  }
+
+  public void testEveryFishDropsItsOwnCardOnFishing(GameTestHelper helper) {
+    MobCaptureCardDropTestHelper.testEveryFishDropsItsOwnCardOnFishing(helper);
+    helper.succeed();
+  }
+
+  public void testFishingCardDropRespectsConfiguration(GameTestHelper helper) {
+    MobCaptureCardDropTestHelper.testFishingCardDropRespectsConfiguration(helper);
+    helper.succeed();
+  }
 }

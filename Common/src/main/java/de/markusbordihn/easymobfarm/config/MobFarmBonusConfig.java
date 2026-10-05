@@ -177,6 +177,7 @@ public class MobFarmBonusConfig extends Config {
     defaultMobFarmBonusMap.put(
         MobFarmType.DESERT_FARM.getId() + "::3::minecraft:rabbit",
         List.of(new DefaultDrop(5, new ItemStackTemplate(Items.RABBIT_HIDE, 1))));
+    addTieredBonusDrop(MobFarmType.DESERT_FARM, "minecraft:armadillo", Items.ARMADILLO_SCUTE);
 
     // Iron Golem Farm Bonus
     defaultMobFarmBonusMap.put(
@@ -427,6 +428,15 @@ public class MobFarmBonusConfig extends Config {
     defaultMobFarmBonusMap.put(
         MobFarmType.NETHER_WASTES_FARM.getId() + "::3::minecraft:ghast",
         List.of(new DefaultDrop(5, new ItemStackTemplate(Items.GUNPOWDER, 1))));
+  }
+
+  private static void addTieredBonusDrop(MobFarmType mobFarmType, String entityType, Item item) {
+    int[] chances = {20, 15, 10, 5};
+    for (int tierLevel = 0; tierLevel < chances.length; tierLevel++) {
+      defaultMobFarmBonusMap.put(
+          mobFarmType.getId() + "::" + tierLevel + "::" + entityType,
+          List.of(new DefaultDrop(chances[tierLevel], new ItemStackTemplate(item, 1))));
+    }
   }
 
   static List<BonusDrop> getDefaultBonusDrops(String mobFarmId, int tierLevel, String entityId) {

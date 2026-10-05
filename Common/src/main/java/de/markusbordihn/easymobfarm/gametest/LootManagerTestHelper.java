@@ -19,12 +19,20 @@
 
 package de.markusbordihn.easymobfarm.gametest;
 
+import de.markusbordihn.easymobfarm.Constants;
+import de.markusbordihn.easymobfarm.capture.MobCaptureManager;
+import de.markusbordihn.easymobfarm.config.MobFarmBonusConfig;
 import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
+import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import de.markusbordihn.easymobfarm.item.upgrade.EnhancementItem;
 import de.markusbordihn.easymobfarm.loot.LootManager;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.DoubleTag;
@@ -32,16 +40,47 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntityTypes;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.sheep.Sheep;
+import net.minecraft.world.entity.monster.cubemob.MagmaCube;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class LootManagerTestHelper {
 
+  private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
+  private static final int FARM_LOOT_RUNS = 32;
   private static final int SPECIAL_DROP_RUNS = 200;
   private static final int LOOT_ENHANCEMENT_COUNT = 4;
+  private static final int KEY_DROP_RUNS = 64;
+  private static final int EXPERIENCE_DROP_RUNS = 100;
+  private static final int MAX_TIER_LEVEL = 3;
+  private static final Map<EntityType<?>, Item> KEY_DROPS = createKeyDrops();
+  private static final List<EntityType<?>> ENHANCEMENT_TEST_ENTITY_TYPES =
+      List.of(
+          EntityTypes.BEE,
+          EntityTypes.BLAZE,
+          EntityTypes.CHICKEN,
+          EntityTypes.COW,
+          EntityTypes.FROG,
+          EntityTypes.GOAT,
+          EntityTypes.MAGMA_CUBE,
+          EntityTypes.MOOSHROOM,
+          EntityTypes.PIG,
+          EntityTypes.SHEEP,
+          EntityTypes.SKELETON,
+          EntityTypes.SLIME,
+          EntityTypes.SNOW_GOLEM,
+          EntityTypes.TURTLE,
+          EntityTypes.WITHER,
+          EntityTypes.ZOMBIE);
 
   private LootManagerTestHelper() {}
 
@@ -52,7 +91,7 @@ public class LootManagerTestHelper {
         List.of(
             (EnhancementItem) de.markusbordihn.easymobfarm.item.Items.HONEY_EXTRACTOR_ENHANCEMENT);
 
-    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityTypes.BEE, null);
+    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityTypes.BEE, null, null);
 
     GameTestHelpers.assertTrue(
         helper,
@@ -65,7 +104,7 @@ public class LootManagerTestHelper {
     NonNullList<ItemStack> drops = NonNullList.create();
     List<ItemStack> bonusDrops = List.of(new ItemStack(Items.HONEYCOMB));
 
-    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityTypes.BEE, null);
+    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityTypes.BEE, null, null);
 
     GameTestHelpers.assertTrue(
         helper,
@@ -81,7 +120,7 @@ public class LootManagerTestHelper {
         List.of(
             (EnhancementItem) de.markusbordihn.easymobfarm.item.Items.HONEY_EXTRACTOR_ENHANCEMENT);
 
-    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityTypes.COW, null);
+    LootManager.addBonusDrops(drops, bonusDrops, enhancements, EntityTypes.COW, null, null);
 
     GameTestHelpers.assertTrue(
         helper,
@@ -148,6 +187,224 @@ public class LootManagerTestHelper {
         helper,
         "Malformed mob capture data must return empty loot instead of throwing.",
         drops != null && drops.isEmpty());
+  }
+
+  public static void testCapturedMobsDropTheirKeyItems(GameTestHelper helper) {
+    List<EnhancementItem> enhancements =
+        List.of((EnhancementItem) de.markusbordihn.easymobfarm.item.Items.SWORD_ENHANCEMENT);
+    List<String> missingDrops = new ArrayList<>();
+    for (Map.Entry<EntityType<?>, Item> keyDrop : KEY_DROPS.entrySet()) {
+      MobCaptureData mobCaptureData =
+          MobCaptureManager.getMobCaptureData(
+              MobCaptureManager.getMobCaptureCardItem(keyDrop.getKey(), helper.getLevel()));
+      if (!dropsItem(helper, mobCaptureData, enhancements, keyDrop.getValue())) {
+        missingDrops.add(keyDrop.getKey().toShortString() + " -> " + keyDrop.getValue());
+      }
+    }
+
+    helper.assertTrue(
+        missingDrops.isEmpty(),
+        "Captured mobs never dropped their key item in "
+            + KEY_DROP_RUNS
+            + " runs: "
+            + missingDrops);
+    helper.succeed();
+  }
+
+  public static void testEveryDefinedMobProducesFarmLoot(GameTestHelper helper) {
+    List<EnhancementItem> enhancements =
+        List.of((EnhancementItem) de.markusbordihn.easymobfarm.item.Items.SWORD_ENHANCEMENT);
+    List<String> mobsWithoutCard = new ArrayList<>();
+    List<String> mobsWithoutLoot = new ArrayList<>();
+    for (EntityType<?> entityType : GameTestHelpers.definedMobCaptureCardEntityTypes(helper)) {
+      MobCaptureData mobCaptureData =
+          MobCaptureManager.getMobCaptureData(
+              MobCaptureManager.getMobCaptureCardItem(entityType, helper.getLevel()));
+      if (mobCaptureData == null) {
+        mobsWithoutCard.add(entityType.toShortString());
+      } else if (!producesLoot(helper, mobCaptureData, enhancements)) {
+        mobsWithoutLoot.add(entityType.toShortString());
+      }
+    }
+
+    if (!mobsWithoutLoot.isEmpty()) {
+      log.warn(
+          "[Game Test] Captured mobs produced no farm loot in {} runs: {}",
+          FARM_LOOT_RUNS,
+          mobsWithoutLoot);
+    }
+    helper.assertTrue(
+        mobsWithoutCard.isEmpty(), "No mob capture card could be created for: " + mobsWithoutCard);
+    helper.succeed();
+  }
+
+  private static boolean producesLoot(
+      GameTestHelper helper, MobCaptureData mobCaptureData, List<EnhancementItem> enhancements) {
+    for (int i = 0; i < FARM_LOOT_RUNS; i++) {
+      if (!LootManager.getEntityLoot(mobCaptureData, enhancements, helper.getLevel()).isEmpty()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public static void testCapturedMagmaCubeKeepsSizeForMagmaCream(GameTestHelper helper) {
+    MagmaCube magmaCube = EntityTypes.MAGMA_CUBE.create(helper.getLevel(), EntitySpawnReason.EVENT);
+    helper.assertTrue(magmaCube != null, "Unable to create a Magma Cube.");
+    magmaCube.setSize(2, true);
+    MobCaptureData mobCaptureData =
+        MobCaptureManager.getMobCaptureData(MobCaptureManager.getMobCaptureCardItem(magmaCube));
+    magmaCube.discard();
+
+    helper.assertTrue(
+        dropsItem(helper, mobCaptureData, List.of(), Items.MAGMA_CREAM),
+        "Captured big Magma Cube never dropped Magma Cream in " + KEY_DROP_RUNS + " runs");
+    helper.succeed();
+  }
+
+  public static void testCapturedRedSheepDropsRedWool(GameTestHelper helper) {
+    Sheep sheep = EntityTypes.SHEEP.create(helper.getLevel(), EntitySpawnReason.EVENT);
+    helper.assertTrue(sheep != null, "Unable to create a Sheep.");
+    sheep.setColor(DyeColor.RED);
+    MobCaptureData mobCaptureData =
+        MobCaptureManager.getMobCaptureData(MobCaptureManager.getMobCaptureCardItem(sheep));
+    sheep.discard();
+
+    NonNullList<ItemStack> drops =
+        LootManager.getEntityLoot(mobCaptureData, List.of(), helper.getLevel());
+    LootManager.addBonusDrops(
+        drops,
+        MobFarmBonusConfig.getBonusDropEntries(
+            MobFarmType.ANIMAL_PLAINS_FARM, MAX_TIER_LEVEL, EntityTypes.SHEEP),
+        List.of(),
+        EntityTypes.SHEEP,
+        mobCaptureData.hasColor() ? mobCaptureData.color().getDyeColor() : null,
+        mobCaptureData.variant());
+
+    helper.assertTrue(
+        countItems(drops, Items.WOOL.red()) > 0 && countItems(drops, Items.WOOL.white()) == 0,
+        "Captured red sheep should only drop red wool, got: " + drops);
+    helper.succeed();
+  }
+
+  public static void testExperienceEnhancementDropsExperienceBottles(GameTestHelper helper) {
+    MobCaptureData mobCaptureData =
+        MobCaptureManager.getMobCaptureData(
+            MobCaptureManager.getMobCaptureCardItem(EntityTypes.ZOMBIE, helper.getLevel()));
+    List<EnhancementItem> enhancements =
+        List.of((EnhancementItem) de.markusbordihn.easymobfarm.item.Items.EXPERIENCE_ENHANCEMENT);
+
+    int experienceBottles = 0;
+    for (int run = 0; run < EXPERIENCE_DROP_RUNS; run++) {
+      experienceBottles +=
+          countItems(
+              LootManager.getEntityLoot(mobCaptureData, enhancements, helper.getLevel()),
+              Items.EXPERIENCE_BOTTLE);
+    }
+
+    helper.assertTrue(
+        experienceBottles > 0,
+        "Experience enhancement never dropped an experience bottle for a zombie in "
+            + EXPERIENCE_DROP_RUNS
+            + " runs");
+    helper.succeed();
+  }
+
+  public static void testAllEnhancementsWorkForProblemMobs(GameTestHelper helper) {
+    List<EnhancementItem> allEnhancements =
+        BuiltInRegistries.ITEM.stream()
+            .filter(EnhancementItem.class::isInstance)
+            .map(EnhancementItem.class::cast)
+            .toList();
+    List<List<EnhancementItem>> enhancementCombinations = new ArrayList<>();
+    allEnhancements.forEach(enhancement -> enhancementCombinations.add(List.of(enhancement)));
+    enhancementCombinations.add(allEnhancements);
+
+    List<String> failures = new ArrayList<>();
+    for (EntityType<?> entityType : ENHANCEMENT_TEST_ENTITY_TYPES) {
+      Entity entity = entityType.create(helper.getLevel(), EntitySpawnReason.EVENT);
+      if (!(entity instanceof LivingEntity)) {
+        failures.add(entityType.toShortString() + ": unable to create entity");
+        continue;
+      }
+
+      try {
+        for (List<EnhancementItem> enhancements : enhancementCombinations) {
+          collectLootFailure(helper, entity, enhancements, failures);
+        }
+      } finally {
+        entity.discard();
+      }
+    }
+
+    helper.assertTrue(
+        failures.isEmpty(), "Loot calculation failed for " + failures.size() + ": " + failures);
+    helper.succeed();
+  }
+
+  private static void collectLootFailure(
+      GameTestHelper helper,
+      Entity entity,
+      List<EnhancementItem> enhancements,
+      List<String> failures) {
+    try {
+      NonNullList<ItemStack> drops =
+          LootManager.getEntityLoot(entity, enhancements, helper.getLevel());
+      for (MobFarmType mobFarmType : MobFarmType.values()) {
+        LootManager.addBonusDrops(
+            drops,
+            MobFarmBonusConfig.getBonusDrop(mobFarmType, MAX_TIER_LEVEL, entity.getType()),
+            enhancements,
+            entity.getType(),
+            null,
+            null);
+      }
+    } catch (Exception e) {
+      failures.add(entity.getType().toShortString() + " with " + enhancements + ": " + e);
+    }
+  }
+
+  private static boolean dropsItem(
+      GameTestHelper helper,
+      MobCaptureData mobCaptureData,
+      List<EnhancementItem> enhancements,
+      Item item) {
+    for (int run = 0; run < KEY_DROP_RUNS; run++) {
+      NonNullList<ItemStack> drops =
+          LootManager.getEntityLoot(mobCaptureData, enhancements, helper.getLevel());
+      if (countItems(drops, item) > 0) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private static Map<EntityType<?>, Item> createKeyDrops() {
+    Map<EntityType<?>, Item> keyDrops = new LinkedHashMap<>();
+    keyDrops.put(EntityTypes.BLAZE, Items.BLAZE_ROD);
+    keyDrops.put(EntityTypes.CHICKEN, Items.CHICKEN);
+    keyDrops.put(EntityTypes.COW, Items.BEEF);
+    keyDrops.put(EntityTypes.CREEPER, Items.GUNPOWDER);
+    keyDrops.put(EntityTypes.DROWNED, Items.ROTTEN_FLESH);
+    keyDrops.put(EntityTypes.ENDERMAN, Items.ENDER_PEARL);
+    keyDrops.put(EntityTypes.EVOKER, Items.TOTEM_OF_UNDYING);
+    keyDrops.put(EntityTypes.GHAST, Items.GHAST_TEAR);
+    keyDrops.put(EntityTypes.GUARDIAN, Items.PRISMARINE_SHARD);
+    keyDrops.put(EntityTypes.HOGLIN, Items.PORKCHOP);
+    keyDrops.put(EntityTypes.IRON_GOLEM, Items.IRON_INGOT);
+    keyDrops.put(EntityTypes.PHANTOM, Items.PHANTOM_MEMBRANE);
+    keyDrops.put(EntityTypes.PIG, Items.PORKCHOP);
+    keyDrops.put(EntityTypes.RABBIT, Items.RABBIT_HIDE);
+    keyDrops.put(EntityTypes.SHEEP, Items.MUTTON);
+    keyDrops.put(EntityTypes.SHULKER, Items.SHULKER_SHELL);
+    keyDrops.put(EntityTypes.SKELETON, Items.BONE);
+    keyDrops.put(EntityTypes.SLIME, Items.SLIME_BALL);
+    keyDrops.put(EntityTypes.SNOW_GOLEM, Items.SNOWBALL);
+    keyDrops.put(EntityTypes.SPIDER, Items.STRING);
+    keyDrops.put(EntityTypes.SQUID, Items.INK_SAC);
+    keyDrops.put(EntityTypes.WITHER_SKELETON, Items.BONE);
+    keyDrops.put(EntityTypes.ZOMBIE, Items.ROTTEN_FLESH);
+    return keyDrops;
   }
 
   private static ListTag invalidPositionTag() {

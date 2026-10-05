@@ -27,6 +27,38 @@ import net.minecraft.gametest.framework.GameTestHelper;
 @SuppressWarnings("unused")
 public class MobFarmBlockItemsTest {
 
+  public void testTier0MobFarmTemplate(GameTestHelper helper) {
+    MobFarmBlockItemTestHelper.testMobFarmBlockItem(
+        helper,
+        ModBlockItems.TIER_0_MOB_FARM_TEMPLATE.get().asItem(),
+        ModBlocks.TIER_0_MOB_FARM_TEMPLATE.get());
+    helper.succeed();
+  }
+
+  public void testTier1MobFarmTemplate(GameTestHelper helper) {
+    MobFarmBlockItemTestHelper.testMobFarmBlockItem(
+        helper,
+        ModBlockItems.TIER_1_MOB_FARM_TEMPLATE.get().asItem(),
+        ModBlocks.TIER_1_MOB_FARM_TEMPLATE.get());
+    helper.succeed();
+  }
+
+  public void testTier2MobFarmTemplate(GameTestHelper helper) {
+    MobFarmBlockItemTestHelper.testMobFarmBlockItem(
+        helper,
+        ModBlockItems.TIER_2_MOB_FARM_TEMPLATE.get().asItem(),
+        ModBlocks.TIER_2_MOB_FARM_TEMPLATE.get());
+    helper.succeed();
+  }
+
+  public void testTier3MobFarmTemplate(GameTestHelper helper) {
+    MobFarmBlockItemTestHelper.testMobFarmBlockItem(
+        helper,
+        ModBlockItems.TIER_3_MOB_FARM_TEMPLATE.get().asItem(),
+        ModBlocks.TIER_3_MOB_FARM_TEMPLATE.get());
+    helper.succeed();
+  }
+
   public void testAnimalPlainsFarm(GameTestHelper helper) {
     MobFarmBlockItemTestHelper.testMobFarmBlockItem(
         helper,

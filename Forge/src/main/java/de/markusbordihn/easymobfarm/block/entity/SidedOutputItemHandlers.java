@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.block.entity;
 
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 import net.minecraft.core.Direction;
 import net.minecraft.world.WorldlyContainer;
@@ -53,7 +54,9 @@ final class SidedOutputItemHandlers {
   }
 
   void refresh() {
-    this.invalidate();
+    List<LazyOptional<IItemHandler>> staleItemHandlers = List.copyOf(this.itemHandlers.values());
     this.itemHandlers.clear();
+    // LazyOptional#invalidate runs listeners that re-query the capability synchronously.
+    staleItemHandlers.forEach(LazyOptional::invalidate);
   }
 }
