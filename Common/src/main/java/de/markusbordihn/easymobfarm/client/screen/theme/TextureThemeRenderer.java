@@ -64,7 +64,8 @@ public record TextureThemeRenderer(
   }
 
   @Override
-  public void renderProgress(GuiGraphicsExtractor guiGraphics, int leftPos, int topPos, float progress) {
+  public void renderProgress(
+      GuiGraphicsExtractor guiGraphics, int leftPos, int topPos, float progress) {
     this.progressBar.render(guiGraphics, leftPos, topPos, progress);
   }
 

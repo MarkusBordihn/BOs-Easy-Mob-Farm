@@ -87,7 +87,8 @@ public class ModBlocks {
   public static final RegistryObject<Block> NETHER_FORTRESS_FARM =
       BLOCKS.register(
           MobFarmType.NETHER_FORTRESS_FARM.getId(),
-          () -> new MobFarmBlockWrapper(MobFarmType.NETHER_FORTRESS_FARM));  public static final RegistryObject<BlockEntityType<CreativeMobFarmBlockEntityWrapper>>
+          () -> new MobFarmBlockWrapper(MobFarmType.NETHER_FORTRESS_FARM));
+  public static final RegistryObject<BlockEntityType<CreativeMobFarmBlockEntityWrapper>>
       CREATIVE_MOB_FARM_ENTITY =
           BLOCK_ENTITIES.register(
               CreativeMobFarmBlockEntity.ID,
@@ -107,9 +108,6 @@ public class ModBlocks {
       BLOCKS.register(
           MobFarmType.NETHER_WASTES_FARM.getId(),
           () -> new MobFarmBlockWrapper(MobFarmType.NETHER_WASTES_FARM));
-
-  protected ModBlocks() {}
-
   public static final RegistryObject<BlockEntityType<MobFarmBlockEntityWrapper>> MOB_FARM_ENTITY =
       BLOCK_ENTITIES.register(
           MobFarmBlockEntity.ID,
@@ -129,4 +127,6 @@ public class ModBlocks {
                       SWAMP_FARM.get(),
                       END_FARM.get(),
                       NETHER_WASTES_FARM.get())));
+
+  protected ModBlocks() {}
 }

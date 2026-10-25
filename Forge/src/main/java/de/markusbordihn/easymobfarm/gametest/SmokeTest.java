@@ -35,4 +35,28 @@ public class SmokeTest {
         ModList.isLoaded(Constants.MOD_ID));
     helper.succeed();
   }
+
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3")
+  public void testEveryModAdvancementIsLoaded(GameTestHelper helper) {
+    ServerDataTestHelper.testEveryModAdvancementIsLoaded(helper);
+    helper.succeed();
+  }
+
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3")
+  public void testEveryModLootTableIsLoaded(GameTestHelper helper) {
+    ServerDataTestHelper.testEveryModLootTableIsLoaded(helper);
+    helper.succeed();
+  }
+
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3")
+  public void testEveryModRecipeIsLoaded(GameTestHelper helper) {
+    ServerDataTestHelper.testEveryModRecipeIsLoaded(helper);
+    helper.succeed();
+  }
+
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3")
+  public void testDisabledEnhancementRecipeIsRemoved(GameTestHelper helper) {
+    ServerDataTestHelper.testDisabledEnhancementRecipeIsRemoved(helper);
+    helper.succeed();
+  }
 }

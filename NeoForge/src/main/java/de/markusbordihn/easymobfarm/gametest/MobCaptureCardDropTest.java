@@ -48,4 +48,14 @@ public class MobCaptureCardDropTest {
     MobCaptureCardDropTestHelper.testFishingCardDropRespectsConfiguration(helper);
     helper.succeed();
   }
+
+  public void testPlayerKillsDropStackingCards(GameTestHelper helper) {
+    MobCaptureCardDropTestHelper.testPlayerKillsDropStackingCards(helper);
+    helper.succeed();
+  }
+
+  public void testNonPlayerKillDropsNoCard(GameTestHelper helper) {
+    MobCaptureCardDropTestHelper.testNonPlayerKillDropsNoCard(helper);
+    helper.succeed();
+  }
 }

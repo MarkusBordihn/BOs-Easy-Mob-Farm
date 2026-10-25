@@ -55,7 +55,7 @@ import org.apache.logging.log4j.Logger;
 public class LootManagerTestHelper {
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
-  private static final int FARM_LOOT_RUNS = 32;
+  private static final int FARM_LOOT_RUNS = 160;
   private static final int SPECIAL_DROP_RUNS = 200;
   private static final int LOOT_ENHANCEMENT_COUNT = 4;
   private static final int KEY_DROP_RUNS = 64;

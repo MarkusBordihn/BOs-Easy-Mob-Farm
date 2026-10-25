@@ -51,7 +51,7 @@ public class EasyMobFarmJeiPlugin implements IModPlugin {
   private static final Identifier pluginId =
       Identifier.fromNamespaceAndPath(Constants.MOD_ID, "jei_plugin");
   private static final List<ItemStack> runtimeAddedCards = new ArrayList<>();
-  private static final List<MobFarmLootDisplay> runtimeAddedLootDisplays = new ArrayList<>();
+  private static final List<MobFarmLootDisplay> registeredLootDisplays = new ArrayList<>();
   private static volatile IJeiRuntime jeiRuntime;
 
   public static void refreshMobCaptureCards() {
@@ -80,18 +80,25 @@ public class EasyMobFarmJeiPlugin implements IModPlugin {
 
   private static void refreshMobFarmLootDisplays() {
     IRecipeManager recipeManager = jeiRuntime.getRecipeManager();
-    if (!runtimeAddedLootDisplays.isEmpty()) {
+    if (!registeredLootDisplays.isEmpty()) {
       recipeManager.hideRecipes(
-          MobFarmLootCategory.RECIPE_TYPE, new ArrayList<>(runtimeAddedLootDisplays));
-      runtimeAddedLootDisplays.clear();
+          MobFarmLootCategory.RECIPE_TYPE, new ArrayList<>(registeredLootDisplays));
+      registeredLootDisplays.clear();
     }
 
     List<MobFarmLootDisplay> lootDisplays =
         MobFarmLootDisplay.createAll(ModItems.MOB_CAPTURE_CARD.get());
     if (!lootDisplays.isEmpty()) {
       recipeManager.addRecipes(MobFarmLootCategory.RECIPE_TYPE, lootDisplays);
-      runtimeAddedLootDisplays.addAll(lootDisplays);
+      registeredLootDisplays.addAll(lootDisplays);
     }
+    logVisibleLootDisplays(recipeManager);
+  }
+
+  private static void logVisibleLootDisplays(IRecipeManager recipeManager) {
+    log.info(
+        "[JEI Compat] Mob Farm loot category shows {} entries.",
+        recipeManager.createRecipeLookup(MobFarmLootCategory.RECIPE_TYPE).get().count());
   }
 
   @Override
@@ -102,7 +109,9 @@ public class EasyMobFarmJeiPlugin implements IModPlugin {
   @Override
   public void onRuntimeAvailable(@NotNull IJeiRuntime runtime) {
     EasyMobFarmJeiPlugin.jeiRuntime = runtime;
-    if (!MobCaptureCardDefinitionManager.getAll().isEmpty()) {
+    if (MobCaptureCardDefinitionManager.getAll().isEmpty()) {
+      logVisibleLootDisplays(runtime.getRecipeManager());
+    } else {
       refreshMobCaptureCards();
     }
   }
@@ -111,7 +120,7 @@ public class EasyMobFarmJeiPlugin implements IModPlugin {
   public void onRuntimeUnavailable() {
     EasyMobFarmJeiPlugin.jeiRuntime = null;
     EasyMobFarmJeiPlugin.runtimeAddedCards.clear();
-    EasyMobFarmJeiPlugin.runtimeAddedLootDisplays.clear();
+    EasyMobFarmJeiPlugin.registeredLootDisplays.clear();
   }
 
   @Override
@@ -123,9 +132,11 @@ public class EasyMobFarmJeiPlugin implements IModPlugin {
 
   @Override
   public void registerRecipes(IRecipeRegistration registration) {
-    registration.addRecipes(
-        MobFarmLootCategory.RECIPE_TYPE,
-        MobFarmLootDisplay.createAll(ModItems.MOB_CAPTURE_CARD.get()));
+    List<MobFarmLootDisplay> lootDisplays =
+        MobFarmLootDisplay.createAll(ModItems.MOB_CAPTURE_CARD.get());
+    registration.addRecipes(MobFarmLootCategory.RECIPE_TYPE, lootDisplays);
+    registeredLootDisplays.clear();
+    registeredLootDisplays.addAll(lootDisplays);
   }
 
   @Override

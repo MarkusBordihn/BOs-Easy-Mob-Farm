@@ -58,13 +58,15 @@ public final class ModGameTests {
 
   private static final LootManagerTest LOOT_MANAGER_TESTS = new LootManagerTest();
   private static final LootTablesTest LOOT_TABLES_TESTS = new LootTablesTest();
-  private static final MobCaptureCardDropTest
-      MOB_CAPTURE_CARD_DROP_TESTS = new MobCaptureCardDropTest();
+  private static final MenuSlotTest MENU_SLOT_TESTS = new MenuSlotTest();
+  private static final MobCaptureCardDropTest MOB_CAPTURE_CARD_DROP_TESTS =
+      new MobCaptureCardDropTest();
   private static final MobCatcherTest MOB_CATCHER_TESTS = new MobCatcherTest();
-  private static final MobFarmBlockEntityTest
-      MOB_FARM_BLOCK_ENTITY_TESTS = new MobFarmBlockEntityTest();
-  private static final MobFarmBlockItemsTest
-      MOB_FARM_BLOCK_ITEMS_TESTS = new MobFarmBlockItemsTest();
+  private static final MobFarmBlockEntityTest MOB_FARM_BLOCK_ENTITY_TESTS =
+      new MobFarmBlockEntityTest();
+  private static final MobFarmBlockItemsTest MOB_FARM_BLOCK_ITEMS_TESTS =
+      new MobFarmBlockItemsTest();
+  private static final MobFarmInventoryTest MOB_FARM_INVENTORY_TESTS = new MobFarmInventoryTest();
   private static final MobVariantDataTest MOB_VARIANT_DATA_TESTS = new MobVariantDataTest();
   private static final ModBlockItemsTest MOD_BLOCK_ITEMS_TESTS = new ModBlockItemsTest();
   private static final ModBlocksTest MOD_BLOCKS_TESTS = new ModBlocksTest();
@@ -94,6 +96,30 @@ public final class ModGameTests {
         LOOT_MANAGER_TESTS::testMalformedCaptureDataDoesNotThrow,
         STRUCTURE_3X3X3);
     register(
+        "loot_manager_captured_mobs_drop_their_key_items",
+        LOOT_MANAGER_TESTS::testCapturedMobsDropTheirKeyItems,
+        STRUCTURE_3X3X3);
+    register(
+        "loot_manager_every_defined_mob_produces_farm_loot",
+        LOOT_MANAGER_TESTS::testEveryDefinedMobProducesFarmLoot,
+        STRUCTURE_3X3X3);
+    register(
+        "loot_manager_captured_magma_cube_keeps_size_for_magma_cream",
+        LOOT_MANAGER_TESTS::testCapturedMagmaCubeKeepsSizeForMagmaCream,
+        STRUCTURE_3X3X3);
+    register(
+        "loot_manager_captured_red_sheep_drops_red_wool",
+        LOOT_MANAGER_TESTS::testCapturedRedSheepDropsRedWool,
+        STRUCTURE_3X3X3);
+    register(
+        "loot_manager_experience_enhancement_drops_experience_bottles",
+        LOOT_MANAGER_TESTS::testExperienceEnhancementDropsExperienceBottles,
+        STRUCTURE_3X3X3);
+    register(
+        "loot_manager_all_enhancements_work_for_problem_mobs",
+        LOOT_MANAGER_TESTS::testAllEnhancementsWorkForProblemMobs,
+        STRUCTURE_3X3X3);
+    register(
         "loot_tables_tier0mob_farm_template_drop",
         LOOT_TABLES_TESTS::testTier0MobFarmTemplateDrop,
         STRUCTURE_1X1X1);
@@ -118,9 +144,7 @@ public final class ModGameTests {
         LOOT_TABLES_TESTS::testAnimalPlainsFarmDrop,
         STRUCTURE_1X1X1);
     register(
-        "loot_tables_bee_hive_farm_drop",
-        LOOT_TABLES_TESTS::testBeeHiveFarmDrop,
-        STRUCTURE_1X1X1);
+        "loot_tables_bee_hive_farm_drop", LOOT_TABLES_TESTS::testBeeHiveFarmDrop, STRUCTURE_1X1X1);
     register(
         "loot_tables_desert_farm_drop", LOOT_TABLES_TESTS::testDesertFarmDrop, STRUCTURE_1X1X1);
     register(
@@ -141,16 +165,85 @@ public final class ModGameTests {
         "loot_tables_nether_fortress_farm_drop",
         LOOT_TABLES_TESTS::testNetherFortressFarmDrop,
         STRUCTURE_1X1X1);
-    register(
-        "loot_tables_ocean_farm_drop", LOOT_TABLES_TESTS::testOceanFarmDrop, STRUCTURE_1X1X1);
-    register(
-        "loot_tables_swamp_farm_drop", LOOT_TABLES_TESTS::testSwampFarmDrop, STRUCTURE_1X1X1);
-    register(
-        "loot_tables_end_farm_drop", LOOT_TABLES_TESTS::testEndFarmDrop, STRUCTURE_1X1X1);
+    register("loot_tables_ocean_farm_drop", LOOT_TABLES_TESTS::testOceanFarmDrop, STRUCTURE_1X1X1);
+    register("loot_tables_swamp_farm_drop", LOOT_TABLES_TESTS::testSwampFarmDrop, STRUCTURE_1X1X1);
+    register("loot_tables_end_farm_drop", LOOT_TABLES_TESTS::testEndFarmDrop, STRUCTURE_1X1X1);
     register(
         "loot_tables_nether_wastes_farm_drop",
         LOOT_TABLES_TESTS::testNetherWastesFarmDrop,
         STRUCTURE_1X1X1);
+    register(
+        "menu_slot_quick_move_capture_card_fills_captured_mob_slot_once",
+        MENU_SLOT_TESTS::testQuickMoveCaptureCardFillsCapturedMobSlotOnce,
+        STRUCTURE_3X3X3);
+    register(
+        "menu_slot_quick_move_never_fills_output_slots",
+        MENU_SLOT_TESTS::testQuickMoveNeverFillsOutputSlots,
+        STRUCTURE_3X3X3);
+    register(
+        "menu_slot_quick_move_takes_result_into_player_inventory",
+        MENU_SLOT_TESTS::testQuickMoveTakesResultIntoPlayerInventory,
+        STRUCTURE_3X3X3);
+    register(
+        "menu_slot_quick_move_slot_upgrade_adds_output_slots",
+        MENU_SLOT_TESTS::testQuickMoveSlotUpgradeAddsOutputSlots,
+        STRUCTURE_3X3X3);
+    register(
+        "menu_slot_hotbar_swap_into_output_slot_is_rejected",
+        MENU_SLOT_TESTS::testHotbarSwapIntoOutputSlotIsRejected,
+        STRUCTURE_3X3X3);
+    register(
+        "menu_slot_hotbar_swap_takes_result",
+        MENU_SLOT_TESTS::testHotbarSwapTakesResult,
+        STRUCTURE_3X3X3);
+    register(
+        "menu_slot_hotbar_swap_capture_card_fills_captured_mob_slot_once",
+        MENU_SLOT_TESTS::testHotbarSwapCaptureCardFillsCapturedMobSlotOnce,
+        STRUCTURE_3X3X3);
+    register(
+        "menu_slot_mouse_placement_respects_slot_restrictions",
+        MENU_SLOT_TESTS::testMousePlacementRespectsSlotRestrictions,
+        STRUCTURE_3X3X3);
+    register(
+        "menu_slot_card_binder_quick_move_cards_fill_one_binder_slot_each",
+        MENU_SLOT_TESTS::testCardBinderQuickMoveCardsFillOneBinderSlotEach,
+        STRUCTURE_3X3X3);
+    register(
+        "menu_slot_card_binder_quick_move_cards_never_stack_in_binder_slot",
+        MENU_SLOT_TESTS::testCardBinderQuickMoveCardsNeverStackInBinderSlot,
+        STRUCTURE_3X3X3);
+    register(
+        "menu_slot_card_binder_quick_move_ignores_non_cards",
+        MENU_SLOT_TESTS::testCardBinderQuickMoveIgnoresNonCards,
+        STRUCTURE_3X3X3);
+    register(
+        "menu_slot_card_binder_quick_move_takes_card_out",
+        MENU_SLOT_TESTS::testCardBinderQuickMoveTakesCardOut,
+        STRUCTURE_3X3X3);
+    register(
+        "menu_slot_card_binder_open_binder_cannot_be_moved",
+        MENU_SLOT_TESTS::testCardBinderOpenBinderCannotBeMoved,
+        STRUCTURE_3X3X3);
+    register(
+        "menu_slot_card_binder_hotbar_swap_cannot_move_open_binder",
+        MENU_SLOT_TESTS::testCardBinderHotbarSwapCannotMoveOpenBinder,
+        STRUCTURE_3X3X3);
+    register(
+        "menu_slot_card_binder_swapped_in_binder_does_not_receive_cards",
+        MENU_SLOT_TESTS::testCardBinderSwappedInBinderDoesNotReceiveCards,
+        STRUCTURE_3X3X3);
+    register(
+        "menu_slot_card_binder_recreated_binder_keeps_menu_open",
+        MENU_SLOT_TESTS::testCardBinderRecreatedBinderKeepsMenuOpen,
+        STRUCTURE_3X3X3);
+    register(
+        "menu_slot_card_binder_cards_are_saved_on_every_click",
+        MENU_SLOT_TESTS::testCardBinderCardsAreSavedOnEveryClick,
+        STRUCTURE_3X3X3);
+    register(
+        "menu_slot_card_binder_dropped_binder_ignores_further_clicks",
+        MENU_SLOT_TESTS::testCardBinderDroppedBinderIgnoresFurtherClicks,
+        STRUCTURE_3X3X3);
     register(
         "mob_capture_card_drop_no_card_drop_with_zero_chance",
         MOB_CAPTURE_CARD_DROP_TESTS::testNoCardDropWithZeroChance,
@@ -160,12 +253,44 @@ public final class ModGameTests {
         MOB_CAPTURE_CARD_DROP_TESTS::testSingleCardDropWithFullChance,
         STRUCTURE_3X3X3);
     register(
+        "mob_capture_card_drop_every_defined_mob_drops_its_own_card_on_kill",
+        MOB_CAPTURE_CARD_DROP_TESTS::testEveryDefinedMobDropsItsOwnCardOnKill,
+        STRUCTURE_3X3X3);
+    register(
+        "mob_capture_card_drop_every_fish_drops_its_own_card_on_fishing",
+        MOB_CAPTURE_CARD_DROP_TESTS::testEveryFishDropsItsOwnCardOnFishing,
+        STRUCTURE_3X3X3);
+    register(
+        "mob_capture_card_drop_fishing_card_drop_respects_configuration",
+        MOB_CAPTURE_CARD_DROP_TESTS::testFishingCardDropRespectsConfiguration,
+        STRUCTURE_3X3X3);
+    register(
+        "mob_capture_card_drop_player_kills_drop_stacking_cards",
+        MOB_CAPTURE_CARD_DROP_TESTS::testPlayerKillsDropStackingCards,
+        STRUCTURE_3X3X3);
+    register(
+        "mob_capture_card_drop_non_player_kill_drops_no_card",
+        MOB_CAPTURE_CARD_DROP_TESTS::testNonPlayerKillDropsNoCard,
+        STRUCTURE_3X3X3);
+    register(
         "mob_catcher_rejected_capture_keeps_durability",
         MOB_CATCHER_TESTS::testRejectedCaptureKeepsDurability,
         STRUCTURE_3X3X3);
     register(
         "mob_catcher_successful_capture_uses_durability",
         MOB_CATCHER_TESTS::testSuccessfulCaptureUsesDurability,
+        STRUCTURE_3X3X3);
+    register(
+        "mob_catcher_deny_list_rejects_capture",
+        MOB_CATCHER_TESTS::testDenyListRejectsCapture,
+        STRUCTURE_3X3X3);
+    register(
+        "mob_catcher_allow_list_rejects_other_mobs",
+        MOB_CATCHER_TESTS::testAllowListRejectsOtherMobs,
+        STRUCTURE_3X3X3);
+    register(
+        "mob_catcher_captured_mob_can_be_released",
+        MOB_CATCHER_TESTS::testCapturedMobCanBeReleased,
         STRUCTURE_3X3X3);
     register(
         "mob_farm_block_entity_unknown_farm_type_tag_keeps_block_farm_type",
@@ -187,6 +312,22 @@ public final class ModGameTests {
         "mob_farm_block_entity_unknown_entity_capture_card_sets_error_status",
         MOB_FARM_BLOCK_ENTITY_TESTS::testUnknownEntityCaptureCardSetsErrorStatus,
         STRUCTURE_3X3X3);
+    register(
+        "mob_farm_block_items_tier0mob_farm_template",
+        MOB_FARM_BLOCK_ITEMS_TESTS::testTier0MobFarmTemplate,
+        STRUCTURE_1X1X1);
+    register(
+        "mob_farm_block_items_tier1mob_farm_template",
+        MOB_FARM_BLOCK_ITEMS_TESTS::testTier1MobFarmTemplate,
+        STRUCTURE_1X1X1);
+    register(
+        "mob_farm_block_items_tier2mob_farm_template",
+        MOB_FARM_BLOCK_ITEMS_TESTS::testTier2MobFarmTemplate,
+        STRUCTURE_1X1X1);
+    register(
+        "mob_farm_block_items_tier3mob_farm_template",
+        MOB_FARM_BLOCK_ITEMS_TESTS::testTier3MobFarmTemplate,
+        STRUCTURE_1X1X1);
     register(
         "mob_farm_block_items_animal_plains_farm",
         MOB_FARM_BLOCK_ITEMS_TESTS::testAnimalPlainsFarm,
@@ -388,9 +529,7 @@ public final class ModGameTests {
         MOB_FARM_BLOCK_ITEMS_TESTS::testSwampFarmTier3,
         STRUCTURE_1X1X1);
     register(
-        "mob_farm_block_items_end_farm",
-        MOB_FARM_BLOCK_ITEMS_TESTS::testEndFarm,
-        STRUCTURE_1X1X1);
+        "mob_farm_block_items_end_farm", MOB_FARM_BLOCK_ITEMS_TESTS::testEndFarm, STRUCTURE_1X1X1);
     register(
         "mob_farm_block_items_end_farm_tier0",
         MOB_FARM_BLOCK_ITEMS_TESTS::testEndFarmTier0,
@@ -427,6 +566,38 @@ public final class ModGameTests {
         "mob_farm_block_items_nether_wastes_farm_tier3",
         MOB_FARM_BLOCK_ITEMS_TESTS::testNetherWastesFarmTier3,
         STRUCTURE_1X1X1);
+    register(
+        "mob_farm_inventory_save_and_load_keeps_farm_state",
+        MOB_FARM_INVENTORY_TESTS::testSaveAndLoadKeepsFarmState,
+        STRUCTURE_3X3X3);
+    register(
+        "mob_farm_inventory_full_output_buffers_loot_without_loss",
+        MOB_FARM_INVENTORY_TESTS::testFullOutputBuffersLootWithoutLoss,
+        STRUCTURE_3X3X3);
+    register(
+        "mob_farm_inventory_partial_buffer_transfer_does_not_duplicate",
+        MOB_FARM_INVENTORY_TESTS::testPartialBufferTransferDoesNotDuplicate,
+        STRUCTURE_3X3X3);
+    register(
+        "mob_farm_inventory_breaking_farm_drops_buffered_items",
+        MOB_FARM_INVENTORY_TESTS::testBreakingFarmDropsBufferedItems,
+        STRUCTURE_3X3X3);
+    register(
+        "mob_farm_inventory_broken_farm_keeps_tier_level",
+        MOB_FARM_INVENTORY_TESTS::testBrokenFarmKeepsTierLevel,
+        STRUCTURE_3X3X3);
+    register(
+        "mob_farm_inventory_right_click_inserts_single_items",
+        MOB_FARM_INVENTORY_TESTS::testRightClickInsertsSingleItems,
+        STRUCTURE_3X3X3);
+    register(
+        "mob_farm_inventory_hopper_below_pulls_only_results",
+        MOB_FARM_INVENTORY_TESTS::testHopperBelowPullsOnlyResults,
+        STRUCTURE_3X3X3);
+    register(
+        "mob_farm_inventory_hopper_above_cannot_insert",
+        MOB_FARM_INVENTORY_TESTS::testHopperAboveCannotInsert,
+        STRUCTURE_3X3X3);
     register(
         "mob_variant_data_pillager_variant_detection",
         MOB_VARIANT_DATA_TESTS::testPillagerVariantDetection,
@@ -492,9 +663,7 @@ public final class ModGameTests {
         MOD_BLOCK_ITEMS_TESTS::testSwampFarmItem,
         STRUCTURE_1X1X1);
     register(
-        "mod_block_items_end_farm_item",
-        MOD_BLOCK_ITEMS_TESTS::testEndFarmItem,
-        STRUCTURE_1X1X1);
+        "mod_block_items_end_farm_item", MOD_BLOCK_ITEMS_TESTS::testEndFarmItem, STRUCTURE_1X1X1);
     register(
         "mod_block_items_nether_wastes_farm_item",
         MOD_BLOCK_ITEMS_TESTS::testNetherWastesFarmItem,
@@ -518,19 +687,12 @@ public final class ModGameTests {
     register(
         "mod_blocks_creative_mob_farm", MOD_BLOCKS_TESTS::testCreativeMobFarm, STRUCTURE_1X1X1);
     register(
-        "mod_blocks_animal_plains_farm",
-        MOD_BLOCKS_TESTS::testAnimalPlainsFarm,
-        STRUCTURE_1X1X1);
-    register(
-        "mod_blocks_bee_hive_farm", MOD_BLOCKS_TESTS::testBeeHiveFarm, STRUCTURE_1X1X1);
-    register(
-        "mod_blocks_desert_farm", MOD_BLOCKS_TESTS::testDesertFarm, STRUCTURE_1X1X1);
-    register(
-        "mod_blocks_iron_golem_farm", MOD_BLOCKS_TESTS::testIronGolemFarm, STRUCTURE_1X1X1);
-    register(
-        "mod_blocks_jungle_farm", MOD_BLOCKS_TESTS::testJungleFarm, STRUCTURE_1X1X1);
-    register(
-        "mod_blocks_lucky_drop_farm", MOD_BLOCKS_TESTS::testLuckyDropFarm, STRUCTURE_1X1X1);
+        "mod_blocks_animal_plains_farm", MOD_BLOCKS_TESTS::testAnimalPlainsFarm, STRUCTURE_1X1X1);
+    register("mod_blocks_bee_hive_farm", MOD_BLOCKS_TESTS::testBeeHiveFarm, STRUCTURE_1X1X1);
+    register("mod_blocks_desert_farm", MOD_BLOCKS_TESTS::testDesertFarm, STRUCTURE_1X1X1);
+    register("mod_blocks_iron_golem_farm", MOD_BLOCKS_TESTS::testIronGolemFarm, STRUCTURE_1X1X1);
+    register("mod_blocks_jungle_farm", MOD_BLOCKS_TESTS::testJungleFarm, STRUCTURE_1X1X1);
+    register("mod_blocks_lucky_drop_farm", MOD_BLOCKS_TESTS::testLuckyDropFarm, STRUCTURE_1X1X1);
     register(
         "mod_blocks_monster_plains_cave_farm",
         MOD_BLOCKS_TESTS::testMonsterPlainsCaveFarm,
@@ -539,16 +701,11 @@ public final class ModGameTests {
         "mod_blocks_nether_fortress_farm",
         MOD_BLOCKS_TESTS::testNetherFortressFarm,
         STRUCTURE_1X1X1);
+    register("mod_blocks_ocean_farm", MOD_BLOCKS_TESTS::testOceanFarm, STRUCTURE_1X1X1);
+    register("mod_blocks_swamp_farm", MOD_BLOCKS_TESTS::testSwampFarm, STRUCTURE_1X1X1);
+    register("mod_blocks_end_farm", MOD_BLOCKS_TESTS::testEndFarm, STRUCTURE_1X1X1);
     register(
-        "mod_blocks_ocean_farm", MOD_BLOCKS_TESTS::testOceanFarm, STRUCTURE_1X1X1);
-    register(
-        "mod_blocks_swamp_farm", MOD_BLOCKS_TESTS::testSwampFarm, STRUCTURE_1X1X1);
-    register(
-        "mod_blocks_end_farm", MOD_BLOCKS_TESTS::testEndFarm, STRUCTURE_1X1X1);
-    register(
-        "mod_blocks_nether_wastes_farm",
-        MOD_BLOCKS_TESTS::testNetherWastesFarm,
-        STRUCTURE_1X1X1);
+        "mod_blocks_nether_wastes_farm", MOD_BLOCKS_TESTS::testNetherWastesFarm, STRUCTURE_1X1X1);
     register(
         "mod_items_blank_mob_capture_card_item",
         MOD_ITEMS_TESTS::testBlankMobCaptureCardItem,
@@ -622,9 +779,7 @@ public final class ModGameTests {
         MOD_ITEMS_TESTS::testNoFlowersFilterItem,
         STRUCTURE_1X1X1);
     register(
-        "mod_items_no_meat_filter_item",
-        MOD_ITEMS_TESTS::testNoMeatFilterItem,
-        STRUCTURE_1X1X1);
+        "mod_items_no_meat_filter_item", MOD_ITEMS_TESTS::testNoMeatFilterItem, STRUCTURE_1X1X1);
     register(
         "mod_items_big_slot_upgrade_item",
         MOD_ITEMS_TESTS::testBigSlotUpgradeItem,
@@ -653,10 +808,8 @@ public final class ModGameTests {
         "mod_items_void_binding_chain_item",
         MOD_ITEMS_TESTS::testVoidBindingChainItem,
         STRUCTURE_1X1X1);
-    register(
-        "mod_items_milk_bottle_item", MOD_ITEMS_TESTS::testMilkBottleItem, STRUCTURE_1X1X1);
-    register(
-        "mod_items_card_binder_item", MOD_ITEMS_TESTS::testCardBinderItem, STRUCTURE_1X1X1);
+    register("mod_items_milk_bottle_item", MOD_ITEMS_TESTS::testMilkBottleItem, STRUCTURE_1X1X1);
+    register("mod_items_card_binder_item", MOD_ITEMS_TESTS::testCardBinderItem, STRUCTURE_1X1X1);
     register(
         "redstone_signal_redstone_signal_with_lever",
         REDSTONE_SIGNAL_TESTS::testRedstoneSignalWithLever,
@@ -666,7 +819,38 @@ public final class ModGameTests {
         REDSTONE_SIGNAL_TESTS::testRedstoneSignalWithRedstoneBlock,
         STRUCTURE_3X3X3);
     register(
-        "smoke_mod_registered", SMOKE_TESTS::testModRegistered, STRUCTURE_3X3X3);
+        "redstone_signal_redstone_mode_disable_on_signal",
+        REDSTONE_SIGNAL_TESTS::testRedstoneModeDisableOnSignal,
+        STRUCTURE_3X3X3);
+    register(
+        "redstone_signal_redstone_mode_enable_on_signal",
+        REDSTONE_SIGNAL_TESTS::testRedstoneModeEnableOnSignal,
+        STRUCTURE_3X3X3);
+    register(
+        "redstone_signal_redstone_mode_enable_on_signal_without_signal",
+        REDSTONE_SIGNAL_TESTS::testRedstoneModeEnableOnSignalWithoutSignal,
+        STRUCTURE_3X3X3);
+    register(
+        "redstone_signal_redstone_mode_ignore",
+        REDSTONE_SIGNAL_TESTS::testRedstoneModeIgnore,
+        STRUCTURE_3X3X3);
+    register("smoke_mod_registered", SMOKE_TESTS::testModRegistered, STRUCTURE_3X3X3);
+    register(
+        "smoke_every_mod_advancement_is_loaded",
+        SMOKE_TESTS::testEveryModAdvancementIsLoaded,
+        STRUCTURE_3X3X3);
+    register(
+        "smoke_every_mod_loot_table_is_loaded",
+        SMOKE_TESTS::testEveryModLootTableIsLoaded,
+        STRUCTURE_3X3X3);
+    register(
+        "smoke_every_mod_recipe_is_loaded",
+        SMOKE_TESTS::testEveryModRecipeIsLoaded,
+        STRUCTURE_3X3X3);
+    register(
+        "smoke_disabled_enhancement_recipe_is_removed",
+        SMOKE_TESTS::testDisabledEnhancementRecipeIsRemoved,
+        STRUCTURE_3X3X3);
     register(
         "item_capability_extraction",
         ItemCapabilityTest::testItemCapabilityExtraction,

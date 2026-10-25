@@ -40,13 +40,6 @@ loom {
       name "Game Test"
       vmArg "-Dfabric-api.gametest"
     }
-    if (clientToolkitAvailable) {
-      clientTest {
-        client()
-        setConfigName("Fabric Client Test")
-        runDir("run/clienttest")
-      }
-    }
   }
 }
 
@@ -66,11 +59,6 @@ dependencies {
   }
 
   // Bug Testing
-
-  // Client Runtime Interface Toolkit (runtime dependency, only for client tests)
-  if (clientToolkitAvailable && isClientTestRun) {
-    localRuntime clientToolkitCoordinate('fabric')
-  }
 }
 
 processResources {

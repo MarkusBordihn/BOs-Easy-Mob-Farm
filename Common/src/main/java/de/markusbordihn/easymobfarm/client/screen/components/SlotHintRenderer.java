@@ -119,8 +119,7 @@ public final class SlotHintRenderer {
       int hintX = leftPos + slot.x;
       int hintY = topPos + slot.y;
       guiGraphics.fakeItem(hint, hintX, hintY);
-      guiGraphics.fill(
-          hintX, hintY, hintX + HINT_SIZE, hintY + HINT_SIZE, HINT_FADE_OVERLAY_COLOR);
+      guiGraphics.fill(hintX, hintY, hintX + HINT_SIZE, hintY + HINT_SIZE, HINT_FADE_OVERLAY_COLOR);
     }
   }
 

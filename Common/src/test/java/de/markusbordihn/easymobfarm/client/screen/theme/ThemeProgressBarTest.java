@@ -45,8 +45,7 @@ class ThemeProgressBarTest {
     }
 
     Mockito.verify(graphics)
-        .blit(
-            RenderPipelines.GUI_TEXTURED, TEXTURE, 129, 95, 0.0F, 244.0F, width, 7, 256, 256);
+        .blit(RenderPipelines.GUI_TEXTURED, TEXTURE, 129, 95, 0.0F, 244.0F, width, 7, 256, 256);
   }
 
   @ParameterizedTest

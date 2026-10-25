@@ -58,8 +58,7 @@ public class ItemCapabilityTest {
     ResourceHandler<ItemResource> itemHandler =
         helper
             .getLevel()
-            .getCapability(
-                Capabilities.Item.BLOCK, helper.absolutePos(mobFarmPos), Direction.WEST);
+            .getCapability(Capabilities.Item.BLOCK, helper.absolutePos(mobFarmPos), Direction.WEST);
     GameTestHelpers.assertTrue(
         helper, "Item capability should be exposed on the side.", itemHandler != null);
     GameTestHelpers.assertTrue(
@@ -89,9 +88,7 @@ public class ItemCapabilityTest {
       int insertedAmount =
           itemHandler.insert(ItemResource.of(new ItemStack(Items.DIRT)), 1, transaction);
       GameTestHelpers.assertTrue(
-          helper,
-          "Inserting items from the side should not be possible.",
-          insertedAmount == 0);
+          helper, "Inserting items from the side should not be possible.", insertedAmount == 0);
     }
 
     helper.succeed();

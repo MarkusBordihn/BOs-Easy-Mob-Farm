@@ -172,8 +172,7 @@ public class MobFarmBlockEntityTestHelper {
 
   private static MobFarmBlockEntity placeMobFarm(GameTestHelper helper, Block block) {
     helper.setBlock(FARM_POSITION, block);
-    BlockEntity blockEntity =
-        helper.getLevel().getBlockEntity(helper.absolutePos(FARM_POSITION));
+    BlockEntity blockEntity = helper.getLevel().getBlockEntity(helper.absolutePos(FARM_POSITION));
     if (blockEntity instanceof MobFarmBlockEntity mobFarmBlockEntity) {
       return mobFarmBlockEntity;
     }
