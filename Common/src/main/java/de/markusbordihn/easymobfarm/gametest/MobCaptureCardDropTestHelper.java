@@ -55,6 +55,7 @@ public class MobCaptureCardDropTestHelper {
   private static final int ZERO_CHANCE_ATTEMPTS = 32;
   private static final float DEFAULT_KILL_DROP_CHANCE = 10 / 100f;
   private static final int MAX_KILLS_PER_MOB = 100;
+  private static final int STACKING_KILLS = 2;
 
   private MobCaptureCardDropTestHelper() {}
 
@@ -133,6 +134,45 @@ public class MobCaptureCardDropTestHelper {
         helper,
         "Killed mobs dropped a mob capture card of another mob: " + mobsWithWrongCard,
         mobsWithWrongCard.isEmpty());
+  }
+
+  public static void testPlayerKillsDropStackingCards(GameTestHelper helper) {
+    List<ItemStack> droppedCards = new ArrayList<>();
+    withPlayerKillDropConfig(
+        () -> {
+          DamageSource playerAttack =
+              helper
+                  .getLevel()
+                  .damageSources()
+                  .playerAttack(helper.makeMockPlayer(GameType.SURVIVAL));
+          for (int i = 0; i < STACKING_KILLS; i++) {
+            killChicken(helper, playerAttack);
+            droppedCards.add(collectDroppedCard(helper));
+          }
+        });
+
+    for (ItemStack droppedCard : droppedCards) {
+      GameTestHelpers.assertTrue(
+          helper,
+          "A chicken killed by a player should drop a chicken card, got: " + droppedCards,
+          MobCaptureManager.getEntityType(droppedCard) == EntityType.CHICKEN);
+    }
+    GameTestHelpers.assertTrue(
+        helper,
+        "Cards of chickens killed by a player should stack, got: " + droppedCards,
+        ItemStack.isSameItemSameComponents(droppedCards.get(0), droppedCards.get(1)));
+  }
+
+  public static void testNonPlayerKillDropsNoCard(GameTestHelper helper) {
+    withPlayerKillDropConfig(
+        () -> {
+          killChicken(helper, helper.getLevel().damageSources().generic());
+          ItemStack droppedCard = collectDroppedCard(helper);
+          GameTestHelpers.assertTrue(
+              helper,
+              "A chicken killed without a player should drop no card, got: " + droppedCard,
+              droppedCard.isEmpty());
+        });
   }
 
   public static void testEveryFishDropsItsOwnCardOnFishing(GameTestHelper helper) {
@@ -231,6 +271,36 @@ public class MobCaptureCardDropTestHelper {
       MobCaptureCardConfig.mobCaptureCardFishingDropAllowList = previousAllowList;
       MobCaptureCardConfig.mobCaptureCardFishingDropDenyList = previousDenyList;
     }
+  }
+
+  private static void withPlayerKillDropConfig(Runnable killCheck) {
+    boolean previousDropOnKill = MobCaptureCardConfig.dropMobCaptureCardOnKill;
+    boolean previousRequirePlayerKill = MobCaptureCardConfig.requirePlayerKill;
+    float previousDropChance = MobCaptureCardConfig.mobCaptureCardKillDropChance;
+    float previousFoilDropChance = MobCaptureCardConfig.mobCaptureCardFoilDropChance;
+    Set<String> previousAllowList = MobCaptureCardConfig.mobCaptureCardKillDropAllowList;
+    Set<String> previousDenyList = MobCaptureCardConfig.mobCaptureCardKillDropDenyList;
+    try {
+      MobCaptureCardConfig.dropMobCaptureCardOnKill = true;
+      MobCaptureCardConfig.requirePlayerKill = true;
+      MobCaptureCardConfig.mobCaptureCardKillDropChance = 1.0f;
+      MobCaptureCardConfig.mobCaptureCardFoilDropChance = 0.0f;
+      MobCaptureCardConfig.mobCaptureCardKillDropAllowList = Set.of();
+      MobCaptureCardConfig.mobCaptureCardKillDropDenyList = Set.of();
+      killCheck.run();
+    } finally {
+      MobCaptureCardConfig.dropMobCaptureCardOnKill = previousDropOnKill;
+      MobCaptureCardConfig.requirePlayerKill = previousRequirePlayerKill;
+      MobCaptureCardConfig.mobCaptureCardKillDropChance = previousDropChance;
+      MobCaptureCardConfig.mobCaptureCardFoilDropChance = previousFoilDropChance;
+      MobCaptureCardConfig.mobCaptureCardKillDropAllowList = previousAllowList;
+      MobCaptureCardConfig.mobCaptureCardKillDropDenyList = previousDenyList;
+    }
+  }
+
+  private static void killChicken(GameTestHelper helper, DamageSource damageSource) {
+    LivingEntity chicken = helper.spawn(EntityType.CHICKEN, SPAWN_POSITION);
+    chicken.hurt(damageSource, Float.MAX_VALUE);
   }
 
   private static Player makeFishingPlayer(GameTestHelper helper) {

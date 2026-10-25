@@ -30,13 +30,6 @@ runs {
     programArguments.addAll '--username', 'guest_player'
   }
 
-  if (clientToolkitAvailable) {
-    clientTest {
-      configure('client')
-      workingDirectory project.file('runs/clientTest')
-    }
-  }
-
   server {
     systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
     programArgument '--nogui'
@@ -90,11 +83,6 @@ dependencies {
 
   // Create: Integration
   runtimeOnly "curse.maven:create-328085:7963363"
-
-  // Client Runtime Interface Toolkit (runtime dependency, only for client tests)
-  if (clientToolkitAvailable && isClientTestRun) {
-    runtimeOnly clientToolkitCoordinate('neoforge')
-  }
 }
 
 // NeoGradle compiles the game, but we don't want to add our common code to the game's code

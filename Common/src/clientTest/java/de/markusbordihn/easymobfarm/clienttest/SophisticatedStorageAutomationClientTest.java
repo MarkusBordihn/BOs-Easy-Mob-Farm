@@ -19,10 +19,12 @@
 
 package de.markusbordihn.easymobfarm.clienttest;
 
-import java.io.IOException;
+import de.markusbordihn.clientruntimeinterfacetoolkit.testrunner.EnabledIfModLoaded;
+import de.markusbordihn.clientruntimeinterfacetoolkit.testrunner.Until;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@EnabledIfModLoaded("sophisticatedstorage")
 class SophisticatedStorageAutomationClientTest extends AutomationClientTestBase {
 
   private static final StageStyle WAREHOUSE =
@@ -38,28 +40,36 @@ class SophisticatedStorageAutomationClientTest extends AutomationClientTestBase 
       "sophisticatedstorage:barrel[ticking=true]{storageWrapper:{contents:{upgradeInventory:{Items:"
           + "[{Slot:0,id:\"sophisticatedstorage:hopper_upgrade\",Count:1b}]}}}}";
   private static final int BARREL_SPACING = 3;
+  private static final int BARREL_SCREEN_SETTLE_TICKS = 20;
 
   private static void decorateWarehouse() {
     fill(-4, PLATFORM_Y, SCENE_Z - 1, 4, PLATFORM_Y, SCENE_Z + 1, "minecraft:polished_deepslate");
-    setblock(-6, GROUND_Y, STAGE_MAX_Z - 2, "sophisticatedstorage:chest");
-    setblock(-5, GROUND_Y, STAGE_MAX_Z - 2, "sophisticatedstorage:gold_barrel");
-    setblock(5, GROUND_Y, STAGE_MAX_Z - 2, "sophisticatedstorage:limited_barrel_4");
-    setblock(6, GROUND_Y, STAGE_MAX_Z - 2, "sophisticatedstorage:iron_barrel");
-    setblock(6, GROUND_Y + 1, STAGE_MAX_Z - 2, "sophisticatedstorage:barrel");
-    setblock(-6, GROUND_Y, 2, "minecraft:potted_azalea_bush");
-    setblock(6, GROUND_Y, 2, "minecraft:potted_azalea_bush");
+    client.setBlock(-6, GROUND_Y, STAGE_MAX_Z - 2, "sophisticatedstorage:chest");
+    client.setBlock(-5, GROUND_Y, STAGE_MAX_Z - 2, "sophisticatedstorage:gold_barrel");
+    client.setBlock(5, GROUND_Y, STAGE_MAX_Z - 2, "sophisticatedstorage:limited_barrel_4");
+    client.setBlock(6, GROUND_Y, STAGE_MAX_Z - 2, "sophisticatedstorage:iron_barrel");
+    client.setBlock(6, GROUND_Y + 1, STAGE_MAX_Z - 2, "sophisticatedstorage:barrel");
+    client.setBlock(-6, GROUND_Y, 2, "minecraft:potted_azalea_bush");
+    client.setBlock(6, GROUND_Y, 2, "minecraft:potted_azalea_bush");
   }
 
   private static void placeBarrelFarm(String farmId, String mobName, int x) {
-    setblock(x, GROUND_Y, SCENE_Z, BARREL_WITH_HOPPER_UPGRADE);
-    setblock(x, GROUND_Y, SCENE_Z + 1, "minecraft:comparator[facing=north]");
+    setBlockWithData(x, GROUND_Y, SCENE_Z, BARREL_WITH_HOPPER_UPGRADE);
+    client.setBlock(x, GROUND_Y, SCENE_Z + 1, "minecraft:comparator[facing=north]");
     placeWorkingFarm(farmId, mobName, x, GROUND_Y + 1, SCENE_Z);
+  }
+
+  private static void captureBarrelContents(String label, int x) {
+    client.teleport(x + 0.5, GROUND_Y, SCENE_Z - 2.5, 0f, 0f);
+    client.openBlockScreen(x, GROUND_Y, SCENE_Z);
+    client.await(Until.ticksElapsed(BARREL_SCREEN_SETTLE_TICKS));
+    client.saveScreenshot(label);
+    client.closeScreen();
   }
 
   @Test
   @DisplayName("Sophisticated Storage hopper upgrade pulls results from three farm types")
-  void hopperUpgradePullsResultsFromThreeFarmTypes() throws IOException {
-    assumeRuntimeMod("Sophisticated Storage", "fabric", "neoforge");
+  void hopperUpgradePullsResultsFromThreeFarmTypes() {
     buildStage(WAREHOUSE, "Sophisticated", "Hopper Upgrade");
     decorateWarehouse();
     placeBarrelFarm("animal_plains_farm", "chicken", -BARREL_SPACING);
@@ -75,5 +85,8 @@ class SophisticatedStorageAutomationClientTest extends AutomationClientTestBase 
         comparatorPowered(0, GROUND_Y, SCENE_Z + 1),
         comparatorPowered(BARREL_SPACING, GROUND_Y, SCENE_Z + 1));
     captureShowcase("automation_sophisticated_storage");
+    captureBarrelContents("automation_sophisticated_storage_chicken", -BARREL_SPACING);
+    captureBarrelContents("automation_sophisticated_storage_salmon", 0);
+    captureBarrelContents("automation_sophisticated_storage_iron_golem", BARREL_SPACING);
   }
 }

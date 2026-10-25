@@ -19,10 +19,11 @@
 
 package de.markusbordihn.easymobfarm.clienttest;
 
-import java.io.IOException;
+import de.markusbordihn.clientruntimeinterfacetoolkit.testrunner.EnabledIfModLoaded;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@EnabledIfModLoaded("storagedrawers")
 class StorageDrawersAutomationClientTest extends AutomationClientTestBase {
 
   private static final StageStyle STOREROOM =
@@ -65,13 +66,15 @@ class StorageDrawersAutomationClientTest extends AutomationClientTestBase {
         WALL_TOP_Y,
         SCENE_Z,
         "storagedrawers:oak_trim");
-    setblock(
+    client.setBlock(
         -WALL_HALF_WIDTH, GROUND_Y, SCENE_Z, "storagedrawers:compacting_drawers_3[facing=north]");
-    setblock(WALL_HALF_WIDTH, GROUND_Y, SCENE_Z, "storagedrawers:oak_full_drawers_1[facing=north]");
-    setblock(-WALL_HALF_WIDTH - 1, GROUND_Y, SCENE_Z, "storagedrawers:controller[facing=north]");
-    setblock(WALL_HALF_WIDTH + 1, GROUND_Y, SCENE_Z, "storagedrawers:controller_slave");
-    setblock(-WALL_HALF_WIDTH - 1, GROUND_Y + 1, SCENE_Z, "minecraft:lantern");
-    setblock(WALL_HALF_WIDTH + 1, GROUND_Y + 1, SCENE_Z, "minecraft:lantern");
+    client.setBlock(
+        WALL_HALF_WIDTH, GROUND_Y, SCENE_Z, "storagedrawers:oak_full_drawers_1[facing=north]");
+    client.setBlock(
+        -WALL_HALF_WIDTH - 1, GROUND_Y, SCENE_Z, "storagedrawers:controller[facing=north]");
+    client.setBlock(WALL_HALF_WIDTH + 1, GROUND_Y, SCENE_Z, "storagedrawers:controller_io");
+    client.setBlock(-WALL_HALF_WIDTH - 1, GROUND_Y + 1, SCENE_Z, "minecraft:lantern");
+    client.setBlock(WALL_HALF_WIDTH + 1, GROUND_Y + 1, SCENE_Z, "minecraft:lantern");
   }
 
   private static void decorateStoreroom() {
@@ -83,24 +86,25 @@ class StorageDrawersAutomationClientTest extends AutomationClientTestBase {
         GROUND_Y,
         STAGE_MAX_Z - 2,
         "minecraft:barrel[facing=up]");
-    setblock(-5, GROUND_Y + 1, STAGE_MAX_Z - 2, "minecraft:barrel[facing=up]");
-    setblock(4, GROUND_Y, STAGE_MAX_Z - 2, "minecraft:crafting_table");
-    setblock(5, GROUND_Y, STAGE_MAX_Z - 2, "storagedrawers:spruce_half_drawers_2[facing=north]");
-    setblock(6, GROUND_Y, STAGE_MAX_Z - 2, "storagedrawers:spruce_half_drawers_1[facing=north]");
-    setblock(-6, GROUND_Y, 2, "minecraft:potted_fern");
-    setblock(6, GROUND_Y, 2, "minecraft:potted_fern");
+    client.setBlock(-5, GROUND_Y + 1, STAGE_MAX_Z - 2, "minecraft:barrel[facing=up]");
+    client.setBlock(4, GROUND_Y, STAGE_MAX_Z - 2, "minecraft:crafting_table");
+    client.setBlock(
+        5, GROUND_Y, STAGE_MAX_Z - 2, "storagedrawers:spruce_half_drawers_2[facing=north]");
+    client.setBlock(
+        6, GROUND_Y, STAGE_MAX_Z - 2, "storagedrawers:spruce_half_drawers_1[facing=north]");
+    client.setBlock(-6, GROUND_Y, 2, "minecraft:potted_fern");
+    client.setBlock(6, GROUND_Y, 2, "minecraft:potted_fern");
   }
 
   @Test
   @DisplayName("Hopper fills a Storage Drawers wall with farm results")
-  void hopperFillsDrawerWall() throws IOException {
-    assumeRuntimeMod("Storage Drawers", "fabric", "forge", "neoforge");
+  void hopperFillsDrawerWall() {
     buildStage(STOREROOM, "Storage Drawers", "Hopper to Drawer");
     decorateStoreroom();
     buildDrawerWall();
-    setblock(0, GROUND_Y, SCENE_Z, DRAWERS_WITH_REDSTONE_UPGRADE);
-    setblock(0, GROUND_Y + 1, SCENE_Z, "minecraft:hopper[facing=down]");
-    setblock(0, GROUND_Y, SCENE_Z + 1, "minecraft:comparator[facing=north]");
+    setBlockWithData(0, GROUND_Y, SCENE_Z, DRAWERS_WITH_REDSTONE_UPGRADE);
+    client.setBlock(0, GROUND_Y + 1, SCENE_Z, "minecraft:hopper[facing=down]");
+    client.setBlock(0, GROUND_Y, SCENE_Z + 1, "minecraft:comparator[facing=north]");
     placeWorkingFarm("animal_plains_farm", "chicken", 0, WALL_TOP_Y, SCENE_Z);
 
     awaitAllResults(

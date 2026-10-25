@@ -177,4 +177,34 @@ class LootManagerTest {
     Assertions.assertEquals(1, drops.size());
     Assertions.assertTrue(drops.get(0).is(Items.EGG));
   }
+
+  @Test
+  void variantEggDoesNotReplaceEggForNonChicken() {
+    NonNullList<ItemStack> drops = NonNullList.create();
+    List<ItemStack> bonusDrops = List.of(new ItemStack(Items.EGG));
+
+    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityType.COW, null, "cold");
+
+    Assertions.assertEquals(1, drops.size());
+    Assertions.assertTrue(drops.get(0).is(Items.EGG));
+  }
+
+  @Test
+  void unknownOrMissingVariantYieldsPlainEgg() {
+    Assertions.assertSame(Items.EGG, LootManager.getEggItem(null));
+    Assertions.assertSame(Items.EGG, LootManager.getEggItem("temperate"));
+    Assertions.assertSame(Items.EGG, LootManager.getEggItem("unknown"));
+  }
+
+  @Test
+  void variantBonusDropsAreEmptyForNonChickenOrNonEgg() {
+    Assertions.assertTrue(
+        LootManager.getVariantBonusDrops(
+                EntityType.COW, new ItemStack(Items.EGG), List.of("cold", "warm"))
+            .isEmpty());
+    Assertions.assertTrue(
+        LootManager.getVariantBonusDrops(
+                EntityType.CHICKEN, new ItemStack(Items.FEATHER), List.of("cold", "warm"))
+            .isEmpty());
+  }
 }

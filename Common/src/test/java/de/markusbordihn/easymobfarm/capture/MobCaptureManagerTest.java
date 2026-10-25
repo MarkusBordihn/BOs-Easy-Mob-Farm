@@ -19,7 +19,9 @@
 
 package de.markusbordihn.easymobfarm.capture;
 
+import de.markusbordihn.easymobfarm.data.capture.MobCaptureData;
 import de.markusbordihn.easymobfarm.data.capture.MobEntityTypeData;
+import java.util.UUID;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
@@ -50,6 +52,17 @@ class MobCaptureManagerTest {
   private static ItemStack createCaptureItem(final CompoundTag captureData) {
     ItemStack itemStack = new ItemStack(Items.PAPER);
     itemStack.set(DataComponents.CUSTOM_DATA, CustomData.of(captureData));
+    return itemStack;
+  }
+
+  private static ItemStack createLegacyPigCard(final UUID uuid, final int age) {
+    CompoundTag pigData = new CompoundTag();
+    pigData.putString("id", "minecraft:pig");
+    pigData.putUUID("UUID", uuid);
+    pigData.putInt("Age", age);
+    ItemStack itemStack = new ItemStack(Items.PAPER);
+    MobCaptureManager.writeMobCaptureData(
+        itemStack, new MobCaptureData(EntityType.PIG).withFoil(false).withData(pigData));
     return itemStack;
   }
 
@@ -89,5 +102,44 @@ class MobCaptureManagerTest {
   void captureDataOfKnownEntityIsResolved() {
     Assertions.assertEquals(
         EntityType.COW, MobCaptureManager.getEntityType(createCaptureItem("minecraft:cow")));
+  }
+
+  @Test
+  @DisplayName("Legacy card loses its per-mob data on upgrade")
+  void legacyCardLosesPerMobDataOnUpgrade() {
+    ItemStack legacyCard = createLegacyPigCard(UUID.randomUUID(), 6000);
+
+    Assertions.assertTrue(MobCaptureManager.upgradeMobCaptureCard(legacyCard));
+    CompoundTag upgradedData = MobCaptureManager.getMobCaptureData(legacyCard).data();
+    Assertions.assertFalse(upgradedData.contains("UUID"));
+    Assertions.assertFalse(upgradedData.contains("Age"));
+  }
+
+  @Test
+  @DisplayName("Upgraded legacy cards of the same mob stack with each other")
+  void upgradedLegacyCardsOfTheSameMobStack() {
+    ItemStack firstCard = createLegacyPigCard(UUID.randomUUID(), 0);
+    ItemStack secondCard = createLegacyPigCard(UUID.randomUUID(), 6000);
+    Assertions.assertFalse(ItemStack.isSameItemSameComponents(firstCard, secondCard));
+
+    MobCaptureManager.upgradeMobCaptureCard(firstCard);
+    MobCaptureManager.upgradeMobCaptureCard(secondCard);
+
+    Assertions.assertTrue(ItemStack.isSameItemSameComponents(firstCard, secondCard));
+  }
+
+  @Test
+  @DisplayName("Current card is not upgraded again")
+  void currentCardIsNotUpgradedAgain() {
+    ItemStack legacyCard = createLegacyPigCard(UUID.randomUUID(), 0);
+    MobCaptureManager.upgradeMobCaptureCard(legacyCard);
+
+    Assertions.assertFalse(MobCaptureManager.upgradeMobCaptureCard(legacyCard));
+  }
+
+  @Test
+  @DisplayName("Item without capture data is not upgraded")
+  void itemWithoutCaptureDataIsNotUpgraded() {
+    Assertions.assertFalse(MobCaptureManager.upgradeMobCaptureCard(new ItemStack(Items.PAPER)));
   }
 }

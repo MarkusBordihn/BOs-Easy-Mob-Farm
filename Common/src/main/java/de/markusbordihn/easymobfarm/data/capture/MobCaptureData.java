@@ -22,12 +22,14 @@ package de.markusbordihn.easymobfarm.data.capture;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import de.markusbordihn.easymobfarm.network.codec.ModStreamCodec;
+import java.util.Optional;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -64,8 +66,9 @@ public record MobCaptureData(
                       Codec.STRING.fieldOf("type").forGetter(MobCaptureData::type),
                       BuiltInRegistries.ENTITY_TYPE
                           .byNameCodec()
-                          .fieldOf("entityType")
-                          .forGetter(MobCaptureData::entityType),
+                          .lenientOptionalFieldOf("entityType")
+                          .forGetter(
+                              mobCaptureData -> Optional.ofNullable(mobCaptureData.entityType())),
                       CompoundTag.CODEC
                           .optionalFieldOf("data", new CompoundTag())
                           .forGetter(MobCaptureData::data),
@@ -79,15 +82,26 @@ public record MobCaptureData(
                           .optionalFieldOf("rarity", Rarity.COMMON)
                           .forGetter(MobCaptureData::rarity),
                       Codec.BOOL.optionalFieldOf("isFoil", false).forGetter(MobCaptureData::isFoil))
-                  .apply(instance, MobCaptureData::new));
+                  .apply(
+                      instance,
+                      (name, type, entityType, data, color, variant, rarity, isFoil) ->
+                          new MobCaptureData(
+                              name,
+                              type,
+                              entityType.orElse(null),
+                              data,
+                              color,
+                              variant,
+                              rarity,
+                              isFoil)));
   public static final StreamCodec<RegistryFriendlyByteBuf, MobCaptureData> STREAM_CODEC =
       ModStreamCodec.composite(
           ByteBufCodecs.STRING_UTF8,
           MobCaptureData::name,
           ByteBufCodecs.STRING_UTF8,
           MobCaptureData::type,
-          ByteBufCodecs.registry(Registries.ENTITY_TYPE),
-          MobCaptureData::entityType,
+          ByteBufCodecs.optional(ByteBufCodecs.registry(Registries.ENTITY_TYPE)),
+          mobCaptureData -> Optional.ofNullable(mobCaptureData.entityType()),
           ByteBufCodecs.COMPOUND_TAG,
           MobCaptureData::data,
           MobColor.STREAM_CODEC,
@@ -98,11 +112,19 @@ public record MobCaptureData(
           MobCaptureData::rarity,
           ByteBufCodecs.BOOL,
           MobCaptureData::isFoil,
-          MobCaptureData::new);
+          (name, type, entityType, data, color, variant, rarity, isFoil) ->
+              new MobCaptureData(
+                  name, type, entityType.orElse(null), data, color, variant, rarity, isFoil));
   private static final int MAX_ID_LIMIT = 16777216;
 
   public MobCaptureData {
     variant = variant != null ? variant : "";
+    if (entityType == null && type != null) {
+      entityType =
+          Optional.ofNullable(ResourceLocation.tryParse(type))
+              .flatMap(BuiltInRegistries.ENTITY_TYPE::getOptional)
+              .orElse(null);
+    }
   }
 
   public MobCaptureData(final String name, final EntityType<?> entityType, final Rarity rarity) {

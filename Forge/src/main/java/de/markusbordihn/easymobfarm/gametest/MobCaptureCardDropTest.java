@@ -47,6 +47,18 @@ public class MobCaptureCardDropTest {
   }
 
   @GameTest(template = "easy_mob_farm:gametest.3x3x3")
+  public void testPlayerKillsDropStackingCards(GameTestHelper helper) {
+    MobCaptureCardDropTestHelper.testPlayerKillsDropStackingCards(helper);
+    helper.succeed();
+  }
+
+  @GameTest(template = "easy_mob_farm:gametest.3x3x3")
+  public void testNonPlayerKillDropsNoCard(GameTestHelper helper) {
+    MobCaptureCardDropTestHelper.testNonPlayerKillDropsNoCard(helper);
+    helper.succeed();
+  }
+
+  @GameTest(template = "easy_mob_farm:gametest.3x3x3")
   public void testEveryFishDropsItsOwnCardOnFishing(GameTestHelper helper) {
     MobCaptureCardDropTestHelper.testEveryFishDropsItsOwnCardOnFishing(helper);
     helper.succeed();

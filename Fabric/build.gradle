@@ -91,11 +91,6 @@ dependencies {
   // Swampier Swamps Tests
   // modRuntimeOnly "curse.maven:cloth-config-348521:5729104"
   // modRuntimeOnly "curse.maven:swampier-swamps-fabric-687298:4580758"
-
-  // Client Runtime Interface Toolkit (runtime dependency, only for client tests)
-  if (clientToolkitAvailable && isClientTestRun) {
-    modLocalRuntime clientToolkitCoordinate('fabric')
-  }
 }
 
 loom {
@@ -128,13 +123,6 @@ loom {
       server()
       name "Game Test"
       vmArg "-Dfabric-api.gametest"
-    }
-    if (clientToolkitAvailable) {
-      clientTest {
-        client()
-        setConfigName("Fabric Client Test")
-        runDir("run/clienttest")
-      }
     }
   }
 }

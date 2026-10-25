@@ -19,11 +19,12 @@
 
 package de.markusbordihn.easymobfarm.clienttest;
 
+import de.markusbordihn.clientruntimeinterfacetoolkit.testrunner.EnabledIfModLoaded;
 import de.markusbordihn.clientruntimeinterfacetoolkit.testrunner.Until;
-import java.io.IOException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@EnabledIfModLoaded("create")
 class CreateAutomationClientTest extends AutomationClientTestBase {
 
   private static final StageStyle WORKSHOP =
@@ -45,38 +46,36 @@ class CreateAutomationClientTest extends AutomationClientTestBase {
   private static void decorateWorkshop() {
     fill(-6, GROUND_Y, STAGE_MAX_Z - 2, -5, GROUND_Y, STAGE_MAX_Z - 2, "create:item_vault[axis=x]");
     fill(6, GROUND_Y, STAGE_MAX_Z - 2, 6, GROUND_Y + 1, STAGE_MAX_Z - 2, "create:fluid_tank");
-    setblock(5, GROUND_Y, STAGE_MAX_Z - 2, "create:fluid_tank");
-    setblock(-2, GROUND_Y, STAGE_MAX_Z - 1, "create:andesite_casing");
-    setblock(-2, GROUND_Y + 1, STAGE_MAX_Z - 1, "create:large_cogwheel[axis=z]");
-    setblock(2, GROUND_Y, STAGE_MAX_Z - 1, "create:brass_casing");
-    setblock(2, GROUND_Y + 1, STAGE_MAX_Z - 1, "create:cogwheel[axis=z]");
-    setblock(0, GROUND_Y, STAGE_MAX_Z - 1, "create:andesite_alloy_block");
-    setblock(-6, GROUND_Y, 2, "create:depot");
-    setblock(6, GROUND_Y, 2, "create:depot");
+    client.setBlock(5, GROUND_Y, STAGE_MAX_Z - 2, "create:fluid_tank");
+    client.setBlock(-2, GROUND_Y, STAGE_MAX_Z - 1, "create:andesite_casing");
+    client.setBlock(-2, GROUND_Y + 1, STAGE_MAX_Z - 1, "create:large_cogwheel[axis=z]");
+    client.setBlock(2, GROUND_Y, STAGE_MAX_Z - 1, "create:brass_casing");
+    client.setBlock(2, GROUND_Y + 1, STAGE_MAX_Z - 1, "create:cogwheel[axis=z]");
+    client.setBlock(0, GROUND_Y, STAGE_MAX_Z - 1, "create:andesite_alloy_block");
+    client.setBlock(-6, GROUND_Y, 2, "create:depot");
+    client.setBlock(6, GROUND_Y, 2, "create:depot");
   }
 
   private static void connectBelt() {
-    command("tp @s 0.5 " + GROUND_Y + " " + (SCENE_Z - 2.5) + " 0 0");
-    command("item replace entity @s weapon.mainhand with create:belt_connector");
-    lookAt(BELT_START_X, GROUND_Y, SCENE_Z);
-    useHeldItem();
+    client.teleport(0.5, GROUND_Y, SCENE_Z - 2.5, 0f, 0f);
+    client.equip("create:belt_connector");
+    client.useOnBlock(BELT_START_X, GROUND_Y, SCENE_Z);
     client.await(Until.ticksElapsed(5));
-    lookAt(BELT_END_X, GROUND_Y, SCENE_Z);
-    useHeldItem();
+    client.useOnBlock(BELT_END_X, GROUND_Y, SCENE_Z);
     client.await(Until.blockState(BELT_START_X, GROUND_Y, SCENE_Z, "create:belt"));
-    command("item replace entity @s weapon.mainhand with minecraft:air");
+    client.clearInventory();
   }
 
   private static void placeArmUnloadingBeltIntoChest() {
-    setblock(BELT_END_X + 1, GROUND_Y, SCENE_Z, "create:andesite_casing");
-    setblock(
+    client.setBlock(BELT_END_X + 1, GROUND_Y, SCENE_Z, "create:andesite_casing");
+    setBlockWithData(
         BELT_END_X + 1, GROUND_Y, SCENE_Z + 1, "create:creative_motor[facing=up]{ScrollValue:64}");
-    setblock(BELT_END_X + 1, ARM_Y, SCENE_Z + 1, "create:cogwheel[axis=y]");
-    setblock(ARM_CHEST_X, GROUND_Y, SCENE_Z, "minecraft:chest[facing=north]");
-    setblock(ARM_CHEST_X, ARM_Y, SCENE_Z, "create:andesite_funnel[facing=up]");
-    setblock(ARM_CHEST_X, GROUND_Y, SCENE_Z - 1, "minecraft:comparator[facing=south]");
-    setblock(ARM_CHEST_X, GROUND_Y, SCENE_Z - 2, "minecraft:redstone_lamp");
-    setblock(
+    client.setBlock(BELT_END_X + 1, ARM_Y, SCENE_Z + 1, "create:cogwheel[axis=y]");
+    client.setBlock(ARM_CHEST_X, GROUND_Y, SCENE_Z, "minecraft:chest[facing=north]");
+    client.setBlock(ARM_CHEST_X, ARM_Y, SCENE_Z, "create:andesite_funnel[facing=up]");
+    client.setBlock(ARM_CHEST_X, GROUND_Y, SCENE_Z - 1, "minecraft:comparator[facing=south]");
+    client.setBlock(ARM_CHEST_X, GROUND_Y, SCENE_Z - 2, "minecraft:redstone_lamp");
+    setBlockWithData(
         BELT_END_X + 1,
         ARM_Y,
         SCENE_Z,
@@ -101,16 +100,15 @@ class CreateAutomationClientTest extends AutomationClientTestBase {
 
   @Test
   @DisplayName("Create mechanical arm moves belt results of three farms into a chest")
-  void beltCarriesResultsOfThreeFarms() throws IOException {
-    assumeRuntimeMod("Create", "neoforge");
+  void beltCarriesResultsOfThreeFarms() {
     buildStage(WORKSHOP, "Create", "Belt and Arm");
     decorateWorkshop();
-    setblock(BELT_START_X, GROUND_Y, SCENE_Z, "create:shaft[axis=z]");
-    setblock(BELT_END_X, GROUND_Y, SCENE_Z, "create:shaft[axis=z]");
+    client.setBlock(BELT_START_X, GROUND_Y, SCENE_Z, "create:shaft[axis=z]");
+    client.setBlock(BELT_END_X, GROUND_Y, SCENE_Z, "create:shaft[axis=z]");
     connectBelt();
-    setblock(BELT_START_X, GROUND_Y, SCENE_Z + 1, "create:creative_motor[facing=north]");
+    client.setBlock(BELT_START_X, GROUND_Y, SCENE_Z + 1, "create:creative_motor[facing=north]");
     for (int x = -2; x <= 2; x += 2) {
-      setblock(x, CHUTE_Y, SCENE_Z, "create:chute");
+      client.setBlock(x, CHUTE_Y, SCENE_Z, "create:chute");
     }
     placeArmUnloadingBeltIntoChest();
     placeWorkingFarm("animal_plains_farm", "chicken", -2, BELT_FARM_Y, SCENE_Z);
@@ -128,16 +126,15 @@ class CreateAutomationClientTest extends AutomationClientTestBase {
 
   @Test
   @DisplayName("Create chutes drop farm results into a chest")
-  void chutesDropResultsIntoChest() throws IOException {
-    assumeRuntimeMod("Create", "neoforge");
+  void chutesDropResultsIntoChest() {
     buildStage(WORKSHOP, "Create", "Chute Tower");
     decorateWorkshop();
-    setblock(0, GROUND_Y, SCENE_Z, "minecraft:chest[facing=north]");
+    client.setBlock(0, GROUND_Y, SCENE_Z, "minecraft:chest[facing=north]");
     fill(0, GROUND_Y + 1, SCENE_Z, 0, GROUND_Y + 2, SCENE_Z, "create:chute");
-    setblock(1, GROUND_Y, SCENE_Z, "minecraft:comparator[facing=west]");
-    setblock(2, GROUND_Y, SCENE_Z, "minecraft:redstone_lamp");
+    client.setBlock(1, GROUND_Y, SCENE_Z, "minecraft:comparator[facing=west]");
+    client.setBlock(2, GROUND_Y, SCENE_Z, "minecraft:redstone_lamp");
     fill(-1, GROUND_Y, SCENE_Z, -1, GROUND_Y + 2, SCENE_Z, "create:andesite_casing");
-    setblock(-1, GROUND_Y + 3, SCENE_Z, "minecraft:lantern");
+    client.setBlock(-1, GROUND_Y + 3, SCENE_Z, "minecraft:lantern");
     placeWorkingFarm("animal_plains_farm", "chicken", 0, GROUND_Y + 3, SCENE_Z);
 
     awaitAllResults(
