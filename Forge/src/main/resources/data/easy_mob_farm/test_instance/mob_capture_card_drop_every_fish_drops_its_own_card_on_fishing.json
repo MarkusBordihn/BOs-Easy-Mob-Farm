@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:function",
+  "function": "easy_mob_farm:mob_capture_card_drop_every_fish_drops_its_own_card_on_fishing",
+  "environment": "minecraft:default",
+  "structure": "easy_mob_farm:gametest.3x3x3",
+  "max_ticks": 100
+}

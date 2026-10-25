@@ -28,6 +28,7 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -47,8 +48,10 @@ public class CardBinderMenu extends AbstractContainerMenu {
   public static MenuType<?> MENU_TYPE = null;
   public static Supplier<MenuType<?>> MENU_TYPE_SUPPLIER = () -> MENU_TYPE;
   private final Container cardContainer;
-  private final ItemStack binderStack;
+  private final boolean tracksBinderStack;
   private final InteractionHand binderHand;
+  private ItemStack binderStack;
+  private int binderInventorySlot = Inventory.NOT_FOUND_INDEX;
   private int lockedSlotIndex = -1;
   private int currentPage = 0;
 
@@ -80,10 +83,13 @@ public class CardBinderMenu extends AbstractContainerMenu {
     super(menuType, containerId);
     this.cardContainer = container;
     this.binderStack = binderStack;
-    this.binderHand =
-        playerInventory.player.getOffhandItem() == binderStack
-            ? InteractionHand.OFF_HAND
-            : InteractionHand.MAIN_HAND;
+    this.tracksBinderStack = !binderStack.isEmpty();
+    if (this.tracksBinderStack && playerInventory.player.getOffhandItem() == binderStack) {
+      this.binderHand = InteractionHand.OFF_HAND;
+      this.binderInventorySlot = Inventory.SLOT_OFFHAND;
+    } else {
+      this.binderHand = InteractionHand.MAIN_HAND;
+    }
 
     for (int i = 0; i < CONTAINER_SIZE; i++) {
       int posOnPage = i % CARDS_PER_PAGE;
@@ -108,7 +114,8 @@ public class CardBinderMenu extends AbstractContainerMenu {
     }
 
     for (int col = 0; col < 9; col++) {
-      if (playerInventory.getItem(col) == binderStack) {
+      if (this.tracksBinderStack && playerInventory.getItem(col) == binderStack) {
+        this.binderInventorySlot = col;
         this.lockedSlotIndex = CONTAINER_SIZE + 27 + col;
         this.addSlot(
             new Slot(playerInventory, col, PLAYER_INV_X + col * 18, PLAYER_HOTBAR_Y) {
@@ -142,22 +149,50 @@ public class CardBinderMenu extends AbstractContainerMenu {
 
   @Override
   public boolean stillValid(Player player) {
-    if (binderStack.isEmpty()) {
-      return true;
+    return !this.tracksBinderStack || this.trackHeldBinder(player);
+  }
+
+  @Override
+  public void clicked(int slotIndex, int buttonNum, ClickType clickType, Player player) {
+    if (!this.tracksBinderStack) {
+      super.clicked(slotIndex, buttonNum, clickType, player);
+      return;
     }
-    ItemStack heldStack = player.getItemInHand(binderHand);
-    return heldStack == binderStack || heldStack.getItem() instanceof CardBinderItem;
+
+    if (!this.trackHeldBinder(player)
+        || (clickType == ClickType.SWAP && buttonNum == this.binderInventorySlot)) {
+      return;
+    }
+
+    super.clicked(slotIndex, buttonNum, clickType, player);
+    this.saveCards();
   }
 
   @Override
   public void removed(Player player) {
     super.removed(player);
-    if (binderStack.isEmpty()) {
-      return;
+    this.saveCards();
+  }
+
+  private boolean trackHeldBinder(Player player) {
+    if (this.binderStack.isEmpty()) {
+      return false;
     }
-    ItemStack heldStack = player.getItemInHand(binderHand);
-    ItemStack targetStack = heldStack.getItem() instanceof CardBinderItem ? heldStack : binderStack;
-    CardBinderItem.saveCards(targetStack, (SimpleContainer) cardContainer);
+
+    ItemStack heldStack = player.getItemInHand(this.binderHand);
+    // #216: other mods re-create the held stack, so a copy holding the same cards is followed.
+    if (heldStack != this.binderStack
+        && heldStack.getItem() instanceof CardBinderItem
+        && CardBinderItem.holdsSameCards(heldStack, (SimpleContainer) this.cardContainer)) {
+      this.binderStack = heldStack;
+    }
+    return heldStack == this.binderStack;
+  }
+
+  private void saveCards() {
+    if (!this.binderStack.isEmpty()) {
+      CardBinderItem.saveCards(this.binderStack, (SimpleContainer) this.cardContainer);
+    }
   }
 
   @Override

@@ -108,9 +108,6 @@ public class ModBlocks {
       BLOCKS.register(
           MobFarmType.NETHER_WASTES_FARM.getId(),
           () -> new MobFarmBlockWrapper(MobFarmType.NETHER_WASTES_FARM));
-
-  protected ModBlocks() {}
-
   public static final RegistryObject<BlockEntityType<MobFarmBlockEntityWrapper>> MOB_FARM_ENTITY =
       BLOCK_ENTITIES.register(
           MobFarmBlockEntity.ID,
@@ -130,4 +127,6 @@ public class ModBlocks {
                       SWAMP_FARM.get(),
                       END_FARM.get(),
                       NETHER_WASTES_FARM.get())));
+
+  protected ModBlocks() {}
 }

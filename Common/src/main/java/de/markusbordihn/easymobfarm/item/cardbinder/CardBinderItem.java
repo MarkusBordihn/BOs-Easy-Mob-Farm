@@ -70,11 +70,21 @@ public class CardBinderItem extends MobFarmItem {
   }
 
   public static void saveCards(ItemStack binderStack, SimpleContainer container) {
+    binderStack.set(DataComponents.CONTAINER, createContents(container));
+  }
+
+  public static boolean holdsSameCards(ItemStack binderStack, SimpleContainer container) {
+    return binderStack
+        .getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY)
+        .equals(createContents(container));
+  }
+
+  private static ItemContainerContents createContents(SimpleContainer container) {
     NonNullList<ItemStack> items = NonNullList.withSize(CONTAINER_SIZE, ItemStack.EMPTY);
     for (int i = 0; i < container.getContainerSize(); i++) {
       items.set(i, container.getItem(i));
     }
-    binderStack.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(items));
+    return ItemContainerContents.fromItems(items);
   }
 
   @Override

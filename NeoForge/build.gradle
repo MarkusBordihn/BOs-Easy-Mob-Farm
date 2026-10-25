@@ -43,13 +43,6 @@ neoForge {
       type = 'gameTestServer'
       systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
     }
-
-    if (clientToolkitAvailable) {
-      clientTest {
-        client()
-        gameDirectory = project.file('runs/clientTest')
-      }
-    }
   }
 
   mods {
@@ -91,11 +84,6 @@ dependencies {
 
   // Storage Drawers: Integration
   runtimeOnly "curse.maven:storage-drawers-223852:8861402"
-
-  // Client Runtime Interface Toolkit (runtime dependency, only for client tests)
-  if (clientToolkitAvailable && isClientTestRun) {
-    runtimeOnly clientToolkitCoordinate('neoforge')
-  }
 }
 
 // NeoGradle compiles the game, but we don't want to add our common code to the game's code

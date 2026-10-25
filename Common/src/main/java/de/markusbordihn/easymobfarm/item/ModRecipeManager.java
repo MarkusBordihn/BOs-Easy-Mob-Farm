@@ -160,27 +160,26 @@ public class ModRecipeManager {
         recipes, MobFarmConfig.enableSheepEnhancement, "sheep_enhancement", ENHANCEMENT_PREFIX);
 
     if (minecraftServer.getRecipeManager().getRecipes().size() != recipes.size()) {
-      // Replace recipes with adjusted recipes.
       log.info("Updating recipes with adjusted recipes ...");
-      RecipeMap recipeMap = RecipeMap.create(recipes);
-
-      // Use reflection to set the recipes.
-      setRecipes(minecraftServer.getRecipeManager(), recipeMap);
-
-      // Sync recipes with connected clients.
-      for (ServerPlayer player : minecraftServer.getPlayerList().getPlayers()) {
-        log.info("{} Sync recipe to player {} ...", LOG_PREFIX, player.getName().getString());
-        player.connection.send(
-            new ClientboundUpdateRecipesPacket(
-                minecraftServer.getRecipeManager().getSynchronizedItemProperties(),
-                minecraftServer.getRecipeManager().getSynchronizedStonecutterRecipes()));
-      }
-      minecraftServer
-          .getRecipeManager()
-          .getRecipes()
-          .forEach(
-              recipeHolder -> log.debug("{} Loaded recipe: {}", LOG_PREFIX, recipeHolder.id()));
+      replaceRecipes(minecraftServer, recipes);
     }
+  }
+
+  public static void replaceRecipes(
+      MinecraftServer minecraftServer, Collection<RecipeHolder<?>> recipes) {
+    setRecipes(minecraftServer.getRecipeManager(), RecipeMap.create(recipes));
+
+    for (ServerPlayer player : minecraftServer.getPlayerList().getPlayers()) {
+      log.info("{} Sync recipe to player {} ...", LOG_PREFIX, player.getName().getString());
+      player.connection.send(
+          new ClientboundUpdateRecipesPacket(
+              minecraftServer.getRecipeManager().getSynchronizedItemProperties(),
+              minecraftServer.getRecipeManager().getSynchronizedStonecutterRecipes()));
+    }
+    minecraftServer
+        .getRecipeManager()
+        .getRecipes()
+        .forEach(recipeHolder -> log.debug("{} Loaded recipe: {}", LOG_PREFIX, recipeHolder.id()));
   }
 
   private static void setRecipes(RecipeManager recipeManager, RecipeMap recipeMap) {

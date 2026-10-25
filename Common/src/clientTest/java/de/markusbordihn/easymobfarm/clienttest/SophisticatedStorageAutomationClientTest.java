@@ -19,10 +19,11 @@
 
 package de.markusbordihn.easymobfarm.clienttest;
 
-import java.io.IOException;
+import de.markusbordihn.clientruntimeinterfacetoolkit.testrunner.EnabledIfModLoaded;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@EnabledIfModLoaded("sophisticatedstorage")
 class SophisticatedStorageAutomationClientTest extends AutomationClientTestBase {
 
   private static final StageStyle WAREHOUSE =
@@ -42,28 +43,33 @@ class SophisticatedStorageAutomationClientTest extends AutomationClientTestBase 
 
   private static void decorateWarehouse() {
     fill(-4, PLATFORM_Y, SCENE_Z - 1, 4, PLATFORM_Y, SCENE_Z + 1, "minecraft:polished_deepslate");
-    setblock(-6, GROUND_Y, STAGE_MAX_Z - 2, "sophisticatedstorage:chest");
-    setblock(-5, GROUND_Y, STAGE_MAX_Z - 2, "sophisticatedstorage:gold_barrel");
-    setblock(5, GROUND_Y, STAGE_MAX_Z - 2, "sophisticatedstorage:limited_barrel_4");
-    setblock(6, GROUND_Y, STAGE_MAX_Z - 2, "sophisticatedstorage:iron_barrel");
-    setblock(6, GROUND_Y + 1, STAGE_MAX_Z - 2, "sophisticatedstorage:barrel");
-    setblock(-6, GROUND_Y, 2, "minecraft:potted_azalea_bush");
-    setblock(6, GROUND_Y, 2, "minecraft:potted_azalea_bush");
+    client.setBlock(-6, GROUND_Y, STAGE_MAX_Z - 2, "sophisticatedstorage:chest");
+    client.setBlock(-5, GROUND_Y, STAGE_MAX_Z - 2, "sophisticatedstorage:gold_barrel");
+    client.setBlock(5, GROUND_Y, STAGE_MAX_Z - 2, "sophisticatedstorage:limited_barrel_4");
+    client.setBlock(6, GROUND_Y, STAGE_MAX_Z - 2, "sophisticatedstorage:iron_barrel");
+    client.setBlock(6, GROUND_Y + 1, STAGE_MAX_Z - 2, "sophisticatedstorage:barrel");
+    client.setBlock(-6, GROUND_Y, 2, "minecraft:potted_azalea_bush");
+    client.setBlock(6, GROUND_Y, 2, "minecraft:potted_azalea_bush");
   }
 
   private static void placeBarrelFarm(String farmId, String mobName, int x) {
-    setblock(x, GROUND_Y, SCENE_Z, "sophisticatedstorage:barrel[ticking=true]");
+    client.setBlock(x, GROUND_Y, SCENE_Z, "sophisticatedstorage:barrel[ticking=true]");
     command(
-        "data modify block " + x + " " + GROUND_Y + " " + SCENE_Z + " "
+        "data modify block "
+            + x
+            + " "
+            + GROUND_Y
+            + " "
+            + SCENE_Z
+            + " "
             + UPGRADE_STACKS_WITH_HOPPER_UPGRADE);
-    setblock(x, GROUND_Y, SCENE_Z + 1, "minecraft:comparator[facing=north]");
+    client.setBlock(x, GROUND_Y, SCENE_Z + 1, "minecraft:comparator[facing=north]");
     placeWorkingFarm(farmId, mobName, x, GROUND_Y + 1, SCENE_Z);
   }
 
   @Test
   @DisplayName("Sophisticated Storage hopper upgrade pulls results from three farm types")
-  void hopperUpgradePullsResultsFromThreeFarmTypes() throws IOException {
-    assumeRuntimeMod("Sophisticated Storage", "neoforge");
+  void hopperUpgradePullsResultsFromThreeFarmTypes() {
     buildStage(WAREHOUSE, "Sophisticated", "Hopper Upgrade");
     decorateWarehouse();
     placeBarrelFarm("animal_plains_farm", "chicken", -BARREL_SPACING);

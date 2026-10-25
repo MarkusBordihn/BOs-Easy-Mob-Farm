@@ -86,6 +86,13 @@ class MobFarmBonusConfigTest {
   }
 
   @Test
+  @DisplayName("Desert Farm has an Armadillo scute bonus drop on every tier")
+  void desertFarmHasArmadilloScuteBonusDrop() {
+    assertDefaultBonusDropsForAllTiers(
+        MobFarmType.DESERT_FARM, "minecraft:armadillo", Items.ARMADILLO_SCUTE);
+  }
+
+  @Test
   @DisplayName("Unknown mob or tier yields no bonus drops")
   void unknownMobOrTierYieldsEmptyList() {
     Assertions.assertTrue(

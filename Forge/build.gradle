@@ -43,7 +43,7 @@ minecraft {
       workingDir = project.file('run/client')
     }
 
-    if (clientToolkitAvailable) {
+    if (rootProject.findProperty('clientRuntimeTest')?.isAvailable()) {
       clientTest {
         configureAsClient(it)
         workingDir = project.file('run/clienttest')
@@ -106,11 +106,6 @@ dependencies {
 
   // Hack fix for now, force jopt-simple to be exactly 5.0.4 because Mojang ships that version, but some transitive dependencies request 6.0+
   implementation('net.sf.jopt-simple:jopt-simple:5.0.4') { version { strictly '5.0.4' } }
-
-  // Client Runtime Interface Toolkit (runtime dependency, only for client tests)
-  if (clientToolkitAvailable && isClientTestRun) {
-    runtimeOnly clientToolkitCoordinate('forge')
-  }
 }
 
 tasks.withType(JavaCompile).configureEach {

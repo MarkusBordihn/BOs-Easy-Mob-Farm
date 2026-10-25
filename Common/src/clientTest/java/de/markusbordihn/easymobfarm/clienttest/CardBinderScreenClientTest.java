@@ -26,7 +26,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import de.markusbordihn.clientruntimeinterfacetoolkit.testrunner.By;
 import de.markusbordihn.clientruntimeinterfacetoolkit.testrunner.Until;
 import de.markusbordihn.clientruntimeinterfacetoolkit.testrunner.data.Parameters;
-import java.io.IOException;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,6 +35,7 @@ class CardBinderScreenClientTest extends ClientTestBase {
   private static final By PREVIOUS_PAGE_BUTTON = By.text("<");
   private static final By NEXT_PAGE_BUTTON = By.text(">");
   private static final String MOB_CAPTURE_CARD = MOD_NAMESPACE + "mob_capture_card";
+  private static final int FIRST_MAIN_INVENTORY_SLOT = 9;
   private static final int FIRST_PLAYER_INVENTORY_MENU_SLOT = 250;
   private static final List<String> CARD_MOB_NAMES = List.of("chicken", "cow", "sheep");
   private static final List<Integer> CARD_STACK_SIZES = List.of(20, 10, 10);
@@ -64,20 +64,16 @@ class CardBinderScreenClientTest extends ClientTestBase {
 
   @Test
   @DisplayName("Card binder pages forward and enables the previous page button")
-  void cardBinderPagesForward() throws IOException {
+  void cardBinderPagesForward() {
     enterTestArea(-90);
     for (int i = 0; i < CARD_MOB_NAMES.size(); i++) {
-      command(
-          "item replace entity @s inventory."
-              + i
-              + " with "
-              + mobCaptureCard(CARD_MOB_NAMES.get(i))
-              + " "
-              + CARD_STACK_SIZES.get(i));
+      client.setItemInSlot(
+          FIRST_MAIN_INVENTORY_SLOT + i,
+          mobCaptureCard(CARD_MOB_NAMES.get(i)),
+          CARD_STACK_SIZES.get(i));
     }
-    command("item replace entity @s weapon.mainhand with " + MOD_NAMESPACE + "card_binder");
-    client.await(Until.itemInSlot(0, MOD_NAMESPACE + "card_binder"));
-    useHeldItem();
+    client.equip(MOD_NAMESPACE + "card_binder");
+    client.useHeldItem();
     client.await(Until.screen(CARD_BINDER_SCREEN_ID));
 
     for (int i = 0; i < CARD_MOB_NAMES.size(); i++) {
@@ -88,21 +84,16 @@ class CardBinderScreenClientTest extends ClientTestBase {
     client.await(Until.ticksElapsed(5));
     assertEquals(
         MOB_CAPTURE_CARD,
-        client.api().state().guiGet().slots().stream()
-            .filter(slot -> slot.index() == 0)
-            .findFirst()
-            .orElseThrow()
-            .item()
-            .item(),
+        client.menuSlot(0).item().item(),
         "First card slot was not filled by the shift-click");
 
     assertFalse(
         client.checkState(Until.widgetEnabled(PREVIOUS_PAGE_BUTTON)).passed(),
         "Previous page button is enabled on the first page");
-    captureScreen("card_binder_first_page");
+    client.saveScreenshot("card_binder_first_page");
 
     client.click(NEXT_PAGE_BUTTON);
     client.await(Until.widgetEnabled(PREVIOUS_PAGE_BUTTON));
-    captureScreen("card_binder_second_page");
+    client.saveScreenshot("card_binder_second_page");
   }
 }

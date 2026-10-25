@@ -29,8 +29,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Stream;
-import net.minecraft.util.Util;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.util.Util;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.bee.Bee;
 import net.minecraft.world.entity.animal.chicken.Chicken;
@@ -119,8 +119,7 @@ public final class SlotHintRenderer {
       int hintX = leftPos + slot.x;
       int hintY = topPos + slot.y;
       guiGraphics.renderFakeItem(hint, hintX, hintY);
-      guiGraphics.fill(
-          hintX, hintY, hintX + HINT_SIZE, hintY + HINT_SIZE, HINT_FADE_OVERLAY_COLOR);
+      guiGraphics.fill(hintX, hintY, hintX + HINT_SIZE, hintY + HINT_SIZE, HINT_FADE_OVERLAY_COLOR);
     }
   }
 
