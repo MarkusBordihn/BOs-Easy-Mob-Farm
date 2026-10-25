@@ -86,6 +86,18 @@ class MobFarmBonusConfigTest {
   }
 
   @Test
+  @DisplayName("Desert Farm has no Armadillo bonus drop without Vanilla Backport")
+  void desertFarmArmadilloDefaultsWithoutVanillaBackport() {
+    for (int tierLevel = 0; tierLevel < EXPECTED_CHANCES.length; tierLevel++) {
+      Assertions.assertTrue(
+          MobFarmBonusConfig.getDefaultBonusDrops(
+                  MobFarmType.DESERT_FARM.getId(), tierLevel, "minecraft:armadillo")
+              .isEmpty(),
+          "Desert Farm tier " + tierLevel);
+    }
+  }
+
+  @Test
   @DisplayName("Unknown mob or tier yields no bonus drops")
   void unknownMobOrTierYieldsEmptyList() {
     Assertions.assertTrue(

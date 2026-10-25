@@ -20,7 +20,6 @@
 package de.markusbordihn.easymobfarm.clienttest;
 
 import de.markusbordihn.clientruntimeinterfacetoolkit.testrunner.Until;
-import java.io.IOException;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -48,7 +47,7 @@ class MobFarmRenderClientTest extends ClientTestBase {
 
   @Test
   @DisplayName("All mob farm blocks render in view without crashing the client")
-  void mobFarmBlocksRenderInView() throws IOException {
+  void mobFarmBlocksRenderInView() {
     enterTestArea(VIEW_PITCH);
     int firstFarmX = -FARM_IDS.size() / 2;
     for (int i = 0; i < FARM_IDS.size(); i++) {
@@ -56,6 +55,6 @@ class MobFarmRenderClientTest extends ClientTestBase {
     }
 
     client.await(Until.ticksElapsed(RENDER_TICKS), Until.worldLoaded(true));
-    captureScreen("mob_farms");
+    client.saveScreenshot("mob_farms");
   }
 }

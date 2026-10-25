@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -48,32 +49,35 @@ public class MobCaptureCardDefinitionManager {
         "{} Set {} definitions with {}", LOG_PREFIX, definitions.size(), definitions.keySet());
     DEFINITIONS.clear();
     ENTITY_TYPE_DEFINITIONS.clear();
+    Set<ResourceLocation> skippedEntities = new TreeSet<>();
     for (Map.Entry<ResourceLocation, MobCaptureCardDefinition> entry : definitions.entrySet()) {
-      addDefinition(entry.getKey(), entry.getValue());
+      if (!addDefinition(entry.getKey(), entry.getValue())) {
+        skippedEntities.add(entry.getKey());
+      }
+    }
+    if (!skippedEntities.isEmpty()) {
+      log.warn(
+          "{} Skipped {} synced definitions for entity types that are not loaded: {}",
+          LOG_PREFIX,
+          skippedEntities.size(),
+          skippedEntities);
     }
   }
 
-  public static void addDefinition(ResourceLocation entity, MobCaptureCardDefinition definition) {
-
-    // Verify entity type.
+  public static boolean addDefinition(
+      ResourceLocation entity, MobCaptureCardDefinition definition) {
     Optional<EntityType<?>> entityType =
         BuiltInRegistries.ENTITY_TYPE.getOptional(definition.entity());
     if (entityType.isEmpty()) {
-      log.warn(
-          "{} Skipping {} definition {}. Entity type {} not found.",
-          LOG_PREFIX,
-          entity,
-          definition,
-          definition.entity());
-      log.warn("This is expected for custom and mod entities which are not loaded.");
-      return;
+      log.debug("{} Skipping {} definition {}", LOG_PREFIX, entity, definition);
+      return false;
     }
 
-    // Add definition to map and cache entity type.
     log.debug("{} Add {} definition: {}", LOG_PREFIX, entity, definition);
     MobCaptureCardDefinition mobCaptureCardDefinition = definition.withEntityType(entityType.get());
     DEFINITIONS.put(entity, mobCaptureCardDefinition);
     ENTITY_TYPE_DEFINITIONS.put(entityType.get(), mobCaptureCardDefinition);
+    return true;
   }
 
   public static MobCaptureCardDefinition get(ResourceLocation entity) {

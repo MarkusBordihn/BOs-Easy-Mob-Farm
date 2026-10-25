@@ -19,57 +19,19 @@
 
 package de.markusbordihn.easymobfarm.clienttest;
 
-import java.io.IOException;
+import de.markusbordihn.clientruntimeinterfacetoolkit.testrunner.EnabledIfModLoaded;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@EnabledIfModLoaded("ae2")
 class AppliedEnergisticsAutomationClientTest extends AutomationClientTestBase {
 
-  private static final StageStyle SKY_STONE_HALL =
-      new StageStyle(
-          "ae2:smooth_sky_stone_block",
-          "ae2:sky_stone_brick",
-          "ae2:sky_stone_brick",
-          "ae2:sky_stone_small_brick",
-          "ae2:quartz_pillar",
-          "ae2:quartz_vibrant_glass",
-          "minecraft:birch_sign");
-  private static final int CHEST_X = 2;
-
-  private static String cableBus(String parts) {
-    return "ae2:cable_bus{cable:{id:\"ae2:fluix_glass_cable\"}," + parts + "}";
-  }
-
-  private static void decorateSkyStoneHall() {
-    fill(-3, PLATFORM_Y, SCENE_Z - 1, 4, PLATFORM_Y, SCENE_Z + 1, "ae2:fluix_block");
-    setblock(-6, GROUND_Y, STAGE_MAX_Z - 2, "ae2:inscriber");
-    setblock(-5, GROUND_Y, STAGE_MAX_Z - 2, "ae2:charger");
-    setblock(-3, GROUND_Y, STAGE_MAX_Z - 2, "ae2:sky_stone_chest");
-    setblock(3, GROUND_Y, STAGE_MAX_Z - 2, "ae2:smooth_sky_stone_chest");
-    fill(5, GROUND_Y, STAGE_MAX_Z - 2, 6, GROUND_Y + 1, STAGE_MAX_Z - 2, "ae2:controller");
-    setblock(-6, GROUND_Y, 2, "ae2:quartz_glass");
-    setblock(6, GROUND_Y, 2, "ae2:quartz_glass");
-    setblock(-6, GROUND_Y + 1, 2, "ae2:quartz_cluster");
-    setblock(6, GROUND_Y + 1, 2, "ae2:quartz_cluster");
-  }
+  private static final int COMPARATOR_X = 3;
 
   @Test
   @DisplayName("Applied Energistics 2 import bus stores farm results in a chest")
-  void importBusStoresResultsThroughStorageBus() throws IOException {
-    assumeForge("Applied Energistics 2");
-    buildStage(SKY_STONE_HALL, "ME System", "Import Bus");
-    decorateSkyStoneHall();
-    setblock(-2, GROUND_Y, SCENE_Z, "ae2:drive");
-    setblock(-1, GROUND_Y, SCENE_Z, "ae2:creative_energy_cell");
-    setblock(0, GROUND_Y, SCENE_Z, cableBus("up:{id:\"ae2:import_bus\"}"));
-    setblock(
-        1,
-        GROUND_Y,
-        SCENE_Z,
-        cableBus("north:{id:\"ae2:terminal\"},east:{id:\"ae2:storage_bus\"}"));
-    setblock(CHEST_X, GROUND_Y, SCENE_Z, "minecraft:chest[facing=north]");
-    setblock(CHEST_X + 1, GROUND_Y, SCENE_Z, "minecraft:comparator[facing=west]");
-    setblock(CHEST_X + 2, GROUND_Y, SCENE_Z, "minecraft:redstone_lamp");
+  void importBusStoresResultsThroughStorageBus() {
+    placeStageAtSavedOrigin(APPLIED_ENERGISTICS_STAGE);
     placeWorkingFarm("animal_plains_farm", "cow", 0, GROUND_Y + 1, SCENE_Z);
 
     awaitAllResults(
@@ -77,7 +39,7 @@ class AppliedEnergisticsAutomationClientTest extends AutomationClientTestBase {
         0,
         GROUND_Y + 1,
         SCENE_Z,
-        comparatorPowered(CHEST_X + 1, GROUND_Y, SCENE_Z));
+        comparatorPowered(COMPARATOR_X, GROUND_Y, SCENE_Z));
     captureShowcase("automation_applied_energistics");
   }
 }

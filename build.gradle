@@ -1,3 +1,26 @@
+buildscript {
+  // The toolkit is only published to Maven Local, so its client test plugin stays optional and a
+  // machine without it still builds and runs the game tests.
+  String toolkitPluginModule = "client_runtime_interface_toolkit-gradle-plugin-${minecraft_version}"
+  String toolkitPluginVersion = '2.1.0'
+  File toolkitPluginDirectory = new File(
+      System.getProperty('maven.repo.local', "${System.getProperty('user.home')}/.m2/repository"),
+      "de/markusbordihn/clientruntimeinterfacetoolkit/${toolkitPluginModule}/${toolkitPluginVersion}")
+  ext.clientRuntimeTestPluginAvailable = toolkitPluginDirectory.isDirectory()
+  repositories {
+    mavenLocal {
+      content {
+        includeGroup 'de.markusbordihn.clientruntimeinterfacetoolkit'
+      }
+    }
+  }
+  dependencies {
+    if (clientRuntimeTestPluginAvailable) {
+      classpath "de.markusbordihn.clientruntimeinterfacetoolkit:${toolkitPluginModule}:${toolkitPluginVersion}"
+    }
+  }
+}
+
 tasks.register('allGameTests') {
   group = 'verification'
   description = 'Runs both Fabric and Forge game tests.'
@@ -66,6 +89,11 @@ subprojects {
     options.encoding = 'UTF-8'
   }
 
+  // Minecraft 1.20.1 and Mixin fail on JDKs newer than 17.
+  tasks.withType(JavaExec).configureEach {
+    javaLauncher = javaToolchains.launcherFor(java.toolchain)
+  }
+
   tasks.withType(GenerateModuleMetadata).configureEach {
     enabled = false
   }
@@ -75,11 +103,8 @@ subprojects {
   }
 
   tasks.register("prepareKotlinBuildScriptModel") {}
-
-  // The toolkit opens a control socket in the client, so it only joins the runtime of client tests.
-  ext.isClientTestRun = gradle.startParameter.taskNames.any {
-    return it.toLowerCase().contains('clienttest')
-  }
 }
 
-apply from: 'gradle/tasks/clientTest.gradle'
+if (clientRuntimeTestPluginAvailable) {
+  apply plugin: 'de.markusbordihn.clientruntimeinterfacetoolkit.client-test'
+}

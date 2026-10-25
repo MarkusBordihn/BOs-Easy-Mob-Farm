@@ -30,6 +30,8 @@ import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinitionManager
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -44,9 +46,16 @@ public class MobCaptureCardResourceManager extends SimpleJsonResourceReloadListe
 
   public static final ResourceLocation RESOURCE_ID =
       new ResourceLocation(Constants.MOD_ID, "mob_capture_card_resource_loader");
+  static final Map<String, String> CHICKEN_VARIANT_MODELS =
+      Map.of(
+          "cold",
+          "minecraft:item/easy_mob_farm/mob_capture_card/chicken_cold",
+          "temperate",
+          "minecraft:item/easy_mob_farm/mob_capture_card/chicken",
+          "warm",
+          "minecraft:item/easy_mob_farm/mob_capture_card/chicken_warm");
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-
   private static final String LOG_PREFIX = "[Mob Capture Card Resource Manager]";
   private static final String SEARCH_PATH = "easy_mob_farm/mob_capture_card";
   private static final String MODEL_TAG = "model";
@@ -57,19 +66,10 @@ public class MobCaptureCardResourceManager extends SimpleJsonResourceReloadListe
   private static final String SCALE_TAG = "scale";
   private static final String COLORS_TAG = "colors";
   private static final String VARIANTS_TAG = "variants";
-
   private static final ResourceLocation CHICKEN_RESOURCE_LOCATION =
       new ResourceLocation("minecraft", "chicken");
   private static final ResourceLocation FROG_RESOURCE_LOCATION =
       new ResourceLocation("minecraft", "frog");
-  private static final Map<String, String> CHICKEN_VARIANT_MODELS =
-      Map.of(
-          "cold",
-          "minecraft:item/easy_mob_farm/mob_capture_card/chicken_cold",
-          "temperate",
-          "minecraft:item/easy_mob_farm/mob_capture_card/chicken",
-          "warm",
-          "minecraft:item/easy_mob_farm/mob_capture_card/chicken_warm");
 
   public MobCaptureCardResourceManager() {
     super(GSON, SEARCH_PATH);
@@ -113,6 +113,7 @@ public class MobCaptureCardResourceManager extends SimpleJsonResourceReloadListe
 
     MobCaptureCardDefinitionManager.clear();
 
+    Set<ResourceLocation> skippedEntities = new TreeSet<>();
     objectMap.forEach(
         (location, element) -> {
           try {
@@ -155,7 +156,9 @@ public class MobCaptureCardResourceManager extends SimpleJsonResourceReloadListe
                     variants,
                     colors);
 
-            MobCaptureCardDefinitionManager.addDefinition(entity, definition);
+            if (!MobCaptureCardDefinitionManager.addDefinition(entity, definition)) {
+              skippedEntities.add(entity);
+            }
           } catch (Exception e) {
             log.error(
                 "{} Failed to parse mob_capture_card definition: {} → {}",
@@ -169,6 +172,13 @@ public class MobCaptureCardResourceManager extends SimpleJsonResourceReloadListe
         "{} Loaded {} mob capture card definitions.",
         LOG_PREFIX,
         MobCaptureCardDefinitionManager.getAll().size());
+    if (!skippedEntities.isEmpty()) {
+      log.info(
+          "{} Skipped {} definitions for entity types that are not loaded: {}",
+          LOG_PREFIX,
+          skippedEntities.size(),
+          skippedEntities);
+    }
   }
 
   private Map<String, MobCaptureCardDefinition.Color> parseColors(JsonObject json) {

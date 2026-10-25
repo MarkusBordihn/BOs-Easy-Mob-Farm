@@ -20,13 +20,17 @@
 package de.markusbordihn.easymobfarm.clienttest;
 
 import de.markusbordihn.clientruntimeinterfacetoolkit.testrunner.ConditionNotMetException;
+import de.markusbordihn.clientruntimeinterfacetoolkit.testrunner.GameClientBuilder;
 import de.markusbordihn.clientruntimeinterfacetoolkit.testrunner.Until;
 import de.markusbordihn.clientruntimeinterfacetoolkit.testrunner.data.Parameters;
-import java.io.IOException;
+import de.markusbordihn.clientruntimeinterfacetoolkit.testrunner.data.TestArea;
+import java.nio.file.Path;
 import java.time.Duration;
 import java.util.Map;
-import org.junit.jupiter.api.Assumptions;
+import java.util.concurrent.TimeUnit;
+import org.junit.jupiter.api.Timeout;
 
+@Timeout(value = 2, unit = TimeUnit.MINUTES)
 abstract class AutomationClientTestBase extends ClientTestBase {
 
   static final int GROUND_Y = PLATFORM_Y + 1;
@@ -35,6 +39,14 @@ abstract class AutomationClientTestBase extends ClientTestBase {
   static final int STAGE_MAX_X = 8;
   static final int STAGE_MIN_Z = 0;
   static final int STAGE_MAX_Z = 12;
+  static final TestArea STAGE =
+      TestArea.between(
+          STAGE_MIN_X, PLATFORM_Y, STAGE_MIN_Z, STAGE_MAX_X, GROUND_Y + 3, STAGE_MAX_Z);
+  static final String CREATE_BELT_STAGE = "create_belt";
+  static final String CREATE_CHUTE_STAGE = "create_chute";
+  static final String APPLIED_ENERGISTICS_STAGE = "applied_energistics";
+  static final String SOPHISTICATED_STORAGE_STAGE = "sophisticated_storage";
+  static final String STORAGE_DRAWERS_STAGE = "storage_drawers";
   private static final String SPEED_ENHANCEMENT = MOD_NAMESPACE + "creative_speed_enhancement";
   private static final int CAPTURED_MOB_SLOT = 0;
   private static final int FIRST_ENHANCEMENT_SLOT = 4;
@@ -43,86 +55,28 @@ abstract class AutomationClientTestBase extends ClientTestBase {
   private static final int SHOWCASE_SETTLE_TICKS = 40;
   private static final int VANTAGE_Y = GROUND_Y + 3;
   private static final int VANTAGE_Z = STAGE_MIN_Z - 4;
+  private static final double PLAYER_EYE_HEIGHT = 1.62;
+  private static final float VANTAGE_PITCH =
+      (float)
+          Math.toDegrees(
+              Math.atan2(VANTAGE_Y + PLAYER_EYE_HEIGHT - (GROUND_Y + 0.5), SCENE_Z - VANTAGE_Z));
 
-  static void assumeForge(String modName) {
-    Assumptions.assumeTrue(
-        "forge".equals(System.getProperty("clientruntime.loader")),
-        modName + " is only part of the Forge runtime");
-  }
-
-  static void setblock(int x, int y, int z, String block) {
-    command("setblock " + x + " " + y + " " + z + " " + block);
-  }
-
-  static void fill(int fromX, int fromY, int fromZ, int toX, int toY, int toZ, String block) {
-    command(
-        "fill " + fromX + " " + fromY + " " + fromZ + " " + toX + " " + toY + " " + toZ + " "
-            + block);
-  }
-
-  static void buildStage(StageStyle style, String title, String subtitle) {
+  static void placeStageAtSavedOrigin(String stageName) {
     standAtVantage();
-    fill(STAGE_MIN_X, PLATFORM_Y, STAGE_MIN_Z, STAGE_MAX_X, PLATFORM_Y, STAGE_MAX_Z, style.floor());
-    fill(
-        STAGE_MIN_X,
-        PLATFORM_Y,
-        STAGE_MIN_Z,
-        STAGE_MAX_X,
-        PLATFORM_Y,
-        STAGE_MIN_Z,
-        style.borderAlongX());
-    fill(
-        STAGE_MIN_X,
-        PLATFORM_Y,
-        STAGE_MAX_Z,
-        STAGE_MAX_X,
-        PLATFORM_Y,
-        STAGE_MAX_Z,
-        style.borderAlongX());
-    fill(
-        STAGE_MIN_X,
-        PLATFORM_Y,
-        STAGE_MIN_Z + 1,
-        STAGE_MIN_X,
-        PLATFORM_Y,
-        STAGE_MAX_Z - 1,
-        style.borderAlongZ());
-    fill(
-        STAGE_MAX_X,
-        PLATFORM_Y,
-        STAGE_MIN_Z + 1,
-        STAGE_MAX_X,
-        PLATFORM_Y,
-        STAGE_MAX_Z - 1,
-        style.borderAlongZ());
-    fill(
-        STAGE_MIN_X + 1,
-        GROUND_Y,
-        STAGE_MAX_Z,
-        STAGE_MAX_X - 1,
-        GROUND_Y,
-        STAGE_MAX_Z,
-        style.backdrop());
-    for (int x : new int[] {STAGE_MIN_X, STAGE_MAX_X}) {
-      for (int z : new int[] {STAGE_MIN_Z, STAGE_MAX_Z}) {
-        fill(x, GROUND_Y, z, x, GROUND_Y + 1, z, style.post());
-        setblock(x, GROUND_Y + 2, z, style.light());
-      }
-    }
-    setblock(
-        STAGE_MIN_X + 2,
-        GROUND_Y,
-        STAGE_MIN_Z + 1,
-        style.sign()
-            + "[rotation=8]{front_text:{messages:['\"\"','\""
-            + title
-            + "\"','\""
-            + subtitle
-            + "\"','\"\"']}}");
+    Path stageFile =
+        Path.of(
+            System.getProperty(GameClientBuilder.PROJECT_DIRECTORY_PROPERTY, "."),
+            "Common",
+            "src",
+            "clientTest",
+            "resources",
+            "structures",
+            stageName + ".nbt");
+    client.placeStructure(stageFile, STAGE.minX(), STAGE.minY(), STAGE.minZ());
   }
 
   static void placeWorkingFarm(String farmId, String mobName, int x, int y, int z) {
-    setblock(x, y, z, MOD_NAMESPACE + farmId);
+    client.setBlock(x, y, z, MOD_NAMESPACE + farmId);
     for (int i = 0; i < EFFECTIVE_SPEED_ENHANCEMENTS; i++) {
       fillContainerSlot(x, y, z, FIRST_ENHANCEMENT_SLOT + i, SPEED_ENHANCEMENT);
     }
@@ -134,8 +88,7 @@ abstract class AutomationClientTestBase extends ClientTestBase {
   }
 
   static void awaitAllResults(
-      String screenshotLabel, int farmX, int farmY, int farmZ, Until... arrivals)
-      throws IOException {
+      String screenshotLabel, int farmX, int farmY, int farmZ, Until... arrivals) {
     try {
       client.await(FIRST_OUTPUT_TIMEOUT, arrivals);
     } catch (ConditionNotMetException e) {
@@ -144,39 +97,23 @@ abstract class AutomationClientTestBase extends ClientTestBase {
     }
   }
 
-  static void captureShowcase(String label) throws IOException {
+  static void captureShowcase(String label) {
     standAtVantage();
-    client.api().render().settingsSet(Parameters.of().with("hand", false).with("crosshair", false));
-    try {
-      client.await(Until.ticksElapsed(SHOWCASE_SETTLE_TICKS));
-      captureScreen(label);
-    } finally {
-      client.api().render().settingsSet(Parameters.of().with("hand", true).with("crosshair", true));
-    }
+    client.renderSettings(Parameters.of().with("hand", false).with("crosshair", false));
+    client.await(Until.ticksElapsed(SHOWCASE_SETTLE_TICKS));
+    client.saveScreenshot(label);
   }
 
-  private static void standAtVantage() {
-    setblock(0, VANTAGE_Y - 1, VANTAGE_Z, "minecraft:barrier");
-    command(
-        "tp @s 0.5 "
-            + VANTAGE_Y
-            + " "
-            + (VANTAGE_Z + 0.5)
-            + " facing 0.5 "
-            + (GROUND_Y + 0.5)
-            + " "
-            + (SCENE_Z + 0.5));
+  static void standAtVantage() {
+    client.setBlock(0, VANTAGE_Y - 1, VANTAGE_Z, "minecraft:barrier");
+    client.teleport(0.5, VANTAGE_Y, VANTAGE_Z + 0.5, 0f, VANTAGE_PITCH);
   }
 
-  private static void captureFailure(String screenshotLabel, int farmX, int farmY, int farmZ)
-      throws IOException {
+  private static void captureFailure(String screenshotLabel, int farmX, int farmY, int farmZ) {
     captureShowcase(screenshotLabel + "_failed");
-    command("tp @s " + (farmX + 0.5) + " " + GROUND_Y + " " + (farmZ - 2.5) + " 0 0");
-    lookAt(farmX, farmY, farmZ);
-    useHeldItem();
-    client.await(Until.screen(MOB_FARM_SCREEN_ID));
-    captureScreen(screenshotLabel + "_failed_farm");
-    client.closeScreen();
+    client.teleport(farmX + 0.5, GROUND_Y, farmZ - 2.5);
+    client.openBlockScreen(farmX, farmY, farmZ, Until.screen(MOB_FARM_SCREEN_ID));
+    client.saveScreenshot(screenshotLabel + "_failed_farm");
   }
 
   private static void fillContainerSlot(int x, int y, int z, int slot, String item) {
@@ -191,13 +128,4 @@ abstract class AutomationClientTestBase extends ClientTestBase {
         + mobName
         + "\",Rarity:\"COMMON\",Foil:0b},CardDataVersion:2}";
   }
-
-  record StageStyle(
-      String floor,
-      String borderAlongX,
-      String borderAlongZ,
-      String backdrop,
-      String post,
-      String light,
-      String sign) {}
 }

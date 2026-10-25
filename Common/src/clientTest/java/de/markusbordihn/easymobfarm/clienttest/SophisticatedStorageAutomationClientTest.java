@@ -19,52 +19,22 @@
 
 package de.markusbordihn.easymobfarm.clienttest;
 
-import java.io.IOException;
+import de.markusbordihn.clientruntimeinterfacetoolkit.testrunner.EnabledIfModLoaded;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@EnabledIfModLoaded("sophisticatedstorage")
 class SophisticatedStorageAutomationClientTest extends AutomationClientTestBase {
 
-  private static final StageStyle WAREHOUSE =
-      new StageStyle(
-          "minecraft:dark_oak_planks",
-          "minecraft:stripped_dark_oak_log[axis=x]",
-          "minecraft:stripped_dark_oak_log[axis=z]",
-          "minecraft:barrel[facing=north]",
-          "minecraft:dark_oak_fence",
-          "minecraft:lantern",
-          "minecraft:birch_sign");
-  private static final String BARREL_WITH_HOPPER_UPGRADE =
-      "sophisticatedstorage:barrel[ticking=true]{storageWrapper:{contents:{upgradeInventory:{Items:"
-          + "[{Slot:0,id:\"sophisticatedstorage:hopper_upgrade\",Count:1b}]}}}}";
   private static final int BARREL_SPACING = 3;
-
-  private static void decorateWarehouse() {
-    fill(-4, PLATFORM_Y, SCENE_Z - 1, 4, PLATFORM_Y, SCENE_Z + 1, "minecraft:polished_deepslate");
-    setblock(-6, GROUND_Y, STAGE_MAX_Z - 2, "sophisticatedstorage:chest");
-    setblock(-5, GROUND_Y, STAGE_MAX_Z - 2, "sophisticatedstorage:gold_barrel");
-    setblock(5, GROUND_Y, STAGE_MAX_Z - 2, "sophisticatedstorage:limited_barrel_4");
-    setblock(6, GROUND_Y, STAGE_MAX_Z - 2, "sophisticatedstorage:iron_barrel");
-    setblock(6, GROUND_Y + 1, STAGE_MAX_Z - 2, "sophisticatedstorage:barrel");
-    setblock(-6, GROUND_Y, 2, "minecraft:potted_azalea_bush");
-    setblock(6, GROUND_Y, 2, "minecraft:potted_azalea_bush");
-  }
-
-  private static void placeBarrelFarm(String farmId, String mobName, int x) {
-    setblock(x, GROUND_Y, SCENE_Z, BARREL_WITH_HOPPER_UPGRADE);
-    setblock(x, GROUND_Y, SCENE_Z + 1, "minecraft:comparator[facing=north]");
-    placeWorkingFarm(farmId, mobName, x, GROUND_Y + 1, SCENE_Z);
-  }
 
   @Test
   @DisplayName("Sophisticated Storage hopper upgrade pulls results from three farm types")
-  void hopperUpgradePullsResultsFromThreeFarmTypes() throws IOException {
-    assumeForge("Sophisticated Storage");
-    buildStage(WAREHOUSE, "Sophisticated", "Hopper Upgrade");
-    decorateWarehouse();
-    placeBarrelFarm("animal_plains_farm", "chicken", -BARREL_SPACING);
-    placeBarrelFarm("ocean_farm", "salmon", 0);
-    placeBarrelFarm("iron_golem_farm", "iron_golem", BARREL_SPACING);
+  void hopperUpgradePullsResultsFromThreeFarmTypes() {
+    placeStageAtSavedOrigin(SOPHISTICATED_STORAGE_STAGE);
+    placeWorkingFarm("animal_plains_farm", "chicken", -BARREL_SPACING, GROUND_Y + 1, SCENE_Z);
+    placeWorkingFarm("ocean_farm", "salmon", 0, GROUND_Y + 1, SCENE_Z);
+    placeWorkingFarm("iron_golem_farm", "iron_golem", BARREL_SPACING, GROUND_Y + 1, SCENE_Z);
 
     awaitAllResults(
         "automation_sophisticated_storage",

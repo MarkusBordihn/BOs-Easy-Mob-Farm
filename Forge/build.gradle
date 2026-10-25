@@ -44,7 +44,7 @@ minecraft {
       args '--username', 'guest_player'
     }
 
-    if (clientToolkitAvailable) {
+    if (rootProject.findProperty('clientRuntimeTest')?.isAvailable()) {
       clientTest {
         parent minecraft.runs.client
         workingDirectory project.file('run/clienttest')
@@ -169,11 +169,6 @@ dependencies {
 
   // Farmers Delight: Integration
   runtimeOnly fg.deobf("curse.maven:farmers-delight-398521:6917255")
-
-  // Client Runtime Interface Toolkit (runtime dependency, only for client tests)
-  if (clientToolkitAvailable && isClientTestRun) {
-    runtimeOnly fg.deobf(clientToolkitCoordinate('forge'))
-  }
 }
 
 tasks.withType(JavaCompile).configureEach {
