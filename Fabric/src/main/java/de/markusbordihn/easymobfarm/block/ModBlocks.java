@@ -37,52 +37,53 @@ import org.apache.logging.log4j.Logger;
 public class ModBlocks {
 
   public static final Block TIER_0_MOB_FARM_TEMPLATE =
-      new MobFarmTemplateBlock(MobFarmTemplateBlock.ID_TIER_0);
+    new MobFarmTemplateBlock(MobFarmTemplateBlock.ID_TIER_0);
   public static final Block TIER_1_MOB_FARM_TEMPLATE =
-      new MobFarmTemplateBlock(MobFarmTemplateBlock.ID_TIER_1);
+    new MobFarmTemplateBlock(MobFarmTemplateBlock.ID_TIER_1);
   public static final Block TIER_2_MOB_FARM_TEMPLATE =
-      new MobFarmTemplateBlock(MobFarmTemplateBlock.ID_TIER_2);
+    new MobFarmTemplateBlock(MobFarmTemplateBlock.ID_TIER_2);
   public static final Block TIER_3_MOB_FARM_TEMPLATE =
-      new MobFarmTemplateBlock(MobFarmTemplateBlock.ID_TIER_3);
+    new MobFarmTemplateBlock(MobFarmTemplateBlock.ID_TIER_3);
   public static final Block CREATIVE_MOB_FARM = new CreativeMobFarmBlockWrapper();
   public static final Block ANIMAL_PLAINS_FARM =
-      new MobFarmBlockWrapper(MobFarmType.ANIMAL_PLAINS_FARM);
+    new MobFarmBlockWrapper(MobFarmType.ANIMAL_PLAINS_FARM);
   public static final Block BEE_HIVE_FARM = new MobFarmBlockWrapper(MobFarmType.BEE_HIVE_FARM);
   public static final Block DESERT_FARM = new MobFarmBlockWrapper(MobFarmType.DESERT_FARM);
   public static final Block IRON_GOLEM_FARM = new MobFarmBlockWrapper(MobFarmType.IRON_GOLEM_FARM);
   public static final Block JUNGLE_FARM = new MobFarmBlockWrapper(MobFarmType.JUNGLE_FARM);
   public static final Block LUCKY_DROP_FARM = new MobFarmBlockWrapper(MobFarmType.LUCKY_DROP_FARM);
   public static final Block MONSTER_PLAINS_CAVE_FARM =
-      new MobFarmBlockWrapper(MobFarmType.MONSTER_PLAINS_CAVE_FARM);
+    new MobFarmBlockWrapper(MobFarmType.MONSTER_PLAINS_CAVE_FARM);
   public static final Block NETHER_FORTRESS_FARM =
-      new MobFarmBlockWrapper(MobFarmType.NETHER_FORTRESS_FARM);
+    new MobFarmBlockWrapper(MobFarmType.NETHER_FORTRESS_FARM);
   public static final Block OCEAN_FARM = new MobFarmBlockWrapper(MobFarmType.OCEAN_FARM);
   public static final Block SWAMP_FARM = new MobFarmBlockWrapper(MobFarmType.SWAMP_FARM);
   public static final Block END_FARM = new MobFarmBlockWrapper(MobFarmType.END_FARM);
   public static final Block NETHER_WASTES_FARM =
-      new MobFarmBlockWrapper(MobFarmType.NETHER_WASTES_FARM);
+    new MobFarmBlockWrapper(MobFarmType.NETHER_WASTES_FARM);
   public static final BlockEntityType<CreativeMobFarmBlockEntityWrapper> CREATIVE_MOB_FARM_ENTITY =
-      FabricBlockEntityTypeBuilder.create(CreativeMobFarmBlockEntityWrapper::new, CREATIVE_MOB_FARM)
-          .build();
+    FabricBlockEntityTypeBuilder.create(CreativeMobFarmBlockEntityWrapper::new, CREATIVE_MOB_FARM)
+      .build();
   public static final BlockEntityType<MobFarmBlockEntityWrapper> MOB_FARM_ENTITY =
-      FabricBlockEntityTypeBuilder.create(
-              MobFarmBlockEntityWrapper::new,
-              ANIMAL_PLAINS_FARM,
-              BEE_HIVE_FARM,
-              DESERT_FARM,
-              IRON_GOLEM_FARM,
-              JUNGLE_FARM,
-              LUCKY_DROP_FARM,
-              MONSTER_PLAINS_CAVE_FARM,
-              NETHER_FORTRESS_FARM,
-              OCEAN_FARM,
-              SWAMP_FARM,
-              END_FARM,
-              NETHER_WASTES_FARM)
-          .build();
+    FabricBlockEntityTypeBuilder.create(
+        MobFarmBlockEntityWrapper::new,
+        ANIMAL_PLAINS_FARM,
+        BEE_HIVE_FARM,
+        DESERT_FARM,
+        IRON_GOLEM_FARM,
+        JUNGLE_FARM,
+        LUCKY_DROP_FARM,
+        MONSTER_PLAINS_CAVE_FARM,
+        NETHER_FORTRESS_FARM,
+        OCEAN_FARM,
+        SWAMP_FARM,
+        END_FARM,
+        NETHER_WASTES_FARM)
+      .build();
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  private ModBlocks() {}
+  private ModBlocks() {
+  }
 
   public static void registerModBlocks() {
     log.debug("{} Mob Farm Template blocks ...", Constants.LOG_REGISTER_PREFIX);
@@ -110,17 +111,17 @@ public class ModBlocks {
   public static void registerModBlockEntities() {
     log.debug("{} Mob Farm block entities ...", Constants.LOG_REGISTER_PREFIX);
     Registry.register(
-        BuiltInRegistries.BLOCK_ENTITY_TYPE,
-        Identifier.fromNamespaceAndPath(Constants.MOD_ID, CreativeMobFarmBlockEntity.ID),
-        CREATIVE_MOB_FARM_ENTITY);
+      BuiltInRegistries.BLOCK_ENTITY_TYPE,
+      Identifier.fromNamespaceAndPath(Constants.MOD_ID, CreativeMobFarmBlockEntity.ID),
+      CREATIVE_MOB_FARM_ENTITY);
     Registry.register(
-        BuiltInRegistries.BLOCK_ENTITY_TYPE,
-        Identifier.fromNamespaceAndPath(Constants.MOD_ID, MobFarmBlockEntity.ID),
-        MOB_FARM_ENTITY);
+      BuiltInRegistries.BLOCK_ENTITY_TYPE,
+      Identifier.fromNamespaceAndPath(Constants.MOD_ID, MobFarmBlockEntity.ID),
+      MOB_FARM_ENTITY);
   }
 
   private static void registerBlock(String id, Block block) {
     Registry.register(
-        BuiltInRegistries.BLOCK, Identifier.fromNamespaceAndPath(Constants.MOD_ID, id), block);
+      BuiltInRegistries.BLOCK, Identifier.fromNamespaceAndPath(Constants.MOD_ID, id), block);
   }
 }

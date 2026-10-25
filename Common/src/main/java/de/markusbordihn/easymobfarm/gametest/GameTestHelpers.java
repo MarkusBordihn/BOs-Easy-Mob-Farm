@@ -38,7 +38,8 @@ public class GameTestHelpers {
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  private GameTestHelpers() {}
+  private GameTestHelpers() {
+  }
 
   public static void assertTrue(GameTestHelper helper, String message, boolean condition) {
     if (condition) {
@@ -58,16 +59,16 @@ public class GameTestHelpers {
 
   public static List<EntityType<?>> definedMobCaptureCardEntityTypes(GameTestHelper helper) {
     List<EntityType<?>> entityTypes =
-        new ArrayList<>(MobCaptureCardDefinitionManager.getDefinedEntityTypes());
+      new ArrayList<>(MobCaptureCardDefinitionManager.getDefinedEntityTypes());
     helper.assertTrue(!entityTypes.isEmpty(), "No mob capture card definitions are loaded");
     entityTypes.sort(
-        Comparator.comparing(
-            entityType -> BuiltInRegistries.ENTITY_TYPE.getKey(entityType).toString()));
+      Comparator.comparing(
+        entityType -> BuiltInRegistries.ENTITY_TYPE.getKey(entityType).toString()));
     return entityTypes;
   }
 
   public static int menuSlotIndex(
-      AbstractContainerMenu menu, Container container, int containerSlotIndex) {
+    AbstractContainerMenu menu, Container container, int containerSlotIndex) {
     for (Slot slot : menu.slots) {
       if (slot.container == container && slot.getContainerSlot() == containerSlotIndex) {
         return slot.index;
@@ -75,6 +76,6 @@ public class GameTestHelpers {
     }
 
     throw new IllegalArgumentException(
-        "Menu " + menu + " has no slot for container slot " + containerSlotIndex);
+      "Menu " + menu + " has no slot for container slot " + containerSlotIndex);
   }
 }

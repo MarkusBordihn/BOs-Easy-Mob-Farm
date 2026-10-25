@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.gametest;
 
 import de.markusbordihn.easymobfarm.item.Items;
+import de.markusbordihn.easymobfarm.item.cardbinder.CardBinderItem;
 import de.markusbordihn.easymobfarm.item.mobcapturecard.MobCaptureCardItem;
 import de.markusbordihn.easymobfarm.menu.CardBinderMenu;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -36,7 +37,8 @@ public class CardBinderMenuTestHelper {
   private static final int LEFT_MOUSE_BUTTON = 0;
   private static final int CARD_COUNT = 3;
 
-  private CardBinderMenuTestHelper() {}
+  private CardBinderMenuTestHelper() {
+  }
 
   public static void testQuickMoveCardsFillOneBinderSlotEach(GameTestHelper helper) {
     Player player = helper.makeMockPlayer(GameType.SURVIVAL);
@@ -63,16 +65,16 @@ public class CardBinderMenuTestHelper {
     Player player = helper.makeMockPlayer(GameType.SURVIVAL);
     CardBinderMenu menu = openBinder(player);
     player
-        .getInventory()
-        .setItem(INVENTORY_SLOT, new ItemStack(net.minecraft.world.item.Items.BONE, 16));
+      .getInventory()
+      .setItem(INVENTORY_SLOT, new ItemStack(net.minecraft.world.item.Items.BONE, 16));
 
     quickMoveInventorySlot(menu, player, INVENTORY_SLOT);
 
     GameTestHelpers.assertTrue(
-        helper,
-        "Shift-click should keep items other than capture cards in the inventory, but found "
-            + player.getInventory().getItem(INVENTORY_SLOT),
-        player.getInventory().getItem(INVENTORY_SLOT).getCount() == 16);
+      helper,
+      "Shift-click should keep items other than capture cards in the inventory, but found "
+        + player.getInventory().getItem(INVENTORY_SLOT),
+      player.getInventory().getItem(INVENTORY_SLOT).getCount() == 16);
     assertBinderSlotsHoldOneCardEach(helper, menu, 0);
   }
 
@@ -85,10 +87,10 @@ public class CardBinderMenuTestHelper {
 
     assertBinderSlotsHoldOneCardEach(helper, menu, 0);
     GameTestHelpers.assertTrue(
-        helper,
-        "Shift-click on a binder card should move it into the player inventory, but found "
-            + player.getInventory().countItem(MobCaptureCardItem.getMobCaptureCardItem()),
-        player.getInventory().countItem(MobCaptureCardItem.getMobCaptureCardItem()) == 1);
+      helper,
+      "Shift-click on a binder card should move it into the player inventory, but found "
+        + player.getInventory().countItem(MobCaptureCardItem.getMobCaptureCardItem()),
+      player.getInventory().countItem(MobCaptureCardItem.getMobCaptureCardItem()) == 1);
   }
 
   public static void testOpenBinderCannotBeMoved(GameTestHelper helper) {
@@ -96,35 +98,146 @@ public class CardBinderMenuTestHelper {
     CardBinderMenu menu = openBinder(player);
     ItemStack binderStack = player.getInventory().getItem(BINDER_HOTBAR_SLOT);
     int binderMenuSlot =
-        GameTestHelpers.menuSlotIndex(menu, player.getInventory(), BINDER_HOTBAR_SLOT);
+      GameTestHelpers.menuSlotIndex(menu, player.getInventory(), BINDER_HOTBAR_SLOT);
 
     menu.clicked(binderMenuSlot, LEFT_MOUSE_BUTTON, ContainerInput.QUICK_MOVE, player);
     menu.clicked(binderMenuSlot, LEFT_MOUSE_BUTTON, ContainerInput.PICKUP, player);
     menu.clicked(0, BINDER_HOTBAR_SLOT, ContainerInput.SWAP, player);
 
     GameTestHelpers.assertTrue(
-        helper,
-        "The open binder should stay in its hotbar slot, but found "
-            + player.getInventory().getItem(BINDER_HOTBAR_SLOT)
-            + " while carrying "
-            + menu.getCarried(),
-        player.getInventory().getItem(BINDER_HOTBAR_SLOT) == binderStack
-            && menu.getCarried().isEmpty());
+      helper,
+      "The open binder should stay in its hotbar slot, but found "
+        + player.getInventory().getItem(BINDER_HOTBAR_SLOT)
+        + " while carrying "
+        + menu.getCarried(),
+      player.getInventory().getItem(BINDER_HOTBAR_SLOT) == binderStack
+        && menu.getCarried().isEmpty());
     assertBinderSlotsHoldOneCardEach(helper, menu, 0);
   }
 
+  public static void testHotbarSwapCannotMoveOpenBinder(GameTestHelper helper) {
+    Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+    CardBinderMenu menu = openBinder(player);
+    ItemStack binderStack = player.getInventory().getItem(BINDER_HOTBAR_SLOT);
+    ItemStack otherBinderStack = new ItemStack(Items.CARD_BINDER);
+    player.getInventory().setItem(INVENTORY_SLOT, otherBinderStack);
+
+    menu.clicked(
+      GameTestHelpers.menuSlotIndex(menu, player.getInventory(), INVENTORY_SLOT),
+      BINDER_HOTBAR_SLOT,
+      ContainerInput.SWAP,
+      player);
+
+    GameTestHelpers.assertTrue(
+      helper,
+      "A hotbar swap should not move the open binder, but found "
+        + player.getInventory().getItem(BINDER_HOTBAR_SLOT)
+        + " in the hand",
+      player.getInventory().getItem(BINDER_HOTBAR_SLOT) == binderStack
+        && player.getInventory().getItem(INVENTORY_SLOT) == otherBinderStack);
+  }
+
+  public static void testSwappedInBinderDoesNotReceiveCards(GameTestHelper helper) {
+    Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+    CardBinderMenu menu = openBinder(player);
+    ItemStack binderStack = player.getInventory().getItem(BINDER_HOTBAR_SLOT);
+    menu.getSlot(0).set(createCards(1));
+    ItemStack otherBinderStack = new ItemStack(Items.CARD_BINDER);
+    player.getInventory().setItem(BINDER_HOTBAR_SLOT, otherBinderStack);
+
+    menu.clicked(0, LEFT_MOUSE_BUTTON, ContainerInput.QUICK_MOVE, player);
+    boolean stillValid = menu.stillValid(player);
+    menu.removed(player);
+
+    GameTestHelpers.assertTrue(
+      helper,
+      "A binder swapped into the hand should close the menu without receiving its cards, but"
+        + " found stillValid="
+        + stillValid
+        + ", cards in swapped binder="
+        + countCards(otherBinderStack)
+        + ", cards in open binder="
+        + countCards(binderStack),
+      !stillValid && countCards(otherBinderStack) == 0 && countCards(binderStack) == 1);
+  }
+
+  public static void testRecreatedBinderKeepsMenuOpen(GameTestHelper helper) {
+    Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+    CardBinderMenu menu = openBinder(player);
+    player.getInventory().setItem(INVENTORY_SLOT, createCards(1));
+    quickMoveInventorySlot(menu, player, INVENTORY_SLOT);
+    ItemStack recreatedBinderStack = player.getInventory().getItem(BINDER_HOTBAR_SLOT).copy();
+    player.getInventory().setItem(BINDER_HOTBAR_SLOT, recreatedBinderStack);
+
+    boolean stillValid = menu.stillValid(player);
+    menu.clicked(0, LEFT_MOUSE_BUTTON, ContainerInput.QUICK_MOVE, player);
+
+    GameTestHelpers.assertTrue(
+      helper,
+      "A re-created copy of the open binder should keep the menu open and receive its changes,"
+        + " but found stillValid="
+        + stillValid
+        + ", cards in copy="
+        + countCards(recreatedBinderStack),
+      stillValid && countCards(recreatedBinderStack) == 0);
+  }
+
+  public static void testCardsAreSavedOnEveryClick(GameTestHelper helper) {
+    Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+    CardBinderMenu menu = openBinder(player);
+    ItemStack binderStack = player.getInventory().getItem(BINDER_HOTBAR_SLOT);
+    player.getInventory().setItem(INVENTORY_SLOT, createCards(CARD_COUNT));
+
+    quickMoveInventorySlot(menu, player, INVENTORY_SLOT);
+
+    GameTestHelpers.assertTrue(
+      helper,
+      "Cards moved into the open binder should be saved before the menu closes, but found "
+        + countCards(binderStack),
+      countCards(binderStack) == CARD_COUNT);
+  }
+
+  public static void testDroppedBinderIgnoresFurtherClicks(GameTestHelper helper) {
+    Player player = helper.makeMockPlayer(GameType.SURVIVAL);
+    CardBinderMenu menu = openBinder(player);
+    player.getInventory().setItem(INVENTORY_SLOT, createCards(1));
+    quickMoveInventorySlot(menu, player, INVENTORY_SLOT);
+    ItemStack droppedBinderStack = player.getInventory().removeFromSelected(false);
+
+    menu.clicked(0, LEFT_MOUSE_BUTTON, ContainerInput.QUICK_MOVE, player);
+    boolean stillValid = menu.stillValid(player);
+    menu.removed(player);
+
+    GameTestHelpers.assertTrue(
+      helper,
+      "A dropped binder should close the menu and keep its cards, but found stillValid="
+        + stillValid
+        + ", cards in dropped binder="
+        + countCards(droppedBinderStack)
+        + ", cards in inventory="
+        + player.getInventory().countItem(MobCaptureCardItem.getMobCaptureCardItem()),
+      !stillValid
+        && countCards(droppedBinderStack) == 1
+        && player.getInventory().countItem(MobCaptureCardItem.getMobCaptureCardItem()) == 0);
+  }
+
+  private static int countCards(ItemStack binderStack) {
+    return CardBinderItem.loadCards(binderStack)
+      .countItem(MobCaptureCardItem.getMobCaptureCardItem());
+  }
+
   private static void assertBinderSlotsHoldOneCardEach(
-      GameTestHelper helper, CardBinderMenu menu, int expectedCards) {
+    GameTestHelper helper, CardBinderMenu menu, int expectedCards) {
     for (int i = 0; i < CardBinderMenu.CONTAINER_SIZE; i++) {
       int expectedCount = i < expectedCards ? 1 : 0;
       if (menu.getSlot(i).getItem().getCount() != expectedCount) {
         helper.fail(
-            "Binder slot "
-                + i
-                + " should hold "
-                + expectedCount
-                + " card(s), but holds "
-                + menu.getSlot(i).getItem());
+          "Binder slot "
+            + i
+            + " should hold "
+            + expectedCount
+            + " card(s), but holds "
+            + menu.getSlot(i).getItem());
       }
     }
   }
@@ -134,13 +247,13 @@ public class CardBinderMenuTestHelper {
   }
 
   private static void quickMoveInventorySlot(
-      CardBinderMenu menu, Player player, int inventorySlotIndex) {
+    CardBinderMenu menu, Player player, int inventorySlotIndex) {
     Inventory inventory = player.getInventory();
     menu.clicked(
-        GameTestHelpers.menuSlotIndex(menu, inventory, inventorySlotIndex),
-        LEFT_MOUSE_BUTTON,
-        ContainerInput.QUICK_MOVE,
-        player);
+      GameTestHelpers.menuSlotIndex(menu, inventory, inventorySlotIndex),
+      LEFT_MOUSE_BUTTON,
+      ContainerInput.QUICK_MOVE,
+      player);
   }
 
   private static CardBinderMenu openBinder(Player player) {
@@ -148,6 +261,6 @@ public class CardBinderMenuTestHelper {
     player.getInventory().setItem(BINDER_HOTBAR_SLOT, binderStack);
     player.getInventory().setSelectedSlot(BINDER_HOTBAR_SLOT);
     return new CardBinderMenu(
-        CardBinderMenu.MENU_TYPE_SUPPLIER.get(), 0, player.getInventory(), binderStack);
+      CardBinderMenu.MENU_TYPE_SUPPLIER.get(), 0, player.getInventory(), binderStack);
   }
 }

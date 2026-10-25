@@ -42,14 +42,15 @@ import net.minecraft.world.phys.Vec3;
 
 public class MobFarmBlockItemTestHelper {
 
-  private MobFarmBlockItemTestHelper() {}
+  private MobFarmBlockItemTestHelper() {
+  }
 
   public static void testMobFarmBlockItem(GameTestHelper helper, Item item, Block block) {
     testMobFarmBlockItem(helper, item, null, block);
   }
 
   public static void testMobFarmBlockItem(
-      GameTestHelper helper, Item item, MobFarmTierLevel tierLevel, Block block) {
+    GameTestHelper helper, Item item, MobFarmTierLevel tierLevel, Block block) {
     BlockPos blockPos = new BlockPos(0, 1, 0);
     ItemStack itemStack = new ItemStack(item);
 
@@ -61,19 +62,19 @@ public class MobFarmBlockItemTestHelper {
 
     // Place block and check if it is present
     if (itemStack.getItem() instanceof MobFarmBlockItem
-        && block instanceof MobFarmBlock mobFarmBlock) {
+      && block instanceof MobFarmBlock mobFarmBlock) {
       useAndTestMobFarmBlockItem(helper, itemStack, mobFarmBlock, blockPos);
     } else if (itemStack.getItem() instanceof MobFarmTemplateItem
-        && block instanceof MobFarmTemplateBlock mobFarmTemplateBlock) {
+      && block instanceof MobFarmTemplateBlock mobFarmTemplateBlock) {
       useAndTestMobFarmBlockItem(helper, itemStack, mobFarmTemplateBlock, blockPos);
     } else {
       helper.fail(
-          Component.literal(
-              "Item "
-                  + itemStack.getItem()
-                  + " is not a MobFarmBlockItem or Block "
-                  + block
-                  + " is not a MobFarmBlock"));
+        Component.literal(
+          "Item "
+            + itemStack.getItem()
+            + " is not a MobFarmBlockItem or Block "
+            + block
+            + " is not a MobFarmBlock"));
       return;
     }
 
@@ -81,12 +82,12 @@ public class MobFarmBlockItemTestHelper {
     if (tierLevel != null) {
       BlockState blockState = helper.getBlockState(blockPos.above());
       GameTestHelpers.assertTrue(
-          helper,
-          "Expected tier level "
-              + tierLevel
-              + " but found "
-              + MobFarmBlock.getTierLevel(blockState),
-          MobFarmBlock.getTierLevel(blockState) == tierLevel.getTierLevel());
+        helper,
+        "Expected tier level "
+          + tierLevel
+          + " but found "
+          + MobFarmBlock.getTierLevel(blockState),
+        MobFarmBlock.getTierLevel(blockState) == tierLevel.getTierLevel());
     }
   }
 
@@ -95,26 +96,26 @@ public class MobFarmBlockItemTestHelper {
   }
 
   public static void useMobFarmBlockItem(
-      GameTestHelper helper, ItemStack mobFarmBlockItemStack, BlockPos blockPos) {
+    GameTestHelper helper, ItemStack mobFarmBlockItemStack, BlockPos blockPos) {
     Player player = helper.makeMockPlayer(GameType.SURVIVAL);
     player.setItemInHand(player.getUsedItemHand(), mobFarmBlockItemStack);
     UseOnContext useOnContext =
-        new UseOnContext(
-            player,
-            player.getUsedItemHand(),
-            new BlockHitResult(
-                helper.absoluteVec(new Vec3(blockPos.getX(), blockPos.getY(), blockPos.getZ())),
-                Direction.UP,
-                helper.absolutePos(blockPos),
-                false));
+      new UseOnContext(
+        player,
+        player.getUsedItemHand(),
+        new BlockHitResult(
+          helper.absoluteVec(new Vec3(blockPos.getX(), blockPos.getY(), blockPos.getZ())),
+          Direction.UP,
+          helper.absolutePos(blockPos),
+          false));
     mobFarmBlockItemStack.useOn(useOnContext);
   }
 
   public static void useAndTestMobFarmBlockItem(
-      GameTestHelper helper,
-      ItemStack mobFarmBlockItemStack,
-      Block mobFarmBlock,
-      BlockPos blockPos) {
+    GameTestHelper helper,
+    ItemStack mobFarmBlockItemStack,
+    Block mobFarmBlock,
+    BlockPos blockPos) {
     useMobFarmBlockItem(helper, mobFarmBlockItemStack, blockPos);
     helper.assertBlockPresent(mobFarmBlock, blockPos.above());
   }

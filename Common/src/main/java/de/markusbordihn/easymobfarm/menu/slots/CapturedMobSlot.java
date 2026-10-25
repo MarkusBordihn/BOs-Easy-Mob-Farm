@@ -42,14 +42,14 @@ public class CapturedMobSlot extends MobFarmSlot {
     }
 
     if (MobCaptureDataSupport.isSupported(itemStack)
-        || itemStack.getItem() instanceof MobCaptureCardItem) {
+      || itemStack.getItem() instanceof MobCaptureCardItem) {
       return true;
     }
 
     log.debug(
-        "Item {} {} is not supported for captured mob slot.",
-        itemStack,
-        itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY));
+      "Item {} {} is not supported for captured mob slot.",
+      itemStack,
+      itemStack.getOrDefault(DataComponents.CUSTOM_DATA, CustomData.EMPTY));
     return false;
   }
 

@@ -73,7 +73,7 @@ public class EasyMobFarm implements ModInitializer {
 
     log.debug("{} server-side resource listener ...", Constants.LOG_REGISTER_PREFIX);
     ResourceManagerHelper.get(PackType.SERVER_DATA)
-        .registerReloadListener(new MobCaptureCardResourceManagerWrapper());
+      .registerReloadListener(new MobCaptureCardResourceManagerWrapper());
 
     log.debug("{} Experience Manager ...", Constants.LOG_REGISTER_PREFIX);
     ExperienceManager.registerExperienceManager(new ModExperienceManager());
@@ -92,8 +92,8 @@ public class EasyMobFarm implements ModInitializer {
 
     log.debug("{} Command register event ...", Constants.LOG_REGISTER_PREFIX);
     CommandRegistrationCallback.EVENT.register(
-        (dispatcher, commandBuildContext, commandSelection) ->
-            CommandManager.registerCommands(dispatcher, commandBuildContext));
+      (dispatcher, commandBuildContext, commandSelection) ->
+        CommandManager.registerCommands(dispatcher, commandBuildContext));
 
     log.debug("{} Menu Types ...", Constants.LOG_REGISTER_PREFIX);
     ModMenuTypes.register();

@@ -33,10 +33,10 @@ public class IronboundContainmentCageItem extends MobCatcherItem {
 
   public IronboundContainmentCageItem() {
     this(
-        new Item.Properties()
-            .setId(
-                ResourceKey.create(
-                    Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
+      new Item.Properties()
+        .setId(
+          ResourceKey.create(
+            Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
   }
 
   public IronboundContainmentCageItem(Item.Properties properties) {

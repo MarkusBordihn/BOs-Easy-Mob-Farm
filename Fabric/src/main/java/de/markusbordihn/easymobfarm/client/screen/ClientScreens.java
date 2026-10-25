@@ -29,7 +29,8 @@ public class ClientScreens {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  protected ClientScreens() {}
+  protected ClientScreens() {
+  }
 
   public static void registerScreens() {
     MenuScreens.register(ModMenuTypes.MOB_FARM_MENU, MobFarmScreenWrapper::new);

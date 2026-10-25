@@ -27,58 +27,58 @@ public class MobCatcherConfig extends Config {
 
   public static final String CONFIG_FILE_NAME = "mob_catcher.cfg";
   public static final String CONFIG_FILE_HEADER =
-"""
- Mob Catcher Configuration
-
- This configuration file allows you to define the general settings for the Mob Catcher.
-
- Configuration Options for each Mob Catcher:
- -------------------------------------------
-
- Enduring Capture Net:
-   EnduringCaptureNet:Enabled - Enable/disable this mob catcher (default: true)
-   EnduringCaptureNet:MaxDurability - Maximum durability before breaking (default: 64)
-   EnduringCaptureNet:RequiredHealthPercentageToCapture - Health % needed to capture (default: 0.5 = 50%)
-   EnduringCaptureNet:MaxEntityHeightToCapture - Maximum entity height to capture (default: 1.4)
-   EnduringCaptureNet:MaxEntityWidthToCapture - Maximum entity width to capture (default: 0.9)
-
- Ironbound Containment Cage:
-   IronboundContainmentCage:Enabled - Enable/disable this mob catcher (default: true)
-   IronboundContainmentCage:MaxDurability - Maximum durability before breaking (default: 32)
-   IronboundContainmentCage:RequiredHealthPercentageToCapture - Health % needed to capture (default: 0.25 = 25%)
-   IronboundContainmentCage:MaxEntityHeightToCapture - Maximum entity height to capture (default: 2.0)
-   IronboundContainmentCage:MaxEntityWidthToCapture - Maximum entity width to capture (default: 1.5)
-
- Mystic Binding Crystal:
-   MysticBindingCrystal:Enabled - Enable/disable this mob catcher (default: true)
-   MysticBindingCrystal:MaxDurability - Maximum durability before breaking (default: 32)
-   MysticBindingCrystal:RequiredHealthPercentageToCapture - Health % needed to capture (default: 0.25 = 25%)
-   MysticBindingCrystal:MaxEntityHeightToCapture - Maximum entity height to capture (default: 4.0)
-   MysticBindingCrystal:MaxEntityWidthToCapture - Maximum entity width to capture (default: 3.0)
-
- Void Binding Chain:
-   VoidBindingChain:Enabled - Enable/disable this mob catcher (default: true)
-   VoidBindingChain:MaxDurability - Maximum durability before breaking (default: 16)
-   VoidBindingChain:RequiredHealthPercentageToCapture - Health % needed to capture (default: 0.20 = 20%)
-   VoidBindingChain:MaxEntityHeightToCapture - Maximum entity height to capture (default: 6.0)
-   VoidBindingChain:MaxEntityWidthToCapture - Maximum entity width to capture (default: 4.0)
-
- Allow and Deny list
- -------------------
- If you want to allow or deny specific mobs, you can use the allow and deny list.
- Keep in mind that if you add a mob to the allow list, all other mobs will be denied by default.
- Additionally mobs on the allow list will be catchable even if their size is bigger than the maximum size.
-
- Each Mob Catcher has it own allow and deny list, so you can define different settings for each Mob Catcher.
-
-  Example for allow only specific mobs:
-    EnduringCaptureNet:AllowList=minecraft:cow,minecraft:sheep,minecraft:chicken
-
-  Example for deny specific mobs:
-    VoidBindingChain:DenyList=minecraft:endermite,minecraft:ender_dragon,minecraft:wither
-
-
-""";
+    """
+       Mob Catcher Configuration
+      
+       This configuration file allows you to define the general settings for the Mob Catcher.
+      
+       Configuration Options for each Mob Catcher:
+       -------------------------------------------
+      
+       Enduring Capture Net:
+         EnduringCaptureNet:Enabled - Enable/disable this mob catcher (default: true)
+         EnduringCaptureNet:MaxDurability - Maximum durability before breaking (default: 64)
+         EnduringCaptureNet:RequiredHealthPercentageToCapture - Health % needed to capture (default: 0.5 = 50%)
+         EnduringCaptureNet:MaxEntityHeightToCapture - Maximum entity height to capture (default: 1.4)
+         EnduringCaptureNet:MaxEntityWidthToCapture - Maximum entity width to capture (default: 0.9)
+      
+       Ironbound Containment Cage:
+         IronboundContainmentCage:Enabled - Enable/disable this mob catcher (default: true)
+         IronboundContainmentCage:MaxDurability - Maximum durability before breaking (default: 32)
+         IronboundContainmentCage:RequiredHealthPercentageToCapture - Health % needed to capture (default: 0.25 = 25%)
+         IronboundContainmentCage:MaxEntityHeightToCapture - Maximum entity height to capture (default: 2.0)
+         IronboundContainmentCage:MaxEntityWidthToCapture - Maximum entity width to capture (default: 1.5)
+      
+       Mystic Binding Crystal:
+         MysticBindingCrystal:Enabled - Enable/disable this mob catcher (default: true)
+         MysticBindingCrystal:MaxDurability - Maximum durability before breaking (default: 32)
+         MysticBindingCrystal:RequiredHealthPercentageToCapture - Health % needed to capture (default: 0.25 = 25%)
+         MysticBindingCrystal:MaxEntityHeightToCapture - Maximum entity height to capture (default: 4.0)
+         MysticBindingCrystal:MaxEntityWidthToCapture - Maximum entity width to capture (default: 3.0)
+      
+       Void Binding Chain:
+         VoidBindingChain:Enabled - Enable/disable this mob catcher (default: true)
+         VoidBindingChain:MaxDurability - Maximum durability before breaking (default: 16)
+         VoidBindingChain:RequiredHealthPercentageToCapture - Health % needed to capture (default: 0.20 = 20%)
+         VoidBindingChain:MaxEntityHeightToCapture - Maximum entity height to capture (default: 6.0)
+         VoidBindingChain:MaxEntityWidthToCapture - Maximum entity width to capture (default: 4.0)
+      
+       Allow and Deny list
+       -------------------
+       If you want to allow or deny specific mobs, you can use the allow and deny list.
+       Keep in mind that if you add a mob to the allow list, all other mobs will be denied by default.
+       Additionally mobs on the allow list will be catchable even if their size is bigger than the maximum size.
+      
+       Each Mob Catcher has it own allow and deny list, so you can define different settings for each Mob Catcher.
+      
+        Example for allow only specific mobs:
+          EnduringCaptureNet:AllowList=minecraft:cow,minecraft:sheep,minecraft:chicken
+      
+        Example for deny specific mobs:
+          VoidBindingChain:DenyList=minecraft:endermite,minecraft:ender_dragon,minecraft:wither
+      
+      
+      """;
 
   // Enduring Capture Net
   public static boolean ENDURING_CAPTURE_NET_ENABLED = true;
@@ -128,120 +128,120 @@ public class MobCatcherConfig extends Config {
 
     // Enduring Capture Net
     ENDURING_CAPTURE_NET_ENABLED =
-        parseConfigValue(properties, "EnduringCaptureNet:Enabled", ENDURING_CAPTURE_NET_ENABLED);
+      parseConfigValue(properties, "EnduringCaptureNet:Enabled", ENDURING_CAPTURE_NET_ENABLED);
     ENDURING_CAPTURE_NET_MAX_DURABILITY =
-        parseConfigValue(
-            properties, "EnduringCaptureNet:MaxDurability", ENDURING_CAPTURE_NET_MAX_DURABILITY);
+      parseConfigValue(
+        properties, "EnduringCaptureNet:MaxDurability", ENDURING_CAPTURE_NET_MAX_DURABILITY);
     ENDURING_CAPTURE_NET_REQUIRED_HEALTH_PERCENTAGE_TO_CAPTURE =
-        parseConfigValue(
-            properties,
-            "EnduringCaptureNet:RequiredHealthPercentageToCapture",
-            ENDURING_CAPTURE_NET_REQUIRED_HEALTH_PERCENTAGE_TO_CAPTURE);
+      parseConfigValue(
+        properties,
+        "EnduringCaptureNet:RequiredHealthPercentageToCapture",
+        ENDURING_CAPTURE_NET_REQUIRED_HEALTH_PERCENTAGE_TO_CAPTURE);
     ENDURING_CAPTURE_NET_MAX_ENTITY_HEIGHT_TO_CAPTURE =
-        parseConfigValue(
-            properties,
-            "EnduringCaptureNet:MaxEntityHeightToCapture",
-            ENDURING_CAPTURE_NET_MAX_ENTITY_HEIGHT_TO_CAPTURE);
+      parseConfigValue(
+        properties,
+        "EnduringCaptureNet:MaxEntityHeightToCapture",
+        ENDURING_CAPTURE_NET_MAX_ENTITY_HEIGHT_TO_CAPTURE);
     ENDURING_CAPTURE_NET_MAX_ENTITY_WIDTH_TO_CAPTURE =
-        parseConfigValue(
-            properties,
-            "EnduringCaptureNet:MaxEntityWidthToCapture",
-            ENDURING_CAPTURE_NET_MAX_ENTITY_WIDTH_TO_CAPTURE);
+      parseConfigValue(
+        properties,
+        "EnduringCaptureNet:MaxEntityWidthToCapture",
+        ENDURING_CAPTURE_NET_MAX_ENTITY_WIDTH_TO_CAPTURE);
     ENDURING_CAPTURE_NET_ALLOW_LIST =
-        parseConfigValue(
-            properties, "EnduringCaptureNet:AllowList", ENDURING_CAPTURE_NET_ALLOW_LIST);
+      parseConfigValue(
+        properties, "EnduringCaptureNet:AllowList", ENDURING_CAPTURE_NET_ALLOW_LIST);
     ENDURING_CAPTURE_NET_DENY_LIST =
-        parseConfigValue(properties, "EnduringCaptureNet:DenyList", ENDURING_CAPTURE_NET_DENY_LIST);
+      parseConfigValue(properties, "EnduringCaptureNet:DenyList", ENDURING_CAPTURE_NET_DENY_LIST);
 
     // Ironbound Containment Cage
     IRONBOUND_CONTAINMENT_CAGE_ENABLED =
-        parseConfigValue(
-            properties, "IronboundContainmentCage:Enabled", IRONBOUND_CONTAINMENT_CAGE_ENABLED);
+      parseConfigValue(
+        properties, "IronboundContainmentCage:Enabled", IRONBOUND_CONTAINMENT_CAGE_ENABLED);
     IRONBOUND_CONTAINMENT_CAGE_MAX_DURABILITY =
-        parseConfigValue(
-            properties,
-            "IronboundContainmentCage:MaxDurability",
-            IRONBOUND_CONTAINMENT_CAGE_MAX_DURABILITY);
+      parseConfigValue(
+        properties,
+        "IronboundContainmentCage:MaxDurability",
+        IRONBOUND_CONTAINMENT_CAGE_MAX_DURABILITY);
     IRONBOUND_CONTAINMENT_CAGE_REQUIRED_HEALTH_PERCENTAGE_TO_CAPTURE =
-        parseConfigValue(
-            properties,
-            "IronboundContainmentCage:RequiredHealthPercentageToCapture",
-            IRONBOUND_CONTAINMENT_CAGE_REQUIRED_HEALTH_PERCENTAGE_TO_CAPTURE);
+      parseConfigValue(
+        properties,
+        "IronboundContainmentCage:RequiredHealthPercentageToCapture",
+        IRONBOUND_CONTAINMENT_CAGE_REQUIRED_HEALTH_PERCENTAGE_TO_CAPTURE);
     IRONBOUND_CONTAINMENT_CAGE_MAX_ENTITY_HEIGHT_TO_CAPTURE =
-        parseConfigValue(
-            properties,
-            "IronboundContainmentCage:MaxEntityHeightToCapture",
-            IRONBOUND_CONTAINMENT_CAGE_MAX_ENTITY_HEIGHT_TO_CAPTURE);
+      parseConfigValue(
+        properties,
+        "IronboundContainmentCage:MaxEntityHeightToCapture",
+        IRONBOUND_CONTAINMENT_CAGE_MAX_ENTITY_HEIGHT_TO_CAPTURE);
     IRONBOUND_CONTAINMENT_CAGE_MAX_ENTITY_WIDTH_TO_CAPTURE =
-        parseConfigValue(
-            properties,
-            "IronboundContainmentCage:MaxEntityWidthToCapture",
-            IRONBOUND_CONTAINMENT_CAGE_MAX_ENTITY_WIDTH_TO_CAPTURE);
+      parseConfigValue(
+        properties,
+        "IronboundContainmentCage:MaxEntityWidthToCapture",
+        IRONBOUND_CONTAINMENT_CAGE_MAX_ENTITY_WIDTH_TO_CAPTURE);
     IRONBOUND_CONTAINMENT_CAGE_ALLOW_LIST =
-        parseConfigValue(
-            properties,
-            "IronboundContainmentCage:AllowList",
-            IRONBOUND_CONTAINMENT_CAGE_ALLOW_LIST);
+      parseConfigValue(
+        properties,
+        "IronboundContainmentCage:AllowList",
+        IRONBOUND_CONTAINMENT_CAGE_ALLOW_LIST);
     IRONBOUND_CONTAINMENT_CAGE_DENY_LIST =
-        parseConfigValue(
-            properties, "IronboundContainmentCage:DenyList", IRONBOUND_CONTAINMENT_CAGE_DENY_LIST);
+      parseConfigValue(
+        properties, "IronboundContainmentCage:DenyList", IRONBOUND_CONTAINMENT_CAGE_DENY_LIST);
 
     // Mystic Binding Crystal
     MYSTIC_BINDING_CRYSTAL_ENABLED =
-        parseConfigValue(
-            properties, "MysticBindingCrystal:Enabled", MYSTIC_BINDING_CRYSTAL_ENABLED);
+      parseConfigValue(
+        properties, "MysticBindingCrystal:Enabled", MYSTIC_BINDING_CRYSTAL_ENABLED);
     MYSTIC_BINDING_CRYSTAL_MAX_DURABILITY =
-        parseConfigValue(
-            properties,
-            "MysticBindingCrystal:MaxDurability",
-            MYSTIC_BINDING_CRYSTAL_MAX_DURABILITY);
+      parseConfigValue(
+        properties,
+        "MysticBindingCrystal:MaxDurability",
+        MYSTIC_BINDING_CRYSTAL_MAX_DURABILITY);
     MYSTIC_BINDING_CRYSTAL_REQUIRED_HEALTH_PERCENTAGE_TO_CAPTURE =
-        parseConfigValue(
-            properties,
-            "MysticBindingCrystal:RequiredHealthPercentageToCapture",
-            MYSTIC_BINDING_CRYSTAL_REQUIRED_HEALTH_PERCENTAGE_TO_CAPTURE);
+      parseConfigValue(
+        properties,
+        "MysticBindingCrystal:RequiredHealthPercentageToCapture",
+        MYSTIC_BINDING_CRYSTAL_REQUIRED_HEALTH_PERCENTAGE_TO_CAPTURE);
     MYSTIC_BINDING_CRYSTAL_MAX_ENTITY_HEIGHT_TO_CAPTURE =
-        parseConfigValue(
-            properties,
-            "MysticBindingCrystal:MaxEntityHeightToCapture",
-            MYSTIC_BINDING_CRYSTAL_MAX_ENTITY_HEIGHT_TO_CAPTURE);
+      parseConfigValue(
+        properties,
+        "MysticBindingCrystal:MaxEntityHeightToCapture",
+        MYSTIC_BINDING_CRYSTAL_MAX_ENTITY_HEIGHT_TO_CAPTURE);
     MYSTIC_BINDING_CRYSTAL_MAX_ENTITY_WIDTH_TO_CAPTURE =
-        parseConfigValue(
-            properties,
-            "MysticBindingCrystal:MaxEntityWidthToCapture",
-            MYSTIC_BINDING_CRYSTAL_MAX_ENTITY_WIDTH_TO_CAPTURE);
+      parseConfigValue(
+        properties,
+        "MysticBindingCrystal:MaxEntityWidthToCapture",
+        MYSTIC_BINDING_CRYSTAL_MAX_ENTITY_WIDTH_TO_CAPTURE);
     MYSTIC_BINDING_CRYSTAL_ALLOW_LIST =
-        parseConfigValue(
-            properties, "MysticBindingCrystal:AllowList", MYSTIC_BINDING_CRYSTAL_ALLOW_LIST);
+      parseConfigValue(
+        properties, "MysticBindingCrystal:AllowList", MYSTIC_BINDING_CRYSTAL_ALLOW_LIST);
     MYSTIC_BINDING_CRYSTAL_DENY_LIST =
-        parseConfigValue(
-            properties, "MysticBindingCrystal:DenyList", MYSTIC_BINDING_CRYSTAL_DENY_LIST);
+      parseConfigValue(
+        properties, "MysticBindingCrystal:DenyList", MYSTIC_BINDING_CRYSTAL_DENY_LIST);
 
     // Void Binding Chain
     VOID_BINDING_CHAIN_ENABLED =
-        parseConfigValue(properties, "VoidBindingChain:Enabled", VOID_BINDING_CHAIN_ENABLED);
+      parseConfigValue(properties, "VoidBindingChain:Enabled", VOID_BINDING_CHAIN_ENABLED);
     VOID_BINDING_CHAIN_MAX_DURABILITY =
-        parseConfigValue(
-            properties, "VoidBindingChain:MaxDurability", VOID_BINDING_CHAIN_MAX_DURABILITY);
+      parseConfigValue(
+        properties, "VoidBindingChain:MaxDurability", VOID_BINDING_CHAIN_MAX_DURABILITY);
     VOID_BINDING_CHAIN_REQUIRED_HEALTH_PERCENTAGE_TO_CAPTURE =
-        parseConfigValue(
-            properties,
-            "VoidBindingChain:RequiredHealthPercentageToCapture",
-            VOID_BINDING_CHAIN_REQUIRED_HEALTH_PERCENTAGE_TO_CAPTURE);
+      parseConfigValue(
+        properties,
+        "VoidBindingChain:RequiredHealthPercentageToCapture",
+        VOID_BINDING_CHAIN_REQUIRED_HEALTH_PERCENTAGE_TO_CAPTURE);
     VOID_BINDING_CHAIN_MAX_ENTITY_HEIGHT_TO_CAPTURE =
-        parseConfigValue(
-            properties,
-            "VoidBindingChain:MaxEntityHeightToCapture",
-            VOID_BINDING_CHAIN_MAX_ENTITY_HEIGHT_TO_CAPTURE);
+      parseConfigValue(
+        properties,
+        "VoidBindingChain:MaxEntityHeightToCapture",
+        VOID_BINDING_CHAIN_MAX_ENTITY_HEIGHT_TO_CAPTURE);
     VOID_BINDING_CHAIN_MAX_ENTITY_WIDTH_TO_CAPTURE =
-        parseConfigValue(
-            properties,
-            "VoidBindingChain:MaxEntityWidthToCapture",
-            VOID_BINDING_CHAIN_MAX_ENTITY_WIDTH_TO_CAPTURE);
+      parseConfigValue(
+        properties,
+        "VoidBindingChain:MaxEntityWidthToCapture",
+        VOID_BINDING_CHAIN_MAX_ENTITY_WIDTH_TO_CAPTURE);
     VOID_BINDING_CHAIN_ALLOW_LIST =
-        parseConfigValue(properties, "VoidBindingChain:AllowList", VOID_BINDING_CHAIN_ALLOW_LIST);
+      parseConfigValue(properties, "VoidBindingChain:AllowList", VOID_BINDING_CHAIN_ALLOW_LIST);
     VOID_BINDING_CHAIN_DENY_LIST =
-        parseConfigValue(properties, "VoidBindingChain:DenyList", VOID_BINDING_CHAIN_DENY_LIST);
+      parseConfigValue(properties, "VoidBindingChain:DenyList", VOID_BINDING_CHAIN_DENY_LIST);
 
     // Update config file if needed
     updateConfigFileIfChanged(configFile, CONFIG_FILE_HEADER, properties, unmodifiedProperties);

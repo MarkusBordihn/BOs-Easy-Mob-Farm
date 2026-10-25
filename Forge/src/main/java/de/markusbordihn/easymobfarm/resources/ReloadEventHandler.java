@@ -31,7 +31,8 @@ public class ReloadEventHandler {
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  private ReloadEventHandler() {}
+  private ReloadEventHandler() {
+  }
 
   @SubscribeEvent
   public static void onAddReloadListener(AddReloadListenerEvent event) {

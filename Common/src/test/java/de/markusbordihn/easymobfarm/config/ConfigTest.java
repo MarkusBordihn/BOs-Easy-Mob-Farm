@@ -177,6 +177,6 @@ class ConfigTest {
     Properties props = new Properties();
     props.setProperty("key", "legendary");
     Assertions.assertEquals(
-        Rarity.UNCOMMON, Config.parseConfigValue(props, "key", Rarity.UNCOMMON));
+      Rarity.UNCOMMON, Config.parseConfigValue(props, "key", Rarity.UNCOMMON));
   }
 }

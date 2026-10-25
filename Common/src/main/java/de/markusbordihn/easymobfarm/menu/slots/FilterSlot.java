@@ -44,9 +44,9 @@ public class FilterSlot extends MobFarmSlot {
 
     Item item = itemStack.getItem();
     if (MobCaptureDataSupport.isSupported(itemStack)
-        || item instanceof MobCaptureCardItem
-        || item instanceof EnhancementItem
-        || item instanceof SlotUpgradeItem) {
+      || item instanceof MobCaptureCardItem
+      || item instanceof EnhancementItem
+      || item instanceof SlotUpgradeItem) {
       return false;
     }
 

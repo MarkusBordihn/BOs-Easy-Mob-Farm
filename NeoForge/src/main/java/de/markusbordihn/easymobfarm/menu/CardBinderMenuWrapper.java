@@ -25,9 +25,9 @@ import net.minecraft.world.entity.player.Inventory;
 public class CardBinderMenuWrapper extends CardBinderMenu {
 
   public CardBinderMenuWrapper(
-      final int windowId,
-      final Inventory playerInventory,
-      @SuppressWarnings("unused") final FriendlyByteBuf buffer) {
+    final int windowId,
+    final Inventory playerInventory,
+    @SuppressWarnings("unused") final FriendlyByteBuf buffer) {
     super(ModMenuTypes.CARD_BINDER_MENU.get(), windowId, playerInventory);
   }
 }

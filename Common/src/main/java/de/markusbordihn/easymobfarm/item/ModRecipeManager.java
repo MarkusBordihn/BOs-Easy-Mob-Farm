@@ -53,116 +53,117 @@ public class ModRecipeManager {
   private static final String MOB_FARM_UPGRADE_SUFFIX = "_upgrade";
   private static final String ENHANCEMENT_PREFIX = "upgrade/enhancement/";
 
-  private ModRecipeManager() {}
+  private ModRecipeManager() {
+  }
 
   public static void register(MinecraftServer minecraftServer) {
     log.debug("{} Mod Recipe Manager ...", Constants.LOG_REGISTER_PREFIX);
 
     // Disable recipes based on the given configuration.
     Collection<RecipeHolder<?>> recipes =
-        new ArrayList<>(minecraftServer.getRecipeManager().getRecipes());
+      new ArrayList<>(minecraftServer.getRecipeManager().getRecipes());
 
     // Disable mob catcher recipes if needed
     removeRecipeIfDisabled(
-        recipes,
-        MobCatcherConfig.ENDURING_CAPTURE_NET_ENABLED,
-        EnduringCaptureNetItem.ID,
-        MOB_CAPTURE_PREFIX);
+      recipes,
+      MobCatcherConfig.ENDURING_CAPTURE_NET_ENABLED,
+      EnduringCaptureNetItem.ID,
+      MOB_CAPTURE_PREFIX);
     removeRecipeIfDisabled(
-        recipes,
-        MobCatcherConfig.IRONBOUND_CONTAINMENT_CAGE_ENABLED,
-        IronboundContainmentCageItem.ID,
-        MOB_CAPTURE_PREFIX);
+      recipes,
+      MobCatcherConfig.IRONBOUND_CONTAINMENT_CAGE_ENABLED,
+      IronboundContainmentCageItem.ID,
+      MOB_CAPTURE_PREFIX);
     removeRecipeIfDisabled(
-        recipes,
-        MobCatcherConfig.MYSTIC_BINDING_CRYSTAL_ENABLED,
-        MysticBindingCrystalItem.ID,
-        MOB_CAPTURE_PREFIX);
+      recipes,
+      MobCatcherConfig.MYSTIC_BINDING_CRYSTAL_ENABLED,
+      MysticBindingCrystalItem.ID,
+      MOB_CAPTURE_PREFIX);
     removeRecipeIfDisabled(
-        recipes,
-        MobCatcherConfig.VOID_BINDING_CHAIN_ENABLED,
-        VoidBindingChainItem.ID,
-        MOB_CAPTURE_PREFIX);
+      recipes,
+      MobCatcherConfig.VOID_BINDING_CHAIN_ENABLED,
+      VoidBindingChainItem.ID,
+      MOB_CAPTURE_PREFIX);
 
     // Disable mob farm template recipes if logical tier progression is enforced
     removeRecipeIfDisabled(
-        recipes,
-        !MobFarmConfig.enforceLogicalTierProgression,
-        "tier1_mob_farm_template",
-        MOB_FARM_TEMPLATE_PREFIX);
+      recipes,
+      !MobFarmConfig.enforceLogicalTierProgression,
+      "tier1_mob_farm_template",
+      MOB_FARM_TEMPLATE_PREFIX);
     removeRecipeIfDisabled(
-        recipes,
-        !MobFarmConfig.enforceLogicalTierProgression,
-        "tier2_mob_farm_template",
-        MOB_FARM_TEMPLATE_PREFIX);
+      recipes,
+      !MobFarmConfig.enforceLogicalTierProgression,
+      "tier2_mob_farm_template",
+      MOB_FARM_TEMPLATE_PREFIX);
     removeRecipeIfDisabled(
-        recipes,
-        !MobFarmConfig.enforceLogicalTierProgression,
-        "tier3_mob_farm_template",
-        MOB_FARM_TEMPLATE_PREFIX);
+      recipes,
+      !MobFarmConfig.enforceLogicalTierProgression,
+      "tier3_mob_farm_template",
+      MOB_FARM_TEMPLATE_PREFIX);
 
     // Disable mob farm upgrade recipes if disabled in config
     if (!MobFarmConfig.enableMobFarmUpgradeRecipes) {
       recipes.removeIf(
-          recipeHolder ->
-              recipeHolder.id().identifier().getNamespace().equals(Constants.MOD_ID)
-                  && recipeHolder.id().identifier().getPath().startsWith(MOB_FARM_PREFIX)
-                  && recipeHolder.id().identifier().getPath().contains(MOB_FARM_UPGRADE_SUFFIX));
+        recipeHolder ->
+          recipeHolder.id().identifier().getNamespace().equals(Constants.MOD_ID)
+            && recipeHolder.id().identifier().getPath().startsWith(MOB_FARM_PREFIX)
+            && recipeHolder.id().identifier().getPath().contains(MOB_FARM_UPGRADE_SUFFIX));
       log.info("{} Disabled mob farm upgrade recipes", LOG_PREFIX);
     }
 
     // Disable individual enhancement recipes if disabled in config
     removeRecipeIfDisabled(
-        recipes,
-        MobFarmConfig.isSpeedEnhancementEnabled(),
-        "speed_enhancement",
-        ENHANCEMENT_PREFIX);
+      recipes,
+      MobFarmConfig.isSpeedEnhancementEnabled(),
+      "speed_enhancement",
+      ENHANCEMENT_PREFIX);
     removeRecipeIfDisabled(
-        recipes, MobFarmConfig.isLootEnhancementEnabled(), "loot_enhancement", ENHANCEMENT_PREFIX);
+      recipes, MobFarmConfig.isLootEnhancementEnabled(), "loot_enhancement", ENHANCEMENT_PREFIX);
     removeRecipeIfDisabled(
-        recipes, MobFarmConfig.isLuckEnhancementEnabled(), "luck_enhancement", ENHANCEMENT_PREFIX);
+      recipes, MobFarmConfig.isLuckEnhancementEnabled(), "luck_enhancement", ENHANCEMENT_PREFIX);
     removeRecipeIfDisabled(
-        recipes,
-        MobFarmConfig.isSwordEnhancementEnabled(),
-        "sword_enhancement",
-        ENHANCEMENT_PREFIX);
+      recipes,
+      MobFarmConfig.isSwordEnhancementEnabled(),
+      "sword_enhancement",
+      ENHANCEMENT_PREFIX);
     removeRecipeIfDisabled(
-        recipes,
-        MobFarmConfig.isKnifeEnhancementEnabled(),
-        "knife_enhancement",
-        ENHANCEMENT_PREFIX);
+      recipes,
+      MobFarmConfig.isKnifeEnhancementEnabled(),
+      "knife_enhancement",
+      ENHANCEMENT_PREFIX);
     removeRecipeIfDisabled(
-        recipes,
-        MobFarmConfig.enableExperienceEnhancement,
-        "experience_enhancement",
-        ENHANCEMENT_PREFIX);
+      recipes,
+      MobFarmConfig.enableExperienceEnhancement,
+      "experience_enhancement",
+      ENHANCEMENT_PREFIX);
     removeRecipeIfDisabled(
-        recipes,
-        MobFarmConfig.enableEggCollectorEnhancement,
-        "egg_collector_enhancement",
-        ENHANCEMENT_PREFIX);
+      recipes,
+      MobFarmConfig.enableEggCollectorEnhancement,
+      "egg_collector_enhancement",
+      ENHANCEMENT_PREFIX);
     removeRecipeIfDisabled(
-        recipes,
-        MobFarmConfig.enableHoneyExtractorEnhancement,
-        "honey_extractor_enhancement",
-        ENHANCEMENT_PREFIX);
+      recipes,
+      MobFarmConfig.enableHoneyExtractorEnhancement,
+      "honey_extractor_enhancement",
+      ENHANCEMENT_PREFIX);
     removeRecipeIfDisabled(
-        recipes,
-        MobFarmConfig.enableHoneyHarvesterFrameEnhancement,
-        "honey_harvester_frame_enhancement",
-        ENHANCEMENT_PREFIX);
+      recipes,
+      MobFarmConfig.enableHoneyHarvesterFrameEnhancement,
+      "honey_harvester_frame_enhancement",
+      ENHANCEMENT_PREFIX);
     removeRecipeIfDisabled(
-        recipes,
-        MobFarmConfig.enableMilkExtractorEnhancement,
-        "milk_extractor_enhancement",
-        ENHANCEMENT_PREFIX);
+      recipes,
+      MobFarmConfig.enableMilkExtractorEnhancement,
+      "milk_extractor_enhancement",
+      ENHANCEMENT_PREFIX);
     removeRecipeIfDisabled(
-        recipes,
-        MobFarmConfig.enablePollenTrapEnhancement,
-        "pollen_trap_enhancement",
-        ENHANCEMENT_PREFIX);
+      recipes,
+      MobFarmConfig.enablePollenTrapEnhancement,
+      "pollen_trap_enhancement",
+      ENHANCEMENT_PREFIX);
     removeRecipeIfDisabled(
-        recipes, MobFarmConfig.enableSheepEnhancement, "sheep_enhancement", ENHANCEMENT_PREFIX);
+      recipes, MobFarmConfig.enableSheepEnhancement, "sheep_enhancement", ENHANCEMENT_PREFIX);
 
     if (minecraftServer.getRecipeManager().getRecipes().size() != recipes.size()) {
       // Replace recipes with adjusted recipes.
@@ -170,12 +171,12 @@ public class ModRecipeManager {
       Set<Recipe<?>> remainingRecipes = Collections.newSetFromMap(new IdentityHashMap<>());
       recipes.forEach(recipeHolder -> remainingRecipes.add(recipeHolder.value()));
       RecipeMap recipeMap =
-          RecipeMap.create(
-              minecraftServer
-                  .reloadableRegistries()
-                  .lookup()
-                  .lookupOrThrow(Registries.RECIPE)
-                  .filterElements(remainingRecipes::contains));
+        RecipeMap.create(
+          minecraftServer
+            .reloadableRegistries()
+            .lookup()
+            .lookupOrThrow(Registries.RECIPE)
+            .filterElements(remainingRecipes::contains));
 
       // Use reflection to set the recipes.
       setRecipes(minecraftServer.getRecipeManager(), recipeMap);
@@ -184,15 +185,15 @@ public class ModRecipeManager {
       for (ServerPlayer player : minecraftServer.getPlayerList().getPlayers()) {
         log.info("{} Sync recipe to player {} ...", LOG_PREFIX, player.getName().getString());
         player.connection.send(
-            new ClientboundUpdateRecipesPacket(
-                minecraftServer.getRecipeManager().getSynchronizedItemProperties(),
-                minecraftServer.getRecipeManager().getSynchronizedStonecutterRecipes()));
+          new ClientboundUpdateRecipesPacket(
+            minecraftServer.getRecipeManager().getSynchronizedItemProperties(),
+            minecraftServer.getRecipeManager().getSynchronizedStonecutterRecipes()));
       }
       minecraftServer
-          .getRecipeManager()
-          .getRecipes()
-          .forEach(
-              recipeHolder -> log.debug("{} Loaded recipe: {}", LOG_PREFIX, recipeHolder.id()));
+        .getRecipeManager()
+        .getRecipes()
+        .forEach(
+          recipeHolder -> log.debug("{} Loaded recipe: {}", LOG_PREFIX, recipeHolder.id()));
     }
   }
 
@@ -216,14 +217,14 @@ public class ModRecipeManager {
   }
 
   private static boolean removeRecipeIfDisabled(
-      Collection<RecipeHolder<?>> recipes, boolean isEnabled, String itemId, String recipePrefix) {
+    Collection<RecipeHolder<?>> recipes, boolean isEnabled, String itemId, String recipePrefix) {
     if (isEnabled) {
       return false;
     }
     String recipePath = Constants.MOD_ID + ":" + recipePrefix + itemId;
     boolean removed =
-        recipes.removeIf(
-            recipeHolder -> recipeHolder.id().identifier().toString().equals(recipePath));
+      recipes.removeIf(
+        recipeHolder -> recipeHolder.id().identifier().toString().equals(recipePath));
     if (removed) {
       log.info("{} Removed {} recipe ...", LOG_PREFIX, recipePath);
     } else {

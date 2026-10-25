@@ -28,13 +28,14 @@ import net.minecraft.world.item.Item;
 public class ModItemTags {
 
   public static final TagKey<Item> MEAT =
-      TagKey.create(
-          BuiltInRegistries.ITEM.key(), Identifier.fromNamespaceAndPath(Constants.MOD_ID, "meat"));
+    TagKey.create(
+      BuiltInRegistries.ITEM.key(), Identifier.fromNamespaceAndPath(Constants.MOD_ID, "meat"));
 
   public static final TagKey<Item> FLOWERS =
-      TagKey.create(
-          BuiltInRegistries.ITEM.key(),
-          Identifier.fromNamespaceAndPath(Constants.MOD_ID, "flowers"));
+    TagKey.create(
+      BuiltInRegistries.ITEM.key(),
+      Identifier.fromNamespaceAndPath(Constants.MOD_ID, "flowers"));
 
-  private ModItemTags() {}
+  private ModItemTags() {
+  }
 }

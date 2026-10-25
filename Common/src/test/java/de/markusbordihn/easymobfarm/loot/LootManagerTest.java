@@ -47,8 +47,8 @@ class LootManagerTest {
       unsafeField.setAccessible(true);
       Unsafe unsafe = (Unsafe) unsafeField.get(null);
       HONEY_EXTRACTOR =
-          (HoneyExtractorEnhancementItem)
-              unsafe.allocateInstance(HoneyExtractorEnhancementItem.class);
+        (HoneyExtractorEnhancementItem)
+          unsafe.allocateInstance(HoneyExtractorEnhancementItem.class);
     } catch (ReflectiveOperationException e) {
       throw new ExceptionInInitializerError(e);
     }
@@ -94,7 +94,7 @@ class LootManagerTest {
     NonNullList<ItemStack> drops = NonNullList.create();
 
     LootManager.addBonusDrops(
-        drops, List.of(), List.of(HONEY_EXTRACTOR), EntityTypes.BEE, null, null);
+      drops, List.of(), List.of(HONEY_EXTRACTOR), EntityTypes.BEE, null, null);
 
     Assertions.assertTrue(drops.isEmpty());
   }
@@ -116,7 +116,8 @@ class LootManagerTest {
     NonNullList<ItemStack> drops = NonNullList.create();
     List<ItemStack> bonusDrops = List.of(new ItemStack(Items.WOOL.white(), 3));
 
-    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityTypes.SHEEP, DyeColor.BLACK, null);
+    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityTypes.SHEEP, DyeColor.BLACK,
+      null);
 
     Assertions.assertEquals(1, drops.size());
     Assertions.assertTrue(drops.get(0).is(Items.WOOL.black()));
@@ -150,7 +151,8 @@ class LootManagerTest {
     NonNullList<ItemStack> drops = NonNullList.create();
     List<ItemStack> bonusDrops = List.of(new ItemStack(Items.STICK));
 
-    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityTypes.SHEEP, DyeColor.BLACK, null);
+    LootManager.addBonusDrops(drops, bonusDrops, List.of(), EntityTypes.SHEEP, DyeColor.BLACK,
+      null);
 
     Assertions.assertEquals(1, drops.size());
     Assertions.assertTrue(drops.get(0).is(Items.STICK));
@@ -222,27 +224,27 @@ class LootManagerTest {
   @Test
   void variantBonusDropsListBlueAndBrownEggsForChicken() {
     List<ItemStack> variantBonusDrops =
-        LootManager.getVariantBonusDrops(
-            EntityTypes.CHICKEN, new ItemStack(Items.EGG, 2), List.of("temperate", "cold", "warm"));
+      LootManager.getVariantBonusDrops(
+        EntityTypes.CHICKEN, new ItemStack(Items.EGG, 2), List.of("temperate", "cold", "warm"));
 
     Assertions.assertEquals(2, variantBonusDrops.size());
     Assertions.assertTrue(
-        variantBonusDrops.stream().anyMatch(itemStack -> itemStack.is(Items.BLUE_EGG)));
+      variantBonusDrops.stream().anyMatch(itemStack -> itemStack.is(Items.BLUE_EGG)));
     Assertions.assertTrue(
-        variantBonusDrops.stream().anyMatch(itemStack -> itemStack.is(Items.BROWN_EGG)));
+      variantBonusDrops.stream().anyMatch(itemStack -> itemStack.is(Items.BROWN_EGG)));
     Assertions.assertTrue(
-        variantBonusDrops.stream().allMatch(itemStack -> itemStack.getCount() == 2));
+      variantBonusDrops.stream().allMatch(itemStack -> itemStack.getCount() == 2));
   }
 
   @Test
   void variantBonusDropsAreEmptyForNonChickenOrNonEgg() {
     Assertions.assertTrue(
-        LootManager.getVariantBonusDrops(
-                EntityTypes.COW, new ItemStack(Items.EGG), List.of("cold", "warm"))
-            .isEmpty());
+      LootManager.getVariantBonusDrops(
+          EntityTypes.COW, new ItemStack(Items.EGG), List.of("cold", "warm"))
+        .isEmpty());
     Assertions.assertTrue(
-        LootManager.getVariantBonusDrops(
-                EntityTypes.CHICKEN, new ItemStack(Items.FEATHER), List.of("cold", "warm"))
-            .isEmpty());
+      LootManager.getVariantBonusDrops(
+          EntityTypes.CHICKEN, new ItemStack(Items.FEATHER), List.of("cold", "warm"))
+        .isEmpty());
   }
 }

@@ -29,7 +29,8 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class MobFarmTemplates {
 
-  protected MobFarmTemplates() {}
+  protected MobFarmTemplates() {
+  }
 
   @SubscribeEvent
   public static void onCreativeTabBuild(BuildCreativeModeTabContentsEvent event) {

@@ -32,10 +32,10 @@ public class VoidBindingChainItem extends MobCatcherItem {
 
   public VoidBindingChainItem() {
     this(
-        new Properties()
-            .setId(
-                ResourceKey.create(
-                    Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
+      new Properties()
+        .setId(
+          ResourceKey.create(
+            Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
   }
 
   public VoidBindingChainItem(Properties properties) {

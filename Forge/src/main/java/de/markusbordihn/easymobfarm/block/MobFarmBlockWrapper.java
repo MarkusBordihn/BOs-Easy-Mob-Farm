@@ -42,10 +42,10 @@ public class MobFarmBlockWrapper extends MobFarmBlock {
 
   @Override
   public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
-      Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
+    Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
     return level.isClientSide()
-        ? null
-        : createTickerHelper(
-            blockEntityType, ModBlocks.MOB_FARM_ENTITY.get(), MobFarmBlockEntity::serverTick);
+      ? null
+      : createTickerHelper(
+        blockEntityType, ModBlocks.MOB_FARM_ENTITY.get(), MobFarmBlockEntity::serverTick);
   }
 }

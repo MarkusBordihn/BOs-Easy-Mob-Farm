@@ -35,11 +35,11 @@ public enum MobFarmTierLevel implements StringRepresentable {
   TIER_3(3);
 
   public static final StringRepresentable.EnumCodec<MobFarmTierLevel> CODEC =
-      StringRepresentable.fromEnum(MobFarmTierLevel::values);
+    StringRepresentable.fromEnum(MobFarmTierLevel::values);
   private static final IntFunction<MobFarmTierLevel> BY_ID =
-      ByIdMap.continuous(MobFarmTierLevel::getTierLevel, values(), OutOfBoundsStrategy.ZERO);
+    ByIdMap.continuous(MobFarmTierLevel::getTierLevel, values(), OutOfBoundsStrategy.ZERO);
   public static final StreamCodec<ByteBuf, MobFarmTierLevel> STREAM_CODEC =
-      ByteBufCodecs.idMapper(BY_ID, MobFarmTierLevel::getTierLevel);
+    ByteBufCodecs.idMapper(BY_ID, MobFarmTierLevel::getTierLevel);
   private final int tierLevel;
   private final String name;
 

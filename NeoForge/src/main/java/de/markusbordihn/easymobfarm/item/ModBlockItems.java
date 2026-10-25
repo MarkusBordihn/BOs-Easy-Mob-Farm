@@ -35,111 +35,112 @@ public class ModBlockItems {
   public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(Constants.MOD_ID);
 
   public static final DeferredItem<Item> TIER_0_MOB_FARM_TEMPLATE =
-      ITEMS.register(
-          MobFarmTemplateItem.ID_TIER_0,
-          () ->
-              new MobFarmTemplateItem(
-                  MobFarmTemplateItem.ID_TIER_0, ModBlocks.TIER_0_MOB_FARM_TEMPLATE.get()));
+    ITEMS.register(
+      MobFarmTemplateItem.ID_TIER_0,
+      () ->
+        new MobFarmTemplateItem(
+          MobFarmTemplateItem.ID_TIER_0, ModBlocks.TIER_0_MOB_FARM_TEMPLATE.get()));
   public static final DeferredItem<Item> TIER_1_MOB_FARM_TEMPLATE =
-      ITEMS.register(
-          MobFarmTemplateItem.ID_TIER_1,
-          () ->
-              new MobFarmTemplateItem(
-                  MobFarmTemplateItem.ID_TIER_1, ModBlocks.TIER_1_MOB_FARM_TEMPLATE.get()));
+    ITEMS.register(
+      MobFarmTemplateItem.ID_TIER_1,
+      () ->
+        new MobFarmTemplateItem(
+          MobFarmTemplateItem.ID_TIER_1, ModBlocks.TIER_1_MOB_FARM_TEMPLATE.get()));
   public static final DeferredItem<Item> TIER_2_MOB_FARM_TEMPLATE =
-      ITEMS.register(
-          MobFarmTemplateItem.ID_TIER_2,
-          () ->
-              new MobFarmTemplateItem(
-                  MobFarmTemplateItem.ID_TIER_2, ModBlocks.TIER_2_MOB_FARM_TEMPLATE.get()));
+    ITEMS.register(
+      MobFarmTemplateItem.ID_TIER_2,
+      () ->
+        new MobFarmTemplateItem(
+          MobFarmTemplateItem.ID_TIER_2, ModBlocks.TIER_2_MOB_FARM_TEMPLATE.get()));
   public static final DeferredItem<Item> TIER_3_MOB_FARM_TEMPLATE =
-      ITEMS.register(
-          MobFarmTemplateItem.ID_TIER_3,
-          () ->
-              new MobFarmTemplateItem(
-                  MobFarmTemplateItem.ID_TIER_3, ModBlocks.TIER_3_MOB_FARM_TEMPLATE.get()));
+    ITEMS.register(
+      MobFarmTemplateItem.ID_TIER_3,
+      () ->
+        new MobFarmTemplateItem(
+          MobFarmTemplateItem.ID_TIER_3, ModBlocks.TIER_3_MOB_FARM_TEMPLATE.get()));
 
   public static final DeferredItem<Item> CREATIVE_MOB_FARM =
-      ITEMS.register(
-          MobFarmType.CREATIVE_MOB_FARM.getId(),
-          () ->
-              new BlockItem(
-                  ModBlocks.CREATIVE_MOB_FARM.get(),
-                  new Item.Properties()
-                      .useBlockDescriptionPrefix()
-                      .setId(
-                          ResourceKey.create(
-                              Registries.ITEM,
-                              Identifier.fromNamespaceAndPath(
-                                  Constants.MOD_ID, MobFarmType.CREATIVE_MOB_FARM.getId())))));
+    ITEMS.register(
+      MobFarmType.CREATIVE_MOB_FARM.getId(),
+      () ->
+        new BlockItem(
+          ModBlocks.CREATIVE_MOB_FARM.get(),
+          new Item.Properties()
+            .useBlockDescriptionPrefix()
+            .setId(
+              ResourceKey.create(
+                Registries.ITEM,
+                Identifier.fromNamespaceAndPath(
+                  Constants.MOD_ID, MobFarmType.CREATIVE_MOB_FARM.getId())))));
 
   public static final DeferredItem<Item> ANIMAL_PLAINS_FARM =
-      ITEMS.register(
-          MobFarmType.ANIMAL_PLAINS_FARM.getId(),
-          () ->
-              new MobFarmBlockItem(
-                  MobFarmType.ANIMAL_PLAINS_FARM, ModBlocks.ANIMAL_PLAINS_FARM.get()));
+    ITEMS.register(
+      MobFarmType.ANIMAL_PLAINS_FARM.getId(),
+      () ->
+        new MobFarmBlockItem(
+          MobFarmType.ANIMAL_PLAINS_FARM, ModBlocks.ANIMAL_PLAINS_FARM.get()));
 
   public static final DeferredItem<Item> BEE_HIVE_FARM =
-      ITEMS.register(
-          MobFarmType.BEE_HIVE_FARM.getId(),
-          () -> new MobFarmBlockItem(MobFarmType.BEE_HIVE_FARM, ModBlocks.BEE_HIVE_FARM.get()));
+    ITEMS.register(
+      MobFarmType.BEE_HIVE_FARM.getId(),
+      () -> new MobFarmBlockItem(MobFarmType.BEE_HIVE_FARM, ModBlocks.BEE_HIVE_FARM.get()));
 
   public static final DeferredItem<Item> DESERT_FARM =
-      ITEMS.register(
-          MobFarmType.DESERT_FARM.getId(),
-          () -> new MobFarmBlockItem(MobFarmType.DESERT_FARM, ModBlocks.DESERT_FARM.get()));
+    ITEMS.register(
+      MobFarmType.DESERT_FARM.getId(),
+      () -> new MobFarmBlockItem(MobFarmType.DESERT_FARM, ModBlocks.DESERT_FARM.get()));
 
   public static final DeferredItem<Item> IRON_GOLEM_FARM =
-      ITEMS.register(
-          MobFarmType.IRON_GOLEM_FARM.getId(),
-          () -> new MobFarmBlockItem(MobFarmType.IRON_GOLEM_FARM, ModBlocks.IRON_GOLEM_FARM.get()));
+    ITEMS.register(
+      MobFarmType.IRON_GOLEM_FARM.getId(),
+      () -> new MobFarmBlockItem(MobFarmType.IRON_GOLEM_FARM, ModBlocks.IRON_GOLEM_FARM.get()));
 
   public static final DeferredItem<Item> JUNGLE_FARM =
-      ITEMS.register(
-          MobFarmType.JUNGLE_FARM.getId(),
-          () -> new MobFarmBlockItem(MobFarmType.JUNGLE_FARM, ModBlocks.JUNGLE_FARM.get()));
+    ITEMS.register(
+      MobFarmType.JUNGLE_FARM.getId(),
+      () -> new MobFarmBlockItem(MobFarmType.JUNGLE_FARM, ModBlocks.JUNGLE_FARM.get()));
 
   public static final DeferredItem<Item> LUCKY_DROP_FARM =
-      ITEMS.register(
-          MobFarmType.LUCKY_DROP_FARM.getId(),
-          () -> new MobFarmBlockItem(MobFarmType.LUCKY_DROP_FARM, ModBlocks.LUCKY_DROP_FARM.get()));
+    ITEMS.register(
+      MobFarmType.LUCKY_DROP_FARM.getId(),
+      () -> new MobFarmBlockItem(MobFarmType.LUCKY_DROP_FARM, ModBlocks.LUCKY_DROP_FARM.get()));
 
   public static final DeferredItem<Item> MONSTER_PLAINS_CAVE_FARM =
-      ITEMS.register(
-          MobFarmType.MONSTER_PLAINS_CAVE_FARM.getId(),
-          () ->
-              new MobFarmBlockItem(
-                  MobFarmType.MONSTER_PLAINS_CAVE_FARM, ModBlocks.MONSTER_PLAINS_CAVE_FARM.get()));
+    ITEMS.register(
+      MobFarmType.MONSTER_PLAINS_CAVE_FARM.getId(),
+      () ->
+        new MobFarmBlockItem(
+          MobFarmType.MONSTER_PLAINS_CAVE_FARM, ModBlocks.MONSTER_PLAINS_CAVE_FARM.get()));
 
   public static final DeferredItem<Item> NETHER_FORTRESS_FARM =
-      ITEMS.register(
-          MobFarmType.NETHER_FORTRESS_FARM.getId(),
-          () ->
-              new MobFarmBlockItem(
-                  MobFarmType.NETHER_FORTRESS_FARM, ModBlocks.NETHER_FORTRESS_FARM.get()));
+    ITEMS.register(
+      MobFarmType.NETHER_FORTRESS_FARM.getId(),
+      () ->
+        new MobFarmBlockItem(
+          MobFarmType.NETHER_FORTRESS_FARM, ModBlocks.NETHER_FORTRESS_FARM.get()));
 
   public static final DeferredItem<Item> OCEAN_FARM =
-      ITEMS.register(
-          MobFarmType.OCEAN_FARM.getId(),
-          () -> new MobFarmBlockItem(MobFarmType.OCEAN_FARM, ModBlocks.OCEAN_FARM.get()));
+    ITEMS.register(
+      MobFarmType.OCEAN_FARM.getId(),
+      () -> new MobFarmBlockItem(MobFarmType.OCEAN_FARM, ModBlocks.OCEAN_FARM.get()));
 
   public static final DeferredItem<Item> SWAMP_FARM =
-      ITEMS.register(
-          MobFarmType.SWAMP_FARM.getId(),
-          () -> new MobFarmBlockItem(MobFarmType.SWAMP_FARM, ModBlocks.SWAMP_FARM.get()));
+    ITEMS.register(
+      MobFarmType.SWAMP_FARM.getId(),
+      () -> new MobFarmBlockItem(MobFarmType.SWAMP_FARM, ModBlocks.SWAMP_FARM.get()));
 
   public static final DeferredItem<Item> END_FARM =
-      ITEMS.register(
-          MobFarmType.END_FARM.getId(),
-          () -> new MobFarmBlockItem(MobFarmType.END_FARM, ModBlocks.END_FARM.get()));
+    ITEMS.register(
+      MobFarmType.END_FARM.getId(),
+      () -> new MobFarmBlockItem(MobFarmType.END_FARM, ModBlocks.END_FARM.get()));
 
   public static final DeferredItem<Item> NETHER_WASTES_FARM =
-      ITEMS.register(
-          MobFarmType.NETHER_WASTES_FARM.getId(),
-          () ->
-              new MobFarmBlockItem(
-                  MobFarmType.NETHER_WASTES_FARM, ModBlocks.NETHER_WASTES_FARM.get()));
+    ITEMS.register(
+      MobFarmType.NETHER_WASTES_FARM.getId(),
+      () ->
+        new MobFarmBlockItem(
+          MobFarmType.NETHER_WASTES_FARM, ModBlocks.NETHER_WASTES_FARM.get()));
 
-  protected ModBlockItems() {}
+  protected ModBlockItems() {
+  }
 }

@@ -33,14 +33,16 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Config {
+
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final String LOG_PREFIX = "[Config]";
   private static boolean isLoaded = false;
 
   private static Path configPath =
-      Paths.get("").toAbsolutePath().resolve("config").resolve(Constants.MOD_ID);
+    Paths.get("").toAbsolutePath().resolve("config").resolve(Constants.MOD_ID);
 
-  protected Config() {}
+  protected Config() {
+  }
 
   public static void register(boolean isServer) {
     prepareConfiguration();
@@ -66,7 +68,8 @@ public class Config {
     MobCatcherConfig.registerConfig();
   }
 
-  public static void registerServerConfig() {}
+  public static void registerServerConfig() {
+  }
 
   public static void registerClientConfig() {
     ClientConfig.registerConfig();
@@ -94,7 +97,7 @@ public class Config {
   }
 
   public static void registerConfigFile(
-      final String configFileName, final String configFileHeader) {
+    final String configFileName, final String configFileHeader) {
     File configFile = getConfigFile(configFileName.trim());
     if (configFile == null || !configFile.exists()) {
       createConfigFile(getConfigFile(configFileName.trim()), configFileHeader.trim());
@@ -118,7 +121,7 @@ public class Config {
       log.info("{} Created configuration file {} ...", LOG_PREFIX, configFile);
     } catch (Exception e) {
       log.error(
-          "{} Failed to create configuration file {} for {}", LOG_PREFIX, configFile, properties);
+        "{} Failed to create configuration file {} for {}", LOG_PREFIX, configFile, properties);
     }
   }
 
@@ -141,26 +144,26 @@ public class Config {
   }
 
   public static void updateConfigFileIfChanged(
-      File configFile,
-      String configFileHeader,
-      Properties properties,
-      Properties unmodifiedProperties) {
+    File configFile,
+    String configFileHeader,
+    Properties properties,
+    Properties unmodifiedProperties) {
     if (!properties.equals(unmodifiedProperties)) {
       log.info("{} Updating configuration file {} ...", LOG_PREFIX, configFile.getName());
       log.debug(
-          "{} Updating configuration file {} {}: {}",
-          LOG_PREFIX,
-          configFile,
-          configFileHeader,
-          properties);
+        "{} Updating configuration file {} {}: {}",
+        LOG_PREFIX,
+        configFile,
+        configFileHeader,
+        properties);
       try (FileWriter writer = new FileWriter(configFile)) {
         properties.store(writer, configFileHeader.trim());
       } catch (Exception e) {
         log.error(
-            "{} Failed to update configuration file {} with {}",
-            LOG_PREFIX,
-            configFile,
-            properties);
+          "{} Failed to update configuration file {} with {}",
+          LOG_PREFIX,
+          configFile,
+          properties);
       }
     } else if (properties.isEmpty()) {
       log.warn("{} Configuration file {} is empty: {}", LOG_PREFIX, configFile, properties);
@@ -170,10 +173,10 @@ public class Config {
   }
 
   public static void updateConfigValue(
-      final String configFileName,
-      final String configFileHeader,
-      final String key,
-      final String value) {
+    final String configFileName,
+    final String configFileHeader,
+    final String key,
+    final String value) {
     File configFile = getConfigFile(configFileName);
     if (configFile == null) {
       return;
@@ -186,7 +189,7 @@ public class Config {
   }
 
   protected static String parseConfigValue(
-      final Properties properties, final String key, final String defaultValue) {
+    final Properties properties, final String key, final String defaultValue) {
     if (properties.containsKey(key)) {
       try {
         return properties.getProperty(key).trim();
@@ -199,7 +202,7 @@ public class Config {
   }
 
   protected static Rarity parseConfigValue(
-      final Properties properties, final String key, final Rarity defaultValue) {
+    final Properties properties, final String key, final Rarity defaultValue) {
     if (properties.containsKey(key)) {
       try {
         return Rarity.valueOf(properties.getProperty(key).trim().toUpperCase(Locale.ROOT));
@@ -212,7 +215,7 @@ public class Config {
   }
 
   protected static int parseConfigValue(
-      final Properties properties, final String key, final int defaultValue) {
+    final Properties properties, final String key, final int defaultValue) {
     if (properties.containsKey(key)) {
       try {
         return Integer.parseInt(properties.getProperty(key).trim());
@@ -225,16 +228,16 @@ public class Config {
   }
 
   protected static int parseConfigValue(
-      final Properties properties, final String key, final int defaultValue, final int minValue) {
+    final Properties properties, final String key, final int defaultValue, final int minValue) {
     int value = parseConfigValue(properties, key, defaultValue);
     if (value < minValue) {
       log.warn(
-          "{} Value {} for key {} is below the minimum of {}, using default value {} instead!",
-          LOG_PREFIX,
-          value,
-          key,
-          minValue,
-          defaultValue);
+        "{} Value {} for key {} is below the minimum of {}, using default value {} instead!",
+        LOG_PREFIX,
+        value,
+        key,
+        minValue,
+        defaultValue);
       properties.setProperty(key, Integer.toString(defaultValue));
       return defaultValue;
     }
@@ -242,7 +245,7 @@ public class Config {
   }
 
   protected static float parseConfigValue(
-      final Properties properties, final String key, final float defaultValue) {
+    final Properties properties, final String key, final float defaultValue) {
     if (properties.containsKey(key)) {
       try {
         return Float.parseFloat(properties.getProperty(key).trim());
@@ -255,21 +258,21 @@ public class Config {
   }
 
   protected static float parseConfigValue(
-      final Properties properties,
-      final String key,
-      final float defaultValue,
-      final float minValue,
-      final float maxValue) {
+    final Properties properties,
+    final String key,
+    final float defaultValue,
+    final float minValue,
+    final float maxValue) {
     float value = parseConfigValue(properties, key, defaultValue);
     if (value < minValue || value > maxValue) {
       log.warn(
-          "{} Value {} for key {} is outside of the range {} - {}, using default value {} instead!",
-          LOG_PREFIX,
-          value,
-          key,
-          minValue,
-          maxValue,
-          defaultValue);
+        "{} Value {} for key {} is outside of the range {} - {}, using default value {} instead!",
+        LOG_PREFIX,
+        value,
+        key,
+        minValue,
+        maxValue,
+        defaultValue);
       properties.setProperty(key, Float.toString(defaultValue));
       return defaultValue;
     }
@@ -277,7 +280,7 @@ public class Config {
   }
 
   protected static boolean parseConfigValue(
-      final Properties properties, final String key, final boolean defaultValue) {
+    final Properties properties, final String key, final boolean defaultValue) {
     if (properties.containsKey(key)) {
       try {
         return Boolean.parseBoolean(properties.getProperty(key).trim());
@@ -290,7 +293,7 @@ public class Config {
   }
 
   protected static Set<String> parseConfigValue(
-      final Properties properties, final String key, final Set<String> defaultValue) {
+    final Properties properties, final String key, final Set<String> defaultValue) {
     if (properties.containsKey(key)) {
       try {
         String value = properties.getProperty(key).trim();

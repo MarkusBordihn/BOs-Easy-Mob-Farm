@@ -37,27 +37,28 @@ public class DataComponents {
   public static DataComponentType<MobCaptureData> MOB_CAPTURE_DATA;
   public static DataComponentType<MobFarmData> MOB_FARM_DATA;
 
-  private DataComponents() {}
+  private DataComponents() {
+  }
 
   public static void registerMobCaptureData() {
     log.info("{} Data Components ...", Constants.MOD_NAME);
     MOB_CAPTURE_DATA =
-        Registry.register(
-            BuiltInRegistries.DATA_COMPONENT_TYPE,
-            Identifier.fromNamespaceAndPath(Constants.MOD_ID, MobCaptureData.ID),
-            DataComponentType.<MobCaptureData>builder()
-                .persistent(MobCaptureData.CODEC)
-                .networkSynchronized(MobCaptureData.STREAM_CODEC)
-                .build());
+      Registry.register(
+        BuiltInRegistries.DATA_COMPONENT_TYPE,
+        Identifier.fromNamespaceAndPath(Constants.MOD_ID, MobCaptureData.ID),
+        DataComponentType.<MobCaptureData>builder()
+          .persistent(MobCaptureData.CODEC)
+          .networkSynchronized(MobCaptureData.STREAM_CODEC)
+          .build());
 
     MOB_FARM_DATA =
-        Registry.register(
-            BuiltInRegistries.DATA_COMPONENT_TYPE,
-            Identifier.fromNamespaceAndPath(Constants.MOD_ID, MobFarmData.ID),
-            DataComponentType.<MobFarmData>builder()
-                .persistent(MobFarmData.CODEC)
-                .networkSynchronized(MobFarmData.STREAM_CODEC)
-                .build());
+      Registry.register(
+        BuiltInRegistries.DATA_COMPONENT_TYPE,
+        Identifier.fromNamespaceAndPath(Constants.MOD_ID, MobFarmData.ID),
+        DataComponentType.<MobFarmData>builder()
+          .persistent(MobFarmData.CODEC)
+          .networkSynchronized(MobFarmData.STREAM_CODEC)
+          .build());
   }
 
   public static void registerMobCaptureData(Supplier<DataComponentType<MobCaptureData>> supplier) {

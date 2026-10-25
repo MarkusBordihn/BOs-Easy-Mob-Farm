@@ -33,7 +33,8 @@ public class Command {
   public static final int SINGLE_SUCCESS = 1;
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  protected Command() {}
+  protected Command() {
+  }
 
   public static int sendFailureMessage(CommandSourceStack context, Component message) {
     context.sendFailure(message);
@@ -51,7 +52,7 @@ public class Command {
   }
 
   public static int sendSuccessMessage(
-      CommandSourceStack context, String message, ChatFormatting formatting) {
+    CommandSourceStack context, String message, ChatFormatting formatting) {
     context.sendSuccess(() -> TextComponent.getText(message).withStyle(formatting), true);
     return SINGLE_SUCCESS;
   }

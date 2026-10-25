@@ -28,7 +28,7 @@ public class CreativeMobFarmBlockEntity extends MobFarmBlockEntity {
   public static final String ID = "creative_mob_farm_entity";
 
   public CreativeMobFarmBlockEntity(
-      BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
+    BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
     super(blockEntityType, blockPos, blockState);
   }
 }

@@ -32,7 +32,8 @@ public class LootPreviewCache {
   private static final Map<EntityType<?>, CacheEntry> serverCache = new ConcurrentHashMap<>();
   private static final Map<EntityType<?>, CacheEntry> clientCache = new ConcurrentHashMap<>();
 
-  private LootPreviewCache() {}
+  private LootPreviewCache() {
+  }
 
   public static boolean isServerCacheValid(EntityType<?> entityType, int requiredSampleRolls) {
     CacheEntry entry = serverCache.get(entityType);
@@ -45,18 +46,18 @@ public class LootPreviewCache {
   }
 
   public static void setServerCachedPreview(
-      EntityType<?> entityType, List<ItemStack> items, int sampleRolls) {
+    EntityType<?> entityType, List<ItemStack> items, int sampleRolls) {
     serverCache.put(entityType, new CacheEntry(items, System.currentTimeMillis(), sampleRolls));
   }
 
   public static Map<EntityType<?>, List<ItemStack>> getServerCachedPreviews() {
     Map<EntityType<?>, List<ItemStack>> previews = new HashMap<>();
     serverCache.forEach(
-        (entityType, entry) -> {
-          if (isValid(entry)) {
-            previews.put(entityType, entry.items());
-          }
-        });
+      (entityType, entry) -> {
+        if (isValid(entry)) {
+          previews.put(entityType, entry.items());
+        }
+      });
     return previews;
   }
 
@@ -86,5 +87,7 @@ public class LootPreviewCache {
     return entry != null && (System.currentTimeMillis() - entry.timestamp()) < CACHE_TTL_MS;
   }
 
-  private record CacheEntry(List<ItemStack> items, long timestamp, int sampleRolls) {}
+  private record CacheEntry(List<ItemStack> items, long timestamp, int sampleRolls) {
+
+  }
 }

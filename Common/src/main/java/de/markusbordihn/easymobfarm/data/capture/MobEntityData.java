@@ -35,56 +35,57 @@ public class MobEntityData {
   protected static final String INVENTORY_TAG = "Inventory";
   protected static final int NORMALIZED_BABY_AGE = -24000;
   protected static final Set<String> SAFE_TO_REMOVE_BASE_TAGS =
-      Set.of(
-          "Air",
-          "Dead",
-          "DeathTime",
-          "FallDistance",
-          "FallFlying",
-          "Fire",
-          "HurtByTimestamp",
-          "HurtTime",
-          "InWaterTime",
-          "Motion",
-          "OnGround",
-          "PortalCooldown",
-          "Pos",
-          "Rotation");
+    Set.of(
+      "Air",
+      "Dead",
+      "DeathTime",
+      "FallDistance",
+      "FallFlying",
+      "Fire",
+      "HurtByTimestamp",
+      "HurtTime",
+      "InWaterTime",
+      "Motion",
+      "OnGround",
+      "PortalCooldown",
+      "Pos",
+      "Rotation");
   protected static final Set<String> UNSAFE_TO_REMOVE_BASE_TAGS = Set.of("UUID", "Attributes");
   protected static final Set<String> SAFE_TO_REMOVE_MOB_CAPTURE_CARD_TAGS =
-      Set.of(
-          "AbsorptionAmount",
-          "ActiveEffects",
-          "AngerTime",
-          "Brain",
-          "CanBreakDoors",
-          "CanPickUpLoot",
-          "CanUpdate",
-          "CurativeItems",
-          "DrownedConversionTime",
-          "EggLayTime",
-          "Health",
-          "Invulnerable",
-          "LeftHanded",
-          "PersistenceRequired",
-          "TimeInOverworld",
-          "Attributes",
-          "Bred",
-          "EatingHaystack",
-          "ForcedAge",
-          "Glowing",
-          "InLove",
-          "Leash",
-          "LoveCause",
-          "NoAI",
-          "NoGravity",
-          "Owner",
-          "Silent",
-          "Temper",
-          "TicksFrozen",
-          "UUID");
+    Set.of(
+      "AbsorptionAmount",
+      "ActiveEffects",
+      "AngerTime",
+      "Brain",
+      "CanBreakDoors",
+      "CanPickUpLoot",
+      "CanUpdate",
+      "CurativeItems",
+      "DrownedConversionTime",
+      "EggLayTime",
+      "Health",
+      "Invulnerable",
+      "LeftHanded",
+      "PersistenceRequired",
+      "TimeInOverworld",
+      "Attributes",
+      "Bred",
+      "EatingHaystack",
+      "ForcedAge",
+      "Glowing",
+      "InLove",
+      "Leash",
+      "LoveCause",
+      "NoAI",
+      "NoGravity",
+      "Owner",
+      "Silent",
+      "Temper",
+      "TicksFrozen",
+      "UUID");
 
-  private MobEntityData() {}
+  private MobEntityData() {
+  }
 
   public static CompoundTag getMobEntityData(EntityType<?> entityType) {
     return new CompoundTag();
@@ -93,8 +94,8 @@ public class MobEntityData {
   public static CompoundTag getMobEntityData(LivingEntity livingEntity) {
 
     TagValueOutput valueOutput =
-        TagValueOutput.createWithContext(
-            ProblemReporter.DISCARDING, livingEntity.level().registryAccess());
+      TagValueOutput.createWithContext(
+        ProblemReporter.DISCARDING, livingEntity.level().registryAccess());
 
     livingEntity.saveWithoutId(valueOutput);
 
@@ -149,7 +150,7 @@ public class MobEntityData {
     CompoundTag cleanedCompoundTag = new CompoundTag();
     for (String key : compoundTag.keySet()) {
       if (SAFE_TO_REMOVE_MOB_CAPTURE_CARD_TAGS.contains(key)
-          || MobCaptureCardConfig.additionalCardTagsToRemove.contains(key)) {
+        || MobCaptureCardConfig.additionalCardTagsToRemove.contains(key)) {
         continue;
       }
 

@@ -24,8 +24,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import de.markusbordihn.clientruntimeinterfacetoolkit.testrunner.By;
 import de.markusbordihn.clientruntimeinterfacetoolkit.testrunner.Until;
-import java.io.IOException;
-import java.time.Duration;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -38,10 +36,9 @@ class MobFarmScreenClientTest extends ClientTestBase {
 
   private static final String TOOLTIP_FARM_PREFIX = "tooltip.easy_mob_farm.farm.";
   private static final List<String> REDSTONE_MODES_IN_CYCLE_ORDER =
-      List.of("disable_on_signal", "enable_on_signal", "ignore");
+    List.of("disable_on_signal", "enable_on_signal", "ignore");
   private static final By THEME_BUTTON = By.translationKey(TOOLTIP_FARM_PREFIX + "theme");
   private static final int MAXIMUM_THEME_CLICKS = 32;
-  private static final Duration SERVER_SYNC_TIMEOUT = Duration.ofSeconds(5);
 
   private static By redstoneModeButton(String redstoneMode) {
     return By.translationKey(TOOLTIP_FARM_PREFIX + "redstone_mode_" + redstoneMode);
@@ -53,28 +50,28 @@ class MobFarmScreenClientTest extends ClientTestBase {
 
   @ParameterizedTest(name = "{0}")
   @ValueSource(
-      strings = {
-        "animal_plains_farm",
-        "bee_hive_farm",
-        "creative_mob_farm",
-        "desert_farm",
-        "end_farm",
-        "iron_golem_farm",
-        "jungle_farm",
-        "lucky_drop_farm",
-        "monster_plains_cave_farm",
-        "nether_fortress_farm",
-        "nether_wastes_farm",
-        "ocean_farm",
-        "swamp_farm"
-      })
+    strings = {
+      "animal_plains_farm",
+      "bee_hive_farm",
+      "creative_mob_farm",
+      "desert_farm",
+      "end_farm",
+      "iron_golem_farm",
+      "jungle_farm",
+      "lucky_drop_farm",
+      "monster_plains_cave_farm",
+      "nether_fortress_farm",
+      "nether_wastes_farm",
+      "ocean_farm",
+      "swamp_farm"
+    })
   @DisplayName("Mob farm screen opens with a clean layout")
-  void mobFarmScreenOpensWithCleanLayout(String farmId) throws IOException {
+  void mobFarmScreenOpensWithCleanLayout(String farmId) {
     openFarm(farmId);
 
     client.assertState(
-        Until.layoutClean(LAYOUT_CHECKS_IGNORING_ICON_BUTTON_TEXT_OVERFLOW, List.of()));
-    captureScreen(farmId);
+      Until.layoutClean(LAYOUT_CHECKS_IGNORING_ICON_BUTTON_TEXT_OVERFLOW, List.of()));
+    client.saveScreenshot(farmId);
   }
 
   @Test
@@ -84,22 +81,22 @@ class MobFarmScreenClientTest extends ClientTestBase {
 
     for (int step = 0; step < REDSTONE_MODES_IN_CYCLE_ORDER.size(); step++) {
       String nextRedstoneMode =
-          REDSTONE_MODES_IN_CYCLE_ORDER.get((step + 1) % REDSTONE_MODES_IN_CYCLE_ORDER.size());
+        REDSTONE_MODES_IN_CYCLE_ORDER.get((step + 1) % REDSTONE_MODES_IN_CYCLE_ORDER.size());
       client.click(redstoneModeButton(REDSTONE_MODES_IN_CYCLE_ORDER.get(step)));
-      client.widget(redstoneModeButton(nextRedstoneMode), SERVER_SYNC_TIMEOUT);
+      client.widget(redstoneModeButton(nextRedstoneMode));
     }
   }
 
   @Test
   @DisplayName("Theme button cycles through distinct themes back to the first one")
-  void themeButtonCyclesThroughDistinctThemes() throws IOException {
+  void themeButtonCyclesThroughDistinctThemes() {
     openFarm("animal_plains_farm");
     String initialTheme = themeButtonText();
     Set<String> shownThemes = new LinkedHashSet<>();
 
     String shownTheme = initialTheme;
     while (shownThemes.add(shownTheme) && shownThemes.size() <= MAXIMUM_THEME_CLICKS) {
-      captureScreen("theme_" + shownThemes.size());
+      client.saveScreenshot("theme_" + shownThemes.size());
       client.click(THEME_BUTTON);
       shownTheme = themeButtonText();
     }

@@ -26,15 +26,15 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 
 public record EntityPreview(
-    int x, int y, int width, int height, int anchorX, int anchorY, float scaleFactor) {
+  int x, int y, int width, int height, int anchorX, int anchorY, float scaleFactor) {
 
   private static final float MIN_ENTITY_SIZE = 0.1F;
   private static final float FIT_MARGIN = 0.9F;
 
   public static EntityPreview centered(
-      int x, int y, int width, int height, int bottomPadding, float scaleFactor) {
+    int x, int y, int width, int height, int bottomPadding, float scaleFactor) {
     return new EntityPreview(
-        x, y, width, height, x + width / 2, y + height - bottomPadding, scaleFactor);
+      x, y, width, height, x + width / 2, y + height - bottomPadding, scaleFactor);
   }
 
   public float fitScale(float baseScale, float entityWidth, float entityHeight) {
@@ -46,13 +46,14 @@ public record EntityPreview(
   }
 
   public void render(
-      GuiGraphicsExtractor guiGraphics, Entity entity, int leftPos, int topPos, float mouseX, float mouseY) {
+    GuiGraphicsExtractor guiGraphics, Entity entity, int leftPos, int topPos, float mouseX,
+    float mouseY) {
     if (!(entity instanceof LivingEntity livingEntity)) {
       return;
     }
 
     float entityWidth =
-        (float) Math.max(entity.getBoundingBox().getXsize(), entity.getBoundingBox().getZsize());
+      (float) Math.max(entity.getBoundingBox().getXsize(), entity.getBoundingBox().getZsize());
     float entityHeight = entity.getBbHeight();
     float scale = this.fitScale(EntityScalingManager.getUIScale(entity), entityWidth, entityHeight);
     int areaLeft = leftPos + this.x;
@@ -62,19 +63,19 @@ public record EntityPreview(
 
     // Vanilla centers the entity inside the area, the offset moves its feet back onto the anchor.
     float verticalOffset =
-        (topPos + this.anchorY - (areaTop + areaBottom) / 2.0F) / Math.max(MIN_ENTITY_SIZE, scale)
-            - entityHeight / 2.0F;
+      (topPos + this.anchorY - (areaTop + areaBottom) / 2.0F) / Math.max(MIN_ENTITY_SIZE, scale)
+        - entityHeight / 2.0F;
 
     InventoryScreen.extractEntityInInventoryFollowsMouse(
-        guiGraphics,
-        areaLeft,
-        areaTop,
-        areaRight,
-        areaBottom,
-        Math.round(scale),
-        verticalOffset,
-        mouseX,
-        mouseY,
-        livingEntity);
+      guiGraphics,
+      areaLeft,
+      areaTop,
+      areaRight,
+      areaBottom,
+      Math.round(scale),
+      verticalOffset,
+      mouseX,
+      mouseY,
+      livingEntity);
   }
 }

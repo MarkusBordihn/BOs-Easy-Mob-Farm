@@ -37,14 +37,14 @@ public class MobFarmTemplateBlock extends Block {
 
   public MobFarmTemplateBlock(String id) {
     super(
-        BlockBehaviour.Properties.of()
-            .setId(
-                ResourceKey.create(
-                    Registries.BLOCK, Identifier.fromNamespaceAndPath(Constants.MOD_ID, id)))
-            .mapColor(MapColor.STONE)
-            .requiresCorrectToolForDrops()
-            .strength(3.0F, 6.0F)
-            .sound(SoundType.METAL)
-            .noOcclusion());
+      BlockBehaviour.Properties.of()
+        .setId(
+          ResourceKey.create(
+            Registries.BLOCK, Identifier.fromNamespaceAndPath(Constants.MOD_ID, id)))
+        .mapColor(MapColor.STONE)
+        .requiresCorrectToolForDrops()
+        .strength(3.0F, 6.0F)
+        .sound(SoundType.METAL)
+        .noOcclusion());
   }
 }

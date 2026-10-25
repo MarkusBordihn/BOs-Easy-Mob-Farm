@@ -31,14 +31,15 @@ public class ExperienceManager {
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static ExperienceManagerInterface experienceManagerInterface;
 
-  private ExperienceManager() {}
+  private ExperienceManager() {
+  }
 
   public static void registerExperienceManager(
-      ExperienceManagerInterface experienceManagerInterface) {
+    ExperienceManagerInterface experienceManagerInterface) {
     log.info(
-        "{} Experience Manager {}",
-        Constants.LOG_REGISTER_PREFIX,
-        experienceManagerInterface.getClass().getSimpleName());
+      "{} Experience Manager {}",
+      Constants.LOG_REGISTER_PREFIX,
+      experienceManagerInterface.getClass().getSimpleName());
     ExperienceManager.experienceManagerInterface = experienceManagerInterface;
   }
 

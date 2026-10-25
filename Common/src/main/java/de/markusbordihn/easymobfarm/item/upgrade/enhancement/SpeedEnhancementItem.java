@@ -38,10 +38,10 @@ public class SpeedEnhancementItem extends EnhancementItem {
 
   public SpeedEnhancementItem() {
     this(
-        new Properties()
-            .setId(
-                ResourceKey.create(
-                    Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
+      new Properties()
+        .setId(
+          ResourceKey.create(
+            Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
   }
 
   public SpeedEnhancementItem(Properties properties) {
@@ -54,13 +54,13 @@ public class SpeedEnhancementItem extends EnhancementItem {
 
   @Override
   public void appendHoverText(
-      ItemStack itemStack,
-      TooltipContext tooltipContext,
-      TooltipDisplay tooltipDisplay,
-      Consumer<Component> tooltipConsumer,
-      TooltipFlag tooltipFlag) {
+    ItemStack itemStack,
+    TooltipContext tooltipContext,
+    TooltipDisplay tooltipDisplay,
+    Consumer<Component> tooltipConsumer,
+    TooltipFlag tooltipFlag) {
     addTooltip(
-        tooltipConsumer,
-        TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_PREFIX + ID, this.getUpgradeSpeed()));
+      tooltipConsumer,
+      TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_PREFIX + ID, this.getUpgradeSpeed()));
   }
 }

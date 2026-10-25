@@ -26,18 +26,18 @@ public class ClientConfig extends Config {
 
   public static final String CONFIG_FILE_NAME = "client.cfg";
   public static final String CONFIG_FILE_HEADER =
-"""
- Client Configuration
-
- This configuration file contains client-side settings that do not affect the game logic.
- The mob farm screen also offers a button to switch the theme, which updates this file.
-
- Configuration Options:
- ----------------------
- mobFarmScreenTheme: Theme of the mob farm screen
-   (technology, technical [Original], classic, rustic, dark, steampunk, create;
-    default: technology)
-""";
+    """
+       Client Configuration
+      
+       This configuration file contains client-side settings that do not affect the game logic.
+       The mob farm screen also offers a button to switch the theme, which updates this file.
+      
+       Configuration Options:
+       ----------------------
+       mobFarmScreenTheme: Theme of the mob farm screen
+         (technology, technical [Original], classic, rustic, dark, steampunk, create;
+          default: technology)
+      """;
 
   public static String mobFarmScreenTheme = "technology";
 

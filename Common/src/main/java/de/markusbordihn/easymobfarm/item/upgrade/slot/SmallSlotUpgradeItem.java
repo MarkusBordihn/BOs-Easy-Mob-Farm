@@ -37,10 +37,10 @@ public class SmallSlotUpgradeItem extends SlotUpgradeItem {
 
   public SmallSlotUpgradeItem() {
     this(
-        new Properties()
-            .setId(
-                ResourceKey.create(
-                    Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
+      new Properties()
+        .setId(
+          ResourceKey.create(
+            Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
   }
 
   public SmallSlotUpgradeItem(Properties properties) {
@@ -49,14 +49,14 @@ public class SmallSlotUpgradeItem extends SlotUpgradeItem {
 
   @Override
   public void appendHoverText(
-      ItemStack itemStack,
-      TooltipContext tooltipContext,
-      TooltipDisplay tooltipDisplay,
-      Consumer<Component> tooltipConsumer,
-      TooltipFlag tooltipFlag) {
+    ItemStack itemStack,
+    TooltipContext tooltipContext,
+    TooltipDisplay tooltipDisplay,
+    Consumer<Component> tooltipConsumer,
+    TooltipFlag tooltipFlag) {
     addTooltip(
-        tooltipConsumer,
-        TextComponent.getTranslatedTextRaw(
-            Constants.TOOLTIP_PREFIX + ID, this.numberOfUpgradeSlots()));
+      tooltipConsumer,
+      TextComponent.getTranslatedTextRaw(
+        Constants.TOOLTIP_PREFIX + ID, this.numberOfUpgradeSlots()));
   }
 }

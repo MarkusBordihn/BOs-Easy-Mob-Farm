@@ -29,16 +29,16 @@ public record MobFarmData(MobFarmTierLevel tierLevel) {
   public static final String ID = "mob_farm_data";
 
   public static final Codec<MobFarmData> CODEC =
-      RecordCodecBuilder.create(
-          instance ->
-              instance
-                  .group(
-                      MobFarmTierLevel.CODEC.fieldOf("tierLevel").forGetter(MobFarmData::tierLevel))
-                  .apply(instance, MobFarmData::new));
+    RecordCodecBuilder.create(
+      instance ->
+        instance
+          .group(
+            MobFarmTierLevel.CODEC.fieldOf("tierLevel").forGetter(MobFarmData::tierLevel))
+          .apply(instance, MobFarmData::new));
 
   public static final StreamCodec<RegistryFriendlyByteBuf, MobFarmData> STREAM_CODEC =
-      StreamCodec.composite(
-          MobFarmTierLevel.STREAM_CODEC, MobFarmData::tierLevel, MobFarmData::new);
+    StreamCodec.composite(
+      MobFarmTierLevel.STREAM_CODEC, MobFarmData::tierLevel, MobFarmData::new);
 
   public static final MobFarmData EMPTY = new MobFarmData(MobFarmTierLevel.TIER_0);
 

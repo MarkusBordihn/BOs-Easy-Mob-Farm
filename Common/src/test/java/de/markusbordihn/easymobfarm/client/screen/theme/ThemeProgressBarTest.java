@@ -29,7 +29,7 @@ import org.mockito.Mockito;
 class ThemeProgressBarTest {
 
   private static final Identifier TEXTURE =
-      Identifier.fromNamespaceAndPath("easy_mob_farm", "textures/gui/progress_test.png");
+    Identifier.fromNamespaceAndPath("easy_mob_farm", "textures/gui/progress_test.png");
 
   @ParameterizedTest
   @CsvSource({"-1, 0", "0, 0", "0.25, 22", "0.5, 44", "0.75, 66", "1, 88", "2, 88"})
@@ -45,8 +45,8 @@ class ThemeProgressBarTest {
     }
 
     Mockito.verify(graphics)
-        .blit(
-            RenderPipelines.GUI_TEXTURED, TEXTURE, 129, 95, 0.0F, 244.0F, width, 7, 256, 256);
+      .blit(
+        RenderPipelines.GUI_TEXTURED, TEXTURE, 129, 95, 0.0F, 244.0F, width, 7, 256, 256);
   }
 
   @ParameterizedTest
@@ -63,17 +63,17 @@ class ThemeProgressBarTest {
     }
 
     Mockito.verify(graphics)
-        .blit(
-            RenderPipelines.GUI_TEXTURED,
-            TEXTURE,
-            208,
-            100 - height,
-            246.0F,
-            48.0F - height,
-            7,
-            height,
-            256,
-            256);
+      .blit(
+        RenderPipelines.GUI_TEXTURED,
+        TEXTURE,
+        208,
+        100 - height,
+        246.0F,
+        48.0F - height,
+        7,
+        height,
+        256,
+        256);
   }
 
   @ParameterizedTest
@@ -88,7 +88,7 @@ class ThemeProgressBarTest {
     bar.render(graphics, 10, 20, progress);
 
     Mockito.verify(graphics)
-        .blit(
-            RenderPipelines.GUI_TEXTURED, TEXTURE, 126, 80, (float) u, (float) v, 28, 26, 256, 256);
+      .blit(
+        RenderPipelines.GUI_TEXTURED, TEXTURE, 126, 80, (float) u, (float) v, 28, 26, 256, 256);
   }
 }

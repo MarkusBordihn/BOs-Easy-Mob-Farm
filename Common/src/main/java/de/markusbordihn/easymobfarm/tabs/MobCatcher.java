@@ -26,7 +26,8 @@ import net.minecraft.world.item.ItemStack;
 
 public class MobCatcher {
 
-  private MobCatcher() {}
+  private MobCatcher() {
+  }
 
   public static List<ItemStack> createTabItems() {
     List<ItemStack> items = new ArrayList<>();

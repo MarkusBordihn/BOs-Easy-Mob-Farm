@@ -33,7 +33,8 @@ import net.neoforged.neoforge.network.PacketDistributor;
 @EventBusSubscriber
 public class ServerEventHandler {
 
-  private ServerEventHandler() {}
+  private ServerEventHandler() {
+  }
 
   @SubscribeEvent
   public static void onServerStarted(ServerStartedEvent event) {
@@ -53,8 +54,8 @@ public class ServerEventHandler {
 
     // Sync all mob capture card definitions to the player.
     PacketDistributor.sendToPlayer(
-        serverPlayer,
-        new SyncMobCaptureCardDefinitionsMessage(MobCaptureCardDefinitionManager.getAll()));
+      serverPlayer,
+      new SyncMobCaptureCardDefinitionsMessage(MobCaptureCardDefinitionManager.getAll()));
 
     ServerEvents.handlePlayerLoginEvent(serverPlayer);
   }

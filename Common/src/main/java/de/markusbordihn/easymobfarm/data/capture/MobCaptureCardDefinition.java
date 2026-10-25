@@ -32,8 +32,39 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Rarity;
 
 public record MobCaptureCardDefinition(
+  Identifier entity,
+  EntityType<?> entityType,
+  Identifier model,
+  Rarity rarity,
+  float scale,
+  boolean requiresKilledByPlayer,
+  boolean requiresAnimationTick,
+  boolean supportsKnifeEnhancement,
+  Map<String, Variant> variants,
+  Map<String, Color> colors) {
+
+  public static final int MAXIMUM_COLORS = 64;
+  public static final int MAXIMUM_VARIANTS = 64;
+  private static final StreamCodec<ByteBuf, Map<String, Color>> COLORS_STREAM_CODEC =
+    ByteBufCodecs.map(
+      HashMap::new,
+      ByteBufCodecs.STRING_UTF8,
+      Identifier.STREAM_CODEC.map(Color::new, Color::model),
+      MAXIMUM_COLORS);
+  private static final StreamCodec<ByteBuf, Map<String, Variant>> VARIANTS_STREAM_CODEC =
+    ByteBufCodecs.map(
+      HashMap::new,
+      ByteBufCodecs.STRING_UTF8,
+      StreamCodec.composite(
+        Identifier.STREAM_CODEC,
+        Variant::model,
+        COLORS_STREAM_CODEC,
+        Variant::colors,
+        Variant::new),
+      MAXIMUM_VARIANTS);
+
+  public MobCaptureCardDefinition(
     Identifier entity,
-    EntityType<?> entityType,
     Identifier model,
     Rarity rarity,
     float scale,
@@ -42,48 +73,17 @@ public record MobCaptureCardDefinition(
     boolean supportsKnifeEnhancement,
     Map<String, Variant> variants,
     Map<String, Color> colors) {
-
-  public static final int MAXIMUM_COLORS = 64;
-  public static final int MAXIMUM_VARIANTS = 64;
-  private static final StreamCodec<ByteBuf, Map<String, Color>> COLORS_STREAM_CODEC =
-      ByteBufCodecs.map(
-          HashMap::new,
-          ByteBufCodecs.STRING_UTF8,
-          Identifier.STREAM_CODEC.map(Color::new, Color::model),
-          MAXIMUM_COLORS);
-  private static final StreamCodec<ByteBuf, Map<String, Variant>> VARIANTS_STREAM_CODEC =
-      ByteBufCodecs.map(
-          HashMap::new,
-          ByteBufCodecs.STRING_UTF8,
-          StreamCodec.composite(
-              Identifier.STREAM_CODEC,
-              Variant::model,
-              COLORS_STREAM_CODEC,
-              Variant::colors,
-              Variant::new),
-          MAXIMUM_VARIANTS);
-
-  public MobCaptureCardDefinition(
-      Identifier entity,
-      Identifier model,
-      Rarity rarity,
-      float scale,
-      boolean requiresKilledByPlayer,
-      boolean requiresAnimationTick,
-      boolean supportsKnifeEnhancement,
-      Map<String, Variant> variants,
-      Map<String, Color> colors) {
     this(
-        entity,
-        getEntityType(entity),
-        getModelResourceLocation(model, rarity != null ? rarity : Rarity.COMMON),
-        rarity != null ? rarity : Rarity.COMMON,
-        scale >= 0 ? scale : 1.0F,
-        requiresKilledByPlayer,
-        requiresAnimationTick,
-        supportsKnifeEnhancement,
-        variants,
-        colors);
+      entity,
+      getEntityType(entity),
+      getModelResourceLocation(model, rarity != null ? rarity : Rarity.COMMON),
+      rarity != null ? rarity : Rarity.COMMON,
+      scale >= 0 ? scale : 1.0F,
+      requiresKilledByPlayer,
+      requiresAnimationTick,
+      supportsKnifeEnhancement,
+      variants,
+      colors);
   }
 
   public static MobCaptureCardDefinition decode(FriendlyByteBuf buffer) {
@@ -100,15 +100,15 @@ public record MobCaptureCardDefinition(
     Map<String, Variant> variants = VARIANTS_STREAM_CODEC.decode(buffer);
 
     return new MobCaptureCardDefinition(
-        entity,
-        model,
-        rarity,
-        scale,
-        requiresKilledByPlayer,
-        requiresAnimationTick,
-        supportsKnifeEnhancement,
-        variants,
-        colors);
+      entity,
+      model,
+      rarity,
+      scale,
+      requiresKilledByPlayer,
+      requiresAnimationTick,
+      supportsKnifeEnhancement,
+      variants,
+      colors);
   }
 
   public static EntityType<?> getEntityType(Identifier resourceLocation) {
@@ -122,15 +122,15 @@ public record MobCaptureCardDefinition(
     switch (rarity) {
       case UNCOMMON -> {
         return Identifier.fromNamespaceAndPath(
-            Constants.MOD_ID, "item/mob_capture_card/default_uncommon");
+          Constants.MOD_ID, "item/mob_capture_card/default_uncommon");
       }
       case RARE -> {
         return Identifier.fromNamespaceAndPath(
-            Constants.MOD_ID, "item/mob_capture_card/default_rare");
+          Constants.MOD_ID, "item/mob_capture_card/default_rare");
       }
       case EPIC -> {
         return Identifier.fromNamespaceAndPath(
-            Constants.MOD_ID, "item/mob_capture_card/default_epic");
+          Constants.MOD_ID, "item/mob_capture_card/default_epic");
       }
       default -> {
         return Identifier.fromNamespaceAndPath(Constants.MOD_ID, "item/mob_capture_card/default");
@@ -140,16 +140,16 @@ public record MobCaptureCardDefinition(
 
   public MobCaptureCardDefinition withEntityType(EntityType<?> entityType) {
     return new MobCaptureCardDefinition(
-        this.entity,
-        entityType,
-        this.model,
-        this.rarity,
-        this.scale,
-        this.requiresKilledByPlayer,
-        this.requiresAnimationTick,
-        this.supportsKnifeEnhancement,
-        this.variants,
-        this.colors);
+      this.entity,
+      entityType,
+      this.model,
+      this.rarity,
+      this.scale,
+      this.requiresKilledByPlayer,
+      this.requiresAnimationTick,
+      this.supportsKnifeEnhancement,
+      this.variants,
+      this.colors);
   }
 
   public void encode(FriendlyByteBuf buffer) {
@@ -166,7 +166,11 @@ public record MobCaptureCardDefinition(
     VARIANTS_STREAM_CODEC.encode(buffer, variants);
   }
 
-  public record Variant(Identifier model, Map<String, Color> colors) {}
+  public record Variant(Identifier model, Map<String, Color> colors) {
 
-  public record Color(Identifier model) {}
+  }
+
+  public record Color(Identifier model) {
+
+  }
 }

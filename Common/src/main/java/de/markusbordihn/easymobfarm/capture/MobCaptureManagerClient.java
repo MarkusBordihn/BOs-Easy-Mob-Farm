@@ -30,7 +30,8 @@ public class MobCaptureManagerClient {
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  private MobCaptureManagerClient() {}
+  private MobCaptureManagerClient() {
+  }
 
   public static MobCaptureData getMobCaptureData(ItemStack itemStack) {
     try {

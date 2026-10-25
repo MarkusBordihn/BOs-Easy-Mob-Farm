@@ -33,7 +33,8 @@ public final class DebugManager {
   private static final String LOG_PREFIX = "[Debug Manager]";
   private static boolean isDevelopmentEnvironment = false;
 
-  private DebugManager() {}
+  private DebugManager() {
+  }
 
   public static void setLogLevel(Logger logger, Level logLevel) {
     if (logLevel == null || logLevel == logger.getLevel()) {
@@ -46,17 +47,17 @@ public final class DebugManager {
     LoggerConfig specificConfig = loggerConfig;
     if (!loggerConfig.getName().equals(loggerName)) {
       log.info(
-          "{} Add new logger config for {} with level {} ...", LOG_PREFIX, loggerName, logLevel);
+        "{} Add new logger config for {} with level {} ...", LOG_PREFIX, loggerName, logLevel);
       specificConfig = new LoggerConfig(loggerName, logLevel, true);
       specificConfig.setParent(loggerConfig);
       config.addLogger(loggerName, specificConfig);
     } else {
       log.info(
-          "{} Changing log level for {} from {} to {}",
-          LOG_PREFIX,
-          loggerName,
-          logger.getLevel(),
-          logLevel);
+        "{} Changing log level for {} from {} to {}",
+        LOG_PREFIX,
+        loggerName,
+        logger.getLevel(),
+        logLevel);
     }
     specificConfig.setLevel(logLevel);
     context.updateLoggers();
@@ -90,19 +91,19 @@ public final class DebugManager {
       Logger logger = LogManager.getLogger(loggerName);
       String logLevelName = logger.getLevel().name();
       logger.warn(
-          "{} Detected debug log level for {} with {}!", LOG_PREFIX, loggerName, logLevelName);
+        "{} Detected debug log level for {} with {}!", LOG_PREFIX, loggerName, logLevelName);
       if (isDevelopmentEnvironment()) {
         logger.info(
-            "{} Detected DEV environment, will not change log level for {}!",
-            LOG_PREFIX,
-            loggerName);
+          "{} Detected DEV environment, will not change log level for {}!",
+          LOG_PREFIX,
+          loggerName);
       } else {
         logger.warn(
-            "{} Adjusting log level for {} from {} to {}, for performance reasons!",
-            LOG_PREFIX,
-            loggerName,
-            logLevelName,
-            Level.INFO);
+          "{} Adjusting log level for {} from {} to {}, for performance reasons!",
+          LOG_PREFIX,
+          loggerName,
+          logLevelName,
+          Level.INFO);
         enableDebugLevel(loggerName, false);
       }
     }

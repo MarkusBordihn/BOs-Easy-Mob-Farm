@@ -29,12 +29,13 @@ import net.minecraftforge.registries.RegistryObject;
 public class ModMenuTypes {
 
   public static final DeferredRegister<MenuType<?>> MENU_TYPES =
-      DeferredRegister.create(ForgeRegistries.MENU_TYPES, Constants.MOD_ID);
+    DeferredRegister.create(ForgeRegistries.MENU_TYPES, Constants.MOD_ID);
   public static final RegistryObject<MenuType<MobFarmMenuWrapper>> MOB_FARM_MENU =
-      MENU_TYPES.register(MobFarmMenu.ID, () -> IForgeMenuType.create(MobFarmMenuWrapper::new));
+    MENU_TYPES.register(MobFarmMenu.ID, () -> IForgeMenuType.create(MobFarmMenuWrapper::new));
   public static final RegistryObject<MenuType<CardBinderMenuWrapper>> CARD_BINDER_MENU =
-      MENU_TYPES.register(
-          CardBinderMenu.ID, () -> IForgeMenuType.create(CardBinderMenuWrapper::new));
+    MENU_TYPES.register(
+      CardBinderMenu.ID, () -> IForgeMenuType.create(CardBinderMenuWrapper::new));
 
-  private ModMenuTypes() {}
+  private ModMenuTypes() {
+  }
 }

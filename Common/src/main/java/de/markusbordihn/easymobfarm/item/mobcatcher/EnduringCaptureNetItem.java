@@ -33,10 +33,10 @@ public class EnduringCaptureNetItem extends MobCatcherItem {
 
   public EnduringCaptureNetItem() {
     this(
-        new Item.Properties()
-            .setId(
-                ResourceKey.create(
-                    Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
+      new Item.Properties()
+        .setId(
+          ResourceKey.create(
+            Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
   }
 
   public EnduringCaptureNetItem(Item.Properties properties) {

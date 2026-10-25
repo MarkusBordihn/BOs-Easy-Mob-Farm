@@ -44,24 +44,24 @@ public class NetworkHandler {
     log.debug("{} Network Handler with {} ...", Constants.LOG_REGISTER_PREFIX, PROTOCOL_VERSION);
 
     registrar.playToClient(
-        SyncMobCaptureCardDefinitionsMessage.PAYLOAD_TYPE,
-        SyncMobCaptureCardDefinitionsMessage.STREAM_CODEC,
-        (customPacketPayload, playPayloadContext) -> {
-          customPacketPayload.handleClient();
-        });
+      SyncMobCaptureCardDefinitionsMessage.PAYLOAD_TYPE,
+      SyncMobCaptureCardDefinitionsMessage.STREAM_CODEC,
+      (customPacketPayload, playPayloadContext) -> {
+        customPacketPayload.handleClient();
+      });
 
     registrar.playToClient(
-        SyncLootPreviewMessage.PAYLOAD_TYPE,
-        SyncLootPreviewMessage.STREAM_CODEC,
-        (customPacketPayload, playPayloadContext) -> {
-          customPacketPayload.handleClient();
-        });
+      SyncLootPreviewMessage.PAYLOAD_TYPE,
+      SyncLootPreviewMessage.STREAM_CODEC,
+      (customPacketPayload, playPayloadContext) -> {
+        customPacketPayload.handleClient();
+      });
 
     registrar.playToClient(
-        SyncLootPreviewBatchMessage.PAYLOAD_TYPE,
-        SyncLootPreviewBatchMessage.STREAM_CODEC,
-        (customPacketPayload, playPayloadContext) -> {
-          customPacketPayload.handleClient();
-        });
+      SyncLootPreviewBatchMessage.PAYLOAD_TYPE,
+      SyncLootPreviewBatchMessage.STREAM_CODEC,
+      (customPacketPayload, playPayloadContext) -> {
+        customPacketPayload.handleClient();
+      });
   }
 }

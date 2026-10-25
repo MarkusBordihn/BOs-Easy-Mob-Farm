@@ -40,10 +40,10 @@ public class ExperienceEnhancementItem extends EnhancementItem {
 
   public ExperienceEnhancementItem() {
     this(
-        new Properties()
-            .setId(
-                ResourceKey.create(
-                    Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
+      new Properties()
+        .setId(
+          ResourceKey.create(
+            Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
   }
 
   public ExperienceEnhancementItem(Properties properties) {
@@ -60,21 +60,21 @@ public class ExperienceEnhancementItem extends EnhancementItem {
 
   @Override
   public void appendHoverText(
-      ItemStack itemStack,
-      TooltipContext tooltipContext,
-      TooltipDisplay tooltipDisplay,
-      Consumer<Component> tooltipConsumer,
-      TooltipFlag tooltipFlag) {
+    ItemStack itemStack,
+    TooltipContext tooltipContext,
+    TooltipDisplay tooltipDisplay,
+    Consumer<Component> tooltipConsumer,
+    TooltipFlag tooltipFlag) {
     addTooltip(tooltipConsumer, TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_PREFIX + ID));
     addTooltip(
-        tooltipConsumer,
-        TextComponent.getTranslatedTextRaw(
-            Constants.TOOLTIP_PREFIX + ID + ".note", this.minExperienceForDrop()),
-        ChatFormatting.YELLOW);
+      tooltipConsumer,
+      TextComponent.getTranslatedTextRaw(
+        Constants.TOOLTIP_PREFIX + ID + ".note", this.minExperienceForDrop()),
+      ChatFormatting.YELLOW);
     addTooltip(
-        tooltipConsumer,
-        TextComponent.getTranslatedTextRaw(
-            Constants.TOOLTIP_PREFIX + ID + ".drop_chance", this.experienceDropChance()),
-        ChatFormatting.GREEN);
+      tooltipConsumer,
+      TextComponent.getTranslatedTextRaw(
+        Constants.TOOLTIP_PREFIX + ID + ".drop_chance", this.experienceDropChance()),
+      ChatFormatting.GREEN);
   }
 }

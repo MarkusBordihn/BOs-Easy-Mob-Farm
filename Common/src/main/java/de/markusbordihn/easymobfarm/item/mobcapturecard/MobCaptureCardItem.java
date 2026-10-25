@@ -60,16 +60,16 @@ public class MobCaptureCardItem extends Item {
 
   public static final String ID = "mob_capture_card";
   public static final Identifier RESOURCE_LOCATION =
-      Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID);
+    Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID);
   public static final String TOOLTIP_PREFIX = Constants.TOOLTIP_PREFIX + ID + ".";
   private Level level;
 
   public MobCaptureCardItem() {
     this(
-        new Item.Properties()
-            .setId(
-                ResourceKey.create(
-                    Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
+      new Item.Properties()
+        .setId(
+          ResourceKey.create(
+            Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
   }
 
   public MobCaptureCardItem(Properties properties) {
@@ -89,11 +89,11 @@ public class MobCaptureCardItem extends Item {
       return "";
     }
     return Arrays.stream(variant.split("_"))
-        .map(
-            word ->
-                word.substring(0, 1).toUpperCase(Locale.ROOT)
-                    + word.substring(1).toLowerCase(Locale.ROOT))
-        .collect(Collectors.joining(" "));
+      .map(
+        word ->
+          word.substring(0, 1).toUpperCase(Locale.ROOT)
+            + word.substring(1).toLowerCase(Locale.ROOT))
+      .collect(Collectors.joining(" "));
   }
 
   private static Component getTranslatedEntityName(MobCaptureData mobCaptureData) {
@@ -104,15 +104,15 @@ public class MobCaptureCardItem extends Item {
   }
 
   private static void addSpecialMechanicsTooltips(
-      final MobCaptureData mobCaptureData, final Consumer<Component> tooltipConsumer) {
+    final MobCaptureData mobCaptureData, final Consumer<Component> tooltipConsumer) {
     if (mobCaptureData == null || mobCaptureData.name() == null) {
       return;
     }
     MutableComponent specialMechanicsTooltip =
-        tryGetTranslation(
-            TOOLTIP_PREFIX
-                + mobCaptureData.name().replace("entity.", "").replace(":", ".")
-                + ".special_mechanics");
+      tryGetTranslation(
+        TOOLTIP_PREFIX
+          + mobCaptureData.name().replace("entity.", "").replace(":", ".")
+          + ".special_mechanics");
     if (specialMechanicsTooltip != null) {
       tooltipConsumer.accept(specialMechanicsTooltip.withStyle(ChatFormatting.GRAY));
     }
@@ -169,7 +169,7 @@ public class MobCaptureCardItem extends Item {
 
   @Override
   public void inventoryTick(
-      ItemStack itemStack, ServerLevel serverLevel, Entity entity, EquipmentSlot equipmentSlot) {
+    ItemStack itemStack, ServerLevel serverLevel, Entity entity, EquipmentSlot equipmentSlot) {
     if (entity instanceof Player && this.level == null) {
       this.level = serverLevel;
     }
@@ -181,11 +181,11 @@ public class MobCaptureCardItem extends Item {
 
   @Override
   public boolean canDestroyBlock(
-      ItemStack itemStack,
-      BlockState blockState,
-      Level level,
-      BlockPos blockPos,
-      LivingEntity livingEntity) {
+    ItemStack itemStack,
+    BlockState blockState,
+    Level level,
+    BlockPos blockPos,
+    LivingEntity livingEntity) {
     this.level = level;
     return false;
   }
@@ -199,35 +199,35 @@ public class MobCaptureCardItem extends Item {
 
     // Generate name based on variant and color.
     String key = TOOLTIP_PREFIX + "card_name";
-    Object[] args = new Object[] {getTranslatedEntityName(mobCaptureData)};
+    Object[] args = new Object[]{getTranslatedEntityName(mobCaptureData)};
     if (mobCaptureData.hasVariant()
-        && !mobCaptureData.name().equalsIgnoreCase(mobCaptureData.variant())) {
+      && !mobCaptureData.name().equalsIgnoreCase(mobCaptureData.variant())) {
       if (mobCaptureData.hasColor()) {
         key += "_variant_color";
         args =
-            new Object[] {
-              getTranslatedEntityName(mobCaptureData),
-              getVariantName(mobCaptureData.variant()),
-              mobCaptureData.color().getName()
-            };
+          new Object[]{
+            getTranslatedEntityName(mobCaptureData),
+            getVariantName(mobCaptureData.variant()),
+            mobCaptureData.color().getName()
+          };
       } else {
         key += "_variant";
         args =
-            new Object[] {
-              getTranslatedEntityName(mobCaptureData), getVariantName(mobCaptureData.variant())
-            };
+          new Object[]{
+            getTranslatedEntityName(mobCaptureData), getVariantName(mobCaptureData.variant())
+          };
       }
     } else if (mobCaptureData.hasColor()) {
       key += "_color";
       args =
-          new Object[] {getTranslatedEntityName(mobCaptureData), mobCaptureData.color().getName()};
+        new Object[]{getTranslatedEntityName(mobCaptureData), mobCaptureData.color().getName()};
     }
 
     return TextComponent.getTranslatedTextRaw(key, args)
-        .append(" ")
-        .append(
-            TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_PREFIX + ID)
-                .withStyle(ChatFormatting.GRAY));
+      .append(" ")
+      .append(
+        TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_PREFIX + ID)
+          .withStyle(ChatFormatting.GRAY));
   }
 
   @Override
@@ -238,50 +238,50 @@ public class MobCaptureCardItem extends Item {
 
   @Override
   public void appendHoverText(
-      ItemStack itemStack,
-      TooltipContext tooltipContext,
-      TooltipDisplay tooltipDisplay,
-      Consumer<Component> tooltipConsumer,
-      TooltipFlag tooltipFlag) {
+    ItemStack itemStack,
+    TooltipContext tooltipContext,
+    TooltipDisplay tooltipDisplay,
+    Consumer<Component> tooltipConsumer,
+    TooltipFlag tooltipFlag) {
     MobCaptureData mobCaptureData = MobCaptureManagerClient.getMobCaptureData(itemStack);
     if (mobCaptureData == null) {
       tooltipConsumer.accept(TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "empty"));
       return;
     }
     tooltipConsumer.accept(
-        TextComponent.getTranslatedTextRaw(
-            TOOLTIP_PREFIX + "name", getTranslatedEntityName(mobCaptureData)));
+      TextComponent.getTranslatedTextRaw(
+        TOOLTIP_PREFIX + "name", getTranslatedEntityName(mobCaptureData)));
     if (tooltipFlag.isAdvanced()) {
       tooltipConsumer.accept(
-          TextComponent.getTranslatedTextRaw(
-              TOOLTIP_PREFIX + "description_id", mobCaptureData.name()));
+        TextComponent.getTranslatedTextRaw(
+          TOOLTIP_PREFIX + "description_id", mobCaptureData.name()));
       tooltipConsumer.accept(
-          TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "type", mobCaptureData.type()));
+        TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "type", mobCaptureData.type()));
     }
     if (mobCaptureData.hasVariant()) {
       tooltipConsumer.accept(
-          TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "variant", mobCaptureData.variant()));
+        TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "variant", mobCaptureData.variant()));
     }
     if (mobCaptureData.hasColor()) {
       tooltipConsumer.accept(
-          TextComponent.getTranslatedTextRaw(
-              TOOLTIP_PREFIX + "color", mobCaptureData.color().getName()));
+        TextComponent.getTranslatedTextRaw(
+          TOOLTIP_PREFIX + "color", mobCaptureData.color().getName()));
     }
 
     ChatFormatting rarityColor =
-        switch (mobCaptureData.rarity()) {
-          case UNCOMMON -> ChatFormatting.GREEN;
-          case RARE -> ChatFormatting.BLUE;
-          case EPIC -> ChatFormatting.DARK_PURPLE;
-          default -> ChatFormatting.GRAY;
-        };
+      switch (mobCaptureData.rarity()) {
+        case UNCOMMON -> ChatFormatting.GREEN;
+        case RARE -> ChatFormatting.BLUE;
+        case EPIC -> ChatFormatting.DARK_PURPLE;
+        default -> ChatFormatting.GRAY;
+      };
     tooltipConsumer.accept(
-        TextComponent.getTranslatedTextRaw(
-                TOOLTIP_PREFIX + "rarity", mobCaptureData.rarity().name())
-            .withStyle(rarityColor));
+      TextComponent.getTranslatedTextRaw(
+          TOOLTIP_PREFIX + "rarity", mobCaptureData.rarity().name())
+        .withStyle(rarityColor));
     tooltipConsumer.accept(
-        TextComponent.getTranslatedTextRaw(
-            TOOLTIP_PREFIX + "id", String.valueOf(mobCaptureData.getCardId())));
+      TextComponent.getTranslatedTextRaw(
+        TOOLTIP_PREFIX + "id", String.valueOf(mobCaptureData.getCardId())));
 
     addSpecialMechanicsTooltips(mobCaptureData, tooltipConsumer);
   }

@@ -39,55 +39,55 @@ public interface ExperienceManagerInterface {
       return livingEntity.shouldDropExperience();
     } catch (Exception e) {
       log.error(
-          "{} Failed to check if entity should drop experience for {}",
-          ExperienceManager.LOG_PREFIX,
-          livingEntity.getClass().getSimpleName(),
-          e);
+        "{} Failed to check if entity should drop experience for {}",
+        ExperienceManager.LOG_PREFIX,
+        livingEntity.getClass().getSimpleName(),
+        e);
       return false;
     }
   }
 
   default int getExperienceReward(
-      LivingEntity livingEntity, ServerLevel serverLevel, String methodName) {
+    LivingEntity livingEntity, ServerLevel serverLevel, String methodName) {
     try {
       Method getBaseExperienceRewardMethod =
-          LivingEntity.class.getDeclaredMethod("getBaseExperienceReward", ServerLevel.class);
+        LivingEntity.class.getDeclaredMethod("getBaseExperienceReward", ServerLevel.class);
       getBaseExperienceRewardMethod.setAccessible(true);
       return (int) getBaseExperienceRewardMethod.invoke(livingEntity, serverLevel);
     } catch (NoSuchMethodException e) {
       if (methodName != null && !methodName.isEmpty()) {
         try {
           Method getBaseExperienceRewardMethod =
-              LivingEntity.class.getDeclaredMethod(methodName, ServerLevel.class);
+            LivingEntity.class.getDeclaredMethod(methodName, ServerLevel.class);
           getBaseExperienceRewardMethod.setAccessible(true);
           return (int) getBaseExperienceRewardMethod.invoke(livingEntity, serverLevel);
         } catch (Exception ex) {
           log.error(
-              "{} Failed to get experience reward for {} with method {}",
-              ExperienceManager.LOG_PREFIX,
-              livingEntity.getClass().getSimpleName(),
-              methodName,
-              ex);
+            "{} Failed to get experience reward for {} with method {}",
+            ExperienceManager.LOG_PREFIX,
+            livingEntity.getClass().getSimpleName(),
+            methodName,
+            ex);
         }
       } else {
         log.error(
-            "{} Failed to get experience reward for {}",
-            ExperienceManager.LOG_PREFIX,
-            livingEntity.getClass().getSimpleName(),
-            e);
-      }
-    } catch (Exception e) {
-      log.error(
           "{} Failed to get experience reward for {}",
           ExperienceManager.LOG_PREFIX,
           livingEntity.getClass().getSimpleName(),
           e);
+      }
+    } catch (Exception e) {
+      log.error(
+        "{} Failed to get experience reward for {}",
+        ExperienceManager.LOG_PREFIX,
+        livingEntity.getClass().getSimpleName(),
+        e);
       return 0;
     }
     log.error(
-        "{} Failed to get experience reward for {}",
-        ExperienceManager.LOG_PREFIX,
-        livingEntity.getClass().getSimpleName());
+      "{} Failed to get experience reward for {}",
+      ExperienceManager.LOG_PREFIX,
+      livingEntity.getClass().getSimpleName());
     return 0;
   }
 }

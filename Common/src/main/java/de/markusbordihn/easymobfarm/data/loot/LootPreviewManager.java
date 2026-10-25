@@ -51,10 +51,11 @@ public class LootPreviewManager {
   private static boolean warmupQueueFilled = false;
   private static int ticksSinceLastWarmupBatch = 0;
 
-  private LootPreviewManager() {}
+  private LootPreviewManager() {
+  }
 
   public static List<ItemStack> getOrCompute(
-      final MobCaptureData mobCaptureData, final Level level) {
+    final MobCaptureData mobCaptureData, final Level level) {
     if (mobCaptureData == null || mobCaptureData.entityType() == null) {
       return List.of();
     }
@@ -65,7 +66,7 @@ public class LootPreviewManager {
     }
 
     List<ItemStack> preview =
-        LootManager.getEntityLootPreview(mobCaptureData, level, FARM_SAMPLE_ROLLS);
+      LootManager.getEntityLootPreview(mobCaptureData, level, FARM_SAMPLE_ROLLS);
     LootPreviewCache.setServerCachedPreview(entityType, preview, FARM_SAMPLE_ROLLS);
     return preview;
   }
@@ -87,7 +88,7 @@ public class LootPreviewManager {
     }
 
     Map<EntityType<?>, List<ItemStack>> previews =
-        computeWarmupBatch(minecraftServer.overworld(), MobFarmConfig.lootPreviewBatchSize);
+      computeWarmupBatch(minecraftServer.overworld(), MobFarmConfig.lootPreviewBatchSize);
     if (previews.isEmpty()) {
       return;
     }
@@ -118,7 +119,7 @@ public class LootPreviewManager {
   }
 
   private static Map<EntityType<?>, List<ItemStack>> computeWarmupBatch(
-      final ServerLevel serverLevel, final int batchSize) {
+    final ServerLevel serverLevel, final int batchSize) {
     Map<EntityType<?>, List<ItemStack>> previews = new LinkedHashMap<>();
     for (int batchIndex = 0; batchIndex < batchSize; batchIndex++) {
       EntityType<?> entityType = warmupQueue.poll();
@@ -130,10 +131,10 @@ public class LootPreviewManager {
       }
 
       List<ItemStack> preview =
-          LootManager.getEntityLootPreview(
-              new MobCaptureData(entityType), serverLevel, MobFarmConfig.lootPreviewSampleRolls);
+        LootManager.getEntityLootPreview(
+          new MobCaptureData(entityType), serverLevel, MobFarmConfig.lootPreviewSampleRolls);
       LootPreviewCache.setServerCachedPreview(
-          entityType, preview, MobFarmConfig.lootPreviewSampleRolls);
+        entityType, preview, MobFarmConfig.lootPreviewSampleRolls);
       previews.put(entityType, preview);
     }
     return previews;
@@ -148,6 +149,6 @@ public class LootPreviewManager {
     warmupQueue.addAll(entityTypes);
     warmupQueueFilled = true;
     log.info(
-        "Pre-calculating loot preview for {} mob(s) in the background ...", warmupQueue.size());
+      "Pre-calculating loot preview for {} mob(s) in the background ...", warmupQueue.size());
   }
 }

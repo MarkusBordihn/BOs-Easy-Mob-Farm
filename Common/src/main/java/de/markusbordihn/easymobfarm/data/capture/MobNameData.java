@@ -32,7 +32,8 @@ public class MobNameData {
   public static final String TYPE_TAG = "Type";
   public static final String ID_TAG = "id";
 
-  private MobNameData() {}
+  private MobNameData() {
+  }
 
   public static String getName(final EntityType<?> entityType) {
     return entityType.getDescriptionId();
@@ -59,13 +60,13 @@ public class MobNameData {
       entityTypeName = compoundTag.getString(ID_TAG).orElse("");
     }
     if (!entityTypeName.contains(":")
-        || !entityTypeName.equals(entityTypeName.toLowerCase(Locale.ROOT))) {
+      || !entityTypeName.equals(entityTypeName.toLowerCase(Locale.ROOT))) {
       return "";
     }
 
     // Get Name over entity type, if possible.
     EntityType<?> entityType =
-        BuiltInRegistries.ENTITY_TYPE.getOptional(Identifier.tryParse(entityTypeName)).orElse(null);
+      BuiltInRegistries.ENTITY_TYPE.getOptional(Identifier.tryParse(entityTypeName)).orElse(null);
     return entityType != null ? entityType.getDescriptionId() : "";
   }
 }

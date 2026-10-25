@@ -95,162 +95,163 @@ public class LootManager {
   private static final Set<Identifier> loggedLegacyPaths = new HashSet<>();
   private static final Set<String> loggedLootFailures = new HashSet<>();
   private static final Map<String, Item> CHICKEN_VARIANT_EGGS =
-      Map.of("cold", Items.BLUE_EGG, "warm", Items.BROWN_EGG);
+    Map.of("cold", Items.BLUE_EGG, "warm", Items.BROWN_EGG);
   private static final Map<String, Identifier> FROG_CATALYST_RESOURCES =
-      Map.ofEntries(
-          Map.entry(
-              "cold",
-              Identifier.fromNamespaceAndPath(
-                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_COLD)),
-          Map.entry(
-              "temperate",
-              Identifier.fromNamespaceAndPath(
-                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_TEMPERATE)),
-          Map.entry(
-              "warm",
-              Identifier.fromNamespaceAndPath(
-                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_WARM)),
-          Map.entry(
-              "white",
-              Identifier.fromNamespaceAndPath(
-                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_WHITE)),
-          Map.entry(
-              "orange",
-              Identifier.fromNamespaceAndPath(
-                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_ORANGE)),
-          Map.entry(
-              "magenta",
-              Identifier.fromNamespaceAndPath(
-                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_MAGENTA)),
-          Map.entry(
-              "light_blue",
-              Identifier.fromNamespaceAndPath(
-                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_LIGHT_BLUE)),
-          Map.entry(
-              "yellow",
-              Identifier.fromNamespaceAndPath(
-                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_YELLOW)),
-          Map.entry(
-              "lime",
-              Identifier.fromNamespaceAndPath(
-                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_LIME)),
-          Map.entry(
-              "pink",
-              Identifier.fromNamespaceAndPath(
-                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_PINK)),
-          Map.entry(
-              "gray",
-              Identifier.fromNamespaceAndPath(
-                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_GRAY)),
-          Map.entry(
-              "light_gray",
-              Identifier.fromNamespaceAndPath(
-                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_LIGHT_GRAY)),
-          Map.entry(
-              "cyan",
-              Identifier.fromNamespaceAndPath(
-                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_CYAN)),
-          Map.entry(
-              "purple",
-              Identifier.fromNamespaceAndPath(
-                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_PURPLE)),
-          Map.entry(
-              "blue",
-              Identifier.fromNamespaceAndPath(
-                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_BLUE)),
-          Map.entry(
-              "brown",
-              Identifier.fromNamespaceAndPath(
-                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_BROWN)),
-          Map.entry(
-              "green",
-              Identifier.fromNamespaceAndPath(
-                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_GREEN)),
-          Map.entry(
-              "red",
-              Identifier.fromNamespaceAndPath(
-                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_RED)),
-          Map.entry(
-              "black",
-              Identifier.fromNamespaceAndPath(
-                  Constants.MOD_ID, FrogCatalystEnhancementItem.ID_BLACK)));
+    Map.ofEntries(
+      Map.entry(
+        "cold",
+        Identifier.fromNamespaceAndPath(
+          Constants.MOD_ID, FrogCatalystEnhancementItem.ID_COLD)),
+      Map.entry(
+        "temperate",
+        Identifier.fromNamespaceAndPath(
+          Constants.MOD_ID, FrogCatalystEnhancementItem.ID_TEMPERATE)),
+      Map.entry(
+        "warm",
+        Identifier.fromNamespaceAndPath(
+          Constants.MOD_ID, FrogCatalystEnhancementItem.ID_WARM)),
+      Map.entry(
+        "white",
+        Identifier.fromNamespaceAndPath(
+          Constants.MOD_ID, FrogCatalystEnhancementItem.ID_WHITE)),
+      Map.entry(
+        "orange",
+        Identifier.fromNamespaceAndPath(
+          Constants.MOD_ID, FrogCatalystEnhancementItem.ID_ORANGE)),
+      Map.entry(
+        "magenta",
+        Identifier.fromNamespaceAndPath(
+          Constants.MOD_ID, FrogCatalystEnhancementItem.ID_MAGENTA)),
+      Map.entry(
+        "light_blue",
+        Identifier.fromNamespaceAndPath(
+          Constants.MOD_ID, FrogCatalystEnhancementItem.ID_LIGHT_BLUE)),
+      Map.entry(
+        "yellow",
+        Identifier.fromNamespaceAndPath(
+          Constants.MOD_ID, FrogCatalystEnhancementItem.ID_YELLOW)),
+      Map.entry(
+        "lime",
+        Identifier.fromNamespaceAndPath(
+          Constants.MOD_ID, FrogCatalystEnhancementItem.ID_LIME)),
+      Map.entry(
+        "pink",
+        Identifier.fromNamespaceAndPath(
+          Constants.MOD_ID, FrogCatalystEnhancementItem.ID_PINK)),
+      Map.entry(
+        "gray",
+        Identifier.fromNamespaceAndPath(
+          Constants.MOD_ID, FrogCatalystEnhancementItem.ID_GRAY)),
+      Map.entry(
+        "light_gray",
+        Identifier.fromNamespaceAndPath(
+          Constants.MOD_ID, FrogCatalystEnhancementItem.ID_LIGHT_GRAY)),
+      Map.entry(
+        "cyan",
+        Identifier.fromNamespaceAndPath(
+          Constants.MOD_ID, FrogCatalystEnhancementItem.ID_CYAN)),
+      Map.entry(
+        "purple",
+        Identifier.fromNamespaceAndPath(
+          Constants.MOD_ID, FrogCatalystEnhancementItem.ID_PURPLE)),
+      Map.entry(
+        "blue",
+        Identifier.fromNamespaceAndPath(
+          Constants.MOD_ID, FrogCatalystEnhancementItem.ID_BLUE)),
+      Map.entry(
+        "brown",
+        Identifier.fromNamespaceAndPath(
+          Constants.MOD_ID, FrogCatalystEnhancementItem.ID_BROWN)),
+      Map.entry(
+        "green",
+        Identifier.fromNamespaceAndPath(
+          Constants.MOD_ID, FrogCatalystEnhancementItem.ID_GREEN)),
+      Map.entry(
+        "red",
+        Identifier.fromNamespaceAndPath(
+          Constants.MOD_ID, FrogCatalystEnhancementItem.ID_RED)),
+      Map.entry(
+        "black",
+        Identifier.fromNamespaceAndPath(
+          Constants.MOD_ID, FrogCatalystEnhancementItem.ID_BLACK)));
   private static final EnumMap<FrogCatalystType, Identifier> FROGLIGHT_MAP =
-      new EnumMap<>(FrogCatalystType.class);
+    new EnumMap<>(FrogCatalystType.class);
   private static FakePlayer fakePlayer;
 
   static {
     if (CompatConstants.MOD_SWAMPIER_SWAMPS_LOADED) {
       FROGLIGHT_MAP.put(
-          FrogCatalystType.WHITE,
-          Identifier.fromNamespaceAndPath(
-              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "white_froglight"));
+        FrogCatalystType.WHITE,
+        Identifier.fromNamespaceAndPath(
+          CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "white_froglight"));
       FROGLIGHT_MAP.put(
-          FrogCatalystType.ORANGE,
-          Identifier.fromNamespaceAndPath(
-              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "orange_froglight"));
+        FrogCatalystType.ORANGE,
+        Identifier.fromNamespaceAndPath(
+          CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "orange_froglight"));
       FROGLIGHT_MAP.put(
-          FrogCatalystType.MAGENTA,
-          Identifier.fromNamespaceAndPath(
-              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "magenta_froglight"));
+        FrogCatalystType.MAGENTA,
+        Identifier.fromNamespaceAndPath(
+          CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "magenta_froglight"));
       FROGLIGHT_MAP.put(
-          FrogCatalystType.LIGHT_BLUE,
-          Identifier.fromNamespaceAndPath(
-              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "light_blue_froglight"));
+        FrogCatalystType.LIGHT_BLUE,
+        Identifier.fromNamespaceAndPath(
+          CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "light_blue_froglight"));
       FROGLIGHT_MAP.put(
-          FrogCatalystType.YELLOW,
-          Identifier.fromNamespaceAndPath(
-              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "yellow_froglight"));
+        FrogCatalystType.YELLOW,
+        Identifier.fromNamespaceAndPath(
+          CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "yellow_froglight"));
       FROGLIGHT_MAP.put(
-          FrogCatalystType.LIME,
-          Identifier.fromNamespaceAndPath(
-              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "lime_froglight"));
+        FrogCatalystType.LIME,
+        Identifier.fromNamespaceAndPath(
+          CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "lime_froglight"));
       FROGLIGHT_MAP.put(
-          FrogCatalystType.PINK,
-          Identifier.fromNamespaceAndPath(
-              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "pink_froglight"));
+        FrogCatalystType.PINK,
+        Identifier.fromNamespaceAndPath(
+          CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "pink_froglight"));
       FROGLIGHT_MAP.put(
-          FrogCatalystType.GRAY,
-          Identifier.fromNamespaceAndPath(
-              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "gray_froglight"));
+        FrogCatalystType.GRAY,
+        Identifier.fromNamespaceAndPath(
+          CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "gray_froglight"));
       FROGLIGHT_MAP.put(
-          FrogCatalystType.LIGHT_GRAY,
-          Identifier.fromNamespaceAndPath(
-              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "light_gray_froglight"));
+        FrogCatalystType.LIGHT_GRAY,
+        Identifier.fromNamespaceAndPath(
+          CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "light_gray_froglight"));
       FROGLIGHT_MAP.put(
-          FrogCatalystType.CYAN,
-          Identifier.fromNamespaceAndPath(
-              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "cyan_froglight"));
+        FrogCatalystType.CYAN,
+        Identifier.fromNamespaceAndPath(
+          CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "cyan_froglight"));
       FROGLIGHT_MAP.put(
-          FrogCatalystType.PURPLE,
-          Identifier.fromNamespaceAndPath("minecraft", "pearlescent_froglight"));
+        FrogCatalystType.PURPLE,
+        Identifier.fromNamespaceAndPath("minecraft", "pearlescent_froglight"));
       FROGLIGHT_MAP.put(
-          FrogCatalystType.BLUE,
-          Identifier.fromNamespaceAndPath(
-              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "blue_froglight"));
+        FrogCatalystType.BLUE,
+        Identifier.fromNamespaceAndPath(
+          CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "blue_froglight"));
       FROGLIGHT_MAP.put(
-          FrogCatalystType.BROWN,
-          Identifier.fromNamespaceAndPath(
-              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "brown_froglight"));
+        FrogCatalystType.BROWN,
+        Identifier.fromNamespaceAndPath(
+          CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "brown_froglight"));
       FROGLIGHT_MAP.put(
-          FrogCatalystType.GREEN,
-          Identifier.fromNamespaceAndPath(
-              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "green_froglight"));
+        FrogCatalystType.GREEN,
+        Identifier.fromNamespaceAndPath(
+          CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "green_froglight"));
       FROGLIGHT_MAP.put(
-          FrogCatalystType.RED,
-          Identifier.fromNamespaceAndPath(CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "red_froglight"));
+        FrogCatalystType.RED,
+        Identifier.fromNamespaceAndPath(CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "red_froglight"));
       FROGLIGHT_MAP.put(
-          FrogCatalystType.BLACK,
-          Identifier.fromNamespaceAndPath(
-              CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "black_froglight"));
+        FrogCatalystType.BLACK,
+        Identifier.fromNamespaceAndPath(
+          CompatConstants.MOD_SWAMPIER_SWAMPS_ID, "black_froglight"));
     }
   }
 
-  private LootManager() {}
+  private LootManager() {
+  }
 
   public static NonNullList<ItemStack> getEntityLoot(
-      final MobCaptureData mobCaptureData,
-      final List<EnhancementItem> enhancements,
-      final Level level) {
+    final MobCaptureData mobCaptureData,
+    final List<EnhancementItem> enhancements,
+    final Level level) {
     EntityType<?> entityType = mobCaptureData.entityType();
     if (entityType == null) {
       logLootFailure("Unable to get entity type from Mob Capture data", mobCaptureData);
@@ -264,8 +265,8 @@ public class LootManager {
 
     try {
       entity.load(
-          TagValueInput.create(
-              ProblemReporter.DISCARDING, level.registryAccess(), mobCaptureData.data()));
+        TagValueInput.create(
+          ProblemReporter.DISCARDING, level.registryAccess(), mobCaptureData.data()));
 
       if (entity instanceof Sheep sheepEntity) {
         sheepEntity.setSheared(false);
@@ -274,7 +275,7 @@ public class LootManager {
         }
       }
       if (entity instanceof Pillager pillager
-          && MobVariantData.LEADER_VARIANT.equals(mobCaptureData.variant())) {
+        && MobVariantData.LEADER_VARIANT.equals(mobCaptureData.variant())) {
         pillager.setPatrolLeader(true);
       }
 
@@ -288,10 +289,10 @@ public class LootManager {
   }
 
   public static List<ItemStack> getEntityLootPreview(
-      final MobCaptureData mobCaptureData, final Level level, final int sampleRolls) {
+    final MobCaptureData mobCaptureData, final Level level, final int sampleRolls) {
     if (!(level instanceof ServerLevel)
-        || mobCaptureData == null
-        || mobCaptureData.entityType() == null) {
+      || mobCaptureData == null
+      || mobCaptureData.entityType() == null) {
       return List.of();
     }
     EntityType<?> entityType = mobCaptureData.entityType();
@@ -301,8 +302,8 @@ public class LootManager {
     }
     try {
       entity.load(
-          TagValueInput.create(
-              ProblemReporter.DISCARDING, level.registryAccess(), mobCaptureData.data()));
+        TagValueInput.create(
+          ProblemReporter.DISCARDING, level.registryAccess(), mobCaptureData.data()));
       if (entity instanceof Sheep sheepEntity) {
         sheepEntity.setSheared(false);
         if (mobCaptureData.hasColor()) {
@@ -310,7 +311,7 @@ public class LootManager {
         }
       }
       if (entity instanceof Pillager pillager
-          && MobVariantData.LEADER_VARIANT.equals(mobCaptureData.variant())) {
+        && MobVariantData.LEADER_VARIANT.equals(mobCaptureData.variant())) {
         pillager.setPatrolLeader(true);
       }
       Map<String, ItemStack> uniqueItems = new LinkedHashMap<>();
@@ -340,9 +341,9 @@ public class LootManager {
   }
 
   private static void logLootFailure(
-      final String reason, final MobCaptureData mobCaptureData, final Exception exception) {
+    final String reason, final MobCaptureData mobCaptureData, final Exception exception) {
     String failureKey =
-        reason + ":" + mobCaptureData.entityType() + ":" + exception.getClass().getName();
+      reason + ":" + mobCaptureData.entityType() + ":" + exception.getClass().getName();
     if (loggedLootFailures.add(failureKey)) {
       log.error("{} {}:", reason, mobCaptureData, exception);
       return;
@@ -352,10 +353,10 @@ public class LootManager {
   }
 
   public static NonNullList<ItemStack> getEntityLoot(
-      final Entity entity, final List<EnhancementItem> enhancements, final Level level) {
+    final Entity entity, final List<EnhancementItem> enhancements, final Level level) {
     NonNullList<ItemStack> drops = NonNullList.create();
     if (!(entity instanceof LivingEntity livingEntity)
-        || !(level instanceof ServerLevel serverLevel)) {
+      || !(level instanceof ServerLevel serverLevel)) {
       return drops;
     }
 
@@ -366,12 +367,12 @@ public class LootManager {
     int additionalRolls = 0;
     for (EnhancementItem enhancement : enhancements) {
       if (enhancement instanceof SwordEnhancementItem
-          && MobFarmConfig.isSwordEnhancementEnabled()) {
+        && MobFarmConfig.isSwordEnhancementEnabled()) {
         setSwordEnhancementParameters(lootContextBuilder, fakePlayer, serverLevel);
         additionalLuck += MobFarmConfig.swordEnhancementAdditionalLuck;
       }
       if (enhancement instanceof KnifeEnhancementItem
-          && MobFarmConfig.isKnifeEnhancementEnabled()) {
+        && MobFarmConfig.isKnifeEnhancementEnabled()) {
         setKnifeEnhancementParameters(lootContextBuilder, fakePlayer, serverLevel);
         additionalLuck += MobFarmConfig.knifeEnhancementAdditionalLuck;
       }
@@ -394,12 +395,12 @@ public class LootManager {
 
     // 1. Try to use overwrite loot table first.
     if (addLootFromCustomTable(
-        LootTablePriority.OVERWRITE,
-        livingEntity,
-        serverLevel,
-        lootParams,
-        additionalRolls,
-        drops)) {
+      LootTablePriority.OVERWRITE,
+      livingEntity,
+      serverLevel,
+      lootParams,
+      additionalRolls,
+      drops)) {
       handlePostEnhancements(enhancements, livingEntity, serverLevel, fakePlayer, drops);
       handleKnifeEnhancementLoot(enhancements, livingEntity, serverLevel, lootParams, drops);
       return drops;
@@ -407,47 +408,47 @@ public class LootManager {
 
     // 2. Then use priority loot table.
     addLootFromCustomTable(
-        LootTablePriority.PRIORITY, livingEntity, serverLevel, lootParams, additionalRolls, drops);
+      LootTablePriority.PRIORITY, livingEntity, serverLevel, lootParams, additionalRolls, drops);
 
     // 3. Then use vanilla loot table.
     if (lootTableLocation != null) {
       LootTable lootTable =
-          serverLevel.getServer().reloadableRegistries().getLootTable(lootTableLocation);
+        serverLevel.getServer().reloadableRegistries().getLootTable(lootTableLocation);
       for (int i = 0; i <= additionalRolls; i++) {
         lootTable.getRandomItems(lootParams).stream()
-            .filter(itemStack -> !itemStack.isEmpty())
-            .forEach(drops::add);
+          .filter(itemStack -> !itemStack.isEmpty())
+          .forEach(drops::add);
       }
       handleSpecialEntityDrops(livingEntity, drops);
     }
 
     // 4. Then use bonus loot table.
     addLootFromCustomTable(
-        LootTablePriority.BONUS, livingEntity, serverLevel, lootParams, additionalRolls, drops);
+      LootTablePriority.BONUS, livingEntity, serverLevel, lootParams, additionalRolls, drops);
 
     // 5. Finally use fallback loot table, if no drops are available yet.
     if (drops.isEmpty()
-        && !addLootFromCustomTable(
-            LootTablePriority.FALLBACK,
-            livingEntity,
-            serverLevel,
-            lootParams,
-            additionalRolls,
-            drops)) {
+      && !addLootFromCustomTable(
+      LootTablePriority.FALLBACK,
+      livingEntity,
+      serverLevel,
+      lootParams,
+      additionalRolls,
+      drops)) {
       ResourceKey<LootTable> legacyLocation =
-          getCustomLootTableLocation(livingEntity, LootTablePriority.LEGACY, false);
+        getCustomLootTableLocation(livingEntity, LootTablePriority.LEGACY, false);
       LootTable legacyTable =
-          serverLevel.getServer().reloadableRegistries().getLootTable(legacyLocation);
+        serverLevel.getServer().reloadableRegistries().getLootTable(legacyLocation);
       if (legacyTable != LootTable.EMPTY) {
         if (loggedLegacyPaths.add(legacyLocation.identifier())) {
           log.warn(
-              "Using legacy loot table path {} - please move to entities/fallback/",
-              legacyLocation);
+            "Using legacy loot table path {} - please move to entities/fallback/",
+            legacyLocation);
         }
         for (int i = 0; i <= additionalRolls; i++) {
           legacyTable.getRandomItems(lootParams).stream()
-              .filter(itemStack -> !itemStack.isEmpty())
-              .forEach(drops::add);
+            .filter(itemStack -> !itemStack.isEmpty())
+            .forEach(drops::add);
         }
       }
     }
@@ -459,7 +460,7 @@ public class LootManager {
   }
 
   public static NonNullList<ItemStack> getLuckyLoot(
-      final MobCaptureData mobCaptureData, final BlockPos blockPos, final Level level) {
+    final MobCaptureData mobCaptureData, final BlockPos blockPos, final Level level) {
     NonNullList<ItemStack> drops = NonNullList.create();
     if (!(level instanceof ServerLevel serverLevel)) {
       return drops;
@@ -467,41 +468,41 @@ public class LootManager {
 
     // Use different loot tables based on rarity of mob capture data.
     ResourceKey lootTableLocation =
-        ResourceKey.create(
-            Registries.LOOT_TABLE,
-            Identifier.fromNamespaceAndPath(
-                "minecraft",
-                switch (mobCaptureData.rarity()) {
-                  case COMMON -> "chests/simple_dungeon";
-                  case UNCOMMON -> "chests/village/village_toolsmith";
-                  case RARE -> "chests/stronghold_library";
-                  case EPIC -> "chests/end_city_treasure";
-                }));
+      ResourceKey.create(
+        Registries.LOOT_TABLE,
+        Identifier.fromNamespaceAndPath(
+          "minecraft",
+          switch (mobCaptureData.rarity()) {
+            case COMMON -> "chests/simple_dungeon";
+            case UNCOMMON -> "chests/village/village_toolsmith";
+            case RARE -> "chests/stronghold_library";
+            case EPIC -> "chests/end_city_treasure";
+          }));
     FakePlayer fakePlayer = getFakePlayer(serverLevel, blockPos);
     LootTable lootTable =
-        serverLevel.getServer().reloadableRegistries().getLootTable(lootTableLocation);
+      serverLevel.getServer().reloadableRegistries().getLootTable(lootTableLocation);
     LootParams.Builder lootContextBuilder = createLootChestContextBuilder(serverLevel, fakePlayer);
     lootContextBuilder.withLuck(
-        switch (mobCaptureData.rarity()) {
-          case COMMON -> 0.0f;
-          case UNCOMMON -> 0.5f;
-          case RARE -> 1.0f;
-          case EPIC -> 1.5f;
-        });
+      switch (mobCaptureData.rarity()) {
+        case COMMON -> 0.0f;
+        case UNCOMMON -> 0.5f;
+        case RARE -> 1.0f;
+        case EPIC -> 1.5f;
+      });
     LootParams lootContext = lootContextBuilder.create(LootContextParamSets.CHEST);
     lootTable.getRandomItems(lootContext).stream()
-        .filter(itemStack -> !itemStack.isEmpty())
-        .forEach(drops::add);
+      .filter(itemStack -> !itemStack.isEmpty())
+      .forEach(drops::add);
     return drops;
   }
 
   public static void addBonusDrops(
-      NonNullList<ItemStack> drops,
-      List<ItemStack> bonusDrops,
-      List<EnhancementItem> enhancements,
-      EntityType<?> entityType,
-      DyeColor color,
-      String variant) {
+    NonNullList<ItemStack> drops,
+    List<ItemStack> bonusDrops,
+    List<EnhancementItem> enhancements,
+    EntityType<?> entityType,
+    DyeColor color,
+    String variant) {
     for (ItemStack drop : bonusDrops) {
       if (drop.isEmpty()) {
         continue;
@@ -511,12 +512,12 @@ public class LootManager {
       } else if (entityType == EntityTypes.CHICKEN && drop.is(Items.EGG)) {
         drops.add(new ItemStack(getEggItem(variant), drop.getCount()));
       } else if (entityType == EntityTypes.BEE
-          && drop.is(Items.HONEYCOMB)
-          && enhancements.stream()
-              .anyMatch(
-                  enhancement ->
-                      enhancement instanceof HoneyExtractorEnhancementItem
-                          && MobFarmConfig.isEnhancementEnabled(enhancement))) {
+        && drop.is(Items.HONEYCOMB)
+        && enhancements.stream()
+        .anyMatch(
+          enhancement ->
+            enhancement instanceof HoneyExtractorEnhancementItem
+              && MobFarmConfig.isEnhancementEnabled(enhancement))) {
         drops.add(new ItemStack(Items.HONEY_BOTTLE));
       } else {
         drops.add(drop.copy());
@@ -525,9 +526,9 @@ public class LootManager {
   }
 
   public static List<ItemStack> getVariantBonusDrops(
-      final EntityType<?> entityType,
-      final ItemStack bonusDrop,
-      final Collection<String> variants) {
+    final EntityType<?> entityType,
+    final ItemStack bonusDrop,
+    final Collection<String> variants) {
     if (entityType != EntityTypes.CHICKEN || !bonusDrop.is(Items.EGG)) {
       return List.of();
     }
@@ -552,7 +553,7 @@ public class LootManager {
   }
 
   private static void handleSpecialEntityDrops(
-      final LivingEntity livingEntity, final NonNullList<ItemStack> drops) {
+    final LivingEntity livingEntity, final NonNullList<ItemStack> drops) {
     if (livingEntity instanceof WitherBoss) {
       if (random.nextInt(2) == 0) {
         drops.add(new ItemStack(Items.NETHER_STAR));
@@ -564,35 +565,35 @@ public class LootManager {
   }
 
   private static LootParams.Builder createLootContextBuilder(
-      ServerLevel serverLevel, LivingEntity livingEntity) {
+    ServerLevel serverLevel, LivingEntity livingEntity) {
     return new LootParams.Builder(serverLevel)
-        .withParameter(LootContextParams.DAMAGE_SOURCE, serverLevel.damageSources().generic())
-        .withParameter(LootContextParams.ORIGIN, livingEntity.position())
-        .withParameter(LootContextParams.THIS_ENTITY, livingEntity);
+      .withParameter(LootContextParams.DAMAGE_SOURCE, serverLevel.damageSources().generic())
+      .withParameter(LootContextParams.ORIGIN, livingEntity.position())
+      .withParameter(LootContextParams.THIS_ENTITY, livingEntity);
   }
 
   private static LootParams.Builder createLootChestContextBuilder(
-      ServerLevel serverLevel, LivingEntity livingEntity) {
+    ServerLevel serverLevel, LivingEntity livingEntity) {
     return new LootParams.Builder(serverLevel)
-        .withParameter(LootContextParams.ORIGIN, livingEntity.position())
-        .withParameter(LootContextParams.THIS_ENTITY, livingEntity);
+      .withParameter(LootContextParams.ORIGIN, livingEntity.position())
+      .withParameter(LootContextParams.THIS_ENTITY, livingEntity);
   }
 
   private static ResourceKey<LootTable> getLootTableLocation(
-      LivingEntity livingEntity, List<EnhancementItem> enhancements) {
+    LivingEntity livingEntity, List<EnhancementItem> enhancements) {
     Optional<ResourceKey<LootTable>> lootTableLocation =
-        livingEntity.getType().getDefaultLootTable();
+      livingEntity.getType().getDefaultLootTable();
     for (EnhancementItem enhancement : enhancements) {
       if (enhancement instanceof SheepEnhancementItem
-          && MobFarmConfig.isEnhancementEnabled(enhancement)
-          && livingEntity instanceof Sheep sheep) {
+        && MobFarmConfig.isEnhancementEnabled(enhancement)
+        && livingEntity instanceof Sheep sheep) {
         DyeColor color = sheep.getColor();
         lootTableLocation =
-            Optional.of(
-                ResourceKey.create(
-                    Registries.LOOT_TABLE,
-                    Identifier.fromNamespaceAndPath(
-                        "minecraft", "entities/sheep/" + color.getName())));
+          Optional.of(
+            ResourceKey.create(
+              Registries.LOOT_TABLE,
+              Identifier.fromNamespaceAndPath(
+                "minecraft", "entities/sheep/" + color.getName())));
       }
     }
 
@@ -600,9 +601,9 @@ public class LootManager {
   }
 
   private static ResourceKey<LootTable> getCustomLootTableLocation(
-      final LivingEntity livingEntity,
-      final LootTablePriority priority,
-      final boolean withVariant) {
+    final LivingEntity livingEntity,
+    final LootTablePriority priority,
+    final boolean withVariant) {
     Identifier entityTypeIdentifier = BuiltInRegistries.ENTITY_TYPE.getKey(livingEntity.getType());
     String entityPath = entityTypeIdentifier.getPath();
     if (withVariant) {
@@ -612,27 +613,27 @@ public class LootManager {
       }
     }
     String path =
-        priority.getPath().isEmpty() ? "entities/" : "entities/" + priority.getPath() + "/";
+      priority.getPath().isEmpty() ? "entities/" : "entities/" + priority.getPath() + "/";
     return ResourceKey.create(
-        Registries.LOOT_TABLE,
-        Identifier.fromNamespaceAndPath(
-            Constants.MOD_ID, path + entityTypeIdentifier.getNamespace() + "/" + entityPath));
+      Registries.LOOT_TABLE,
+      Identifier.fromNamespaceAndPath(
+        Constants.MOD_ID, path + entityTypeIdentifier.getNamespace() + "/" + entityPath));
   }
 
   private static boolean addLootFromCustomTable(
-      final LootTablePriority priority,
-      final LivingEntity livingEntity,
-      final ServerLevel serverLevel,
-      final LootParams lootParams,
-      final int additionalRolls,
-      final NonNullList<ItemStack> drops) {
+    final LootTablePriority priority,
+    final LivingEntity livingEntity,
+    final ServerLevel serverLevel,
+    final LootParams lootParams,
+    final int additionalRolls,
+    final NonNullList<ItemStack> drops) {
     ResourceKey<LootTable> variantLocation =
-        getCustomLootTableLocation(livingEntity, priority, true);
+      getCustomLootTableLocation(livingEntity, priority, true);
     LootTable customTable =
-        serverLevel.getServer().reloadableRegistries().getLootTable(variantLocation);
+      serverLevel.getServer().reloadableRegistries().getLootTable(variantLocation);
     if (customTable == LootTable.EMPTY) {
       ResourceKey<LootTable> baseLocation =
-          getCustomLootTableLocation(livingEntity, priority, false);
+        getCustomLootTableLocation(livingEntity, priority, false);
       if (!baseLocation.equals(variantLocation)) {
         customTable = serverLevel.getServer().reloadableRegistries().getLootTable(baseLocation);
       }
@@ -640,8 +641,8 @@ public class LootManager {
     if (customTable != LootTable.EMPTY) {
       for (int i = 0; i <= additionalRolls; i++) {
         customTable.getRandomItems(lootParams).stream()
-            .filter(itemStack -> !itemStack.isEmpty())
-            .forEach(drops::add);
+          .filter(itemStack -> !itemStack.isEmpty())
+          .forEach(drops::add);
       }
       return true;
     }
@@ -649,36 +650,36 @@ public class LootManager {
   }
 
   private static void setSwordEnhancementParameters(
-      LootParams.Builder lootParamsBuilder, FakePlayer fakePlayer, ServerLevel serverLevel) {
+    LootParams.Builder lootParamsBuilder, FakePlayer fakePlayer, ServerLevel serverLevel) {
     ItemStack swordItem = new ItemStack(Items.IRON_SWORD);
     fakePlayer.setItemInHand(InteractionHand.MAIN_HAND, swordItem);
     lootParamsBuilder
-        .withParameter(
-            LootContextParams.DAMAGE_SOURCE, serverLevel.damageSources().playerAttack(fakePlayer))
-        .withParameter(LootContextParams.LAST_DAMAGE_PLAYER, fakePlayer)
-        .withParameter(LootContextParams.ATTACKING_ENTITY, fakePlayer)
-        .withParameter(LootContextParams.DIRECT_ATTACKING_ENTITY, fakePlayer);
+      .withParameter(
+        LootContextParams.DAMAGE_SOURCE, serverLevel.damageSources().playerAttack(fakePlayer))
+      .withParameter(LootContextParams.LAST_DAMAGE_PLAYER, fakePlayer)
+      .withParameter(LootContextParams.ATTACKING_ENTITY, fakePlayer)
+      .withParameter(LootContextParams.DIRECT_ATTACKING_ENTITY, fakePlayer);
   }
 
   private static void setKnifeEnhancementParameters(
-      LootParams.Builder lootParamsBuilder, FakePlayer fakePlayer, ServerLevel serverLevel) {
+    LootParams.Builder lootParamsBuilder, FakePlayer fakePlayer, ServerLevel serverLevel) {
     ItemStack knifeItem = getKnifeTool();
     if (!knifeItem.isEmpty()) {
       fakePlayer.setItemInHand(InteractionHand.MAIN_HAND, knifeItem);
     }
     lootParamsBuilder
-        .withParameter(
-            LootContextParams.DAMAGE_SOURCE, serverLevel.damageSources().playerAttack(fakePlayer))
-        .withParameter(LootContextParams.LAST_DAMAGE_PLAYER, fakePlayer)
-        .withParameter(LootContextParams.ATTACKING_ENTITY, fakePlayer)
-        .withParameter(LootContextParams.DIRECT_ATTACKING_ENTITY, fakePlayer);
+      .withParameter(
+        LootContextParams.DAMAGE_SOURCE, serverLevel.damageSources().playerAttack(fakePlayer))
+      .withParameter(LootContextParams.LAST_DAMAGE_PLAYER, fakePlayer)
+      .withParameter(LootContextParams.ATTACKING_ENTITY, fakePlayer)
+      .withParameter(LootContextParams.DIRECT_ATTACKING_ENTITY, fakePlayer);
   }
 
   private static ItemStack getKnifeTool() {
     if (CompatConstants.MOD_FARMERS_DELIGHT_LOADED) {
       Optional<Reference<Item>> farmersDelightKnife =
-          BuiltInRegistries.ITEM.get(
-              Identifier.fromNamespaceAndPath("farmersdelight", "iron_knife"));
+        BuiltInRegistries.ITEM.get(
+          Identifier.fromNamespaceAndPath("farmersdelight", "iron_knife"));
       if (farmersDelightKnife.isPresent() && farmersDelightKnife.get().value() != Items.AIR) {
         return new ItemStack(farmersDelightKnife.get().value());
       }
@@ -687,43 +688,43 @@ public class LootManager {
   }
 
   private static void handlePostEnhancements(
-      List<EnhancementItem> enhancements,
-      LivingEntity livingEntity,
-      ServerLevel serverLevel,
-      FakePlayer fakePlayer,
-      NonNullList<ItemStack> drops) {
+    List<EnhancementItem> enhancements,
+    LivingEntity livingEntity,
+    ServerLevel serverLevel,
+    FakePlayer fakePlayer,
+    NonNullList<ItemStack> drops) {
     for (EnhancementItem enhancement : enhancements) {
 
       // Handle Experience enhancement
       if (enhancement instanceof ExperienceEnhancementItem experienceEnhancementItem
-          && MobFarmConfig.isEnhancementEnabled(enhancement)
-          && random.nextInt(experienceEnhancementItem.experienceDropChance()) == 0
-          && ExperienceManager.shouldDropExperience(livingEntity)) {
+        && MobFarmConfig.isEnhancementEnabled(enhancement)
+        && random.nextInt(experienceEnhancementItem.experienceDropChance()) == 0
+        && ExperienceManager.shouldDropExperience(livingEntity)) {
         int experience = ExperienceManager.getExperienceReward(livingEntity, serverLevel);
         if (experience >= experienceEnhancementItem.minExperienceForDrop()) {
           drops.add(new ItemStack(Items.EXPERIENCE_BOTTLE));
         } else {
           log.debug(
-              "Experience drop of {} is below minimum threshold of {} for {}",
-              experience,
-              experienceEnhancementItem.minExperienceForDrop(),
-              livingEntity);
+            "Experience drop of {} is below minimum threshold of {} for {}",
+            experience,
+            experienceEnhancementItem.minExperienceForDrop(),
+            livingEntity);
         }
       }
 
       // Handle Mob specific enhancements
       if (livingEntity instanceof Bee) {
         if (enhancement instanceof HoneyHarvesterFrameEnhancementItem
-            && MobFarmConfig.isEnhancementEnabled(enhancement)
-            && random.nextInt(4) == 0) {
+          && MobFarmConfig.isEnhancementEnabled(enhancement)
+          && random.nextInt(4) == 0) {
           drops.add(new ItemStack(Items.HONEYCOMB));
         } else if (enhancement instanceof HoneyExtractorEnhancementItem
-            && MobFarmConfig.isEnhancementEnabled(enhancement)
-            && random.nextInt(4) == 0) {
+          && MobFarmConfig.isEnhancementEnabled(enhancement)
+          && random.nextInt(4) == 0) {
           drops.add(new ItemStack(Items.HONEY_BOTTLE));
         } else if (enhancement instanceof PollenTrapEnhancementItem
-            && MobFarmConfig.isEnhancementEnabled(enhancement)
-            && random.nextInt(5) == 0) {
+          && MobFarmConfig.isEnhancementEnabled(enhancement)
+          && random.nextInt(5) == 0) {
           if (random.nextFloat() < 0.3f) {
             drops.add(getRandomFlower());
           } else {
@@ -733,19 +734,19 @@ public class LootManager {
       } else if (livingEntity instanceof Cow) {
         // Handle MilkExtractor enhancement (50% chance)
         if (enhancement instanceof MilkExtractorEnhancementItem
-            && MobFarmConfig.isEnhancementEnabled(enhancement)
-            && random.nextInt(2) == 0) {
+          && MobFarmConfig.isEnhancementEnabled(enhancement)
+          && random.nextInt(2) == 0) {
           Optional<Reference<Item>> milkBottle;
           if (CompatConstants.MOD_FARMERS_DELIGHT_LOADED) {
             milkBottle =
-                BuiltInRegistries.ITEM.get(
-                    Identifier.fromNamespaceAndPath(
-                        CompatConstants.MOD_FARMERS_DELIGHT_ID,
-                        CompatConstants.MOD_FARMERS_DELIGHT_MILK_BOTTLE));
+              BuiltInRegistries.ITEM.get(
+                Identifier.fromNamespaceAndPath(
+                  CompatConstants.MOD_FARMERS_DELIGHT_ID,
+                  CompatConstants.MOD_FARMERS_DELIGHT_MILK_BOTTLE));
           } else {
             milkBottle =
-                BuiltInRegistries.ITEM.get(
-                    Identifier.fromNamespaceAndPath(Constants.MOD_ID, MilkBottleItem.ID));
+              BuiltInRegistries.ITEM.get(
+                Identifier.fromNamespaceAndPath(Constants.MOD_ID, MilkBottleItem.ID));
           }
           milkBottle.ifPresent(itemReference -> drops.add(new ItemStack(itemReference)));
         }
@@ -754,8 +755,8 @@ public class LootManager {
       // Handle egg drops for chicken entities with Egg Collector enhancement (50% chance)
       if (livingEntity instanceof Chicken) {
         if (enhancement instanceof EggCollectorEnhancementItem
-            && MobFarmConfig.isEnhancementEnabled(enhancement)
-            && random.nextInt(2) == 0) {
+          && MobFarmConfig.isEnhancementEnabled(enhancement)
+          && random.nextInt(2) == 0) {
           drops.add(new ItemStack(getEggItem(MobVariantData.getVariant(livingEntity))));
         }
       } else if (livingEntity instanceof Frog) {
@@ -765,15 +766,15 @@ public class LootManager {
           Identifier frogCatalystIdentifier = FROG_CATALYST_RESOURCES.get(frogVariant);
           if (frogCatalystIdentifier != null) {
             Optional<Reference<Item>> frogCatalystItem =
-                BuiltInRegistries.ITEM.get(frogCatalystIdentifier);
+              BuiltInRegistries.ITEM.get(frogCatalystIdentifier);
             if (frogCatalystItem.isPresent()
-                && frogCatalystItem.get().value()
-                    instanceof FrogCatalystEnhancementItem frogCatalystEnhancementItem) {
+              && frogCatalystItem.get().value()
+              instanceof FrogCatalystEnhancementItem frogCatalystEnhancementItem) {
               drops.add(new ItemStack(frogCatalystEnhancementItem));
             } else {
               log.warn(
-                  "Frog Catalyst item {} is not an instance of FrogCatalystEnhancementItem!",
-                  frogCatalystItem);
+                "Frog Catalyst item {} is not an instance of FrogCatalystEnhancementItem!",
+                frogCatalystItem);
             }
           } else {
             log.warn("No Frog Catalyst resource found for variant {}!", frogVariant);
@@ -787,8 +788,8 @@ public class LootManager {
 
         // Adding additional Frog Light drop with a 50% chance with frog catalyst enhancement.
         if (enhancement instanceof FrogCatalystEnhancementItem frogCatalystEnhancementItem
-            && MobFarmConfig.isEnhancementEnabled(enhancement)
-            && random.nextInt(2) == 0) {
+          && MobFarmConfig.isEnhancementEnabled(enhancement)
+          && random.nextInt(2) == 0) {
           FrogCatalystType frogCatalystType = frogCatalystEnhancementItem.getFrogCatalystType();
           // Handle basic frog catalyst drops based on type.
           switch (frogCatalystType) {
@@ -807,12 +808,12 @@ public class LootManager {
             Identifier frogCatalystIdentifier = FROGLIGHT_MAP.get(frogCatalystType);
             if (frogCatalystIdentifier != null) {
               Optional<Reference<Item>> frogCatalystItem =
-                  BuiltInRegistries.ITEM.get(frogCatalystIdentifier);
+                BuiltInRegistries.ITEM.get(frogCatalystIdentifier);
               if (frogCatalystItem.isPresent() && frogCatalystItem.get().value() != Items.AIR) {
                 drops.add(new ItemStack(frogCatalystItem.get().value()));
               } else {
                 log.warn(
-                    "Swampier Swamps: Frog Catalyst item {} is not available!", frogCatalystType);
+                  "Swampier Swamps: Frog Catalyst item {} is not available!", frogCatalystType);
               }
             }
           }
@@ -822,15 +823,15 @@ public class LootManager {
   }
 
   private static void handleKnifeEnhancementLoot(
-      List<EnhancementItem> enhancements,
-      LivingEntity livingEntity,
-      ServerLevel serverLevel,
-      LootParams lootParams,
-      NonNullList<ItemStack> drops) {
+    List<EnhancementItem> enhancements,
+    LivingEntity livingEntity,
+    ServerLevel serverLevel,
+    LootParams lootParams,
+    NonNullList<ItemStack> drops) {
     boolean hasKnifeEnhancement = false;
     for (EnhancementItem enhancement : enhancements) {
       if (enhancement instanceof KnifeEnhancementItem
-          && MobFarmConfig.isEnhancementEnabled(enhancement)) {
+        && MobFarmConfig.isEnhancementEnabled(enhancement)) {
         hasKnifeEnhancement = true;
         break;
       }
@@ -842,21 +843,21 @@ public class LootManager {
 
     Identifier entityTypeIdentifier = BuiltInRegistries.ENTITY_TYPE.getKey(livingEntity.getType());
     ResourceKey<LootTable> knifeLootTableLocation =
-        ResourceKey.create(
-            Registries.LOOT_TABLE,
-            Identifier.fromNamespaceAndPath(
-                Constants.MOD_ID,
-                "enhancement/knife/"
-                    + entityTypeIdentifier.getNamespace()
-                    + "/"
-                    + entityTypeIdentifier.getPath()));
+      ResourceKey.create(
+        Registries.LOOT_TABLE,
+        Identifier.fromNamespaceAndPath(
+          Constants.MOD_ID,
+          "enhancement/knife/"
+            + entityTypeIdentifier.getNamespace()
+            + "/"
+            + entityTypeIdentifier.getPath()));
 
     LootTable knifeLootTable =
-        serverLevel.getServer().reloadableRegistries().getLootTable(knifeLootTableLocation);
+      serverLevel.getServer().reloadableRegistries().getLootTable(knifeLootTableLocation);
     if (knifeLootTable != LootTable.EMPTY) {
       knifeLootTable.getRandomItems(lootParams).stream()
-          .filter(itemStack -> !itemStack.isEmpty())
-          .forEach(drops::add);
+        .filter(itemStack -> !itemStack.isEmpty())
+        .forEach(drops::add);
     }
   }
 
@@ -872,32 +873,32 @@ public class LootManager {
 
   private static ItemStack getRandomFlower() {
     List<Item> flowers =
-        List.of(
-            Items.DANDELION,
-            Items.POPPY,
-            Items.BLUE_ORCHID,
-            Items.ALLIUM,
-            Items.AZURE_BLUET,
-            Items.RED_TULIP,
-            Items.ORANGE_TULIP,
-            Items.WHITE_TULIP,
-            Items.PINK_TULIP,
-            Items.OXEYE_DAISY,
-            Items.CORNFLOWER,
-            Items.LILY_OF_THE_VALLEY);
+      List.of(
+        Items.DANDELION,
+        Items.POPPY,
+        Items.BLUE_ORCHID,
+        Items.ALLIUM,
+        Items.AZURE_BLUET,
+        Items.RED_TULIP,
+        Items.ORANGE_TULIP,
+        Items.WHITE_TULIP,
+        Items.PINK_TULIP,
+        Items.OXEYE_DAISY,
+        Items.CORNFLOWER,
+        Items.LILY_OF_THE_VALLEY);
     return new ItemStack(flowers.get(new Random().nextInt(flowers.size())));
   }
 
   private static ItemStack getRandomDye() {
     List<Item> dyes =
-        List.of(
-            Items.DYE.yellow(),
-            Items.DYE.red(),
-            Items.DYE.blue(),
-            Items.DYE.orange(),
-            Items.DYE.pink(),
-            Items.DYE.white(),
-            Items.DYE.black());
+      List.of(
+        Items.DYE.yellow(),
+        Items.DYE.red(),
+        Items.DYE.blue(),
+        Items.DYE.orange(),
+        Items.DYE.pink(),
+        Items.DYE.white(),
+        Items.DYE.black());
     return new ItemStack(dyes.get(new Random().nextInt(dyes.size())));
   }
 }

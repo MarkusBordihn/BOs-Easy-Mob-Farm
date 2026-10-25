@@ -51,11 +51,12 @@ public class RendererManager {
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final Map<BlockPos, Entity> entityMap = new HashMap<>();
   private static final AtomicInteger renderEntityIdCounter =
-      new AtomicInteger(Integer.MAX_VALUE - 100000);
+    new AtomicInteger(Integer.MAX_VALUE - 100000);
   private static final Map<BlockPos, ItemStack> unusableCapturedMobs = new HashMap<>();
   private static int validationCounter = 0;
 
-  private RendererManager() {}
+  private RendererManager() {
+  }
 
   public static void assignRenderEntityId(Entity entity) {
     entity.setId(renderEntityIdCounter.getAndDecrement());
@@ -172,8 +173,8 @@ public class RendererManager {
     // Load entity data from Mob Capture data
     CompoundTag mobDataTag = mobCaptureData.data();
     ValueInput valueInput =
-        TagValueInput.create(
-            ProblemReporter.DISCARDING, entity.level().registryAccess(), mobDataTag);
+      TagValueInput.create(
+        ProblemReporter.DISCARDING, entity.level().registryAccess(), mobDataTag);
     entity.load(valueInput);
     entity.tick();
 
@@ -193,15 +194,15 @@ public class RendererManager {
 
     // Ensure Pillager Leaders always display with the Ominous Banner.
     if (entity instanceof Pillager pillager
-        && MobVariantData.LEADER_VARIANT.equals(mobCaptureData.variant())
-        && pillager.getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
+      && MobVariantData.LEADER_VARIANT.equals(mobCaptureData.variant())
+      && pillager.getItemBySlot(EquipmentSlot.HEAD).isEmpty()) {
       pillager.setItemSlot(
-          EquipmentSlot.HEAD,
-          Raid.getOminousBannerInstance(
-              mobFarmBlockEntity
-                  .getLevel()
-                  .registryAccess()
-                  .lookupOrThrow(Registries.BANNER_PATTERN)));
+        EquipmentSlot.HEAD,
+        Raid.getOminousBannerInstance(
+          mobFarmBlockEntity
+            .getLevel()
+            .registryAccess()
+            .lookupOrThrow(Registries.BANNER_PATTERN)));
     }
 
     // Disable AI for the entity and other performance improvements

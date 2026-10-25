@@ -10,7 +10,8 @@ public class ClientScreens {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  protected ClientScreens() {}
+  protected ClientScreens() {
+  }
 
   public static void registerScreens(final RegisterMenuScreensEvent event) {
     log.debug("{} Client Screens ...", Constants.LOG_REGISTER_PREFIX);

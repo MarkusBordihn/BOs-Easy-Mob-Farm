@@ -45,7 +45,8 @@ public class MobCatcherTestHelper {
   private static final BlockPos RELEASE_GROUND_POSITION = new BlockPos(1, 1, 1);
   private static final BlockPos RELEASE_POSITION = new BlockPos(1, 2, 1);
 
-  private MobCatcherTestHelper() {}
+  private MobCatcherTestHelper() {
+  }
 
   public static void testRejectedCaptureKeepsDurability(GameTestHelper helper) {
     ItemStack mobCatcher = new ItemStack(Items.ENDURING_CAPTURE_NET);
@@ -54,17 +55,17 @@ public class MobCatcherTestHelper {
     cow.setHealth(cow.getMaxHealth());
 
     InteractionResult result =
-        mobCatcherItem.interactLivingEntity(
-            mobCatcher, helper.makeMockPlayer(GameType.SURVIVAL), cow, InteractionHand.MAIN_HAND);
+      mobCatcherItem.interactLivingEntity(
+        mobCatcher, helper.makeMockPlayer(GameType.SURVIVAL), cow, InteractionHand.MAIN_HAND);
     cow.discard();
 
     GameTestHelpers.assertTrue(
-        helper,
-        "A rejected capture should fail without using durability, but got "
-            + result
-            + " with damage "
-            + mobCatcher.getDamageValue(),
-        result == InteractionResult.FAIL && mobCatcher.getDamageValue() == 0);
+      helper,
+      "A rejected capture should fail without using durability, but got "
+        + result
+        + " with damage "
+        + mobCatcher.getDamageValue(),
+      result == InteractionResult.FAIL && mobCatcher.getDamageValue() == 0);
   }
 
   public static void testSuccessfulCaptureUsesDurability(GameTestHelper helper) {
@@ -75,20 +76,20 @@ public class MobCatcherTestHelper {
     Player player = helper.makeMockPlayer(GameType.SURVIVAL);
 
     InteractionResult result =
-        mobCatcherItem.interactLivingEntity(mobCatcher, player, cow, InteractionHand.MAIN_HAND);
+      mobCatcherItem.interactLivingEntity(mobCatcher, player, cow, InteractionHand.MAIN_HAND);
     ItemStack usedMobCatcher = player.getItemInHand(InteractionHand.MAIN_HAND);
 
     GameTestHelpers.assertTrue(
-        helper,
-        "A successful capture should consume durability, but got "
-            + result
-            + " with damage "
-            + usedMobCatcher.getDamageValue(),
-        result == InteractionResult.CONSUME && usedMobCatcher.getDamageValue() > 0);
+      helper,
+      "A successful capture should consume durability, but got "
+        + result
+        + " with damage "
+        + usedMobCatcher.getDamageValue(),
+      result == InteractionResult.CONSUME && usedMobCatcher.getDamageValue() > 0);
     GameTestHelpers.assertTrue(
-        helper,
-        "A successful capture should store the mob capture data on the used mob catcher.",
-        mobCatcherItem.hasMobCaptureData(usedMobCatcher));
+      helper,
+      "A successful capture should store the mob capture data on the used mob catcher.",
+      mobCatcherItem.hasMobCaptureData(usedMobCatcher));
   }
 
   public static void testDenyListRejectsCapture(GameTestHelper helper) {
@@ -126,29 +127,29 @@ public class MobCatcherTestHelper {
 
     BlockPos absoluteGroundPosition = helper.absolutePos(RELEASE_GROUND_POSITION);
     InteractionResult result =
-        player
-            .getItemInHand(InteractionHand.MAIN_HAND)
-            .useOn(
-                new UseOnContext(
-                    player,
-                    InteractionHand.MAIN_HAND,
-                    new BlockHitResult(
-                        Vec3.atCenterOf(absoluteGroundPosition),
-                        Direction.UP,
-                        absoluteGroundPosition,
-                        false)));
+      player
+        .getItemInHand(InteractionHand.MAIN_HAND)
+        .useOn(
+          new UseOnContext(
+            player,
+            InteractionHand.MAIN_HAND,
+            new BlockHitResult(
+              Vec3.atCenterOf(absoluteGroundPosition),
+              Direction.UP,
+              absoluteGroundPosition,
+              false)));
     List<Cow> releasedCows =
-        helper
-            .getLevel()
-            .getEntitiesOfClass(
-                Cow.class, new AABB(helper.absolutePos(RELEASE_POSITION)).inflate(2));
+      helper
+        .getLevel()
+        .getEntitiesOfClass(
+          Cow.class, new AABB(helper.absolutePos(RELEASE_POSITION)).inflate(2));
 
     helper.assertTrue(
-        result.consumesAction() && releasedCows.size() == 1,
-        "The captured cow should be released, but got " + result + " with " + releasedCows);
+      result.consumesAction() && releasedCows.size() == 1,
+      "The captured cow should be released, but got " + result + " with " + releasedCows);
     helper.assertFalse(
-        mobCatcherItem.hasMobCaptureData(player.getItemInHand(InteractionHand.MAIN_HAND)),
-        "The mob catcher should be empty after releasing the cow.");
+      mobCatcherItem.hasMobCaptureData(player.getItemInHand(InteractionHand.MAIN_HAND)),
+      "The mob catcher should be empty after releasing the cow.");
     helper.succeed();
   }
 
@@ -159,13 +160,13 @@ public class MobCatcherTestHelper {
     cow.setHealth(1.0f);
 
     InteractionResult result =
-        mobCatcherItem.interactLivingEntity(
-            mobCatcher, helper.makeMockPlayer(GameType.SURVIVAL), cow, InteractionHand.MAIN_HAND);
+      mobCatcherItem.interactLivingEntity(
+        mobCatcher, helper.makeMockPlayer(GameType.SURVIVAL), cow, InteractionHand.MAIN_HAND);
     boolean cowCaptured = cow.isRemoved();
     cow.discard();
 
     helper.assertTrue(
-        result == InteractionResult.FAIL && !cowCaptured,
-        message + ", but got " + result + " with captured " + cowCaptured);
+      result == InteractionResult.FAIL && !cowCaptured,
+      message + ", but got " + result + " with captured " + cowCaptured);
   }
 }

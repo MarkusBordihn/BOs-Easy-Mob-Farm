@@ -53,7 +53,7 @@ class RecipeAdvancementTest {
 
     URL assetsUrl = RecipeAdvancementTest.class.getResource("/assets/" + Constants.MOD_ID);
     Assertions.assertNotNull(
-        assetsUrl, "Unable to find the assets directory of " + Constants.MOD_ID);
+      assetsUrl, "Unable to find the assets directory of " + Constants.MOD_ID);
     assetsDirectory = Path.of(assetsUrl.toURI());
   }
 
@@ -61,8 +61,8 @@ class RecipeAdvancementTest {
     Path recipeDirectory = dataDirectory.resolve("recipe");
 
     return jsonFiles(recipeDirectory).stream()
-        .map(recipe -> NAMESPACE_PREFIX + toResourcePath(recipeDirectory, recipe))
-        .collect(Collectors.toCollection(TreeSet::new));
+      .map(recipe -> NAMESPACE_PREFIX + toResourcePath(recipeDirectory, recipe))
+      .collect(Collectors.toCollection(TreeSet::new));
   }
 
   private static Set<String> unlockedRecipeIds() throws IOException {
@@ -102,8 +102,8 @@ class RecipeAdvancementTest {
 
     try (Stream<Path> files = Files.walk(directory)) {
       return files
-          .filter(file -> file.getFileName().toString().endsWith(".json"))
-          .collect(Collectors.toCollection(TreeSet::new));
+        .filter(file -> file.getFileName().toString().endsWith(".json"))
+        .collect(Collectors.toCollection(TreeSet::new));
     }
   }
 
@@ -114,9 +114,9 @@ class RecipeAdvancementTest {
     recipesWithoutAdvancement.removeAll(unlockedRecipeIds());
 
     Assertions.assertEquals(
-        Set.of(),
-        recipesWithoutAdvancement,
-        "Recipes without an unlock advancement never show up in the recipe book");
+      Set.of(),
+      recipesWithoutAdvancement,
+      "Recipes without an unlock advancement never show up in the recipe book");
   }
 
   @Test
@@ -126,7 +126,7 @@ class RecipeAdvancementTest {
     unknownRecipes.removeAll(recipeIds());
 
     Assertions.assertEquals(
-        Set.of(), unknownRecipes, "Advancements unlock recipes which do not exist");
+      Set.of(), unknownRecipes, "Advancements unlock recipes which do not exist");
   }
 
   @Test
@@ -177,6 +177,6 @@ class RecipeAdvancementTest {
     }
 
     Assertions.assertEquals(
-        Set.of(), missingTranslations, "Advancements use untranslated title or description keys");
+      Set.of(), missingTranslations, "Advancements use untranslated title or description keys");
   }
 }

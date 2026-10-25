@@ -93,8 +93,8 @@ class MobFarmConfigTest {
     MobFarmConfig.tier0MaxSpeedEnhancements = 1;
 
     Assertions.assertFalse(
-        MobFarmConfig.canAddEnhancementType(
-            SpeedEnhancementItem.class, List.of(SpeedEnhancementItem.class), 0));
+      MobFarmConfig.canAddEnhancementType(
+        SpeedEnhancementItem.class, List.of(SpeedEnhancementItem.class), 0));
   }
 
   @Test
@@ -102,8 +102,8 @@ class MobFarmConfigTest {
     MobFarmConfig.tier0MaxSpeedEnhancements = 1;
 
     Assertions.assertFalse(
-        MobFarmConfig.canAddEnhancementType(
-            SpeedEnhancementItem.class, List.of(CreativeSpeedEnhancementItem.class), 0));
+      MobFarmConfig.canAddEnhancementType(
+        SpeedEnhancementItem.class, List.of(CreativeSpeedEnhancementItem.class), 0));
   }
 
   @Test
@@ -113,23 +113,23 @@ class MobFarmConfigTest {
     MobFarmConfig.tier0MaxLuckEnhancements = 1;
 
     List<Class<? extends EnhancementItem>> effectiveEnhancementTypes =
-        MobFarmConfig.getEffectiveEnhancementTypes(
-            List.of(
-                SpeedEnhancementItem.class,
-                SpeedEnhancementItem.class,
-                LootEnhancementItem.class,
-                LootEnhancementItem.class,
-                LootEnhancementItem.class,
-                LuckEnhancementItem.class,
-                LuckEnhancementItem.class),
-            0);
+      MobFarmConfig.getEffectiveEnhancementTypes(
+        List.of(
+          SpeedEnhancementItem.class,
+          SpeedEnhancementItem.class,
+          LootEnhancementItem.class,
+          LootEnhancementItem.class,
+          LootEnhancementItem.class,
+          LuckEnhancementItem.class,
+          LuckEnhancementItem.class),
+        0);
 
     Assertions.assertEquals(
-        1, effectiveEnhancementTypes.stream().filter(SpeedEnhancementItem.class::equals).count());
+      1, effectiveEnhancementTypes.stream().filter(SpeedEnhancementItem.class::equals).count());
     Assertions.assertEquals(
-        2, effectiveEnhancementTypes.stream().filter(LootEnhancementItem.class::equals).count());
+      2, effectiveEnhancementTypes.stream().filter(LootEnhancementItem.class::equals).count());
     Assertions.assertEquals(
-        1, effectiveEnhancementTypes.stream().filter(LuckEnhancementItem.class::equals).count());
+      1, effectiveEnhancementTypes.stream().filter(LuckEnhancementItem.class::equals).count());
   }
 
   @Test
@@ -137,9 +137,9 @@ class MobFarmConfigTest {
     MobFarmConfig.tier0MaxSpeedEnhancements = 0;
 
     Assertions.assertFalse(
-        MobFarmConfig.canAddEnhancementType(SpeedEnhancementItem.class, List.of(), 0));
+      MobFarmConfig.canAddEnhancementType(SpeedEnhancementItem.class, List.of(), 0));
     Assertions.assertTrue(
-        MobFarmConfig.getEffectiveEnhancementTypes(List.of(SpeedEnhancementItem.class), 0)
-            .isEmpty());
+      MobFarmConfig.getEffectiveEnhancementTypes(List.of(SpeedEnhancementItem.class), 0)
+        .isEmpty());
   }
 }

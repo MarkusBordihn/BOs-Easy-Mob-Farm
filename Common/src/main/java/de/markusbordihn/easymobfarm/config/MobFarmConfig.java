@@ -42,76 +42,76 @@ public class MobFarmConfig extends Config {
 
   public static final String CONFIG_FILE_NAME = "mob_farm.cfg";
   public static final String CONFIG_FILE_HEADER =
-"""
- Mob Farm Configuration
-
- This configuration file allows you to define the general settings for the Mob Farms.
-
- Configuration Options:
- ----------------------
- farmProgressingTime: Time in ticks for farm progression (default: 6000 = 5 minutes)
-
- tier0progressionUpgradeSpeed: Speed bonus for tier 0 farms (default: 0)
- tier1progressionUpgradeSpeed: Speed bonus for tier 1 farms (default: 2)
- tier2progressionUpgradeSpeed: Speed bonus for tier 2 farms (default: 4)
- tier3progressionUpgradeSpeed: Speed bonus for tier 3 farms (default: 6)
-
- experienceDropChance: Chance for experience drops (1 in x chance, default: 5)
- speedEnhancementUpgradeSpeed: Speed bonus from speed enhancement upgrades (default: 6)
-
- Enhancement Power Configuration:
- lootEnhancementAdditionalRolls: Additional loot rolls from loot enhancement (default: 1, set 0 to disable)
- luckEnhancementAdditionalLuck: Additional luck from luck enhancement (default: 1.0, set 0 to disable)
- speedEnhancementUpgradeSpeed: Speed bonus from speed enhancement upgrades (default: 6, set 0 to disable)
- swordEnhancementAdditionalLuck: Additional luck from sword enhancement (default: 0.5)
- knifeEnhancementAdditionalLuck: Additional luck from knife enhancement (default: 0.25)
-
- Duplicate Enhancement Limits:
- tier0MaxSpeedEnhancements: Maximum speed enhancements for tier 0 farms (default: 4)
- tier1MaxSpeedEnhancements: Maximum speed enhancements for tier 1 farms (default: 4)
- tier2MaxSpeedEnhancements: Maximum speed enhancements for tier 2 farms (default: 4)
- tier3MaxSpeedEnhancements: Maximum speed enhancements for tier 3 farms (default: 4)
- tier0MaxLootEnhancements: Maximum loot enhancements for tier 0 farms (default: 4)
- tier1MaxLootEnhancements: Maximum loot enhancements for tier 1 farms (default: 4)
- tier2MaxLootEnhancements: Maximum loot enhancements for tier 2 farms (default: 4)
- tier3MaxLootEnhancements: Maximum loot enhancements for tier 3 farms (default: 4)
- tier0MaxLuckEnhancements: Maximum luck enhancements for tier 0 farms (default: 4)
- tier1MaxLuckEnhancements: Maximum luck enhancements for tier 1 farms (default: 4)
- tier2MaxLuckEnhancements: Maximum luck enhancements for tier 2 farms (default: 4)
- tier3MaxLuckEnhancements: Maximum luck enhancements for tier 3 farms (default: 4)
-
- Enhancement Enable/Disable (set to false to disable the enhancement and hide its recipe):
- enableSpeedEnhancement: Enable speed enhancement (default: true)
- enableLootEnhancement: Enable loot enhancement (default: true)
- enableLuckEnhancement: Enable luck enhancement (default: true)
- enableSwordEnhancement: Enable sword enhancement (default: true)
- enableKnifeEnhancement: Enable knife enhancement (default: true)
- enableExperienceEnhancement: Enable experience enhancement (default: true)
- enableEggCollectorEnhancement: Enable egg collector enhancement (default: true)
- enableHoneyExtractorEnhancement: Enable honey extractor enhancement (default: true)
- enableHoneyHarvesterFrameEnhancement: Enable honey harvester frame enhancement (default: true)
- enableMilkExtractorEnhancement: Enable milk extractor enhancement (default: true)
- enablePollenTrapEnhancement: Enable pollen trap enhancement (default: true)
- enableSheepEnhancement: Enable sheep enhancement (default: true)
- enableFrogCatalystEnhancement: Enable frog catalyst enhancement (default: true)
-
- progressingRequiresOwnerToBeOnline: Whether farms only work when owner is online (default: false)
- luckyDropFarmLuckPercentage: Luck percentage for lucky drop farms (default: 95)
- enforceLogicalTierProgression: Whether farms must be upgraded in order (default: false)
- enableMobFarmUpgradeRecipes: Enable recipes to upgrade existing mob farms (default: true)
-
- enableItemBuffer: Enable temporary item buffer when output slots are full (default: true)
- maxBufferSize: Maximum number of items in buffer (default: 128)
- bufferProcessInterval: Ticks between buffer processing attempts (default: 20)
- maxBonusDropMultiplier: Maximum multiplier for bonus drop amounts vs stack size (default: 100)
- dropItemsToWorldWhenBufferFull: Drop items to world when buffer is full (default: false)
-
- lootPreviewWarmupEnabled: Pre-calculate loot previews for recipe viewers like JEI (default: true)
- lootPreviewBatchSize: Number of mobs processed per warmup batch (default: 2)
- lootPreviewBatchIntervalTicks: Ticks between warmup batches (default: 100 = 5 seconds)
- lootPreviewSampleRolls: Loot table rolls used for the pre-calculated preview (default: 25)
-
-""";
+    """
+       Mob Farm Configuration
+      
+       This configuration file allows you to define the general settings for the Mob Farms.
+      
+       Configuration Options:
+       ----------------------
+       farmProgressingTime: Time in ticks for farm progression (default: 6000 = 5 minutes)
+      
+       tier0progressionUpgradeSpeed: Speed bonus for tier 0 farms (default: 0)
+       tier1progressionUpgradeSpeed: Speed bonus for tier 1 farms (default: 2)
+       tier2progressionUpgradeSpeed: Speed bonus for tier 2 farms (default: 4)
+       tier3progressionUpgradeSpeed: Speed bonus for tier 3 farms (default: 6)
+      
+       experienceDropChance: Chance for experience drops (1 in x chance, default: 5)
+       speedEnhancementUpgradeSpeed: Speed bonus from speed enhancement upgrades (default: 6)
+      
+       Enhancement Power Configuration:
+       lootEnhancementAdditionalRolls: Additional loot rolls from loot enhancement (default: 1, set 0 to disable)
+       luckEnhancementAdditionalLuck: Additional luck from luck enhancement (default: 1.0, set 0 to disable)
+       speedEnhancementUpgradeSpeed: Speed bonus from speed enhancement upgrades (default: 6, set 0 to disable)
+       swordEnhancementAdditionalLuck: Additional luck from sword enhancement (default: 0.5)
+       knifeEnhancementAdditionalLuck: Additional luck from knife enhancement (default: 0.25)
+      
+       Duplicate Enhancement Limits:
+       tier0MaxSpeedEnhancements: Maximum speed enhancements for tier 0 farms (default: 4)
+       tier1MaxSpeedEnhancements: Maximum speed enhancements for tier 1 farms (default: 4)
+       tier2MaxSpeedEnhancements: Maximum speed enhancements for tier 2 farms (default: 4)
+       tier3MaxSpeedEnhancements: Maximum speed enhancements for tier 3 farms (default: 4)
+       tier0MaxLootEnhancements: Maximum loot enhancements for tier 0 farms (default: 4)
+       tier1MaxLootEnhancements: Maximum loot enhancements for tier 1 farms (default: 4)
+       tier2MaxLootEnhancements: Maximum loot enhancements for tier 2 farms (default: 4)
+       tier3MaxLootEnhancements: Maximum loot enhancements for tier 3 farms (default: 4)
+       tier0MaxLuckEnhancements: Maximum luck enhancements for tier 0 farms (default: 4)
+       tier1MaxLuckEnhancements: Maximum luck enhancements for tier 1 farms (default: 4)
+       tier2MaxLuckEnhancements: Maximum luck enhancements for tier 2 farms (default: 4)
+       tier3MaxLuckEnhancements: Maximum luck enhancements for tier 3 farms (default: 4)
+      
+       Enhancement Enable/Disable (set to false to disable the enhancement and hide its recipe):
+       enableSpeedEnhancement: Enable speed enhancement (default: true)
+       enableLootEnhancement: Enable loot enhancement (default: true)
+       enableLuckEnhancement: Enable luck enhancement (default: true)
+       enableSwordEnhancement: Enable sword enhancement (default: true)
+       enableKnifeEnhancement: Enable knife enhancement (default: true)
+       enableExperienceEnhancement: Enable experience enhancement (default: true)
+       enableEggCollectorEnhancement: Enable egg collector enhancement (default: true)
+       enableHoneyExtractorEnhancement: Enable honey extractor enhancement (default: true)
+       enableHoneyHarvesterFrameEnhancement: Enable honey harvester frame enhancement (default: true)
+       enableMilkExtractorEnhancement: Enable milk extractor enhancement (default: true)
+       enablePollenTrapEnhancement: Enable pollen trap enhancement (default: true)
+       enableSheepEnhancement: Enable sheep enhancement (default: true)
+       enableFrogCatalystEnhancement: Enable frog catalyst enhancement (default: true)
+      
+       progressingRequiresOwnerToBeOnline: Whether farms only work when owner is online (default: false)
+       luckyDropFarmLuckPercentage: Luck percentage for lucky drop farms (default: 95)
+       enforceLogicalTierProgression: Whether farms must be upgraded in order (default: false)
+       enableMobFarmUpgradeRecipes: Enable recipes to upgrade existing mob farms (default: true)
+      
+       enableItemBuffer: Enable temporary item buffer when output slots are full (default: true)
+       maxBufferSize: Maximum number of items in buffer (default: 128)
+       bufferProcessInterval: Ticks between buffer processing attempts (default: 20)
+       maxBonusDropMultiplier: Maximum multiplier for bonus drop amounts vs stack size (default: 100)
+       dropItemsToWorldWhenBufferFull: Drop items to world when buffer is full (default: false)
+      
+       lootPreviewWarmupEnabled: Pre-calculate loot previews for recipe viewers like JEI (default: true)
+       lootPreviewBatchSize: Number of mobs processed per warmup batch (default: 2)
+       lootPreviewBatchIntervalTicks: Ticks between warmup batches (default: 100 = 5 seconds)
+       lootPreviewSampleRolls: Loot table rolls used for the pre-calculated preview (default: 25)
+      
+      """;
 
   public static int farmProgressingTime = 6000; // 5 minutes in seconds
   public static int tier0progressionUpgradeSpeed = 0;
@@ -190,135 +190,135 @@ public class MobFarmConfig extends Config {
 
     // Config entries
     farmProgressingTime =
-        parseConfigValue(properties, "farmProgressingTime", farmProgressingTime, 1);
+      parseConfigValue(properties, "farmProgressingTime", farmProgressingTime, 1);
 
     tier0progressionUpgradeSpeed =
-        parseConfigValue(
-            properties, "tier0progressionUpgradeSpeed", tier0progressionUpgradeSpeed, 0);
+      parseConfigValue(
+        properties, "tier0progressionUpgradeSpeed", tier0progressionUpgradeSpeed, 0);
     tier1progressionUpgradeSpeed =
-        parseConfigValue(
-            properties, "tier1progressionUpgradeSpeed", tier1progressionUpgradeSpeed, 0);
+      parseConfigValue(
+        properties, "tier1progressionUpgradeSpeed", tier1progressionUpgradeSpeed, 0);
     tier2progressionUpgradeSpeed =
-        parseConfigValue(
-            properties, "tier2progressionUpgradeSpeed", tier2progressionUpgradeSpeed, 0);
+      parseConfigValue(
+        properties, "tier2progressionUpgradeSpeed", tier2progressionUpgradeSpeed, 0);
     tier3progressionUpgradeSpeed =
-        parseConfigValue(
-            properties, "tier3progressionUpgradeSpeed", tier3progressionUpgradeSpeed, 0);
+      parseConfigValue(
+        properties, "tier3progressionUpgradeSpeed", tier3progressionUpgradeSpeed, 0);
 
     experienceDropChance =
-        parseConfigValue(properties, "experienceDropChance", experienceDropChance, 1);
+      parseConfigValue(properties, "experienceDropChance", experienceDropChance, 1);
     speedEnhancementUpgradeSpeed =
-        parseConfigValue(
-            properties, "speedEnhancementUpgradeSpeed", speedEnhancementUpgradeSpeed, 0);
+      parseConfigValue(
+        properties, "speedEnhancementUpgradeSpeed", speedEnhancementUpgradeSpeed, 0);
 
     // Enhancement power values
     lootEnhancementAdditionalRolls =
-        parseConfigValue(
-            properties, "lootEnhancementAdditionalRolls", lootEnhancementAdditionalRolls, 0);
+      parseConfigValue(
+        properties, "lootEnhancementAdditionalRolls", lootEnhancementAdditionalRolls, 0);
     luckEnhancementAdditionalLuck =
-        parseConfigValue(
-            properties, "luckEnhancementAdditionalLuck", luckEnhancementAdditionalLuck);
+      parseConfigValue(
+        properties, "luckEnhancementAdditionalLuck", luckEnhancementAdditionalLuck);
     swordEnhancementAdditionalLuck =
-        parseConfigValue(
-            properties, "swordEnhancementAdditionalLuck", swordEnhancementAdditionalLuck);
+      parseConfigValue(
+        properties, "swordEnhancementAdditionalLuck", swordEnhancementAdditionalLuck);
     knifeEnhancementAdditionalLuck =
-        parseConfigValue(
-            properties, "knifeEnhancementAdditionalLuck", knifeEnhancementAdditionalLuck);
+      parseConfigValue(
+        properties, "knifeEnhancementAdditionalLuck", knifeEnhancementAdditionalLuck);
 
     // Enhancement limits
     tier0MaxSpeedEnhancements =
-        parseConfigValue(properties, "tier0MaxSpeedEnhancements", tier0MaxSpeedEnhancements, 0);
+      parseConfigValue(properties, "tier0MaxSpeedEnhancements", tier0MaxSpeedEnhancements, 0);
     tier1MaxSpeedEnhancements =
-        parseConfigValue(properties, "tier1MaxSpeedEnhancements", tier1MaxSpeedEnhancements, 0);
+      parseConfigValue(properties, "tier1MaxSpeedEnhancements", tier1MaxSpeedEnhancements, 0);
     tier2MaxSpeedEnhancements =
-        parseConfigValue(properties, "tier2MaxSpeedEnhancements", tier2MaxSpeedEnhancements, 0);
+      parseConfigValue(properties, "tier2MaxSpeedEnhancements", tier2MaxSpeedEnhancements, 0);
     tier3MaxSpeedEnhancements =
-        parseConfigValue(properties, "tier3MaxSpeedEnhancements", tier3MaxSpeedEnhancements, 0);
+      parseConfigValue(properties, "tier3MaxSpeedEnhancements", tier3MaxSpeedEnhancements, 0);
     tier0MaxLootEnhancements =
-        parseConfigValue(properties, "tier0MaxLootEnhancements", tier0MaxLootEnhancements, 0);
+      parseConfigValue(properties, "tier0MaxLootEnhancements", tier0MaxLootEnhancements, 0);
     tier1MaxLootEnhancements =
-        parseConfigValue(properties, "tier1MaxLootEnhancements", tier1MaxLootEnhancements, 0);
+      parseConfigValue(properties, "tier1MaxLootEnhancements", tier1MaxLootEnhancements, 0);
     tier2MaxLootEnhancements =
-        parseConfigValue(properties, "tier2MaxLootEnhancements", tier2MaxLootEnhancements, 0);
+      parseConfigValue(properties, "tier2MaxLootEnhancements", tier2MaxLootEnhancements, 0);
     tier3MaxLootEnhancements =
-        parseConfigValue(properties, "tier3MaxLootEnhancements", tier3MaxLootEnhancements, 0);
+      parseConfigValue(properties, "tier3MaxLootEnhancements", tier3MaxLootEnhancements, 0);
     tier0MaxLuckEnhancements =
-        parseConfigValue(properties, "tier0MaxLuckEnhancements", tier0MaxLuckEnhancements, 0);
+      parseConfigValue(properties, "tier0MaxLuckEnhancements", tier0MaxLuckEnhancements, 0);
     tier1MaxLuckEnhancements =
-        parseConfigValue(properties, "tier1MaxLuckEnhancements", tier1MaxLuckEnhancements, 0);
+      parseConfigValue(properties, "tier1MaxLuckEnhancements", tier1MaxLuckEnhancements, 0);
     tier2MaxLuckEnhancements =
-        parseConfigValue(properties, "tier2MaxLuckEnhancements", tier2MaxLuckEnhancements, 0);
+      parseConfigValue(properties, "tier2MaxLuckEnhancements", tier2MaxLuckEnhancements, 0);
     tier3MaxLuckEnhancements =
-        parseConfigValue(properties, "tier3MaxLuckEnhancements", tier3MaxLuckEnhancements, 0);
+      parseConfigValue(properties, "tier3MaxLuckEnhancements", tier3MaxLuckEnhancements, 0);
 
     // Per-enhancement enable/disable
     enableSpeedEnhancement =
-        parseConfigValue(properties, "enableSpeedEnhancement", enableSpeedEnhancement);
+      parseConfigValue(properties, "enableSpeedEnhancement", enableSpeedEnhancement);
     enableLootEnhancement =
-        parseConfigValue(properties, "enableLootEnhancement", enableLootEnhancement);
+      parseConfigValue(properties, "enableLootEnhancement", enableLootEnhancement);
     enableLuckEnhancement =
-        parseConfigValue(properties, "enableLuckEnhancement", enableLuckEnhancement);
+      parseConfigValue(properties, "enableLuckEnhancement", enableLuckEnhancement);
     enableSwordEnhancement =
-        parseConfigValue(properties, "enableSwordEnhancement", enableSwordEnhancement);
+      parseConfigValue(properties, "enableSwordEnhancement", enableSwordEnhancement);
     enableKnifeEnhancement =
-        parseConfigValue(properties, "enableKnifeEnhancement", enableKnifeEnhancement);
+      parseConfigValue(properties, "enableKnifeEnhancement", enableKnifeEnhancement);
     enableExperienceEnhancement =
-        parseConfigValue(properties, "enableExperienceEnhancement", enableExperienceEnhancement);
+      parseConfigValue(properties, "enableExperienceEnhancement", enableExperienceEnhancement);
     enableEggCollectorEnhancement =
-        parseConfigValue(
-            properties, "enableEggCollectorEnhancement", enableEggCollectorEnhancement);
+      parseConfigValue(
+        properties, "enableEggCollectorEnhancement", enableEggCollectorEnhancement);
     enableHoneyExtractorEnhancement =
-        parseConfigValue(
-            properties, "enableHoneyExtractorEnhancement", enableHoneyExtractorEnhancement);
+      parseConfigValue(
+        properties, "enableHoneyExtractorEnhancement", enableHoneyExtractorEnhancement);
     enableHoneyHarvesterFrameEnhancement =
-        parseConfigValue(
-            properties,
-            "enableHoneyHarvesterFrameEnhancement",
-            enableHoneyHarvesterFrameEnhancement);
+      parseConfigValue(
+        properties,
+        "enableHoneyHarvesterFrameEnhancement",
+        enableHoneyHarvesterFrameEnhancement);
     enableMilkExtractorEnhancement =
-        parseConfigValue(
-            properties, "enableMilkExtractorEnhancement", enableMilkExtractorEnhancement);
+      parseConfigValue(
+        properties, "enableMilkExtractorEnhancement", enableMilkExtractorEnhancement);
     enablePollenTrapEnhancement =
-        parseConfigValue(properties, "enablePollenTrapEnhancement", enablePollenTrapEnhancement);
+      parseConfigValue(properties, "enablePollenTrapEnhancement", enablePollenTrapEnhancement);
     enableSheepEnhancement =
-        parseConfigValue(properties, "enableSheepEnhancement", enableSheepEnhancement);
+      parseConfigValue(properties, "enableSheepEnhancement", enableSheepEnhancement);
     enableFrogCatalystEnhancement =
-        parseConfigValue(
-            properties, "enableFrogCatalystEnhancement", enableFrogCatalystEnhancement);
+      parseConfigValue(
+        properties, "enableFrogCatalystEnhancement", enableFrogCatalystEnhancement);
 
     processingRequiresOwnerToBeOnline =
-        parseConfigValue(
-            properties, "progressingRequiresOwnerToBeOnline", processingRequiresOwnerToBeOnline);
+      parseConfigValue(
+        properties, "progressingRequiresOwnerToBeOnline", processingRequiresOwnerToBeOnline);
 
     luckyDropFarmLuckPercentage =
-        parseConfigValue(properties, "luckyDropFarmLuckPercentage", luckyDropFarmLuckPercentage);
+      parseConfigValue(properties, "luckyDropFarmLuckPercentage", luckyDropFarmLuckPercentage);
 
     enforceLogicalTierProgression =
-        parseConfigValue(
-            properties, "enforceLogicalTierProgression", enforceLogicalTierProgression);
+      parseConfigValue(
+        properties, "enforceLogicalTierProgression", enforceLogicalTierProgression);
 
     enableMobFarmUpgradeRecipes =
-        parseConfigValue(properties, "enableMobFarmUpgradeRecipes", enableMobFarmUpgradeRecipes);
+      parseConfigValue(properties, "enableMobFarmUpgradeRecipes", enableMobFarmUpgradeRecipes);
 
     enableItemBuffer = parseConfigValue(properties, "enableItemBuffer", enableItemBuffer);
     maxBufferSize = parseConfigValue(properties, "maxBufferSize", maxBufferSize, 1);
     bufferProcessInterval =
-        parseConfigValue(properties, "bufferProcessInterval", bufferProcessInterval, 1);
+      parseConfigValue(properties, "bufferProcessInterval", bufferProcessInterval, 1);
     maxBonusDropMultiplier =
-        parseConfigValue(properties, "maxBonusDropMultiplier", maxBonusDropMultiplier, 1);
+      parseConfigValue(properties, "maxBonusDropMultiplier", maxBonusDropMultiplier, 1);
     dropItemsToWorldWhenBufferFull =
-        parseConfigValue(
-            properties, "dropItemsToWorldWhenBufferFull", dropItemsToWorldWhenBufferFull);
+      parseConfigValue(
+        properties, "dropItemsToWorldWhenBufferFull", dropItemsToWorldWhenBufferFull);
 
     lootPreviewWarmupEnabled =
-        parseConfigValue(properties, "lootPreviewWarmupEnabled", lootPreviewWarmupEnabled);
+      parseConfigValue(properties, "lootPreviewWarmupEnabled", lootPreviewWarmupEnabled);
     lootPreviewBatchSize =
-        parseConfigValue(properties, "lootPreviewBatchSize", lootPreviewBatchSize, 1);
+      parseConfigValue(properties, "lootPreviewBatchSize", lootPreviewBatchSize, 1);
     lootPreviewBatchIntervalTicks =
-        parseConfigValue(
-            properties, "lootPreviewBatchIntervalTicks", lootPreviewBatchIntervalTicks, 1);
+      parseConfigValue(
+        properties, "lootPreviewBatchIntervalTicks", lootPreviewBatchIntervalTicks, 1);
     lootPreviewSampleRolls =
-        parseConfigValue(properties, "lootPreviewSampleRolls", lootPreviewSampleRolls, 1);
+      parseConfigValue(properties, "lootPreviewSampleRolls", lootPreviewSampleRolls, 1);
 
     // Update config file if needed
     updateConfigFileIfChanged(configFile, CONFIG_FILE_HEADER, properties, unmodifiedProperties);
@@ -436,7 +436,7 @@ public class MobFarmConfig extends Config {
   }
 
   static int getMaxDuplicateEnhancements(
-      Class<? extends EnhancementItem> enhancementType, int tierLevel) {
+    Class<? extends EnhancementItem> enhancementType, int tierLevel) {
     if (SpeedEnhancementItem.class.isAssignableFrom(enhancementType)) {
       return getMaxSpeedEnhancements(tierLevel);
     }
@@ -450,17 +450,17 @@ public class MobFarmConfig extends Config {
   }
 
   public static boolean canAddEnhancement(
-      EnhancementItem enhancementItem, List<EnhancementItem> existingEnhancements, int tierLevel) {
+    EnhancementItem enhancementItem, List<EnhancementItem> existingEnhancements, int tierLevel) {
     return canAddEnhancementType(
-        enhancementItem.getClass(),
-        existingEnhancements.stream().map(EnhancementItem::getClass).toList(),
-        tierLevel);
+      enhancementItem.getClass(),
+      existingEnhancements.stream().map(EnhancementItem::getClass).toList(),
+      tierLevel);
   }
 
   static boolean canAddEnhancementType(
-      Class<? extends EnhancementItem> enhancementType,
-      List<Class<? extends EnhancementItem>> existingEnhancementTypes,
-      int tierLevel) {
+    Class<? extends EnhancementItem> enhancementType,
+    List<Class<? extends EnhancementItem>> existingEnhancementTypes,
+    int tierLevel) {
     if (!isEnhancementTypeEnabled(enhancementType)) {
       return false;
     }
@@ -469,15 +469,15 @@ public class MobFarmConfig extends Config {
       return true;
     }
     return countMatchingEnhancementTypes(existingEnhancementTypes, enhancementType, maxEnhancements)
-        < maxEnhancements;
+      < maxEnhancements;
   }
 
   public static List<EnhancementItem> getEffectiveEnhancements(
-      List<EnhancementItem> enhancements, int tierLevel) {
+    List<EnhancementItem> enhancements, int tierLevel) {
     List<EnhancementItem> effectiveEnhancements = new ArrayList<>();
     List<Class<? extends EnhancementItem>> effectiveEnhancementTypes =
-        getEffectiveEnhancementTypes(
-            enhancements.stream().map(EnhancementItem::getClass).toList(), tierLevel);
+      getEffectiveEnhancementTypes(
+        enhancements.stream().map(EnhancementItem::getClass).toList(), tierLevel);
     for (EnhancementItem enhancement : enhancements) {
       if (effectiveEnhancementTypes.remove(enhancement.getClass())) {
         effectiveEnhancements.add(enhancement);
@@ -487,7 +487,7 @@ public class MobFarmConfig extends Config {
   }
 
   static List<Class<? extends EnhancementItem>> getEffectiveEnhancementTypes(
-      List<Class<? extends EnhancementItem>> enhancementTypes, int tierLevel) {
+    List<Class<? extends EnhancementItem>> enhancementTypes, int tierLevel) {
     List<Class<? extends EnhancementItem>> effectiveEnhancementTypes = new ArrayList<>();
     int speedEnhancements = 0;
     int lootEnhancements = 0;
@@ -518,21 +518,21 @@ public class MobFarmConfig extends Config {
   }
 
   public static int countMatchingEnhancements(
-      List<EnhancementItem> enhancements, EnhancementItem enhancementItem, int maxCount) {
+    List<EnhancementItem> enhancements, EnhancementItem enhancementItem, int maxCount) {
     return countMatchingEnhancementTypes(
-        enhancements.stream().map(EnhancementItem::getClass).toList(),
-        enhancementItem.getClass(),
-        maxCount);
+      enhancements.stream().map(EnhancementItem::getClass).toList(),
+      enhancementItem.getClass(),
+      maxCount);
   }
 
   static int countMatchingEnhancementTypes(
-      List<Class<? extends EnhancementItem>> enhancementTypes,
-      Class<? extends EnhancementItem> enhancementType,
-      int maxCount) {
+    List<Class<? extends EnhancementItem>> enhancementTypes,
+    Class<? extends EnhancementItem> enhancementType,
+    int maxCount) {
     int count = 0;
     for (Class<? extends EnhancementItem> existingEnhancementType : enhancementTypes) {
       if (isSameLimitedEnhancementType(existingEnhancementType, enhancementType)
-          && ++count >= maxCount) {
+        && ++count >= maxCount) {
         return count;
       }
     }
@@ -540,18 +540,18 @@ public class MobFarmConfig extends Config {
   }
 
   private static boolean isSameLimitedEnhancementType(
-      Class<? extends EnhancementItem> firstEnhancementType,
-      Class<? extends EnhancementItem> secondEnhancementType) {
+    Class<? extends EnhancementItem> firstEnhancementType,
+    Class<? extends EnhancementItem> secondEnhancementType) {
     if (SpeedEnhancementItem.class.isAssignableFrom(firstEnhancementType)
-        && SpeedEnhancementItem.class.isAssignableFrom(secondEnhancementType)) {
+      && SpeedEnhancementItem.class.isAssignableFrom(secondEnhancementType)) {
       return true;
     }
     if (LootEnhancementItem.class.isAssignableFrom(firstEnhancementType)
-        && LootEnhancementItem.class.isAssignableFrom(secondEnhancementType)) {
+      && LootEnhancementItem.class.isAssignableFrom(secondEnhancementType)) {
       return true;
     }
     if (LuckEnhancementItem.class.isAssignableFrom(firstEnhancementType)
-        && LuckEnhancementItem.class.isAssignableFrom(secondEnhancementType)) {
+      && LuckEnhancementItem.class.isAssignableFrom(secondEnhancementType)) {
       return true;
     }
     return firstEnhancementType.equals(secondEnhancementType);

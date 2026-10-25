@@ -35,9 +35,9 @@ public class CreativeMobCatcherItem extends MobCatcherItem {
 
   public CreativeMobCatcherItem(Item.Properties properties) {
     super(
-        properties.setId(
-            ResourceKey.create(
-                Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
+      properties.setId(
+        ResourceKey.create(
+          Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
   }
 
   @Override

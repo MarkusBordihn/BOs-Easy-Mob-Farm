@@ -39,13 +39,13 @@ public class ModBlockCapabilities {
     log.debug("{} Block Capabilities for Easy Mob Farm", Constants.LOG_REGISTER_PREFIX);
 
     event.registerBlockEntity(
-        Capabilities.Item.BLOCK,
-        ModBlocks.MOB_FARM_ENTITY.get(),
-        MobFarmBlockEntityWrapper::getItemCapability);
+      Capabilities.Item.BLOCK,
+      ModBlocks.MOB_FARM_ENTITY.get(),
+      MobFarmBlockEntityWrapper::getItemCapability);
 
     event.registerBlockEntity(
-        Capabilities.Item.BLOCK,
-        ModBlocks.CREATIVE_MOB_FARM_ENTITY.get(),
-        CreativeMobFarmBlockEntityWrapper::getItemCapability);
+      Capabilities.Item.BLOCK,
+      ModBlocks.CREATIVE_MOB_FARM_ENTITY.get(),
+      CreativeMobFarmBlockEntityWrapper::getItemCapability);
   }
 }

@@ -29,7 +29,8 @@ public class MobColorData {
 
   public static final String COLOR_TAG = "Color";
 
-  private MobColorData() {}
+  private MobColorData() {
+  }
 
   public static MobColor getColor(final EntityType<?> entityType) {
     return MobColor.NONE;

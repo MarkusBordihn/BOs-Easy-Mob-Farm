@@ -51,11 +51,11 @@ public enum MobColor implements StringRepresentable {
   YELLOW(16, DyeColor.YELLOW);
 
   public static final StringRepresentable.EnumCodec<MobColor> CODEC =
-      StringRepresentable.fromEnum(MobColor::values);
+    StringRepresentable.fromEnum(MobColor::values);
   private static final IntFunction<MobColor> BY_ID =
-      ByIdMap.continuous(MobColor::getId, values(), OutOfBoundsStrategy.ZERO);
+    ByIdMap.continuous(MobColor::getId, values(), OutOfBoundsStrategy.ZERO);
   public static final StreamCodec<ByteBuf, MobColor> STREAM_CODEC =
-      ByteBufCodecs.idMapper(BY_ID, MobColor::getId);
+    ByteBufCodecs.idMapper(BY_ID, MobColor::getId);
   private final int id;
   private final String name;
   private final DyeColor dyeColor;

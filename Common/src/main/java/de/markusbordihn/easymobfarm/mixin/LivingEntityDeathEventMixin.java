@@ -31,15 +31,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(LivingEntity.class)
 public class LivingEntityDeathEventMixin {
 
-  private LivingEntityDeathEventMixin() {}
+  private LivingEntityDeathEventMixin() {
+  }
 
   @Inject(method = "die", at = @At("HEAD"))
   public void easyMobFarmLivingDeathEvent(DamageSource damageSource, CallbackInfo callbackInfo) {
     LivingEntity livingEntity = (LivingEntity) (Object) this;
     if (livingEntity == null
-        || livingEntity.level().isClientSide()
-        || livingEntity instanceof Player
-        || !(livingEntity instanceof LivingEntity)) {
+      || livingEntity.level().isClientSide()
+      || livingEntity instanceof Player
+      || !(livingEntity instanceof LivingEntity)) {
       return;
     }
 

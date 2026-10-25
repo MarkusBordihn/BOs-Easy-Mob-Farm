@@ -45,13 +45,6 @@ neoForge {
       type = 'gameTestServer'
       systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
     }
-
-    if (clientToolkitAvailable) {
-      clientTest {
-        client()
-        gameDirectory = project.file('runs/clientTest')
-      }
-    }
   }
 
   mods {
@@ -97,11 +90,6 @@ dependencies {
   // Create: Integration
   if (project.hasProperty('neoforge_create_mod') && project.neoforge_create_mod) {
     runtimeOnly "curse.maven:create-328085:${project.neoforge_create_mod}"
-  }
-
-  // Client Runtime Interface Toolkit (runtime dependency, only for client tests)
-  if (clientToolkitAvailable && isClientTestRun) {
-    runtimeOnly clientToolkitCoordinate('neoforge')
   }
 }
 

@@ -29,13 +29,14 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class ModMenuTypes {
 
   public static final DeferredRegister<MenuType<?>> MENU_TYPES =
-      DeferredRegister.create(BuiltInRegistries.MENU, Constants.MOD_ID);
+    DeferredRegister.create(BuiltInRegistries.MENU, Constants.MOD_ID);
   public static final DeferredHolder<MenuType<?>, MenuType<MobFarmMenuWrapper>> MOB_FARM_MENU =
-      MENU_TYPES.register(MobFarmMenu.ID, () -> IMenuTypeExtension.create(MobFarmMenuWrapper::new));
+    MENU_TYPES.register(MobFarmMenu.ID, () -> IMenuTypeExtension.create(MobFarmMenuWrapper::new));
   public static final DeferredHolder<MenuType<?>, MenuType<CardBinderMenuWrapper>>
-      CARD_BINDER_MENU =
-          MENU_TYPES.register(
-              CardBinderMenu.ID, () -> IMenuTypeExtension.create(CardBinderMenuWrapper::new));
+    CARD_BINDER_MENU =
+    MENU_TYPES.register(
+      CardBinderMenu.ID, () -> IMenuTypeExtension.create(CardBinderMenuWrapper::new));
 
-  private ModMenuTypes() {}
+  private ModMenuTypes() {
+  }
 }

@@ -33,56 +33,57 @@ public class EntityScalingManager {
 
   private static final Map<Class<? extends Entity>, Float> entityScaleCache = new HashMap<>();
 
-  private EntityScalingManager() {}
+  private EntityScalingManager() {
+  }
 
   public static float getEntityScale(Entity entity) {
     return entityScaleCache.computeIfAbsent(
-        entity.getClass(),
-        cls -> {
-          // Get entity width and height from bounding box or dimensions.
-          float entityWidth;
-          float entityHeight;
-          if (entity.getBoundingBox().getXsize() > 0 && entity.getBoundingBox().getYsize() > 0) {
-            entityWidth = (float) entity.getBoundingBox().getXsize();
-            entityHeight = (float) entity.getBoundingBox().getYsize();
-          } else {
-            entityWidth = entity.getDimensions(entity.getPose()).width();
-            entityHeight = entity.getDimensions(entity.getPose()).height();
-          }
+      entity.getClass(),
+      cls -> {
+        // Get entity width and height from bounding box or dimensions.
+        float entityWidth;
+        float entityHeight;
+        if (entity.getBoundingBox().getXsize() > 0 && entity.getBoundingBox().getYsize() > 0) {
+          entityWidth = (float) entity.getBoundingBox().getXsize();
+          entityHeight = (float) entity.getBoundingBox().getYsize();
+        } else {
+          entityWidth = entity.getDimensions(entity.getPose()).width();
+          entityHeight = entity.getDimensions(entity.getPose()).height();
+        }
 
-          // Add extra scale numbers for specific entities from external mods.
-          MobCaptureCardDefinition mobCaptureCardDefinition =
-              MobCaptureCardDefinitionManager.get(entity.getType());
-          if (mobCaptureCardDefinition != null
-              && mobCaptureCardDefinition.scale() > 0f
-              && mobCaptureCardDefinition.scale() != 1f) {
-            entityWidth *= mobCaptureCardDefinition.scale();
-            entityHeight *= mobCaptureCardDefinition.scale();
-          }
+        // Add extra scale numbers for specific entities from external mods.
+        MobCaptureCardDefinition mobCaptureCardDefinition =
+          MobCaptureCardDefinitionManager.get(entity.getType());
+        if (mobCaptureCardDefinition != null
+          && mobCaptureCardDefinition.scale() > 0f
+          && mobCaptureCardDefinition.scale() != 1f) {
+          entityWidth *= mobCaptureCardDefinition.scale();
+          entityHeight *= mobCaptureCardDefinition.scale();
+        }
 
-          // Return default scale if entity width or height is not available.
-          if (entityWidth == 0 || entityHeight == 0) {
-            return DEFAULT_SCALE_BLOCK;
-          }
+        // Return default scale if entity width or height is not available.
+        if (entityWidth == 0 || entityHeight == 0) {
+          return DEFAULT_SCALE_BLOCK;
+        }
 
-          // Add extra scale numbers for specific entities to consider additional
-          // space requirements for body parts like wings or tails.
-          if (entity instanceof ElderGuardian) {
-            entityWidth *= 1.8f;
-          }
+        // Add extra scale numbers for specific entities to consider additional
+        // space requirements for body parts like wings or tails.
+        if (entity instanceof ElderGuardian) {
+          entityWidth *= 1.8f;
+        }
 
-          // Calculate scale factor for block.
-          if ((entityWidth < MAX_BLOCK_SCALE && entityHeight < MAX_BLOCK_SCALE)
-              || (entityWidth * DEFAULT_SCALE_BLOCK < MAX_BLOCK_SCALE
-                  && entityHeight * DEFAULT_SCALE_BLOCK < MAX_BLOCK_SCALE)) {
-            return DEFAULT_SCALE_BLOCK;
-          }
-          float scaleFactor = Math.max(entityWidth, entityHeight) / MAX_BLOCK_SCALE;
-          if (scaleFactor > 1.0f) {
-            return MAX_BLOCK_SCALE / scaleFactor;
-          }
-          return MAX_BLOCK_SCALE;
-        });
+        // Calculate scale factor for block.
+        if ((entityWidth < MAX_BLOCK_SCALE && entityHeight < MAX_BLOCK_SCALE)
+          || (entityWidth * DEFAULT_SCALE_BLOCK < MAX_BLOCK_SCALE
+          && entityHeight * DEFAULT_SCALE_BLOCK < MAX_BLOCK_SCALE)) {
+          return DEFAULT_SCALE_BLOCK;
+        }
+        float scaleFactor = Math.max(entityWidth, entityHeight) / MAX_BLOCK_SCALE;
+        if (scaleFactor > 1.0f) {
+          return MAX_BLOCK_SCALE / scaleFactor;
+        }
+        return MAX_BLOCK_SCALE;
+      });
   }
 
   public static float getUIScale(Entity entity) {

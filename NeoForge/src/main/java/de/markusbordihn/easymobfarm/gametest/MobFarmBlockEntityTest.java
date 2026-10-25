@@ -27,29 +27,29 @@ public class MobFarmBlockEntityTest {
 
   public void testUnknownFarmTypeTagKeepsBlockFarmType(GameTestHelper helper) {
     MobFarmBlockEntityTestHelper.testUnknownFarmTypeTagKeepsBlockFarmType(
-        helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
+      helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
     helper.succeed();
   }
 
   public void testNonLivingCaptureCardHasNoExperience(GameTestHelper helper) {
     MobFarmBlockEntityTestHelper.testNonLivingCaptureCardHasNoExperience(
-        helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
+      helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
     helper.succeed();
   }
 
   public void testNonLivingCaptureCardLeavesNoEntity(GameTestHelper helper) {
     MobFarmBlockEntityTestHelper.testNonLivingCaptureCardLeavesNoEntity(
-        helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
+      helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
     helper.succeed();
   }
 
   public void testEmptyCaptureItemKeepsFarmIdle(GameTestHelper helper) {
     MobFarmBlockEntityTestHelper.testEmptyCaptureItemKeepsFarmIdle(
-        helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
+      helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
   }
 
   public void testUnknownEntityCaptureCardSetsErrorStatus(GameTestHelper helper) {
     MobFarmBlockEntityTestHelper.testUnknownEntityCaptureCardSetsErrorStatus(
-        helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
+      helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
   }
 }

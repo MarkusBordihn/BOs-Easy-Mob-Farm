@@ -44,7 +44,8 @@ public class MobVariantData {
   public static final String SMALL_VARIANT = "small";
   public static final String TINY_VARIANT = "tiny";
 
-  private MobVariantData() {}
+  private MobVariantData() {
+  }
 
   public static String getVariant(final EntityType<?> entityType) {
     return null;
@@ -55,9 +56,9 @@ public class MobVariantData {
       return LEADER_VARIANT;
     } else if (livingEntity instanceof Cat cat) {
       return (cat.getVariant().unwrapKey().orElse(CatVariants.BLACK))
-          .identifier()
-          .toString()
-          .replace("minecraft:", "");
+        .identifier()
+        .toString()
+        .replace("minecraft:", "");
     } else if (livingEntity instanceof Villager villager) {
       return villager.getVillagerData().profession().getRegisteredName().replace("minecraft:", "");
     } else if (livingEntity instanceof MagmaCube magmaCube) {
@@ -66,21 +67,21 @@ public class MobVariantData {
       return getSizeVariant(slime.getSize());
     } else if (livingEntity instanceof Chicken chicken) {
       return (chicken.getVariant().unwrapKey().orElse(ChickenVariants.TEMPERATE))
+        .identifier()
+        .toString()
+        .replace("minecraft:", "");
+    } else if (livingEntity instanceof Frog frog) {
+      String frogVariant =
+        (frog.getVariant().unwrapKey().orElse(FrogVariants.TEMPERATE))
           .identifier()
           .toString()
           .replace("minecraft:", "");
-    } else if (livingEntity instanceof Frog frog) {
-      String frogVariant =
-          (frog.getVariant().unwrapKey().orElse(FrogVariants.TEMPERATE))
-              .identifier()
-              .toString()
-              .replace("minecraft:", "");
       if (CompatConstants.MOD_SWAMPIER_SWAMPS_LOADED) {
         frogVariant =
-            frogVariant
-                .replace(CompatConstants.MOD_SWAMPIER_SWAMPS_ID + ":", "")
-                .replace("frog_", "")
-                .replace("_variant", "");
+          frogVariant
+            .replace(CompatConstants.MOD_SWAMPIER_SWAMPS_ID + ":", "")
+            .replace("frog_", "")
+            .replace("_variant", "");
       }
       return frogVariant;
     }

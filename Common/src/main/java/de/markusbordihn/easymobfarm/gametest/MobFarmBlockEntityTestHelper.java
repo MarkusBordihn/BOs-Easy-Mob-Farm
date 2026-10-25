@@ -44,7 +44,8 @@ public class MobFarmBlockEntityTestHelper {
   private static final BlockPos FARM_POSITION = new BlockPos(1, 2, 1);
   private static final int PROCESSING_TICKS_DELAY = 30;
 
-  private MobFarmBlockEntityTestHelper() {}
+  private MobFarmBlockEntityTestHelper() {
+  }
 
   public static void testUnknownFarmTypeTagKeepsBlockFarmType(GameTestHelper helper, Block block) {
     MobFarmBlockEntity blockEntity = placeMobFarm(helper, block);
@@ -57,16 +58,16 @@ public class MobFarmBlockEntityTestHelper {
     CompoundTag compoundTag = new CompoundTag();
     compoundTag.putString(MobFarmBlockEntity.FARM_TYPE_TAG, "not_a_known_farm_type");
     blockEntity.loadAdditional(
-        TagValueInput.create(
-            ProblemReporter.DISCARDING, helper.getLevel().registryAccess(), compoundTag));
+      TagValueInput.create(
+        ProblemReporter.DISCARDING, helper.getLevel().registryAccess(), compoundTag));
 
     GameTestHelpers.assertTrue(
-        helper,
-        "Unknown farm type should keep "
-            + expectedFarmType
-            + ", but found "
-            + blockEntity.getFarmType(),
-        blockEntity.getFarmType() == expectedFarmType);
+      helper,
+      "Unknown farm type should keep "
+        + expectedFarmType
+        + ", but found "
+        + blockEntity.getFarmType(),
+      blockEntity.getFarmType() == expectedFarmType);
   }
 
   public static void testNonLivingCaptureCardHasNoExperience(GameTestHelper helper, Block block) {
@@ -79,10 +80,10 @@ public class MobFarmBlockEntityTestHelper {
     blockEntity.setItem(MobFarmSlot.CAPTURED_MOB.index(), createNonLivingCaptureCard());
 
     GameTestHelpers.assertTrue(
-        helper,
-        "Capture card for a non-living entity should have no experience, but found "
-            + blockEntity.getCapturedMobExperience(),
-        blockEntity.getCapturedMobExperience() == 0);
+      helper,
+      "Capture card for a non-living entity should have no experience, but found "
+        + blockEntity.getCapturedMobExperience(),
+      blockEntity.getCapturedMobExperience() == 0);
   }
 
   public static void testNonLivingCaptureCardLeavesNoEntity(GameTestHelper helper, Block block) {
@@ -106,19 +107,19 @@ public class MobFarmBlockEntityTestHelper {
     }
 
     blockEntity.setItem(
-        MobFarmSlot.CAPTURED_MOB.index(),
-        new ItemStack(MobCaptureCardItem.getMobCaptureCardItem()));
+      MobFarmSlot.CAPTURED_MOB.index(),
+      new ItemStack(MobCaptureCardItem.getMobCaptureCardItem()));
 
     helper.runAfterDelay(
-        PROCESSING_TICKS_DELAY,
-        () -> {
-          assertUnusableCapturedMob(helper, blockEntity, MobFarmStatus.IDLE);
-          helper.succeed();
-        });
+      PROCESSING_TICKS_DELAY,
+      () -> {
+        assertUnusableCapturedMob(helper, blockEntity, MobFarmStatus.IDLE);
+        helper.succeed();
+      });
   }
 
   public static void testUnknownEntityCaptureCardSetsErrorStatus(
-      GameTestHelper helper, Block block) {
+    GameTestHelper helper, Block block) {
     MobFarmBlockEntity blockEntity = placeMobFarm(helper, block);
     if (blockEntity == null) {
       helper.fail("Unable to place mob farm " + block + " for the unknown entity card test.");
@@ -128,49 +129,49 @@ public class MobFarmBlockEntityTestHelper {
     blockEntity.setItem(MobFarmSlot.CAPTURED_MOB.index(), createUnknownEntityCaptureCard());
 
     helper.runAfterDelay(
-        PROCESSING_TICKS_DELAY,
-        () -> {
-          assertUnusableCapturedMob(helper, blockEntity, MobFarmStatus.ERROR);
-          blockEntity.setItem(MobFarmSlot.CAPTURED_MOB.index(), ItemStack.EMPTY);
-          helper.succeed();
-        });
+      PROCESSING_TICKS_DELAY,
+      () -> {
+        assertUnusableCapturedMob(helper, blockEntity, MobFarmStatus.ERROR);
+        blockEntity.setItem(MobFarmSlot.CAPTURED_MOB.index(), ItemStack.EMPTY);
+        helper.succeed();
+      });
   }
 
   private static void assertUnusableCapturedMob(
-      GameTestHelper helper, MobFarmBlockEntity blockEntity, int expectedFarmStatus) {
+    GameTestHelper helper, MobFarmBlockEntity blockEntity, int expectedFarmStatus) {
     GameTestHelpers.assertTrue(
-        helper,
-        "Unusable captured mob should set farm status "
-            + expectedFarmStatus
-            + ", but found "
-            + blockEntity.getFarmStatus(),
-        blockEntity.getFarmStatus() == expectedFarmStatus);
+      helper,
+      "Unusable captured mob should set farm status "
+        + expectedFarmStatus
+        + ", but found "
+        + blockEntity.getFarmStatus(),
+      blockEntity.getFarmStatus() == expectedFarmStatus);
     GameTestHelpers.assertTrue(
-        helper,
-        "Unusable captured mob should not add farm progress, but found "
-            + blockEntity.getFarmProgress(),
-        blockEntity.getFarmProgress() == 0);
+      helper,
+      "Unusable captured mob should not add farm progress, but found "
+        + blockEntity.getFarmProgress(),
+      blockEntity.getFarmProgress() == 0);
     GameTestHelpers.assertTrue(
-        helper,
-        "Unusable captured mob should stay inside the farm, but the slot was empty.",
-        blockEntity.hasCapturedMob());
+      helper,
+      "Unusable captured mob should stay inside the farm, but the slot was empty.",
+      blockEntity.hasCapturedMob());
   }
 
   private static ItemStack createUnknownEntityCaptureCard() {
     return createCaptureCardBypassingNullEntityTypeGuard(
-        "Unknown", "easy_mob_farm:does_not_exist", null);
+      "Unknown", "easy_mob_farm:does_not_exist", null);
   }
 
   private static ItemStack createNonLivingCaptureCard() {
     return createCaptureCardBypassingNullEntityTypeGuard(
-        "Arrow", "minecraft:arrow", EntityTypes.ARROW);
+      "Arrow", "minecraft:arrow", EntityTypes.ARROW);
   }
 
   private static ItemStack createCaptureCardBypassingNullEntityTypeGuard(
-      String name, String type, EntityType<?> entityType) {
+    String name, String type, EntityType<?> entityType) {
     MobCaptureData mobCaptureData =
-        new MobCaptureData(
-            name, type, entityType, new CompoundTag(), MobColor.NONE, "", Rarity.COMMON, false);
+      new MobCaptureData(
+        name, type, entityType, new CompoundTag(), MobColor.NONE, "", Rarity.COMMON, false);
 
     ItemStack itemStack = new ItemStack(MobCaptureCardItem.getMobCaptureCardItem());
     itemStack.set(DataComponents.MOB_CAPTURE_DATA, mobCaptureData);

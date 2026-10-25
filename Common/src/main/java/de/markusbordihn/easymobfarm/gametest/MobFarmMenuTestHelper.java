@@ -41,28 +41,29 @@ public class MobFarmMenuTestHelper {
   private static final int HOTBAR_SLOT = 0;
   private static final int LEFT_MOUSE_BUTTON = 0;
 
-  private MobFarmMenuTestHelper() {}
+  private MobFarmMenuTestHelper() {
+  }
 
   public static void testQuickMoveCaptureCardFillsCapturedMobSlotOnce(
-      GameTestHelper helper, Block block) {
+    GameTestHelper helper, Block block) {
     Player player = helper.makeMockPlayer(GameType.SURVIVAL);
     MobFarmBlockEntity mobFarm = placeMobFarm(helper, block);
     MobFarmMenu menu = openMenu(mobFarm, player);
     player
-        .getInventory()
-        .setItem(INVENTORY_SLOT, new ItemStack(MobCaptureCardItem.getMobCaptureCardItem(), 2));
+      .getInventory()
+      .setItem(INVENTORY_SLOT, new ItemStack(MobCaptureCardItem.getMobCaptureCardItem(), 2));
 
     quickMoveInventorySlot(menu, player, INVENTORY_SLOT);
 
     GameTestHelpers.assertTrue(
-        helper,
-        "Shift-click should move exactly one capture card into the captured mob slot, but found "
-            + mobFarm.getItem(MobFarmSlot.CAPTURED_MOB.index())
-            + " in the farm and "
-            + player.getInventory().getItem(INVENTORY_SLOT)
-            + " in the inventory",
-        mobFarm.getItem(MobFarmSlot.CAPTURED_MOB.index()).getCount() == 1
-            && player.getInventory().getItem(INVENTORY_SLOT).getCount() == 1);
+      helper,
+      "Shift-click should move exactly one capture card into the captured mob slot, but found "
+        + mobFarm.getItem(MobFarmSlot.CAPTURED_MOB.index())
+        + " in the farm and "
+        + player.getInventory().getItem(INVENTORY_SLOT)
+        + " in the inventory",
+      mobFarm.getItem(MobFarmSlot.CAPTURED_MOB.index()).getCount() == 1
+        && player.getInventory().getItem(INVENTORY_SLOT).getCount() == 1);
   }
 
   public static void testQuickMoveNeverFillsOutputSlots(GameTestHelper helper, Block block) {
@@ -77,7 +78,7 @@ public class MobFarmMenuTestHelper {
   }
 
   public static void testQuickMoveTakesResultIntoPlayerInventory(
-      GameTestHelper helper, Block block) {
+    GameTestHelper helper, Block block) {
     Player player = helper.makeMockPlayer(GameType.SURVIVAL);
     MobFarmBlockEntity mobFarm = placeMobFarm(helper, block);
     MobFarmMenu menu = openMenu(mobFarm, player);
@@ -85,17 +86,17 @@ public class MobFarmMenuTestHelper {
     mobFarm.setItem(resultSlot, new ItemStack(Items.BONE, 16));
 
     menu.clicked(
-        GameTestHelpers.menuSlotIndex(menu, mobFarm, resultSlot),
-        LEFT_MOUSE_BUTTON,
-        ContainerInput.QUICK_MOVE,
-        player);
+      GameTestHelpers.menuSlotIndex(menu, mobFarm, resultSlot),
+      LEFT_MOUSE_BUTTON,
+      ContainerInput.QUICK_MOVE,
+      player);
 
     assertOutputSlotsEmpty(helper, mobFarm, "Shift-click on a result");
     GameTestHelpers.assertTrue(
-        helper,
-        "Shift-click on a result should move all 16 bones into the player inventory, but found "
-            + player.getInventory().countItem(Items.BONE),
-        player.getInventory().countItem(Items.BONE) == 16);
+      helper,
+      "Shift-click on a result should move all 16 bones into the player inventory, but found "
+        + player.getInventory().countItem(Items.BONE),
+      player.getInventory().countItem(Items.BONE) == 16);
   }
 
   public static void testQuickMoveSlotUpgradeAddsOutputSlots(GameTestHelper helper, Block block) {
@@ -103,25 +104,25 @@ public class MobFarmMenuTestHelper {
     MobFarmBlockEntity mobFarm = placeMobFarm(helper, block);
     MobFarmMenu menu = openMenu(mobFarm, player);
     player
-        .getInventory()
-        .setItem(
-            INVENTORY_SLOT,
-            new ItemStack(de.markusbordihn.easymobfarm.item.Items.SMALL_SLOT_UPGRADE));
+      .getInventory()
+      .setItem(
+        INVENTORY_SLOT,
+        new ItemStack(de.markusbordihn.easymobfarm.item.Items.SMALL_SLOT_UPGRADE));
 
     quickMoveInventorySlot(menu, player, INVENTORY_SLOT);
 
     GameTestHelpers.assertTrue(
-        helper,
-        "Shift-click should move the slot upgrade into the first slot upgrade slot, but found "
-            + mobFarm.getItem(MobFarmSlots.SLOT_UPGRADE_ITEM_SLOTS.get(0).index()),
-        mobFarm
-            .getItem(MobFarmSlots.SLOT_UPGRADE_ITEM_SLOTS.get(0).index())
-            .is(de.markusbordihn.easymobfarm.item.Items.SMALL_SLOT_UPGRADE));
+      helper,
+      "Shift-click should move the slot upgrade into the first slot upgrade slot, but found "
+        + mobFarm.getItem(MobFarmSlots.SLOT_UPGRADE_ITEM_SLOTS.get(0).index()),
+      mobFarm
+        .getItem(MobFarmSlots.SLOT_UPGRADE_ITEM_SLOTS.get(0).index())
+        .is(de.markusbordihn.easymobfarm.item.Items.SMALL_SLOT_UPGRADE));
     GameTestHelpers.assertTrue(
-        helper,
-        "Slot upgrade should add output slots, but the menu still shows "
-            + menu.getMobFarmNumberOfOutputSlots(),
-        menu.getMobFarmNumberOfOutputSlots() > MobFarmMenu.MIN_NUMBER_OF_OUTPUT_SLOTS);
+      helper,
+      "Slot upgrade should add output slots, but the menu still shows "
+        + menu.getMobFarmNumberOfOutputSlots(),
+      menu.getMobFarmNumberOfOutputSlots() > MobFarmMenu.MIN_NUMBER_OF_OUTPUT_SLOTS);
   }
 
   public static void testHotbarSwapIntoOutputSlotIsRejected(GameTestHelper helper, Block block) {
@@ -131,17 +132,17 @@ public class MobFarmMenuTestHelper {
     player.getInventory().setItem(HOTBAR_SLOT, new ItemStack(Items.BONE));
 
     menu.clicked(
-        GameTestHelpers.menuSlotIndex(menu, mobFarm, MobFarmSlots.RESULT_SLOTS.get(0).index()),
-        HOTBAR_SLOT,
-        ContainerInput.SWAP,
-        player);
+      GameTestHelpers.menuSlotIndex(menu, mobFarm, MobFarmSlots.RESULT_SLOTS.get(0).index()),
+      HOTBAR_SLOT,
+      ContainerInput.SWAP,
+      player);
 
     assertOutputSlotsEmpty(helper, mobFarm, "Hotbar swap");
     GameTestHelpers.assertTrue(
-        helper,
-        "Rejected hotbar swap should keep the bone in the hotbar, but found "
-            + player.getInventory().getItem(HOTBAR_SLOT),
-        player.getInventory().getItem(HOTBAR_SLOT).is(Items.BONE));
+      helper,
+      "Rejected hotbar swap should keep the bone in the hotbar, but found "
+        + player.getInventory().getItem(HOTBAR_SLOT),
+      player.getInventory().getItem(HOTBAR_SLOT).is(Items.BONE));
   }
 
   public static void testHotbarSwapTakesResult(GameTestHelper helper, Block block) {
@@ -152,48 +153,48 @@ public class MobFarmMenuTestHelper {
     mobFarm.setItem(resultSlot, new ItemStack(Items.BONE, 16));
 
     menu.clicked(
-        GameTestHelpers.menuSlotIndex(menu, mobFarm, resultSlot),
-        HOTBAR_SLOT,
-        ContainerInput.SWAP,
-        player);
+      GameTestHelpers.menuSlotIndex(menu, mobFarm, resultSlot),
+      HOTBAR_SLOT,
+      ContainerInput.SWAP,
+      player);
 
     assertOutputSlotsEmpty(helper, mobFarm, "Hotbar swap on a result");
     GameTestHelpers.assertTrue(
-        helper,
-        "Hotbar swap on a result should move all 16 bones into the hotbar, but found "
-            + player.getInventory().getItem(HOTBAR_SLOT),
-        player.getInventory().getItem(HOTBAR_SLOT).is(Items.BONE)
-            && player.getInventory().getItem(HOTBAR_SLOT).getCount() == 16);
+      helper,
+      "Hotbar swap on a result should move all 16 bones into the hotbar, but found "
+        + player.getInventory().getItem(HOTBAR_SLOT),
+      player.getInventory().getItem(HOTBAR_SLOT).is(Items.BONE)
+        && player.getInventory().getItem(HOTBAR_SLOT).getCount() == 16);
   }
 
   public static void testHotbarSwapCaptureCardFillsCapturedMobSlotOnce(
-      GameTestHelper helper, Block block) {
+    GameTestHelper helper, Block block) {
     Player player = helper.makeMockPlayer(GameType.SURVIVAL);
     MobFarmBlockEntity mobFarm = placeMobFarm(helper, block);
     MobFarmMenu menu = openMenu(mobFarm, player);
     player
-        .getInventory()
-        .setItem(HOTBAR_SLOT, new ItemStack(MobCaptureCardItem.getMobCaptureCardItem(), 2));
+      .getInventory()
+      .setItem(HOTBAR_SLOT, new ItemStack(MobCaptureCardItem.getMobCaptureCardItem(), 2));
 
     menu.clicked(
-        GameTestHelpers.menuSlotIndex(menu, mobFarm, MobFarmSlot.CAPTURED_MOB.index()),
-        HOTBAR_SLOT,
-        ContainerInput.SWAP,
-        player);
+      GameTestHelpers.menuSlotIndex(menu, mobFarm, MobFarmSlot.CAPTURED_MOB.index()),
+      HOTBAR_SLOT,
+      ContainerInput.SWAP,
+      player);
 
     GameTestHelpers.assertTrue(
-        helper,
-        "Hotbar swap should move exactly one capture card into the captured mob slot, but found "
-            + mobFarm.getItem(MobFarmSlot.CAPTURED_MOB.index())
-            + " in the farm and "
-            + player.getInventory().getItem(HOTBAR_SLOT)
-            + " in the hotbar",
-        mobFarm.getItem(MobFarmSlot.CAPTURED_MOB.index()).getCount() == 1
-            && player.getInventory().getItem(HOTBAR_SLOT).getCount() == 1);
+      helper,
+      "Hotbar swap should move exactly one capture card into the captured mob slot, but found "
+        + mobFarm.getItem(MobFarmSlot.CAPTURED_MOB.index())
+        + " in the farm and "
+        + player.getInventory().getItem(HOTBAR_SLOT)
+        + " in the hotbar",
+      mobFarm.getItem(MobFarmSlot.CAPTURED_MOB.index()).getCount() == 1
+        && player.getInventory().getItem(HOTBAR_SLOT).getCount() == 1);
   }
 
   public static void testMousePlacementRespectsSlotRestrictions(
-      GameTestHelper helper, Block block) {
+    GameTestHelper helper, Block block) {
     Player player = helper.makeMockPlayer(GameType.SURVIVAL);
     MobFarmBlockEntity mobFarm = placeMobFarm(helper, block);
     MobFarmMenu menu = openMenu(mobFarm, player);
@@ -207,55 +208,55 @@ public class MobFarmMenuTestHelper {
 
     assertOutputSlotsEmpty(helper, mobFarm, "Placing a bone with the mouse");
     GameTestHelpers.assertTrue(
-        helper,
-        "A bone should only be accepted by the filter slot, and only once, but the farm holds "
-            + mobFarm.getItem(MobFarmSlot.CAPTURED_MOB.index())
-            + ", "
-            + mobFarm.getItem(MobFarmSlots.ENHANCEMENT_ITEM_SLOTS.get(0).index())
-            + ", "
-            + mobFarm.getItem(MobFarmSlots.SLOT_UPGRADE_ITEM_SLOTS.get(0).index())
-            + ", "
-            + mobFarm.getItem(MobFarmSlots.FILTER_ITEM_SLOTS.get(0).index())
-            + " while carrying "
-            + menu.getCarried(),
-        mobFarm.getItem(MobFarmSlot.CAPTURED_MOB.index()).isEmpty()
-            && mobFarm.getItem(MobFarmSlots.ENHANCEMENT_ITEM_SLOTS.get(0).index()).isEmpty()
-            && mobFarm.getItem(MobFarmSlots.SLOT_UPGRADE_ITEM_SLOTS.get(0).index()).isEmpty()
-            && mobFarm.getItem(MobFarmSlots.FILTER_ITEM_SLOTS.get(0).index()).getCount() == 1
-            && menu.getCarried().getCount() == 3);
+      helper,
+      "A bone should only be accepted by the filter slot, and only once, but the farm holds "
+        + mobFarm.getItem(MobFarmSlot.CAPTURED_MOB.index())
+        + ", "
+        + mobFarm.getItem(MobFarmSlots.ENHANCEMENT_ITEM_SLOTS.get(0).index())
+        + ", "
+        + mobFarm.getItem(MobFarmSlots.SLOT_UPGRADE_ITEM_SLOTS.get(0).index())
+        + ", "
+        + mobFarm.getItem(MobFarmSlots.FILTER_ITEM_SLOTS.get(0).index())
+        + " while carrying "
+        + menu.getCarried(),
+      mobFarm.getItem(MobFarmSlot.CAPTURED_MOB.index()).isEmpty()
+        && mobFarm.getItem(MobFarmSlots.ENHANCEMENT_ITEM_SLOTS.get(0).index()).isEmpty()
+        && mobFarm.getItem(MobFarmSlots.SLOT_UPGRADE_ITEM_SLOTS.get(0).index()).isEmpty()
+        && mobFarm.getItem(MobFarmSlots.FILTER_ITEM_SLOTS.get(0).index()).getCount() == 1
+        && menu.getCarried().getCount() == 3);
   }
 
   private static void assertOutputSlotsEmpty(
-      GameTestHelper helper, MobFarmBlockEntity mobFarm, String action) {
+    GameTestHelper helper, MobFarmBlockEntity mobFarm, String action) {
     for (MobFarmSlot resultSlot : MobFarmSlots.RESULT_SLOTS) {
       if (!mobFarm.getItem(resultSlot.index()).isEmpty()) {
         helper.fail(
-            action
-                + " should leave the output slots empty, but "
-                + resultSlot
-                + " holds "
-                + mobFarm.getItem(resultSlot.index()));
+          action
+            + " should leave the output slots empty, but "
+            + resultSlot
+            + " holds "
+            + mobFarm.getItem(resultSlot.index()));
       }
     }
   }
 
   private static void quickMoveInventorySlot(
-      MobFarmMenu menu, Player player, int inventorySlotIndex) {
+    MobFarmMenu menu, Player player, int inventorySlotIndex) {
     Inventory inventory = player.getInventory();
     menu.clicked(
-        GameTestHelpers.menuSlotIndex(menu, inventory, inventorySlotIndex),
-        LEFT_MOUSE_BUTTON,
-        ContainerInput.QUICK_MOVE,
-        player);
+      GameTestHelpers.menuSlotIndex(menu, inventory, inventorySlotIndex),
+      LEFT_MOUSE_BUTTON,
+      ContainerInput.QUICK_MOVE,
+      player);
   }
 
   private static void placeCarried(
-      MobFarmMenu menu, Player player, MobFarmBlockEntity mobFarm, int containerSlotIndex) {
+    MobFarmMenu menu, Player player, MobFarmBlockEntity mobFarm, int containerSlotIndex) {
     menu.clicked(
-        GameTestHelpers.menuSlotIndex(menu, mobFarm, containerSlotIndex),
-        LEFT_MOUSE_BUTTON,
-        ContainerInput.PICKUP,
-        player);
+      GameTestHelpers.menuSlotIndex(menu, mobFarm, containerSlotIndex),
+      LEFT_MOUSE_BUTTON,
+      ContainerInput.PICKUP,
+      player);
   }
 
   private static MobFarmMenu openMenu(MobFarmBlockEntity mobFarm, Player player) {
@@ -265,7 +266,7 @@ public class MobFarmMenuTestHelper {
   private static MobFarmBlockEntity placeMobFarm(GameTestHelper helper, Block block) {
     helper.setBlock(FARM_POSITION, block);
     if (helper.getLevel().getBlockEntity(helper.absolutePos(FARM_POSITION))
-        instanceof MobFarmBlockEntity mobFarmBlockEntity) {
+      instanceof MobFarmBlockEntity mobFarmBlockEntity) {
       return mobFarmBlockEntity;
     }
 

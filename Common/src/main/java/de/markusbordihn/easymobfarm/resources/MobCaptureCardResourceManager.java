@@ -27,6 +27,8 @@ import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinitionManager
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 import net.minecraft.resources.FileToIdConverter;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -41,7 +43,7 @@ import org.apache.logging.log4j.Logger;
 public class MobCaptureCardResourceManager extends SimpleJsonResourceReloadListener<JsonElement> {
 
   public static final Identifier RESOURCE_ID =
-      Identifier.fromNamespaceAndPath(Constants.MOD_ID, "mob_capture_card_resource_loader");
+    Identifier.fromNamespaceAndPath(Constants.MOD_ID, "mob_capture_card_resource_loader");
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   private static final String LOG_PREFIX = "[Mob Capture Card Resource Manager]";
@@ -61,63 +63,73 @@ public class MobCaptureCardResourceManager extends SimpleJsonResourceReloadListe
 
   @Override
   protected void apply(
-      Map<Identifier, JsonElement> objectMap,
-      ResourceManager resourceManager,
-      ProfilerFiller profiler) {
+    Map<Identifier, JsonElement> objectMap,
+    ResourceManager resourceManager,
+    ProfilerFiller profiler) {
 
     MobCaptureCardDefinitionManager.clear();
 
+    Set<Identifier> skippedEntities = new TreeSet<>();
     objectMap.forEach(
-        (location, element) -> {
-          try {
-            JsonObject json = GsonHelper.convertToJsonObject(element, "mob_capture_card");
-            log.debug("{} Parsing definition: {}", LOG_PREFIX, location);
+      (location, element) -> {
+        try {
+          JsonObject json = GsonHelper.convertToJsonObject(element, "mob_capture_card");
+          log.debug("{} Parsing definition: {}", LOG_PREFIX, location);
 
-            Identifier entity = Identifier.parse(GsonHelper.getAsString(json, "entity"));
-            Identifier model =
-                json.has(MODEL_TAG)
-                    ? Identifier.parse(GsonHelper.getAsString(json, MODEL_TAG))
-                    : null;
-            Rarity rarity =
-                Rarity.valueOf(
-                    GsonHelper.getAsString(json, RARITY_TAG, "common").toUpperCase(Locale.ROOT));
-            float scale = GsonHelper.getAsFloat(json, SCALE_TAG, 1.0f);
-            boolean requiresKilledByPlayer =
-                GsonHelper.getAsBoolean(json, REQUIRES_KILLED_BY_PLAYER_TAG, false);
-            boolean requiresAnimationTick =
-                GsonHelper.getAsBoolean(json, REQUIRES_ANIMATION_TICK_TAG, false);
-            boolean supportsKnifeEnhancement =
-                GsonHelper.getAsBoolean(json, SUPPORTS_KNIFE_ENHANCEMENT_TAG, false);
+          Identifier entity = Identifier.parse(GsonHelper.getAsString(json, "entity"));
+          Identifier model =
+            json.has(MODEL_TAG)
+              ? Identifier.parse(GsonHelper.getAsString(json, MODEL_TAG))
+              : null;
+          Rarity rarity =
+            Rarity.valueOf(
+              GsonHelper.getAsString(json, RARITY_TAG, "common").toUpperCase(Locale.ROOT));
+          float scale = GsonHelper.getAsFloat(json, SCALE_TAG, 1.0f);
+          boolean requiresKilledByPlayer =
+            GsonHelper.getAsBoolean(json, REQUIRES_KILLED_BY_PLAYER_TAG, false);
+          boolean requiresAnimationTick =
+            GsonHelper.getAsBoolean(json, REQUIRES_ANIMATION_TICK_TAG, false);
+          boolean supportsKnifeEnhancement =
+            GsonHelper.getAsBoolean(json, SUPPORTS_KNIFE_ENHANCEMENT_TAG, false);
 
-            Map<String, MobCaptureCardDefinition.Color> colors = parseColors(json);
-            Map<String, MobCaptureCardDefinition.Variant> variants = parseVariants(json);
+          Map<String, MobCaptureCardDefinition.Color> colors = parseColors(json);
+          Map<String, MobCaptureCardDefinition.Variant> variants = parseVariants(json);
 
-            MobCaptureCardDefinition definition =
-                new MobCaptureCardDefinition(
-                    entity,
-                    model,
-                    rarity,
-                    scale,
-                    requiresKilledByPlayer,
-                    requiresAnimationTick,
-                    supportsKnifeEnhancement,
-                    variants,
-                    colors);
+          MobCaptureCardDefinition definition =
+            new MobCaptureCardDefinition(
+              entity,
+              model,
+              rarity,
+              scale,
+              requiresKilledByPlayer,
+              requiresAnimationTick,
+              supportsKnifeEnhancement,
+              variants,
+              colors);
 
-            MobCaptureCardDefinitionManager.addDefinition(entity, definition);
-          } catch (Exception e) {
-            log.error(
-                "{} Failed to parse mob_capture_card definition: {} → {}",
-                LOG_PREFIX,
-                location,
-                e.getMessage());
+          if (!MobCaptureCardDefinitionManager.addDefinition(entity, definition)) {
+            skippedEntities.add(entity);
           }
-        });
+        } catch (Exception e) {
+          log.error(
+            "{} Failed to parse mob_capture_card definition: {} → {}",
+            LOG_PREFIX,
+            location,
+            e.getMessage());
+        }
+      });
 
     log.info(
-        "{} Loaded {} mob capture card definitions.",
+      "{} Loaded {} mob capture card definitions.",
+      LOG_PREFIX,
+      MobCaptureCardDefinitionManager.getAll().size());
+    if (!skippedEntities.isEmpty()) {
+      log.info(
+        "{} Skipped {} definitions for entity types that are not loaded: {}",
         LOG_PREFIX,
-        MobCaptureCardDefinitionManager.getAll().size());
+        skippedEntities.size(),
+        skippedEntities);
+    }
   }
 
   private Map<String, MobCaptureCardDefinition.Color> parseColors(JsonObject json) {
@@ -128,17 +140,17 @@ public class MobCaptureCardResourceManager extends SimpleJsonResourceReloadListe
 
     JsonObject colorsJson = GsonHelper.getAsJsonObject(json, COLORS_TAG);
     colorsJson
-        .entrySet()
-        .forEach(
-            entry -> {
-              String color = entry.getKey();
-              Identifier colorModel =
-                  json.has(MODEL_TAG)
-                      ? Identifier.parse(
-                          GsonHelper.getAsString(entry.getValue().getAsJsonObject(), MODEL_TAG))
-                      : null;
-              colors.put(color, new MobCaptureCardDefinition.Color(colorModel));
-            });
+      .entrySet()
+      .forEach(
+        entry -> {
+          String color = entry.getKey();
+          Identifier colorModel =
+            json.has(MODEL_TAG)
+              ? Identifier.parse(
+              GsonHelper.getAsString(entry.getValue().getAsJsonObject(), MODEL_TAG))
+              : null;
+          colors.put(color, new MobCaptureCardDefinition.Color(colorModel));
+        });
 
     return colors;
   }
@@ -151,37 +163,37 @@ public class MobCaptureCardResourceManager extends SimpleJsonResourceReloadListe
 
     JsonObject variantsJson = GsonHelper.getAsJsonObject(json, VARIANTS_TAG);
     variantsJson
-        .entrySet()
-        .forEach(
-            entry -> {
-              String variant = entry.getKey();
-              JsonObject variantObj = entry.getValue().getAsJsonObject();
-              Identifier variantModel =
-                  json.has(MODEL_TAG)
-                      ? Identifier.parse(GsonHelper.getAsString(variantObj, MODEL_TAG, null))
+      .entrySet()
+      .forEach(
+        entry -> {
+          String variant = entry.getKey();
+          JsonObject variantObj = entry.getValue().getAsJsonObject();
+          Identifier variantModel =
+            json.has(MODEL_TAG)
+              ? Identifier.parse(GsonHelper.getAsString(variantObj, MODEL_TAG, null))
+              : null;
+
+          Map<String, MobCaptureCardDefinition.Color> variantColors = new HashMap<>();
+          if (variantObj.has(COLORS_TAG)) {
+            JsonObject variantColorsJson = GsonHelper.getAsJsonObject(variantObj, COLORS_TAG);
+            variantColorsJson
+              .entrySet()
+              .forEach(
+                colorEntry -> {
+                  String color = colorEntry.getKey();
+                  Identifier colorModel =
+                    json.has(MODEL_TAG)
+                      ? Identifier.parse(
+                      GsonHelper.getAsString(
+                        colorEntry.getValue().getAsJsonObject(), MODEL_TAG))
                       : null;
+                  variantColors.put(color, new MobCaptureCardDefinition.Color(colorModel));
+                });
+          }
 
-              Map<String, MobCaptureCardDefinition.Color> variantColors = new HashMap<>();
-              if (variantObj.has(COLORS_TAG)) {
-                JsonObject variantColorsJson = GsonHelper.getAsJsonObject(variantObj, COLORS_TAG);
-                variantColorsJson
-                    .entrySet()
-                    .forEach(
-                        colorEntry -> {
-                          String color = colorEntry.getKey();
-                          Identifier colorModel =
-                              json.has(MODEL_TAG)
-                                  ? Identifier.parse(
-                                      GsonHelper.getAsString(
-                                          colorEntry.getValue().getAsJsonObject(), MODEL_TAG))
-                                  : null;
-                          variantColors.put(color, new MobCaptureCardDefinition.Color(colorModel));
-                        });
-              }
-
-              variants.put(
-                  variant, new MobCaptureCardDefinition.Variant(variantModel, variantColors));
-            });
+          variants.put(
+            variant, new MobCaptureCardDefinition.Variant(variantModel, variantColors));
+        });
 
     return variants;
   }

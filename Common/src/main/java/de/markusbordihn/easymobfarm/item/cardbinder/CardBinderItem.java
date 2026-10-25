@@ -51,10 +51,10 @@ public class CardBinderItem extends MobFarmItem {
 
   public CardBinderItem() {
     this(
-        new Properties()
-            .setId(
-                ResourceKey.create(
-                    Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
+      new Properties()
+        .setId(
+          ResourceKey.create(
+            Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
   }
 
   public CardBinderItem(Properties properties) {
@@ -64,17 +64,27 @@ public class CardBinderItem extends MobFarmItem {
   public static SimpleContainer loadCards(ItemStack binderStack) {
     SimpleContainer container = new SimpleContainer(CONTAINER_SIZE);
     ItemContainerContents contents =
-        binderStack.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY);
+      binderStack.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY);
     contents.copyInto(container.getItems());
     return container;
   }
 
   public static void saveCards(ItemStack binderStack, SimpleContainer container) {
+    binderStack.set(DataComponents.CONTAINER, createContents(container));
+  }
+
+  public static boolean holdsSameCards(ItemStack binderStack, SimpleContainer container) {
+    return binderStack
+      .getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY)
+      .equals(createContents(container));
+  }
+
+  private static ItemContainerContents createContents(SimpleContainer container) {
     NonNullList<ItemStack> items = NonNullList.withSize(CONTAINER_SIZE, ItemStack.EMPTY);
     for (int i = 0; i < container.getContainerSize(); i++) {
       items.set(i, container.getItem(i));
     }
-    binderStack.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(items));
+    return ItemContainerContents.fromItems(items);
   }
 
   @Override
@@ -88,18 +98,18 @@ public class CardBinderItem extends MobFarmItem {
 
   @Override
   public void appendHoverText(
-      ItemStack itemStack,
-      TooltipContext tooltipContext,
-      TooltipDisplay tooltipDisplay,
-      Consumer<Component> tooltipConsumer,
-      TooltipFlag tooltipFlag) {
+    ItemStack itemStack,
+    TooltipContext tooltipContext,
+    TooltipDisplay tooltipDisplay,
+    Consumer<Component> tooltipConsumer,
+    TooltipFlag tooltipFlag) {
     ItemContainerContents contents =
-        itemStack.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY);
+      itemStack.getOrDefault(DataComponents.CONTAINER, ItemContainerContents.EMPTY);
     int cardCount = (int) contents.nonEmptyItemCopyStream().count();
     addTooltip(
-        tooltipConsumer,
-        TextComponent.getTranslatedTextRaw(
-            Constants.TOOLTIP_PREFIX + ID, new Object[] {cardCount, CONTAINER_SIZE}));
+      tooltipConsumer,
+      TextComponent.getTranslatedTextRaw(
+        Constants.TOOLTIP_PREFIX + ID, new Object[]{cardCount, CONTAINER_SIZE}));
   }
 
   private record CardBinderMenuProvider(ItemStack binderStack) implements MenuProvider {
@@ -111,9 +121,9 @@ public class CardBinderItem extends MobFarmItem {
 
     @Override
     public AbstractContainerMenu createMenu(
-        int containerId, Inventory playerInventory, Player player) {
+      int containerId, Inventory playerInventory, Player player) {
       return new CardBinderMenu(
-          CardBinderMenu.MENU_TYPE_SUPPLIER.get(), containerId, playerInventory, binderStack);
+        CardBinderMenu.MENU_TYPE_SUPPLIER.get(), containerId, playerInventory, binderStack);
     }
   }
 }

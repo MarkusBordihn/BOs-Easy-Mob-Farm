@@ -28,9 +28,9 @@ public class SmokeTest {
 
   public void testModRegistered(GameTestHelper helper) {
     GameTestHelpers.assertTrue(
-        helper,
-        "Mod " + Constants.MOD_ID + " is not available!",
-        ModList.get().isLoaded(Constants.MOD_ID));
+      helper,
+      "Mod " + Constants.MOD_ID + " is not available!",
+      ModList.get().isLoaded(Constants.MOD_ID));
     helper.succeed();
   }
 

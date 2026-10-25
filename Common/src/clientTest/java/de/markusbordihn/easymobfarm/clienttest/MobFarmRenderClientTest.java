@@ -20,7 +20,6 @@
 package de.markusbordihn.easymobfarm.clienttest;
 
 import de.markusbordihn.clientruntimeinterfacetoolkit.testrunner.Until;
-import java.io.IOException;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,27 +27,27 @@ import org.junit.jupiter.api.Test;
 class MobFarmRenderClientTest extends ClientTestBase {
 
   private static final List<String> FARM_IDS =
-      List.of(
-          "animal_plains_farm",
-          "bee_hive_farm",
-          "creative_mob_farm",
-          "desert_farm",
-          "end_farm",
-          "iron_golem_farm",
-          "jungle_farm",
-          "lucky_drop_farm",
-          "monster_plains_cave_farm",
-          "nether_fortress_farm",
-          "nether_wastes_farm",
-          "ocean_farm",
-          "swamp_farm");
+    List.of(
+      "animal_plains_farm",
+      "bee_hive_farm",
+      "creative_mob_farm",
+      "desert_farm",
+      "end_farm",
+      "iron_golem_farm",
+      "jungle_farm",
+      "lucky_drop_farm",
+      "monster_plains_cave_farm",
+      "nether_fortress_farm",
+      "nether_wastes_farm",
+      "ocean_farm",
+      "swamp_farm");
   private static final int FARM_ROW_Z = 6;
   private static final int VIEW_PITCH = 20;
   private static final long RENDER_TICKS = 40;
 
   @Test
   @DisplayName("All mob farm blocks render in view without crashing the client")
-  void mobFarmBlocksRenderInView() throws IOException {
+  void mobFarmBlocksRenderInView() {
     enterTestArea(VIEW_PITCH);
     int firstFarmX = -FARM_IDS.size() / 2;
     for (int i = 0; i < FARM_IDS.size(); i++) {
@@ -56,6 +55,6 @@ class MobFarmRenderClientTest extends ClientTestBase {
     }
 
     client.await(Until.ticksElapsed(RENDER_TICKS), Until.worldLoaded(true));
-    captureScreen("mob_farms");
+    client.saveScreenshot("mob_farms");
   }
 }

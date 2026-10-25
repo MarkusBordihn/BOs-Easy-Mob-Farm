@@ -25,58 +25,59 @@ import net.minecraft.resources.Identifier;
 
 public class Graphics {
 
-  private Graphics() {}
+  private Graphics() {
+  }
 
   public static void blit(
-      GuiGraphicsExtractor guiGraphics,
-      Identifier texture,
-      int x,
-      int y,
-      int textureX,
-      int textureY,
-      int width,
-      int height) {
+    GuiGraphicsExtractor guiGraphics,
+    Identifier texture,
+    int x,
+    int y,
+    int textureX,
+    int textureY,
+    int width,
+    int height) {
     blit(guiGraphics, texture, x, y, textureX, textureY, width, height, 256, 256);
   }
 
   public static void blit(
-      GuiGraphicsExtractor guiGraphics,
-      Identifier texture,
-      int x,
-      int y,
-      int textureX,
-      int textureY,
-      int width,
-      int height,
-      int textureWidth,
-      int textureHeight) {
+    GuiGraphicsExtractor guiGraphics,
+    Identifier texture,
+    int x,
+    int y,
+    int textureX,
+    int textureY,
+    int width,
+    int height,
+    int textureWidth,
+    int textureHeight) {
     guiGraphics.blit(
-        RenderPipelines.GUI_TEXTURED,
-        texture,
-        x,
-        y,
-        textureX,
-        textureY,
-        width,
-        height,
-        textureWidth,
-        textureHeight);
+      RenderPipelines.GUI_TEXTURED,
+      texture,
+      x,
+      y,
+      textureX,
+      textureY,
+      width,
+      height,
+      textureWidth,
+      textureHeight);
   }
 
   public static void blitNineSliced(
-      GuiGraphicsExtractor guiGraphics,
-      Identifier texture,
-      int x,
-      int y,
-      int width,
-      int height,
-      int sliceSize,
-      int textureX,
-      int textureY,
-      int textureWidth,
-      int textureHeight,
-      int bodyTextureX,
-      int bodyTextureY) {
+    GuiGraphicsExtractor guiGraphics,
+    Identifier texture,
+    int x,
+    int y,
+    int width,
+    int height,
+    int sliceSize,
+    int textureX,
+    int textureY,
+    int textureWidth,
+    int textureHeight,
+    int bodyTextureX,
+    int bodyTextureY) {
     int sliceWidth = Math.min(sliceSize, width / 2);
     int sliceHeight = Math.min(sliceSize, height / 2);
     int innerWidth = width - 2 * sliceWidth;
@@ -87,132 +88,132 @@ public class Graphics {
     int bottomY = y + height - sliceHeight;
 
     blitStretched(
-        guiGraphics,
-        texture,
-        x,
-        y,
-        sliceWidth,
-        sliceHeight,
-        textureX,
-        textureY,
-        sliceSize,
-        sliceSize);
+      guiGraphics,
+      texture,
+      x,
+      y,
+      sliceWidth,
+      sliceHeight,
+      textureX,
+      textureY,
+      sliceSize,
+      sliceSize);
     blitStretched(
-        guiGraphics,
-        texture,
-        rightX,
-        y,
-        sliceWidth,
-        sliceHeight,
-        rightTextureX,
-        textureY,
-        sliceSize,
-        sliceSize);
+      guiGraphics,
+      texture,
+      rightX,
+      y,
+      sliceWidth,
+      sliceHeight,
+      rightTextureX,
+      textureY,
+      sliceSize,
+      sliceSize);
     blitStretched(
-        guiGraphics,
-        texture,
-        x,
-        bottomY,
-        sliceWidth,
-        sliceHeight,
-        textureX,
-        bottomTextureY,
-        sliceSize,
-        sliceSize);
+      guiGraphics,
+      texture,
+      x,
+      bottomY,
+      sliceWidth,
+      sliceHeight,
+      textureX,
+      bottomTextureY,
+      sliceSize,
+      sliceSize);
     blitStretched(
-        guiGraphics,
-        texture,
-        rightX,
-        bottomY,
-        sliceWidth,
-        sliceHeight,
-        rightTextureX,
-        bottomTextureY,
-        sliceSize,
-        sliceSize);
+      guiGraphics,
+      texture,
+      rightX,
+      bottomY,
+      sliceWidth,
+      sliceHeight,
+      rightTextureX,
+      bottomTextureY,
+      sliceSize,
+      sliceSize);
     blitStretched(
-        guiGraphics,
-        texture,
-        x + sliceWidth,
-        y,
-        innerWidth,
-        sliceHeight,
-        bodyTextureX,
-        textureY,
-        sliceSize,
-        sliceSize);
+      guiGraphics,
+      texture,
+      x + sliceWidth,
+      y,
+      innerWidth,
+      sliceHeight,
+      bodyTextureX,
+      textureY,
+      sliceSize,
+      sliceSize);
     blitStretched(
-        guiGraphics,
-        texture,
-        x + sliceWidth,
-        bottomY,
-        innerWidth,
-        sliceHeight,
-        bodyTextureX,
-        bottomTextureY,
-        sliceSize,
-        sliceSize);
+      guiGraphics,
+      texture,
+      x + sliceWidth,
+      bottomY,
+      innerWidth,
+      sliceHeight,
+      bodyTextureX,
+      bottomTextureY,
+      sliceSize,
+      sliceSize);
     blitStretched(
-        guiGraphics,
-        texture,
-        x,
-        y + sliceHeight,
-        sliceWidth,
-        innerHeight,
-        textureX,
-        bodyTextureY,
-        sliceSize,
-        sliceSize);
+      guiGraphics,
+      texture,
+      x,
+      y + sliceHeight,
+      sliceWidth,
+      innerHeight,
+      textureX,
+      bodyTextureY,
+      sliceSize,
+      sliceSize);
     blitStretched(
-        guiGraphics,
-        texture,
-        rightX,
-        y + sliceHeight,
-        sliceWidth,
-        innerHeight,
-        rightTextureX,
-        bodyTextureY,
-        sliceSize,
-        sliceSize);
+      guiGraphics,
+      texture,
+      rightX,
+      y + sliceHeight,
+      sliceWidth,
+      innerHeight,
+      rightTextureX,
+      bodyTextureY,
+      sliceSize,
+      sliceSize);
     blitStretched(
-        guiGraphics,
-        texture,
-        x + sliceWidth,
-        y + sliceHeight,
-        innerWidth,
-        innerHeight,
-        bodyTextureX,
-        bodyTextureY,
-        sliceSize,
-        sliceSize);
+      guiGraphics,
+      texture,
+      x + sliceWidth,
+      y + sliceHeight,
+      innerWidth,
+      innerHeight,
+      bodyTextureX,
+      bodyTextureY,
+      sliceSize,
+      sliceSize);
   }
 
   private static void blitStretched(
-      GuiGraphicsExtractor guiGraphics,
-      Identifier texture,
-      int x,
-      int y,
-      int width,
-      int height,
-      int textureX,
-      int textureY,
-      int sourceWidth,
-      int sourceHeight) {
+    GuiGraphicsExtractor guiGraphics,
+    Identifier texture,
+    int x,
+    int y,
+    int width,
+    int height,
+    int textureX,
+    int textureY,
+    int sourceWidth,
+    int sourceHeight) {
     if (width <= 0 || height <= 0 || sourceWidth <= 0 || sourceHeight <= 0) {
       return;
     }
     guiGraphics.blit(
-        RenderPipelines.GUI_TEXTURED,
-        texture,
-        x,
-        y,
-        textureX,
-        textureY,
-        width,
-        height,
-        sourceWidth,
-        sourceHeight,
-        256,
-        256);
+      RenderPipelines.GUI_TEXTURED,
+      texture,
+      x,
+      y,
+      textureX,
+      textureY,
+      width,
+      height,
+      sourceWidth,
+      sourceHeight,
+      256,
+      256);
   }
 }

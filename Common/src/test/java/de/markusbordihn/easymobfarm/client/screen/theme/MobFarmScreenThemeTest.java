@@ -28,12 +28,12 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import org.joml.Matrix3x2fStack;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
-import org.joml.Matrix3x2fStack;
 import org.mockito.Mockito;
 
 class MobFarmScreenThemeTest {
@@ -98,11 +98,11 @@ class MobFarmScreenThemeTest {
     if (progress instanceof ThemeProgressBar.Frames frames) {
       for (int frame = 0; frame < frames.frameCount(); frame++) {
         assertVisible(
-            image,
-            frame % frames.columns() * frames.strideX(),
-            frame / frames.columns() * frames.strideY(),
-            frames.width(),
-            frames.height());
+          image,
+          frame % frames.columns() * frames.strideX(),
+          frame / frames.columns() * frames.strideY(),
+          frames.width(),
+          frames.height());
       }
     } else if (progress instanceof ThemeProgressBar.Fill fill) {
       assertVisible(image, fill.textureU(), fill.textureV(), fill.width(), fill.height());
@@ -117,12 +117,12 @@ class MobFarmScreenThemeTest {
     Assertions.assertTrue(preview.anchorX() < preview.x() + preview.width());
     Assertions.assertTrue(preview.anchorY() > preview.y());
     Assertions.assertTrue(preview.anchorY() < preview.y() + preview.height());
-    for (float[] size : new float[][] {{0.5F, 0.5F}, {0.6F, 2.0F}, {20, 3}, {3, 20}}) {
+    for (float[] size : new float[][]{{0.5F, 0.5F}, {0.6F, 2.0F}, {20, 3}, {3, 20}}) {
       float scale = preview.fitScale(45, size[0], size[1]);
       Assertions.assertTrue(scale > 0);
       Assertions.assertTrue(size[0] * scale / 2 <= preview.anchorX() - preview.x());
       Assertions.assertTrue(
-          size[0] * scale / 2 <= preview.x() + preview.width() - preview.anchorX());
+        size[0] * scale / 2 <= preview.x() + preview.width() - preview.anchorX());
       Assertions.assertTrue(size[1] * scale <= preview.anchorY() - preview.y());
     }
   }
@@ -130,13 +130,13 @@ class MobFarmScreenThemeTest {
   @Test
   void themedEntityPreviewsAreCenteredWithBottomClearance() {
     for (MobFarmScreenTheme theme :
-        new MobFarmScreenTheme[] {
-          MobFarmScreenTheme.TECHNOLOGY,
-          MobFarmScreenTheme.RUSTIC,
-          MobFarmScreenTheme.DARK,
-          MobFarmScreenTheme.STEAMPUNK,
-          MobFarmScreenTheme.CREATE
-        }) {
+      new MobFarmScreenTheme[]{
+        MobFarmScreenTheme.TECHNOLOGY,
+        MobFarmScreenTheme.RUSTIC,
+        MobFarmScreenTheme.DARK,
+        MobFarmScreenTheme.STEAMPUNK,
+        MobFarmScreenTheme.CREATE
+      }) {
       EntityPreview preview = theme.getRenderer().entityPreview();
       Assertions.assertEquals(preview.x() + preview.width() / 2, preview.anchorX(), theme.getId());
       int bottomPadding = preview.y() + preview.height() - preview.anchorY();
@@ -158,7 +158,7 @@ class MobFarmScreenThemeTest {
   @Test
   void technologyHasTransparencyAndOnlyOneProgressSprite() throws Exception {
     TextureThemeRenderer renderer =
-        (TextureThemeRenderer) MobFarmScreenTheme.TECHNOLOGY.getRenderer();
+      (TextureThemeRenderer) MobFarmScreenTheme.TECHNOLOGY.getRenderer();
     BufferedImage active = readTexture(renderer.workingTexture());
     BufferedImage idle = readTexture(renderer.idleTexture());
     Assertions.assertEquals(0, active.getRGB(0, 0) >>> 24);
@@ -176,7 +176,7 @@ class MobFarmScreenThemeTest {
         for (int y = 0; y < 18; y++) {
           for (int x = 0; x < 18; x++) {
             Assertions.assertEquals(
-                active.getRGB(slotX + x, slotY + y), idle.getRGB(slotX + x, slotY + y));
+              active.getRGB(slotX + x, slotY + y), idle.getRGB(slotX + x, slotY + y));
           }
         }
       }

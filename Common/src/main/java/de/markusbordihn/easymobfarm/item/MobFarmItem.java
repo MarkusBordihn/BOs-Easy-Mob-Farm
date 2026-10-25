@@ -40,12 +40,12 @@ public class MobFarmItem extends Item {
   }
 
   public void addTooltip(
-      Consumer<Component> tooltipConsumer,
-      final Component component,
-      final ChatFormatting formatting) {
+    Consumer<Component> tooltipConsumer,
+    final Component component,
+    final ChatFormatting formatting) {
     if (RenderSystem.isOnRenderThread()) {
       List<FormattedText> lines =
-          Minecraft.getInstance().font.getSplitter().splitLines(component, 200, Style.EMPTY);
+        Minecraft.getInstance().font.getSplitter().splitLines(component, 200, Style.EMPTY);
       for (FormattedText line : lines) {
         tooltipConsumer.accept(Component.literal(line.getString()).withStyle(formatting));
       }

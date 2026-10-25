@@ -31,7 +31,7 @@ import net.minecraftforge.items.wrapper.SidedInvWrapper;
 final class SidedOutputItemHandlers {
 
   private final Map<Direction, LazyOptional<IItemHandler>> itemHandlers =
-      new EnumMap<>(Direction.class);
+    new EnumMap<>(Direction.class);
   private final WorldlyContainer container;
 
   SidedOutputItemHandlers(WorldlyContainer container) {
@@ -44,9 +44,9 @@ final class SidedOutputItemHandlers {
     }
 
     return this.itemHandlers
-        .computeIfAbsent(
-            direction, side -> LazyOptional.of(() -> new SidedInvWrapper(this.container, side)))
-        .cast();
+      .computeIfAbsent(
+        direction, side -> LazyOptional.of(() -> new SidedInvWrapper(this.container, side)))
+      .cast();
   }
 
   void invalidate() {

@@ -30,7 +30,7 @@ public interface MobFarmScreenThemeRenderer {
   EntityPreview DEFAULT_ENTITY_PREVIEW = new EntityPreview(48, 22, 48, 64, 72, 80, 1.0F);
 
   void renderBackground(
-      GuiGraphicsExtractor guiGraphics, int leftPos, int topPos, boolean idle, List<Slot> slots);
+    GuiGraphicsExtractor guiGraphics, int leftPos, int topPos, boolean idle, List<Slot> slots);
 
   void renderProgress(GuiGraphicsExtractor guiGraphics, int leftPos, int topPos, float progress);
 

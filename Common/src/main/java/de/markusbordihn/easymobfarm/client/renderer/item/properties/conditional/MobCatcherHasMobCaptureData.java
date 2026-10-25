@@ -30,15 +30,15 @@ import net.minecraft.world.item.ItemStack;
 public record MobCatcherHasMobCaptureData() implements ConditionalItemModelProperty {
 
   public static final MapCodec<MobCatcherHasMobCaptureData> MAP_CODEC =
-      MapCodec.unit(new MobCatcherHasMobCaptureData());
+    MapCodec.unit(new MobCatcherHasMobCaptureData());
 
   @Override
   public boolean get(
-      final ItemStack itemStack,
-      final ClientLevel clientLevel,
-      final LivingEntity livingEntity,
-      final int i,
-      final ItemDisplayContext itemDisplayContext) {
+    final ItemStack itemStack,
+    final ClientLevel clientLevel,
+    final LivingEntity livingEntity,
+    final int i,
+    final ItemDisplayContext itemDisplayContext) {
     return MobCatcherItem.hasMobCaptureData(itemStack);
   }
 

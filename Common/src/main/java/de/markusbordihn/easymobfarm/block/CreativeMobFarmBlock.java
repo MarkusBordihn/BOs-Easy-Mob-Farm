@@ -31,18 +31,18 @@ public class CreativeMobFarmBlock extends MobFarmBlock {
 
   public CreativeMobFarmBlock() {
     this(
-        Properties.of()
-            .setId(
-                ResourceKey.create(
-                    Registries.BLOCK,
-                    Identifier.fromNamespaceAndPath(
-                        Constants.MOD_ID, MobFarmType.CREATIVE_MOB_FARM.getId())))
-            .mapColor(MapColor.NETHER)
-            .requiresCorrectToolForDrops()
-            .strength(5.0f)
-            .lightLevel(MobFarmBlock::getLightLevel)
-            .sound(SoundType.METAL)
-            .noOcclusion());
+      Properties.of()
+        .setId(
+          ResourceKey.create(
+            Registries.BLOCK,
+            Identifier.fromNamespaceAndPath(
+              Constants.MOD_ID, MobFarmType.CREATIVE_MOB_FARM.getId())))
+        .mapColor(MapColor.NETHER)
+        .requiresCorrectToolForDrops()
+        .strength(5.0f)
+        .lightLevel(MobFarmBlock::getLightLevel)
+        .sound(SoundType.METAL)
+        .noOcclusion());
   }
 
   public CreativeMobFarmBlock(final Properties properties) {

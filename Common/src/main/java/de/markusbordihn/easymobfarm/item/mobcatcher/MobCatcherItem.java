@@ -72,8 +72,8 @@ public class MobCatcherItem extends MobFarmItem {
 
   public static boolean hasMobCaptureData(ItemStack itemStack) {
     return itemStack != null
-        && itemStack.has(DataComponents.MOB_CAPTURE_DATA)
-        && !itemStack.getOrDefault(DataComponents.MOB_CAPTURE_DATA, MobCaptureData.EMPTY).isEmpty();
+      && itemStack.has(DataComponents.MOB_CAPTURE_DATA)
+      && !itemStack.getOrDefault(DataComponents.MOB_CAPTURE_DATA, MobCaptureData.EMPTY).isEmpty();
   }
 
   public float getRequiredHealthPercentageToCapture() {
@@ -112,9 +112,9 @@ public class MobCatcherItem extends MobFarmItem {
     BlockState clickedState = level.getBlockState(clickedPos);
     // Mirror vanilla SpawnEggItem: if clicked block is solid, use the adjacent air position
     BlockPos blockPos =
-        clickedState.getCollisionShape(level, clickedPos).isEmpty()
-            ? clickedPos
-            : clickedPos.relative(context.getClickedFace());
+      clickedState.getCollisionShape(level, clickedPos).isEmpty()
+        ? clickedPos
+        : clickedPos.relative(context.getClickedFace());
     ItemStack itemStack = context.getItemInHand();
 
     // Check if we have any mob capture data.
@@ -124,8 +124,8 @@ public class MobCatcherItem extends MobFarmItem {
 
     // Check if target block is a mob farm.
     if (level.getBlockState(blockPos).getBlock() instanceof MobFarmBlock
-        && level.getBlockEntity(blockPos) instanceof MobFarmBlockEntity mobFarmBlockEntity
-        && !mobFarmBlockEntity.hasCapturedMob()) {
+      && level.getBlockEntity(blockPos) instanceof MobFarmBlockEntity mobFarmBlockEntity
+      && !mobFarmBlockEntity.hasCapturedMob()) {
       return InteractionResult.PASS;
     }
 
@@ -136,8 +136,8 @@ public class MobCatcherItem extends MobFarmItem {
       if (MobCaptureManager.releaseMob(mobCaptureData, blockPos, serverLevel)) {
         itemStack.remove(DataComponents.MOB_CAPTURE_DATA);
         itemStack.set(
-            net.minecraft.core.component.DataComponents.CUSTOM_MODEL_DATA,
-            new CustomModelData(List.of(0.0f), List.of(), List.of(), List.of()));
+          net.minecraft.core.component.DataComponents.CUSTOM_MODEL_DATA,
+          new CustomModelData(List.of(0.0f), List.of(), List.of(), List.of()));
         return InteractionResult.SUCCESS;
       }
     }
@@ -147,7 +147,7 @@ public class MobCatcherItem extends MobFarmItem {
 
   @Override
   public InteractionResult interactLivingEntity(
-      ItemStack itemStack, Player player, LivingEntity livingEntity, InteractionHand hand) {
+    ItemStack itemStack, Player player, LivingEntity livingEntity, InteractionHand hand) {
 
     // Ignore players and dead entities for capturing.
     if (livingEntity == null || livingEntity instanceof Player || livingEntity.isDeadOrDying()) {
@@ -165,8 +165,8 @@ public class MobCatcherItem extends MobFarmItem {
       if (!this.getAllowList().contains(entityName)) {
         log.debug("Mob {} is not on the allow list for {}.", entityName, this);
         player.sendOverlayMessage(
-            TextComponent.getTranslatedText(
-                "mob_is_not_on_allow_list", livingEntity.getDisplayName().getString()));
+          TextComponent.getTranslatedText(
+            "mob_is_not_on_allow_list", livingEntity.getDisplayName().getString()));
         return InteractionResult.FAIL;
       }
     } else {
@@ -174,8 +174,8 @@ public class MobCatcherItem extends MobFarmItem {
       if (!this.getDenyList().isEmpty() && this.getDenyList().contains(entityName)) {
         log.debug("Mob {} is on the deny list for {}.", entityName, this);
         player.sendOverlayMessage(
-            TextComponent.getTranslatedText(
-                "mob_is_on_deny_list", livingEntity.getDisplayName().getString()));
+          TextComponent.getTranslatedText(
+            "mob_is_on_deny_list", livingEntity.getDisplayName().getString()));
         return InteractionResult.FAIL;
       }
 
@@ -183,16 +183,16 @@ public class MobCatcherItem extends MobFarmItem {
       if (getMaxEntityHeightToCapture() > 0 || getMaxEntityWidthToCapture() > 0f) {
         EntityDimensions dimensions = livingEntity.getDimensions(livingEntity.getPose());
         if (dimensions.height() > getMaxEntityHeightToCapture()
-            || dimensions.width() > getMaxEntityWidthToCapture()) {
+          || dimensions.width() > getMaxEntityWidthToCapture()) {
           log.debug(
-              "Mob {} with {}x{} size is too large to be captured by {}.",
-              entityName,
-              dimensions.width(),
-              dimensions.height(),
-              this);
+            "Mob {} with {}x{} size is too large to be captured by {}.",
+            entityName,
+            dimensions.width(),
+            dimensions.height(),
+            this);
           player.sendOverlayMessage(
-              TextComponent.getTranslatedText(
-                  "too_large_to_capture", livingEntity.getDisplayName().getString()));
+            TextComponent.getTranslatedText(
+              "too_large_to_capture", livingEntity.getDisplayName().getString()));
           return InteractionResult.FAIL;
         }
       }
@@ -203,13 +203,13 @@ public class MobCatcherItem extends MobFarmItem {
       float healthPercentage = livingEntity.getHealth() / livingEntity.getMaxHealth();
       if (healthPercentage > getRequiredHealthPercentageToCapture()) {
         log.debug(
-            "Mob {} with {} health is too strong to be captured by {}.",
-            entityName,
-            healthPercentage,
-            this);
+          "Mob {} with {} health is too strong to be captured by {}.",
+          entityName,
+          healthPercentage,
+          this);
         player.sendOverlayMessage(
-            TextComponent.getTranslatedText(
-                "too_strong_to_capture", livingEntity.getDisplayName().getString()));
+          TextComponent.getTranslatedText(
+            "too_strong_to_capture", livingEntity.getDisplayName().getString()));
         return InteractionResult.FAIL;
       }
     }
@@ -231,77 +231,77 @@ public class MobCatcherItem extends MobFarmItem {
     MobCaptureData mobCaptureData = new MobCaptureData(livingEntity);
     itemStack.set(DataComponents.MOB_CAPTURE_DATA, mobCaptureData);
     itemStack.set(
-        net.minecraft.core.component.DataComponents.CUSTOM_MODEL_DATA,
-        new CustomModelData(List.of(1f), List.of(), List.of(), List.of()));
+      net.minecraft.core.component.DataComponents.CUSTOM_MODEL_DATA,
+      new CustomModelData(List.of(1f), List.of(), List.of(), List.of()));
 
     player.setItemInHand(hand, itemStack);
     livingEntity.discard();
 
     // Notify player about the successful capture.
     player.sendOverlayMessage(
-        TextComponent.getTranslatedText(
-            "captured_mob", mobCaptureData.name(), mobCaptureData.type()));
+      TextComponent.getTranslatedText(
+        "captured_mob", mobCaptureData.name(), mobCaptureData.type()));
 
     return InteractionResult.CONSUME;
   }
 
   @Override
   public void appendHoverText(
-      ItemStack itemStack,
-      TooltipContext tooltipContext,
-      TooltipDisplay tooltipDisplay,
-      Consumer<Component> tooltipConsumer,
-      TooltipFlag tooltipFlag) {
+    ItemStack itemStack,
+    TooltipContext tooltipContext,
+    TooltipDisplay tooltipDisplay,
+    Consumer<Component> tooltipConsumer,
+    TooltipFlag tooltipFlag) {
     if (hasMobCaptureData(itemStack)) {
       MobCaptureData mobCaptureData = MobCaptureManagerClient.getMobCaptureData(itemStack);
       addTooltip(
-          tooltipConsumer,
-          TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "release_hint", mobCaptureData.name())
-              .withStyle(ChatFormatting.DARK_RED));
+        tooltipConsumer,
+        TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "release_hint", mobCaptureData.name())
+          .withStyle(ChatFormatting.DARK_RED));
       addTooltip(
-          tooltipConsumer,
-          TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "name", mobCaptureData.name()));
+        tooltipConsumer,
+        TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "name", mobCaptureData.name()));
       if (tooltipFlag.isAdvanced()) {
         addTooltip(
-            tooltipConsumer,
-            TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "type", mobCaptureData.type()));
+          tooltipConsumer,
+          TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "type", mobCaptureData.type()));
       }
       if (mobCaptureData.variant() != null) {
         addTooltip(
-            tooltipConsumer,
-            TextComponent.getTranslatedTextRaw(
-                TOOLTIP_PREFIX + "variant", mobCaptureData.variant()));
+          tooltipConsumer,
+          TextComponent.getTranslatedTextRaw(
+            TOOLTIP_PREFIX + "variant", mobCaptureData.variant()));
       }
       if (mobCaptureData.color() != null) {
         addTooltip(
-            tooltipConsumer,
-            TextComponent.getTranslatedTextRaw(
-                TOOLTIP_PREFIX + "color", mobCaptureData.color().getName()));
+          tooltipConsumer,
+          TextComponent.getTranslatedTextRaw(
+            TOOLTIP_PREFIX + "color", mobCaptureData.color().getName()));
       }
     } else {
       addTooltip(
-          tooltipConsumer,
-          TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "capture_hint")
-              .withStyle(ChatFormatting.DARK_GREEN));
+        tooltipConsumer,
+        TextComponent.getTranslatedTextRaw(TOOLTIP_PREFIX + "capture_hint")
+          .withStyle(ChatFormatting.DARK_GREEN));
       addTooltip(
-          tooltipConsumer,
-          TextComponent.getTranslatedTextRaw(
-              TOOLTIP_PREFIX + "max_size",
-              getMaxEntityWidthToCapture() + "x" + getMaxEntityHeightToCapture()));
-      addTooltip(
-          tooltipConsumer,
-          TextComponent.getTranslatedTextRaw(
-              TOOLTIP_PREFIX + "min_health", getRequiredHealthPercentageToCapture() * 100 + "%"));
-    }
-    addTooltip(
         tooltipConsumer,
         TextComponent.getTranslatedTextRaw(
-                TOOLTIP_PREFIX + "usage_left",
-                "("
-                    + (itemStack.getMaxDamage() - itemStack.getDamageValue())
-                    + "/"
-                    + itemStack.getMaxDamage()
-                    + ")")
-            .withStyle(ChatFormatting.GRAY));
+          TOOLTIP_PREFIX + "max_size",
+          getMaxEntityWidthToCapture() + "x" + getMaxEntityHeightToCapture()));
+      addTooltip(
+        tooltipConsumer,
+        TextComponent.getTranslatedTextRaw(
+          TOOLTIP_PREFIX + "min_health", getRequiredHealthPercentageToCapture() * 100 + "%"));
+    }
+    addTooltip(
+      tooltipConsumer,
+      TextComponent.getTranslatedTextRaw(
+          TOOLTIP_PREFIX + "usage_left",
+          "("
+            + (itemStack.getMaxDamage() - itemStack.getDamageValue())
+            + "/"
+            + itemStack.getMaxDamage()
+            + ")")
+        .withStyle(ChatFormatting.GRAY));
   }
 }

@@ -25,6 +25,7 @@ import net.minecraft.core.Direction;
 
 @SuppressWarnings("java:S1104")
 public class MobFarmRenderState extends BlockEntityRenderState {
+
   public EntityRenderState entityRenderState;
   public float entityScaling = 1.0f;
   public float rotationDegrees = 0.0f;

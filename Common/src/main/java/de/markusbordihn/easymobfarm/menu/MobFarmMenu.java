@@ -80,12 +80,12 @@ public class MobFarmMenu extends AbstractContainerMenu {
 
   private static final int CAPTURED_MOB_SLOT_COUNT = 1;
   private static final int MOB_FARM_INPUT_SLOT_COUNT =
-      CAPTURED_MOB_SLOT_COUNT
-          + MobFarmSlots.ENHANCEMENT_ITEM_SLOTS.size()
-          + MobFarmSlots.FILTER_ITEM_SLOTS.size()
-          + MobFarmSlots.SLOT_UPGRADE_ITEM_SLOTS.size();
+    CAPTURED_MOB_SLOT_COUNT
+      + MobFarmSlots.ENHANCEMENT_ITEM_SLOTS.size()
+      + MobFarmSlots.FILTER_ITEM_SLOTS.size()
+      + MobFarmSlots.SLOT_UPGRADE_ITEM_SLOTS.size();
   private static final int MOB_FARM_SLOT_COUNT =
-      MOB_FARM_INPUT_SLOT_COUNT + MobFarmSlots.RESULT_SLOTS.size();
+    MOB_FARM_INPUT_SLOT_COUNT + MobFarmSlots.RESULT_SLOTS.size();
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private final Container container;
@@ -94,21 +94,21 @@ public class MobFarmMenu extends AbstractContainerMenu {
   private EntityType<?> lastSentEntityType = null;
 
   public MobFarmMenu(
-      final MenuType<?> menuType, final int containerId, final Inventory playerInventory) {
+    final MenuType<?> menuType, final int containerId, final Inventory playerInventory) {
     this(
-        menuType,
-        containerId,
-        playerInventory,
-        new SimpleContainer(CONTAINER_SIZE),
-        new SimpleContainerData(CONTAINER_DATA_SIZE));
+      menuType,
+      containerId,
+      playerInventory,
+      new SimpleContainer(CONTAINER_SIZE),
+      new SimpleContainerData(CONTAINER_DATA_SIZE));
   }
 
   public MobFarmMenu(
-      final MenuType<?> menuType,
-      final int containerId,
-      final Inventory playerInventory,
-      final Container container,
-      final ContainerData containerData) {
+    final MenuType<?> menuType,
+    final int containerId,
+    final Inventory playerInventory,
+    final Container container,
+    final ContainerData containerData) {
     super(menuType, containerId);
 
     checkContainerSize(container, CONTAINER_SIZE);
@@ -136,9 +136,9 @@ public class MobFarmMenu extends AbstractContainerMenu {
       // Update number of output slots
       if (updateNumberOfOutputSlots()) {
         log.debug(
-            "Update number of output slots {} for {}",
-            getMobFarmNumberOfOutputSlots(),
-            mobFarmBlockEntity);
+          "Update number of output slots {} for {}",
+          getMobFarmNumberOfOutputSlots(),
+          mobFarmBlockEntity);
       }
     }
 
@@ -148,9 +148,9 @@ public class MobFarmMenu extends AbstractContainerMenu {
 
   public BlockPos getMobFarmBlockPos() {
     return new BlockPos(
-        this.data.get(MobFarmDataEntry.BLOCK_POS_X),
-        this.data.get(MobFarmDataEntry.BLOCK_POS_Y),
-        this.data.get(MobFarmDataEntry.BLOCK_POS_Z));
+      this.data.get(MobFarmDataEntry.BLOCK_POS_X),
+      this.data.get(MobFarmDataEntry.BLOCK_POS_Y),
+      this.data.get(MobFarmDataEntry.BLOCK_POS_Z));
   }
 
   public void setMobFarmBlockPos(final BlockPos blockPos) {
@@ -215,8 +215,8 @@ public class MobFarmMenu extends AbstractContainerMenu {
   @Override
   public boolean clickMenuButton(final Player player, final int buttonId) {
     if (buttonId != TOGGLE_REDSTONE_MODE_BUTTON
-        || !this.stillValid(player)
-        || !(this.container instanceof MobFarmBlockEntity mobFarmBlockEntity)) {
+      || !this.stillValid(player)
+      || !(this.container instanceof MobFarmBlockEntity mobFarmBlockEntity)) {
       return false;
     }
 
@@ -227,11 +227,11 @@ public class MobFarmMenu extends AbstractContainerMenu {
 
   private void defineMobFarmSlots() {
     this.addSlot(
-        new CapturedMobSlot(
-            this.container,
-            MobFarmSlot.CAPTURED_MOB.index(),
-            CAPTURED_MOB_SLOT_X,
-            CAPTURED_MOB_SLOT_Y));
+      new CapturedMobSlot(
+        this.container,
+        MobFarmSlot.CAPTURED_MOB.index(),
+        CAPTURED_MOB_SLOT_X,
+        CAPTURED_MOB_SLOT_Y));
   }
 
   private void defineUpgradeSlots() {
@@ -239,11 +239,11 @@ public class MobFarmMenu extends AbstractContainerMenu {
     for (int row = 0; row < 2; ++row) {
       for (int column = 0; column < 2; ++column) {
         this.addSlot(
-            new EnhancementSlot(
-                this.container,
-                MobFarmSlots.ENHANCEMENT_ITEM_SLOTS.get(slotId).index(),
-                UPGRADE_SLOT_X + column * 18,
-                UPGRADE_SLOT_Y + row * 18));
+          new EnhancementSlot(
+            this.container,
+            MobFarmSlots.ENHANCEMENT_ITEM_SLOTS.get(slotId).index(),
+            UPGRADE_SLOT_X + column * 18,
+            UPGRADE_SLOT_Y + row * 18));
         slotId++;
       }
     }
@@ -253,11 +253,11 @@ public class MobFarmMenu extends AbstractContainerMenu {
     int slotId = 0;
     for (int row = 0; row < MobFarmSlots.FILTER_ITEM_SLOTS.size(); ++row) {
       this.addSlot(
-          new FilterSlot(
-              this.container,
-              MobFarmSlots.FILTER_ITEM_SLOTS.get(slotId).index(),
-              FILTER_SLOT_X,
-              FILTER_SLOT_Y + row * 18));
+        new FilterSlot(
+          this.container,
+          MobFarmSlots.FILTER_ITEM_SLOTS.get(slotId).index(),
+          FILTER_SLOT_X,
+          FILTER_SLOT_Y + row * 18));
       slotId++;
     }
   }
@@ -266,12 +266,12 @@ public class MobFarmMenu extends AbstractContainerMenu {
     int slotId = 0;
     for (int row = 0; row < 3; ++row) {
       this.addSlot(
-          new SlotUpgradeSlot(
-              this,
-              this.container,
-              MobFarmSlots.SLOT_UPGRADE_ITEM_SLOTS.get(slotId).index(),
-              SLOT_UPGRADE_SLOT_X,
-              SLOT_UPGRADE_SLOT_Y + row * 18));
+        new SlotUpgradeSlot(
+          this,
+          this.container,
+          MobFarmSlots.SLOT_UPGRADE_ITEM_SLOTS.get(slotId).index(),
+          SLOT_UPGRADE_SLOT_X,
+          SLOT_UPGRADE_SLOT_Y + row * 18));
       slotId++;
     }
   }
@@ -281,11 +281,11 @@ public class MobFarmMenu extends AbstractContainerMenu {
     for (int row = 0; row < 3; ++row) {
       for (int column = 0; column < 9; ++column) {
         this.addSlot(
-            new OutputSlot(
-                this.container,
-                MobFarmSlots.RESULT_SLOTS.get(slotId).index(),
-                RESULT_SLOT_X + column * 18,
-                RESULT_SLOT_Y + row * 18));
+          new OutputSlot(
+            this.container,
+            MobFarmSlots.RESULT_SLOTS.get(slotId).index(),
+            RESULT_SLOT_X + column * 18,
+            RESULT_SLOT_Y + row * 18));
         slotId++;
       }
     }
@@ -295,11 +295,11 @@ public class MobFarmMenu extends AbstractContainerMenu {
     for (int row = 0; row < 3; ++row) {
       for (int column = 0; column < 9; ++column) {
         this.addSlot(
-            new Slot(
-                this.playerInventory,
-                column + row * 9 + 9,
-                PLAYER_INVENTORY_SLOT_X + column * 18,
-                PLAYER_INVENTORY_SLOT_Y + row * 18));
+          new Slot(
+            this.playerInventory,
+            column + row * 9 + 9,
+            PLAYER_INVENTORY_SLOT_X + column * 18,
+            PLAYER_INVENTORY_SLOT_Y + row * 18));
       }
     }
   }
@@ -307,11 +307,11 @@ public class MobFarmMenu extends AbstractContainerMenu {
   private void definePlayerHotbarSlots() {
     for (int column = 0; column < 9; ++column) {
       this.addSlot(
-          new Slot(
-              this.playerInventory,
-              column,
-              PLAYER_HOTBAR_SLOT_X + column * 18,
-              PLAYER_HOTBAR_SLOT_Y));
+        new Slot(
+          this.playerInventory,
+          column,
+          PLAYER_HOTBAR_SLOT_X + column * 18,
+          PLAYER_HOTBAR_SLOT_Y));
     }
   }
 
@@ -328,8 +328,8 @@ public class MobFarmMenu extends AbstractContainerMenu {
     }
     int currentNumberOfOutputSlots = this.getMobFarmNumberOfOutputSlots();
     int newNumberOfOutputSlots =
-        Math.min(
-            Math.max(MIN_NUMBER_OF_OUTPUT_SLOTS, numberOfOutputSlots), MAX_NUMBER_OF_OUTPUT_SLOTS);
+      Math.min(
+        Math.max(MIN_NUMBER_OF_OUTPUT_SLOTS, numberOfOutputSlots), MAX_NUMBER_OF_OUTPUT_SLOTS);
     if (currentNumberOfOutputSlots != newNumberOfOutputSlots) {
       this.setMobFarmNumberOfOutputSlots(newNumberOfOutputSlots);
       this.adjustOutputSlots(newNumberOfOutputSlots);
@@ -355,13 +355,13 @@ public class MobFarmMenu extends AbstractContainerMenu {
   public void broadcastChanges() {
     super.broadcastChanges();
     if (this.container instanceof MobFarmBlockEntity mobFarmBlockEntity
-        && this.playerInventory.player instanceof ServerPlayer serverPlayer) {
+      && this.playerInventory.player instanceof ServerPlayer serverPlayer) {
       syncLootPreviewIfChanged(mobFarmBlockEntity, serverPlayer);
     }
   }
 
   private void syncLootPreviewIfChanged(
-      final MobFarmBlockEntity mobFarmBlockEntity, final ServerPlayer serverPlayer) {
+    final MobFarmBlockEntity mobFarmBlockEntity, final ServerPlayer serverPlayer) {
     ItemStack capturedMob = this.container.getItem(MobFarmSlot.CAPTURED_MOB.index());
     Level level = mobFarmBlockEntity.getLevel();
     if (level == null) {
@@ -377,9 +377,9 @@ public class MobFarmMenu extends AbstractContainerMenu {
       return;
     }
     List<ItemStack> preview =
-        LootPreviewManager.getOrCompute(captureData, mobFarmBlockEntity.getLevel());
+      LootPreviewManager.getOrCompute(captureData, mobFarmBlockEntity.getLevel());
     SyncLootPreviewMessage.sendToPlayer(
-        serverPlayer, mobFarmBlockEntity.getBlockPos(), currentEntityType, preview);
+      serverPlayer, mobFarmBlockEntity.getBlockPos(), currentEntityType, preview);
   }
 
   @Override
@@ -412,8 +412,8 @@ public class MobFarmMenu extends AbstractContainerMenu {
       for (Slot targetSlot : this.slots.subList(0, MOB_FARM_INPUT_SLOT_COUNT)) {
         // Skip Output Slots and ensure the target slot is empty or below max stack size
         if (!(targetSlot instanceof OutputSlot)
-            && !targetSlot.hasItem()
-            && targetSlot.mayPlace(itemStack)) {
+          && !targetSlot.hasItem()
+          && targetSlot.mayPlace(itemStack)) {
           ItemStack singleItem = itemStack.split(1);
           targetSlot.set(singleItem);
           targetSlot.setChanged();

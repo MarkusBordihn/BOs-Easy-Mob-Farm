@@ -54,10 +54,10 @@ public class MilkBottleItem extends Item {
 
   public MilkBottleItem() {
     this(
-        new Item.Properties()
-            .setId(
-                ResourceKey.create(
-                    Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
+      new Item.Properties()
+        .setId(
+          ResourceKey.create(
+            Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
   }
 
   public MilkBottleItem(Properties properties) {
@@ -72,14 +72,14 @@ public class MilkBottleItem extends Item {
 
     player.removeAllEffects();
     level.playSound(
-        null,
-        player.getX(),
-        player.getY(),
-        player.getZ(),
-        SoundEvents.GENERIC_DRINK,
-        SoundSource.PLAYERS,
-        1.0F,
-        1.0F);
+      null,
+      player.getX(),
+      player.getY(),
+      player.getZ(),
+      SoundEvents.GENERIC_DRINK,
+      SoundSource.PLAYERS,
+      1.0F,
+      1.0F);
 
     if (!player.getAbilities().instabuild) {
       itemStack.shrink(1);
@@ -105,24 +105,24 @@ public class MilkBottleItem extends Item {
 
   @Override
   public void appendHoverText(
-      ItemStack itemStack,
-      TooltipContext tooltipContext,
-      TooltipDisplay tooltipDisplay,
-      Consumer<Component> tooltipConsumer,
-      TooltipFlag tooltipFlag) {
+    ItemStack itemStack,
+    TooltipContext tooltipContext,
+    TooltipDisplay tooltipDisplay,
+    Consumer<Component> tooltipConsumer,
+    TooltipFlag tooltipFlag) {
     addTooltip(
-        tooltipConsumer,
-        TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_PREFIX + ID),
-        ChatFormatting.GRAY);
+      tooltipConsumer,
+      TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_PREFIX + ID),
+      ChatFormatting.GRAY);
   }
 
   public void addTooltip(
-      Consumer<Component> tooltipConsumer,
-      final Component component,
-      final ChatFormatting formatting) {
+    Consumer<Component> tooltipConsumer,
+    final Component component,
+    final ChatFormatting formatting) {
     if (RenderSystem.isOnRenderThread()) {
       List<FormattedText> lines =
-          Minecraft.getInstance().font.getSplitter().splitLines(component, 200, Style.EMPTY);
+        Minecraft.getInstance().font.getSplitter().splitLines(component, 200, Style.EMPTY);
       for (FormattedText line : lines) {
         tooltipConsumer.accept(Component.literal(line.getString()).withStyle(formatting));
       }

@@ -33,30 +33,30 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload.Type;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 
 public record SyncLootPreviewMessage(
-    BlockPos blockPos, EntityType<?> entityType, List<ItemStack> items)
-    implements NetworkMessageRecord {
+  BlockPos blockPos, EntityType<?> entityType, List<ItemStack> items)
+  implements NetworkMessageRecord {
 
   public static final Identifier MESSAGE_ID =
-      Identifier.fromNamespaceAndPath(Constants.MOD_ID, "sync_loot_preview");
+    Identifier.fromNamespaceAndPath(Constants.MOD_ID, "sync_loot_preview");
   public static final CustomPacketPayload.Type<SyncLootPreviewMessage> PAYLOAD_TYPE =
-      new Type<>(MESSAGE_ID);
+    new Type<>(MESSAGE_ID);
   public static final StreamCodec<RegistryFriendlyByteBuf, SyncLootPreviewMessage> STREAM_CODEC =
-      StreamCodec.of((buffer, message) -> message.write(buffer), SyncLootPreviewMessage::create);
+    StreamCodec.of((buffer, message) -> message.write(buffer), SyncLootPreviewMessage::create);
 
-  public static BiConsumer<ServerPlayer, SyncLootPreviewMessage> SENDER = (player, msg) -> {};
+  public static BiConsumer<ServerPlayer, SyncLootPreviewMessage> SENDER = (player, msg) -> {
+  };
 
   public static SyncLootPreviewMessage create(FriendlyByteBuf buffer) {
     BlockPos pos = buffer.readBlockPos();
     Identifier entityTypeId = buffer.readIdentifier();
     Optional<Holder.Reference<EntityType<?>>> entityTypeHolder =
-        BuiltInRegistries.ENTITY_TYPE.get(entityTypeId);
+      BuiltInRegistries.ENTITY_TYPE.get(entityTypeId);
     EntityType<?> type = entityTypeHolder.map(Holder.Reference::value).orElse(null);
     int size = buffer.readVarInt();
     List<ItemStack> items = new ArrayList<>();
@@ -64,16 +64,16 @@ public record SyncLootPreviewMessage(
       Identifier itemId = buffer.readIdentifier();
       int count = buffer.readVarInt();
       BuiltInRegistries.ITEM
-          .get(itemId)
-          .ifPresentOrElse(
-              ref -> items.add(new ItemStack(ref.value(), count)),
-              () -> items.add(ItemStack.EMPTY));
+        .get(itemId)
+        .ifPresentOrElse(
+          ref -> items.add(new ItemStack(ref.value(), count)),
+          () -> items.add(ItemStack.EMPTY));
     }
     return new SyncLootPreviewMessage(pos, type, items);
   }
 
   public static void sendToPlayer(
-      ServerPlayer player, BlockPos pos, EntityType<?> entityType, List<ItemStack> items) {
+    ServerPlayer player, BlockPos pos, EntityType<?> entityType, List<ItemStack> items) {
     SENDER.accept(player, new SyncLootPreviewMessage(pos, entityType, items));
   }
 

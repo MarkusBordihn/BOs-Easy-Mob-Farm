@@ -26,7 +26,8 @@ import net.minecraft.world.level.block.Block;
 
 public class ModBlocksTestHelper {
 
-  private ModBlocksTestHelper() {}
+  private ModBlocksTestHelper() {
+  }
 
   public static void testModBlock(GameTestHelper helper, Block block) {
     BlockPos blockPos = new BlockPos(0, 1, 0);

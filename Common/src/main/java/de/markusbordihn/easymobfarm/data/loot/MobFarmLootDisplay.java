@@ -42,59 +42,59 @@ import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.ItemLike;
 
 public record MobFarmLootDisplay(
-    EntityType<?> entityType,
-    List<ItemStack> captureCards,
-    List<ItemStack> spawnEggs,
-    boolean requiresKilledByPlayer,
-    boolean supportsKnifeEnhancement,
-    List<BonusDrop> bonusDrops) {
+  EntityType<?> entityType,
+  List<ItemStack> captureCards,
+  List<ItemStack> spawnEggs,
+  boolean requiresKilledByPlayer,
+  boolean supportsKnifeEnhancement,
+  List<BonusDrop> bonusDrops) {
 
   public static List<MobFarmLootDisplay> createAll(final ItemLike mobCaptureCardItem) {
     Map<EntityType<?>, List<ItemStack>> captureCardsByEntityType = new LinkedHashMap<>();
     for (ItemStack captureCard :
-        CustomMobCaptureCards.getCustomMobCaptureCards(mobCaptureCardItem)) {
+      CustomMobCaptureCards.getCustomMobCaptureCards(mobCaptureCardItem)) {
       MobCaptureData captureData = MobCaptureManager.getMobCaptureData(captureCard);
       if (captureData == null || captureData.entityType() == null) {
         continue;
       }
 
       captureCardsByEntityType
-          .computeIfAbsent(captureData.entityType(), entityType -> new ArrayList<>())
-          .add(captureCard);
+        .computeIfAbsent(captureData.entityType(), entityType -> new ArrayList<>())
+        .add(captureCard);
     }
 
     List<MobFarmLootDisplay> displays = new ArrayList<>();
     captureCardsByEntityType.forEach(
-        (entityType, captureCards) -> {
-          MobCaptureCardDefinition definition = MobCaptureCardDefinitionManager.get(entityType);
-          if (definition == null) {
-            return;
-          }
+      (entityType, captureCards) -> {
+        MobCaptureCardDefinition definition = MobCaptureCardDefinitionManager.get(entityType);
+        if (definition == null) {
+          return;
+        }
 
-          displays.add(
-              new MobFarmLootDisplay(
-                  entityType,
-                  List.copyOf(captureCards),
-                  getSpawnEggs(entityType),
-                  definition.requiresKilledByPlayer(),
-                  definition.supportsKnifeEnhancement(),
-                  getBonusDrops(entityType, definition.variants().keySet())));
-        });
+        displays.add(
+          new MobFarmLootDisplay(
+            entityType,
+            List.copyOf(captureCards),
+            getSpawnEggs(entityType),
+            definition.requiresKilledByPlayer(),
+            definition.supportsKnifeEnhancement(),
+            getBonusDrops(entityType, definition.variants().keySet())));
+      });
     return displays;
   }
 
   private static List<BonusDrop> getBonusDrops(
-      final EntityType<?> entityType, final Collection<String> variants) {
+    final EntityType<?> entityType, final Collection<String> variants) {
     Map<String, ItemStack> itemsByKey = new LinkedHashMap<>();
     Map<String, List<MobFarmType>> mobFarmTypesByKey = new LinkedHashMap<>();
     for (MobFarmType mobFarmType : MobFarmBonusConfig.getMobFarmTypesWithBonusDrop(entityType)) {
       for (MobFarmTierLevel tierLevel : MobFarmTierLevel.values()) {
         for (ItemStack item :
-            MobFarmBonusConfig.getBonusDropEntries(
-                mobFarmType, tierLevel.getTierLevel(), entityType)) {
+          MobFarmBonusConfig.getBonusDropEntries(
+            mobFarmType, tierLevel.getTierLevel(), entityType)) {
           collectBonusDrop(itemsByKey, mobFarmTypesByKey, mobFarmType, item);
           for (ItemStack variantItem :
-              LootManager.getVariantBonusDrops(entityType, item, variants)) {
+            LootManager.getVariantBonusDrops(entityType, item, variants)) {
             collectBonusDrop(itemsByKey, mobFarmTypesByKey, mobFarmType, variantItem);
           }
         }
@@ -103,20 +103,20 @@ public record MobFarmLootDisplay(
 
     List<BonusDrop> bonusDrops = new ArrayList<>();
     itemsByKey.forEach(
-        (key, item) ->
-            bonusDrops.add(new BonusDrop(item, List.copyOf(mobFarmTypesByKey.get(key)))));
+      (key, item) ->
+        bonusDrops.add(new BonusDrop(item, List.copyOf(mobFarmTypesByKey.get(key)))));
     return bonusDrops;
   }
 
   private static void collectBonusDrop(
-      final Map<String, ItemStack> itemsByKey,
-      final Map<String, List<MobFarmType>> mobFarmTypesByKey,
-      final MobFarmType mobFarmType,
-      final ItemStack item) {
+    final Map<String, ItemStack> itemsByKey,
+    final Map<String, List<MobFarmType>> mobFarmTypesByKey,
+    final MobFarmType mobFarmType,
+    final ItemStack item) {
     String key = getItemKey(item);
     itemsByKey.putIfAbsent(key, item);
     List<MobFarmType> mobFarmTypes =
-        mobFarmTypesByKey.computeIfAbsent(key, itemKey -> new ArrayList<>());
+      mobFarmTypesByKey.computeIfAbsent(key, itemKey -> new ArrayList<>());
     if (!mobFarmTypes.contains(mobFarmType)) {
       mobFarmTypes.add(mobFarmType);
     }
@@ -124,7 +124,7 @@ public record MobFarmLootDisplay(
 
   private static String getItemKey(final ItemStack itemStack) {
     return BuiltInRegistries.ITEM.getKey(itemStack.getItem()).toString()
-        + itemStack.getComponentsPatch();
+      + itemStack.getComponentsPatch();
   }
 
   private static List<ItemStack> getSpawnEggs(final EntityType<?> entityType) {
@@ -146,13 +146,16 @@ public record MobFarmLootDisplay(
     return inputItems;
   }
 
-  public record BonusDrop(ItemStack item, List<MobFarmType> mobFarmTypes) {}
+  public record BonusDrop(ItemStack item, List<MobFarmType> mobFarmTypes) {
+
+  }
 
   private static final class SpawnEggs {
 
     private static final Map<EntityType<?>, ItemStack> BY_ENTITY_TYPE = byEntityType();
 
-    private SpawnEggs() {}
+    private SpawnEggs() {
+    }
 
     private static Map<EntityType<?>, ItemStack> byEntityType() {
       Map<EntityType<?>, ItemStack> spawnEggs = new HashMap<>();

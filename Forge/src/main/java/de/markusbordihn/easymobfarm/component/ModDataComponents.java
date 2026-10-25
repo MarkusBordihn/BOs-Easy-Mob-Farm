@@ -34,32 +34,33 @@ import net.minecraftforge.registries.RegistryObject;
 public class ModDataComponents {
 
   public static final DeferredRegister<DataComponentType<?>> DATA_COMPONENTS =
-      DeferredRegister.create(Registries.DATA_COMPONENT_TYPE, Constants.MOD_ID);
+    DeferredRegister.create(Registries.DATA_COMPONENT_TYPE, Constants.MOD_ID);
   public static final RegistryObject<DataComponentType<MobCaptureData>> MOB_CAPTURE_DATA =
-      DATA_COMPONENTS.register(
-          MobCaptureData.ID,
-          () ->
-              DataComponentType.<MobCaptureData>builder()
-                  .persistent(MobCaptureData.CODEC)
-                  .networkSynchronized(MobCaptureData.STREAM_CODEC)
-                  .build());
+    DATA_COMPONENTS.register(
+      MobCaptureData.ID,
+      () ->
+        DataComponentType.<MobCaptureData>builder()
+          .persistent(MobCaptureData.CODEC)
+          .networkSynchronized(MobCaptureData.STREAM_CODEC)
+          .build());
   public static final RegistryObject<DataComponentType<MobFarmData>> MOB_FARM_DATA =
-      DATA_COMPONENTS.register(
-          MobFarmData.ID,
-          () ->
-              DataComponentType.<MobFarmData>builder()
-                  .persistent(MobFarmData.CODEC)
-                  .networkSynchronized(MobFarmData.STREAM_CODEC)
-                  .build());
+    DATA_COMPONENTS.register(
+      MobFarmData.ID,
+      () ->
+        DataComponentType.<MobFarmData>builder()
+          .persistent(MobFarmData.CODEC)
+          .networkSynchronized(MobFarmData.STREAM_CODEC)
+          .build());
 
-  private ModDataComponents() {}
+  private ModDataComponents() {
+  }
 
   @SubscribeEvent
   public static void onCommonSetup(FMLCommonSetupEvent event) {
     event.enqueueWork(
-        () -> {
-          DataComponents.registerMobCaptureData(MOB_CAPTURE_DATA);
-          DataComponents.registerMobFarmData(MOB_FARM_DATA);
-        });
+      () -> {
+        DataComponents.registerMobCaptureData(MOB_CAPTURE_DATA);
+        DataComponents.registerMobFarmData(MOB_FARM_DATA);
+      });
   }
 }

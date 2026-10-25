@@ -27,31 +27,31 @@ public class MenuSlotTest {
 
   public void testQuickMoveCaptureCardFillsCapturedMobSlotOnce(GameTestHelper helper) {
     MobFarmMenuTestHelper.testQuickMoveCaptureCardFillsCapturedMobSlotOnce(
-        helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
+      helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
     helper.succeed();
   }
 
   public void testQuickMoveNeverFillsOutputSlots(GameTestHelper helper) {
     MobFarmMenuTestHelper.testQuickMoveNeverFillsOutputSlots(
-        helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
+      helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
     helper.succeed();
   }
 
   public void testQuickMoveTakesResultIntoPlayerInventory(GameTestHelper helper) {
     MobFarmMenuTestHelper.testQuickMoveTakesResultIntoPlayerInventory(
-        helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
+      helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
     helper.succeed();
   }
 
   public void testQuickMoveSlotUpgradeAddsOutputSlots(GameTestHelper helper) {
     MobFarmMenuTestHelper.testQuickMoveSlotUpgradeAddsOutputSlots(
-        helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
+      helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
     helper.succeed();
   }
 
   public void testHotbarSwapIntoOutputSlotIsRejected(GameTestHelper helper) {
     MobFarmMenuTestHelper.testHotbarSwapIntoOutputSlotIsRejected(
-        helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
+      helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
     helper.succeed();
   }
 
@@ -62,13 +62,13 @@ public class MenuSlotTest {
 
   public void testHotbarSwapCaptureCardFillsCapturedMobSlotOnce(GameTestHelper helper) {
     MobFarmMenuTestHelper.testHotbarSwapCaptureCardFillsCapturedMobSlotOnce(
-        helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
+      helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
     helper.succeed();
   }
 
   public void testMousePlacementRespectsSlotRestrictions(GameTestHelper helper) {
     MobFarmMenuTestHelper.testMousePlacementRespectsSlotRestrictions(
-        helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
+      helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
     helper.succeed();
   }
 
@@ -94,6 +94,31 @@ public class MenuSlotTest {
 
   public void testCardBinderOpenBinderCannotBeMoved(GameTestHelper helper) {
     CardBinderMenuTestHelper.testOpenBinderCannotBeMoved(helper);
+    helper.succeed();
+  }
+
+  public void testCardBinderHotbarSwapCannotMoveOpenBinder(GameTestHelper helper) {
+    CardBinderMenuTestHelper.testHotbarSwapCannotMoveOpenBinder(helper);
+    helper.succeed();
+  }
+
+  public void testCardBinderSwappedInBinderDoesNotReceiveCards(GameTestHelper helper) {
+    CardBinderMenuTestHelper.testSwappedInBinderDoesNotReceiveCards(helper);
+    helper.succeed();
+  }
+
+  public void testCardBinderRecreatedBinderKeepsMenuOpen(GameTestHelper helper) {
+    CardBinderMenuTestHelper.testRecreatedBinderKeepsMenuOpen(helper);
+    helper.succeed();
+  }
+
+  public void testCardBinderCardsAreSavedOnEveryClick(GameTestHelper helper) {
+    CardBinderMenuTestHelper.testCardsAreSavedOnEveryClick(helper);
+    helper.succeed();
+  }
+
+  public void testCardBinderDroppedBinderIgnoresFurtherClicks(GameTestHelper helper) {
+    CardBinderMenuTestHelper.testDroppedBinderIgnoresFurtherClicks(helper);
     helper.succeed();
   }
 }

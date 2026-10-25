@@ -35,27 +35,27 @@ public class ModItemProperties {
 
   public static void registerItemProperties() {
     ConditionalItemModelProperties.ID_MAPPER.put(
-        Identifier.fromNamespaceAndPath(Constants.MOD_ID, "has_mob_capture_data"),
-        MobCatcherHasMobCaptureData.MAP_CODEC);
+      Identifier.fromNamespaceAndPath(Constants.MOD_ID, "has_mob_capture_data"),
+      MobCatcherHasMobCaptureData.MAP_CODEC);
 
     RangeSelectItemModelProperties.ID_MAPPER.put(
-        Identifier.fromNamespaceAndPath(Constants.MOD_ID, "mob_farm_block_item_tier_level"),
-        MobFarmBlockItemTierLevel.MAP_CODEC);
+      Identifier.fromNamespaceAndPath(Constants.MOD_ID, "mob_farm_block_item_tier_level"),
+      MobFarmBlockItemTierLevel.MAP_CODEC);
 
     SelectItemModelProperties.ID_MAPPER.put(
-        Identifier.fromNamespaceAndPath(Constants.MOD_ID, "mob_capture_card_entity_color"),
-        MobCaptureCardEntityColor.TYPE);
+      Identifier.fromNamespaceAndPath(Constants.MOD_ID, "mob_capture_card_entity_color"),
+      MobCaptureCardEntityColor.TYPE);
 
     SelectItemModelProperties.ID_MAPPER.put(
-        Identifier.fromNamespaceAndPath(Constants.MOD_ID, "mob_capture_card_entity_type"),
-        MobCaptureCardEntityType.TYPE);
+      Identifier.fromNamespaceAndPath(Constants.MOD_ID, "mob_capture_card_entity_type"),
+      MobCaptureCardEntityType.TYPE);
 
     SelectItemModelProperties.ID_MAPPER.put(
-        Identifier.fromNamespaceAndPath(Constants.MOD_ID, "mob_capture_card_entity_variant"),
-        MobCaptureCardEntityVariant.TYPE);
+      Identifier.fromNamespaceAndPath(Constants.MOD_ID, "mob_capture_card_entity_variant"),
+      MobCaptureCardEntityVariant.TYPE);
 
     SelectItemModelProperties.ID_MAPPER.put(
-        Identifier.fromNamespaceAndPath(Constants.MOD_ID, "mob_capture_card_rarity"),
-        MobCaptureCardRarity.TYPE);
+      Identifier.fromNamespaceAndPath(Constants.MOD_ID, "mob_capture_card_rarity"),
+      MobCaptureCardRarity.TYPE);
   }
 }

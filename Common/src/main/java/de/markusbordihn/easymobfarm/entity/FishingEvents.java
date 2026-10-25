@@ -39,11 +39,12 @@ public class FishingEvents {
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final Random RANDOM = new Random();
 
-  private FishingEvents() {}
+  private FishingEvents() {
+  }
 
   public static void handleItemFishedEvent(Player player, Collection<ItemStack> fishingLoot) {
     if (!MobCaptureCardConfig.dropMobCaptureCardOnFishing
-        || !(player.level() instanceof ServerLevel serverLevel)) {
+      || !(player.level() instanceof ServerLevel serverLevel)) {
       return;
     }
 
@@ -54,8 +55,8 @@ public class FishingEvents {
 
     String entityName = BuiltInRegistries.ENTITY_TYPE.getKey(entityType).toString();
     if (MobCaptureCardConfig.mobCaptureCardFishingDropDenyList.contains(entityName)
-        || (!MobCaptureCardConfig.mobCaptureCardFishingDropAllowList.isEmpty()
-            && !MobCaptureCardConfig.mobCaptureCardFishingDropAllowList.contains(entityName))) {
+      || (!MobCaptureCardConfig.mobCaptureCardFishingDropAllowList.isEmpty()
+      && !MobCaptureCardConfig.mobCaptureCardFishingDropAllowList.contains(entityName))) {
       log.debug("[Skip] Mob capture card fishing drop for {}.", entityName);
       return;
     }
@@ -80,8 +81,8 @@ public class FishingEvents {
         continue;
       }
       Optional<EntityType<?>> entityType =
-          BuiltInRegistries.ENTITY_TYPE.getOptional(
-              BuiltInRegistries.ITEM.getKey(itemStack.getItem()));
+        BuiltInRegistries.ENTITY_TYPE.getOptional(
+          BuiltInRegistries.ITEM.getKey(itemStack.getItem()));
       if (entityType.isPresent()) {
         return entityType.get();
       }

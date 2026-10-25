@@ -47,45 +47,45 @@ public class ModItemProperties {
   public static void registerItemProperties() {
     try {
       Field conditionalMapperField =
-          ConditionalItemModelProperties.class.getDeclaredField("ID_MAPPER");
+        ConditionalItemModelProperties.class.getDeclaredField("ID_MAPPER");
       conditionalMapperField.setAccessible(true);
       ExtraCodecs.LateBoundIdMapper<Identifier, MapCodec<? extends ConditionalItemModelProperty>>
-          conditionalMapper =
-              (ExtraCodecs.LateBoundIdMapper<
-                      Identifier, MapCodec<? extends ConditionalItemModelProperty>>)
-                  conditionalMapperField.get(null);
+        conditionalMapper =
+        (ExtraCodecs.LateBoundIdMapper<
+          Identifier, MapCodec<? extends ConditionalItemModelProperty>>)
+          conditionalMapperField.get(null);
       conditionalMapper.put(
-          Identifier.fromNamespaceAndPath(Constants.MOD_ID, "has_mob_capture_data"),
-          MobCatcherHasMobCaptureData.MAP_CODEC);
+        Identifier.fromNamespaceAndPath(Constants.MOD_ID, "has_mob_capture_data"),
+        MobCatcherHasMobCaptureData.MAP_CODEC);
 
       Field rangeMapperField = RangeSelectItemModelProperties.class.getDeclaredField("ID_MAPPER");
       rangeMapperField.setAccessible(true);
       ExtraCodecs.LateBoundIdMapper<Identifier, MapCodec<? extends RangeSelectItemModelProperty>>
-          rangeMapper =
-              (ExtraCodecs.LateBoundIdMapper<
-                      Identifier, MapCodec<? extends RangeSelectItemModelProperty>>)
-                  rangeMapperField.get(null);
+        rangeMapper =
+        (ExtraCodecs.LateBoundIdMapper<
+          Identifier, MapCodec<? extends RangeSelectItemModelProperty>>)
+          rangeMapperField.get(null);
       rangeMapper.put(
-          Identifier.fromNamespaceAndPath(Constants.MOD_ID, "mob_farm_block_item_tier_level"),
-          MobFarmBlockItemTierLevel.MAP_CODEC);
+        Identifier.fromNamespaceAndPath(Constants.MOD_ID, "mob_farm_block_item_tier_level"),
+        MobFarmBlockItemTierLevel.MAP_CODEC);
 
       Field selectMapperField = SelectItemModelProperties.class.getDeclaredField("ID_MAPPER");
       selectMapperField.setAccessible(true);
       ExtraCodecs.LateBoundIdMapper<Identifier, SelectItemModelProperty.Type<?, ?>> selectMapper =
-          (ExtraCodecs.LateBoundIdMapper<Identifier, SelectItemModelProperty.Type<?, ?>>)
-              selectMapperField.get(null);
+        (ExtraCodecs.LateBoundIdMapper<Identifier, SelectItemModelProperty.Type<?, ?>>)
+          selectMapperField.get(null);
       selectMapper.put(
-          Identifier.fromNamespaceAndPath(Constants.MOD_ID, "mob_capture_card_entity_color"),
-          MobCaptureCardEntityColor.TYPE);
+        Identifier.fromNamespaceAndPath(Constants.MOD_ID, "mob_capture_card_entity_color"),
+        MobCaptureCardEntityColor.TYPE);
       selectMapper.put(
-          Identifier.fromNamespaceAndPath(Constants.MOD_ID, "mob_capture_card_entity_type"),
-          MobCaptureCardEntityType.TYPE);
+        Identifier.fromNamespaceAndPath(Constants.MOD_ID, "mob_capture_card_entity_type"),
+        MobCaptureCardEntityType.TYPE);
       selectMapper.put(
-          Identifier.fromNamespaceAndPath(Constants.MOD_ID, "mob_capture_card_entity_variant"),
-          MobCaptureCardEntityVariant.TYPE);
+        Identifier.fromNamespaceAndPath(Constants.MOD_ID, "mob_capture_card_entity_variant"),
+        MobCaptureCardEntityVariant.TYPE);
       selectMapper.put(
-          Identifier.fromNamespaceAndPath(Constants.MOD_ID, "mob_capture_card_rarity"),
-          MobCaptureCardRarity.TYPE);
+        Identifier.fromNamespaceAndPath(Constants.MOD_ID, "mob_capture_card_rarity"),
+        MobCaptureCardRarity.TYPE);
     } catch (NoSuchFieldException | IllegalAccessException e) {
       log.error("Failed to register item model properties via reflection: {}", e.getMessage());
     }

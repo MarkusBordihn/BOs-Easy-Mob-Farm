@@ -53,25 +53,25 @@ class MobCaptureCardDefinitionTest {
   @Test
   void definitionWithVariantsAndColorsSurvivesNetworkRoundTrip() {
     MobCaptureCardDefinition definition =
-        new MobCaptureCardDefinition(
-            Identifier.withDefaultNamespace("cat"),
-            Identifier.withDefaultNamespace("item/easy_mob_farm/mob_capture_card/cat_tabby"),
-            Rarity.RARE,
-            1.5F,
-            true,
-            false,
-            true,
-            Map.of(
-                "minecraft:british_shorthair",
-                new MobCaptureCardDefinition.Variant(
-                    Identifier.withDefaultNamespace(
-                        "item/easy_mob_farm/mob_capture_card/cat_british_shorthair"),
-                    Map.of("red", color("item/cat_red"), "blue", color("item/cat_blue"))),
-                "minecraft:calico",
-                new MobCaptureCardDefinition.Variant(
-                    Identifier.withDefaultNamespace("item/easy_mob_farm/mob_capture_card/cat_calico"),
-                    Map.of())),
-            Map.of("white", color("item/sheep_white"), "black", color("item/sheep_black")));
+      new MobCaptureCardDefinition(
+        Identifier.withDefaultNamespace("cat"),
+        Identifier.withDefaultNamespace("item/easy_mob_farm/mob_capture_card/cat_tabby"),
+        Rarity.RARE,
+        1.5F,
+        true,
+        false,
+        true,
+        Map.of(
+          "minecraft:british_shorthair",
+          new MobCaptureCardDefinition.Variant(
+            Identifier.withDefaultNamespace(
+              "item/easy_mob_farm/mob_capture_card/cat_british_shorthair"),
+            Map.of("red", color("item/cat_red"), "blue", color("item/cat_blue"))),
+          "minecraft:calico",
+          new MobCaptureCardDefinition.Variant(
+            Identifier.withDefaultNamespace("item/easy_mob_farm/mob_capture_card/cat_calico"),
+            Map.of())),
+        Map.of("white", color("item/sheep_white"), "black", color("item/sheep_black")));
 
     MobCaptureCardDefinition decoded = roundTrip(definition);
 
@@ -82,9 +82,9 @@ class MobCaptureCardDefinitionTest {
   @Test
   void definitionWithoutVariantsAndColorsSurvivesNetworkRoundTrip() {
     MobCaptureCardDefinition definition =
-        new MobCaptureCardDefinition(
-            Identifier.withDefaultNamespace("cow"), null, Rarity.COMMON, 1.0F, false, false, false,
-            Map.of(), Map.of());
+      new MobCaptureCardDefinition(
+        Identifier.withDefaultNamespace("cow"), null, Rarity.COMMON, 1.0F, false, false, false,
+        Map.of(), Map.of());
 
     Assertions.assertEquals(definition, roundTrip(definition));
   }
@@ -105,10 +105,10 @@ class MobCaptureCardDefinitionTest {
     buffer.writeBoolean(false);
     buffer.writeVarInt(colors.size());
     colors.forEach(
-        (name, color) -> {
-          buffer.writeUtf(name);
-          buffer.writeIdentifier(color.model());
-        });
+      (name, color) -> {
+        buffer.writeUtf(name);
+        buffer.writeIdentifier(color.model());
+      });
     buffer.writeVarInt(0);
 
     Assertions.assertThrows(RuntimeException.class, () -> MobCaptureCardDefinition.decode(buffer));

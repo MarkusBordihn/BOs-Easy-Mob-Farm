@@ -28,6 +28,7 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerInput;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -47,81 +48,87 @@ public class CardBinderMenu extends AbstractContainerMenu {
   public static MenuType<?> MENU_TYPE = null;
   public static Supplier<MenuType<?>> MENU_TYPE_SUPPLIER = () -> MENU_TYPE;
   private final Container cardContainer;
-  private final ItemStack binderStack;
+  private final boolean tracksBinderStack;
   private final InteractionHand binderHand;
+  private ItemStack binderStack;
+  private int binderInventorySlot = Inventory.NOT_FOUND_INDEX;
   private int lockedSlotIndex = -1;
   private int currentPage = 0;
 
   public CardBinderMenu(
-      final MenuType<?> menuType,
-      final int containerId,
-      final Inventory playerInventory,
-      final ItemStack binderStack) {
+    final MenuType<?> menuType,
+    final int containerId,
+    final Inventory playerInventory,
+    final ItemStack binderStack) {
     this(
-        menuType, containerId, playerInventory, CardBinderItem.loadCards(binderStack), binderStack);
+      menuType, containerId, playerInventory, CardBinderItem.loadCards(binderStack), binderStack);
   }
 
   public CardBinderMenu(
-      final MenuType<?> menuType, final int containerId, final Inventory playerInventory) {
+    final MenuType<?> menuType, final int containerId, final Inventory playerInventory) {
     this(
-        menuType,
-        containerId,
-        playerInventory,
-        new SimpleContainer(CONTAINER_SIZE),
-        ItemStack.EMPTY);
+      menuType,
+      containerId,
+      playerInventory,
+      new SimpleContainer(CONTAINER_SIZE),
+      ItemStack.EMPTY);
   }
 
   public CardBinderMenu(
-      final MenuType<?> menuType,
-      final int containerId,
-      final Inventory playerInventory,
-      final Container container,
-      final ItemStack binderStack) {
+    final MenuType<?> menuType,
+    final int containerId,
+    final Inventory playerInventory,
+    final Container container,
+    final ItemStack binderStack) {
     super(menuType, containerId);
     this.cardContainer = container;
     this.binderStack = binderStack;
-    this.binderHand =
-        playerInventory.player.getOffhandItem() == binderStack
-            ? InteractionHand.OFF_HAND
-            : InteractionHand.MAIN_HAND;
+    this.tracksBinderStack = !binderStack.isEmpty();
+    if (this.tracksBinderStack && playerInventory.player.getOffhandItem() == binderStack) {
+      this.binderHand = InteractionHand.OFF_HAND;
+      this.binderInventorySlot = Inventory.SLOT_OFFHAND;
+    } else {
+      this.binderHand = InteractionHand.MAIN_HAND;
+    }
 
     for (int i = 0; i < CONTAINER_SIZE; i++) {
       int posOnPage = i % CARDS_PER_PAGE;
       this.addSlot(
-          new CardSlot(
-              this,
-              container,
-              i,
-              GRID_START_X + (posOnPage % CARD_COLS) * SLOT_SPACING,
-              GRID_START_Y + (posOnPage / CARD_COLS) * SLOT_SPACING));
+        new CardSlot(
+          this,
+          container,
+          i,
+          GRID_START_X + (posOnPage % CARD_COLS) * SLOT_SPACING,
+          GRID_START_Y + (posOnPage / CARD_COLS) * SLOT_SPACING));
     }
 
     for (int row = 0; row < 3; row++) {
       for (int col = 0; col < 9; col++) {
         this.addSlot(
-            new Slot(
-                playerInventory,
-                col + row * 9 + 9,
-                PLAYER_INV_X + col * 18,
-                PLAYER_INV_Y + row * 18));
+          new Slot(
+            playerInventory,
+            col + row * 9 + 9,
+            PLAYER_INV_X + col * 18,
+            PLAYER_INV_Y + row * 18));
       }
     }
 
     for (int col = 0; col < 9; col++) {
-      if (playerInventory.getItem(col) == binderStack) {
+      if (this.tracksBinderStack && playerInventory.getItem(col) == binderStack) {
+        this.binderInventorySlot = col;
         this.lockedSlotIndex = CONTAINER_SIZE + 27 + col;
         this.addSlot(
-            new Slot(playerInventory, col, PLAYER_INV_X + col * 18, PLAYER_HOTBAR_Y) {
-              @Override
-              public boolean mayPickup(Player player) {
-                return false;
-              }
+          new Slot(playerInventory, col, PLAYER_INV_X + col * 18, PLAYER_HOTBAR_Y) {
+            @Override
+            public boolean mayPickup(Player player) {
+              return false;
+            }
 
-              @Override
-              public boolean mayPlace(ItemStack stack) {
-                return false;
-              }
-            });
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+              return false;
+            }
+          });
       } else {
         this.addSlot(new Slot(playerInventory, col, PLAYER_INV_X + col * 18, PLAYER_HOTBAR_Y));
       }
@@ -142,22 +149,50 @@ public class CardBinderMenu extends AbstractContainerMenu {
 
   @Override
   public boolean stillValid(Player player) {
-    if (binderStack.isEmpty()) {
-      return true;
+    return !this.tracksBinderStack || this.trackHeldBinder(player);
+  }
+
+  @Override
+  public void clicked(int slotIndex, int buttonNum, ContainerInput containerInput, Player player) {
+    if (!this.tracksBinderStack) {
+      super.clicked(slotIndex, buttonNum, containerInput, player);
+      return;
     }
-    ItemStack heldStack = player.getItemInHand(binderHand);
-    return heldStack == binderStack || heldStack.getItem() instanceof CardBinderItem;
+
+    if (!this.trackHeldBinder(player)
+      || (containerInput == ContainerInput.SWAP && buttonNum == this.binderInventorySlot)) {
+      return;
+    }
+
+    super.clicked(slotIndex, buttonNum, containerInput, player);
+    this.saveCards();
   }
 
   @Override
   public void removed(Player player) {
     super.removed(player);
-    if (binderStack.isEmpty()) {
-      return;
+    this.saveCards();
+  }
+
+  private boolean trackHeldBinder(Player player) {
+    if (this.binderStack.isEmpty()) {
+      return false;
     }
-    ItemStack heldStack = player.getItemInHand(binderHand);
-    ItemStack targetStack = heldStack.getItem() instanceof CardBinderItem ? heldStack : binderStack;
-    CardBinderItem.saveCards(targetStack, (SimpleContainer) cardContainer);
+
+    ItemStack heldStack = player.getItemInHand(this.binderHand);
+    // #216: other mods re-create the held stack, so a copy holding the same cards is followed.
+    if (heldStack != this.binderStack
+      && heldStack.getItem() instanceof CardBinderItem
+      && CardBinderItem.holdsSameCards(heldStack, (SimpleContainer) this.cardContainer)) {
+      this.binderStack = heldStack;
+    }
+    return heldStack == this.binderStack;
+  }
+
+  private void saveCards() {
+    if (!this.binderStack.isEmpty()) {
+      CardBinderItem.saveCards(this.binderStack, (SimpleContainer) this.cardContainer);
+    }
   }
 
   @Override
@@ -206,6 +241,7 @@ public class CardBinderMenu extends AbstractContainerMenu {
   }
 
   private static class CardSlot extends Slot {
+
     private final CardBinderMenu menu;
     private final int slotIndex;
 

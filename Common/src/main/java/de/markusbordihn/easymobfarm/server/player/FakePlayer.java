@@ -32,10 +32,10 @@ public class FakePlayer extends ServerPlayer {
 
   public FakePlayer(final ServerLevel level, final BlockPos blockPos) {
     super(
-        level.getServer(),
-        level,
-        new GameProfile(UUID.randomUUID(), "FakePlayer"),
-        ClientInformation.createDefault());
+      level.getServer(),
+      level,
+      new GameProfile(UUID.randomUUID(), "FakePlayer"),
+      ClientInformation.createDefault());
     this.getAdvancements().clearTriggers();
     this.setPos(blockPos.getX(), blockPos.getY(), blockPos.getZ());
   }

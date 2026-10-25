@@ -34,7 +34,8 @@ import net.minecraftforge.network.PacketDistributor;
 @EventBusSubscriber
 public class ServerEventHandler {
 
-  private ServerEventHandler() {}
+  private ServerEventHandler() {
+  }
 
   @SubscribeEvent
   public static void onServerStarted(ServerStartedEvent event) {
@@ -54,8 +55,8 @@ public class ServerEventHandler {
 
     // Sync all mob capture card definitions to the player.
     NetworkHandler.INSTANCE.send(
-        new SyncMobCaptureCardDefinitionsMessage(MobCaptureCardDefinitionManager.getAll()),
-        PacketDistributor.PLAYER.with(serverPlayer));
+      new SyncMobCaptureCardDefinitionsMessage(MobCaptureCardDefinitionManager.getAll()),
+      PacketDistributor.PLAYER.with(serverPlayer));
 
     ServerEvents.handlePlayerLoginEvent(serverPlayer);
   }

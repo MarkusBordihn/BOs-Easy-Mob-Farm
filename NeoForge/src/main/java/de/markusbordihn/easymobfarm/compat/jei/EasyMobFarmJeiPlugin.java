@@ -49,9 +49,9 @@ public class EasyMobFarmJeiPlugin implements IModPlugin {
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final Identifier pluginId =
-      Identifier.fromNamespaceAndPath(Constants.MOD_ID, "jei_plugin");
+    Identifier.fromNamespaceAndPath(Constants.MOD_ID, "jei_plugin");
   private static final List<ItemStack> runtimeAddedCards = new ArrayList<>();
-  private static final List<MobFarmLootDisplay> runtimeAddedLootDisplays = new ArrayList<>();
+  private static final List<MobFarmLootDisplay> registeredLootDisplays = new ArrayList<>();
   private static volatile IJeiRuntime jeiRuntime;
 
   public static void refreshMobCaptureCards() {
@@ -63,12 +63,12 @@ public class EasyMobFarmJeiPlugin implements IModPlugin {
     IIngredientManager ingredientManager = jeiRuntime.getIngredientManager();
     if (!runtimeAddedCards.isEmpty()) {
       ingredientManager.removeIngredientsAtRuntime(
-          VanillaTypes.ITEM_STACK, new ArrayList<>(runtimeAddedCards));
+        VanillaTypes.ITEM_STACK, new ArrayList<>(runtimeAddedCards));
       runtimeAddedCards.clear();
     }
 
     Set<ItemStack> cards =
-        CustomMobCaptureCards.getCustomMobCaptureCards(ModItems.MOB_CAPTURE_CARD.get());
+      CustomMobCaptureCards.getCustomMobCaptureCards(ModItems.MOB_CAPTURE_CARD.get());
     if (!cards.isEmpty()) {
       log.info("[JEI Compat] Adding {} mob capture card(s) to JEI at runtime.", cards.size());
       ingredientManager.addIngredientsAtRuntime(VanillaTypes.ITEM_STACK, cards);
@@ -80,18 +80,25 @@ public class EasyMobFarmJeiPlugin implements IModPlugin {
 
   private static void refreshMobFarmLootDisplays() {
     IRecipeManager recipeManager = jeiRuntime.getRecipeManager();
-    if (!runtimeAddedLootDisplays.isEmpty()) {
+    if (!registeredLootDisplays.isEmpty()) {
       recipeManager.hideRecipes(
-          MobFarmLootCategory.RECIPE_TYPE, new ArrayList<>(runtimeAddedLootDisplays));
-      runtimeAddedLootDisplays.clear();
+        MobFarmLootCategory.RECIPE_TYPE, new ArrayList<>(registeredLootDisplays));
+      registeredLootDisplays.clear();
     }
 
     List<MobFarmLootDisplay> lootDisplays =
-        MobFarmLootDisplay.createAll(ModItems.MOB_CAPTURE_CARD.get());
+      MobFarmLootDisplay.createAll(ModItems.MOB_CAPTURE_CARD.get());
     if (!lootDisplays.isEmpty()) {
       recipeManager.addRecipes(MobFarmLootCategory.RECIPE_TYPE, lootDisplays);
-      runtimeAddedLootDisplays.addAll(lootDisplays);
+      registeredLootDisplays.addAll(lootDisplays);
     }
+    logVisibleLootDisplays(recipeManager);
+  }
+
+  private static void logVisibleLootDisplays(IRecipeManager recipeManager) {
+    log.info(
+      "[JEI Compat] Mob Farm loot category shows {} entries.",
+      recipeManager.createRecipeLookup(MobFarmLootCategory.RECIPE_TYPE).get().count());
   }
 
   @Override
@@ -104,6 +111,8 @@ public class EasyMobFarmJeiPlugin implements IModPlugin {
     EasyMobFarmJeiPlugin.jeiRuntime = runtime;
     if (!MobCaptureCardDefinitionManager.getAll().isEmpty()) {
       refreshMobCaptureCards();
+    } else {
+      logVisibleLootDisplays(runtime.getRecipeManager());
     }
   }
 
@@ -111,68 +120,70 @@ public class EasyMobFarmJeiPlugin implements IModPlugin {
   public void onRuntimeUnavailable() {
     EasyMobFarmJeiPlugin.jeiRuntime = null;
     EasyMobFarmJeiPlugin.runtimeAddedCards.clear();
-    EasyMobFarmJeiPlugin.runtimeAddedLootDisplays.clear();
+    EasyMobFarmJeiPlugin.registeredLootDisplays.clear();
   }
 
   @Override
   public void registerCategories(IRecipeCategoryRegistration registration) {
     registration.addRecipeCategories(
-        new MobFarmLootCategory(
-            registration.getJeiHelpers().getGuiHelper(), ModBlockItems.ANIMAL_PLAINS_FARM.get()));
+      new MobFarmLootCategory(
+        registration.getJeiHelpers().getGuiHelper(), ModBlockItems.ANIMAL_PLAINS_FARM.get()));
   }
 
   @Override
   public void registerRecipes(IRecipeRegistration registration) {
-    registration.addRecipes(
-        MobFarmLootCategory.RECIPE_TYPE,
-        MobFarmLootDisplay.createAll(ModItems.MOB_CAPTURE_CARD.get()));
+    List<MobFarmLootDisplay> lootDisplays =
+      MobFarmLootDisplay.createAll(ModItems.MOB_CAPTURE_CARD.get());
+    registration.addRecipes(MobFarmLootCategory.RECIPE_TYPE, lootDisplays);
+    registeredLootDisplays.clear();
+    registeredLootDisplays.addAll(lootDisplays);
   }
 
   @Override
   public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
     registration.addCraftingStation(
-        MobFarmLootCategory.RECIPE_TYPE,
-        ModBlockItems.ANIMAL_PLAINS_FARM.get(),
-        ModBlockItems.BEE_HIVE_FARM.get(),
-        ModBlockItems.DESERT_FARM.get(),
-        ModBlockItems.END_FARM.get(),
-        ModBlockItems.IRON_GOLEM_FARM.get(),
-        ModBlockItems.JUNGLE_FARM.get(),
-        ModBlockItems.LUCKY_DROP_FARM.get(),
-        ModBlockItems.MONSTER_PLAINS_CAVE_FARM.get(),
-        ModBlockItems.NETHER_FORTRESS_FARM.get(),
-        ModBlockItems.NETHER_WASTES_FARM.get(),
-        ModBlockItems.OCEAN_FARM.get(),
-        ModBlockItems.SWAMP_FARM.get());
+      MobFarmLootCategory.RECIPE_TYPE,
+      ModBlockItems.ANIMAL_PLAINS_FARM.get(),
+      ModBlockItems.BEE_HIVE_FARM.get(),
+      ModBlockItems.DESERT_FARM.get(),
+      ModBlockItems.END_FARM.get(),
+      ModBlockItems.IRON_GOLEM_FARM.get(),
+      ModBlockItems.JUNGLE_FARM.get(),
+      ModBlockItems.LUCKY_DROP_FARM.get(),
+      ModBlockItems.MONSTER_PLAINS_CAVE_FARM.get(),
+      ModBlockItems.NETHER_FORTRESS_FARM.get(),
+      ModBlockItems.NETHER_WASTES_FARM.get(),
+      ModBlockItems.OCEAN_FARM.get(),
+      ModBlockItems.SWAMP_FARM.get());
   }
 
   @Override
   public void registerItemSubtypes(ISubtypeRegistration registration) {
     registration.registerSubtypeInterpreter(
-        ModItems.MOB_CAPTURE_CARD.get(), MobCaptureCardSubtypeInterpreter.INSTANCE);
+      ModItems.MOB_CAPTURE_CARD.get(), MobCaptureCardSubtypeInterpreter.INSTANCE);
     registration.registerSubtypeInterpreter(
-        ModBlockItems.ANIMAL_PLAINS_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
+      ModBlockItems.ANIMAL_PLAINS_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
     registration.registerSubtypeInterpreter(
-        ModBlockItems.BEE_HIVE_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
+      ModBlockItems.BEE_HIVE_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
     registration.registerSubtypeInterpreter(
-        ModBlockItems.DESERT_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
+      ModBlockItems.DESERT_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
     registration.registerSubtypeInterpreter(
-        ModBlockItems.END_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
+      ModBlockItems.END_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
     registration.registerSubtypeInterpreter(
-        ModBlockItems.IRON_GOLEM_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
+      ModBlockItems.IRON_GOLEM_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
     registration.registerSubtypeInterpreter(
-        ModBlockItems.JUNGLE_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
+      ModBlockItems.JUNGLE_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
     registration.registerSubtypeInterpreter(
-        ModBlockItems.LUCKY_DROP_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
+      ModBlockItems.LUCKY_DROP_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
     registration.registerSubtypeInterpreter(
-        ModBlockItems.MONSTER_PLAINS_CAVE_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
+      ModBlockItems.MONSTER_PLAINS_CAVE_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
     registration.registerSubtypeInterpreter(
-        ModBlockItems.NETHER_FORTRESS_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
+      ModBlockItems.NETHER_FORTRESS_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
     registration.registerSubtypeInterpreter(
-        ModBlockItems.NETHER_WASTES_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
+      ModBlockItems.NETHER_WASTES_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
     registration.registerSubtypeInterpreter(
-        ModBlockItems.OCEAN_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
+      ModBlockItems.OCEAN_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
     registration.registerSubtypeInterpreter(
-        ModBlockItems.SWAMP_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
+      ModBlockItems.SWAMP_FARM.get(), MobFarmSubtypeInterpreter.INSTANCE);
   }
 }

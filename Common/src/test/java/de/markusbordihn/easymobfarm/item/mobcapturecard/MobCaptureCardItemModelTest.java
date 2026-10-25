@@ -38,7 +38,7 @@ class MobCaptureCardItemModelTest {
 
   private static final Path RESOURCES = Path.of("src/main/resources");
   private static final Path ITEM_MODEL =
-      RESOURCES.resolve("assets/easy_mob_farm/items/mob_capture_card.json");
+    RESOURCES.resolve("assets/easy_mob_farm/items/mob_capture_card.json");
 
   private static JsonObject readJson(Path path) {
     try {
@@ -51,11 +51,11 @@ class MobCaptureCardItemModelTest {
   private static List<JsonObject> readCardDefinitions() throws IOException {
     try (Stream<Path> paths = Files.walk(RESOURCES.resolve("data"))) {
       return paths
-          .filter(path -> path.toString().endsWith(".json"))
-          .filter(path -> path.getParent().getFileName().toString().equals("mob_capture_card"))
-          .map(MobCaptureCardItemModelTest::readJson)
-          .filter(definition -> definition.has("entity") && definition.has("model"))
-          .toList();
+        .filter(path -> path.toString().endsWith(".json"))
+        .filter(path -> path.getParent().getFileName().toString().equals("mob_capture_card"))
+        .map(MobCaptureCardItemModelTest::readJson)
+        .filter(definition -> definition.has("entity") && definition.has("model"))
+        .toList();
     }
   }
 
@@ -67,17 +67,17 @@ class MobCaptureCardItemModelTest {
 
     String baseModel = definition.get("model").getAsString();
     definition
-        .getAsJsonObject(selection)
-        .entrySet()
-        .forEach(
-            selectionEntry -> {
-              JsonObject selectionDefinition = selectionEntry.getValue().getAsJsonObject();
-              models.put(
-                  selectionEntry.getKey(),
-                  selectionDefinition.has("model")
-                      ? selectionDefinition.get("model").getAsString()
-                      : baseModel);
-            });
+      .getAsJsonObject(selection)
+      .entrySet()
+      .forEach(
+        selectionEntry -> {
+          JsonObject selectionDefinition = selectionEntry.getValue().getAsJsonObject();
+          models.put(
+            selectionEntry.getKey(),
+            selectionDefinition.has("model")
+              ? selectionDefinition.get("model").getAsString()
+              : baseModel);
+        });
     return models;
   }
 
@@ -97,7 +97,8 @@ class MobCaptureCardItemModelTest {
   @Test
   @DisplayName("Item model has a case for every card definition, variant and color")
   void itemModelMatchesCardDefinitions() throws IOException {
-    Map<String, JsonObject> entityCases = casesByWhen(readJson(ITEM_MODEL).getAsJsonObject("model"));
+    Map<String, JsonObject> entityCases = casesByWhen(
+      readJson(ITEM_MODEL).getAsJsonObject("model"));
     List<String> mismatches = new ArrayList<>();
 
     for (JsonObject definition : readCardDefinitions()) {
@@ -126,20 +127,20 @@ class MobCaptureCardItemModelTest {
 
       Map<String, JsonObject> selectionCases = casesByWhen(entityModel);
       expectedModels.forEach(
-          (selection, expectedModel) -> {
-            JsonObject selectionCase = selectionCases.get(selection);
-            if (selectionCase == null || !expectedModel.equals(modelOf(selectionCase))) {
-              mismatches.add(entity + " " + selection + ": " + expectedModel);
-            }
-          });
+        (selection, expectedModel) -> {
+          JsonObject selectionCase = selectionCases.get(selection);
+          if (selectionCase == null || !expectedModel.equals(modelOf(selectionCase))) {
+            mismatches.add(entity + " " + selection + ": " + expectedModel);
+          }
+        });
       if (!baseModel.equals(modelOf(entityModel.getAsJsonObject("fallback")))) {
         mismatches.add(entity + " fallback: " + baseModel);
       }
     }
 
     Assertions.assertTrue(
-        mismatches.isEmpty(),
-        "Run generateMobCaptureCardModel, item model is out of sync: " + mismatches);
+      mismatches.isEmpty(),
+      "Run generateMobCaptureCardModel, item model is out of sync: " + mismatches);
   }
 
   @Test
@@ -154,8 +155,8 @@ class MobCaptureCardItemModelTest {
       for (String model : models) {
         String[] namespaceAndPath = model.split(":", 2);
         Path modelFile =
-            RESOURCES.resolve(
-                "assets/" + namespaceAndPath[0] + "/models/" + namespaceAndPath[1] + ".json");
+          RESOURCES.resolve(
+            "assets/" + namespaceAndPath[0] + "/models/" + namespaceAndPath[1] + ".json");
         if (!Files.exists(modelFile)) {
           missingModels.add(model);
         }

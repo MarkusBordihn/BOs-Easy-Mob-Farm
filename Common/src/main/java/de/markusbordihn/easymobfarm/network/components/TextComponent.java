@@ -28,7 +28,8 @@ import net.minecraft.world.entity.player.Player;
 
 public class TextComponent {
 
-  private TextComponent() {}
+  private TextComponent() {
+  }
 
   public static MutableComponent getTextComponentRaw(final String text, final boolean translate) {
     if (translate) {
@@ -46,14 +47,14 @@ public class TextComponent {
   }
 
   public static MutableComponent getTranslatedBlockText(
-      final String translationKey, final int tierLevel) {
+    final String translationKey, final int tierLevel) {
     return getTranslatedTextRaw(Constants.BLOCK_PREFIX + translationKey, String.valueOf(tierLevel));
   }
 
   public static MutableComponent getTranslatedText(
-      final String translationKey, final int tierLevel, ChatFormatting chatFormatting) {
+    final String translationKey, final int tierLevel, ChatFormatting chatFormatting) {
     return getTranslatedTextRaw(Constants.TEXT_PREFIX + translationKey, String.valueOf(tierLevel))
-        .withStyle(chatFormatting);
+      .withStyle(chatFormatting);
   }
 
   public static MutableComponent getTranslatedText(final String translationKey, final float value) {
@@ -61,9 +62,9 @@ public class TextComponent {
   }
 
   public static MutableComponent getTranslatedText(
-      final String translationKey, final float value, ChatFormatting chatFormatting) {
+    final String translationKey, final float value, ChatFormatting chatFormatting) {
     return getTranslatedTextRaw(Constants.TEXT_PREFIX + translationKey, String.valueOf(value))
-        .withStyle(chatFormatting);
+      .withStyle(chatFormatting);
   }
 
   public static MutableComponent getTranslatedText(final String translationKey, final String data) {
@@ -71,21 +72,21 @@ public class TextComponent {
   }
 
   public static MutableComponent getTranslatedText(
-      final String translationKey, final String data, final String data2) {
+    final String translationKey, final String data, final String data2) {
     return getTranslatedTextRaw(Constants.TEXT_PREFIX + translationKey, data, data2);
   }
 
   public static MutableComponent getTranslatedText(
-      final String translationKey, final Component data) {
+    final String translationKey, final Component data) {
     return getTranslatedTextRaw(Constants.TEXT_PREFIX + translationKey, data);
   }
 
   public static MutableComponent getTranslatedText(
-      final String translationKey, final LivingEntity livingEntity, final Player player) {
+    final String translationKey, final LivingEntity livingEntity, final Player player) {
     return getTranslatedTextRaw(
-        Constants.TEXT_PREFIX + translationKey,
-        livingEntity.getDisplayName(),
-        player.getDisplayName());
+      Constants.TEXT_PREFIX + translationKey,
+      livingEntity.getDisplayName(),
+      player.getDisplayName());
   }
 
   public static MutableComponent getTranslatedConfigText(final String translationKey) {
@@ -93,7 +94,7 @@ public class TextComponent {
   }
 
   public static MutableComponent getTranslatedConfigText(
-      final String translationKey, final String data) {
+    final String translationKey, final String data) {
     return getTranslatedTextRaw(Constants.TEXT_CONFIG_PREFIX + translationKey, data);
   }
 
@@ -106,7 +107,7 @@ public class TextComponent {
   }
 
   public static MutableComponent getTranslatedTextRaw(
-      final String translationKey, final String data) {
+    final String translationKey, final String data) {
     return Component.translatable(translationKey, data);
   }
 
@@ -115,17 +116,17 @@ public class TextComponent {
   }
 
   public static MutableComponent getTranslatedTextRaw(
-      final String translationKey, final String data, final String data2) {
+    final String translationKey, final String data, final String data2) {
     return Component.translatable(translationKey, data, data2);
   }
 
   public static MutableComponent getTranslatedTextRaw(
-      final String translationKey, final Component data) {
+    final String translationKey, final Component data) {
     return Component.translatable(translationKey, data);
   }
 
   public static MutableComponent getTranslatedTextRaw(
-      final String translationKey, final Component data, final Component data2) {
+    final String translationKey, final Component data, final Component data2) {
     return Component.translatable(translationKey, data, data2);
   }
 

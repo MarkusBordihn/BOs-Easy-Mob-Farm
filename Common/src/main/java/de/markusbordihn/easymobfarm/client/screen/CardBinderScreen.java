@@ -45,8 +45,8 @@ import net.minecraft.world.level.storage.TagValueInput;
 public class CardBinderScreen<T extends CardBinderMenu> extends AbstractContainerScreen<T> {
 
   private static final Identifier CHEST_GUI_TEXTURE =
-      Identifier.fromNamespaceAndPath(
-          Constants.MINECRAFT_PREFIX, "textures/gui/container/generic_54.png");
+    Identifier.fromNamespaceAndPath(
+      Constants.MINECRAFT_PREFIX, "textures/gui/container/generic_54.png");
 
   private static final int BOOK_WIDTH = 280;
   private static final int BOOK_HEIGHT = 160;
@@ -75,15 +75,15 @@ public class CardBinderScreen<T extends CardBinderMenu> extends AbstractContaine
 
     int navY = this.topPos + 130;
     prevPageButton =
-        Button.builder(Component.literal("<"), b -> changePage(-1))
-            .pos(this.leftPos + 15, navY)
-            .size(20, 20)
-            .build();
+      Button.builder(Component.literal("<"), b -> changePage(-1))
+        .pos(this.leftPos + 15, navY)
+        .size(20, 20)
+        .build();
     nextPageButton =
-        Button.builder(Component.literal(">"), b -> changePage(1))
-            .pos(this.leftPos + 105, navY)
-            .size(20, 20)
-            .build();
+      Button.builder(Component.literal(">"), b -> changePage(1))
+        .pos(this.leftPos + 105, navY)
+        .size(20, 20)
+        .build();
     this.addRenderableWidget(prevPageButton);
     this.addRenderableWidget(nextPageButton);
     updatePageButtons();
@@ -106,7 +106,7 @@ public class CardBinderScreen<T extends CardBinderMenu> extends AbstractContaine
 
   @Override
   public void extractRenderState(
-      GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
+    GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTicks) {
     this.renderBg(guiGraphics, partialTicks, mouseX, mouseY);
     super.extractRenderState(guiGraphics, mouseX, mouseY, partialTicks);
     this.renderRightPagePreview(guiGraphics, mouseX, mouseY);
@@ -114,7 +114,7 @@ public class CardBinderScreen<T extends CardBinderMenu> extends AbstractContaine
   }
 
   protected void renderBg(
-      GuiGraphicsExtractor guiGraphics, float partialTicks, int mouseX, int mouseY) {
+    GuiGraphicsExtractor guiGraphics, float partialTicks, int mouseX, int mouseY) {
     int x = this.leftPos;
     int y = this.topPos;
 
@@ -141,7 +141,9 @@ public class CardBinderScreen<T extends CardBinderMenu> extends AbstractContaine
     Minecraft mc = Minecraft.getInstance();
     for (int i = 0; i < CardBinderMenu.CONTAINER_SIZE; i++) {
       Slot slot = this.menu.getSlot(i);
-      if (!slot.isActive()) continue;
+      if (!slot.isActive()) {
+        continue;
+      }
       int sx = x + slot.x - 1;
       int sy = y + slot.y - 1;
 
@@ -163,7 +165,8 @@ public class CardBinderScreen<T extends CardBinderMenu> extends AbstractContaine
               bgColor = 0xFFD8C0E8;
               borderColor = 0xFF8040A0;
             }
-            default -> {}
+            default -> {
+            }
           }
         }
       }
@@ -176,22 +179,26 @@ public class CardBinderScreen<T extends CardBinderMenu> extends AbstractContaine
   }
 
   private void renderSelectedHighlight(GuiGraphicsExtractor guiGraphics, int x, int y) {
-    if (selectedSlotIndex < 0 || selectedSlotIndex >= CardBinderMenu.CONTAINER_SIZE) return;
+    if (selectedSlotIndex < 0 || selectedSlotIndex >= CardBinderMenu.CONTAINER_SIZE) {
+      return;
+    }
     Slot slot = this.menu.getSlot(selectedSlotIndex);
-    if (!slot.isActive() || !slot.hasItem()) return;
+    if (!slot.isActive() || !slot.hasItem()) {
+      return;
+    }
     guiGraphics.fill(x + slot.x - 1, y + slot.y - 1, x + slot.x + 17, y + slot.y + 17, 0x6055FFFF);
   }
 
   private void renderInventorySlotFrames(GuiGraphicsExtractor guiGraphics, int x, int y) {
     Graphics.blit(
-        guiGraphics,
-        CHEST_GUI_TEXTURE,
-        x + CardBinderMenu.PLAYER_INV_X - 8,
-        y + CardBinderMenu.PLAYER_INV_Y - 15,
-        0,
-        125,
-        176,
-        96);
+      guiGraphics,
+      CHEST_GUI_TEXTURE,
+      x + CardBinderMenu.PLAYER_INV_X - 8,
+      y + CardBinderMenu.PLAYER_INV_Y - 15,
+      0,
+      125,
+      176,
+      96);
   }
 
   @Override
@@ -200,14 +207,16 @@ public class CardBinderScreen<T extends CardBinderMenu> extends AbstractContaine
 
     int cardCount = 0;
     for (int i = 0; i < CardBinderMenu.CONTAINER_SIZE; i++) {
-      if (this.menu.getSlot(i).hasItem()) cardCount++;
+      if (this.menu.getSlot(i).hasItem()) {
+        cardCount++;
+      }
     }
     String countText = cardCount + "/" + CardBinderMenu.CONTAINER_SIZE;
     guiGraphics.text(this.font, countText, 128 - this.font.width(countText), 12, 0xFF808080, false);
 
     String pageText = (currentPage + 1) + "/" + (menu.getMaxPage() + 1);
     guiGraphics.text(
-        this.font, pageText, 70 - this.font.width(pageText) / 2, 136, COLOR_PAGE_TEXT, false);
+      this.font, pageText, 70 - this.font.width(pageText) / 2, 136, COLOR_PAGE_TEXT, false);
 
     renderCardInfo(guiGraphics);
   }
@@ -220,32 +229,38 @@ public class CardBinderScreen<T extends CardBinderMenu> extends AbstractContaine
       return;
     }
     Slot slot = this.menu.getSlot(selectedSlotIndex);
-    if (!slot.hasItem()) return;
+    if (!slot.hasItem()) {
+      return;
+    }
 
     ItemStack cardStack = slot.getItem();
-    if (mc.level == null) return;
+    if (mc.level == null) {
+      return;
+    }
     MobCaptureData data = MobCaptureManager.getMobCaptureData(cardStack, mc.level);
-    if (data == null) return;
+    if (data == null) {
+      return;
+    }
 
     int rightX = 155;
     drawWordWrap(
-        guiGraphics, cardStack.getHoverName().getString(), rightX, 14, 110, COLOR_PAGE_TEXT);
+      guiGraphics, cardStack.getHoverName().getString(), rightX, 14, 110, COLOR_PAGE_TEXT);
 
     int infoY = 110;
     if (data.rarity() != null) {
       int color =
-          switch (data.rarity()) {
-            case UNCOMMON -> 0xFF55FF55;
-            case RARE -> 0xFF5555FF;
-            case EPIC -> 0xFFAA00AA;
-            default -> 0xFF808080;
-          };
+        switch (data.rarity()) {
+          case UNCOMMON -> 0xFF55FF55;
+          case RARE -> 0xFF5555FF;
+          case EPIC -> 0xFFAA00AA;
+          default -> 0xFF808080;
+        };
       guiGraphics.text(this.font, data.rarity().name(), rightX, infoY, color, false);
       infoY += 11;
     }
     if (data.type() != null) {
       String typeText =
-          data.type().length() > 20 ? data.type().substring(0, 20) + "..." : data.type();
+        data.type().length() > 20 ? data.type().substring(0, 20) + "..." : data.type();
       guiGraphics.text(this.font, typeText, rightX, infoY, 0xFF808080, false);
       infoY += 11;
     }
@@ -261,7 +276,7 @@ public class CardBinderScreen<T extends CardBinderMenu> extends AbstractContaine
   }
 
   private void drawWordWrap(
-      GuiGraphicsExtractor guiGraphics, String text, int x, int y, int maxWidth, int color) {
+    GuiGraphicsExtractor guiGraphics, String text, int x, int y, int maxWidth, int color) {
     if (this.font.width(text) <= maxWidth) {
       guiGraphics.text(this.font, text, x, y, color, false);
       return;
@@ -290,7 +305,9 @@ public class CardBinderScreen<T extends CardBinderMenu> extends AbstractContaine
       }
     }
 
-    if (selectedSlotIndex < 0 || selectedSlotIndex >= CardBinderMenu.CONTAINER_SIZE) return;
+    if (selectedSlotIndex < 0 || selectedSlotIndex >= CardBinderMenu.CONTAINER_SIZE) {
+      return;
+    }
     Slot slot = this.menu.getSlot(selectedSlotIndex);
     if (!slot.hasItem()) {
       selectedSlotIndex = -1;
@@ -310,32 +327,36 @@ public class CardBinderScreen<T extends CardBinderMenu> extends AbstractContaine
       float yOffset = entityHeight < 1.5F ? 0.5F : 0.0625F;
 
       InventoryScreen.extractEntityInInventoryFollowsMouse(
-          guiGraphics,
-          entityAreaLeft,
-          entityAreaTop,
-          entityAreaRight,
-          entityAreaBottom,
-          scaledSize,
-          yOffset,
-          mouseX,
-          mouseY,
-          livingEntity);
+        guiGraphics,
+        entityAreaLeft,
+        entityAreaTop,
+        entityAreaRight,
+        entityAreaBottom,
+        scaledSize,
+        yOffset,
+        mouseX,
+        mouseY,
+        livingEntity);
     }
   }
 
   private void updatePreviewEntity(ItemStack cardStack) {
     int hash =
-        cardStack.isEmpty()
-            ? 0
-            : System.identityHashCode(cardStack.getItem()) + cardStack.getComponents().hashCode();
-    if (hash == previewEntityHash && previewEntity != null) return;
+      cardStack.isEmpty()
+        ? 0
+        : System.identityHashCode(cardStack.getItem()) + cardStack.getComponents().hashCode();
+    if (hash == previewEntityHash && previewEntity != null) {
+      return;
+    }
 
     if (previewEntity != null) {
       previewEntity.discard();
       previewEntity = null;
     }
     Minecraft mc = Minecraft.getInstance();
-    if (mc.level == null) return;
+    if (mc.level == null) {
+      return;
+    }
     MobCaptureData data = MobCaptureManager.getMobCaptureData(cardStack, mc.level);
     if (data != null && data.entityType() != null) {
       previewEntity = data.entityType().create(mc.level, EntitySpawnReason.EVENT);
@@ -344,8 +365,8 @@ public class CardBinderScreen<T extends CardBinderMenu> extends AbstractContaine
         if (data.hasData()) {
           try {
             previewEntity.load(
-                TagValueInput.create(
-                    ProblemReporter.DISCARDING, mc.level.registryAccess(), data.data()));
+              TagValueInput.create(
+                ProblemReporter.DISCARDING, mc.level.registryAccess(), data.data()));
           } catch (Exception ignored) {
           }
         }

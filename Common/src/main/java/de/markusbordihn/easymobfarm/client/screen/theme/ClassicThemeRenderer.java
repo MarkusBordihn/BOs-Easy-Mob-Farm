@@ -58,10 +58,11 @@ public final class ClassicThemeRenderer implements MobFarmScreenThemeRenderer {
   private static final int ENTITY_WINDOW_HEIGHT = 66;
   private static final int ENTITY_WINDOW_BORDER = 1;
 
-  private ClassicThemeRenderer() {}
+  private ClassicThemeRenderer() {
+  }
 
   private static void renderGroupLabel(
-      GuiGraphicsExtractor guiGraphics, Font font, String label, int centerX, int y, int maxWidth) {
+    GuiGraphicsExtractor guiGraphics, Font font, String label, int centerX, int y, int maxWidth) {
     Component text = Component.translatable(Constants.TEXT_PREFIX + "gui." + label);
     int width = font.width(text);
     float scale = Math.min(0.75F, (float) maxWidth / Math.max(1, width));
@@ -84,7 +85,7 @@ public final class ClassicThemeRenderer implements MobFarmScreenThemeRenderer {
   }
 
   private static void renderArrow(
-      GuiGraphicsExtractor guiGraphics, int x, int y, int rows, int color) {
+    GuiGraphicsExtractor guiGraphics, int x, int y, int rows, int color) {
     int centerX = x + ARROW_WIDTH / 2;
     for (int row = 0; row < rows; row++) {
       int halfWidth = arrowHalfWidth(row);
@@ -96,63 +97,63 @@ public final class ClassicThemeRenderer implements MobFarmScreenThemeRenderer {
   }
 
   private static void renderPanel(
-      GuiGraphicsExtractor guiGraphics, int x, int y, int width, int height) {
+    GuiGraphicsExtractor guiGraphics, int x, int y, int width, int height) {
     Graphics.blitNineSliced(
-        guiGraphics,
-        Constants.TEXTURE_GENERIC_54,
-        x,
-        y,
-        width,
-        height,
-        PANEL_SLICE_SIZE,
-        0,
-        0,
-        PANEL_TEXTURE_WIDTH,
-        PANEL_TEXTURE_HEIGHT,
-        PANEL_FLAT_BODY_TEXTURE_X,
-        PANEL_FLAT_BODY_TEXTURE_Y);
+      guiGraphics,
+      Constants.TEXTURE_GENERIC_54,
+      x,
+      y,
+      width,
+      height,
+      PANEL_SLICE_SIZE,
+      0,
+      0,
+      PANEL_TEXTURE_WIDTH,
+      PANEL_TEXTURE_HEIGHT,
+      PANEL_FLAT_BODY_TEXTURE_X,
+      PANEL_FLAT_BODY_TEXTURE_Y);
   }
 
   private static void renderSlotFrame(GuiGraphicsExtractor guiGraphics, int x, int y) {
     Graphics.blit(
-        guiGraphics,
-        Constants.TEXTURE_GENERIC_54,
-        x,
-        y,
-        SLOT_FRAME_TEXTURE_X,
-        SLOT_FRAME_TEXTURE_Y,
-        SLOT_FRAME_SIZE,
-        SLOT_FRAME_SIZE);
+      guiGraphics,
+      Constants.TEXTURE_GENERIC_54,
+      x,
+      y,
+      SLOT_FRAME_TEXTURE_X,
+      SLOT_FRAME_TEXTURE_Y,
+      SLOT_FRAME_SIZE,
+      SLOT_FRAME_SIZE);
   }
 
   @Override
   public void renderBackground(
-      GuiGraphicsExtractor guiGraphics, int leftPos, int topPos, boolean idle, List<Slot> slots) {
+    GuiGraphicsExtractor guiGraphics, int leftPos, int topPos, boolean idle, List<Slot> slots) {
     renderPanel(guiGraphics, leftPos + 40, topPos + 148, 176, 91);
     renderPanel(guiGraphics, leftPos + 10, topPos + 5, 234, 147);
     for (Slot slot : slots) {
       renderSlotFrame(
-          guiGraphics, leftPos + slot.x - SLOT_FRAME_BORDER, topPos + slot.y - SLOT_FRAME_BORDER);
+        guiGraphics, leftPos + slot.x - SLOT_FRAME_BORDER, topPos + slot.y - SLOT_FRAME_BORDER);
     }
     guiGraphics.fill(
-        leftPos + ENTITY_WINDOW_X,
-        topPos + ENTITY_WINDOW_Y,
-        leftPos + ENTITY_WINDOW_X + ENTITY_WINDOW_WIDTH,
-        topPos + ENTITY_WINDOW_Y + ENTITY_WINDOW_HEIGHT,
-        COLOR_FRAME);
+      leftPos + ENTITY_WINDOW_X,
+      topPos + ENTITY_WINDOW_Y,
+      leftPos + ENTITY_WINDOW_X + ENTITY_WINDOW_WIDTH,
+      topPos + ENTITY_WINDOW_Y + ENTITY_WINDOW_HEIGHT,
+      COLOR_FRAME);
     guiGraphics.fill(
-        leftPos + ENTITY_WINDOW_X + ENTITY_WINDOW_BORDER,
-        topPos + ENTITY_WINDOW_Y + ENTITY_WINDOW_BORDER,
-        leftPos + ENTITY_WINDOW_X + ENTITY_WINDOW_WIDTH - ENTITY_WINDOW_BORDER,
-        topPos + ENTITY_WINDOW_Y + ENTITY_WINDOW_HEIGHT - ENTITY_WINDOW_BORDER,
-        idle ? COLOR_ENTITY_WINDOW_IDLE : COLOR_ENTITY_WINDOW_WORKING);
+      leftPos + ENTITY_WINDOW_X + ENTITY_WINDOW_BORDER,
+      topPos + ENTITY_WINDOW_Y + ENTITY_WINDOW_BORDER,
+      leftPos + ENTITY_WINDOW_X + ENTITY_WINDOW_WIDTH - ENTITY_WINDOW_BORDER,
+      topPos + ENTITY_WINDOW_Y + ENTITY_WINDOW_HEIGHT - ENTITY_WINDOW_BORDER,
+      idle ? COLOR_ENTITY_WINDOW_IDLE : COLOR_ENTITY_WINDOW_WORKING);
 
     renderArrow(guiGraphics, leftPos + ARROW_X, topPos + ARROW_Y, ARROW_HEIGHT, COLOR_ARROW_TRACK);
   }
 
   @Override
   public void renderProgress(
-      GuiGraphicsExtractor guiGraphics, int leftPos, int topPos, float progress) {
+    GuiGraphicsExtractor guiGraphics, int leftPos, int topPos, float progress) {
     int filledRows = Math.round(ARROW_HEIGHT * Math.max(0.0F, Math.min(1.0F, progress)));
     renderArrow(guiGraphics, leftPos + ARROW_X, topPos + ARROW_Y, filledRows, COLOR_ARROW_FILL);
   }

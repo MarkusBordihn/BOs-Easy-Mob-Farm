@@ -26,7 +26,8 @@ import net.minecraft.world.item.ItemStack;
 
 public class MobCaptureCards {
 
-  private MobCaptureCards() {}
+  private MobCaptureCards() {
+  }
 
   public static List<ItemStack> createTabItems() {
     List<ItemStack> items = new ArrayList<>();

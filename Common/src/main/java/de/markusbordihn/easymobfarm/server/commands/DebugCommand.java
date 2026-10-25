@@ -31,41 +31,42 @@ import net.minecraft.server.permissions.Permissions;
 
 public class DebugCommand extends Command {
 
-  private DebugCommand() {}
+  private DebugCommand() {
+  }
 
   public static ArgumentBuilder<CommandSourceStack, ?> register() {
     return Commands.literal("debug")
-        .requires(cs -> cs.permissions().hasPermission(Permissions.COMMANDS_GAMEMASTER))
-        .then(
-            Commands.literal("log")
-                .then(
-                    Commands.argument("enable", BoolArgumentType.bool())
-                        .executes(
-                            context ->
-                                setDebug(
-                                    context.getSource(),
-                                    BoolArgumentType.getBool(context, "enable")))));
+      .requires(cs -> cs.permissions().hasPermission(Permissions.COMMANDS_GAMEMASTER))
+      .then(
+        Commands.literal("log")
+          .then(
+            Commands.argument("enable", BoolArgumentType.bool())
+              .executes(
+                context ->
+                  setDebug(
+                    context.getSource(),
+                    BoolArgumentType.getBool(context, "enable")))));
   }
 
   public static int setDebug(CommandSourceStack context, boolean enable) {
     if (enable) {
       sendSuccessMessage(
-          context,
-          "► Enable debug for "
-              + Constants.MOD_NAME
-              + ", please check debug.log for the full output.",
-          ChatFormatting.GREEN);
+        context,
+        "► Enable debug for "
+          + Constants.MOD_NAME
+          + ", please check debug.log for the full output.",
+        ChatFormatting.GREEN);
       sendSuccessMessage(
-          context,
-          "> Use '/" + Constants.MOD_COMMAND + " debug false' to disable the debug!",
-          ChatFormatting.WHITE);
+        context,
+        "> Use '/" + Constants.MOD_COMMAND + " debug false' to disable the debug!",
+        ChatFormatting.WHITE);
     } else {
       sendSuccessMessage(
-          context, "■ Disable debug for " + Constants.MOD_NAME + "!", ChatFormatting.RED);
+        context, "■ Disable debug for " + Constants.MOD_NAME + "!", ChatFormatting.RED);
       sendSuccessMessage(
-          context,
-          "> Please check the latest.log and/or debug.log for the full output.",
-          ChatFormatting.WHITE);
+        context,
+        "> Please check the latest.log and/or debug.log for the full output.",
+        ChatFormatting.WHITE);
     }
     DebugManager.enableDebugLevel(enable);
     return Command.SINGLE_SUCCESS;

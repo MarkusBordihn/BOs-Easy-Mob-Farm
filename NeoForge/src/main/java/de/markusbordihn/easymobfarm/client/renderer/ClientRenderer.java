@@ -30,14 +30,15 @@ public class ClientRenderer {
 
   public static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  protected ClientRenderer() {}
+  protected ClientRenderer() {
+  }
 
   public static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
     log.debug("{} Block Entity Renderers ...", Constants.LOG_REGISTER_PREFIX);
 
     event.registerBlockEntityRenderer(
-        ModBlocks.CREATIVE_MOB_FARM_ENTITY.get(), MobFarmBlockEntityRenderer::new);
+      ModBlocks.CREATIVE_MOB_FARM_ENTITY.get(), MobFarmBlockEntityRenderer::new);
     event.registerBlockEntityRenderer(
-        ModBlocks.MOB_FARM_ENTITY.get(), MobFarmBlockEntityRenderer::new);
+      ModBlocks.MOB_FARM_ENTITY.get(), MobFarmBlockEntityRenderer::new);
   }
 }

@@ -23,7 +23,7 @@ import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.minecraft.resources.Identifier;
 
 public class MobCaptureCardResourceManagerWrapper extends MobCaptureCardResourceManager
-    implements IdentifiableResourceReloadListener {
+  implements IdentifiableResourceReloadListener {
 
   public MobCaptureCardResourceManagerWrapper() {
     super();

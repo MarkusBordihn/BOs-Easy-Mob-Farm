@@ -19,20 +19,26 @@
 
 package de.markusbordihn.easymobfarm.data.capture;
 
+import io.netty.buffer.Unpooled;
 import net.minecraft.SharedConstants;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.server.Bootstrap;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.item.Rarity;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class MobCaptureDataTest {
 
   private static final int MAX_ID_LIMIT = 16777216;
+  private static final String UNINSTALLED_MOD_TYPE = "uninstalled_mod:dragon";
 
   @BeforeAll
   static void bootstrap() {
@@ -64,22 +70,22 @@ class MobCaptureDataTest {
   @Test
   void differentTypesProduceDifferentIds() {
     Assertions.assertNotEquals(
-        card("minecraft:bee", null, false).getCardId(),
-        card("minecraft:cow", null, false).getCardId());
+      card("minecraft:bee", null, false).getCardId(),
+      card("minecraft:cow", null, false).getCardId());
   }
 
   @Test
   void foilChangesCardId() {
     Assertions.assertNotEquals(
-        card("minecraft:bee", null, false).getCardId(),
-        card("minecraft:bee", null, true).getCardId());
+      card("minecraft:bee", null, false).getCardId(),
+      card("minecraft:bee", null, true).getCardId());
   }
 
   @Test
   void variantChangesCardId() {
     Assertions.assertNotEquals(
-        card("minecraft:pillager", null, false).getCardId(),
-        card("minecraft:pillager", "leader", false).getCardId());
+      card("minecraft:pillager", null, false).getCardId(),
+      card("minecraft:pillager", "leader", false).getCardId());
   }
 
   @Test
@@ -93,15 +99,15 @@ class MobCaptureDataTest {
   @Test
   void codecKeepsEmptyDataCompound() {
     MobCaptureData data =
-        new MobCaptureData(
-            "Bee",
-            "minecraft:bee",
-            EntityTypes.BEE,
-            new CompoundTag(),
-            MobColor.NONE,
-            "",
-            Rarity.COMMON,
-            false);
+      new MobCaptureData(
+        "Bee",
+        "minecraft:bee",
+        EntityTypes.BEE,
+        new CompoundTag(),
+        MobColor.NONE,
+        "",
+        Rarity.COMMON,
+        false);
 
     Assertions.assertEquals(data, roundTrip(data));
   }
@@ -111,16 +117,80 @@ class MobCaptureDataTest {
     CompoundTag entityData = new CompoundTag();
     entityData.putString("id", "minecraft:sheep");
     MobCaptureData data =
-        new MobCaptureData(
-            "Sheep",
-            "minecraft:sheep",
-            EntityTypes.SHEEP,
-            entityData,
-            MobColor.BLACK,
-            "leader",
-            Rarity.RARE,
-            true);
+      new MobCaptureData(
+        "Sheep",
+        "minecraft:sheep",
+        EntityTypes.SHEEP,
+        entityData,
+        MobColor.BLACK,
+        "leader",
+        Rarity.RARE,
+        true);
 
     Assertions.assertEquals(data, roundTrip(data));
+  }
+
+  @Test
+  @DisplayName("Card of an uninstalled mod keeps its type through the codec")
+  void codecKeepsCardOfUninstalledMod() {
+    MobCaptureData data =
+      new MobCaptureData(
+        "Dragon",
+        UNINSTALLED_MOD_TYPE,
+        null,
+        new CompoundTag(),
+        MobColor.NONE,
+        "",
+        Rarity.COMMON,
+        false);
+
+    Assertions.assertEquals(UNINSTALLED_MOD_TYPE, roundTrip(data).type());
+  }
+
+  @Test
+  @DisplayName("Stored unregistered entity type decodes without error")
+  void codecDecodesUnregisteredEntityType() {
+    CompoundTag tag = new CompoundTag();
+    tag.putString("name", "Dragon");
+    tag.putString("type", UNINSTALLED_MOD_TYPE);
+    tag.putString("entityType", UNINSTALLED_MOD_TYPE);
+
+    MobCaptureData data = MobCaptureData.CODEC.parse(NbtOps.INSTANCE, tag).getOrThrow();
+
+    Assertions.assertEquals(UNINSTALLED_MOD_TYPE, data.type());
+    Assertions.assertNull(data.entityType());
+  }
+
+  @Test
+  @DisplayName("Missing entity type is resolved from the stored type")
+  void codecResolvesMissingEntityTypeFromType() {
+    CompoundTag tag = new CompoundTag();
+    tag.putString("name", "Bee");
+    tag.putString("type", "minecraft:bee");
+
+    Assertions.assertEquals(
+      EntityTypes.BEE, MobCaptureData.CODEC.parse(NbtOps.INSTANCE, tag).getOrThrow().entityType());
+  }
+
+  @Test
+  @DisplayName("Card of an uninstalled mod survives network sync")
+  void streamCodecKeepsCardOfUninstalledMod() {
+    MobCaptureData data =
+      new MobCaptureData(
+        "Dragon",
+        UNINSTALLED_MOD_TYPE,
+        null,
+        new CompoundTag(),
+        MobColor.NONE,
+        "",
+        Rarity.COMMON,
+        false);
+    RegistryFriendlyByteBuf buffer =
+      new RegistryFriendlyByteBuf(
+        Unpooled.buffer(), RegistryAccess.fromRegistryOfRegistries(BuiltInRegistries.REGISTRY));
+
+    MobCaptureData.STREAM_CODEC.encode(buffer, data);
+
+    Assertions.assertEquals(data, MobCaptureData.STREAM_CODEC.decode(buffer));
   }
 }

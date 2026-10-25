@@ -34,7 +34,7 @@ public class ItemIconButton extends AbstractButton {
   private ItemStack icon;
 
   public ItemIconButton(
-      int x, int y, ItemStack icon, Component message, Consumer<ItemIconButton> onPress) {
+    int x, int y, ItemStack icon, Component message, Consumer<ItemIconButton> onPress) {
     super(x, y, SIZE, SIZE, message);
     this.icon = icon;
     this.onPress = onPress;
@@ -51,7 +51,7 @@ public class ItemIconButton extends AbstractButton {
 
   @Override
   protected void extractContents(
-      GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
+    GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY, float partialTick) {
     guiGraphics.item(this.icon, this.getX(), this.getY());
   }
 

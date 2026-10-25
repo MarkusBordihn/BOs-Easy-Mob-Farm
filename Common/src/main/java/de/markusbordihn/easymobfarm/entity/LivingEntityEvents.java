@@ -37,10 +37,11 @@ public class LivingEntityEvents {
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final Random RANDOM = new Random();
 
-  private LivingEntityEvents() {}
+  private LivingEntityEvents() {
+  }
 
   public static void handleLivingEntityDeathEvent(
-      LivingEntity livingEntity, DamageSource damageSource) {
+    LivingEntity livingEntity, DamageSource damageSource) {
     // Check if mob capture card drop is enabled.
     if (!MobCaptureCardConfig.dropMobCaptureCardOnKill) {
       return;
@@ -48,15 +49,15 @@ public class LivingEntityEvents {
 
     // Check if we require a player kill to drop the mob capture card.
     if (MobCaptureCardConfig.requirePlayerKill
-        && (damageSource.getEntity() == null || !(damageSource.getEntity() instanceof Player))) {
+      && (damageSource.getEntity() == null || !(damageSource.getEntity() instanceof Player))) {
       return;
     }
 
     // Check allow and deny list for drops.
     String entityName = BuiltInRegistries.ENTITY_TYPE.getKey(livingEntity.getType()).toString();
     if (MobCaptureCardConfig.mobCaptureCardKillDropDenyList.contains(entityName)
-        || (!MobCaptureCardConfig.mobCaptureCardKillDropAllowList.isEmpty()
-            && !MobCaptureCardConfig.mobCaptureCardKillDropAllowList.contains(entityName))) {
+      || (!MobCaptureCardConfig.mobCaptureCardKillDropAllowList.isEmpty()
+      && !MobCaptureCardConfig.mobCaptureCardKillDropAllowList.contains(entityName))) {
       log.debug("[Skip] Mob capture card kill drop for {}.", entityName);
       return;
     }

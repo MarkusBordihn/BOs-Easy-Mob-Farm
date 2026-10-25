@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.data.mobfarm;
 
 public class MobFarmDataEntry {
+
   public static final int BLOCK_POS_X = 0;
   public static final int BLOCK_POS_Y = 1;
   public static final int BLOCK_POS_Z = 2;
@@ -35,7 +36,8 @@ public class MobFarmDataEntry {
   public static final int BUFFER_MAX_SIZE = 12;
   public static final int REDSTONE_MODE = 13;
 
-  private MobFarmDataEntry() {}
+  private MobFarmDataEntry() {
+  }
 
   public static int getLastSlotIndex() {
     return REDSTONE_MODE;

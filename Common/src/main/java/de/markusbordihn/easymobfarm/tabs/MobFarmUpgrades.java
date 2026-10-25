@@ -27,7 +27,8 @@ import net.minecraft.world.item.ItemStack;
 
 public class MobFarmUpgrades {
 
-  private MobFarmUpgrades() {}
+  private MobFarmUpgrades() {
+  }
 
   public static List<ItemStack> createTabItems() {
     List<ItemStack> items = new ArrayList<>();

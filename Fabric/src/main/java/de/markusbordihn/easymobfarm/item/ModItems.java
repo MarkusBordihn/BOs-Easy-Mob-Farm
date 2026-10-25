@@ -58,7 +58,8 @@ public class ModItems {
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  private ModItems() {}
+  private ModItems() {
+  }
 
   public static void registerModItems() {
     log.debug("{} Mob Capture Card items ...", Constants.LOG_REGISTER_PREFIX);
@@ -84,19 +85,19 @@ public class ModItems {
     log.debug("{} Enhancement Catalyst items ...", Constants.LOG_REGISTER_PREFIX);
     registerItem(FrogCatalystEnhancementItem.ID_COLD, Items.FROG_CATALYST_COLD_ENHANCEMENT);
     registerItem(
-        FrogCatalystEnhancementItem.ID_TEMPERATE, Items.FROG_CATALYST_TEMPERATE_ENHANCEMENT);
+      FrogCatalystEnhancementItem.ID_TEMPERATE, Items.FROG_CATALYST_TEMPERATE_ENHANCEMENT);
     registerItem(FrogCatalystEnhancementItem.ID_WARM, Items.FROG_CATALYST_WARM_ENHANCEMENT);
     registerItem(FrogCatalystEnhancementItem.ID_WHITE, Items.FROG_CATALYST_WHITE_ENHANCEMENT);
     registerItem(FrogCatalystEnhancementItem.ID_ORANGE, Items.FROG_CATALYST_ORANGE_ENHANCEMENT);
     registerItem(FrogCatalystEnhancementItem.ID_MAGENTA, Items.FROG_CATALYST_MAGENTA_ENHANCEMENT);
     registerItem(
-        FrogCatalystEnhancementItem.ID_LIGHT_BLUE, Items.FROG_CATALYST_LIGHT_BLUE_ENHANCEMENT);
+      FrogCatalystEnhancementItem.ID_LIGHT_BLUE, Items.FROG_CATALYST_LIGHT_BLUE_ENHANCEMENT);
     registerItem(FrogCatalystEnhancementItem.ID_YELLOW, Items.FROG_CATALYST_YELLOW_ENHANCEMENT);
     registerItem(FrogCatalystEnhancementItem.ID_LIME, Items.FROG_CATALYST_LIME_ENHANCEMENT);
     registerItem(FrogCatalystEnhancementItem.ID_PINK, Items.FROG_CATALYST_PINK_ENHANCEMENT);
     registerItem(FrogCatalystEnhancementItem.ID_GRAY, Items.FROG_CATALYST_GRAY_ENHANCEMENT);
     registerItem(
-        FrogCatalystEnhancementItem.ID_LIGHT_GRAY, Items.FROG_CATALYST_LIGHT_GRAY_ENHANCEMENT);
+      FrogCatalystEnhancementItem.ID_LIGHT_GRAY, Items.FROG_CATALYST_LIGHT_GRAY_ENHANCEMENT);
     registerItem(FrogCatalystEnhancementItem.ID_CYAN, Items.FROG_CATALYST_CYAN_ENHANCEMENT);
     registerItem(FrogCatalystEnhancementItem.ID_PURPLE, Items.FROG_CATALYST_PURPLE_ENHANCEMENT);
     registerItem(FrogCatalystEnhancementItem.ID_BLUE, Items.FROG_CATALYST_BLUE_ENHANCEMENT);

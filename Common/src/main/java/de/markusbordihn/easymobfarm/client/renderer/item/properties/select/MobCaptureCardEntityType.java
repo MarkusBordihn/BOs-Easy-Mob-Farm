@@ -31,16 +31,16 @@ import net.minecraft.world.item.ItemStack;
 public record MobCaptureCardEntityType() implements SelectItemModelProperty<String> {
 
   public static final SelectItemModelProperty.Type<MobCaptureCardEntityType, String> TYPE =
-      SelectItemModelProperty.Type.create(
-          MapCodec.unit(MobCaptureCardEntityType::new), Codec.STRING);
+    SelectItemModelProperty.Type.create(
+      MapCodec.unit(MobCaptureCardEntityType::new), Codec.STRING);
 
   @Override
   public String get(
-      ItemStack itemStack,
-      ClientLevel clientLevel,
-      LivingEntity livingEntity,
-      int i,
-      ItemDisplayContext itemDisplayContext) {
+    ItemStack itemStack,
+    ClientLevel clientLevel,
+    LivingEntity livingEntity,
+    int i,
+    ItemDisplayContext itemDisplayContext) {
     return MobCaptureCardItem.getEntityType(itemStack);
   }
 

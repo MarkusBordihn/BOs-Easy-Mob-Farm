@@ -34,16 +34,17 @@ public class ClientScreens {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  protected ClientScreens() {}
+  protected ClientScreens() {
+  }
 
   @SubscribeEvent
   public static void registerScreens(final FMLClientSetupEvent event) {
     log.debug("{} Client Screens ...", Constants.LOG_REGISTER_PREFIX);
 
     event.enqueueWork(
-        () -> {
-          MenuScreens.register(ModMenuTypes.MOB_FARM_MENU.get(), MobFarmScreenWrapper::new);
-          MenuScreens.register(ModMenuTypes.CARD_BINDER_MENU.get(), CardBinderScreenWrapper::new);
-        });
+      () -> {
+        MenuScreens.register(ModMenuTypes.MOB_FARM_MENU.get(), MobFarmScreenWrapper::new);
+        MenuScreens.register(ModMenuTypes.CARD_BINDER_MENU.get(), CardBinderScreenWrapper::new);
+      });
   }
 }

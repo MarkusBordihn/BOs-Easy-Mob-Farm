@@ -49,10 +49,10 @@ class LootPreviewManagerTest {
   @Test
   void cachedPreviewIsReturnedWithoutLevel() {
     LootPreviewCache.setServerCachedPreview(
-        EntityTypes.COW, List.of(new ItemStack(Items.LEATHER)), FARM_SAMPLE_ROLLS);
+      EntityTypes.COW, List.of(new ItemStack(Items.LEATHER)), FARM_SAMPLE_ROLLS);
 
     List<ItemStack> preview =
-        LootPreviewManager.getOrCompute(new MobCaptureData(EntityTypes.COW), null);
+      LootPreviewManager.getOrCompute(new MobCaptureData(EntityTypes.COW), null);
 
     Assertions.assertEquals(1, preview.size());
     Assertions.assertEquals(Items.LEATHER, preview.get(0).getItem());
@@ -66,7 +66,7 @@ class LootPreviewManagerTest {
   @Test
   void resetClearsCachedPreviews() {
     LootPreviewCache.setServerCachedPreview(
-        EntityTypes.COW, List.of(new ItemStack(Items.LEATHER)), FARM_SAMPLE_ROLLS);
+      EntityTypes.COW, List.of(new ItemStack(Items.LEATHER)), FARM_SAMPLE_ROLLS);
 
     LootPreviewManager.reset();
 

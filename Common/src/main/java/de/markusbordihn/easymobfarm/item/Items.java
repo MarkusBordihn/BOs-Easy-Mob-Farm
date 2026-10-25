@@ -60,47 +60,47 @@ public class Items {
   public static final Item EGG_COLLECTOR_ENHANCEMENT = new EggCollectorEnhancementItem();
   public static final Item EXPERIENCE_ENHANCEMENT = new ExperienceEnhancementItem();
   public static final Item FROG_CATALYST_COLD_ENHANCEMENT =
-      new FrogCatalystEnhancementItem(FrogCatalystType.COLD);
+    new FrogCatalystEnhancementItem(FrogCatalystType.COLD);
   public static final Item FROG_CATALYST_TEMPERATE_ENHANCEMENT =
-      new FrogCatalystEnhancementItem(FrogCatalystType.TEMPERATE);
+    new FrogCatalystEnhancementItem(FrogCatalystType.TEMPERATE);
   public static final Item FROG_CATALYST_WARM_ENHANCEMENT =
-      new FrogCatalystEnhancementItem(FrogCatalystType.WARM);
+    new FrogCatalystEnhancementItem(FrogCatalystType.WARM);
   public static final Item FROG_CATALYST_WHITE_ENHANCEMENT =
-      new FrogCatalystEnhancementItem(FrogCatalystType.WHITE);
+    new FrogCatalystEnhancementItem(FrogCatalystType.WHITE);
   public static final Item FROG_CATALYST_ORANGE_ENHANCEMENT =
-      new FrogCatalystEnhancementItem(FrogCatalystType.ORANGE);
+    new FrogCatalystEnhancementItem(FrogCatalystType.ORANGE);
   public static final Item FROG_CATALYST_MAGENTA_ENHANCEMENT =
-      new FrogCatalystEnhancementItem(FrogCatalystType.MAGENTA);
+    new FrogCatalystEnhancementItem(FrogCatalystType.MAGENTA);
   public static final Item FROG_CATALYST_LIGHT_BLUE_ENHANCEMENT =
-      new FrogCatalystEnhancementItem(FrogCatalystType.LIGHT_BLUE);
+    new FrogCatalystEnhancementItem(FrogCatalystType.LIGHT_BLUE);
   public static final Item FROG_CATALYST_YELLOW_ENHANCEMENT =
-      new FrogCatalystEnhancementItem(FrogCatalystType.YELLOW);
+    new FrogCatalystEnhancementItem(FrogCatalystType.YELLOW);
   public static final Item FROG_CATALYST_LIME_ENHANCEMENT =
-      new FrogCatalystEnhancementItem(FrogCatalystType.LIME);
+    new FrogCatalystEnhancementItem(FrogCatalystType.LIME);
   public static final Item FROG_CATALYST_PINK_ENHANCEMENT =
-      new FrogCatalystEnhancementItem(FrogCatalystType.PINK);
+    new FrogCatalystEnhancementItem(FrogCatalystType.PINK);
   public static final Item FROG_CATALYST_GRAY_ENHANCEMENT =
-      new FrogCatalystEnhancementItem(FrogCatalystType.GRAY);
+    new FrogCatalystEnhancementItem(FrogCatalystType.GRAY);
   public static final Item FROG_CATALYST_LIGHT_GRAY_ENHANCEMENT =
-      new FrogCatalystEnhancementItem(FrogCatalystType.LIGHT_GRAY);
+    new FrogCatalystEnhancementItem(FrogCatalystType.LIGHT_GRAY);
   public static final Item FROG_CATALYST_CYAN_ENHANCEMENT =
-      new FrogCatalystEnhancementItem(FrogCatalystType.CYAN);
+    new FrogCatalystEnhancementItem(FrogCatalystType.CYAN);
   public static final Item FROG_CATALYST_PURPLE_ENHANCEMENT =
-      new FrogCatalystEnhancementItem(FrogCatalystType.PURPLE);
+    new FrogCatalystEnhancementItem(FrogCatalystType.PURPLE);
   public static final Item FROG_CATALYST_BLUE_ENHANCEMENT =
-      new FrogCatalystEnhancementItem(FrogCatalystType.BLUE);
+    new FrogCatalystEnhancementItem(FrogCatalystType.BLUE);
   public static final Item FROG_CATALYST_BROWN_ENHANCEMENT =
-      new FrogCatalystEnhancementItem(FrogCatalystType.BROWN);
+    new FrogCatalystEnhancementItem(FrogCatalystType.BROWN);
   public static final Item FROG_CATALYST_GREEN_ENHANCEMENT =
-      new FrogCatalystEnhancementItem(FrogCatalystType.GREEN);
+    new FrogCatalystEnhancementItem(FrogCatalystType.GREEN);
   public static final Item FROG_CATALYST_RED_ENHANCEMENT =
-      new FrogCatalystEnhancementItem(FrogCatalystType.RED);
+    new FrogCatalystEnhancementItem(FrogCatalystType.RED);
   public static final Item FROG_CATALYST_BLACK_ENHANCEMENT =
-      new FrogCatalystEnhancementItem(FrogCatalystType.BLACK);
+    new FrogCatalystEnhancementItem(FrogCatalystType.BLACK);
 
   public static final Item HONEY_EXTRACTOR_ENHANCEMENT = new HoneyExtractorEnhancementItem();
   public static final Item HONEY_HARVESTER_FRAME_ENHANCEMENT =
-      new HoneyHarvesterFrameEnhancementItem();
+    new HoneyHarvesterFrameEnhancementItem();
   public static final Item KNIFE_ENHANCEMENT = new KnifeEnhancementItem();
   public static final Item LOOT_ENHANCEMENT = new LootEnhancementItem();
   public static final Item LUCK_ENHANCEMENT = new LuckEnhancementItem();
@@ -126,5 +126,6 @@ public class Items {
 
   public static final Item CARD_BINDER = new CardBinderItem();
 
-  private Items() {}
+  private Items() {
+  }
 }

@@ -43,21 +43,21 @@ public class MobFarmTemplateItem extends BlockItem {
 
   public MobFarmTemplateItem(String tierLevel, Block block) {
     this(
-        tierLevel,
-        block,
-        new Properties()
-            .useBlockDescriptionPrefix()
-            .setId(
-                ResourceKey.create(
-                    Registries.ITEM,
-                    Identifier.fromNamespaceAndPath(
-                        Constants.MOD_ID,
-                        switch (tierLevel) {
-                          case ID_TIER_1 -> ID_TIER_1;
-                          case ID_TIER_2 -> ID_TIER_2;
-                          case ID_TIER_3 -> ID_TIER_3;
-                          default -> ID_TIER_0;
-                        }))));
+      tierLevel,
+      block,
+      new Properties()
+        .useBlockDescriptionPrefix()
+        .setId(
+          ResourceKey.create(
+            Registries.ITEM,
+            Identifier.fromNamespaceAndPath(
+              Constants.MOD_ID,
+              switch (tierLevel) {
+                case ID_TIER_1 -> ID_TIER_1;
+                case ID_TIER_2 -> ID_TIER_2;
+                case ID_TIER_3 -> ID_TIER_3;
+                default -> ID_TIER_0;
+              }))));
   }
 
   public MobFarmTemplateItem(String tierLevel, Block block, Properties properties) {
@@ -67,25 +67,25 @@ public class MobFarmTemplateItem extends BlockItem {
 
   @Override
   public void appendHoverText(
-      ItemStack itemStack,
-      TooltipContext tooltipContext,
-      TooltipDisplay tooltipDisplay,
-      Consumer<Component> tooltipConsumer,
-      TooltipFlag tooltipFlag) {
+    ItemStack itemStack,
+    TooltipContext tooltipContext,
+    TooltipDisplay tooltipDisplay,
+    Consumer<Component> tooltipConsumer,
+    TooltipFlag tooltipFlag) {
     tooltipConsumer.accept(
-        TextComponent.getTranslatedText("mob_farm_template").withStyle(ChatFormatting.YELLOW));
+      TextComponent.getTranslatedText("mob_farm_template").withStyle(ChatFormatting.YELLOW));
 
     // Add Tier Level to tooltip
     Component tierLevelText =
-        switch (tierLevel) {
-          case ID_TIER_1 -> TextComponent.getTranslatedText("tier_level", 1, ChatFormatting.GREEN);
-          case ID_TIER_2 -> TextComponent.getTranslatedText("tier_level", 2, ChatFormatting.YELLOW);
-          case ID_TIER_3 -> TextComponent.getTranslatedText("tier_level", 3, ChatFormatting.RED);
-          default -> TextComponent.getTranslatedText("tier_level", 0, ChatFormatting.WHITE);
-        };
+      switch (tierLevel) {
+        case ID_TIER_1 -> TextComponent.getTranslatedText("tier_level", 1, ChatFormatting.GREEN);
+        case ID_TIER_2 -> TextComponent.getTranslatedText("tier_level", 2, ChatFormatting.YELLOW);
+        case ID_TIER_3 -> TextComponent.getTranslatedText("tier_level", 3, ChatFormatting.RED);
+        default -> TextComponent.getTranslatedText("tier_level", 0, ChatFormatting.WHITE);
+      };
     tooltipConsumer.accept(tierLevelText);
     tooltipConsumer.accept(
-        TextComponent.getTranslatedText("mob_farm_template_building_block_hint")
-            .withStyle(ChatFormatting.GRAY));
+      TextComponent.getTranslatedText("mob_farm_template_building_block_hint")
+        .withStyle(ChatFormatting.GRAY));
   }
 }

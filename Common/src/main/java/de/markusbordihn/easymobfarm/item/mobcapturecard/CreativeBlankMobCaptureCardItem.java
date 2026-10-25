@@ -42,10 +42,10 @@ public class CreativeBlankMobCaptureCardItem extends BlankMobCaptureCardItem {
 
   public CreativeBlankMobCaptureCardItem() {
     super(
-        new Properties()
-            .setId(
-                ResourceKey.create(
-                    Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
+      new Properties()
+        .setId(
+          ResourceKey.create(
+            Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
   }
 
   public CreativeBlankMobCaptureCardItem(Properties properties) {
@@ -54,7 +54,7 @@ public class CreativeBlankMobCaptureCardItem extends BlankMobCaptureCardItem {
 
   @Override
   public InteractionResult interactLivingEntity(
-      ItemStack itemStack, Player player, LivingEntity livingEntity, InteractionHand hand) {
+    ItemStack itemStack, Player player, LivingEntity livingEntity, InteractionHand hand) {
 
     // Ignore players and dead entities for capturing.
     if (livingEntity == null || livingEntity instanceof Player || livingEntity.isDeadOrDying()) {
@@ -76,7 +76,7 @@ public class CreativeBlankMobCaptureCardItem extends BlankMobCaptureCardItem {
 
     // Verify captured entity.
     MobCaptureData mobCaptureData =
-        MobCaptureManager.getMobCaptureData(mobCaptureCardItemStack, level);
+      MobCaptureManager.getMobCaptureData(mobCaptureCardItemStack, level);
     if (mobCaptureData == null || mobCaptureData.entityType() == null) {
       log.error("Failed to get mob capture data for entity {}", livingEntity);
       return InteractionResult.FAIL;
@@ -87,13 +87,13 @@ public class CreativeBlankMobCaptureCardItem extends BlankMobCaptureCardItem {
       ItemStack mobCaptureCardItemStackCopy = mobCaptureCardItemStack.copy();
       if (!player.addItem(mobCaptureCardItemStack)) {
         log.error(
-            "Failed to add mob capture card {} to player {}", mobCaptureCardItemStack, player);
+          "Failed to add mob capture card {} to player {}", mobCaptureCardItemStack, player);
         return InteractionResult.FAIL;
       } else {
         log.info(
-            "Added mob capture card {} to players inventory {}",
-            mobCaptureCardItemStackCopy,
-            player);
+          "Added mob capture card {} to players inventory {}",
+          mobCaptureCardItemStackCopy,
+          player);
       }
     } else {
       player.setItemInHand(hand, mobCaptureCardItemStack);

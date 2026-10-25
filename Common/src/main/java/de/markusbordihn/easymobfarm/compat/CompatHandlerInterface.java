@@ -32,22 +32,22 @@ public interface CompatHandlerInterface {
 
   default void register() {
     CompatConstants.MOD_FARMERS_DELIGHT_LOADED =
-        isModLoaded(CompatConstants.MOD_FARMERS_DELIGHT_ID);
+      isModLoaded(CompatConstants.MOD_FARMERS_DELIGHT_ID);
     logFoundMod(
-        CompatConstants.MOD_FARMERS_DELIGHT_NAME,
-        CompatConstants.MOD_FARMERS_DELIGHT_ID,
-        CompatConstants.MOD_FARMERS_DELIGHT_LOADED);
+      CompatConstants.MOD_FARMERS_DELIGHT_NAME,
+      CompatConstants.MOD_FARMERS_DELIGHT_ID,
+      CompatConstants.MOD_FARMERS_DELIGHT_LOADED);
 
     CompatConstants.MOD_JEI_LOADED = isModLoaded(CompatConstants.MOD_JEI_ID);
     logFoundMod(
-        CompatConstants.MOD_JEI_NAME, CompatConstants.MOD_JEI_ID, CompatConstants.MOD_JEI_LOADED);
+      CompatConstants.MOD_JEI_NAME, CompatConstants.MOD_JEI_ID, CompatConstants.MOD_JEI_LOADED);
 
     CompatConstants.MOD_SWAMPIER_SWAMPS_LOADED =
-        isModLoaded(CompatConstants.MOD_SWAMPIER_SWAMPS_ID);
+      isModLoaded(CompatConstants.MOD_SWAMPIER_SWAMPS_ID);
     logFoundMod(
-        CompatConstants.MOD_SWAMPIER_SWAMPS_NAME,
-        CompatConstants.MOD_SWAMPIER_SWAMPS_ID,
-        CompatConstants.MOD_SWAMPIER_SWAMPS_LOADED);
+      CompatConstants.MOD_SWAMPIER_SWAMPS_NAME,
+      CompatConstants.MOD_SWAMPIER_SWAMPS_ID,
+      CompatConstants.MOD_SWAMPIER_SWAMPS_LOADED);
   }
 
   default void onMobCaptureCardDefinitionsSynced() {

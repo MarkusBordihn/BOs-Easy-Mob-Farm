@@ -24,7 +24,8 @@ import net.minecraft.client.Minecraft;
 
 public class ClientEventHandler {
 
-  private ClientEventHandler() {}
+  private ClientEventHandler() {
+  }
 
   public static void registerClientEvents() {
     ClientLifecycleEvents.CLIENT_STARTED.register(ClientEventHandler::registerClientStarted);

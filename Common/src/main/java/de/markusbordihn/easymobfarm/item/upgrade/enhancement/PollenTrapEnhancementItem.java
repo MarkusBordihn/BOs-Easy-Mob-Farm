@@ -37,10 +37,10 @@ public class PollenTrapEnhancementItem extends EnhancementItem {
 
   public PollenTrapEnhancementItem() {
     this(
-        new Properties()
-            .setId(
-                ResourceKey.create(
-                    Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
+      new Properties()
+        .setId(
+          ResourceKey.create(
+            Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
   }
 
   public PollenTrapEnhancementItem(Properties properties) {
@@ -49,11 +49,11 @@ public class PollenTrapEnhancementItem extends EnhancementItem {
 
   @Override
   public void appendHoverText(
-      ItemStack itemStack,
-      TooltipContext tooltipContext,
-      TooltipDisplay tooltipDisplay,
-      Consumer<Component> tooltipConsumer,
-      TooltipFlag tooltipFlag) {
+    ItemStack itemStack,
+    TooltipContext tooltipContext,
+    TooltipDisplay tooltipDisplay,
+    Consumer<Component> tooltipConsumer,
+    TooltipFlag tooltipFlag) {
     addTooltip(tooltipConsumer, TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_PREFIX + ID));
   }
 }

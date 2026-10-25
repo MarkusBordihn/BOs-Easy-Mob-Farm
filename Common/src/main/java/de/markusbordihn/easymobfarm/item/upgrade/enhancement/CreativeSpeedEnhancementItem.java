@@ -36,10 +36,10 @@ public class CreativeSpeedEnhancementItem extends SpeedEnhancementItem {
 
   public CreativeSpeedEnhancementItem() {
     this(
-        new Properties()
-            .setId(
-                ResourceKey.create(
-                    Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
+      new Properties()
+        .setId(
+          ResourceKey.create(
+            Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
   }
 
   public CreativeSpeedEnhancementItem(Properties properties) {
@@ -57,14 +57,14 @@ public class CreativeSpeedEnhancementItem extends SpeedEnhancementItem {
 
   @Override
   public void appendHoverText(
-      ItemStack itemStack,
-      TooltipContext tooltipContext,
-      TooltipDisplay tooltipDisplay,
-      Consumer<Component> tooltipConsumer,
-      TooltipFlag tooltipFlag) {
+    ItemStack itemStack,
+    TooltipContext tooltipContext,
+    TooltipDisplay tooltipDisplay,
+    Consumer<Component> tooltipConsumer,
+    TooltipFlag tooltipFlag) {
     addTooltip(
-        tooltipConsumer,
-        TextComponent.getTranslatedTextRaw(
-            Constants.TOOLTIP_PREFIX + SpeedEnhancementItem.ID, this.getUpgradeSpeed()));
+      tooltipConsumer,
+      TextComponent.getTranslatedTextRaw(
+        Constants.TOOLTIP_PREFIX + SpeedEnhancementItem.ID, this.getUpgradeSpeed()));
   }
 }

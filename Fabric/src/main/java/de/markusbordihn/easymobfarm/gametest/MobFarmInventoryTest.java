@@ -34,19 +34,19 @@ public class MobFarmInventoryTest {
   @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
   public void testFullOutputBuffersLootWithoutLoss(GameTestHelper helper) {
     MobFarmInventoryTestHelper.testFullOutputBuffersLootWithoutLoss(
-        helper, ModBlocks.ANIMAL_PLAINS_FARM);
+      helper, ModBlocks.ANIMAL_PLAINS_FARM);
   }
 
   @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
   public void testPartialBufferTransferDoesNotDuplicate(GameTestHelper helper) {
     MobFarmInventoryTestHelper.testPartialBufferTransferDoesNotDuplicate(
-        helper, ModBlocks.ANIMAL_PLAINS_FARM);
+      helper, ModBlocks.ANIMAL_PLAINS_FARM);
   }
 
   @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
   public void testBreakingFarmDropsBufferedItems(GameTestHelper helper) {
     MobFarmInventoryTestHelper.testBreakingFarmDropsBufferedItems(
-        helper, ModBlocks.ANIMAL_PLAINS_FARM);
+      helper, ModBlocks.ANIMAL_PLAINS_FARM);
   }
 
   @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
@@ -57,13 +57,13 @@ public class MobFarmInventoryTest {
   @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
   public void testRightClickInsertsSingleItems(GameTestHelper helper) {
     MobFarmInventoryTestHelper.testRightClickInsertsSingleItems(
-        helper, ModBlocks.ANIMAL_PLAINS_FARM);
+      helper, ModBlocks.ANIMAL_PLAINS_FARM);
   }
 
   @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
   public void testHopperBelowPullsOnlyResults(GameTestHelper helper) {
     MobFarmInventoryTestHelper.testHopperBelowPullsOnlyResults(
-        helper, ModBlocks.ANIMAL_PLAINS_FARM);
+      helper, ModBlocks.ANIMAL_PLAINS_FARM);
   }
 
   @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)

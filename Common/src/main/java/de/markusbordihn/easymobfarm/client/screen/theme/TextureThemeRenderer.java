@@ -29,42 +29,43 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.inventory.Slot;
 
 public record TextureThemeRenderer(
-    Identifier workingTexture,
-    Identifier idleTexture,
-    ThemeProgressBar progressBar,
-    EntityPreview entityPreview)
-    implements MobFarmScreenThemeRenderer {
+  Identifier workingTexture,
+  Identifier idleTexture,
+  ThemeProgressBar progressBar,
+  EntityPreview entityPreview)
+  implements MobFarmScreenThemeRenderer {
 
   private static final int LAYOUT_WIDTH = 244;
   private static final int LAYOUT_HEIGHT = 243;
 
   public static Identifier guiTexture(String textureName) {
     return Identifier.fromNamespaceAndPath(
-        Constants.MOD_ID, "textures/gui/" + textureName + ".png");
+      Constants.MOD_ID, "textures/gui/" + textureName + ".png");
   }
 
   public static TextureThemeRenderer of(
-      String textureName, ThemeProgressBar progressBar, EntityPreview entityPreview) {
+    String textureName, ThemeProgressBar progressBar, EntityPreview entityPreview) {
     return new TextureThemeRenderer(
-        guiTexture(textureName), guiTexture(textureName + "_idle"), progressBar, entityPreview);
+      guiTexture(textureName), guiTexture(textureName + "_idle"), progressBar, entityPreview);
   }
 
   @Override
   public void renderBackground(
-      GuiGraphicsExtractor guiGraphics, int leftPos, int topPos, boolean idle, List<Slot> slots) {
+    GuiGraphicsExtractor guiGraphics, int leftPos, int topPos, boolean idle, List<Slot> slots) {
     Graphics.blit(
-        guiGraphics,
-        idle ? this.idleTexture : this.workingTexture,
-        leftPos,
-        topPos,
-        0,
-        0,
-        LAYOUT_WIDTH,
-        LAYOUT_HEIGHT);
+      guiGraphics,
+      idle ? this.idleTexture : this.workingTexture,
+      leftPos,
+      topPos,
+      0,
+      0,
+      LAYOUT_WIDTH,
+      LAYOUT_HEIGHT);
   }
 
   @Override
-  public void renderProgress(GuiGraphicsExtractor guiGraphics, int leftPos, int topPos, float progress) {
+  public void renderProgress(GuiGraphicsExtractor guiGraphics, int leftPos, int topPos,
+    float progress) {
     this.progressBar.render(guiGraphics, leftPos, topPos, progress);
   }
 
@@ -74,5 +75,6 @@ public record TextureThemeRenderer(
   }
 
   @Override
-  public void renderLabels(GuiGraphicsExtractor guiGraphics, Font font, Component title) {}
+  public void renderLabels(GuiGraphicsExtractor guiGraphics, Font font, Component title) {
+  }
 }

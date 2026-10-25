@@ -21,5 +21,6 @@ package de.markusbordihn.easymobfarm.client.renderer;
 
 public class ClientRenderer {
 
-  protected ClientRenderer() {}
+  protected ClientRenderer() {
+  }
 }

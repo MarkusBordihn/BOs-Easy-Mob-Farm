@@ -33,7 +33,8 @@ public class MobEntityTypeData {
   public static final String ENTITY_TYPE_TAG = "EntityTag";
   public static final String ID_TAG = "id";
 
-  private MobEntityTypeData() {}
+  private MobEntityTypeData() {
+  }
 
   public static String getEntityTypeName(LivingEntity livingEntity) {
     return getEntityTypeName(livingEntity.getType());
@@ -44,7 +45,7 @@ public class MobEntityTypeData {
   }
 
   public static String getEntityTypeName(
-      ItemStack itemStack, CompoundTag compoundTag, Level level) {
+    ItemStack itemStack, CompoundTag compoundTag, Level level) {
     if (itemStack == null || itemStack.isEmpty()) {
       return getEntityTypeName(compoundTag);
     }
@@ -69,7 +70,7 @@ public class MobEntityTypeData {
       return compoundTag.getString(TYPE_TAG).get();
     }
     if (compoundTag.contains(ENTITY_TYPE_TAG)
-        && compoundTag.getCompound(ENTITY_TYPE_TAG).isPresent()) {
+      && compoundTag.getCompound(ENTITY_TYPE_TAG).isPresent()) {
       CompoundTag entityTypeTag = compoundTag.getCompound(ENTITY_TYPE_TAG).get();
       if (entityTypeTag.contains(ID_TAG) && entityTypeTag.getString(ID_TAG).isPresent()) {
         return entityTypeTag.getString(ID_TAG).get();
@@ -80,7 +81,7 @@ public class MobEntityTypeData {
   }
 
   public static EntityType<?> getEntityType(
-      ItemStack itemStack, CompoundTag compoundTag, Level level) {
+    ItemStack itemStack, CompoundTag compoundTag, Level level) {
     if (itemStack == null || itemStack.isEmpty()) {
       return getEntityType(compoundTag);
     }
@@ -110,7 +111,7 @@ public class MobEntityTypeData {
       return null;
     }
     return BuiltInRegistries.ENTITY_TYPE
-        .getOptional(Identifier.tryParse(entityTypeName))
-        .orElse(null);
+      .getOptional(Identifier.tryParse(entityTypeName))
+      .orElse(null);
   }
 }

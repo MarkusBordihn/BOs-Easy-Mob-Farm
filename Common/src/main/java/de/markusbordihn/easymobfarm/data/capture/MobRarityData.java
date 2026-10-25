@@ -29,7 +29,8 @@ public class MobRarityData {
 
   public static final String RARITY_TAG = "Rarity";
 
-  private MobRarityData() {}
+  private MobRarityData() {
+  }
 
   public static Rarity getRarity(final EntityType<?> entityType) {
     if (entityType == null) {
@@ -38,7 +39,7 @@ public class MobRarityData {
 
     // Check for rarity based on entity type over the config file.
     MobCaptureCardDefinition mobCaptureCardDefinition =
-        MobCaptureCardDefinitionManager.get(entityType);
+      MobCaptureCardDefinitionManager.get(entityType);
     if (mobCaptureCardDefinition != null) {
       return mobCaptureCardDefinition.rarity();
     }

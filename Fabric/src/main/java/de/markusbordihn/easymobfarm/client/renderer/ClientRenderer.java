@@ -25,11 +25,12 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 
 public class ClientRenderer {
 
-  private ClientRenderer() {}
+  private ClientRenderer() {
+  }
 
   public static void registerBlockEntityRenderers() {
     BlockEntityRenderers.register(
-        ModBlocks.CREATIVE_MOB_FARM_ENTITY, MobFarmBlockEntityRenderer::new);
+      ModBlocks.CREATIVE_MOB_FARM_ENTITY, MobFarmBlockEntityRenderer::new);
     BlockEntityRenderers.register(ModBlocks.MOB_FARM_ENTITY, MobFarmBlockEntityRenderer::new);
   }
 }

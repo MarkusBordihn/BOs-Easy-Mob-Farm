@@ -55,7 +55,8 @@ public class MobCaptureManager {
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final String LOG_PREFIX = "[MobCaptureManager]";
 
-  private MobCaptureManager() {}
+  private MobCaptureManager() {
+  }
 
   public static ItemStack getMobCaptureCardItem(EntityType<?> entityType, Level level) {
     if (entityType == null || level == null) {
@@ -82,8 +83,8 @@ public class MobCaptureManager {
 
   public static ItemStack getMobCaptureCardItem(LivingEntity livingEntity) {
     if (livingEntity == null
-        || livingEntity instanceof Player
-        || livingEntity.level().isClientSide()) {
+      || livingEntity instanceof Player
+      || livingEntity.level().isClientSide()) {
       return null;
     }
 
@@ -98,29 +99,29 @@ public class MobCaptureManager {
     MobCaptureData mobCaptureData = new MobCaptureData(livingEntity);
     if (mobCaptureData.entityType() == null || mobCaptureData.data() == null) {
       log.debug(
-          "{} Unable to get mob capture data from living entity {}.", LOG_PREFIX, livingEntity);
+        "{} Unable to get mob capture data from living entity {}.", LOG_PREFIX, livingEntity);
       return null;
     }
 
     // Cleanup Mob Data for allowing better stackability.
     mobCaptureData =
-        mobCaptureData.withData(
-            MobEntityData.removeSafeToRemoveMobCaptureCardTags(mobCaptureData.data()));
+      mobCaptureData.withData(
+        MobEntityData.removeSafeToRemoveMobCaptureCardTags(mobCaptureData.data()));
 
     // Set mob capture data to mob capture card item.
     ItemStack itemStack = new ItemStack(mobCaptureCardItem);
     writeMobCaptureData(itemStack, mobCaptureData);
 
     log.debug(
-        "{} Captured mob {} with data:{}",
-        LOG_PREFIX,
-        mobCaptureData.entityType(),
-        mobCaptureData.data());
+      "{} Captured mob {} with data:{}",
+      LOG_PREFIX,
+      mobCaptureData.entityType(),
+      mobCaptureData.data());
     return itemStack;
   }
 
   public static boolean releaseMob(
-      MobCaptureData mobCaptureData, BlockPos blockPos, ServerLevel serverLevel) {
+    MobCaptureData mobCaptureData, BlockPos blockPos, ServerLevel serverLevel) {
     if (mobCaptureData == null || mobCaptureData.entityType() == null) {
       return false;
     }
@@ -137,36 +138,36 @@ public class MobCaptureManager {
     // Copy data from mobCaptureData to entity
     CompoundTag mobDataTag = mobCaptureData.data();
     ValueInput valueInput =
-        TagValueInput.create(
-            ProblemReporter.DISCARDING, entity.level().registryAccess(), mobDataTag);
+      TagValueInput.create(
+        ProblemReporter.DISCARDING, entity.level().registryAccess(), mobDataTag);
     entity.load(valueInput);
 
     // Get safe spawn position.
     BlockPos safeSpawnBlockPos = getSafeSpawnPos(serverLevel, blockPos);
     if (safeSpawnBlockPos == null) {
       log.warn(
-          "{} Unable to release mob {} with data:{} at block position {}.",
-          LOG_PREFIX,
-          entityType,
-          mobCaptureData.data(),
-          blockPos);
+        "{} Unable to release mob {} with data:{} at block position {}.",
+        LOG_PREFIX,
+        entityType,
+        mobCaptureData.data(),
+        blockPos);
       return false;
     }
 
     // Spawn entity at safe spawn position.
     entity.snapTo(
-        safeSpawnBlockPos.getX() + 0.5D,
-        safeSpawnBlockPos.getY(),
-        safeSpawnBlockPos.getZ() + 0.5D,
-        0.0F,
-        0.0F);
+      safeSpawnBlockPos.getX() + 0.5D,
+      safeSpawnBlockPos.getY(),
+      safeSpawnBlockPos.getZ() + 0.5D,
+      0.0F,
+      0.0F);
     serverLevel.addFreshEntity(entity);
     log.debug(
-        "{} Released mob {} with data:{} at block position {}.",
-        LOG_PREFIX,
-        entityType,
-        mobCaptureData.data(),
-        safeSpawnBlockPos);
+      "{} Released mob {} with data:{} at block position {}.",
+      LOG_PREFIX,
+      entityType,
+      mobCaptureData.data(),
+      safeSpawnBlockPos);
 
     return true;
   }
@@ -188,7 +189,7 @@ public class MobCaptureManager {
   }
 
   public static ItemStack createMobCaptureCard(
-      ItemLike itemLike, EntityType<?> entityType, String variant, MobColor mobColor) {
+    ItemLike itemLike, EntityType<?> entityType, String variant, MobColor mobColor) {
     if (itemLike == null || entityType == null) {
       return null;
     }
@@ -223,12 +224,12 @@ public class MobCaptureManager {
     // slots. Skip writing and log enough context to diagnose the source.
     if (mobCaptureData.entityType() == null) {
       log.error(
-          "{} Refusing to write mob capture data with null entity type to {} (type='{}', data={}). "
-              + "This would corrupt saving - please report this with the surrounding actions.",
-          LOG_PREFIX,
-          itemStack,
-          mobCaptureData.type(),
-          mobCaptureData.data());
+        "{} Refusing to write mob capture data with null entity type to {} (type='{}', data={}). "
+          + "This would corrupt saving - please report this with the surrounding actions.",
+        LOG_PREFIX,
+        itemStack,
+        mobCaptureData.type(),
+        mobCaptureData.data());
       return;
     }
 
@@ -246,8 +247,8 @@ public class MobCaptureManager {
     }
 
     MobCaptureData upgradedMobCaptureData =
-        mobCaptureData.withData(
-            MobEntityData.removeSafeToRemoveMobCaptureCardTags(mobCaptureData.data()));
+      mobCaptureData.withData(
+        MobEntityData.removeSafeToRemoveMobCaptureCardTags(mobCaptureData.data()));
     if (upgradedMobCaptureData.equals(mobCaptureData)) {
       return false;
     }
@@ -258,9 +259,9 @@ public class MobCaptureManager {
 
   public static boolean hasMobCaptureData(ItemStack itemStack) {
     return itemStack != null
-        && !itemStack.isEmpty()
-        && itemStack.has(DataComponents.MOB_CAPTURE_DATA)
-        && !itemStack.getOrDefault(DataComponents.MOB_CAPTURE_DATA, MobCaptureData.EMPTY).isEmpty();
+      && !itemStack.isEmpty()
+      && itemStack.has(DataComponents.MOB_CAPTURE_DATA)
+      && !itemStack.getOrDefault(DataComponents.MOB_CAPTURE_DATA, MobCaptureData.EMPTY).isEmpty();
   }
 
   public static MobCaptureData getMobCaptureData(ItemStack itemStack) {
@@ -283,11 +284,11 @@ public class MobCaptureManager {
 
     // Try to get mob capture data from item stack like spawn eggs or similar.
     return new MobCaptureData(
-        itemStack,
-        itemStack
-            .getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, CustomData.EMPTY)
-            .copyTag(),
-        level);
+      itemStack,
+      itemStack
+        .getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, CustomData.EMPTY)
+        .copyTag(),
+      level);
   }
 
   public static EntityType<?> getEntityType(ItemStack itemStack, Level level) {
@@ -300,11 +301,11 @@ public class MobCaptureManager {
     }
 
     return MobEntityTypeData.getEntityType(
-        itemStack,
-        itemStack
-            .getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, CustomData.EMPTY)
-            .copyTag(),
-        level);
+      itemStack,
+      itemStack
+        .getOrDefault(net.minecraft.core.component.DataComponents.CUSTOM_DATA, CustomData.EMPTY)
+        .copyTag(),
+      level);
   }
 
   public static boolean isSafeSpawnPos(Level level, BlockPos blockPos) {
@@ -328,7 +329,9 @@ public class MobCaptureManager {
 
     for (int dx = -1; dx <= 1; dx++) {
       for (int dz = -1; dz <= 1; dz++) {
-        if (dx == 0 && dz == 0) continue;
+        if (dx == 0 && dz == 0) {
+          continue;
+        }
 
         BlockPos nearbyPos = blockPos.offset(dx, 0, dz);
         if (isSafeSpawnPos(level, nearbyPos)) {

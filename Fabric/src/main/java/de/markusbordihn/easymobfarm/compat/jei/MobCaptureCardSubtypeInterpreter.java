@@ -28,7 +28,7 @@ import net.minecraft.world.item.ItemStack;
 public class MobCaptureCardSubtypeInterpreter implements ISubtypeInterpreter<ItemStack> {
 
   public static final MobCaptureCardSubtypeInterpreter INSTANCE =
-      new MobCaptureCardSubtypeInterpreter();
+    new MobCaptureCardSubtypeInterpreter();
 
   @Override
   public Object getSubtypeData(ItemStack itemStack, UidContext uidContext) {

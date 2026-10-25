@@ -29,7 +29,8 @@ import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 @EventBusSubscriber(value = Dist.CLIENT)
 public class MobFarmTemplates {
 
-  protected MobFarmTemplates() {}
+  protected MobFarmTemplates() {
+  }
 
   @SubscribeEvent
   public static void onCreativeTabBuild(BuildCreativeModeTabContentsEvent event) {

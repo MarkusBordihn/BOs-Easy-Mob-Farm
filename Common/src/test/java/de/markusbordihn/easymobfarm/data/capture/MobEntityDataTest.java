@@ -59,9 +59,9 @@ class MobEntityDataTest {
   @Test
   void adultPigsWithDifferentAgeAndUuidProduceIdenticalData() {
     CompoundTag firstPig =
-        MobEntityData.removeSafeToRemoveMobCaptureCardTags(pig(0, UUID.randomUUID()));
+      MobEntityData.removeSafeToRemoveMobCaptureCardTags(pig(0, UUID.randomUUID()));
     CompoundTag secondPig =
-        MobEntityData.removeSafeToRemoveMobCaptureCardTags(pig(6000, UUID.randomUUID()));
+      MobEntityData.removeSafeToRemoveMobCaptureCardTags(pig(6000, UUID.randomUUID()));
 
     Assertions.assertEquals(firstPig, secondPig);
     Assertions.assertFalse(firstPig.contains("Age"));
@@ -71,9 +71,9 @@ class MobEntityDataTest {
   @Test
   void babyPigsWithDifferentAgeProduceIdenticalData() {
     CompoundTag firstPiglet =
-        MobEntityData.removeSafeToRemoveMobCaptureCardTags(pig(-24000, UUID.randomUUID()));
+      MobEntityData.removeSafeToRemoveMobCaptureCardTags(pig(-24000, UUID.randomUUID()));
     CompoundTag secondPiglet =
-        MobEntityData.removeSafeToRemoveMobCaptureCardTags(pig(-1200, UUID.randomUUID()));
+      MobEntityData.removeSafeToRemoveMobCaptureCardTags(pig(-1200, UUID.randomUUID()));
 
     Assertions.assertEquals(firstPiglet, secondPiglet);
     Assertions.assertTrue(firstPiglet.getIntOr("Age", 0) < 0);
@@ -82,8 +82,8 @@ class MobEntityDataTest {
   @Test
   void babyDataDiffersFromAdultData() {
     Assertions.assertNotEquals(
-        MobEntityData.removeSafeToRemoveMobCaptureCardTags(pig(-1200, UUID.randomUUID())),
-        MobEntityData.removeSafeToRemoveMobCaptureCardTags(pig(0, UUID.randomUUID())));
+      MobEntityData.removeSafeToRemoveMobCaptureCardTags(pig(-1200, UUID.randomUUID())),
+      MobEntityData.removeSafeToRemoveMobCaptureCardTags(pig(0, UUID.randomUUID())));
   }
 
   @Test
@@ -94,8 +94,8 @@ class MobEntityDataTest {
     secondChicken.putInt("EggLayTime", 11999);
 
     Assertions.assertEquals(
-        MobEntityData.removeSafeToRemoveMobCaptureCardTags(firstChicken),
-        MobEntityData.removeSafeToRemoveMobCaptureCardTags(secondChicken));
+      MobEntityData.removeSafeToRemoveMobCaptureCardTags(firstChicken),
+      MobEntityData.removeSafeToRemoveMobCaptureCardTags(secondChicken));
   }
 
   @Test
@@ -104,7 +104,7 @@ class MobEntityDataTest {
     namedPig.putString("CustomName", "{\"text\":\"Rosi\"}");
 
     Assertions.assertTrue(
-        MobEntityData.removeSafeToRemoveMobCaptureCardTags(namedPig).contains("CustomName"));
+      MobEntityData.removeSafeToRemoveMobCaptureCardTags(namedPig).contains("CustomName"));
   }
 
   @Test
@@ -118,11 +118,11 @@ class MobEntityDataTest {
     filledInventory.put("Inventory", items);
 
     Assertions.assertFalse(
-        MobEntityData.removeSafeToRemoveMobCaptureCardTags(emptyInventory).contains("Inventory"));
+      MobEntityData.removeSafeToRemoveMobCaptureCardTags(emptyInventory).contains("Inventory"));
     Assertions.assertTrue(
-        MobEntityData.removeSafeToRemoveMobCaptureCardTags(filledInventory)
-            .getList("Inventory")
-            .isPresent());
+      MobEntityData.removeSafeToRemoveMobCaptureCardTags(filledInventory)
+        .getList("Inventory")
+        .isPresent());
   }
 
   @Test
@@ -132,6 +132,6 @@ class MobEntityDataTest {
     moddedPig.putInt("SomeModTimer", 17);
 
     Assertions.assertFalse(
-        MobEntityData.removeSafeToRemoveMobCaptureCardTags(moddedPig).contains("SomeModTimer"));
+      MobEntityData.removeSafeToRemoveMobCaptureCardTags(moddedPig).contains("SomeModTimer"));
   }
 }

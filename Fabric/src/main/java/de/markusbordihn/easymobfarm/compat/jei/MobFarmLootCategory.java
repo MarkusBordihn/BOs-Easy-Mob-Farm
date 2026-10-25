@@ -48,7 +48,7 @@ import net.minecraft.world.level.ItemLike;
 public class MobFarmLootCategory implements IRecipeCategory<MobFarmLootDisplay> {
 
   public static final IRecipeType<MobFarmLootDisplay> RECIPE_TYPE =
-      IRecipeType.create(Constants.MOD_ID, "mob_farm", MobFarmLootDisplay.class);
+    IRecipeType.create(Constants.MOD_ID, "mob_farm", MobFarmLootDisplay.class);
 
   private static final int WIDTH = 162;
   private static final int HEIGHT = 134;
@@ -87,13 +87,13 @@ public class MobFarmLootCategory implements IRecipeCategory<MobFarmLootDisplay> 
         mobFarmTypeNames.append(", ");
       }
       mobFarmTypeNames.append(
-          Component.translatable(Constants.BLOCK_PREFIX + mobFarmTypes.get(i).getId()));
+        Component.translatable(Constants.BLOCK_PREFIX + mobFarmTypes.get(i).getId()));
     }
     return mobFarmTypeNames;
   }
 
   private static List<MobFarmType> getMobFarmTypesWithBonusDrop(
-      final MobFarmLootDisplay mobFarmLootDisplay) {
+    final MobFarmLootDisplay mobFarmLootDisplay) {
     List<MobFarmType> mobFarmTypes = new ArrayList<>();
     for (BonusDrop bonusDrop : mobFarmLootDisplay.bonusDrops()) {
       for (MobFarmType mobFarmType : bonusDrop.mobFarmTypes()) {
@@ -109,20 +109,20 @@ public class MobFarmLootCategory implements IRecipeCategory<MobFarmLootDisplay> 
     List<Component> hints = new ArrayList<>();
     if (mobFarmLootDisplay.requiresKilledByPlayer()) {
       hints.add(
-          Component.translatable(Constants.TOOLTIP_FARM_PREFIX + "killed_by_player")
-              .withStyle(ChatFormatting.RED));
+        Component.translatable(Constants.TOOLTIP_FARM_PREFIX + "killed_by_player")
+          .withStyle(ChatFormatting.RED));
     }
     if (!mobFarmLootDisplay.bonusDrops().isEmpty()) {
       hints.add(
-          Component.translatable(
-                  Constants.TOOLTIP_FARM_PREFIX + "loot_bonus_other_farm",
-                  getMobFarmTypeNames(getMobFarmTypesWithBonusDrop(mobFarmLootDisplay)))
-              .withStyle(ChatFormatting.GOLD));
+        Component.translatable(
+            Constants.TOOLTIP_FARM_PREFIX + "loot_bonus_other_farm",
+            getMobFarmTypeNames(getMobFarmTypesWithBonusDrop(mobFarmLootDisplay)))
+          .withStyle(ChatFormatting.GOLD));
     }
     if (mobFarmLootDisplay.supportsKnifeEnhancement()) {
       hints.add(
-          Component.translatable(Constants.TEXT_PREFIX + "jei.knife_enhancement")
-              .withStyle(ChatFormatting.DARK_GREEN));
+        Component.translatable(Constants.TEXT_PREFIX + "jei.knife_enhancement")
+          .withStyle(ChatFormatting.DARK_GREEN));
     }
     return hints;
   }
@@ -154,107 +154,107 @@ public class MobFarmLootCategory implements IRecipeCategory<MobFarmLootDisplay> 
 
   @Override
   public void setRecipe(
-      final IRecipeLayoutBuilder builder,
-      final MobFarmLootDisplay mobFarmLootDisplay,
-      final IFocusGroup focusGroup) {
+    final IRecipeLayoutBuilder builder,
+    final MobFarmLootDisplay mobFarmLootDisplay,
+    final IFocusGroup focusGroup) {
     builder
-        .addSlot(RecipeIngredientRole.INPUT, 1, 1)
-        .setBackground(this.slotBackground, -1, -1)
-        .addItemStacks(mobFarmLootDisplay.inputItems());
+      .addSlot(RecipeIngredientRole.INPUT, 1, 1)
+      .setBackground(this.slotBackground, -1, -1)
+      .addItemStacks(mobFarmLootDisplay.inputItems());
 
     List<ItemStack> baseDrops = mobFarmLootDisplay.baseDrops();
     for (int i = 0; i < Math.min(baseDrops.size(), MAX_BASE_DROPS); i++) {
       builder
-          .addSlot(
-              RecipeIngredientRole.OUTPUT,
-              getDropX(i),
-              BASE_DROP_TOP + (i / DROPS_PER_ROW) * SLOT_SIZE)
-          .setBackground(this.slotBackground, -1, -1)
-          .add(baseDrops.get(i));
+        .addSlot(
+          RecipeIngredientRole.OUTPUT,
+          getDropX(i),
+          BASE_DROP_TOP + (i / DROPS_PER_ROW) * SLOT_SIZE)
+        .setBackground(this.slotBackground, -1, -1)
+        .add(baseDrops.get(i));
     }
 
     List<BonusDrop> bonusDrops = mobFarmLootDisplay.bonusDrops();
     for (int i = 0; i < Math.min(bonusDrops.size(), MAX_BONUS_DROPS); i++) {
       BonusDrop bonusDrop = bonusDrops.get(i);
       builder
-          .addSlot(RecipeIngredientRole.OUTPUT, getDropX(i), BONUS_DROP_TOP)
-          .setBackground(this.slotBackground, -1, -1)
-          .add(bonusDrop.item())
-          .addRichTooltipCallback(
-              (recipeSlotView, tooltip) ->
-                  tooltip.add(
-                      Component.translatable(
-                              Constants.TEXT_PREFIX + "jei.bonus_drop",
-                              getMobFarmTypeNames(bonusDrop.mobFarmTypes()))
-                          .withStyle(ChatFormatting.GOLD)));
+        .addSlot(RecipeIngredientRole.OUTPUT, getDropX(i), BONUS_DROP_TOP)
+        .setBackground(this.slotBackground, -1, -1)
+        .add(bonusDrop.item())
+        .addRichTooltipCallback(
+          (recipeSlotView, tooltip) ->
+            tooltip.add(
+              Component.translatable(
+                  Constants.TEXT_PREFIX + "jei.bonus_drop",
+                  getMobFarmTypeNames(bonusDrop.mobFarmTypes()))
+                .withStyle(ChatFormatting.GOLD)));
     }
   }
 
   @Override
   public void draw(
-      final MobFarmLootDisplay mobFarmLootDisplay,
-      final IRecipeSlotsView recipeSlotsView,
-      final GuiGraphicsExtractor guiGraphics,
-      final double mouseX,
-      final double mouseY) {
+    final MobFarmLootDisplay mobFarmLootDisplay,
+    final IRecipeSlotsView recipeSlotsView,
+    final GuiGraphicsExtractor guiGraphics,
+    final double mouseX,
+    final double mouseY) {
     Font font = Minecraft.getInstance().font;
 
     guiGraphics.text(
-        font,
-        mobFarmLootDisplay.entityType().getDescription(),
-        HEADER_TEXT_X,
-        TITLE_TOP,
-        TEXT_COLOR,
-        false);
+      font,
+      mobFarmLootDisplay.entityType().getDescription(),
+      HEADER_TEXT_X,
+      TITLE_TOP,
+      TEXT_COLOR,
+      false);
     guiGraphics.text(
-        font,
-        Component.translatable(
-            Constants.TEXT_PREFIX + "jei.processing_speed",
-            MobFarmBlockEntity.getProcessingSpeed(MobFarmTierLevel.TIER_0.getTierLevel()),
-            MobFarmBlockEntity.getProcessingSpeed(MobFarmTierLevel.TIER_3.getTierLevel())),
-        HEADER_TEXT_X,
-        PROCESSING_SPEED_TOP,
-        TEXT_COLOR,
-        false);
+      font,
+      Component.translatable(
+        Constants.TEXT_PREFIX + "jei.processing_speed",
+        MobFarmBlockEntity.getProcessingSpeed(MobFarmTierLevel.TIER_0.getTierLevel()),
+        MobFarmBlockEntity.getProcessingSpeed(MobFarmTierLevel.TIER_3.getTierLevel())),
+      HEADER_TEXT_X,
+      PROCESSING_SPEED_TOP,
+      TEXT_COLOR,
+      false);
 
     if (mobFarmLootDisplay.hasBaseDrops()) {
       guiGraphics.text(
-          font,
-          Component.translatable(Constants.TOOLTIP_FARM_PREFIX + "loot_base_drops"),
-          1,
-          BASE_DROP_LABEL_TOP,
-          TEXT_COLOR,
-          false);
+        font,
+        Component.translatable(Constants.TOOLTIP_FARM_PREFIX + "loot_base_drops"),
+        1,
+        BASE_DROP_LABEL_TOP,
+        TEXT_COLOR,
+        false);
     } else {
       drawWrappedText(
-          guiGraphics,
-          font,
-          List.of(
-              Component.translatable(Constants.TEXT_PREFIX + "jei.loot_preview_pending")
-                  .withStyle(ChatFormatting.DARK_GRAY)),
-          BASE_DROP_LABEL_TOP,
-          MAX_HINT_LINES);
+        guiGraphics,
+        font,
+        List.of(
+          Component.translatable(Constants.TEXT_PREFIX + "jei.loot_preview_pending")
+            .withStyle(ChatFormatting.DARK_GRAY)),
+        BASE_DROP_LABEL_TOP,
+        MAX_HINT_LINES);
     }
 
     if (!mobFarmLootDisplay.bonusDrops().isEmpty()) {
       guiGraphics.text(
-          font,
-          Component.translatable(Constants.TEXT_PREFIX + "jei.bonus_drops"),
-          1,
-          BONUS_DROP_LABEL_TOP,
-          TEXT_COLOR,
-          false);
+        font,
+        Component.translatable(Constants.TEXT_PREFIX + "jei.bonus_drops"),
+        1,
+        BONUS_DROP_LABEL_TOP,
+        TEXT_COLOR,
+        false);
     }
 
     drawWrappedText(guiGraphics, font, getHints(mobFarmLootDisplay), HINT_TOP, MAX_HINT_LINES);
   }
 
   private void drawWrappedText(
-      final GuiGraphicsExtractor guiGraphics,
-      final Font font,
-      final List<Component> lines,
-      final int top,
-      final int maxLines) {
+    final GuiGraphicsExtractor guiGraphics,
+    final Font font,
+    final List<Component> lines,
+    final int top,
+    final int maxLines) {
     int drawnLines = 0;
     for (Component line : lines) {
       for (FormattedCharSequence wrappedLine : font.split(line, WIDTH - 2)) {
@@ -263,7 +263,7 @@ public class MobFarmLootCategory implements IRecipeCategory<MobFarmLootDisplay> 
         }
 
         guiGraphics.text(
-            font, wrappedLine, 1, top + drawnLines * LINE_HEIGHT, TEXT_COLOR, false);
+          font, wrappedLine, 1, top + drawnLines * LINE_HEIGHT, TEXT_COLOR, false);
         drawnLines++;
       }
     }

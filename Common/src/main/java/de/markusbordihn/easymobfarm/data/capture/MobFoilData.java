@@ -29,7 +29,8 @@ public class MobFoilData {
 
   private static final Random RANDOM = new Random();
 
-  private MobFoilData() {}
+  private MobFoilData() {
+  }
 
   public static boolean getRandomFoil() {
     return RANDOM.nextFloat() <= MobCaptureCardConfig.mobCaptureCardFoilDropChance;

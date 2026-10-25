@@ -53,7 +53,7 @@ class SlotHintRendererTest {
 
   @Test
   void randomSeedsAlwaysProduceValidIndices() {
-    for (int seed : new int[] {Integer.MIN_VALUE, -1, 0, Integer.MAX_VALUE}) {
+    for (int seed : new int[]{Integer.MIN_VALUE, -1, 0, Integer.MAX_VALUE}) {
       SlotHintCycle cycle = new SlotHintCycle(0, seed);
       for (int slot = 0; slot < 75; slot++) {
         int index = cycle.index(slot, 6, 100000);
@@ -73,7 +73,7 @@ class SlotHintRendererTest {
     List<Slot> slots = List.of(enhancement, emptyEnhancement, filter, upgrade);
 
     Assertions.assertEquals(
-        Set.of(HintGroup.ENHANCEMENT, HintGroup.SLOT_UPGRADE), HintGroup.occupiedGroups(slots));
+      Set.of(HintGroup.ENHANCEMENT, HintGroup.SLOT_UPGRADE), HintGroup.occupiedGroups(slots));
 
     Mockito.when(enhancement.hasItem()).thenReturn(false);
     Assertions.assertEquals(Set.of(HintGroup.SLOT_UPGRADE), HintGroup.occupiedGroups(slots));

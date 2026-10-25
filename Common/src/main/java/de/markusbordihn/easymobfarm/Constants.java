@@ -39,9 +39,9 @@ public final class Constants {
   public static final String LOG_NAME = MOD_NAME;
   public static final String LOG_REGISTER_PREFIX = "Register " + MOD_NAME;
   public static final Identifier TEXTURE_DEMO_BACKGROUND =
-      Identifier.withDefaultNamespace("textures/gui/demo_background.png");
+    Identifier.withDefaultNamespace("textures/gui/demo_background.png");
   public static final Identifier TEXTURE_GENERIC_54 =
-      Identifier.withDefaultNamespace("textures/gui/container/generic_54.png");
+    Identifier.withDefaultNamespace("textures/gui/container/generic_54.png");
   public static final int FONT_COLOR_DEFAULT = 0xFF404040;
   public static final int FONT_COLOR_RED = 0xFFFF5555;
 
@@ -50,5 +50,6 @@ public final class Constants {
   public static Path GAME_DIR = Paths.get("").toAbsolutePath();
   public static Path CONFIG_DIR = GAME_DIR.resolve("config");
 
-  private Constants() {}
+  private Constants() {
+  }
 }

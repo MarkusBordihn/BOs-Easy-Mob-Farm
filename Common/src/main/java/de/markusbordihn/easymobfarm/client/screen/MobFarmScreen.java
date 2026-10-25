@@ -83,7 +83,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
   private static final int THEME_BUTTON_X = 219;
   private static final int THEME_BUTTON_Y = 126;
   private static final ItemStack REDSTONE_MODE_ICON_DISABLE_ON_SIGNAL =
-      new ItemStack(Items.REDSTONE_TORCH);
+    new ItemStack(Items.REDSTONE_TORCH);
   private static final ItemStack REDSTONE_MODE_ICON_ENABLE_ON_SIGNAL = new ItemStack(Items.LEVER);
   private static final ItemStack REDSTONE_MODE_ICON_IGNORE = new ItemStack(Items.BARRIER);
   private final SlotHintRenderer slotHints = new SlotHintRenderer();
@@ -107,7 +107,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
   }
 
   public static MutableComponent getLocalizedRemainingTimeComponent(
-      int totalTicks, int currentProgress, int speed, int bonus) {
+    int totalTicks, int currentProgress, int speed, int bonus) {
     int remainingTicks = Math.max(0, totalTicks - currentProgress);
     float ticksPerSecond = Math.max(1f, speed + bonus);
     float secondsRemaining = remainingTicks / ticksPerSecond;
@@ -115,12 +115,12 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
     int totalSeconds = Math.round(secondsRemaining);
     if (totalSeconds < 60) {
       return TextComponent.getTranslatedTextRaw(
-          Constants.TOOLTIP_FARM_PREFIX + "next_drop.seconds", totalSeconds);
+        Constants.TOOLTIP_FARM_PREFIX + "next_drop.seconds", totalSeconds);
     } else {
       int minutes = totalSeconds / 60;
       int seconds = totalSeconds % 60;
       return TextComponent.getTranslatedTextRaw(
-          Constants.TOOLTIP_FARM_PREFIX + "next_drop.full", new Object[] {minutes, seconds});
+        Constants.TOOLTIP_FARM_PREFIX + "next_drop.full", new Object[]{minutes, seconds});
     }
   }
 
@@ -134,26 +134,26 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
 
   private static MutableComponent getRedstoneModeMessage(RedstoneMode redstoneMode) {
     return TextComponent.getTranslatedTextRaw(
-        Constants.TOOLTIP_FARM_PREFIX + "redstone_mode_" + redstoneMode.getId());
+      Constants.TOOLTIP_FARM_PREFIX + "redstone_mode_" + redstoneMode.getId());
   }
 
   @Override
   protected void renderDefaultScreenBg(GuiGraphicsExtractor guiGraphics, int leftPos, int topPos) {
     int mobFarmStatus = this.menu.getMobFarmStatus();
     this.theme
-        .getRenderer()
-        .renderBackground(
-            guiGraphics,
-            leftPos,
-            topPos,
-            mobFarmStatus == MobFarmStatus.IDLE || mobFarmStatus == MobFarmStatus.ERROR,
-            this.menu.slots);
+      .getRenderer()
+      .renderBackground(
+        guiGraphics,
+        leftPos,
+        topPos,
+        mobFarmStatus == MobFarmStatus.IDLE || mobFarmStatus == MobFarmStatus.ERROR,
+        this.menu.slots);
     this.slotHints.render(guiGraphics, this.menu.slots, this.entity, this.leftPos, this.topPos);
   }
 
   @Override
   public void extractRenderState(
-      GuiGraphicsExtractor guiGraphics, int x, int y, float partialTicks) {
+    GuiGraphicsExtractor guiGraphics, int x, int y, float partialTicks) {
     this.xMouse = x;
     this.yMouse = y;
     super.extractRenderState(guiGraphics, x, y, partialTicks);
@@ -170,21 +170,21 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
     super.init();
     this.shownRedstoneMode = this.getMenu().getRedstoneMode();
     this.redstoneModeButton =
-        this.addRenderableWidget(
-            new ItemIconButton(
-                this.leftPos + STATUS_COLUMN_X,
-                this.topPos + REDSTONE_MODE_BUTTON_Y,
-                getRedstoneModeIcon(this.shownRedstoneMode),
-                getRedstoneModeMessage(this.shownRedstoneMode),
-                button -> this.toggleRedstoneMode()));
+      this.addRenderableWidget(
+        new ItemIconButton(
+          this.leftPos + STATUS_COLUMN_X,
+          this.topPos + REDSTONE_MODE_BUTTON_Y,
+          getRedstoneModeIcon(this.shownRedstoneMode),
+          getRedstoneModeMessage(this.shownRedstoneMode),
+          button -> this.toggleRedstoneMode()));
     this.themeButton =
-        this.addRenderableWidget(
-            new ItemIconButton(
-                this.leftPos + THEME_BUTTON_X,
-                this.topPos + THEME_BUTTON_Y,
-                this.theme.getIcon(),
-                this.getThemeMessage(),
-                this::switchTheme));
+      this.addRenderableWidget(
+        new ItemIconButton(
+          this.leftPos + THEME_BUTTON_X,
+          this.topPos + THEME_BUTTON_Y,
+          this.theme.getIcon(),
+          this.getThemeMessage(),
+          this::switchTheme));
   }
 
   @Override
@@ -201,7 +201,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
   private void toggleRedstoneMode() {
     if (this.minecraftInstance.gameMode != null) {
       this.minecraftInstance.gameMode.handleInventoryButtonClick(
-          this.menu.containerId, MobFarmMenu.TOGGLE_REDSTONE_MODE_BUTTON);
+        this.menu.containerId, MobFarmMenu.TOGGLE_REDSTONE_MODE_BUTTON);
     }
   }
 
@@ -214,8 +214,8 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
 
   private MutableComponent getThemeMessage() {
     return TextComponent.getTranslatedTextRaw(
-        Constants.TOOLTIP_FARM_PREFIX + "theme",
-        TextComponent.getTranslatedTextRaw(this.theme.getTranslationKey()));
+      Constants.TOOLTIP_FARM_PREFIX + "theme",
+      TextComponent.getTranslatedTextRaw(this.theme.getTranslationKey()));
   }
 
   @Override
@@ -232,17 +232,17 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
     if (mobFarmType != this.cachedFarmTypeIconType) {
       this.cachedFarmTypeIconType = mobFarmType;
       this.cachedFarmTypeIcon =
-          BuiltInRegistries.ITEM
-              .getOptional(Identifier.fromNamespaceAndPath(Constants.MOD_ID, mobFarmType.getId()))
-              .map(ItemStack::new)
-              .orElse(ItemStack.EMPTY);
+        BuiltInRegistries.ITEM
+          .getOptional(Identifier.fromNamespaceAndPath(Constants.MOD_ID, mobFarmType.getId()))
+          .map(ItemStack::new)
+          .orElse(ItemStack.EMPTY);
     }
     if (!this.cachedFarmTypeIcon.isEmpty()) {
       int iconX = this.leftPos + STATUS_COLUMN_X;
       int iconY = this.topPos + FARM_TYPE_ICON_Y;
       guiGraphics.item(this.cachedFarmTypeIcon, iconX, iconY);
       guiGraphics.itemDecorations(
-          this.font, this.cachedFarmTypeIcon, iconX, iconY, FARM_TYPE_ICON_BADGE);
+        this.font, this.cachedFarmTypeIcon, iconX, iconY, FARM_TYPE_ICON_BADGE);
     }
   }
 
@@ -251,8 +251,8 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
     guiGraphics.pose().pushMatrix();
     try {
       guiGraphics
-          .pose()
-          .translate(this.leftPos + STATUS_COLUMN_X + inset, this.topPos + LOOT_ICON_Y + inset);
+        .pose()
+        .translate(this.leftPos + STATUS_COLUMN_X + inset, this.topPos + LOOT_ICON_Y + inset);
       guiGraphics.pose().scale(LOOT_ICON_SCALE, LOOT_ICON_SCALE);
       guiGraphics.item(LOOT_ICON, 0, 0);
     } finally {
@@ -262,9 +262,9 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
 
   private void renderMobFarmProgress(GuiGraphicsExtractor guiGraphics) {
     float progress =
-        MobFarmConfig.farmProgressingTime > 0
-            ? (float) this.getMenu().getMobFarmProgress() / MobFarmConfig.farmProgressingTime
-            : 0.0F;
+      MobFarmConfig.farmProgressingTime > 0
+        ? (float) this.getMenu().getMobFarmProgress() / MobFarmConfig.farmProgressingTime
+        : 0.0F;
     this.theme.getRenderer().renderProgress(guiGraphics, this.leftPos, this.topPos, progress);
   }
 
@@ -287,9 +287,9 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
     this.entity = RendererManager.getEntity(blockPos);
     if (this.entity != null) {
       this.theme
-          .getRenderer()
-          .entityPreview()
-          .render(guiGraphics, this.entity, this.leftPos, this.topPos, this.xMouse, this.yMouse);
+        .getRenderer()
+        .entityPreview()
+        .render(guiGraphics, this.entity, this.leftPos, this.topPos, this.xMouse, this.yMouse);
     } else {
       if (this.entityExperience > 0) {
         this.entityExperience = 0;
@@ -303,7 +303,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
         int slotX = this.leftPos + slot.x;
         int slotY = this.topPos + slot.y;
         guiGraphics.fill(
-            slotX, slotY, slotX + SLOT_SIZE, slotY + SLOT_SIZE, LOCKED_SLOT_OVERLAY_COLOR);
+          slotX, slotY, slotX + SLOT_SIZE, slotY + SLOT_SIZE, LOCKED_SLOT_OVERLAY_COLOR);
       }
     }
   }
@@ -318,9 +318,9 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
     // Render tooltip for different kind of slots.
     for (Slot slot : this.menu.slots) {
       if (slot instanceof MobFarmSlot mobFarmSlot
-          && mobFarmSlot.getTooltip() != null
-          && isHovering(slot.x, slot.y, 16, 16, mouseX, mouseY)
-          && !slot.hasItem()) {
+        && mobFarmSlot.getTooltip() != null
+        && isHovering(slot.x, slot.y, 16, 16, mouseX, mouseY)
+        && !slot.hasItem()) {
         renderSlotTooltip(guiGraphics, mobFarmSlot, mouseX, mouseY);
       }
     }
@@ -337,92 +337,92 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
       List<Component> infoText = new ArrayList<>();
       if (mobFarmType != null) {
         infoText.add(
-            TextComponent.getTranslatedTextRaw(
-                    Constants.TOOLTIP_FARM_PREFIX + mobFarmType.getId(),
-                    String.valueOf(this.getMenu().getMobFarmTierLevel()))
-                .withStyle(
-                    switch (this.getMenu().getMobFarmTierLevel()) {
-                      case 1 -> ChatFormatting.GREEN;
-                      case 2 -> ChatFormatting.YELLOW;
-                      case 3 -> ChatFormatting.RED;
-                      default -> ChatFormatting.WHITE;
-                    }));
+          TextComponent.getTranslatedTextRaw(
+              Constants.TOOLTIP_FARM_PREFIX + mobFarmType.getId(),
+              String.valueOf(this.getMenu().getMobFarmTierLevel()))
+            .withStyle(
+              switch (this.getMenu().getMobFarmTierLevel()) {
+                case 1 -> ChatFormatting.GREEN;
+                case 2 -> ChatFormatting.YELLOW;
+                case 3 -> ChatFormatting.RED;
+                default -> ChatFormatting.WHITE;
+              }));
       }
       infoText.add(
-          TextComponent.getTranslatedTextRaw(
-              Constants.TOOLTIP_FARM_PREFIX + "tier",
-              new Object[] {this.getMenu().getMobFarmTierLevel()}));
+        TextComponent.getTranslatedTextRaw(
+          Constants.TOOLTIP_FARM_PREFIX + "tier",
+          new Object[]{this.getMenu().getMobFarmTierLevel()}));
       this.appendProgressInfo(infoText, isAdvanced);
 
       infoText.add(
-          TextComponent.getTranslatedText(
-              "tier_level_processing_speed",
-              MobFarmBlockEntity.getProcessingSpeed(
-                  this.getMenu().getMobFarmTierLevel(),
-                  this.getMenu().getMobFarmProgressionSpeedBonus())));
+        TextComponent.getTranslatedText(
+          "tier_level_processing_speed",
+          MobFarmBlockEntity.getProcessingSpeed(
+            this.getMenu().getMobFarmTierLevel(),
+            this.getMenu().getMobFarmProgressionSpeedBonus())));
       if (isAdvanced) {
         infoText.add(
-            TextComponent.getTranslatedTextRaw(
-                Constants.TOOLTIP_FARM_PREFIX + "progression_speed",
-                new Object[] {
-                  this.getMenu().getMobFarmProgressionSpeed(),
-                  this.getMenu().getMobFarmProgressionSpeedBonus()
-                }));
+          TextComponent.getTranslatedTextRaw(
+            Constants.TOOLTIP_FARM_PREFIX + "progression_speed",
+            new Object[]{
+              this.getMenu().getMobFarmProgressionSpeed(),
+              this.getMenu().getMobFarmProgressionSpeedBonus()
+            }));
       }
 
       infoText.add(
-          TextComponent.getTranslatedTextRaw(
-              Constants.TOOLTIP_FARM_PREFIX + "output_slots",
-              new Object[] {this.getMenu().getMobFarmNumberOfOutputSlots()}));
+        TextComponent.getTranslatedTextRaw(
+          Constants.TOOLTIP_FARM_PREFIX + "output_slots",
+          new Object[]{this.getMenu().getMobFarmNumberOfOutputSlots()}));
 
       // Add buffer information
       int bufferSize = this.getMenu().getBufferSize();
       int bufferMaxSize = this.getMenu().getBufferMaxSize();
       int bufferPercentage = bufferMaxSize > 0 ? (bufferSize * 100 / bufferMaxSize) : 0;
       ChatFormatting bufferColor =
-          bufferPercentage >= 80
-              ? ChatFormatting.RED
-              : bufferPercentage >= 50 ? ChatFormatting.YELLOW : ChatFormatting.GREEN;
+        bufferPercentage >= 80
+          ? ChatFormatting.RED
+          : bufferPercentage >= 50 ? ChatFormatting.YELLOW : ChatFormatting.GREEN;
       infoText.add(
-          TextComponent.getTranslatedTextRaw(
-                  Constants.TOOLTIP_FARM_PREFIX + "buffer",
-                  new Object[] {bufferPercentage, bufferSize, bufferMaxSize})
-              .withStyle(bufferColor));
+        TextComponent.getTranslatedTextRaw(
+            Constants.TOOLTIP_FARM_PREFIX + "buffer",
+            new Object[]{bufferPercentage, bufferSize, bufferMaxSize})
+          .withStyle(bufferColor));
 
       // Add additional information for special mob farms.
       if (mobFarmType == MobFarmType.LUCKY_DROP_FARM) {
         infoText.add(
-            TextComponent.getTranslatedTextRaw(
-                Constants.TOOLTIP_FARM_PREFIX + "lucky_drop_percentage",
-                new Object[] {MobFarmConfig.luckyDropFarmLuckPercentage}));
+          TextComponent.getTranslatedTextRaw(
+            Constants.TOOLTIP_FARM_PREFIX + "lucky_drop_percentage",
+            new Object[]{MobFarmConfig.luckyDropFarmLuckPercentage}));
         if (MobFarmConfig.luckyDropFarmLuckPercentage < 100) {
           infoText.add(
-              TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "lucky_drop_warn")
-                  .withStyle(ChatFormatting.RED));
+            TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "lucky_drop_warn")
+              .withStyle(ChatFormatting.RED));
         }
       }
 
       // Add entity information to the tooltip, if available.
       if (this.entity != null && this.getMenu().getMobFarmStatus() != MobFarmStatus.IDLE) {
         infoText.add(
-            TextComponent.getTranslatedTextRaw(
-                Constants.TOOLTIP_FARM_PREFIX + "entity_type",
-                new Object[] {this.entity.getType().toString()}));
+          TextComponent.getTranslatedTextRaw(
+            Constants.TOOLTIP_FARM_PREFIX + "entity_type",
+            new Object[]{this.entity.getType().toString()}));
 
         // Add Requires "killed_by_player" information, if available.
         MobCaptureCardDefinition mobCaptureCardDefinition =
-            MobCaptureCardDefinitionManager.get(this.entity.getType());
+          MobCaptureCardDefinitionManager.get(this.entity.getType());
         if (mobCaptureCardDefinition != null && mobCaptureCardDefinition.requiresKilledByPlayer()) {
           if (hasPlayerKillEnhancement()) {
             infoText.add(
-                TextComponent.getTranslatedTextRaw(
-                        Constants.TOOLTIP_FARM_PREFIX + "killed_by_player_fulfilled")
-                    .withStyle(ChatFormatting.GREEN));
+              TextComponent.getTranslatedTextRaw(
+                  Constants.TOOLTIP_FARM_PREFIX + "killed_by_player_fulfilled")
+                .withStyle(ChatFormatting.GREEN));
           } else {
             infoText.add(
-                TextComponent.getTranslatedTextRaw(
-                        Constants.TOOLTIP_FARM_PREFIX + "killed_by_player")
-                    .withStyle(ChatFormatting.RED));
+              TextComponent.getTranslatedTextRaw(
+                  Constants.TOOLTIP_FARM_PREFIX + "killed_by_player")
+                .withStyle(ChatFormatting.RED));
           }
         }
 
@@ -430,52 +430,52 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
         int capturedMobExperience = this.getMenu().getCapturedMobExperience();
         if (capturedMobExperience >= ExperienceEnhancementItem.MIN_EXPERIENCE_FOR_DROP) {
           infoText.add(
-              TextComponent.getTranslatedTextRaw(
-                      Constants.TOOLTIP_FARM_PREFIX + "experience",
-                      new Object[] {capturedMobExperience})
-                  .withStyle(ChatFormatting.GREEN));
+            TextComponent.getTranslatedTextRaw(
+                Constants.TOOLTIP_FARM_PREFIX + "experience",
+                new Object[]{capturedMobExperience})
+              .withStyle(ChatFormatting.GREEN));
         } else if (capturedMobExperience > 0) {
           infoText.add(
-              TextComponent.getTranslatedTextRaw(
-                      Constants.TOOLTIP_FARM_PREFIX + "low_experience",
-                      new Object[] {capturedMobExperience})
-                  .withStyle(ChatFormatting.YELLOW));
+            TextComponent.getTranslatedTextRaw(
+                Constants.TOOLTIP_FARM_PREFIX + "low_experience",
+                new Object[]{capturedMobExperience})
+              .withStyle(ChatFormatting.YELLOW));
         } else if (capturedMobExperience == 0) {
           infoText.add(
-              TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "no_experience")
-                  .withStyle(ChatFormatting.RED));
+            TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "no_experience")
+              .withStyle(ChatFormatting.RED));
         }
 
         // Add Bonus drop information, if available.
         List<ItemStack> bonusLootDrops =
-            MobFarmBonusConfig.getBonusDropEntries(
-                this.getMenu().getMobFarmType(),
-                this.getMenu().getMobFarmTierLevel(),
-                this.entity.getType());
+          MobFarmBonusConfig.getBonusDropEntries(
+            this.getMenu().getMobFarmType(),
+            this.getMenu().getMobFarmTierLevel(),
+            this.entity.getType());
 
         if (!bonusLootDrops.isEmpty()) {
           List<String> bonusLootDropNames =
-              bonusLootDrops.stream().map(drop -> drop.getDisplayName().getString()).toList();
+            bonusLootDrops.stream().map(drop -> drop.getDisplayName().getString()).toList();
           int itemsPerLine = 4;
           String firstChunk =
-              String.join(
-                  ", ",
-                  bonusLootDropNames.subList(0, Math.min(itemsPerLine, bonusLootDropNames.size())));
+            String.join(
+              ", ",
+              bonusLootDropNames.subList(0, Math.min(itemsPerLine, bonusLootDropNames.size())));
           if (bonusLootDropNames.size() > itemsPerLine) {
             firstChunk += ",";
           }
 
           infoText.add(
-              TextComponent.getTranslatedTextRaw(
-                      Constants.TOOLTIP_FARM_PREFIX + "bonus_drop", new Object[] {firstChunk})
-                  .withStyle(ChatFormatting.GREEN));
+            TextComponent.getTranslatedTextRaw(
+                Constants.TOOLTIP_FARM_PREFIX + "bonus_drop", new Object[]{firstChunk})
+              .withStyle(ChatFormatting.GREEN));
 
           for (int i = itemsPerLine; i < bonusLootDropNames.size(); i += itemsPerLine) {
             String nextChunk =
-                String.join(
-                    ", ",
-                    bonusLootDropNames.subList(
-                        i, Math.min(i + itemsPerLine, bonusLootDropNames.size())));
+              String.join(
+                ", ",
+                bonusLootDropNames.subList(
+                  i, Math.min(i + itemsPerLine, bonusLootDropNames.size())));
             if (i + itemsPerLine < bonusLootDropNames.size()) {
               nextChunk += ",";
             }
@@ -485,13 +485,13 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
 
         } else {
           infoText.add(
-              TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "no_bonus_drop")
-                  .withStyle(ChatFormatting.GRAY));
+            TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "no_bonus_drop")
+              .withStyle(ChatFormatting.GRAY));
         }
       }
       guiGraphics.setComponentTooltipForNextFrame(this.font, infoText, mouseX, mouseY);
     } else if (isHovering(STATUS_COLUMN_X, LOOT_ICON_Y, 16, 16, mouseX, mouseY)
-        && this.getMenu().getMobFarmStatus() != MobFarmStatus.IDLE) {
+      && this.getMenu().getMobFarmStatus() != MobFarmStatus.IDLE) {
       renderLootInfoTooltip(guiGraphics, mouseX, mouseY);
     } else if (this.redstoneModeButton.isHovered()) {
       renderRedstoneModeTooltip(guiGraphics, mouseX, mouseY);
@@ -502,10 +502,10 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
 
   private void appendProgressInfo(List<Component> infoText, boolean isAdvanced) {
     MutableComponent statusText =
+      TextComponent.getTranslatedTextRaw(
+        Constants.TOOLTIP_FARM_PREFIX + "status",
         TextComponent.getTranslatedTextRaw(
-            Constants.TOOLTIP_FARM_PREFIX + "status",
-            TextComponent.getTranslatedTextRaw(
-                Constants.TOOLTIP_FARM_PREFIX + "status_" + this.getMenu().getMobFarmStatus()));
+          Constants.TOOLTIP_FARM_PREFIX + "status_" + this.getMenu().getMobFarmStatus()));
     if (this.getMenu().getMobFarmStatus() == MobFarmStatus.ERROR) {
       statusText = statusText.withStyle(ChatFormatting.RED);
     }
@@ -513,50 +513,50 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
 
     if (this.getMenu().getMobFarmStatus() == MobFarmStatus.WORKING) {
       infoText.add(
-          getLocalizedRemainingTimeComponent(
-              MobFarmConfig.farmProgressingTime,
-              this.getMenu().getMobFarmProgress(),
-              this.getMenu().getMobFarmProgressionSpeed(),
-              this.getMenu().getMobFarmProgressionSpeedBonus()));
+        getLocalizedRemainingTimeComponent(
+          MobFarmConfig.farmProgressingTime,
+          this.getMenu().getMobFarmProgress(),
+          this.getMenu().getMobFarmProgressionSpeed(),
+          this.getMenu().getMobFarmProgressionSpeedBonus()));
     }
     if (isAdvanced) {
       infoText.add(
-          TextComponent.getTranslatedTextRaw(
-              Constants.TOOLTIP_FARM_PREFIX + "progress",
-              new Object[] {
-                this.getMenu().getMobFarmProgress(), MobFarmConfig.farmProgressingTime
-              }));
+        TextComponent.getTranslatedTextRaw(
+          Constants.TOOLTIP_FARM_PREFIX + "progress",
+          new Object[]{
+            this.getMenu().getMobFarmProgress(), MobFarmConfig.farmProgressingTime
+          }));
     }
   }
 
   private void renderThemeTooltip(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
     guiGraphics.setComponentTooltipForNextFrame(
-        this.font,
-        List.of(
-            this.themeButton.getMessage(),
-            TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "theme_hint")
-                .withStyle(ChatFormatting.GRAY)),
-        mouseX,
-        mouseY);
+      this.font,
+      List.of(
+        this.themeButton.getMessage(),
+        TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "theme_hint")
+          .withStyle(ChatFormatting.GRAY)),
+      mouseX,
+      mouseY);
   }
 
   private void renderRedstoneModeTooltip(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
     guiGraphics.setComponentTooltipForNextFrame(
-        this.font,
-        List.of(
-            this.redstoneModeButton.getMessage(),
-            TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "redstone_mode_hint")
-                .withStyle(ChatFormatting.GRAY)),
-        mouseX,
-        mouseY);
+      this.font,
+      List.of(
+        this.redstoneModeButton.getMessage(),
+        TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "redstone_mode_hint")
+          .withStyle(ChatFormatting.GRAY)),
+      mouseX,
+      mouseY);
   }
 
   private void renderLootInfoTooltip(GuiGraphicsExtractor guiGraphics, int mouseX, int mouseY) {
     // Use cached tooltip if entity and enhancements haven't changed
     int enhancementHash = computeEnhancementHash();
     if (cachedLootTooltip == null
-        || cachedLootEntity != this.entity
-        || cachedEnhancementHash != enhancementHash) {
+      || cachedLootEntity != this.entity
+      || cachedEnhancementHash != enhancementHash) {
       cachedLootTooltip = buildLootInfoTooltip();
       cachedLootEntity = this.entity;
       cachedEnhancementHash = enhancementHash;
@@ -568,7 +568,7 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
     int hash = 0;
     for (Slot menuSlot : this.menu.slots) {
       if (menuSlot instanceof de.markusbordihn.easymobfarm.menu.slots.EnhancementSlot
-          && menuSlot.hasItem()) {
+        && menuSlot.hasItem()) {
         hash = hash * 31 + menuSlot.getItem().getItem().hashCode();
       }
     }
@@ -577,8 +577,8 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
       hash = hash * 31 + this.entity.getType().hashCode();
       List<ItemStack> preview = LootPreviewCache.getLootPreview(this.entity.getType());
       hash =
-          hash * 31
-              + (LootPreviewCache.hasLootPreview(this.entity.getType()) ? preview.size() + 1 : 0);
+        hash * 31
+          + (LootPreviewCache.hasLootPreview(this.entity.getType()) ? preview.size() + 1 : 0);
     }
     return hash;
   }
@@ -586,37 +586,37 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
   private List<Component> buildLootInfoTooltip() {
     List<Component> lootInfo = new ArrayList<>();
     lootInfo.add(
-        TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "loot_info_title")
-            .withStyle(ChatFormatting.GOLD));
+      TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "loot_info_title")
+        .withStyle(ChatFormatting.GOLD));
 
     // If entity not yet loaded by renderer, show hint to re-open
     if (this.entity == null) {
       lootInfo.add(
-          TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "loot_preview_hint")
-              .withStyle(ChatFormatting.DARK_GRAY));
+        TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "loot_preview_hint")
+          .withStyle(ChatFormatting.DARK_GRAY));
       return lootInfo;
     }
 
     // Fetch capture card definition once for reuse
     MobCaptureCardDefinition mobCaptureCardDefinition =
-        MobCaptureCardDefinitionManager.get(this.entity.getType());
+      MobCaptureCardDefinitionManager.get(this.entity.getType());
 
     // Show base loot drops from server preview (EntityType-based cache, shared across all farms)
     if (!LootPreviewCache.hasLootPreview(this.entity.getType())) {
       lootInfo.add(
-          TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "loot_preview_hint")
-              .withStyle(ChatFormatting.DARK_GRAY));
+        TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "loot_preview_hint")
+          .withStyle(ChatFormatting.DARK_GRAY));
     } else {
       List<ItemStack> lootPreview = LootPreviewCache.getLootPreview(this.entity.getType());
       if (!lootPreview.isEmpty()) {
         lootInfo.add(
-            TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "loot_base_drops")
-                .withStyle(ChatFormatting.WHITE));
+          TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "loot_base_drops")
+            .withStyle(ChatFormatting.WHITE));
         for (ItemStack item : lootPreview) {
           lootInfo.add(
-              Component.literal("  \u2022 ")
-                  .append(item.getHoverName())
-                  .withStyle(ChatFormatting.GRAY));
+            Component.literal("  \u2022 ")
+              .append(item.getHoverName())
+              .withStyle(ChatFormatting.GRAY));
         }
       }
     }
@@ -626,32 +626,32 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
     int tierLevel = this.getMenu().getMobFarmTierLevel();
 
     List<MobFarmBonusConfig.BonusDrop> bonusDrops =
-        MobFarmBonusConfig.getConfiguredBonusDrops(mobFarmType, tierLevel, this.entity.getType());
+      MobFarmBonusConfig.getConfiguredBonusDrops(mobFarmType, tierLevel, this.entity.getType());
 
     for (MobFarmBonusConfig.BonusDrop drop : bonusDrops) {
       if (drop.chance() > 0 && drop.itemStack().count() > 0) {
         ItemStack dropStack = drop.itemStack().create();
         lootInfo.add(
-            TextComponent.getTranslatedTextRaw(
-                    Constants.TOOLTIP_FARM_PREFIX + "loot_bonus_chance",
-                    new Object[] {dropStack.getDisplayName(), drop.chance()})
-                .withStyle(ChatFormatting.GREEN));
+          TextComponent.getTranslatedTextRaw(
+              Constants.TOOLTIP_FARM_PREFIX + "loot_bonus_chance",
+              new Object[]{dropStack.getDisplayName(), drop.chance()})
+            .withStyle(ChatFormatting.GREEN));
       }
     }
 
     if (bonusDrops.isEmpty()) {
       for (MobFarmType bonusDropFarmType :
-          MobFarmBonusConfig.getMobFarmTypesWithBonusDrop(this.entity.getType())) {
+        MobFarmBonusConfig.getMobFarmTypesWithBonusDrop(this.entity.getType())) {
         if (bonusDropFarmType == mobFarmType) {
           continue;
         }
         lootInfo.add(
-            TextComponent.getTranslatedTextRaw(
-                    Constants.TOOLTIP_FARM_PREFIX + "loot_bonus_other_farm",
-                    new Object[] {
-                      Component.translatable(Constants.BLOCK_PREFIX + bonusDropFarmType.getId())
-                    })
-                .withStyle(ChatFormatting.YELLOW));
+          TextComponent.getTranslatedTextRaw(
+              Constants.TOOLTIP_FARM_PREFIX + "loot_bonus_other_farm",
+              new Object[]{
+                Component.translatable(Constants.BLOCK_PREFIX + bonusDropFarmType.getId())
+              })
+            .withStyle(ChatFormatting.YELLOW));
       }
     }
 
@@ -659,63 +659,63 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
     List<EnhancementItem> activeEnhancements = getActiveEnhancements();
     if (!activeEnhancements.isEmpty()) {
       lootInfo.add(
-          TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "active_enhancements")
-              .withStyle(ChatFormatting.AQUA));
+        TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "active_enhancements")
+          .withStyle(ChatFormatting.AQUA));
 
       for (EnhancementItem enhancement : activeEnhancements) {
         if (enhancement instanceof HoneyHarvesterFrameEnhancementItem
-            && this.entity instanceof Bee) {
+          && this.entity instanceof Bee) {
           lootInfo.add(
-              TextComponent.getTranslatedTextRaw(
-                      Constants.TOOLTIP_FARM_PREFIX + "loot_honey_harvester")
-                  .withStyle(ChatFormatting.YELLOW));
+            TextComponent.getTranslatedTextRaw(
+                Constants.TOOLTIP_FARM_PREFIX + "loot_honey_harvester")
+              .withStyle(ChatFormatting.YELLOW));
         } else if (enhancement instanceof HoneyExtractorEnhancementItem
-            && this.entity instanceof Bee) {
+          && this.entity instanceof Bee) {
           lootInfo.add(
-              TextComponent.getTranslatedTextRaw(
-                      Constants.TOOLTIP_FARM_PREFIX + "loot_honey_extractor")
-                  .withStyle(ChatFormatting.YELLOW));
+            TextComponent.getTranslatedTextRaw(
+                Constants.TOOLTIP_FARM_PREFIX + "loot_honey_extractor")
+              .withStyle(ChatFormatting.YELLOW));
         } else if (enhancement instanceof PollenTrapEnhancementItem && this.entity instanceof Bee) {
           lootInfo.add(
-              TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "loot_pollen_trap")
-                  .withStyle(ChatFormatting.YELLOW));
+            TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "loot_pollen_trap")
+              .withStyle(ChatFormatting.YELLOW));
         } else if (enhancement instanceof MilkExtractorEnhancementItem
-            && this.entity instanceof Cow) {
+          && this.entity instanceof Cow) {
           lootInfo.add(
-              TextComponent.getTranslatedTextRaw(
-                      Constants.TOOLTIP_FARM_PREFIX + "loot_milk_extractor")
-                  .withStyle(ChatFormatting.YELLOW));
+            TextComponent.getTranslatedTextRaw(
+                Constants.TOOLTIP_FARM_PREFIX + "loot_milk_extractor")
+              .withStyle(ChatFormatting.YELLOW));
         } else if (enhancement instanceof EggCollectorEnhancementItem
-            && this.entity instanceof Chicken) {
+          && this.entity instanceof Chicken) {
           lootInfo.add(
-              TextComponent.getTranslatedTextRaw(
-                      Constants.TOOLTIP_FARM_PREFIX + "loot_egg_collector")
-                  .withStyle(ChatFormatting.YELLOW));
+            TextComponent.getTranslatedTextRaw(
+                Constants.TOOLTIP_FARM_PREFIX + "loot_egg_collector")
+              .withStyle(ChatFormatting.YELLOW));
         } else if (enhancement instanceof SheepEnhancementItem && this.entity instanceof Sheep) {
           lootInfo.add(
-              TextComponent.getTranslatedTextRaw(
-                      Constants.TOOLTIP_FARM_PREFIX + "loot_sheep_enhancement")
-                  .withStyle(ChatFormatting.YELLOW));
+            TextComponent.getTranslatedTextRaw(
+                Constants.TOOLTIP_FARM_PREFIX + "loot_sheep_enhancement")
+              .withStyle(ChatFormatting.YELLOW));
         } else if (enhancement instanceof SwordEnhancementItem
-            && mobCaptureCardDefinition != null
-            && mobCaptureCardDefinition.requiresKilledByPlayer()) {
+          && mobCaptureCardDefinition != null
+          && mobCaptureCardDefinition.requiresKilledByPlayer()) {
           lootInfo.add(
-              TextComponent.getTranslatedTextRaw(
-                      Constants.TOOLTIP_FARM_PREFIX + "loot_sword_enhancement")
-                  .withStyle(ChatFormatting.YELLOW));
+            TextComponent.getTranslatedTextRaw(
+                Constants.TOOLTIP_FARM_PREFIX + "loot_sword_enhancement")
+              .withStyle(ChatFormatting.YELLOW));
         } else if (enhancement instanceof KnifeEnhancementItem
-            && mobCaptureCardDefinition != null
-            && mobCaptureCardDefinition.supportsKnifeEnhancement()) {
+          && mobCaptureCardDefinition != null
+          && mobCaptureCardDefinition.supportsKnifeEnhancement()) {
           lootInfo.add(
-              TextComponent.getTranslatedTextRaw(
-                      Constants.TOOLTIP_FARM_PREFIX + "loot_knife_enhancement")
-                  .withStyle(ChatFormatting.YELLOW));
+            TextComponent.getTranslatedTextRaw(
+                Constants.TOOLTIP_FARM_PREFIX + "loot_knife_enhancement")
+              .withStyle(ChatFormatting.YELLOW));
         } else if (enhancement instanceof ExperienceEnhancementItem) {
           lootInfo.add(
-              TextComponent.getTranslatedTextRaw(
-                      Constants.TOOLTIP_FARM_PREFIX + "loot_experience",
-                      new Object[] {MobFarmConfig.experienceDropChance})
-                  .withStyle(ChatFormatting.YELLOW));
+            TextComponent.getTranslatedTextRaw(
+                Constants.TOOLTIP_FARM_PREFIX + "loot_experience",
+                new Object[]{MobFarmConfig.experienceDropChance})
+              .withStyle(ChatFormatting.YELLOW));
         }
       }
     }
@@ -724,9 +724,9 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
     List<Component> suggestions = getEnhancementSuggestions(activeEnhancements);
     if (!suggestions.isEmpty()) {
       lootInfo.add(
-          TextComponent.getTranslatedTextRaw(
-                  Constants.TOOLTIP_FARM_PREFIX + "enhancement_suggestions")
-              .withStyle(ChatFormatting.GRAY));
+        TextComponent.getTranslatedTextRaw(
+            Constants.TOOLTIP_FARM_PREFIX + "enhancement_suggestions")
+          .withStyle(ChatFormatting.GRAY));
       lootInfo.addAll(suggestions);
     }
 
@@ -737,8 +737,8 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
     List<EnhancementItem> enhancements = new ArrayList<>();
     for (Slot menuSlot : this.menu.slots) {
       if (menuSlot instanceof de.markusbordihn.easymobfarm.menu.slots.EnhancementSlot
-          && menuSlot.hasItem()
-          && menuSlot.getItem().getItem() instanceof EnhancementItem enhancementItem) {
+        && menuSlot.hasItem()
+        && menuSlot.getItem().getItem() instanceof EnhancementItem enhancementItem) {
         enhancements.add(enhancementItem);
       }
     }
@@ -747,10 +747,10 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
 
   private boolean hasPlayerKillEnhancement() {
     return getActiveEnhancements().stream()
-        .anyMatch(
-            enhancement ->
-                enhancement instanceof SwordEnhancementItem
-                    || enhancement instanceof KnifeEnhancementItem);
+      .anyMatch(
+        enhancement ->
+          enhancement instanceof SwordEnhancementItem
+            || enhancement instanceof KnifeEnhancementItem);
   }
 
   private List<Component> getEnhancementSuggestions(List<EnhancementItem> active) {
@@ -759,96 +759,96 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
       return suggestions;
     }
     boolean hasEggCollector =
-        active.stream().anyMatch(EggCollectorEnhancementItem.class::isInstance);
+      active.stream().anyMatch(EggCollectorEnhancementItem.class::isInstance);
     boolean hasMilkExtractor =
-        active.stream().anyMatch(MilkExtractorEnhancementItem.class::isInstance);
+      active.stream().anyMatch(MilkExtractorEnhancementItem.class::isInstance);
     boolean hasHoneyHarvester =
-        active.stream().anyMatch(HoneyHarvesterFrameEnhancementItem.class::isInstance);
+      active.stream().anyMatch(HoneyHarvesterFrameEnhancementItem.class::isInstance);
     boolean hasHoneyExtractor =
-        active.stream().anyMatch(HoneyExtractorEnhancementItem.class::isInstance);
+      active.stream().anyMatch(HoneyExtractorEnhancementItem.class::isInstance);
     boolean hasPollenTrap = active.stream().anyMatch(PollenTrapEnhancementItem.class::isInstance);
     boolean hasSheepEnhancement = active.stream().anyMatch(SheepEnhancementItem.class::isInstance);
     boolean hasSwordEnhancement = active.stream().anyMatch(SwordEnhancementItem.class::isInstance);
     boolean hasKnifeEnhancement = active.stream().anyMatch(KnifeEnhancementItem.class::isInstance);
     boolean hasExperienceEnhancement =
-        active.stream().anyMatch(ExperienceEnhancementItem.class::isInstance);
+      active.stream().anyMatch(ExperienceEnhancementItem.class::isInstance);
 
     // Suggest sword enhancement for mobs that require killed-by-player loot
     MobCaptureCardDefinition mobCaptureCardDefinition =
-        MobCaptureCardDefinitionManager.get(this.entity.getType());
+      MobCaptureCardDefinitionManager.get(this.entity.getType());
     if (!hasSwordEnhancement
-        && mobCaptureCardDefinition != null
-        && mobCaptureCardDefinition.requiresKilledByPlayer()) {
+      && mobCaptureCardDefinition != null
+      && mobCaptureCardDefinition.requiresKilledByPlayer()) {
       suggestions.add(
-          TextComponent.getTranslatedTextRaw(
-                  Constants.TOOLTIP_FARM_PREFIX + "suggest_sword_enhancement")
-              .withStyle(ChatFormatting.DARK_GRAY));
+        TextComponent.getTranslatedTextRaw(
+            Constants.TOOLTIP_FARM_PREFIX + "suggest_sword_enhancement")
+          .withStyle(ChatFormatting.DARK_GRAY));
     }
 
     // Suggest knife enhancement for mobs that support it (e.g. mobs that drop meat/fish)
     if (!hasKnifeEnhancement
-        && mobCaptureCardDefinition != null
-        && mobCaptureCardDefinition.supportsKnifeEnhancement()) {
+      && mobCaptureCardDefinition != null
+      && mobCaptureCardDefinition.supportsKnifeEnhancement()) {
       suggestions.add(
-          TextComponent.getTranslatedTextRaw(
-                  Constants.TOOLTIP_FARM_PREFIX + "suggest_knife_enhancement")
-              .withStyle(ChatFormatting.DARK_GRAY));
+        TextComponent.getTranslatedTextRaw(
+            Constants.TOOLTIP_FARM_PREFIX + "suggest_knife_enhancement")
+          .withStyle(ChatFormatting.DARK_GRAY));
     }
 
     // Suggest experience enhancement for mobs that yield enough experience
     int capturedMobExperience = this.getMenu().getCapturedMobExperience();
     if (!hasExperienceEnhancement
-        && capturedMobExperience >= ExperienceEnhancementItem.MIN_EXPERIENCE_FOR_DROP) {
+      && capturedMobExperience >= ExperienceEnhancementItem.MIN_EXPERIENCE_FOR_DROP) {
       suggestions.add(
-          TextComponent.getTranslatedTextRaw(
-                  Constants.TOOLTIP_FARM_PREFIX + "suggest_experience_enhancement")
-              .withStyle(ChatFormatting.DARK_GRAY));
+        TextComponent.getTranslatedTextRaw(
+            Constants.TOOLTIP_FARM_PREFIX + "suggest_experience_enhancement")
+          .withStyle(ChatFormatting.DARK_GRAY));
     }
 
     // Use individual if-checks instead of else-if to allow multiple suggestions at once
     if (this.entity instanceof Chicken && !hasEggCollector) {
       suggestions.add(
-          TextComponent.getTranslatedTextRaw(
-                  Constants.TOOLTIP_FARM_PREFIX + "suggest_egg_collector")
-              .withStyle(ChatFormatting.DARK_GRAY));
+        TextComponent.getTranslatedTextRaw(
+            Constants.TOOLTIP_FARM_PREFIX + "suggest_egg_collector")
+          .withStyle(ChatFormatting.DARK_GRAY));
     }
     if (this.entity instanceof Cow && !hasMilkExtractor) {
       suggestions.add(
-          TextComponent.getTranslatedTextRaw(
-                  Constants.TOOLTIP_FARM_PREFIX + "suggest_milk_extractor")
-              .withStyle(ChatFormatting.DARK_GRAY));
+        TextComponent.getTranslatedTextRaw(
+            Constants.TOOLTIP_FARM_PREFIX + "suggest_milk_extractor")
+          .withStyle(ChatFormatting.DARK_GRAY));
     }
     if (this.entity instanceof Bee) {
       if (!hasHoneyHarvester) {
         suggestions.add(
-            TextComponent.getTranslatedTextRaw(
-                    Constants.TOOLTIP_FARM_PREFIX + "suggest_honey_harvester")
-                .withStyle(ChatFormatting.DARK_GRAY));
+          TextComponent.getTranslatedTextRaw(
+              Constants.TOOLTIP_FARM_PREFIX + "suggest_honey_harvester")
+            .withStyle(ChatFormatting.DARK_GRAY));
       }
       if (!hasHoneyExtractor) {
         suggestions.add(
-            TextComponent.getTranslatedTextRaw(
-                    Constants.TOOLTIP_FARM_PREFIX + "suggest_honey_extractor")
-                .withStyle(ChatFormatting.DARK_GRAY));
+          TextComponent.getTranslatedTextRaw(
+              Constants.TOOLTIP_FARM_PREFIX + "suggest_honey_extractor")
+            .withStyle(ChatFormatting.DARK_GRAY));
       }
       if (!hasPollenTrap) {
         suggestions.add(
-            TextComponent.getTranslatedTextRaw(
-                    Constants.TOOLTIP_FARM_PREFIX + "suggest_pollen_trap")
-                .withStyle(ChatFormatting.DARK_GRAY));
+          TextComponent.getTranslatedTextRaw(
+              Constants.TOOLTIP_FARM_PREFIX + "suggest_pollen_trap")
+            .withStyle(ChatFormatting.DARK_GRAY));
       }
     }
     if (this.entity instanceof Sheep && !hasSheepEnhancement) {
       suggestions.add(
-          TextComponent.getTranslatedTextRaw(
-                  Constants.TOOLTIP_FARM_PREFIX + "suggest_sheep_enhancement")
-              .withStyle(ChatFormatting.DARK_GRAY));
+        TextComponent.getTranslatedTextRaw(
+            Constants.TOOLTIP_FARM_PREFIX + "suggest_sheep_enhancement")
+          .withStyle(ChatFormatting.DARK_GRAY));
     }
     return suggestions;
   }
 
   private void renderSlotTooltip(
-      GuiGraphicsExtractor guiGraphics, MobFarmSlot mobFarmSlot, int mouseX, int mouseY) {
+    GuiGraphicsExtractor guiGraphics, MobFarmSlot mobFarmSlot, int mouseX, int mouseY) {
     Component component = mobFarmSlot.getTooltip();
     if (component == null) {
       return;

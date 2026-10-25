@@ -42,10 +42,10 @@ class MobFarmBonusConfigTest {
   }
 
   private static void assertDefaultBonusDropsForAllTiers(
-      MobFarmType mobFarmType, String entityId, Item expectedItem) {
+    MobFarmType mobFarmType, String entityId, Item expectedItem) {
     for (int tierLevel = 0; tierLevel < EXPECTED_CHANCES.length; tierLevel++) {
       List<BonusDrop> bonusDrops =
-          MobFarmBonusConfig.getDefaultBonusDrops(mobFarmType.getId(), tierLevel, entityId);
+        MobFarmBonusConfig.getDefaultBonusDrops(mobFarmType.getId(), tierLevel, entityId);
       Assertions.assertEquals(1, bonusDrops.size(), mobFarmType + " tier " + tierLevel);
       Assertions.assertEquals(EXPECTED_CHANCES[tierLevel], bonusDrops.get(0).chance());
       Assertions.assertSame(expectedItem, bonusDrops.get(0).itemStack().item().value());
@@ -57,33 +57,33 @@ class MobFarmBonusConfigTest {
   @DisplayName("End Farm has bonus drops for its End mobs on every tier")
   void endFarmDefaults() {
     assertDefaultBonusDropsForAllTiers(
-        MobFarmType.END_FARM, "minecraft:enderman", Items.ENDER_PEARL);
+      MobFarmType.END_FARM, "minecraft:enderman", Items.ENDER_PEARL);
     assertDefaultBonusDropsForAllTiers(
-        MobFarmType.END_FARM, "minecraft:shulker", Items.SHULKER_SHELL);
+      MobFarmType.END_FARM, "minecraft:shulker", Items.SHULKER_SHELL);
     assertDefaultBonusDropsForAllTiers(
-        MobFarmType.END_FARM, "minecraft:endermite", Items.CHORUS_FRUIT);
+      MobFarmType.END_FARM, "minecraft:endermite", Items.CHORUS_FRUIT);
   }
 
   @Test
   @DisplayName("Nether Wastes Farm has bonus drops for its Nether mobs on every tier")
   void netherWastesFarmDefaults() {
     assertDefaultBonusDropsForAllTiers(
-        MobFarmType.NETHER_WASTES_FARM, "minecraft:piglin", Items.GOLD_NUGGET);
+      MobFarmType.NETHER_WASTES_FARM, "minecraft:piglin", Items.GOLD_NUGGET);
     assertDefaultBonusDropsForAllTiers(
-        MobFarmType.NETHER_WASTES_FARM, "minecraft:zombified_piglin", Items.GOLD_NUGGET);
+      MobFarmType.NETHER_WASTES_FARM, "minecraft:zombified_piglin", Items.GOLD_NUGGET);
     assertDefaultBonusDropsForAllTiers(
-        MobFarmType.NETHER_WASTES_FARM, "minecraft:hoglin", Items.LEATHER);
+      MobFarmType.NETHER_WASTES_FARM, "minecraft:hoglin", Items.LEATHER);
     assertDefaultBonusDropsForAllTiers(
-        MobFarmType.NETHER_WASTES_FARM, "minecraft:strider", Items.STRING);
+      MobFarmType.NETHER_WASTES_FARM, "minecraft:strider", Items.STRING);
     assertDefaultBonusDropsForAllTiers(
-        MobFarmType.NETHER_WASTES_FARM, "minecraft:ghast", Items.GUNPOWDER);
+      MobFarmType.NETHER_WASTES_FARM, "minecraft:ghast", Items.GUNPOWDER);
   }
 
   @Test
   @DisplayName("Desert Farm has an Armadillo scute bonus drop on every tier")
   void desertFarmArmadilloDefaults() {
     assertDefaultBonusDropsForAllTiers(
-        MobFarmType.DESERT_FARM, "minecraft:armadillo", Items.ARMADILLO_SCUTE);
+      MobFarmType.DESERT_FARM, "minecraft:armadillo", Items.ARMADILLO_SCUTE);
   }
 
   @Test
@@ -96,12 +96,12 @@ class MobFarmBonusConfigTest {
   @DisplayName("Unknown mob or tier yields no bonus drops")
   void unknownMobOrTierYieldsEmptyList() {
     Assertions.assertTrue(
-        MobFarmBonusConfig.getDefaultBonusDrops(
-                MobFarmType.END_FARM.getId(), 0, "minecraft:creeper")
-            .isEmpty());
+      MobFarmBonusConfig.getDefaultBonusDrops(
+          MobFarmType.END_FARM.getId(), 0, "minecraft:creeper")
+        .isEmpty());
     Assertions.assertTrue(
-        MobFarmBonusConfig.getDefaultBonusDrops(
-                MobFarmType.NETHER_WASTES_FARM.getId(), 4, "minecraft:piglin")
-            .isEmpty());
+      MobFarmBonusConfig.getDefaultBonusDrops(
+          MobFarmType.NETHER_WASTES_FARM.getId(), 4, "minecraft:piglin")
+        .isEmpty());
   }
 }

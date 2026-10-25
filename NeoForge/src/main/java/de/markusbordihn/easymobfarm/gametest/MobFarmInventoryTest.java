@@ -27,41 +27,41 @@ public class MobFarmInventoryTest {
 
   public void testSaveAndLoadKeepsFarmState(GameTestHelper helper) {
     MobFarmInventoryTestHelper.testSaveAndLoadKeepsFarmState(
-        helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
+      helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
   }
 
   public void testFullOutputBuffersLootWithoutLoss(GameTestHelper helper) {
     MobFarmInventoryTestHelper.testFullOutputBuffersLootWithoutLoss(
-        helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
+      helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
   }
 
   public void testPartialBufferTransferDoesNotDuplicate(GameTestHelper helper) {
     MobFarmInventoryTestHelper.testPartialBufferTransferDoesNotDuplicate(
-        helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
+      helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
   }
 
   public void testBreakingFarmDropsBufferedItems(GameTestHelper helper) {
     MobFarmInventoryTestHelper.testBreakingFarmDropsBufferedItems(
-        helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
+      helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
   }
 
   public void testBrokenFarmKeepsTierLevel(GameTestHelper helper) {
     MobFarmInventoryTestHelper.testBrokenFarmKeepsTierLevel(
-        helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
+      helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
   }
 
   public void testRightClickInsertsSingleItems(GameTestHelper helper) {
     MobFarmInventoryTestHelper.testRightClickInsertsSingleItems(
-        helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
+      helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
   }
 
   public void testHopperBelowPullsOnlyResults(GameTestHelper helper) {
     MobFarmInventoryTestHelper.testHopperBelowPullsOnlyResults(
-        helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
+      helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
   }
 
   public void testHopperAboveCannotInsert(GameTestHelper helper) {
     MobFarmInventoryTestHelper.testHopperAboveCannotInsert(
-        helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
+      helper, ModBlocks.ANIMAL_PLAINS_FARM.get());
   }
 }

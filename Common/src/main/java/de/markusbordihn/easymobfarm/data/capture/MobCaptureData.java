@@ -21,12 +21,14 @@ package de.markusbordihn.easymobfarm.data.capture;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import java.util.Optional;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.LivingEntity;
@@ -35,148 +37,167 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
 
 public record MobCaptureData(
-    String name,
-    String type,
-    EntityType<?> entityType,
-    CompoundTag data,
-    MobColor color,
-    String variant,
-    Rarity rarity,
-    boolean isFoil) {
+  String name,
+  String type,
+  EntityType<?> entityType,
+  CompoundTag data,
+  MobColor color,
+  String variant,
+  Rarity rarity,
+  boolean isFoil) {
 
   public static final String ID = "mob_capture_data";
   public static final String TYPE_SEPARATOR = ":";
 
   public static final MobCaptureData EMPTY =
-      new MobCaptureData(
-          "",
-          "",
-          EntityTypes.ARMOR_STAND,
-          new CompoundTag(),
-          MobColor.NONE,
-          "",
-          Rarity.COMMON,
-          false);
+    new MobCaptureData(
+      "",
+      "",
+      EntityTypes.ARMOR_STAND,
+      new CompoundTag(),
+      MobColor.NONE,
+      "",
+      Rarity.COMMON,
+      false);
   public static final Codec<MobCaptureData> CODEC =
-      RecordCodecBuilder.create(
-          instance ->
-              instance
-                  .group(
-                      Codec.STRING.fieldOf("name").forGetter(MobCaptureData::name),
-                      Codec.STRING.fieldOf("type").forGetter(MobCaptureData::type),
-                      BuiltInRegistries.ENTITY_TYPE
-                          .byNameCodec()
-                          .fieldOf("entityType")
-                          .forGetter(MobCaptureData::entityType),
-                      CompoundTag.CODEC
-                          .optionalFieldOf("data", new CompoundTag())
-                          .forGetter(MobCaptureData::data),
-                      MobColor.CODEC
-                          .optionalFieldOf("color", MobColor.NONE)
-                          .forGetter(MobCaptureData::color),
-                      Codec.STRING
-                          .optionalFieldOf("variant", "")
-                          .forGetter(MobCaptureData::variant),
-                      Rarity.CODEC
-                          .optionalFieldOf("rarity", Rarity.COMMON)
-                          .forGetter(MobCaptureData::rarity),
-                      Codec.BOOL.optionalFieldOf("isFoil", false).forGetter(MobCaptureData::isFoil))
-                  .apply(instance, MobCaptureData::new));
+    RecordCodecBuilder.create(
+      instance ->
+        instance
+          .group(
+            Codec.STRING.fieldOf("name").forGetter(MobCaptureData::name),
+            Codec.STRING.fieldOf("type").forGetter(MobCaptureData::type),
+            BuiltInRegistries.ENTITY_TYPE
+              .byNameCodec()
+              .lenientOptionalFieldOf("entityType")
+              .forGetter(mobCaptureData -> Optional.ofNullable(mobCaptureData.entityType())),
+            CompoundTag.CODEC
+              .optionalFieldOf("data", new CompoundTag())
+              .forGetter(MobCaptureData::data),
+            MobColor.CODEC
+              .optionalFieldOf("color", MobColor.NONE)
+              .forGetter(MobCaptureData::color),
+            Codec.STRING
+              .optionalFieldOf("variant", "")
+              .forGetter(MobCaptureData::variant),
+            Rarity.CODEC
+              .optionalFieldOf("rarity", Rarity.COMMON)
+              .forGetter(MobCaptureData::rarity),
+            Codec.BOOL.optionalFieldOf("isFoil", false).forGetter(MobCaptureData::isFoil))
+          .apply(
+            instance,
+            (name, type, entityType, data, color, variant, rarity, isFoil) ->
+              new MobCaptureData(
+                name,
+                type,
+                entityType.orElse(null),
+                data,
+                color,
+                variant,
+                rarity,
+                isFoil)));
   public static final StreamCodec<RegistryFriendlyByteBuf, MobCaptureData> STREAM_CODEC =
-      StreamCodec.composite(
-          ByteBufCodecs.STRING_UTF8,
-          MobCaptureData::name,
-          ByteBufCodecs.STRING_UTF8,
-          MobCaptureData::type,
-          ByteBufCodecs.registry(Registries.ENTITY_TYPE),
-          MobCaptureData::entityType,
-          ByteBufCodecs.COMPOUND_TAG,
-          MobCaptureData::data,
-          MobColor.STREAM_CODEC,
-          MobCaptureData::color,
-          ByteBufCodecs.STRING_UTF8,
-          MobCaptureData::variant,
-          Rarity.STREAM_CODEC,
-          MobCaptureData::rarity,
-          ByteBufCodecs.BOOL,
-          MobCaptureData::isFoil,
-          MobCaptureData::new);
+    StreamCodec.composite(
+      ByteBufCodecs.STRING_UTF8,
+      MobCaptureData::name,
+      ByteBufCodecs.STRING_UTF8,
+      MobCaptureData::type,
+      ByteBufCodecs.optional(ByteBufCodecs.registry(Registries.ENTITY_TYPE)),
+      mobCaptureData -> Optional.ofNullable(mobCaptureData.entityType()),
+      ByteBufCodecs.COMPOUND_TAG,
+      MobCaptureData::data,
+      MobColor.STREAM_CODEC,
+      MobCaptureData::color,
+      ByteBufCodecs.STRING_UTF8,
+      MobCaptureData::variant,
+      Rarity.STREAM_CODEC,
+      MobCaptureData::rarity,
+      ByteBufCodecs.BOOL,
+      MobCaptureData::isFoil,
+      (name, type, entityType, data, color, variant, rarity, isFoil) ->
+        new MobCaptureData(
+          name, type, entityType.orElse(null), data, color, variant, rarity, isFoil));
   private static final int MAX_ID_LIMIT = 16777216;
 
   public MobCaptureData {
     variant = variant != null ? variant : "";
+    if (entityType == null && type != null) {
+      entityType =
+        Optional.ofNullable(Identifier.tryParse(type))
+          .flatMap(BuiltInRegistries.ENTITY_TYPE::getOptional)
+          .orElse(null);
+    }
   }
 
   public MobCaptureData(final String name, final EntityType<?> entityType, final Rarity rarity) {
     this(
-        name,
-        MobEntityTypeData.getEntityTypeName(entityType),
-        MobEntityTypeData.getEntityType(entityType),
-        MobEntityData.getMobEntityData(entityType),
-        MobColorData.getColor(entityType),
-        MobVariantData.getVariant(entityType),
-        rarity,
-        MobFoilData.getRandomFoil());
+      name,
+      MobEntityTypeData.getEntityTypeName(entityType),
+      MobEntityTypeData.getEntityType(entityType),
+      MobEntityData.getMobEntityData(entityType),
+      MobColorData.getColor(entityType),
+      MobVariantData.getVariant(entityType),
+      rarity,
+      MobFoilData.getRandomFoil());
   }
 
   public MobCaptureData(final EntityType<?> entityType) {
     this(
-        MobNameData.getName(entityType),
-        MobEntityTypeData.getEntityTypeName(entityType),
-        MobEntityTypeData.getEntityType(entityType),
-        MobEntityData.getMobEntityData(entityType),
-        MobColorData.getColor(entityType),
-        MobVariantData.getVariant(entityType),
-        MobRarityData.getRarity(entityType),
-        MobFoilData.getRandomFoil());
+      MobNameData.getName(entityType),
+      MobEntityTypeData.getEntityTypeName(entityType),
+      MobEntityTypeData.getEntityType(entityType),
+      MobEntityData.getMobEntityData(entityType),
+      MobColorData.getColor(entityType),
+      MobVariantData.getVariant(entityType),
+      MobRarityData.getRarity(entityType),
+      MobFoilData.getRandomFoil());
   }
 
   public MobCaptureData(final LivingEntity livingEntity) {
     this(
-        MobNameData.getName(livingEntity),
-        MobEntityTypeData.getEntityTypeName(livingEntity),
-        MobEntityTypeData.getEntityType(livingEntity),
-        MobEntityData.getMobEntityData(livingEntity),
-        MobColorData.getColor(livingEntity),
-        MobVariantData.getVariant(livingEntity),
-        MobRarityData.getRarity(livingEntity),
-        MobFoilData.getRandomFoil());
+      MobNameData.getName(livingEntity),
+      MobEntityTypeData.getEntityTypeName(livingEntity),
+      MobEntityTypeData.getEntityType(livingEntity),
+      MobEntityData.getMobEntityData(livingEntity),
+      MobColorData.getColor(livingEntity),
+      MobVariantData.getVariant(livingEntity),
+      MobRarityData.getRarity(livingEntity),
+      MobFoilData.getRandomFoil());
   }
 
   public MobCaptureData(final ItemStack itemStack, final CompoundTag compoundTag, Level level) {
     this(
-        MobNameData.getName(compoundTag),
-        MobEntityTypeData.getEntityTypeName(itemStack, compoundTag, level),
-        MobEntityTypeData.getEntityType(itemStack, compoundTag, level),
-        MobEntityData.getMobEntityData(compoundTag),
-        MobColorData.getColor(compoundTag),
-        MobVariantData.getVariant(compoundTag),
-        MobRarityData.getRarity(compoundTag),
-        MobFoilData.getFoil(compoundTag));
+      MobNameData.getName(compoundTag),
+      MobEntityTypeData.getEntityTypeName(itemStack, compoundTag, level),
+      MobEntityTypeData.getEntityType(itemStack, compoundTag, level),
+      MobEntityData.getMobEntityData(compoundTag),
+      MobColorData.getColor(compoundTag),
+      MobVariantData.getVariant(compoundTag),
+      MobRarityData.getRarity(compoundTag),
+      MobFoilData.getFoil(compoundTag));
   }
 
   public MobCaptureData(final ItemStack itemStack, final CompoundTag compoundTag) {
     this(
-        MobNameData.getName(compoundTag),
-        MobEntityTypeData.getEntityTypeName(itemStack, compoundTag, null),
-        MobEntityTypeData.getEntityType(itemStack, compoundTag, null),
-        MobEntityData.getMobEntityData(compoundTag),
-        MobColorData.getColor(compoundTag),
-        MobVariantData.getVariant(compoundTag),
-        MobRarityData.getRarity(compoundTag),
-        MobFoilData.getFoil(compoundTag));
+      MobNameData.getName(compoundTag),
+      MobEntityTypeData.getEntityTypeName(itemStack, compoundTag, null),
+      MobEntityTypeData.getEntityType(itemStack, compoundTag, null),
+      MobEntityData.getMobEntityData(compoundTag),
+      MobColorData.getColor(compoundTag),
+      MobVariantData.getVariant(compoundTag),
+      MobRarityData.getRarity(compoundTag),
+      MobFoilData.getFoil(compoundTag));
   }
 
   public MobCaptureData(final CompoundTag compoundTag) {
     this(
-        MobNameData.getName(compoundTag),
-        MobEntityTypeData.getEntityTypeName(compoundTag),
-        MobEntityTypeData.getEntityType(compoundTag),
-        MobEntityData.getMobEntityData(compoundTag),
-        MobColorData.getColor(compoundTag),
-        MobVariantData.getVariant(compoundTag),
-        MobRarityData.getRarity(compoundTag),
-        MobFoilData.getFoil(compoundTag));
+      MobNameData.getName(compoundTag),
+      MobEntityTypeData.getEntityTypeName(compoundTag),
+      MobEntityTypeData.getEntityType(compoundTag),
+      MobEntityData.getMobEntityData(compoundTag),
+      MobColorData.getColor(compoundTag),
+      MobVariantData.getVariant(compoundTag),
+      MobRarityData.getRarity(compoundTag),
+      MobFoilData.getFoil(compoundTag));
   }
 
   public int getCardId() {
@@ -248,20 +269,20 @@ public record MobCaptureData(
   @Override
   public String toString() {
     return "MobCaptureData{"
-        + ", name='"
-        + name
-        + ", entityType="
-        + entityType
-        + ", color="
-        + color
-        + ", variant="
-        + variant
-        + ", rarity="
-        + rarity
-        + ", isFoil="
-        + isFoil
-        + ", data="
-        + data
-        + '}';
+      + ", name='"
+      + name
+      + ", entityType="
+      + entityType
+      + ", color="
+      + color
+      + ", variant="
+      + variant
+      + ", rarity="
+      + rarity
+      + ", isFoil="
+      + isFoil
+      + ", data="
+      + data
+      + '}';
   }
 }

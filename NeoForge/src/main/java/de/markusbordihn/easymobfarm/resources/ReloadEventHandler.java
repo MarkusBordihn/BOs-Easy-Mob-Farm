@@ -31,12 +31,13 @@ public class ReloadEventHandler {
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  private ReloadEventHandler() {}
+  private ReloadEventHandler() {
+  }
 
   @SubscribeEvent
   public static void onAddReloadListener(AddServerReloadListenersEvent event) {
     log.debug("{} server-side resource listener ...", Constants.LOG_REGISTER_PREFIX);
     event.addListener(
-        MobCaptureCardResourceManager.RESOURCE_ID, new MobCaptureCardResourceManager());
+      MobCaptureCardResourceManager.RESOURCE_ID, new MobCaptureCardResourceManager());
   }
 }

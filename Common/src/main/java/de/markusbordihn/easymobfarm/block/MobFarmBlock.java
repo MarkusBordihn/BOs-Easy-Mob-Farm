@@ -62,23 +62,23 @@ public class MobFarmBlock extends BaseEntityBlock {
   public static final IntegerProperty TIER_LEVEL = IntegerProperty.create("tier_level", 0, 3);
   public static final BooleanProperty POWERED = BooleanProperty.create("powered");
   public static final EnumProperty<MobFarmType> FARM_TYPE =
-      EnumProperty.create("farm_type", MobFarmType.class);
+    EnumProperty.create("farm_type", MobFarmType.class);
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
   public MobFarmBlock(final MobFarmType mobFarmType) {
     this(
-        Properties.of()
-            .setId(
-                ResourceKey.create(
-                    Registries.BLOCK,
-                    Identifier.fromNamespaceAndPath(Constants.MOD_ID, mobFarmType.getId())))
-            .mapColor(MapColor.STONE)
-            .requiresCorrectToolForDrops()
-            .strength(5.0f)
-            .lightLevel(MobFarmBlock::getLightLevel)
-            .sound(SoundType.METAL)
-            .noOcclusion(),
-        mobFarmType);
+      Properties.of()
+        .setId(
+          ResourceKey.create(
+            Registries.BLOCK,
+            Identifier.fromNamespaceAndPath(Constants.MOD_ID, mobFarmType.getId())))
+        .mapColor(MapColor.STONE)
+        .requiresCorrectToolForDrops()
+        .strength(5.0f)
+        .lightLevel(MobFarmBlock::getLightLevel)
+        .sound(SoundType.METAL)
+        .noOcclusion(),
+      mobFarmType);
   }
 
   public MobFarmBlock(final Properties properties, final MobFarmType mobFarmType) {
@@ -88,13 +88,13 @@ public class MobFarmBlock extends BaseEntityBlock {
   public MobFarmBlock(final Properties properties, int tierLevel, final MobFarmType mobFarmType) {
     super(properties);
     this.registerDefaultState(
-        this.stateDefinition
-            .any()
-            .setValue(FACING, Direction.NORTH)
-            .setValue(WORKING, Boolean.FALSE)
-            .setValue(TIER_LEVEL, tierLevel)
-            .setValue(FARM_TYPE, mobFarmType)
-            .setValue(POWERED, false));
+      this.stateDefinition
+        .any()
+        .setValue(FACING, Direction.NORTH)
+        .setValue(WORKING, Boolean.FALSE)
+        .setValue(TIER_LEVEL, tierLevel)
+        .setValue(FARM_TYPE, mobFarmType)
+        .setValue(POWERED, false));
   }
 
   public static int getLightLevel(final BlockState blockState) {
@@ -110,7 +110,7 @@ public class MobFarmBlock extends BaseEntityBlock {
   }
 
   public BlockEntity newBlockEntity(
-      final BlockPos blockPos, final BlockState blockState, MobFarmType mobFarmType) {
+    final BlockPos blockPos, final BlockState blockState, MobFarmType mobFarmType) {
     throw new UnsupportedOperationException("This method must be overridden by a subclass!");
   }
 
@@ -121,7 +121,7 @@ public class MobFarmBlock extends BaseEntityBlock {
 
   @Override
   public void affectNeighborsAfterRemoval(
-      BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, boolean isMoving) {
+    BlockState blockState, ServerLevel serverLevel, BlockPos blockPos, boolean isMoving) {
     BlockEntity blockEntity = serverLevel.getBlockEntity(blockPos);
     if (blockEntity instanceof MobFarmBlockEntity mobFarmBlockEntity) {
       serverLevel.updateNeighbourForOutputSignal(blockPos, this);
@@ -137,26 +137,26 @@ public class MobFarmBlock extends BaseEntityBlock {
 
   @Override
   protected void createBlockStateDefinition(
-      final StateDefinition.Builder<Block, BlockState> blockState) {
+    final StateDefinition.Builder<Block, BlockState> blockState) {
     blockState.add(FACING, WORKING, TIER_LEVEL, FARM_TYPE, POWERED);
   }
 
   @Override
   public BlockState getStateForPlacement(final BlockPlaceContext context) {
     return this.defaultBlockState()
-        .setValue(FACING, context.getHorizontalDirection().getOpposite());
+      .setValue(FACING, context.getHorizontalDirection().getOpposite());
   }
 
   @Override
   public void setPlacedBy(
-      final Level level,
-      final BlockPos blockPos,
-      final BlockState blockState,
-      final LivingEntity livingEntity,
-      final ItemStack itemStack) {
+    final Level level,
+    final BlockPos blockPos,
+    final BlockState blockState,
+    final LivingEntity livingEntity,
+    final ItemStack itemStack) {
     BlockEntity blockEntity = level.getBlockEntity(blockPos);
     if (blockEntity instanceof MobFarmBlockEntity blockEntityInstance
-        && level instanceof ServerLevel serverLevel) {
+      && level instanceof ServerLevel serverLevel) {
       if (livingEntity instanceof ServerPlayer serverPlayer) {
         blockEntityInstance.setOwner(serverPlayer);
       }
@@ -164,7 +164,7 @@ public class MobFarmBlock extends BaseEntityBlock {
 
       // Set tier level from item stack
       MobFarmData mobFarmData =
-          itemStack.getOrDefault(DataComponents.MOB_FARM_DATA, MobFarmData.EMPTY);
+        itemStack.getOrDefault(DataComponents.MOB_FARM_DATA, MobFarmData.EMPTY);
       int tierLevel = mobFarmData.tierLevel().getTierLevel();
       if (TIER_LEVEL.getPossibleValues().contains(tierLevel)) {
         newBlockState = newBlockState.setValue(TIER_LEVEL, tierLevel);
@@ -187,11 +187,11 @@ public class MobFarmBlock extends BaseEntityBlock {
 
   @Override
   protected InteractionResult useWithoutItem(
-      BlockState blockState,
-      Level level,
-      BlockPos blockPos,
-      Player player,
-      BlockHitResult hitResult) {
+    BlockState blockState,
+    Level level,
+    BlockPos blockPos,
+    Player player,
+    BlockHitResult hitResult) {
     if (level.isClientSide()) {
       return InteractionResult.SUCCESS;
     }
@@ -203,13 +203,13 @@ public class MobFarmBlock extends BaseEntityBlock {
 
   @Override
   public InteractionResult useItemOn(
-      ItemStack itemStack,
-      final BlockState blockState,
-      final Level level,
-      final BlockPos blockPos,
-      final Player player,
-      final InteractionHand interactionHand,
-      final BlockHitResult blockHitResult) {
+    ItemStack itemStack,
+    final BlockState blockState,
+    final Level level,
+    final BlockPos blockPos,
+    final Player player,
+    final InteractionHand interactionHand,
+    final BlockHitResult blockHitResult) {
     if (level.isClientSide()) {
       return InteractionResult.SUCCESS;
     }
@@ -222,10 +222,10 @@ public class MobFarmBlock extends BaseEntityBlock {
 
     // Check if item in hand could be consumed
     if (!itemStack.isEmpty()
-        && (mobFarmBlockEntity.takeMobCaptureItem(player, interactionHand)
-            || mobFarmBlockEntity.takeEnhancementItem(player, interactionHand)
-            || mobFarmBlockEntity.takeSlotUpgradeItem(player, interactionHand)
-            || mobFarmBlockEntity.takeFilterItem(player, interactionHand))) {
+      && (mobFarmBlockEntity.takeMobCaptureItem(player, interactionHand)
+      || mobFarmBlockEntity.takeEnhancementItem(player, interactionHand)
+      || mobFarmBlockEntity.takeSlotUpgradeItem(player, interactionHand)
+      || mobFarmBlockEntity.takeFilterItem(player, interactionHand))) {
       return InteractionResult.CONSUME;
     }
 
@@ -242,12 +242,12 @@ public class MobFarmBlock extends BaseEntityBlock {
 
   @Override
   public void neighborChanged(
-      final BlockState blockState,
-      final Level level,
-      final BlockPos blockPos,
-      final Block block,
-      final Orientation orientation,
-      final boolean isMoving) {
+    final BlockState blockState,
+    final Level level,
+    final BlockPos blockPos,
+    final Block block,
+    final Orientation orientation,
+    final boolean isMoving) {
     if (!level.isClientSide()) {
       boolean isPowered = blockState.getValue(POWERED);
       boolean isPoweredNow = level.hasNeighborSignal(blockPos);
@@ -260,7 +260,7 @@ public class MobFarmBlock extends BaseEntityBlock {
   protected void openMenu(final Level level, final BlockPos blockPos, final Player player) {
     BlockEntity blockEntity = level.getBlockEntity(blockPos);
     if (blockEntity instanceof MobFarmBlockEntity blockEntityInstance
-        && player instanceof ServerPlayer serverPlayer) {
+      && player instanceof ServerPlayer serverPlayer) {
       serverPlayer.openMenu(blockEntityInstance);
     }
   }

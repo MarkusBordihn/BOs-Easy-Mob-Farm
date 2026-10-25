@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
@@ -37,43 +38,46 @@ public class MobCaptureCardDefinitionManager {
   private static final String LOG_PREFIX = "[Mob Capture Card Definition Manager]";
 
   private static final Map<Identifier, MobCaptureCardDefinition> DEFINITIONS =
-      new ConcurrentHashMap<>();
+    new ConcurrentHashMap<>();
   private static final Map<EntityType<?>, MobCaptureCardDefinition> ENTITY_TYPE_DEFINITIONS =
-      new ConcurrentHashMap<>();
+    new ConcurrentHashMap<>();
 
-  private MobCaptureCardDefinitionManager() {}
+  private MobCaptureCardDefinitionManager() {
+  }
 
   public static void setDefinitions(Map<Identifier, MobCaptureCardDefinition> definitions) {
     log.debug(
-        "{} Set {} definitions with {}", LOG_PREFIX, definitions.size(), definitions.keySet());
+      "{} Set {} definitions with {}", LOG_PREFIX, definitions.size(), definitions.keySet());
     DEFINITIONS.clear();
     ENTITY_TYPE_DEFINITIONS.clear();
+    Set<Identifier> skippedEntities = new TreeSet<>();
     for (Map.Entry<Identifier, MobCaptureCardDefinition> entry : definitions.entrySet()) {
-      addDefinition(entry.getKey(), entry.getValue());
+      if (!addDefinition(entry.getKey(), entry.getValue())) {
+        skippedEntities.add(entry.getKey());
+      }
+    }
+    if (!skippedEntities.isEmpty()) {
+      log.warn(
+        "{} Skipped {} synced definitions for entity types that are not loaded: {}",
+        LOG_PREFIX,
+        skippedEntities.size(),
+        skippedEntities);
     }
   }
 
-  public static void addDefinition(Identifier entity, MobCaptureCardDefinition definition) {
-
-    // Verify entity type.
+  public static boolean addDefinition(Identifier entity, MobCaptureCardDefinition definition) {
     Optional<EntityType<?>> entityType =
-        BuiltInRegistries.ENTITY_TYPE.getOptional(definition.entity());
+      BuiltInRegistries.ENTITY_TYPE.getOptional(definition.entity());
     if (entityType.isEmpty()) {
-      log.warn(
-          "{} Skipping {} definition {}. Entity type {} not found.",
-          LOG_PREFIX,
-          entity,
-          definition,
-          definition.entity());
-      log.warn("This is expected for custom and mod entities which are not loaded.");
-      return;
+      log.debug("{} Skipping {} definition {}", LOG_PREFIX, entity, definition);
+      return false;
     }
 
-    // Add definition to map and cache entity type.
     log.debug("{} Add {} definition: {}", LOG_PREFIX, entity, definition);
     MobCaptureCardDefinition mobCaptureCardDefinition = definition.withEntityType(entityType.get());
     DEFINITIONS.put(entity, mobCaptureCardDefinition);
     ENTITY_TYPE_DEFINITIONS.put(entityType.get(), mobCaptureCardDefinition);
+    return true;
   }
 
   public static MobCaptureCardDefinition get(Identifier entity) {

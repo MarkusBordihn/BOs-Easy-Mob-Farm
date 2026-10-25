@@ -37,5 +37,6 @@ public class CompatConstants {
   public static boolean MOD_JEI_LOADED = false;
   public static boolean MOD_SWAMPIER_SWAMPS_LOADED = false;
 
-  private CompatConstants() {}
+  private CompatConstants() {
+  }
 }

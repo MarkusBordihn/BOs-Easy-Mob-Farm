@@ -38,19 +38,19 @@ public class FrogCatalystEnhancementItem extends EnhancementItem {
   private static final String ID_PREFIX = ID + "_";
   public static final String ID_COLD = ID_PREFIX + FrogCatalystType.COLD.getId() + ID_POSTFIX;
   public static final String ID_TEMPERATE =
-      ID_PREFIX + FrogCatalystType.TEMPERATE.getId() + ID_POSTFIX;
+    ID_PREFIX + FrogCatalystType.TEMPERATE.getId() + ID_POSTFIX;
   public static final String ID_WARM = ID_PREFIX + FrogCatalystType.WARM.getId() + ID_POSTFIX;
   public static final String ID_WHITE = ID_PREFIX + FrogCatalystType.WHITE.getId() + ID_POSTFIX;
   public static final String ID_ORANGE = ID_PREFIX + FrogCatalystType.ORANGE.getId() + ID_POSTFIX;
   public static final String ID_MAGENTA = ID_PREFIX + FrogCatalystType.MAGENTA.getId() + ID_POSTFIX;
   public static final String ID_LIGHT_BLUE =
-      ID_PREFIX + FrogCatalystType.LIGHT_BLUE.getId() + ID_POSTFIX;
+    ID_PREFIX + FrogCatalystType.LIGHT_BLUE.getId() + ID_POSTFIX;
   public static final String ID_YELLOW = ID_PREFIX + FrogCatalystType.YELLOW.getId() + ID_POSTFIX;
   public static final String ID_LIME = ID_PREFIX + FrogCatalystType.LIME.getId() + ID_POSTFIX;
   public static final String ID_PINK = ID_PREFIX + FrogCatalystType.PINK.getId() + ID_POSTFIX;
   public static final String ID_GRAY = ID_PREFIX + FrogCatalystType.GRAY.getId() + ID_POSTFIX;
   public static final String ID_LIGHT_GRAY =
-      ID_PREFIX + FrogCatalystType.LIGHT_GRAY.getId() + ID_POSTFIX;
+    ID_PREFIX + FrogCatalystType.LIGHT_GRAY.getId() + ID_POSTFIX;
   public static final String ID_CYAN = ID_PREFIX + FrogCatalystType.CYAN.getId() + ID_POSTFIX;
   public static final String ID_PURPLE = ID_PREFIX + FrogCatalystType.PURPLE.getId() + ID_POSTFIX;
   public static final String ID_BLUE = ID_PREFIX + FrogCatalystType.BLUE.getId() + ID_POSTFIX;
@@ -63,13 +63,13 @@ public class FrogCatalystEnhancementItem extends EnhancementItem {
 
   public FrogCatalystEnhancementItem(FrogCatalystType frogCatalystType) {
     this(
-        frogCatalystType,
-        new Properties()
-            .setId(
-                ResourceKey.create(
-                    Registries.ITEM,
-                    Identifier.fromNamespaceAndPath(
-                        Constants.MOD_ID, ID_PREFIX + frogCatalystType.getId() + ID_POSTFIX))));
+      frogCatalystType,
+      new Properties()
+        .setId(
+          ResourceKey.create(
+            Registries.ITEM,
+            Identifier.fromNamespaceAndPath(
+              Constants.MOD_ID, ID_PREFIX + frogCatalystType.getId() + ID_POSTFIX))));
   }
 
   public FrogCatalystEnhancementItem(FrogCatalystType frogCatalystType, Properties properties) {
@@ -83,14 +83,14 @@ public class FrogCatalystEnhancementItem extends EnhancementItem {
 
   @Override
   public void appendHoverText(
-      ItemStack itemStack,
-      TooltipContext tooltipContext,
-      TooltipDisplay tooltipDisplay,
-      Consumer<Component> tooltipConsumer,
-      TooltipFlag tooltipFlag) {
+    ItemStack itemStack,
+    TooltipContext tooltipContext,
+    TooltipDisplay tooltipDisplay,
+    Consumer<Component> tooltipConsumer,
+    TooltipFlag tooltipFlag) {
     addTooltip(
-        tooltipConsumer,
-        TextComponent.getTranslatedTextRaw(
-            Constants.TOOLTIP_PREFIX + ID + "_" + frogCatalystType.getId() + ID_POSTFIX));
+      tooltipConsumer,
+      TextComponent.getTranslatedTextRaw(
+        Constants.TOOLTIP_PREFIX + ID + "_" + frogCatalystType.getId() + ID_POSTFIX));
   }
 }

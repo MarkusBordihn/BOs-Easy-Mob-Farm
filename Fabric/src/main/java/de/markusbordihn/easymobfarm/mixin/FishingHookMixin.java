@@ -32,19 +32,19 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 public class FishingHookMixin {
 
   @ModifyArg(
-      method = "retrieve",
-      at =
-          @At(
-              value = "INVOKE",
-              target =
-                  "Lnet/minecraft/advancements/triggers/FishingRodHookedTrigger;trigger(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/projectile/FishingHook;Ljava/util/Collection;)V",
-              ordinal = 1),
-      index = 3)
+    method = "retrieve",
+    at =
+    @At(
+      value = "INVOKE",
+      target =
+        "Lnet/minecraft/advancements/triggers/FishingRodHookedTrigger;trigger(Lnet/minecraft/server/level/ServerPlayer;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/entity/projectile/FishingHook;Ljava/util/Collection;)V",
+      ordinal = 1),
+    index = 3)
   private Collection<ItemStack> easyMobFarmOnRetrieve(
-      ServerPlayer serverPlayer,
-      ItemStack fishingRod,
-      FishingHook fishingHook,
-      Collection<ItemStack> fishingLoot) {
+    ServerPlayer serverPlayer,
+    ItemStack fishingRod,
+    FishingHook fishingHook,
+    Collection<ItemStack> fishingLoot) {
     FishingEvents.handleItemFishedEvent(serverPlayer, fishingLoot);
     return fishingLoot;
   }

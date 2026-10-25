@@ -39,74 +39,75 @@ import net.minecraft.world.level.storage.loot.LootTable;
 public class ServerDataTestHelper {
 
   private static final ResourceKey<Recipe<?>> SPEED_ENHANCEMENT_RECIPE =
-      ResourceKey.create(
-          Registries.RECIPE,
-          Identifier.fromNamespaceAndPath(
-              Constants.MOD_ID, "upgrade/enhancement/speed_enhancement"));
+    ResourceKey.create(
+      Registries.RECIPE,
+      Identifier.fromNamespaceAndPath(
+        Constants.MOD_ID, "upgrade/enhancement/speed_enhancement"));
 
-  private ServerDataTestHelper() {}
+  private ServerDataTestHelper() {
+  }
 
   private static List<Identifier> modDataIds(
-      MinecraftServer server, FileToIdConverter fileToIdConverter) {
+    MinecraftServer server, FileToIdConverter fileToIdConverter) {
     return fileToIdConverter.listMatchingResources(server.getResourceManager()).keySet().stream()
-        .filter(file -> file.getNamespace().equals(Constants.MOD_ID))
-        .map(fileToIdConverter::fileToId)
-        .sorted()
-        .toList();
+      .filter(file -> file.getNamespace().equals(Constants.MOD_ID))
+      .map(fileToIdConverter::fileToId)
+      .sorted()
+      .toList();
   }
 
   private static void assertEveryModDataIsLoaded(
-      GameTestHelper helper,
-      FileToIdConverter fileToIdConverter,
-      String dataName,
-      Predicate<Identifier> isLoaded) {
+    GameTestHelper helper,
+    FileToIdConverter fileToIdConverter,
+    String dataName,
+    Predicate<Identifier> isLoaded) {
     List<Identifier> dataIds = modDataIds(helper.getLevel().getServer(), fileToIdConverter);
     helper.assertTrue(!dataIds.isEmpty(), "No " + dataName + " files found");
     List<Identifier> notLoaded =
-        dataIds.stream().filter(dataId -> !isLoaded.test(dataId)).toList();
+      dataIds.stream().filter(dataId -> !isLoaded.test(dataId)).toList();
     GameTestHelpers.assertTrue(
-        helper,
-        notLoaded.size() + " of " + dataIds.size() + " " + dataName + " not loaded: " + notLoaded,
-        notLoaded.isEmpty());
+      helper,
+      notLoaded.size() + " of " + dataIds.size() + " " + dataName + " not loaded: " + notLoaded,
+      notLoaded.isEmpty());
   }
 
   public static void testEveryModAdvancementIsLoaded(GameTestHelper helper) {
     MinecraftServer server = helper.getLevel().getServer();
     assertEveryModDataIsLoaded(
-        helper,
-        FileToIdConverter.registry(Registries.ADVANCEMENT),
-        "advancements",
-        advancementId -> server.getAdvancements().get(advancementId) != null);
+      helper,
+      FileToIdConverter.registry(Registries.ADVANCEMENT),
+      "advancements",
+      advancementId -> server.getAdvancements().get(advancementId) != null);
   }
 
   public static void testEveryModLootTableIsLoaded(GameTestHelper helper) {
     MinecraftServer server = helper.getLevel().getServer();
     assertEveryModDataIsLoaded(
-        helper,
-        FileToIdConverter.registry(Registries.LOOT_TABLE),
-        "loot tables",
-        lootTableId ->
-            server
-                    .reloadableRegistries()
-                    .getLootTable(ResourceKey.create(Registries.LOOT_TABLE, lootTableId))
-                != LootTable.EMPTY);
+      helper,
+      FileToIdConverter.registry(Registries.LOOT_TABLE),
+      "loot tables",
+      lootTableId ->
+        server
+          .reloadableRegistries()
+          .getLootTable(ResourceKey.create(Registries.LOOT_TABLE, lootTableId))
+          != LootTable.EMPTY);
   }
 
   public static void testEveryModRecipeIsLoaded(GameTestHelper helper) {
     RecipeManager recipeManager = helper.getLevel().getServer().getRecipeManager();
     assertEveryModDataIsLoaded(
-        helper,
-        FileToIdConverter.registry(Registries.RECIPE),
-        "recipes",
-        recipeId -> recipeManager.byKey(ResourceKey.create(Registries.RECIPE, recipeId)).isPresent());
+      helper,
+      FileToIdConverter.registry(Registries.RECIPE),
+      "recipes",
+      recipeId -> recipeManager.byKey(ResourceKey.create(Registries.RECIPE, recipeId)).isPresent());
   }
 
   public static void testDisabledEnhancementRecipeIsRemoved(GameTestHelper helper) {
     MinecraftServer server = helper.getLevel().getServer();
     RecipeManager recipeManager = server.getRecipeManager();
     helper.assertTrue(
-        recipeManager.byKey(SPEED_ENHANCEMENT_RECIPE).isPresent(),
-        "Speed enhancement recipe is not loaded");
+      recipeManager.byKey(SPEED_ENHANCEMENT_RECIPE).isPresent(),
+      "Speed enhancement recipe is not loaded");
 
     Field recipesField = recipeMapField();
     RecipeMap originalRecipes = getRecipeMap(recipesField, recipeManager);
@@ -116,9 +117,9 @@ public class ServerDataTestHelper {
       ModRecipeManager.register(server);
 
       GameTestHelpers.assertTrue(
-          helper,
-          "Disabled speed enhancement recipe is still available",
-          recipeManager.byKey(SPEED_ENHANCEMENT_RECIPE).isEmpty());
+        helper,
+        "Disabled speed enhancement recipe is still available",
+        recipeManager.byKey(SPEED_ENHANCEMENT_RECIPE).isEmpty());
     } finally {
       MobFarmConfig.enableSpeedEnhancement = speedEnhancementEnabled;
       setRecipeMap(recipesField, recipeManager, originalRecipes);
@@ -144,7 +145,7 @@ public class ServerDataTestHelper {
   }
 
   private static void setRecipeMap(
-      Field recipesField, RecipeManager recipeManager, RecipeMap recipeMap) {
+    Field recipesField, RecipeManager recipeManager, RecipeMap recipeMap) {
     try {
       recipesField.set(recipeManager, recipeMap);
     } catch (IllegalAccessException e) {

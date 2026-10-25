@@ -29,7 +29,7 @@ import net.minecraft.world.item.ItemStack;
 public record MobFarmBlockItemTierLevel() implements RangeSelectItemModelProperty {
 
   public static final MapCodec<MobFarmBlockItemTierLevel> MAP_CODEC =
-      MapCodec.unit(new MobFarmBlockItemTierLevel());
+    MapCodec.unit(new MobFarmBlockItemTierLevel());
 
   @Override
   public float get(ItemStack itemStack, ClientLevel clientLevel, ItemOwner itemOwner, int i) {

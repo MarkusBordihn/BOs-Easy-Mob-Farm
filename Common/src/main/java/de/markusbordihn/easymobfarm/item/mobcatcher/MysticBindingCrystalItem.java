@@ -33,10 +33,10 @@ public class MysticBindingCrystalItem extends MobCatcherItem {
 
   public MysticBindingCrystalItem() {
     this(
-        new Item.Properties()
-            .setId(
-                ResourceKey.create(
-                    Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
+      new Item.Properties()
+        .setId(
+          ResourceKey.create(
+            Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
   }
 
   public MysticBindingCrystalItem(Item.Properties properties) {

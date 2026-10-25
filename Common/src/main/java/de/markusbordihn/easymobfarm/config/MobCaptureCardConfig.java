@@ -27,53 +27,53 @@ public class MobCaptureCardConfig extends Config {
 
   public static final String CONFIG_FILE_NAME = "mob_capture_card.cfg";
   public static final String CONFIG_FILE_HEADER =
-"""
- Mob Capture Card Configuration
-
- This configuration file allows you to define the general settings for the Mob Capture Cards.
-
- Configuration Options:
- ----------------------
- dropMobCaptureCardOnKill: Enable mob capture card drops when killing mobs (default: true)
- dropMobCaptureCardOnFishing: Enable mob capture card drops when fishing (default: true)
-
- requirePlayerKill: Only drop cards when player kills the mob (default: true)
- mobCaptureCardKillDropChance: Drop chance for kill drops (0.0-1.0, default: 0.1 = 10%)
- mobCaptureCardFishingDropChance: Drop chance for fishing drops (0.0-1.0, default: 0.15 = 15%)
- mobCaptureCardFoilDropChance: Drop chance for foil cards (0.0-1.0, default: 0.01 = 1%)
-
- Card stacking
- -------------
- Cards only stack when their stored mob data is identical, so per mob data like the age or the
- owner is removed when a card is created. Existing cards are cleaned up once when they are held
- in an inventory.
-
- upgradeExistingMobCaptureCards: Clean up cards from older versions on load (default: true)
- additionalCardTagsToRemove: Extra mob data tags to remove, for mobs from other mods
-
-  Example:
-    additionalCardTagsToRemove=SomeModTimer,SomeModRandomSeed
-
- Allow and Deny list
- -------------------
- If you want to allow or deny specific mobs, you can use the allow and deny list.
- Keep in mind that if you add a mob to the allow list, all other mobs will be denied by default.
- There are two separate lists for kill and fishing drops.
-
-  Example for allow only specific mobs:
-    mobCaptureCardKillDropAllowList=minecraft:zombie,minecraft:skeleton
-    mobCaptureCardKillDropDenyList=
-    mobCaptureCardFishingDropAllowList=minecraft:cod,minecraft:salmon
-    mobCaptureCardFishingDropDenyList=
-
-  Example for deny specific mobs:
-    mobCaptureCardKillDropAllowList=
-    mobCaptureCardKillDropDenyList=minecraft:ender_dragon,minecraft:wither
-    mobCaptureCardFishingDropAllowList=
-    mobCaptureCardFishingDropDenyList=minecraft:squid,minecraft:turtle
-
-
-""";
+    """
+       Mob Capture Card Configuration
+      
+       This configuration file allows you to define the general settings for the Mob Capture Cards.
+      
+       Configuration Options:
+       ----------------------
+       dropMobCaptureCardOnKill: Enable mob capture card drops when killing mobs (default: true)
+       dropMobCaptureCardOnFishing: Enable mob capture card drops when fishing (default: true)
+      
+       requirePlayerKill: Only drop cards when player kills the mob (default: true)
+       mobCaptureCardKillDropChance: Drop chance for kill drops (0.0-1.0, default: 0.1 = 10%)
+       mobCaptureCardFishingDropChance: Drop chance for fishing drops (0.0-1.0, default: 0.15 = 15%)
+       mobCaptureCardFoilDropChance: Drop chance for foil cards (0.0-1.0, default: 0.01 = 1%)
+      
+       Card stacking
+       -------------
+       Cards only stack when their stored mob data is identical, so per mob data like the age or the
+       owner is removed when a card is created. Existing cards are cleaned up once when they are held
+       in an inventory.
+      
+       upgradeExistingMobCaptureCards: Clean up cards from older versions on load (default: true)
+       additionalCardTagsToRemove: Extra mob data tags to remove, for mobs from other mods
+      
+        Example:
+          additionalCardTagsToRemove=SomeModTimer,SomeModRandomSeed
+      
+       Allow and Deny list
+       -------------------
+       If you want to allow or deny specific mobs, you can use the allow and deny list.
+       Keep in mind that if you add a mob to the allow list, all other mobs will be denied by default.
+       There are two separate lists for kill and fishing drops.
+      
+        Example for allow only specific mobs:
+          mobCaptureCardKillDropAllowList=minecraft:zombie,minecraft:skeleton
+          mobCaptureCardKillDropDenyList=
+          mobCaptureCardFishingDropAllowList=minecraft:cod,minecraft:salmon
+          mobCaptureCardFishingDropDenyList=
+      
+        Example for deny specific mobs:
+          mobCaptureCardKillDropAllowList=
+          mobCaptureCardKillDropDenyList=minecraft:ender_dragon,minecraft:wither
+          mobCaptureCardFishingDropAllowList=
+          mobCaptureCardFishingDropDenyList=minecraft:squid,minecraft:turtle
+      
+      
+      """;
 
   public static boolean dropMobCaptureCardOnKill = true;
   public static boolean dropMobCaptureCardOnFishing = true;
@@ -104,45 +104,45 @@ public class MobCaptureCardConfig extends Config {
 
     // Config entries
     dropMobCaptureCardOnKill =
-        parseConfigValue(properties, "dropMobCaptureCardOnKill", dropMobCaptureCardOnKill);
+      parseConfigValue(properties, "dropMobCaptureCardOnKill", dropMobCaptureCardOnKill);
     dropMobCaptureCardOnFishing =
-        parseConfigValue(properties, "dropMobCaptureCardOnFishing", dropMobCaptureCardOnFishing);
+      parseConfigValue(properties, "dropMobCaptureCardOnFishing", dropMobCaptureCardOnFishing);
 
     requirePlayerKill = parseConfigValue(properties, "requirePlayerKill", requirePlayerKill);
     mobCaptureCardKillDropChance =
-        parseConfigValue(
-            properties, "mobCaptureCardKillDropChance", mobCaptureCardKillDropChance, 0.0f, 1.0f);
+      parseConfigValue(
+        properties, "mobCaptureCardKillDropChance", mobCaptureCardKillDropChance, 0.0f, 1.0f);
 
     mobCaptureCardFishingDropChance =
-        parseConfigValue(
-            properties,
-            "mobCaptureCardFishingDropChance",
-            mobCaptureCardFishingDropChance,
-            0.0f,
-            1.0f);
+      parseConfigValue(
+        properties,
+        "mobCaptureCardFishingDropChance",
+        mobCaptureCardFishingDropChance,
+        0.0f,
+        1.0f);
     mobCaptureCardFoilDropChance =
-        parseConfigValue(
-            properties, "mobCaptureCardFoilDropChance", mobCaptureCardFoilDropChance, 0.0f, 1.0f);
+      parseConfigValue(
+        properties, "mobCaptureCardFoilDropChance", mobCaptureCardFoilDropChance, 0.0f, 1.0f);
 
     upgradeExistingMobCaptureCards =
-        parseConfigValue(
-            properties, "upgradeExistingMobCaptureCards", upgradeExistingMobCaptureCards);
+      parseConfigValue(
+        properties, "upgradeExistingMobCaptureCards", upgradeExistingMobCaptureCards);
     additionalCardTagsToRemove =
-        parseConfigValue(properties, "additionalCardTagsToRemove", additionalCardTagsToRemove);
+      parseConfigValue(properties, "additionalCardTagsToRemove", additionalCardTagsToRemove);
 
     mobCaptureCardKillDropAllowList =
-        parseConfigValue(
-            properties, "mobCaptureCardKillDropAllowList", mobCaptureCardKillDropAllowList);
+      parseConfigValue(
+        properties, "mobCaptureCardKillDropAllowList", mobCaptureCardKillDropAllowList);
     mobCaptureCardKillDropDenyList =
-        parseConfigValue(
-            properties, "mobCaptureCardKillDropDenyList", mobCaptureCardKillDropDenyList);
+      parseConfigValue(
+        properties, "mobCaptureCardKillDropDenyList", mobCaptureCardKillDropDenyList);
 
     mobCaptureCardFishingDropAllowList =
-        parseConfigValue(
-            properties, "mobCaptureCardFishingDropAllowList", mobCaptureCardFishingDropAllowList);
+      parseConfigValue(
+        properties, "mobCaptureCardFishingDropAllowList", mobCaptureCardFishingDropAllowList);
     mobCaptureCardFishingDropDenyList =
-        parseConfigValue(
-            properties, "mobCaptureCardFishingDropDenyList", mobCaptureCardFishingDropDenyList);
+      parseConfigValue(
+        properties, "mobCaptureCardFishingDropDenyList", mobCaptureCardFishingDropDenyList);
 
     // Update config file if needed
     updateConfigFileIfChanged(configFile, CONFIG_FILE_HEADER, properties, unmodifiedProperties);

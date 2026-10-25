@@ -31,7 +31,8 @@ import net.minecraft.server.network.ServerGamePacketListenerImpl;
 
 public class ServerEventHandler {
 
-  private ServerEventHandler() {}
+  private ServerEventHandler() {
+  }
 
   public static void registerServerEvents() {
     ServerLifecycleEvents.SERVER_STARTED.register(ServerEventHandler::onServerStarted);
@@ -49,11 +50,11 @@ public class ServerEventHandler {
   }
 
   private static void onPlayerLogin(
-      ServerGamePacketListenerImpl serverGamePacketListener,
-      PacketSender packetSender,
-      MinecraftServer minecraftServer) {
+    ServerGamePacketListenerImpl serverGamePacketListener,
+    PacketSender packetSender,
+    MinecraftServer minecraftServer) {
     SyncMobCaptureCardDefinitionsMessage message =
-        new SyncMobCaptureCardDefinitionsMessage(MobCaptureCardDefinitionManager.getAll());
+      new SyncMobCaptureCardDefinitionsMessage(MobCaptureCardDefinitionManager.getAll());
 
     ServerPlayNetworking.send(serverGamePacketListener.getPlayer(), message);
 

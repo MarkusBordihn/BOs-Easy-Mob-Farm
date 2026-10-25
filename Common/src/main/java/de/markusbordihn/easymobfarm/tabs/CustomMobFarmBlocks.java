@@ -31,7 +31,8 @@ import net.minecraft.world.level.ItemLike;
 
 public class CustomMobFarmBlocks {
 
-  private CustomMobFarmBlocks() {}
+  private CustomMobFarmBlocks() {
+  }
 
   public static Set<ItemStack> getMobFarmTiers(ItemLike itemLike) {
     if (!(itemLike instanceof MobFarmBlockItem mobFarmBlockItem)) {

@@ -39,30 +39,30 @@ public class OutputCapabilityRefreshTest {
   private static final BlockPos FARM_POSITION = new BlockPos(1, 2, 1);
 
   @GameTest(
-      structure = "easy_mob_farm:gametest.3x3x3",
-      maxTicks = MobFarmBlockEntity.DEFAULT_RECHECK_TICKS * 2)
+    structure = "easy_mob_farm:gametest.3x3x3",
+    maxTicks = MobFarmBlockEntity.DEFAULT_RECHECK_TICKS * 2)
   public void testStalledOutputRefreshHandsListenersUsableHandler(GameTestHelper helper) {
     helper.setBlock(FARM_POSITION, ModBlocks.ANIMAL_PLAINS_FARM.get());
     MobFarmBlockEntity mobFarmBlockEntity =
-        helper.getBlockEntity(FARM_POSITION, MobFarmBlockEntity.class);
+      helper.getBlockEntity(FARM_POSITION, MobFarmBlockEntity.class);
     mobFarmBlockEntity.setItem(
-        MobFarmSlots.RESULT_SLOTS.get(0).index(), new ItemStack(Items.FEATHER));
+      MobFarmSlots.RESULT_SLOTS.get(0).index(), new ItemStack(Items.FEATHER));
 
     AtomicReference<LazyOptional<IItemHandler>> requeriedItemHandler = new AtomicReference<>();
     mobFarmBlockEntity
-        .getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.DOWN)
-        .addListener(
-            invalidatedItemHandler ->
-                requeriedItemHandler.set(
-                    mobFarmBlockEntity.getCapability(
-                        ForgeCapabilities.ITEM_HANDLER, Direction.DOWN)));
+      .getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.DOWN)
+      .addListener(
+        invalidatedItemHandler ->
+          requeriedItemHandler.set(
+            mobFarmBlockEntity.getCapability(
+              ForgeCapabilities.ITEM_HANDLER, Direction.DOWN)));
 
     helper.succeedWhen(
-        () -> {
-          helper.assertTrue(requeriedItemHandler.get() != null, "Stalled output was not refreshed");
-          helper.assertTrue(
-              requeriedItemHandler.get().isPresent(),
-              "Listener re-querying on invalidation received an invalidated item handler");
-        });
+      () -> {
+        helper.assertTrue(requeriedItemHandler.get() != null, "Stalled output was not refreshed");
+        helper.assertTrue(
+          requeriedItemHandler.get().isPresent(),
+          "Listener re-querying on invalidation received an invalidated item handler");
+      });
   }
 }

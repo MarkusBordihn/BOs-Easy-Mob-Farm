@@ -42,38 +42,38 @@ public class RedstoneSignalTest {
 
     // Set mob farm block
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.ANIMAL_PLAINS_FARM.get().asItem(), mobFarmPos);
+      helper, ModBlockItems.ANIMAL_PLAINS_FARM.get().asItem(), mobFarmPos);
     GameTestHelpers.assertTrue(
-        helper,
-        "Mob farm block should be placed.",
-        helper.getBlockState(mobFarmPos).is(ModBlocks.ANIMAL_PLAINS_FARM.get()));
+      helper,
+      "Mob farm block should be placed.",
+      helper.getBlockState(mobFarmPos).is(ModBlocks.ANIMAL_PLAINS_FARM.get()));
     GameTestHelpers.assertFalse(
-        helper,
-        "Mob farm should not be powered by redstone signal.",
-        helper.getBlockState(mobFarmPos).getValue(MobFarmBlock.POWERED));
+      helper,
+      "Mob farm should not be powered by redstone signal.",
+      helper.getBlockState(mobFarmPos).getValue(MobFarmBlock.POWERED));
 
     // Place a lever next to the mob farm
     helper.setBlock(
-        leverPos,
-        Blocks.LEVER
-            .defaultBlockState()
-            .setValue(LeverBlock.FACING, Direction.WEST)
-            .setValue(LeverBlock.FACE, AttachFace.WALL)
-            .setValue(LeverBlock.POWERED, true));
+      leverPos,
+      Blocks.LEVER
+        .defaultBlockState()
+        .setValue(LeverBlock.FACING, Direction.WEST)
+        .setValue(LeverBlock.FACE, AttachFace.WALL)
+        .setValue(LeverBlock.POWERED, true));
     GameTestHelpers.assertTrue(
-        helper, "Lever should be placed.", helper.getBlockState(leverPos).is(Blocks.LEVER));
+      helper, "Lever should be placed.", helper.getBlockState(leverPos).is(Blocks.LEVER));
     helper.pullLever(leverPos);
 
     // Activate redstone signal
     helper.runAfterDelay(
-        1,
-        () -> {
-          GameTestHelpers.assertTrue(
-              helper,
-              "Mob farm should be powered by redstone signal.",
-              helper.getBlockState(mobFarmPos).getValue(MobFarmBlock.POWERED));
-          helper.succeed();
-        });
+      1,
+      () -> {
+        GameTestHelpers.assertTrue(
+          helper,
+          "Mob farm should be powered by redstone signal.",
+          helper.getBlockState(mobFarmPos).getValue(MobFarmBlock.POWERED));
+        helper.succeed();
+      });
   }
 
   @GameTest(structure = "easy_mob_farm:gametest.3x3x3")
@@ -84,76 +84,76 @@ public class RedstoneSignalTest {
 
     // Set mob farm block
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.ANIMAL_PLAINS_FARM.get().asItem(), mobFarmPos);
+      helper, ModBlockItems.ANIMAL_PLAINS_FARM.get().asItem(), mobFarmPos);
     GameTestHelpers.assertTrue(
-        helper,
-        "Mob farm block should be placed.",
-        helper.getBlockState(mobFarmPos).is(ModBlocks.ANIMAL_PLAINS_FARM.get()));
+      helper,
+      "Mob farm block should be placed.",
+      helper.getBlockState(mobFarmPos).is(ModBlocks.ANIMAL_PLAINS_FARM.get()));
     GameTestHelpers.assertFalse(
-        helper,
-        "Mob farm should not be powered by redstone signal.",
-        helper.getBlockState(mobFarmPos).getValue(MobFarmBlock.POWERED));
+      helper,
+      "Mob farm should not be powered by redstone signal.",
+      helper.getBlockState(mobFarmPos).getValue(MobFarmBlock.POWERED));
 
     // Place a red stone block next to the mob farm
     helper.setBlock(redstoneBlockPos, Blocks.REDSTONE_BLOCK.defaultBlockState());
     GameTestHelpers.assertTrue(
-        helper,
-        "Redstone block should be placed.",
-        helper.getBlockState(redstoneBlockPos).is(Blocks.REDSTONE_BLOCK));
+      helper,
+      "Redstone block should be placed.",
+      helper.getBlockState(redstoneBlockPos).is(Blocks.REDSTONE_BLOCK));
 
     // Activate redstone signal
     helper.runAfterDelay(
-        1,
-        () -> {
-          GameTestHelpers.assertTrue(
-              helper,
-              "Mob farm should be powered by redstone signal.",
-              helper.getBlockState(mobFarmPos).getValue(MobFarmBlock.POWERED));
-          helper.succeed();
-        });
+      1,
+      () -> {
+        GameTestHelpers.assertTrue(
+          helper,
+          "Mob farm should be powered by redstone signal.",
+          helper.getBlockState(mobFarmPos).getValue(MobFarmBlock.POWERED));
+        helper.succeed();
+      });
   }
 
   @GameTest(structure = "easy_mob_farm:gametest.3x3x3")
   public void testRedstoneModeDisableOnSignal(GameTestHelper helper) {
     MobFarmRedstoneModeTestHelper.testRedstoneMode(
-        helper,
-        ModBlockItems.ANIMAL_PLAINS_FARM.get().asItem(),
-        ModBlocks.ANIMAL_PLAINS_FARM.get(),
-        RedstoneMode.DISABLE_ON_SIGNAL,
-        true,
-        true);
+      helper,
+      ModBlockItems.ANIMAL_PLAINS_FARM.get().asItem(),
+      ModBlocks.ANIMAL_PLAINS_FARM.get(),
+      RedstoneMode.DISABLE_ON_SIGNAL,
+      true,
+      true);
   }
 
   @GameTest(structure = "easy_mob_farm:gametest.3x3x3")
   public void testRedstoneModeEnableOnSignal(GameTestHelper helper) {
     MobFarmRedstoneModeTestHelper.testRedstoneMode(
-        helper,
-        ModBlockItems.ANIMAL_PLAINS_FARM.get().asItem(),
-        ModBlocks.ANIMAL_PLAINS_FARM.get(),
-        RedstoneMode.ENABLE_ON_SIGNAL,
-        true,
-        false);
+      helper,
+      ModBlockItems.ANIMAL_PLAINS_FARM.get().asItem(),
+      ModBlocks.ANIMAL_PLAINS_FARM.get(),
+      RedstoneMode.ENABLE_ON_SIGNAL,
+      true,
+      false);
   }
 
   @GameTest(structure = "easy_mob_farm:gametest.3x3x3")
   public void testRedstoneModeEnableOnSignalWithoutSignal(GameTestHelper helper) {
     MobFarmRedstoneModeTestHelper.testRedstoneMode(
-        helper,
-        ModBlockItems.ANIMAL_PLAINS_FARM.get().asItem(),
-        ModBlocks.ANIMAL_PLAINS_FARM.get(),
-        RedstoneMode.ENABLE_ON_SIGNAL,
-        false,
-        true);
+      helper,
+      ModBlockItems.ANIMAL_PLAINS_FARM.get().asItem(),
+      ModBlocks.ANIMAL_PLAINS_FARM.get(),
+      RedstoneMode.ENABLE_ON_SIGNAL,
+      false,
+      true);
   }
 
   @GameTest(structure = "easy_mob_farm:gametest.3x3x3")
   public void testRedstoneModeIgnore(GameTestHelper helper) {
     MobFarmRedstoneModeTestHelper.testRedstoneMode(
-        helper,
-        ModBlockItems.ANIMAL_PLAINS_FARM.get().asItem(),
-        ModBlocks.ANIMAL_PLAINS_FARM.get(),
-        RedstoneMode.IGNORE,
-        true,
-        false);
+      helper,
+      ModBlockItems.ANIMAL_PLAINS_FARM.get().asItem(),
+      ModBlocks.ANIMAL_PLAINS_FARM.get(),
+      RedstoneMode.IGNORE,
+      true,
+      false);
   }
 }

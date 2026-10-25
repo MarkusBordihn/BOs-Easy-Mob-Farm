@@ -34,28 +34,29 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public class ModDataComponents {
 
   public static final DeferredRegister.DataComponents DATA_COMPONENTS =
-      DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, Constants.MOD_ID);
+    DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, Constants.MOD_ID);
   public static final Supplier<DataComponentType<MobCaptureData>> MOB_CAPTURE_DATA =
-      DATA_COMPONENTS.registerComponentType(
-          MobCaptureData.ID,
-          builder ->
-              builder
-                  .persistent(MobCaptureData.CODEC)
-                  .networkSynchronized(MobCaptureData.STREAM_CODEC));
+    DATA_COMPONENTS.registerComponentType(
+      MobCaptureData.ID,
+      builder ->
+        builder
+          .persistent(MobCaptureData.CODEC)
+          .networkSynchronized(MobCaptureData.STREAM_CODEC));
   public static final Supplier<DataComponentType<MobFarmData>> MOB_FARM_DATA =
-      DATA_COMPONENTS.registerComponentType(
-          MobFarmData.ID,
-          builder ->
-              builder.persistent(MobFarmData.CODEC).networkSynchronized(MobFarmData.STREAM_CODEC));
+    DATA_COMPONENTS.registerComponentType(
+      MobFarmData.ID,
+      builder ->
+        builder.persistent(MobFarmData.CODEC).networkSynchronized(MobFarmData.STREAM_CODEC));
 
-  private ModDataComponents() {}
+  private ModDataComponents() {
+  }
 
   @SubscribeEvent
   public static void onCommonSetup(FMLCommonSetupEvent event) {
     event.enqueueWork(
-        () -> {
-          DataComponents.registerMobCaptureData(MOB_CAPTURE_DATA);
-          DataComponents.registerMobFarmData(MOB_FARM_DATA);
-        });
+      () -> {
+        DataComponents.registerMobCaptureData(MOB_CAPTURE_DATA);
+        DataComponents.registerMobFarmData(MOB_FARM_DATA);
+      });
   }
 }

@@ -29,7 +29,8 @@ public class CompatManager {
 
   private static CompatHandlerInterface compatHandlerInterface;
 
-  private CompatManager() {}
+  private CompatManager() {
+  }
 
   public static void registerCompatHandler(CompatHandlerInterface compatHandlerInterface) {
     log.debug("{} Compat Handler ...", Constants.LOG_REGISTER_PREFIX);

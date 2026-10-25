@@ -52,7 +52,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class MobFarmBlockEntityRenderer
-    implements BlockEntityRenderer<MobFarmBlockEntity, MobFarmRenderState> {
+  implements BlockEntityRenderer<MobFarmBlockEntity, MobFarmRenderState> {
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
   private static final Set<EntityType<?>> loggedRenderFailures = new HashSet<>();
@@ -69,13 +69,13 @@ public class MobFarmBlockEntityRenderer
 
   @Override
   public void extractRenderState(
-      MobFarmBlockEntity blockEntity,
-      MobFarmRenderState renderState,
-      float partialTicks,
-      Vec3 cameraPos,
-      ModelFeatureRenderer.CrumblingOverlay crumblingOverlay) {
+    MobFarmBlockEntity blockEntity,
+    MobFarmRenderState renderState,
+    float partialTicks,
+    Vec3 cameraPos,
+    ModelFeatureRenderer.CrumblingOverlay crumblingOverlay) {
     BlockEntityRenderer.super.extractRenderState(
-        blockEntity, renderState, partialTicks, cameraPos, crumblingOverlay);
+      blockEntity, renderState, partialTicks, cameraPos, crumblingOverlay);
 
     if (!blockEntity.hasCapturedMob() || blockEntity.getLevel() == null) {
       RendererManager.removeEntity(blockEntity);
@@ -94,17 +94,17 @@ public class MobFarmBlockEntityRenderer
     try {
       @SuppressWarnings("unchecked")
       EntityRenderer<Entity, EntityRenderState> renderer =
-          (EntityRenderer<Entity, EntityRenderState>) this.entityRenderer.getRenderer(entity);
+        (EntityRenderer<Entity, EntityRenderState>) this.entityRenderer.getRenderer(entity);
       EntityRenderState entityRenderState = renderer.createRenderState(entity, partialTicks);
 
       // Animation support
       entity.tickCount = (int) blockEntity.getLevel().getGameTime();
       MobCaptureCardDefinition mobCaptureCardDefinition =
-          MobCaptureCardDefinitionManager.get(entity.getType());
+        MobCaptureCardDefinitionManager.get(entity.getType());
       if ((mobCaptureCardDefinition != null
-              && mobCaptureCardDefinition.requiresAnimationTick()
-              && entity.tickCount % 2 == 0)
-          || entity.tickCount % 200 == 0) {
+        && mobCaptureCardDefinition.requiresAnimationTick()
+        && entity.tickCount % 2 == 0)
+        || entity.tickCount % 200 == 0) {
         entity.tick();
       }
 
@@ -127,21 +127,21 @@ public class MobFarmBlockEntityRenderer
 
       // Calculate rotation based on facing direction
       renderState.rotationDegrees =
-          switch (renderState.facing) {
-            case NORTH -> 180f;
-            case SOUTH -> 0f;
-            case WEST -> -90f;
-            case EAST -> 90f;
-            default -> 0f;
-          };
+        switch (renderState.facing) {
+          case NORTH -> 180f;
+          case SOUTH -> 0f;
+          case WEST -> -90f;
+          case EAST -> 90f;
+          default -> 0f;
+        };
 
     } catch (Exception exception) {
       if (loggedRenderFailures.add(entity.getType())) {
         log.error(
-            "Failed to extract render state for entity {} at block entity {}: {}",
-            entity.getType(),
-            blockEntity.getBlockPos(),
-            exception.getMessage());
+          "Failed to extract render state for entity {} at block entity {}: {}",
+          entity.getType(),
+          blockEntity.getBlockPos(),
+          exception.getMessage());
       }
       renderState.entityRenderState = null;
     }
@@ -149,10 +149,10 @@ public class MobFarmBlockEntityRenderer
 
   @Override
   public void submit(
-      MobFarmRenderState renderState,
-      PoseStack poseStack,
-      SubmitNodeCollector submitNodeCollector,
-      CameraRenderState cameraRenderState) {
+    MobFarmRenderState renderState,
+    PoseStack poseStack,
+    SubmitNodeCollector submitNodeCollector,
+    CameraRenderState cameraRenderState) {
 
     if (renderState.entityRenderState == null) {
       return;
@@ -168,7 +168,7 @@ public class MobFarmBlockEntityRenderer
     }
 
     poseStack.scale(
-        renderState.entityScaling, renderState.entityScaling, renderState.entityScaling);
+      renderState.entityScaling, renderState.entityScaling, renderState.entityScaling);
 
     // Apply rotation based on facing direction
     poseStack.rotateDegrees(Axis.YP, renderState.rotationDegrees);
@@ -178,13 +178,13 @@ public class MobFarmBlockEntityRenderer
 
     // Submit entity for rendering
     this.entityRenderer.submit(
-        renderState.entityRenderState,
-        cameraRenderState,
-        0.0,
-        0.0,
-        0.0,
-        poseStack,
-        submitNodeCollector);
+      renderState.entityRenderState,
+      cameraRenderState,
+      0.0,
+      0.0,
+      0.0,
+      poseStack,
+      submitNodeCollector);
 
     poseStack.popPose();
   }
@@ -207,7 +207,7 @@ public class MobFarmBlockEntityRenderer
   }
 
   private void applyEntitySpecificTransformations(
-      MobFarmRenderState renderState, PoseStack poseStack) {
+    MobFarmRenderState renderState, PoseStack poseStack) {
     switch (renderState.entityType) {
       case SCHOOLING_FISH:
         poseStack.translate(-0.1, 0.5, 0.1);

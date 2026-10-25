@@ -34,43 +34,43 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload.Type;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 
 public record SyncLootPreviewBatchMessage(Map<EntityType<?>, List<ItemStack>> previews)
-    implements NetworkMessageRecord {
+  implements NetworkMessageRecord {
 
   public static final Identifier MESSAGE_ID =
-      Identifier.fromNamespaceAndPath(Constants.MOD_ID, "sync_loot_preview_batch");
+    Identifier.fromNamespaceAndPath(Constants.MOD_ID, "sync_loot_preview_batch");
   public static final CustomPacketPayload.Type<SyncLootPreviewBatchMessage> PAYLOAD_TYPE =
-      new Type<>(MESSAGE_ID);
+    new Type<>(MESSAGE_ID);
   public static final StreamCodec<RegistryFriendlyByteBuf, SyncLootPreviewBatchMessage>
-      STREAM_CODEC =
-          StreamCodec.of(
-              (buffer, message) -> message.write(buffer), SyncLootPreviewBatchMessage::create);
+    STREAM_CODEC =
+    StreamCodec.of(
+      (buffer, message) -> message.write(buffer), SyncLootPreviewBatchMessage::create);
 
   public static BiConsumer<ServerPlayer, SyncLootPreviewBatchMessage> SENDER =
-      (player, message) -> {};
+    (player, message) -> {
+    };
 
   public static SyncLootPreviewBatchMessage create(FriendlyByteBuf buffer) {
     int numberOfPreviews = buffer.readVarInt();
     Map<EntityType<?>, List<ItemStack>> previews = new LinkedHashMap<>();
     for (int previewIndex = 0; previewIndex < numberOfPreviews; previewIndex++) {
       Optional<Holder.Reference<EntityType<?>>> entityTypeHolder =
-          BuiltInRegistries.ENTITY_TYPE.get(buffer.readIdentifier());
+        BuiltInRegistries.ENTITY_TYPE.get(buffer.readIdentifier());
       int numberOfItems = buffer.readVarInt();
       List<ItemStack> items = new ArrayList<>(numberOfItems);
       for (int itemIndex = 0; itemIndex < numberOfItems; itemIndex++) {
         Identifier itemId = buffer.readIdentifier();
         int count = buffer.readVarInt();
         BuiltInRegistries.ITEM
-            .get(itemId)
-            .ifPresentOrElse(
-                itemHolder -> items.add(new ItemStack(itemHolder.value(), count)),
-                () -> items.add(ItemStack.EMPTY));
+          .get(itemId)
+          .ifPresentOrElse(
+            itemHolder -> items.add(new ItemStack(itemHolder.value(), count)),
+            () -> items.add(ItemStack.EMPTY));
       }
       entityTypeHolder.ifPresent(entityType -> previews.put(entityType.value(), items));
     }
@@ -78,7 +78,7 @@ public record SyncLootPreviewBatchMessage(Map<EntityType<?>, List<ItemStack>> pr
   }
 
   public static void sendToPlayer(
-      ServerPlayer serverPlayer, Map<EntityType<?>, List<ItemStack>> previews) {
+    ServerPlayer serverPlayer, Map<EntityType<?>, List<ItemStack>> previews) {
     if (previews.isEmpty()) {
       return;
     }
@@ -90,14 +90,14 @@ public record SyncLootPreviewBatchMessage(Map<EntityType<?>, List<ItemStack>> pr
   public void write(FriendlyByteBuf buffer) {
     buffer.writeVarInt(this.previews.size());
     this.previews.forEach(
-        (entityType, items) -> {
-          buffer.writeIdentifier(BuiltInRegistries.ENTITY_TYPE.getKey(entityType));
-          buffer.writeVarInt(items.size());
-          for (ItemStack item : items) {
-            buffer.writeIdentifier(BuiltInRegistries.ITEM.getKey(item.getItem()));
-            buffer.writeVarInt(item.getCount());
-          }
-        });
+      (entityType, items) -> {
+        buffer.writeIdentifier(BuiltInRegistries.ENTITY_TYPE.getKey(entityType));
+        buffer.writeVarInt(items.size());
+        for (ItemStack item : items) {
+          buffer.writeIdentifier(BuiltInRegistries.ITEM.getKey(item.getItem()));
+          buffer.writeVarInt(item.getCount());
+        }
+      });
   }
 
   @Override

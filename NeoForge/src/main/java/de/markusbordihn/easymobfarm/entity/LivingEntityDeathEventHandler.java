@@ -28,14 +28,15 @@ import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 @EventBusSubscriber
 public class LivingEntityDeathEventHandler {
 
-  private LivingEntityDeathEventHandler() {}
+  private LivingEntityDeathEventHandler() {
+  }
 
   @SuppressWarnings("unused")
   @SubscribeEvent
   public static void onLivingDeathEvent(LivingDeathEvent event) {
     if (event.getEntity() == null
-        || event.getEntity().level().isClientSide()
-        || event.getEntity() instanceof Player) {
+      || event.getEntity().level().isClientSide()
+      || event.getEntity() instanceof Player) {
       return;
     }
     LivingEntityEvents.handleLivingEntityDeathEvent(event.getEntity(), event.getSource());

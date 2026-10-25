@@ -27,14 +27,15 @@ import net.minecraft.server.Bootstrap;
 
 public final class TestBootstrap {
 
-  private TestBootstrap() {}
+  private TestBootstrap() {
+  }
 
   public static void bootstrapWithBoundItemComponents() {
     SharedConstants.tryDetectVersion();
     Bootstrap.bootStrap();
 
     BuiltInRegistries.DATA_COMPONENT_INITIALIZERS
-        .build(VanillaRegistries.createWorldLookup())
-        .forEach(DataComponentInitializers.PendingComponents::apply);
+      .build(VanillaRegistries.createWorldLookup())
+      .forEach(DataComponentInitializers.PendingComponents::apply);
   }
 }

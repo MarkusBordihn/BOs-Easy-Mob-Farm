@@ -1,15 +1,16 @@
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 
-def inputDir = file("$projectDir/../Common/src/main/resources/data")
-def outputFile = file("$projectDir/../Common/src/main/resources/assets/easy_mob_farm/items/mob_capture_card.json")
+def inputDir = file("$rootDir/Common/src/main/resources/data")
+def outputFile = file("$rootDir/Common/src/main/resources/assets/easy_mob_farm/items/mob_capture_card.json")
 
 task generateMobCaptureCardModel {
   group = "build"
   description = "Generates mob_capture_card.json from entity definitions."
 
   inputs.dir inputDir
-  outputs.file outputFile
+  // No outputs.file: the JSON lives in Common's source set, which every loader reads, and a
+  // declared output there fails Gradle's implicit-dependency validation for all of them.
 
   doLast {
     def jsonSlurper = new JsonSlurper()

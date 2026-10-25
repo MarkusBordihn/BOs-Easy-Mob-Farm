@@ -33,20 +33,21 @@ public class MobFarmRedstoneModeTestHelper {
   private static final BlockPos MOB_FARM_POS = new BlockPos(0, 1, 0);
   private static final int STATUS_CHECK_DELAY = 3;
 
-  private MobFarmRedstoneModeTestHelper() {}
+  private MobFarmRedstoneModeTestHelper() {
+  }
 
   public static void testRedstoneMode(
-      GameTestHelper helper,
-      Item item,
-      Block block,
-      RedstoneMode redstoneMode,
-      boolean powered,
-      boolean expectDisabled) {
+    GameTestHelper helper,
+    Item item,
+    Block block,
+    RedstoneMode redstoneMode,
+    boolean powered,
+    boolean expectDisabled) {
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(helper, item, MOB_FARM_POS);
     helper.assertBlockPresent(block, MOB_FARM_POS);
 
     if (!(helper.getLevel().getBlockEntity(helper.absolutePos(MOB_FARM_POS))
-        instanceof MobFarmBlockEntity mobFarmBlockEntity)) {
+      instanceof MobFarmBlockEntity mobFarmBlockEntity)) {
       helper.fail("Mob farm block entity should be present.");
       return;
     }
@@ -60,19 +61,19 @@ public class MobFarmRedstoneModeTestHelper {
     }
 
     String failureMessage =
-        "Mob farm with redstone mode "
-            + redstoneMode.getId()
-            + " and redstone signal "
-            + powered
-            + " should have disabled status "
-            + expectDisabled;
+      "Mob farm with redstone mode "
+        + redstoneMode.getId()
+        + " and redstone signal "
+        + powered
+        + " should have disabled status "
+        + expectDisabled;
 
     helper.runAfterDelay(
-        STATUS_CHECK_DELAY,
-        () ->
-            GameTestHelpers.assertTrue(
-                helper,
-                failureMessage + ", but status is " + mobFarmBlockEntity.getFarmStatus(),
-                (mobFarmBlockEntity.getFarmStatus() == MobFarmStatus.DISABLED) == expectDisabled));
+      STATUS_CHECK_DELAY,
+      () ->
+        GameTestHelpers.assertTrue(
+          helper,
+          failureMessage + ", but status is " + mobFarmBlockEntity.getFarmStatus(),
+          (mobFarmBlockEntity.getFarmStatus() == MobFarmStatus.DISABLED) == expectDisabled));
   }
 }

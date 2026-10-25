@@ -20,6 +20,7 @@
 package de.markusbordihn.easymobfarm.data.mobfarm;
 
 public class MobFarmStatus {
+
   public static final int IDLE = 0;
   public static final int PROCESSING = 102;
   public static final int WORKING = 200;

@@ -42,53 +42,53 @@ public class ItemCapabilityTest {
 
     // Set mob farm block
     MobFarmBlockItemTestHelper.useMobFarmBlockItem(
-        helper, ModBlockItems.ANIMAL_PLAINS_FARM.get().asItem(), mobFarmPos);
+      helper, ModBlockItems.ANIMAL_PLAINS_FARM.get().asItem(), mobFarmPos);
     GameTestHelpers.assertTrue(
-        helper,
-        "Mob farm block should be placed.",
-        helper.getBlockState(mobFarmPos).is(ModBlocks.ANIMAL_PLAINS_FARM.get()));
+      helper,
+      "Mob farm block should be placed.",
+      helper.getBlockState(mobFarmPos).is(ModBlocks.ANIMAL_PLAINS_FARM.get()));
 
     // Place loot into the first result slot
     MobFarmBlockEntity mobFarmBlockEntity =
-        helper.getBlockEntity(mobFarmPos, MobFarmBlockEntity.class);
+      helper.getBlockEntity(mobFarmPos, MobFarmBlockEntity.class);
     int resultSlotIndex = MobFarmSlots.RESULT_SLOTS.get(0).index();
     mobFarmBlockEntity.setItem(resultSlotIndex, new ItemStack(Items.BONE, 8));
 
     // Query the item capability from the side, like Pipez, RS2 or Sophisticated Storage do
     ResourceHandler<ItemResource> itemHandler =
-        helper
-            .getLevel()
-            .getCapability(Capabilities.Item.BLOCK, helper.absolutePos(mobFarmPos), Direction.WEST);
+      helper
+        .getLevel()
+        .getCapability(Capabilities.Item.BLOCK, helper.absolutePos(mobFarmPos), Direction.WEST);
     GameTestHelpers.assertTrue(
-        helper, "Item capability should be exposed on the side.", itemHandler != null);
+      helper, "Item capability should be exposed on the side.", itemHandler != null);
     GameTestHelpers.assertTrue(
-        helper,
-        "Item capability should only expose the result slots.",
-        itemHandler.size() == MobFarmSlots.RESULT_SLOTS.size());
+      helper,
+      "Item capability should only expose the result slots.",
+      itemHandler.size() == MobFarmSlots.RESULT_SLOTS.size());
 
     // Extract one item through the capability
     ItemResource itemResource = itemHandler.getResource(0);
     GameTestHelpers.assertTrue(
-        helper, "Loot should be visible through the item capability.", !itemResource.isEmpty());
+      helper, "Loot should be visible through the item capability.", !itemResource.isEmpty());
     try (Transaction transaction = Transaction.openRoot()) {
       int extractedAmount = itemHandler.extract(0, itemResource, 1, transaction);
       GameTestHelpers.assertTrue(
-          helper,
-          "One item should be extractable through the item capability.",
-          extractedAmount == 1);
+        helper,
+        "One item should be extractable through the item capability.",
+        extractedAmount == 1);
       transaction.commit();
     }
     GameTestHelpers.assertTrue(
-        helper,
-        "Extraction should reduce the result slot content.",
-        mobFarmBlockEntity.getItem(resultSlotIndex).getCount() == 7);
+      helper,
+      "Extraction should reduce the result slot content.",
+      mobFarmBlockEntity.getItem(resultSlotIndex).getCount() == 7);
 
     // Inserting items from the side should not be possible
     try (Transaction transaction = Transaction.openRoot()) {
       int insertedAmount =
-          itemHandler.insert(ItemResource.of(new ItemStack(Items.DIRT)), 1, transaction);
+        itemHandler.insert(ItemResource.of(new ItemStack(Items.DIRT)), 1, transaction);
       GameTestHelpers.assertTrue(
-          helper, "Inserting items from the side should not be possible.", insertedAmount == 0);
+        helper, "Inserting items from the side should not be possible.", insertedAmount == 0);
     }
 
     helper.succeed();

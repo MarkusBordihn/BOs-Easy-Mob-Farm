@@ -26,10 +26,10 @@ import net.minecraft.world.inventory.ContainerData;
 public class MobFarmMenuWrapper extends MobFarmMenu {
 
   public MobFarmMenuWrapper(
-      final int windowId,
-      final Inventory playerInventory,
-      final Container container,
-      final ContainerData containerData) {
+    final int windowId,
+    final Inventory playerInventory,
+    final Container container,
+    final ContainerData containerData) {
     super(ModMenuTypes.MOB_FARM_MENU, windowId, playerInventory, container, containerData);
   }
 

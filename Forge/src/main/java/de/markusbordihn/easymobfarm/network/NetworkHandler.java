@@ -30,64 +30,65 @@ import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.network.SimpleChannel;
 
 public class NetworkHandler {
+
   private static final int PROTOCOL_VERSION = 3;
 
   public static final SimpleChannel INSTANCE =
-      ChannelBuilder.named(Identifier.fromNamespaceAndPath(Constants.MOD_ID, "network"))
-          .networkProtocolVersion(PROTOCOL_VERSION)
-          .simpleChannel();
+    ChannelBuilder.named(Identifier.fromNamespaceAndPath(Constants.MOD_ID, "network"))
+      .networkProtocolVersion(PROTOCOL_VERSION)
+      .simpleChannel();
 
   private static int packetId = 0;
 
   public static void registerClientNetworkMessageHandler() {
     INSTANCE
-        .messageBuilder(
-            SyncMobCaptureCardDefinitionsMessage.class, packetId++, NetworkDirection.PLAY_TO_CLIENT)
-        .encoder(SyncMobCaptureCardDefinitionsMessage::write)
-        .decoder(SyncMobCaptureCardDefinitionsMessage::create)
-        .consumerNetworkThread(
-            (message, context) -> {
-              context.enqueueWork(
-                  () -> {
-                    if (FMLEnvironment.dist.isClient()) {
-                      message.handleClient();
-                    }
-                  });
-              context.setPacketHandled(true);
-            })
-        .add();
+      .messageBuilder(
+        SyncMobCaptureCardDefinitionsMessage.class, packetId++, NetworkDirection.PLAY_TO_CLIENT)
+      .encoder(SyncMobCaptureCardDefinitionsMessage::write)
+      .decoder(SyncMobCaptureCardDefinitionsMessage::create)
+      .consumerNetworkThread(
+        (message, context) -> {
+          context.enqueueWork(
+            () -> {
+              if (FMLEnvironment.dist.isClient()) {
+                message.handleClient();
+              }
+            });
+          context.setPacketHandled(true);
+        })
+      .add();
 
     INSTANCE
-        .messageBuilder(SyncLootPreviewMessage.class, packetId++, NetworkDirection.PLAY_TO_CLIENT)
-        .encoder(SyncLootPreviewMessage::write)
-        .decoder(SyncLootPreviewMessage::create)
-        .consumerNetworkThread(
-            (message, context) -> {
-              context.enqueueWork(
-                  () -> {
-                    if (FMLEnvironment.dist.isClient()) {
-                      message.handleClient();
-                    }
-                  });
-              context.setPacketHandled(true);
-            })
-        .add();
+      .messageBuilder(SyncLootPreviewMessage.class, packetId++, NetworkDirection.PLAY_TO_CLIENT)
+      .encoder(SyncLootPreviewMessage::write)
+      .decoder(SyncLootPreviewMessage::create)
+      .consumerNetworkThread(
+        (message, context) -> {
+          context.enqueueWork(
+            () -> {
+              if (FMLEnvironment.dist.isClient()) {
+                message.handleClient();
+              }
+            });
+          context.setPacketHandled(true);
+        })
+      .add();
 
     INSTANCE
-        .messageBuilder(
-            SyncLootPreviewBatchMessage.class, packetId++, NetworkDirection.PLAY_TO_CLIENT)
-        .encoder(SyncLootPreviewBatchMessage::write)
-        .decoder(SyncLootPreviewBatchMessage::create)
-        .consumerNetworkThread(
-            (message, context) -> {
-              context.enqueueWork(
-                  () -> {
-                    if (FMLEnvironment.dist.isClient()) {
-                      message.handleClient();
-                    }
-                  });
-              context.setPacketHandled(true);
-            })
-        .add();
+      .messageBuilder(
+        SyncLootPreviewBatchMessage.class, packetId++, NetworkDirection.PLAY_TO_CLIENT)
+      .encoder(SyncLootPreviewBatchMessage::write)
+      .decoder(SyncLootPreviewBatchMessage::create)
+      .consumerNetworkThread(
+        (message, context) -> {
+          context.enqueueWork(
+            () -> {
+              if (FMLEnvironment.dist.isClient()) {
+                message.handleClient();
+              }
+            });
+          context.setPacketHandled(true);
+        })
+      .add();
   }
 }

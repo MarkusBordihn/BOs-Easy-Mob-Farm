@@ -26,51 +26,51 @@ import net.minecraft.resources.Identifier;
 public interface ThemeProgressBar {
 
   static Fill horizontal(
-      String textureName, int x, int y, int width, int height, int textureU, int textureV) {
+    String textureName, int x, int y, int width, int height, int textureU, int textureV) {
     return new Fill(
-        TextureThemeRenderer.guiTexture(textureName),
-        x,
-        y,
-        width,
-        height,
-        textureU,
-        textureV,
-        false);
+      TextureThemeRenderer.guiTexture(textureName),
+      x,
+      y,
+      width,
+      height,
+      textureU,
+      textureV,
+      false);
   }
 
   static Fill vertical(
-      String textureName, int x, int y, int width, int height, int textureU, int textureV) {
+    String textureName, int x, int y, int width, int height, int textureU, int textureV) {
     return new Fill(
-        TextureThemeRenderer.guiTexture(textureName),
-        x,
-        y,
-        width,
-        height,
-        textureU,
-        textureV,
-        true);
+      TextureThemeRenderer.guiTexture(textureName),
+      x,
+      y,
+      width,
+      height,
+      textureU,
+      textureV,
+      true);
   }
 
   static Frames frames(
-      String textureName,
-      int x,
-      int y,
-      int width,
-      int height,
-      int frameCount,
-      int columns,
-      int strideX,
-      int strideY) {
+    String textureName,
+    int x,
+    int y,
+    int width,
+    int height,
+    int frameCount,
+    int columns,
+    int strideX,
+    int strideY) {
     return new Frames(
-        TextureThemeRenderer.guiTexture(textureName),
-        x,
-        y,
-        width,
-        height,
-        frameCount,
-        columns,
-        strideX,
-        strideY);
+      TextureThemeRenderer.guiTexture(textureName),
+      x,
+      y,
+      width,
+      height,
+      frameCount,
+      columns,
+      strideX,
+      strideY);
   }
 
   void render(GuiGraphicsExtractor guiGraphics, int leftPos, int topPos, float progress);
@@ -87,21 +87,21 @@ public interface ThemeProgressBar {
 
   default boolean contains(double mouseX, double mouseY) {
     return mouseX >= this.x()
-        && mouseX < this.x() + this.width()
-        && mouseY >= this.y()
-        && mouseY < this.y() + this.height();
+      && mouseX < this.x() + this.width()
+      && mouseY >= this.y()
+      && mouseY < this.y() + this.height();
   }
 
   record Fill(
-      Identifier texture,
-      int x,
-      int y,
-      int width,
-      int height,
-      int textureU,
-      int textureV,
-      boolean bottomToTop)
-      implements ThemeProgressBar {
+    Identifier texture,
+    int x,
+    int y,
+    int width,
+    int height,
+    int textureU,
+    int textureV,
+    boolean bottomToTop)
+    implements ThemeProgressBar {
 
     @Override
     public void render(GuiGraphicsExtractor guiGraphics, int leftPos, int topPos, float progress) {
@@ -114,28 +114,28 @@ public interface ThemeProgressBar {
 
       int offsetY = this.height - filledHeight;
       Graphics.blit(
-          guiGraphics,
-          this.texture,
-          leftPos + this.x,
-          topPos + this.y + offsetY,
-          this.textureU,
-          this.textureV + offsetY,
-          filledWidth,
-          filledHeight);
+        guiGraphics,
+        this.texture,
+        leftPos + this.x,
+        topPos + this.y + offsetY,
+        this.textureU,
+        this.textureV + offsetY,
+        filledWidth,
+        filledHeight);
     }
   }
 
   record Frames(
-      Identifier texture,
-      int x,
-      int y,
-      int width,
-      int height,
-      int frameCount,
-      int columns,
-      int strideX,
-      int strideY)
-      implements ThemeProgressBar {
+    Identifier texture,
+    int x,
+    int y,
+    int width,
+    int height,
+    int frameCount,
+    int columns,
+    int strideX,
+    int strideY)
+    implements ThemeProgressBar {
 
     @Override
     public boolean contains(double mouseX, double mouseY) {
@@ -149,14 +149,14 @@ public interface ThemeProgressBar {
       float clampedProgress = Math.max(0.0F, Math.min(1.0F, progress));
       int frame = Math.round(clampedProgress * (this.frameCount - 1));
       Graphics.blit(
-          guiGraphics,
-          this.texture,
-          leftPos + this.x,
-          topPos + this.y,
-          (frame % this.columns) * this.strideX,
-          (frame / this.columns) * this.strideY,
-          this.width,
-          this.height);
+        guiGraphics,
+        this.texture,
+        leftPos + this.x,
+        topPos + this.y,
+        (frame % this.columns) * this.strideX,
+        (frame / this.columns) * this.strideY,
+        this.width,
+        this.height);
     }
   }
 }

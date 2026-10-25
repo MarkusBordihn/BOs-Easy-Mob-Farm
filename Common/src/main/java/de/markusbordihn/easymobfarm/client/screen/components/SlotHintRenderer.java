@@ -45,39 +45,39 @@ public final class SlotHintRenderer {
   private static final int HINT_SIZE = 16;
   private static final int HINT_FADE_OVERLAY_COLOR = 0x9AFFFFFF;
   private static final List<ItemStack> CAPTURED_MOB_HINTS =
-      hintStacks(
-          Items.MOB_CAPTURE_CARD,
-          net.minecraft.world.item.Items.PIG_SPAWN_EGG,
-          Items.ENDURING_CAPTURE_NET,
-          Items.IRONBOUND_CONTAINMENT_CAGE,
-          Items.MYSTIC_BINDING_CRYSTAL,
-          Items.VOID_BINDING_CHAIN);
+    hintStacks(
+      Items.MOB_CAPTURE_CARD,
+      net.minecraft.world.item.Items.PIG_SPAWN_EGG,
+      Items.ENDURING_CAPTURE_NET,
+      Items.IRONBOUND_CONTAINMENT_CAGE,
+      Items.MYSTIC_BINDING_CRYSTAL,
+      Items.VOID_BINDING_CHAIN);
   private static final List<ItemStack> ENHANCEMENT_HINTS =
-      hintStacks(
-          Items.SPEED_ENHANCEMENT,
-          Items.LOOT_ENHANCEMENT,
-          Items.LUCK_ENHANCEMENT,
-          Items.EXPERIENCE_ENHANCEMENT,
-          Items.SWORD_ENHANCEMENT,
-          Items.KNIFE_ENHANCEMENT);
+    hintStacks(
+      Items.SPEED_ENHANCEMENT,
+      Items.LOOT_ENHANCEMENT,
+      Items.LUCK_ENHANCEMENT,
+      Items.EXPERIENCE_ENHANCEMENT,
+      Items.SWORD_ENHANCEMENT,
+      Items.KNIFE_ENHANCEMENT);
   private static final List<ItemStack> BEE_ENHANCEMENT_HINTS =
-      entityEnhancementHintStacks(
-          Items.HONEY_HARVESTER_FRAME_ENHANCEMENT,
-          Items.HONEY_EXTRACTOR_ENHANCEMENT,
-          Items.POLLEN_TRAP_ENHANCEMENT);
+    entityEnhancementHintStacks(
+      Items.HONEY_HARVESTER_FRAME_ENHANCEMENT,
+      Items.HONEY_EXTRACTOR_ENHANCEMENT,
+      Items.POLLEN_TRAP_ENHANCEMENT);
   private static final List<ItemStack> CHICKEN_ENHANCEMENT_HINTS =
-      entityEnhancementHintStacks(Items.EGG_COLLECTOR_ENHANCEMENT);
+    entityEnhancementHintStacks(Items.EGG_COLLECTOR_ENHANCEMENT);
   private static final List<ItemStack> COW_ENHANCEMENT_HINTS =
-      entityEnhancementHintStacks(Items.MILK_EXTRACTOR_ENHANCEMENT);
+    entityEnhancementHintStacks(Items.MILK_EXTRACTOR_ENHANCEMENT);
   private static final List<ItemStack> SHEEP_ENHANCEMENT_HINTS =
-      entityEnhancementHintStacks(Items.SHEEP_ENHANCEMENT);
+    entityEnhancementHintStacks(Items.SHEEP_ENHANCEMENT);
   private static final List<ItemStack> FILTER_HINTS =
-      hintStacks(Items.NO_MEAT_FILTER, Items.NO_FLOWERS_FILTER);
+    hintStacks(Items.NO_MEAT_FILTER, Items.NO_FLOWERS_FILTER);
   private static final List<ItemStack> SLOT_UPGRADE_HINTS =
-      hintStacks(Items.SMALL_SLOT_UPGRADE, Items.BIG_SLOT_UPGRADE);
+    hintStacks(Items.SMALL_SLOT_UPGRADE, Items.BIG_SLOT_UPGRADE);
 
   private final SlotHintCycle cycle =
-      new SlotHintCycle(Util.getMillis(), ThreadLocalRandom.current().nextInt());
+    new SlotHintCycle(Util.getMillis(), ThreadLocalRandom.current().nextInt());
 
   private static List<ItemStack> getEnhancementHints(Entity entity) {
     if (entity instanceof Bee) {
@@ -104,7 +104,7 @@ public final class SlotHintRenderer {
   }
 
   public void render(
-      GuiGraphicsExtractor guiGraphics, List<Slot> slots, Entity entity, int leftPos, int topPos) {
+    GuiGraphicsExtractor guiGraphics, List<Slot> slots, Entity entity, int leftPos, int topPos) {
     Set<HintGroup> occupiedGroups = HintGroup.occupiedGroups(slots);
     long now = Util.getMillis();
     for (int index = 0; index < slots.size(); index++) {
@@ -120,7 +120,7 @@ public final class SlotHintRenderer {
       int hintY = topPos + slot.y;
       guiGraphics.fakeItem(hint, hintX, hintY);
       guiGraphics.fill(
-          hintX, hintY, hintX + HINT_SIZE, hintY + HINT_SIZE, HINT_FADE_OVERLAY_COLOR);
+        hintX, hintY, hintX + HINT_SIZE, hintY + HINT_SIZE, HINT_FADE_OVERLAY_COLOR);
     }
   }
 

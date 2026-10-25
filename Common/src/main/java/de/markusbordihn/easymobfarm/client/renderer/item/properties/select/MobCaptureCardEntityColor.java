@@ -32,15 +32,15 @@ import net.minecraft.world.item.ItemStack;
 public record MobCaptureCardEntityColor() implements SelectItemModelProperty<String> {
 
   public static final Type<MobCaptureCardEntityColor, String> TYPE =
-      Type.create(MapCodec.unit(MobCaptureCardEntityColor::new), Codec.STRING);
+    Type.create(MapCodec.unit(MobCaptureCardEntityColor::new), Codec.STRING);
 
   @Override
   public String get(
-      ItemStack itemStack,
-      ClientLevel clientLevel,
-      LivingEntity livingEntity,
-      int i,
-      ItemDisplayContext itemDisplayContext) {
+    ItemStack itemStack,
+    ClientLevel clientLevel,
+    LivingEntity livingEntity,
+    int i,
+    ItemDisplayContext itemDisplayContext) {
     MobColor mobColor = MobCaptureCardItem.getEntityColor(itemStack);
     return mobColor == null ? null : mobColor.getName().toLowerCase();
   }

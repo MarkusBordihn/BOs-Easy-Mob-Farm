@@ -59,7 +59,7 @@ class MobFarmTypeTest {
   void newFarmsAreAppendedAfterSwampFarm() {
     Assertions.assertTrue(MobFarmType.END_FARM.ordinal() > MobFarmType.SWAMP_FARM.ordinal());
     Assertions.assertTrue(
-        MobFarmType.NETHER_WASTES_FARM.ordinal() > MobFarmType.END_FARM.ordinal());
+      MobFarmType.NETHER_WASTES_FARM.ordinal() > MobFarmType.END_FARM.ordinal());
     Assertions.assertEquals("end_farm", MobFarmType.END_FARM.getId());
     Assertions.assertEquals("nether_wastes_farm", MobFarmType.NETHER_WASTES_FARM.getId());
   }
@@ -68,8 +68,8 @@ class MobFarmTypeTest {
   @DisplayName("Every farm type resolves from its id")
   void everyFarmTypeResolvesFromId() {
     var idToType =
-        Arrays.stream(MobFarmType.values())
-            .collect(Collectors.toMap(MobFarmType::getId, mobFarmType -> mobFarmType));
+      Arrays.stream(MobFarmType.values())
+        .collect(Collectors.toMap(MobFarmType::getId, mobFarmType -> mobFarmType));
     Assertions.assertSame(MobFarmType.END_FARM, idToType.get("end_farm"));
     Assertions.assertSame(MobFarmType.NETHER_WASTES_FARM, idToType.get("nether_wastes_farm"));
   }

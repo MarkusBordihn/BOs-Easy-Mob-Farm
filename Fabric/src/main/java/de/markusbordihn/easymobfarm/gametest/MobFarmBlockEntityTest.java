@@ -29,33 +29,33 @@ public class MobFarmBlockEntityTest {
   @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
   public void testUnknownFarmTypeTagKeepsBlockFarmType(GameTestHelper helper) {
     MobFarmBlockEntityTestHelper.testUnknownFarmTypeTagKeepsBlockFarmType(
-        helper, ModBlocks.ANIMAL_PLAINS_FARM);
+      helper, ModBlocks.ANIMAL_PLAINS_FARM);
     helper.succeed();
   }
 
   @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
   public void testNonLivingCaptureCardHasNoExperience(GameTestHelper helper) {
     MobFarmBlockEntityTestHelper.testNonLivingCaptureCardHasNoExperience(
-        helper, ModBlocks.ANIMAL_PLAINS_FARM);
+      helper, ModBlocks.ANIMAL_PLAINS_FARM);
     helper.succeed();
   }
 
   @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
   public void testNonLivingCaptureCardLeavesNoEntity(GameTestHelper helper) {
     MobFarmBlockEntityTestHelper.testNonLivingCaptureCardLeavesNoEntity(
-        helper, ModBlocks.ANIMAL_PLAINS_FARM);
+      helper, ModBlocks.ANIMAL_PLAINS_FARM);
     helper.succeed();
   }
 
   @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
   public void testEmptyCaptureItemKeepsFarmIdle(GameTestHelper helper) {
     MobFarmBlockEntityTestHelper.testEmptyCaptureItemKeepsFarmIdle(
-        helper, ModBlocks.ANIMAL_PLAINS_FARM);
+      helper, ModBlocks.ANIMAL_PLAINS_FARM);
   }
 
   @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
   public void testUnknownEntityCaptureCardSetsErrorStatus(GameTestHelper helper) {
     MobFarmBlockEntityTestHelper.testUnknownEntityCaptureCardSetsErrorStatus(
-        helper, ModBlocks.ANIMAL_PLAINS_FARM);
+      helper, ModBlocks.ANIMAL_PLAINS_FARM);
   }
 }

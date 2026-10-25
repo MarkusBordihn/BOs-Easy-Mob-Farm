@@ -20,13 +20,16 @@
 package de.markusbordihn.easymobfarm.gametest;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 
 public class ModItemsTestHelper {
 
-  private ModItemsTestHelper() {}
+  private ModItemsTestHelper() {
+  }
 
   public static void testModItem(GameTestHelper helper, Item item) {
     BlockPos blockPos = new BlockPos(0, 1, 0);
@@ -38,7 +41,22 @@ public class ModItemsTestHelper {
       helper.fail(Component.literal("Item or block position is not defined!"));
       return;
     }
+    assertItemDefinitionExists(helper, item);
     helper.spawnItem(item, blockPos.getX(), blockPos.getY(), blockPos.getZ());
     helper.assertItemEntityPresent(item, blockPos, 0D);
+  }
+
+  private static void assertItemDefinitionExists(GameTestHelper helper, Item item) {
+    Identifier itemModel = item.components().get(DataComponents.ITEM_MODEL);
+    if (itemModel == null) {
+      helper.fail(Component.literal("Item " + item + " has no item model!"));
+      return;
+    }
+
+    String itemDefinition =
+      "/assets/" + itemModel.getNamespace() + "/items/" + itemModel.getPath() + ".json";
+    if (ModItemsTestHelper.class.getResource(itemDefinition) == null) {
+      helper.fail(Component.literal("Item " + item + " has no item definition " + itemDefinition));
+    }
   }
 }

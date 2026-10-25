@@ -28,15 +28,16 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class FishingEventHandler {
 
-  private FishingEventHandler() {}
+  private FishingEventHandler() {
+  }
 
   @SuppressWarnings("unused")
   @SubscribeEvent
   public static void onItemFished(ItemFishedEvent event) {
     if (event.getEntity().level().isClientSide()
-        || event.getDrops() == null
-        || event.getDrops().isEmpty()
-        || !(event.getEntity() instanceof ServerPlayer serverPlayer)) {
+      || event.getDrops() == null
+      || event.getDrops().isEmpty()
+      || !(event.getEntity() instanceof ServerPlayer serverPlayer)) {
       return;
     }
     FishingEvents.handleItemFishedEvent(serverPlayer, event.getDrops());

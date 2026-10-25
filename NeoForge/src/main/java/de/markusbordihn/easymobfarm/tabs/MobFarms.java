@@ -26,47 +26,48 @@ import net.minecraft.world.item.ItemStack;
 
 public class MobFarms {
 
-  private MobFarms() {}
+  private MobFarms() {
+  }
 
   public static List<ItemStack> createTabItems() {
     List<ItemStack> items = new ArrayList<>();
     items.add(ModBlockItems.CREATIVE_MOB_FARM.get().getDefaultInstance());
     items.addAll(
-        CustomMobFarmBlocks.getMobFarmTiers(
-            ModBlockItems.ANIMAL_PLAINS_FARM.get().getDefaultInstance().getItem()));
+      CustomMobFarmBlocks.getMobFarmTiers(
+        ModBlockItems.ANIMAL_PLAINS_FARM.get().getDefaultInstance().getItem()));
     items.addAll(
-        CustomMobFarmBlocks.getMobFarmTiers(
-            ModBlockItems.BEE_HIVE_FARM.get().getDefaultInstance().getItem()));
+      CustomMobFarmBlocks.getMobFarmTiers(
+        ModBlockItems.BEE_HIVE_FARM.get().getDefaultInstance().getItem()));
     items.addAll(
-        CustomMobFarmBlocks.getMobFarmTiers(
-            ModBlockItems.DESERT_FARM.get().getDefaultInstance().getItem()));
+      CustomMobFarmBlocks.getMobFarmTiers(
+        ModBlockItems.DESERT_FARM.get().getDefaultInstance().getItem()));
     items.addAll(
-        CustomMobFarmBlocks.getMobFarmTiers(
-            ModBlockItems.IRON_GOLEM_FARM.get().getDefaultInstance().getItem()));
+      CustomMobFarmBlocks.getMobFarmTiers(
+        ModBlockItems.IRON_GOLEM_FARM.get().getDefaultInstance().getItem()));
     items.addAll(
-        CustomMobFarmBlocks.getMobFarmTiers(
-            ModBlockItems.JUNGLE_FARM.get().getDefaultInstance().getItem()));
+      CustomMobFarmBlocks.getMobFarmTiers(
+        ModBlockItems.JUNGLE_FARM.get().getDefaultInstance().getItem()));
     items.addAll(
-        CustomMobFarmBlocks.getMobFarmTiers(
-            ModBlockItems.LUCKY_DROP_FARM.get().getDefaultInstance().getItem()));
+      CustomMobFarmBlocks.getMobFarmTiers(
+        ModBlockItems.LUCKY_DROP_FARM.get().getDefaultInstance().getItem()));
     items.addAll(
-        CustomMobFarmBlocks.getMobFarmTiers(
-            ModBlockItems.MONSTER_PLAINS_CAVE_FARM.get().getDefaultInstance().getItem()));
+      CustomMobFarmBlocks.getMobFarmTiers(
+        ModBlockItems.MONSTER_PLAINS_CAVE_FARM.get().getDefaultInstance().getItem()));
     items.addAll(
-        CustomMobFarmBlocks.getMobFarmTiers(
-            ModBlockItems.NETHER_FORTRESS_FARM.get().getDefaultInstance().getItem()));
+      CustomMobFarmBlocks.getMobFarmTiers(
+        ModBlockItems.NETHER_FORTRESS_FARM.get().getDefaultInstance().getItem()));
     items.addAll(
-        CustomMobFarmBlocks.getMobFarmTiers(
-            ModBlockItems.OCEAN_FARM.get().getDefaultInstance().getItem()));
+      CustomMobFarmBlocks.getMobFarmTiers(
+        ModBlockItems.OCEAN_FARM.get().getDefaultInstance().getItem()));
     items.addAll(
-        CustomMobFarmBlocks.getMobFarmTiers(
-            ModBlockItems.SWAMP_FARM.get().getDefaultInstance().getItem()));
+      CustomMobFarmBlocks.getMobFarmTiers(
+        ModBlockItems.SWAMP_FARM.get().getDefaultInstance().getItem()));
     items.addAll(
-        CustomMobFarmBlocks.getMobFarmTiers(
-            ModBlockItems.END_FARM.get().getDefaultInstance().getItem()));
+      CustomMobFarmBlocks.getMobFarmTiers(
+        ModBlockItems.END_FARM.get().getDefaultInstance().getItem()));
     items.addAll(
-        CustomMobFarmBlocks.getMobFarmTiers(
-            ModBlockItems.NETHER_WASTES_FARM.get().getDefaultInstance().getItem()));
+      CustomMobFarmBlocks.getMobFarmTiers(
+        ModBlockItems.NETHER_WASTES_FARM.get().getDefaultInstance().getItem()));
     return items;
   }
 }

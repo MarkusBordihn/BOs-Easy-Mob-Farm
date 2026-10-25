@@ -28,15 +28,15 @@ public class NetworkHandler {
 
   public static void registerNetworkMessageHandler() {
     PayloadTypeRegistry.clientboundPlay()
-        .register(
-            SyncMobCaptureCardDefinitionsMessage.PAYLOAD_TYPE,
-            SyncMobCaptureCardDefinitionsMessage.STREAM_CODEC);
+      .register(
+        SyncMobCaptureCardDefinitionsMessage.PAYLOAD_TYPE,
+        SyncMobCaptureCardDefinitionsMessage.STREAM_CODEC);
 
     PayloadTypeRegistry.clientboundPlay()
-        .register(SyncLootPreviewMessage.PAYLOAD_TYPE, SyncLootPreviewMessage.STREAM_CODEC);
+      .register(SyncLootPreviewMessage.PAYLOAD_TYPE, SyncLootPreviewMessage.STREAM_CODEC);
 
     PayloadTypeRegistry.clientboundPlay()
-        .register(
-            SyncLootPreviewBatchMessage.PAYLOAD_TYPE, SyncLootPreviewBatchMessage.STREAM_CODEC);
+      .register(
+        SyncLootPreviewBatchMessage.PAYLOAD_TYPE, SyncLootPreviewBatchMessage.STREAM_CODEC);
   }
 }

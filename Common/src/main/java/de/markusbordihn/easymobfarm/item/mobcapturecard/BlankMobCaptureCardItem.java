@@ -31,10 +31,10 @@ public class BlankMobCaptureCardItem extends Item {
 
   public BlankMobCaptureCardItem() {
     super(
-        new Item.Properties()
-            .setId(
-                ResourceKey.create(
-                    Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
+      new Item.Properties()
+        .setId(
+          ResourceKey.create(
+            Registries.ITEM, Identifier.fromNamespaceAndPath(Constants.MOD_ID, ID))));
   }
 
   public BlankMobCaptureCardItem(Properties properties) {

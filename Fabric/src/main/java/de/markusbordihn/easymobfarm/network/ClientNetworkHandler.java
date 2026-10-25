@@ -32,39 +32,39 @@ public class ClientNetworkHandler {
   @Environment(EnvType.CLIENT)
   public static void registerClientNetworkMessageHandler() {
     ClientPlayNetworking.registerGlobalReceiver(
-        SyncMobCaptureCardDefinitionsMessage.PAYLOAD_TYPE,
-        (payload, context) ->
-            context
-                .client()
-                .execute(
-                    () -> {
-                      if (payload instanceof NetworkMessageRecord networkMessageRecord) {
-                        networkMessageRecord.handleClient();
-                      }
-                    }));
+      SyncMobCaptureCardDefinitionsMessage.PAYLOAD_TYPE,
+      (payload, context) ->
+        context
+          .client()
+          .execute(
+            () -> {
+              if (payload instanceof NetworkMessageRecord networkMessageRecord) {
+                networkMessageRecord.handleClient();
+              }
+            }));
 
     ClientPlayNetworking.registerGlobalReceiver(
-        SyncLootPreviewMessage.PAYLOAD_TYPE,
-        (payload, context) ->
-            context
-                .client()
-                .execute(
-                    () -> {
-                      if (payload instanceof NetworkMessageRecord networkMessageRecord) {
-                        networkMessageRecord.handleClient();
-                      }
-                    }));
+      SyncLootPreviewMessage.PAYLOAD_TYPE,
+      (payload, context) ->
+        context
+          .client()
+          .execute(
+            () -> {
+              if (payload instanceof NetworkMessageRecord networkMessageRecord) {
+                networkMessageRecord.handleClient();
+              }
+            }));
 
     ClientPlayNetworking.registerGlobalReceiver(
-        SyncLootPreviewBatchMessage.PAYLOAD_TYPE,
-        (payload, context) ->
-            context
-                .client()
-                .execute(
-                    () -> {
-                      if (payload instanceof NetworkMessageRecord networkMessageRecord) {
-                        networkMessageRecord.handleClient();
-                      }
-                    }));
+      SyncLootPreviewBatchMessage.PAYLOAD_TYPE,
+      (payload, context) ->
+        context
+          .client()
+          .execute(
+            () -> {
+              if (payload instanceof NetworkMessageRecord networkMessageRecord) {
+                networkMessageRecord.handleClient();
+              }
+            }));
   }
 }

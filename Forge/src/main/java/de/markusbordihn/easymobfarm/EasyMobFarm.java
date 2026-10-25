@@ -64,7 +64,7 @@ public class EasyMobFarm {
 
     log.debug("{} Debug Manager ...", Constants.LOG_REGISTER_PREFIX);
     Optional<String> version =
-        Launcher.INSTANCE.environment().getProperty(IEnvironment.Keys.VERSION.get());
+      Launcher.INSTANCE.environment().getProperty(IEnvironment.Keys.VERSION.get());
     if (version.isPresent() && "MOD_DEV".equals(version.get())) {
       DebugManager.setDevelopmentEnvironment(true);
     }
@@ -108,9 +108,9 @@ public class EasyMobFarm {
     log.debug("{} Network Handler ...", Constants.LOG_REGISTER_PREFIX);
     NetworkHandler.registerClientNetworkMessageHandler();
     SyncLootPreviewMessage.SENDER =
-        (player, msg) -> NetworkHandler.INSTANCE.send(msg, PacketDistributor.PLAYER.with(player));
+      (player, msg) -> NetworkHandler.INSTANCE.send(msg, PacketDistributor.PLAYER.with(player));
     SyncLootPreviewBatchMessage.SENDER =
-        (player, msg) -> NetworkHandler.INSTANCE.send(msg, PacketDistributor.PLAYER.with(player));
+      (player, msg) -> NetworkHandler.INSTANCE.send(msg, PacketDistributor.PLAYER.with(player));
 
     log.info("{} Creative Tabs ...", Constants.LOG_REGISTER_PREFIX);
     ModTabs.CREATIVE_TABS.register(modBusGroup);

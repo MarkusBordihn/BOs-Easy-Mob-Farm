@@ -57,8 +57,10 @@ public class MobCaptureCardDropTestHelper {
   private static final int ZERO_CHANCE_ATTEMPTS = 32;
   private static final float DEFAULT_KILL_DROP_CHANCE = 10 / 100f;
   private static final int MAX_KILLS_PER_MOB = 100;
+  private static final int STACKING_KILLS = 2;
 
-  private MobCaptureCardDropTestHelper() {}
+  private MobCaptureCardDropTestHelper() {
+  }
 
   public static void testNoCardDropWithZeroChance(GameTestHelper helper) {
     boolean previousRequirePlayerKill = MobCaptureCardConfig.requirePlayerKill;
@@ -68,9 +70,9 @@ public class MobCaptureCardDropTestHelper {
       MobCaptureCardConfig.mobCaptureCardKillDropChance = 0.0f;
       int droppedCards = countDroppedCards(helper, ZERO_CHANCE_ATTEMPTS);
       GameTestHelpers.assertTrue(
-          helper,
-          "A drop chance of 0.0 should never drop a mob capture card, got: " + droppedCards,
-          droppedCards == 0);
+        helper,
+        "A drop chance of 0.0 should never drop a mob capture card, got: " + droppedCards,
+        droppedCards == 0);
     } finally {
       MobCaptureCardConfig.requirePlayerKill = previousRequirePlayerKill;
       MobCaptureCardConfig.mobCaptureCardKillDropChance = previousDropChance;
@@ -85,9 +87,9 @@ public class MobCaptureCardDropTestHelper {
       MobCaptureCardConfig.mobCaptureCardKillDropChance = 1.0f;
       int droppedCards = countDroppedCards(helper, 1);
       GameTestHelpers.assertTrue(
-          helper,
-          "A drop chance of 1.0 should drop exactly one mob capture card, got: " + droppedCards,
-          droppedCards == 1);
+        helper,
+        "A drop chance of 1.0 should drop exactly one mob capture card, got: " + droppedCards,
+        droppedCards == 1);
     } finally {
       MobCaptureCardConfig.requirePlayerKill = previousRequirePlayerKill;
       MobCaptureCardConfig.mobCaptureCardKillDropChance = previousDropChance;
@@ -111,7 +113,7 @@ public class MobCaptureCardDropTestHelper {
       for (EntityType<?> entityType : GameTestHelpers.definedMobCaptureCardEntityTypes(helper)) {
         ItemStack droppedCard = killUntilCardDrops(helper, entityType);
         EntityType<?> cardEntityType =
-            MobCaptureManager.getEntityType(droppedCard, helper.getLevel());
+          MobCaptureManager.getEntityType(droppedCard, helper.getLevel());
         if (droppedCard.isEmpty()) {
           mobsWithoutCard.add(entityType.toShortString());
         } else if (cardEntityType != entityType) {
@@ -128,96 +130,135 @@ public class MobCaptureCardDropTestHelper {
 
     if (!mobsWithoutCard.isEmpty()) {
       log.warn(
-          "[Game Test] No mob capture card dropped within {} kills for: {}",
-          MAX_KILLS_PER_MOB,
-          mobsWithoutCard);
+        "[Game Test] No mob capture card dropped within {} kills for: {}",
+        MAX_KILLS_PER_MOB,
+        mobsWithoutCard);
     }
     GameTestHelpers.assertTrue(
+      helper,
+      "Killed mobs dropped a mob capture card of another mob: " + mobsWithWrongCard,
+      mobsWithWrongCard.isEmpty());
+  }
+
+  public static void testPlayerKillsDropStackingCards(GameTestHelper helper) {
+    List<ItemStack> droppedCards = new ArrayList<>();
+    withPlayerKillDropConfig(
+      () -> {
+        DamageSource playerAttack =
+          helper
+            .getLevel()
+            .damageSources()
+            .playerAttack(helper.makeMockPlayer(GameType.SURVIVAL));
+        for (int i = 0; i < STACKING_KILLS; i++) {
+          killChicken(helper, playerAttack);
+          droppedCards.add(collectDroppedCard(helper));
+        }
+      });
+
+    for (ItemStack droppedCard : droppedCards) {
+      GameTestHelpers.assertTrue(
         helper,
-        "Killed mobs dropped a mob capture card of another mob: " + mobsWithWrongCard,
-        mobsWithWrongCard.isEmpty());
+        "A chicken killed by a player should drop a chicken card, got: " + droppedCards,
+        MobCaptureManager.getEntityType(droppedCard, helper.getLevel()) == EntityTypes.CHICKEN);
+    }
+    GameTestHelpers.assertTrue(
+      helper,
+      "Cards of chickens killed by a player should stack, got: " + droppedCards,
+      ItemStack.isSameItemSameComponents(droppedCards.get(0), droppedCards.get(1)));
+  }
+
+  public static void testNonPlayerKillDropsNoCard(GameTestHelper helper) {
+    withPlayerKillDropConfig(
+      () -> {
+        killChicken(helper, helper.getLevel().damageSources().generic());
+        ItemStack droppedCard = collectDroppedCard(helper);
+        GameTestHelpers.assertTrue(
+          helper,
+          "A chicken killed without a player should drop no card, got: " + droppedCard,
+          droppedCard.isEmpty());
+      });
   }
 
   public static void testEveryFishDropsItsOwnCardOnFishing(GameTestHelper helper) {
     List<String> wrongFishingDrops = new ArrayList<>();
     withFishingConfig(
-        true,
-        1.0f,
-        Set.of(),
-        Set.of(),
-        () -> {
-          Player player = makeFishingPlayer(helper);
-          for (Holder<Item> fish : BuiltInRegistries.ITEM.getTagOrEmpty(ItemTags.FISHES)) {
-            Identifier fishId = BuiltInRegistries.ITEM.getKey(fish.value());
-            EntityType<?> expectedEntityType =
-                BuiltInRegistries.ENTITY_TYPE.getOptional(fishId).orElse(null);
-            EntityType<?> cardEntityType = fishCardEntityType(helper, player, fish.value());
-            if (cardEntityType != expectedEntityType) {
-              wrongFishingDrops.add(fishId + " -> " + cardEntityType);
-            }
+      true,
+      1.0f,
+      Set.of(),
+      Set.of(),
+      () -> {
+        Player player = makeFishingPlayer(helper);
+        for (Holder<Item> fish : BuiltInRegistries.ITEM.getTagOrEmpty(ItemTags.FISHES)) {
+          Identifier fishId = BuiltInRegistries.ITEM.getKey(fish.value());
+          EntityType<?> expectedEntityType =
+            BuiltInRegistries.ENTITY_TYPE.getOptional(fishId).orElse(null);
+          EntityType<?> cardEntityType = fishCardEntityType(helper, player, fish.value());
+          if (cardEntityType != expectedEntityType) {
+            wrongFishingDrops.add(fishId + " -> " + cardEntityType);
           }
-          EntityType<?> junkCardEntityType = fishCardEntityType(helper, player, Items.STICK);
-          if (junkCardEntityType != null) {
-            wrongFishingDrops.add("minecraft:stick -> " + junkCardEntityType);
-          }
-        });
+        }
+        EntityType<?> junkCardEntityType = fishCardEntityType(helper, player, Items.STICK);
+        if (junkCardEntityType != null) {
+          wrongFishingDrops.add("minecraft:stick -> " + junkCardEntityType);
+        }
+      });
 
     GameTestHelpers.assertTrue(
-        helper,
-        "Fishing dropped no or the wrong mob capture card: " + wrongFishingDrops,
-        wrongFishingDrops.isEmpty());
+      helper,
+      "Fishing dropped no or the wrong mob capture card: " + wrongFishingDrops,
+      wrongFishingDrops.isEmpty());
   }
 
   public static void testFishingCardDropRespectsConfiguration(GameTestHelper helper) {
     Player player = makeFishingPlayer(helper);
     withFishingConfig(
-        false,
-        1.0f,
-        Set.of(),
-        Set.of(),
-        () -> assertFishingCard(helper, player, Items.COD, null, "Disabled fishing drops"));
+      false,
+      1.0f,
+      Set.of(),
+      Set.of(),
+      () -> assertFishingCard(helper, player, Items.COD, null, "Disabled fishing drops"));
     withFishingConfig(
-        true,
-        0.0f,
-        Set.of(),
-        Set.of(),
-        () -> assertFishingCard(helper, player, Items.COD, null, "A fishing drop chance of 0.0"));
+      true,
+      0.0f,
+      Set.of(),
+      Set.of(),
+      () -> assertFishingCard(helper, player, Items.COD, null, "A fishing drop chance of 0.0"));
     withFishingConfig(
-        true,
-        1.0f,
-        Set.of(),
-        Set.of("minecraft:cod"),
-        () -> assertFishingCard(helper, player, Items.COD, null, "A denied cod"));
+      true,
+      1.0f,
+      Set.of(),
+      Set.of("minecraft:cod"),
+      () -> assertFishingCard(helper, player, Items.COD, null, "A denied cod"));
     withFishingConfig(
-        true,
-        1.0f,
-        Set.of("minecraft:salmon"),
-        Set.of(),
-        () -> {
-          assertFishingCard(helper, player, Items.COD, null, "A cod missing in the allow list");
-          assertFishingCard(helper, player, Items.SALMON, EntityTypes.SALMON, "An allowed salmon");
-        });
+      true,
+      1.0f,
+      Set.of("minecraft:salmon"),
+      Set.of(),
+      () -> {
+        assertFishingCard(helper, player, Items.COD, null, "A cod missing in the allow list");
+        assertFishingCard(helper, player, Items.SALMON, EntityTypes.SALMON, "An allowed salmon");
+      });
   }
 
   private static void assertFishingCard(
-      GameTestHelper helper,
-      Player player,
-      Item fish,
-      EntityType<?> expectedEntityType,
-      String scenario) {
+    GameTestHelper helper,
+    Player player,
+    Item fish,
+    EntityType<?> expectedEntityType,
+    String scenario) {
     EntityType<?> cardEntityType = fishCardEntityType(helper, player, fish);
     GameTestHelpers.assertTrue(
-        helper,
-        scenario + " should drop a card for " + expectedEntityType + ", got: " + cardEntityType,
-        cardEntityType == expectedEntityType);
+      helper,
+      scenario + " should drop a card for " + expectedEntityType + ", got: " + cardEntityType,
+      cardEntityType == expectedEntityType);
   }
 
   private static void withFishingConfig(
-      boolean dropOnFishing,
-      float dropChance,
-      Set<String> allowList,
-      Set<String> denyList,
-      Runnable fishingCheck) {
+    boolean dropOnFishing,
+    float dropChance,
+    Set<String> allowList,
+    Set<String> denyList,
+    Runnable fishingCheck) {
     boolean previousDropOnFishing = MobCaptureCardConfig.dropMobCaptureCardOnFishing;
     float previousDropChance = MobCaptureCardConfig.mobCaptureCardFishingDropChance;
     Set<String> previousAllowList = MobCaptureCardConfig.mobCaptureCardFishingDropAllowList;
@@ -234,6 +275,36 @@ public class MobCaptureCardDropTestHelper {
       MobCaptureCardConfig.mobCaptureCardFishingDropAllowList = previousAllowList;
       MobCaptureCardConfig.mobCaptureCardFishingDropDenyList = previousDenyList;
     }
+  }
+
+  private static void withPlayerKillDropConfig(Runnable killCheck) {
+    boolean previousDropOnKill = MobCaptureCardConfig.dropMobCaptureCardOnKill;
+    boolean previousRequirePlayerKill = MobCaptureCardConfig.requirePlayerKill;
+    float previousDropChance = MobCaptureCardConfig.mobCaptureCardKillDropChance;
+    float previousFoilDropChance = MobCaptureCardConfig.mobCaptureCardFoilDropChance;
+    Set<String> previousAllowList = MobCaptureCardConfig.mobCaptureCardKillDropAllowList;
+    Set<String> previousDenyList = MobCaptureCardConfig.mobCaptureCardKillDropDenyList;
+    try {
+      MobCaptureCardConfig.dropMobCaptureCardOnKill = true;
+      MobCaptureCardConfig.requirePlayerKill = true;
+      MobCaptureCardConfig.mobCaptureCardKillDropChance = 1.0f;
+      MobCaptureCardConfig.mobCaptureCardFoilDropChance = 0.0f;
+      MobCaptureCardConfig.mobCaptureCardKillDropAllowList = Set.of();
+      MobCaptureCardConfig.mobCaptureCardKillDropDenyList = Set.of();
+      killCheck.run();
+    } finally {
+      MobCaptureCardConfig.dropMobCaptureCardOnKill = previousDropOnKill;
+      MobCaptureCardConfig.requirePlayerKill = previousRequirePlayerKill;
+      MobCaptureCardConfig.mobCaptureCardKillDropChance = previousDropChance;
+      MobCaptureCardConfig.mobCaptureCardFoilDropChance = previousFoilDropChance;
+      MobCaptureCardConfig.mobCaptureCardKillDropAllowList = previousAllowList;
+      MobCaptureCardConfig.mobCaptureCardKillDropDenyList = previousDenyList;
+    }
+  }
+
+  private static void killChicken(GameTestHelper helper, DamageSource damageSource) {
+    LivingEntity chicken = helper.spawn(EntityTypes.CHICKEN, SPAWN_POSITION);
+    chicken.hurtServer(helper.getLevel(), damageSource, Float.MAX_VALUE);
   }
 
   private static Player makeFishingPlayer(GameTestHelper helper) {
@@ -253,7 +324,8 @@ public class MobCaptureCardDropTestHelper {
   }
 
   private static ItemStack killUntilCardDrops(GameTestHelper helper, EntityType<?> entityType) {
-    if (!(entityType.create(helper.getLevel(), EntitySpawnReason.EVENT) instanceof LivingEntity livingEntity)) {
+    if (!(entityType.create(helper.getLevel(),
+      EntitySpawnReason.EVENT) instanceof LivingEntity livingEntity)) {
       return ItemStack.EMPTY;
     }
 
@@ -277,7 +349,7 @@ public class MobCaptureCardDropTestHelper {
     AABB searchArea = new AABB(helper.absolutePos(SPAWN_POSITION)).inflate(2.0);
     ItemStack droppedCard = ItemStack.EMPTY;
     for (ItemEntity itemEntity :
-        helper.getLevel().getEntitiesOfClass(ItemEntity.class, searchArea)) {
+      helper.getLevel().getEntitiesOfClass(ItemEntity.class, searchArea)) {
       if (droppedCard.isEmpty() && itemEntity.getItem().getItem() instanceof MobCaptureCardItem) {
         droppedCard = itemEntity.getItem().copy();
       }
@@ -295,7 +367,7 @@ public class MobCaptureCardDropTestHelper {
 
     AABB searchArea = new AABB(helper.absolutePos(SPAWN_POSITION)).inflate(2.0);
     List<ItemEntity> itemEntities =
-        helper.getLevel().getEntitiesOfClass(ItemEntity.class, searchArea);
+      helper.getLevel().getEntitiesOfClass(ItemEntity.class, searchArea);
     int droppedCards = 0;
     for (ItemEntity itemEntity : itemEntities) {
       if (itemEntity.getItem().getItem() instanceof MobCaptureCardItem) {

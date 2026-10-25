@@ -30,9 +30,9 @@ public class SmokeTest {
   @GameTest(structure = "easy_mob_farm:gametest.3x3x3")
   public void testModRegistered(GameTestHelper helper) {
     GameTestHelpers.assertTrue(
-        helper,
-        "Mod " + Constants.MOD_ID + " is not available!",
-        ModList.isLoaded(Constants.MOD_ID));
+      helper,
+      "Mod " + Constants.MOD_ID + " is not available!",
+      ModList.isLoaded(Constants.MOD_ID));
     helper.succeed();
   }
 

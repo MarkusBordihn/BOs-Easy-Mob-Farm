@@ -33,19 +33,19 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 
 public record SyncMobCaptureCardDefinitionsMessage(
-    Map<Identifier, MobCaptureCardDefinition> definitions) implements NetworkMessageRecord {
+  Map<Identifier, MobCaptureCardDefinition> definitions) implements NetworkMessageRecord {
 
   public static final int MAXIMUM_DEFINITIONS = 1024;
 
   public static final Identifier MESSAGE_ID =
-      Identifier.fromNamespaceAndPath(Constants.MOD_ID, "sync_mob_capture_card_definitions");
+    Identifier.fromNamespaceAndPath(Constants.MOD_ID, "sync_mob_capture_card_definitions");
   public static final CustomPacketPayload.Type<SyncMobCaptureCardDefinitionsMessage> PAYLOAD_TYPE =
-      new Type<>(MESSAGE_ID);
+    new Type<>(MESSAGE_ID);
   public static final StreamCodec<RegistryFriendlyByteBuf, SyncMobCaptureCardDefinitionsMessage>
-      STREAM_CODEC =
-          StreamCodec.of(
-              (buffer, message) -> message.write(buffer),
-              SyncMobCaptureCardDefinitionsMessage::create);
+    STREAM_CODEC =
+    StreamCodec.of(
+      (buffer, message) -> message.write(buffer),
+      SyncMobCaptureCardDefinitionsMessage::create);
 
   public static SyncMobCaptureCardDefinitionsMessage create(FriendlyByteBuf buffer) {
     int size = buffer.readVarInt();

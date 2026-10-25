@@ -32,15 +32,15 @@ import net.minecraft.world.item.Rarity;
 public record MobCaptureCardRarity() implements SelectItemModelProperty<String> {
 
   public static final Type<MobCaptureCardRarity, String> TYPE =
-      Type.create(MapCodec.unit(MobCaptureCardRarity::new), Codec.STRING);
+    Type.create(MapCodec.unit(MobCaptureCardRarity::new), Codec.STRING);
 
   @Override
   public String get(
-      ItemStack itemStack,
-      ClientLevel clientLevel,
-      LivingEntity livingEntity,
-      int i,
-      ItemDisplayContext itemDisplayContext) {
+    ItemStack itemStack,
+    ClientLevel clientLevel,
+    LivingEntity livingEntity,
+    int i,
+    ItemDisplayContext itemDisplayContext) {
     Rarity rarity = MobCaptureCardItem.getRarity(itemStack);
     return rarity == null ? "common" : rarity.getSerializedName();
   }

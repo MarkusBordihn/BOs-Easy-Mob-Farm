@@ -34,15 +34,16 @@ public class ClientRendererEvents {
 
   public static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  protected ClientRendererEvents() {}
+  protected ClientRendererEvents() {
+  }
 
   @SubscribeEvent
   public static void registerBlockEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
     log.info("{} Block Entity Renderers ...", Constants.LOG_REGISTER_PREFIX);
 
     event.registerBlockEntityRenderer(
-        ModBlocks.CREATIVE_MOB_FARM_ENTITY.get(), MobFarmBlockEntityRenderer::new);
+      ModBlocks.CREATIVE_MOB_FARM_ENTITY.get(), MobFarmBlockEntityRenderer::new);
     event.registerBlockEntityRenderer(
-        ModBlocks.MOB_FARM_ENTITY.get(), MobFarmBlockEntityRenderer::new);
+      ModBlocks.MOB_FARM_ENTITY.get(), MobFarmBlockEntityRenderer::new);
   }
 }

@@ -32,16 +32,17 @@ public class CommandManager {
 
   protected static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  private CommandManager() {}
+  private CommandManager() {
+  }
 
   public static void registerCommands(
-      CommandDispatcher<CommandSourceStack> commandDispatcher, CommandBuildContext context) {
+    CommandDispatcher<CommandSourceStack> commandDispatcher, CommandBuildContext context) {
     log.info(
-        "{} /{} commands for {} ...",
-        Constants.LOG_REGISTER_PREFIX,
-        Constants.MOD_COMMAND,
-        Constants.MOD_NAME);
+      "{} /{} commands for {} ...",
+      Constants.LOG_REGISTER_PREFIX,
+      Constants.MOD_COMMAND,
+      Constants.MOD_NAME);
     commandDispatcher.register(
-        Commands.literal(Constants.MOD_COMMAND).then(DebugCommand.register()));
+      Commands.literal(Constants.MOD_COMMAND).then(DebugCommand.register()));
   }
 }

@@ -28,15 +28,16 @@ import net.neoforged.neoforge.event.entity.player.ItemFishedEvent;
 @EventBusSubscriber()
 public class FishingEventHandler {
 
-  private FishingEventHandler() {}
+  private FishingEventHandler() {
+  }
 
   @SuppressWarnings("unused")
   @SubscribeEvent
   public static void onItemFished(ItemFishedEvent event) {
     if (event.getEntity().level().isClientSide()
-        || event.getDrops() == null
-        || event.getDrops().isEmpty()
-        || !(event.getEntity() instanceof ServerPlayer serverPlayer)) {
+      || event.getDrops() == null
+      || event.getDrops().isEmpty()
+      || !(event.getEntity() instanceof ServerPlayer serverPlayer)) {
       return;
     }
     FishingEvents.handleItemFishedEvent(serverPlayer, event.getDrops());

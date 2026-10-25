@@ -22,8 +22,8 @@ package de.markusbordihn.easymobfarm.gametest;
 import de.markusbordihn.easymobfarm.Constants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTestHelper;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -37,7 +37,8 @@ public class LootTableTestHelper {
 
   private static final Logger log = LogManager.getLogger(Constants.LOG_NAME);
 
-  private LootTableTestHelper() {}
+  private LootTableTestHelper() {
+  }
 
   public static void testBlockDropItem(GameTestHelper helper, Block block, Item item) {
     testBlockDropItem(helper, block, item, Items.IRON_PICKAXE);
@@ -48,13 +49,13 @@ public class LootTableTestHelper {
   }
 
   public static void testBlockDropItem(
-      GameTestHelper helper, Block block, Item item, Item miningTool) {
+    GameTestHelper helper, Block block, Item item, Item miningTool) {
     BlockPos blockPos = new BlockPos(0, 1, 0);
     testBlockDropItem(helper, block, item, miningTool, blockPos);
   }
 
   public static void testBlockDropItem(
-      GameTestHelper helper, Block block, Item item, Item miningTool, BlockPos blockPos) {
+    GameTestHelper helper, Block block, Item item, Item miningTool, BlockPos blockPos) {
     // Define itemStack and mock player
     ItemStack itemStack = new ItemStack(miningTool);
     ServerPlayer player = (ServerPlayer) helper.makeMockServerPlayer(GameType.SURVIVAL);
@@ -65,37 +66,37 @@ public class LootTableTestHelper {
     helper.assertBlockPresent(block, blockPos);
     BlockState blockState = helper.getBlockState(blockPos);
     GameTestHelpers.assertTrue(
-        helper,
-        "Expected block " + block + " but found " + blockState.getBlock(),
-        blockState.getBlock() == block);
+      helper,
+      "Expected block " + block + " but found " + blockState.getBlock(),
+      blockState.getBlock() == block);
 
     // Check if the item can mine the block
     GameTestHelpers.assertTrue(
-        helper,
-        itemStack.getItem() + " can't mine " + blockState.getBlock(),
-        itemStack
-            .getItem()
-            .mineBlock(
-                itemStack, helper.getLevel(), blockState, helper.absolutePos(blockPos), player));
+      helper,
+      itemStack.getItem() + " can't mine " + blockState.getBlock(),
+      itemStack
+        .getItem()
+        .mineBlock(
+          itemStack, helper.getLevel(), blockState, helper.absolutePos(blockPos), player));
     GameTestHelpers.assertTrue(
-        helper,
-        player
-            + " has not correct Tool "
-            + player.getMainHandItem()
-            + " for drops "
-            + blockState.getBlock(),
-        player.hasCorrectToolForDrops(blockState));
+      helper,
+      player
+        + " has not correct Tool "
+        + player.getMainHandItem()
+        + " for drops "
+        + blockState.getBlock(),
+      player.hasCorrectToolForDrops(blockState));
 
     // Destroy block and check for item drop
     blockState
-        .getBlock()
-        .playerDestroy(
-            helper.getLevel(),
-            player,
-            helper.absolutePos(blockPos),
-            blockState,
-            null,
-            player.getMainHandItem());
+      .getBlock()
+      .playerDestroy(
+        helper.getLevel(),
+        player,
+        helper.absolutePos(blockPos),
+        blockState,
+        null,
+        player.getMainHandItem());
     helper.assertItemEntityPresent(item, blockPos, 2D);
     helper.destroyBlock(blockPos);
     helper.assertBlockNotPresent(block, blockPos);
