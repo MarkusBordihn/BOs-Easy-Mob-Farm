@@ -33,4 +33,24 @@ public class SmokeTest {
         ModList.get().isLoaded(Constants.MOD_ID));
     helper.succeed();
   }
+
+  public void testEveryModAdvancementIsLoaded(GameTestHelper helper) {
+    ServerDataTestHelper.testEveryModAdvancementIsLoaded(helper);
+    helper.succeed();
+  }
+
+  public void testEveryModLootTableIsLoaded(GameTestHelper helper) {
+    ServerDataTestHelper.testEveryModLootTableIsLoaded(helper);
+    helper.succeed();
+  }
+
+  public void testEveryModRecipeIsLoaded(GameTestHelper helper) {
+    ServerDataTestHelper.testEveryModRecipeIsLoaded(helper);
+    helper.succeed();
+  }
+
+  public void testDisabledEnhancementRecipeIsRemoved(GameTestHelper helper) {
+    ServerDataTestHelper.testDisabledEnhancementRecipeIsRemoved(helper);
+    helper.succeed();
+  }
 }

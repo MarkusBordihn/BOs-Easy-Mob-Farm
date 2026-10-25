@@ -46,7 +46,12 @@ public record EntityPreview(
   }
 
   public void render(
-      GuiGraphicsExtractor guiGraphics, Entity entity, int leftPos, int topPos, float mouseX, float mouseY) {
+      GuiGraphicsExtractor guiGraphics,
+      Entity entity,
+      int leftPos,
+      int topPos,
+      float mouseX,
+      float mouseY) {
     if (!(entity instanceof LivingEntity livingEntity)) {
       return;
     }

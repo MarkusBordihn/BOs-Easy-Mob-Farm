@@ -110,4 +110,34 @@ public class MenuSlotTest {
     CardBinderMenuTestHelper.testOpenBinderCannotBeMoved(helper);
     helper.succeed();
   }
+
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
+  public void testCardBinderHotbarSwapCannotMoveOpenBinder(GameTestHelper helper) {
+    CardBinderMenuTestHelper.testHotbarSwapCannotMoveOpenBinder(helper);
+    helper.succeed();
+  }
+
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
+  public void testCardBinderSwappedInBinderDoesNotReceiveCards(GameTestHelper helper) {
+    CardBinderMenuTestHelper.testSwappedInBinderDoesNotReceiveCards(helper);
+    helper.succeed();
+  }
+
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
+  public void testCardBinderRecreatedBinderKeepsMenuOpen(GameTestHelper helper) {
+    CardBinderMenuTestHelper.testRecreatedBinderKeepsMenuOpen(helper);
+    helper.succeed();
+  }
+
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
+  public void testCardBinderCardsAreSavedOnEveryClick(GameTestHelper helper) {
+    CardBinderMenuTestHelper.testCardsAreSavedOnEveryClick(helper);
+    helper.succeed();
+  }
+
+  @GameTest(structure = "easy_mob_farm:gametest.3x3x3", maxTicks = 100)
+  public void testCardBinderDroppedBinderIgnoresFurtherClicks(GameTestHelper helper) {
+    CardBinderMenuTestHelper.testDroppedBinderIgnoresFurtherClicks(helper);
+    helper.succeed();
+  }
 }

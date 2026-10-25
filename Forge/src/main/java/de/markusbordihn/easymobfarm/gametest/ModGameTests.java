@@ -154,6 +154,21 @@ public final class ModGameTests {
         "menu_slot_card_binder_open_binder_cannot_be_moved",
         MENU_SLOT_TESTS::testCardBinderOpenBinderCannotBeMoved);
     register(
+        "menu_slot_card_binder_hotbar_swap_cannot_move_open_binder",
+        MENU_SLOT_TESTS::testCardBinderHotbarSwapCannotMoveOpenBinder);
+    register(
+        "menu_slot_card_binder_swapped_in_binder_does_not_receive_cards",
+        MENU_SLOT_TESTS::testCardBinderSwappedInBinderDoesNotReceiveCards);
+    register(
+        "menu_slot_card_binder_recreated_binder_keeps_menu_open",
+        MENU_SLOT_TESTS::testCardBinderRecreatedBinderKeepsMenuOpen);
+    register(
+        "menu_slot_card_binder_cards_are_saved_on_every_click",
+        MENU_SLOT_TESTS::testCardBinderCardsAreSavedOnEveryClick);
+    register(
+        "menu_slot_card_binder_dropped_binder_ignores_further_clicks",
+        MENU_SLOT_TESTS::testCardBinderDroppedBinderIgnoresFurtherClicks);
+    register(
         "mob_capture_card_drop_no_card_drop_with_zero_chance",
         MOB_CAPTURE_CARD_DROP_TESTS::testNoCardDropWithZeroChance);
     register(
@@ -168,6 +183,12 @@ public final class ModGameTests {
     register(
         "mob_capture_card_drop_fishing_card_drop_respects_configuration",
         MOB_CAPTURE_CARD_DROP_TESTS::testFishingCardDropRespectsConfiguration);
+    register(
+        "mob_capture_card_drop_player_kills_drop_stacking_cards",
+        MOB_CAPTURE_CARD_DROP_TESTS::testPlayerKillsDropStackingCards);
+    register(
+        "mob_capture_card_drop_non_player_kill_drops_no_card",
+        MOB_CAPTURE_CARD_DROP_TESTS::testNonPlayerKillDropsNoCard);
     register(
         "mob_catcher_rejected_capture_keeps_durability",
         MOB_CATCHER_TESTS::testRejectedCaptureKeepsDurability);
@@ -490,9 +511,14 @@ public final class ModGameTests {
     register(
         "redstone_signal_redstone_mode_enable_on_signal_without_signal",
         REDSTONE_SIGNAL_TESTS::testRedstoneModeEnableOnSignalWithoutSignal);
-    register(
-        "redstone_signal_redstone_mode_ignore", REDSTONE_SIGNAL_TESTS::testRedstoneModeIgnore);
+    register("redstone_signal_redstone_mode_ignore", REDSTONE_SIGNAL_TESTS::testRedstoneModeIgnore);
     register("smoke_mod_registered", SMOKE_TESTS::testModRegistered);
+    register("smoke_every_mod_advancement_is_loaded", SMOKE_TESTS::testEveryModAdvancementIsLoaded);
+    register("smoke_every_mod_loot_table_is_loaded", SMOKE_TESTS::testEveryModLootTableIsLoaded);
+    register("smoke_every_mod_recipe_is_loaded", SMOKE_TESTS::testEveryModRecipeIsLoaded);
+    register(
+        "smoke_disabled_enhancement_recipe_is_removed",
+        SMOKE_TESTS::testDisabledEnhancementRecipeIsRemoved);
   }
 
   private ModGameTests() {}

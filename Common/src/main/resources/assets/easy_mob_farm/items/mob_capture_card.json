@@ -39,6 +39,13 @@
         }
       },
       {
+        "when": "minecraft:armadillo",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/armadillo"
+        }
+      },
+      {
         "when": "minecraft:axolotl",
         "model": {
           "type": "minecraft:model",
@@ -77,6 +84,13 @@
               "model": {
                 "type": "minecraft:model",
                 "model": "minecraft:item/easy_mob_farm/mob_capture_card/cat_black"
+              }
+            },
+            {
+              "when": "british_shorthair",
+              "model": {
+                "type": "minecraft:model",
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/cat_british_shorthair"
               }
             },
             {
@@ -138,7 +152,7 @@
           ],
           "fallback": {
             "type": "minecraft:model",
-            "model": "minecraft:item/easy_mob_farm/mob_capture_card/cat_all_black"
+            "model": "minecraft:item/easy_mob_farm/mob_capture_card/cat_calico"
           }
         }
       },
@@ -152,8 +166,35 @@
       {
         "when": "minecraft:chicken",
         "model": {
-          "type": "minecraft:model",
-          "model": "minecraft:item/easy_mob_farm/mob_capture_card/chicken"
+          "type": "minecraft:select",
+          "property": "easy_mob_farm:mob_capture_card_entity_variant",
+          "cases": [
+            {
+              "when": "cold",
+              "model": {
+                "type": "minecraft:model",
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/chicken_cold"
+              }
+            },
+            {
+              "when": "temperate",
+              "model": {
+                "type": "minecraft:model",
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/chicken"
+              }
+            },
+            {
+              "when": "warm",
+              "model": {
+                "type": "minecraft:model",
+                "model": "minecraft:item/easy_mob_farm/mob_capture_card/chicken_warm"
+              }
+            }
+          ],
+          "fallback": {
+            "type": "minecraft:model",
+            "model": "minecraft:item/easy_mob_farm/mob_capture_card/chicken"
+          }
         }
       },
       {
@@ -192,17 +233,17 @@
         }
       },
       {
-        "when": "minecraft:enderman",
-        "model": {
-          "type": "minecraft:model",
-          "model": "minecraft:item/easy_mob_farm/mob_capture_card/enderman"
-        }
-      },
-      {
         "when": "minecraft:ender_dragon",
         "model": {
           "type": "minecraft:model",
           "model": "minecraft:item/easy_mob_farm/mob_capture_card/ender_dragon"
+        }
+      },
+      {
+        "when": "minecraft:enderman",
+        "model": {
+          "type": "minecraft:model",
+          "model": "minecraft:item/easy_mob_farm/mob_capture_card/enderman"
         }
       },
       {
@@ -256,7 +297,7 @@
           ],
           "fallback": {
             "type": "minecraft:model",
-            "model": "minecraft:item/easy_mob_farm/mob_capture_card/frog_cold"
+            "model": "minecraft:item/easy_mob_farm/mob_capture_card/frog"
           }
         }
       },
@@ -541,7 +582,7 @@
           ],
           "fallback": {
             "type": "minecraft:model",
-            "model": "minecraft:item/easy_mob_farm/mob_capture_card/sheep_black"
+            "model": "minecraft:item/easy_mob_farm/mob_capture_card/sheep"
           }
         }
       },

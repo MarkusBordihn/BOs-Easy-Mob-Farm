@@ -262,8 +262,7 @@ public class MobFarmLootCategory implements IRecipeCategory<MobFarmLootDisplay> 
           return;
         }
 
-        guiGraphics.text(
-            font, wrappedLine, 1, top + drawnLines * LINE_HEIGHT, TEXT_COLOR, false);
+        guiGraphics.text(font, wrappedLine, 1, top + drawnLines * LINE_HEIGHT, TEXT_COLOR, false);
         drawnLines++;
       }
     }

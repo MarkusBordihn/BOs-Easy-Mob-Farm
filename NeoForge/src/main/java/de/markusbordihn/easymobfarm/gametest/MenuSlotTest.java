@@ -96,4 +96,29 @@ public class MenuSlotTest {
     CardBinderMenuTestHelper.testOpenBinderCannotBeMoved(helper);
     helper.succeed();
   }
+
+  public void testCardBinderHotbarSwapCannotMoveOpenBinder(GameTestHelper helper) {
+    CardBinderMenuTestHelper.testHotbarSwapCannotMoveOpenBinder(helper);
+    helper.succeed();
+  }
+
+  public void testCardBinderSwappedInBinderDoesNotReceiveCards(GameTestHelper helper) {
+    CardBinderMenuTestHelper.testSwappedInBinderDoesNotReceiveCards(helper);
+    helper.succeed();
+  }
+
+  public void testCardBinderRecreatedBinderKeepsMenuOpen(GameTestHelper helper) {
+    CardBinderMenuTestHelper.testRecreatedBinderKeepsMenuOpen(helper);
+    helper.succeed();
+  }
+
+  public void testCardBinderCardsAreSavedOnEveryClick(GameTestHelper helper) {
+    CardBinderMenuTestHelper.testCardsAreSavedOnEveryClick(helper);
+    helper.succeed();
+  }
+
+  public void testCardBinderDroppedBinderIgnoresFurtherClicks(GameTestHelper helper) {
+    CardBinderMenuTestHelper.testDroppedBinderIgnoresFurtherClicks(helper);
+    helper.succeed();
+  }
 }

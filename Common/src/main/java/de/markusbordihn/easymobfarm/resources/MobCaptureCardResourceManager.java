@@ -27,6 +27,8 @@ import de.markusbordihn.easymobfarm.data.capture.MobCaptureCardDefinitionManager
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 import net.minecraft.resources.FileToIdConverter;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -67,6 +69,7 @@ public class MobCaptureCardResourceManager extends SimpleJsonResourceReloadListe
 
     MobCaptureCardDefinitionManager.clear();
 
+    Set<Identifier> skippedEntities = new TreeSet<>();
     objectMap.forEach(
         (location, element) -> {
           try {
@@ -104,7 +107,9 @@ public class MobCaptureCardResourceManager extends SimpleJsonResourceReloadListe
                     variants,
                     colors);
 
-            MobCaptureCardDefinitionManager.addDefinition(entity, definition);
+            if (!MobCaptureCardDefinitionManager.addDefinition(entity, definition)) {
+              skippedEntities.add(entity);
+            }
           } catch (Exception e) {
             log.error(
                 "{} Failed to parse mob_capture_card definition: {} → {}",
@@ -118,6 +123,13 @@ public class MobCaptureCardResourceManager extends SimpleJsonResourceReloadListe
         "{} Loaded {} mob capture card definitions.",
         LOG_PREFIX,
         MobCaptureCardDefinitionManager.getAll().size());
+    if (!skippedEntities.isEmpty()) {
+      log.info(
+          "{} Skipped {} definitions for entity types that are not loaded: {}",
+          LOG_PREFIX,
+          skippedEntities.size(),
+          skippedEntities);
+    }
   }
 
   private Map<String, MobCaptureCardDefinition.Color> parseColors(JsonObject json) {

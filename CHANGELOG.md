@@ -5,6 +5,15 @@
 This change log includes the summarized changes. For the full changelog, please go to
 the [GitHub History][history] instead.
 
+### 11.1.0
+
+- Fixed #227 by no longer showing Mob Farm loot entries twice in JEI after joining a server.
+- Fixed card binder cards being duplicated by swapping or dropping the open binder.
+- Fixed log spam from capture card definitions of mobs whose mod is not installed.
+- Fixed cards of mobs from uninstalled mods being lost on save or breaking multiplayer sync.
+- Fixed colored Frog Catalyst enhancements showing a missing texture.
+- Changed the minimum NeoForge version to 26.2.0.93, which fixes three network vulnerabilities.
+
 ### 11.0.0
 
 - Fixed #225 by giving cold and warm chickens their own cards and blue or brown eggs.

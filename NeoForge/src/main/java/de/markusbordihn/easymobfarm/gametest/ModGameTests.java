@@ -225,6 +225,26 @@ public final class ModGameTests {
         MENU_SLOT_TESTS::testCardBinderOpenBinderCannotBeMoved,
         STRUCTURE_3X3X3);
     register(
+        "menu_slot_card_binder_hotbar_swap_cannot_move_open_binder",
+        MENU_SLOT_TESTS::testCardBinderHotbarSwapCannotMoveOpenBinder,
+        STRUCTURE_3X3X3);
+    register(
+        "menu_slot_card_binder_swapped_in_binder_does_not_receive_cards",
+        MENU_SLOT_TESTS::testCardBinderSwappedInBinderDoesNotReceiveCards,
+        STRUCTURE_3X3X3);
+    register(
+        "menu_slot_card_binder_recreated_binder_keeps_menu_open",
+        MENU_SLOT_TESTS::testCardBinderRecreatedBinderKeepsMenuOpen,
+        STRUCTURE_3X3X3);
+    register(
+        "menu_slot_card_binder_cards_are_saved_on_every_click",
+        MENU_SLOT_TESTS::testCardBinderCardsAreSavedOnEveryClick,
+        STRUCTURE_3X3X3);
+    register(
+        "menu_slot_card_binder_dropped_binder_ignores_further_clicks",
+        MENU_SLOT_TESTS::testCardBinderDroppedBinderIgnoresFurtherClicks,
+        STRUCTURE_3X3X3);
+    register(
         "mob_capture_card_drop_no_card_drop_with_zero_chance",
         MOB_CAPTURE_CARD_DROP_TESTS::testNoCardDropWithZeroChance,
         STRUCTURE_3X3X3);
@@ -243,6 +263,14 @@ public final class ModGameTests {
     register(
         "mob_capture_card_drop_fishing_card_drop_respects_configuration",
         MOB_CAPTURE_CARD_DROP_TESTS::testFishingCardDropRespectsConfiguration,
+        STRUCTURE_3X3X3);
+    register(
+        "mob_capture_card_drop_player_kills_drop_stacking_cards",
+        MOB_CAPTURE_CARD_DROP_TESTS::testPlayerKillsDropStackingCards,
+        STRUCTURE_3X3X3);
+    register(
+        "mob_capture_card_drop_non_player_kill_drops_no_card",
+        MOB_CAPTURE_CARD_DROP_TESTS::testNonPlayerKillDropsNoCard,
         STRUCTURE_3X3X3);
     register(
         "mob_catcher_rejected_capture_keeps_durability",
@@ -807,6 +835,22 @@ public final class ModGameTests {
         REDSTONE_SIGNAL_TESTS::testRedstoneModeIgnore,
         STRUCTURE_3X3X3);
     register("smoke_mod_registered", SMOKE_TESTS::testModRegistered, STRUCTURE_3X3X3);
+    register(
+        "smoke_every_mod_advancement_is_loaded",
+        SMOKE_TESTS::testEveryModAdvancementIsLoaded,
+        STRUCTURE_3X3X3);
+    register(
+        "smoke_every_mod_loot_table_is_loaded",
+        SMOKE_TESTS::testEveryModLootTableIsLoaded,
+        STRUCTURE_3X3X3);
+    register(
+        "smoke_every_mod_recipe_is_loaded",
+        SMOKE_TESTS::testEveryModRecipeIsLoaded,
+        STRUCTURE_3X3X3);
+    register(
+        "smoke_disabled_enhancement_recipe_is_removed",
+        SMOKE_TESTS::testDisabledEnhancementRecipeIsRemoved,
+        STRUCTURE_3X3X3);
     register(
         "item_capability_extraction",
         ItemCapabilityTest::testItemCapabilityExtraction,
