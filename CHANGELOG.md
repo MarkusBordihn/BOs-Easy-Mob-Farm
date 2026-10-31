@@ -12,6 +12,9 @@ the [GitHub History][history] instead.
 - Fixed log spam from capture card definitions of mobs whose mod is not installed.
 - Fixed cards of mobs from uninstalled mods being lost on save or breaking multiplayer sync.
 - Fixed colored Frog Catalyst enhancements showing a missing texture.
+- Changed mob farm descriptions to make clear that every farm works with any captured mob.
+- Added the mobs with bonus drops to the mob farm tooltip.
+- Added bonus drops for nine more mobs, such as skeletons, spiders, creepers and wither skeletons.
 - Updated the tested NeoForge version to 21.11.48, which fixes three network vulnerabilities.
 
 ### 11.0.0
