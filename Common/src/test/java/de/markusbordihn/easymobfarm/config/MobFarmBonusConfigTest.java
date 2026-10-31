@@ -24,7 +24,9 @@ import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import java.util.List;
 import net.minecraft.SharedConstants;
 import net.minecraft.server.Bootstrap;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
@@ -77,6 +79,47 @@ class MobFarmBonusConfigTest {
         MobFarmType.NETHER_WASTES_FARM, "minecraft:strider", Items.STRING);
     assertDefaultBonusDropsForAllTiers(
         MobFarmType.NETHER_WASTES_FARM, "minecraft:ghast", Items.GUNPOWDER);
+  }
+
+  @Test
+  @DisplayName("Every mob named in the config header has bonus drops on every tier")
+  void headerMobDefaults() {
+    assertDefaultBonusDropsForAllTiers(
+        MobFarmType.ANIMAL_PLAINS_FARM, "minecraft:pig", Items.PORKCHOP);
+    assertDefaultBonusDropsForAllTiers(MobFarmType.DESERT_FARM, "minecraft:camel", Items.CACTUS);
+    assertDefaultBonusDropsForAllTiers(
+        MobFarmType.JUNGLE_FARM, "minecraft:ocelot", Items.COCOA_BEANS);
+    assertDefaultBonusDropsForAllTiers(
+        MobFarmType.MONSTER_PLAINS_CAVE_FARM, "minecraft:skeleton", Items.BONE);
+    assertDefaultBonusDropsForAllTiers(
+        MobFarmType.MONSTER_PLAINS_CAVE_FARM, "minecraft:spider", Items.STRING);
+    assertDefaultBonusDropsForAllTiers(
+        MobFarmType.MONSTER_PLAINS_CAVE_FARM, "minecraft:creeper", Items.GUNPOWDER);
+    assertDefaultBonusDropsForAllTiers(
+        MobFarmType.NETHER_FORTRESS_FARM, "minecraft:wither_skeleton", Items.COAL);
+    assertDefaultBonusDropsForAllTiers(MobFarmType.OCEAN_FARM, "minecraft:salmon", Items.SALMON);
+    assertDefaultBonusDropsForAllTiers(
+        MobFarmType.OCEAN_FARM, "minecraft:guardian", Items.PRISMARINE_SHARD);
+  }
+
+  @Test
+  @DisplayName("Bonus mob list of a farm only contains mobs configured for its tier")
+  void entityTypesWithBonusDropMatchFarmAndTier() {
+    MobFarmBonusConfig.addBonusDropEntry(
+        MobFarmType.LUCKY_DROP_FARM,
+        2,
+        "minecraft:creeper",
+        5,
+        new ItemStackTemplate(Items.TNT, 1));
+    MobFarmBonusConfig.addBonusDropEntry(
+        MobFarmType.LUCKY_DROP_FARM, 2, "minecraft:bat", 5, new ItemStackTemplate(Items.TNT, 1));
+
+    Assertions.assertEquals(
+        List.of(EntityType.BAT, EntityType.CREEPER),
+        MobFarmBonusConfig.getEntityTypesWithBonusDrop(MobFarmType.LUCKY_DROP_FARM.getId(), 2));
+    Assertions.assertTrue(
+        MobFarmBonusConfig.getEntityTypesWithBonusDrop(MobFarmType.LUCKY_DROP_FARM.getId(), 1)
+            .isEmpty());
   }
 
   @Test

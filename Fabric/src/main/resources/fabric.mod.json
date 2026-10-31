@@ -21,22 +21,6 @@
     "client": [
       "de.markusbordihn.easymobfarm.EasyMobFarmClient"
     ],
-    "fabric-gametest": [
-      "de.markusbordihn.easymobfarm.gametest.SmokeTest",
-      "de.markusbordihn.easymobfarm.gametest.ModBlocksTest",
-      "de.markusbordihn.easymobfarm.gametest.ModBlockItemsTest",
-      "de.markusbordihn.easymobfarm.gametest.ModItemsTest",
-      "de.markusbordihn.easymobfarm.gametest.MobFarmBlockItemsTest",
-      "de.markusbordihn.easymobfarm.gametest.LootTablesTest",
-      "de.markusbordihn.easymobfarm.gametest.LootManagerTest",
-      "de.markusbordihn.easymobfarm.gametest.MobVariantDataTest",
-      "de.markusbordihn.easymobfarm.gametest.MobCaptureCardDropTest",
-      "de.markusbordihn.easymobfarm.gametest.MobFarmBlockEntityTest",
-      "de.markusbordihn.easymobfarm.gametest.MobCatcherTest",
-      "de.markusbordihn.easymobfarm.gametest.RedstoneSignalTest",
-      "de.markusbordihn.easymobfarm.gametest.MenuSlotTest",
-      "de.markusbordihn.easymobfarm.gametest.MobFarmInventoryTest"
-    ],
     "jei_mod_plugin": [
       "de.markusbordihn.easymobfarm.compat.jei.EasyMobFarmJeiPlugin"
     ]

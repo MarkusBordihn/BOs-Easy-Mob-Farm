@@ -1,3 +1,5 @@
+import java.util.zip.ZipFile
+
 buildscript {
   // The toolkit is only published to Maven Local, so its client test plugin stays optional and a
   // machine without it still builds and runs the game tests.
@@ -37,10 +39,45 @@ tasks.register('allGameTests') {
   dependsOn ':Fabric:runGameTest', ':Forge:runGameTestServer', ':NeoForge:runGameTestServer'
 }
 
+tasks.register('verifyProductionJars') {
+  group = 'verification'
+  description = 'Checks that release jars contain no game or client test code or resources.'
+  dependsOn ':Common:jar', ':Fabric:jar', ':Forge:jar', ':NeoForge:jar'
+
+  doLast {
+    [project(':Common').tasks.named('jar'),
+     project(':Fabric').tasks.named('jar'),
+     project(':Forge').tasks.named('jar'),
+     project(':NeoForge').tasks.named('jar')].each { archiveTask ->
+      File archiveFile = archiveTask.get().archiveFile.get().asFile
+      new ZipFile(archiveFile).withCloseable { archive ->
+        archive.entries().each { entry ->
+          String entryName = entry.name.toLowerCase(Locale.ROOT)
+          if (entryName.contains('/gametest/') || entryName.contains('/clienttest/')
+              || entryName.contains('/test_instance/') || entryName.contains('/test_environment/')
+              || entryName.contains('/gametest.') || entryName.startsWith('org/junit/')
+              || entryName.startsWith('org/mockito/')
+              || entryName.startsWith('de/markusbordihn/clientruntimeinterfacetoolkit/')) {
+            throw new GradleException("Test content in ${archiveFile.name}: ${entry.name}")
+          }
+          if (entry.name == 'fabric.mod.json') {
+            archive.getInputStream(entry).withCloseable { metadata ->
+              if (metadata.getText('UTF-8').contains('"fabric-gametest"')) {
+                throw new GradleException("Game test entrypoints in ${archiveFile.name}")
+              }
+            }
+          }
+        }
+      }
+      logger.lifecycle("Verified production jar: ${archiveFile.name}")
+    }
+  }
+}
+
 tasks.register('fullCheck') {
   group = 'verification'
   description = 'Runs the standard checks and Fabric, Forge and NeoForge game tests.'
-  dependsOn ':Common:check', ':Fabric:check', ':Forge:check', ':NeoForge:check', 'allGameTests'
+  dependsOn ':Common:check', ':Fabric:check', ':Forge:check', ':NeoForge:check', 'allGameTests', 'verifyProductionJars'
 }
 
 tasks.register('publishModrinth') {
@@ -102,7 +139,7 @@ subprojects {
   }
 
   tasks.register('wrapper', Wrapper) {
-    gradleVersion = '9.8.0'
+    gradleVersion = '9.8.2'
     distributionType = Wrapper.DistributionType.BIN
   }
 
