@@ -113,11 +113,10 @@ class MobCaptureCardDefinitionTest {
     buffer.writeBoolean(false);
     buffer.writeBoolean(false);
     buffer.writeVarInt(colors.size());
-    colors.forEach(
-        (name, color) -> {
-          buffer.writeUtf(name);
-          buffer.writeResourceLocation(color.model());
-        });
+    colors.forEach((name, color) -> {
+      buffer.writeUtf(name);
+      buffer.writeResourceLocation(color.model());
+    });
     buffer.writeVarInt(0);
 
     Assertions.assertThrows(RuntimeException.class, () -> MobCaptureCardDefinition.decode(buffer));

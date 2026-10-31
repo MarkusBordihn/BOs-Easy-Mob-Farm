@@ -22,6 +22,7 @@ package de.markusbordihn.easymobfarm.item;
 import com.mojang.blaze3d.systems.RenderSystem;
 import de.markusbordihn.easymobfarm.Constants;
 import de.markusbordihn.easymobfarm.block.entity.MobFarmBlockEntity;
+import de.markusbordihn.easymobfarm.config.MobFarmBonusConfig;
 import de.markusbordihn.easymobfarm.config.MobFarmConfig;
 import de.markusbordihn.easymobfarm.data.mobfarm.MobFarmType;
 import de.markusbordihn.easymobfarm.network.components.TextComponent;
@@ -32,6 +33,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
 import net.minecraft.network.chat.Style;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -140,6 +142,23 @@ public class MobFarmBlockItem extends BlockItem {
         };
     if (processingSpeedText != null) {
       tooltip.add(processingSpeedText);
+    }
+
+    tooltip.add(
+        TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "accepts_any_mob")
+            .withStyle(ChatFormatting.GRAY));
+    List<EntityType<?>> bonusDropEntityTypes =
+        MobFarmBonusConfig.getEntityTypesWithBonusDrop(this.farmName, tierLevel);
+    if (!bonusDropEntityTypes.isEmpty()) {
+      tooltip.add(
+          TextComponent.getTranslatedTextRaw(Constants.TOOLTIP_FARM_PREFIX + "bonus_drops_for")
+              .withStyle(ChatFormatting.GREEN));
+      for (EntityType<?> entityType : bonusDropEntityTypes) {
+        tooltip.add(
+            Component.literal("  • ")
+                .append(entityType.getDescription())
+                .withStyle(ChatFormatting.GRAY));
+      }
     }
 
     // Add additional information for special mob farms.

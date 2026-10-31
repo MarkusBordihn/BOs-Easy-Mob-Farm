@@ -71,10 +71,9 @@ public class MobCaptureCardItem extends Item {
       return "";
     }
     return Arrays.stream(variant.split("_"))
-        .map(
-            word ->
-                word.substring(0, 1).toUpperCase(Locale.ROOT)
-                    + word.substring(1).toLowerCase(Locale.ROOT))
+        .map(word ->
+            word.substring(0, 1).toUpperCase(Locale.ROOT)
+                + word.substring(1).toLowerCase(Locale.ROOT))
         .collect(Collectors.joining(" "));
   }
 

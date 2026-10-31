@@ -62,15 +62,14 @@ public class ModelEventHandler {
             ModelManagerInterface.DEFAULT_RARE_MODEL,
             ModelManagerInterface.DEFAULT_EPIC_MODEL,
             ModelManagerInterface.DEFAULT_FISH_MODEL)
-        .forEach(
-            resourceLocation -> {
-              if (resourceLocation instanceof ModelResourceLocation modelResourceLocation) {
-                resourceLocation =
-                    ModelManager.getRegistrationModelResourceLocation(modelResourceLocation);
-              }
-              log.debug("Registering default model {} ...", resourceLocation);
-              event.register(resourceLocation);
-            });
+        .forEach(resourceLocation -> {
+          if (resourceLocation instanceof ModelResourceLocation modelResourceLocation) {
+            resourceLocation =
+                ModelManager.getRegistrationModelResourceLocation(modelResourceLocation);
+          }
+          log.debug("Registering default model {} ...", resourceLocation);
+          event.register(resourceLocation);
+        });
 
     // Pre-Loading additional models for Mob Capture Card from the resource folder.
     ResourceManager resourceManager = Minecraft.getInstance().getResourceManager();

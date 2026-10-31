@@ -741,10 +741,9 @@ public class MobFarmScreen<T extends MobFarmMenu> extends ContainerScreen<T> {
 
   private boolean hasPlayerKillEnhancement() {
     return getActiveEnhancements().stream()
-        .anyMatch(
-            enhancement ->
-                enhancement instanceof SwordEnhancementItem
-                    || enhancement instanceof KnifeEnhancementItem);
+        .anyMatch(enhancement ->
+            enhancement instanceof SwordEnhancementItem
+                || enhancement instanceof KnifeEnhancementItem);
   }
 
   private List<Component> getEnhancementSuggestions(List<EnhancementItem> active) {

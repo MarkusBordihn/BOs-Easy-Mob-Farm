@@ -10,6 +10,9 @@ the [GitHub History][history] instead.
 - Fixed #227 by no longer showing Mob Farm loot entries twice in JEI after joining a server.
 - Fixed card binder cards being duplicated by swapping or dropping the open binder.
 - Fixed log spam from capture card definitions of mobs whose mod is not installed.
+- Changed mob farm descriptions to make clear that every farm works with any captured mob.
+- Added the mobs with bonus drops to the mob farm tooltip.
+- Added bonus drops for nine more mobs, such as skeletons, spiders, creepers and wither skeletons.
 
 ### 11.0.0
 

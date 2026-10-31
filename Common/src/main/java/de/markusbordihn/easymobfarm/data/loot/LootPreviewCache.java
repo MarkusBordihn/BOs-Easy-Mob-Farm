@@ -51,12 +51,11 @@ public class LootPreviewCache {
 
   public static Map<EntityType<?>, List<ItemStack>> getServerCachedPreviews() {
     Map<EntityType<?>, List<ItemStack>> previews = new HashMap<>();
-    serverCache.forEach(
-        (entityType, entry) -> {
-          if (isValid(entry)) {
-            previews.put(entityType, entry.items());
-          }
-        });
+    serverCache.forEach((entityType, entry) -> {
+      if (isValid(entry)) {
+        previews.put(entityType, entry.items());
+      }
+    });
     return previews;
   }
 

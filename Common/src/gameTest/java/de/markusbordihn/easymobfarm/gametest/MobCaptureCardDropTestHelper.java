@@ -137,15 +137,14 @@ public class MobCaptureCardDropTestHelper {
 
   public static void testPlayerKillsDropStackingCards(GameTestHelper helper) {
     List<ItemStack> droppedCards = new ArrayList<>();
-    withPlayerKillDropConfig(
-        () -> {
-          DamageSource playerAttack =
-              helper.getLevel().damageSources().playerAttack(helper.makeMockSurvivalPlayer());
-          for (int i = 0; i < STACKING_KILLS; i++) {
-            killChicken(helper, playerAttack);
-            droppedCards.add(collectDroppedCard(helper));
-          }
-        });
+    withPlayerKillDropConfig(() -> {
+      DamageSource playerAttack =
+          helper.getLevel().damageSources().playerAttack(helper.makeMockSurvivalPlayer());
+      for (int i = 0; i < STACKING_KILLS; i++) {
+        killChicken(helper, playerAttack);
+        droppedCards.add(collectDroppedCard(helper));
+      }
+    });
 
     for (ItemStack droppedCard : droppedCards) {
       GameTestHelpers.assertTrue(
@@ -160,15 +159,14 @@ public class MobCaptureCardDropTestHelper {
   }
 
   public static void testNonPlayerKillDropsNoCard(GameTestHelper helper) {
-    withPlayerKillDropConfig(
-        () -> {
-          killChicken(helper, helper.getLevel().damageSources().generic());
-          ItemStack droppedCard = collectDroppedCard(helper);
-          GameTestHelpers.assertTrue(
-              helper,
-              "A chicken killed without a player should drop no card, got: " + droppedCard,
-              droppedCard.isEmpty());
-        });
+    withPlayerKillDropConfig(() -> {
+      killChicken(helper, helper.getLevel().damageSources().generic());
+      ItemStack droppedCard = collectDroppedCard(helper);
+      GameTestHelpers.assertTrue(
+          helper,
+          "A chicken killed without a player should drop no card, got: " + droppedCard,
+          droppedCard.isEmpty());
+    });
   }
 
   public static void testEveryFishDropsItsOwnCardOnFishing(GameTestHelper helper) {

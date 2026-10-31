@@ -53,15 +53,6 @@ abstract class ClientTestBase {
   private static final TestArea ARRIVAL_PLATFORM =
       TestArea.between(-7, PLATFORM_Y, -2, 7, PLATFORM_Y, 8);
   private static final String MOD_CONFIGURATION_DIRECTORY = "easy_mob_farm";
-  private static final Map<String, List<String>> TEST_CONFIGURATION =
-      Map.of(
-          "mob_capture_card.cfg",
-          List.of(
-              "mobCaptureCardKillDropChance=1.0",
-              "mobCaptureCardFishingDropChance=1.0",
-              "mobCaptureCardFoilDropChance=0.0"),
-          "mob_farm.cfg",
-          List.of("farmProgressingTime=1000"));
 
   private static GameClientBuilder configureLaunch(GameClientBuilder builder) {
     writeTestConfiguration();
@@ -69,7 +60,7 @@ abstract class ClientTestBase {
         .withSuiteName(SUITE_NAME)
         .withWindowSize(1280, 720)
         .withGuiScale(2)
-        .withAllowedCommands("setblock", "tp", "item", "kill", "clear")
+        .withAllowedCommands("item", "clear")
         .withWorld()
         .withRenderProfile(
             Parameters.of("preset", "deterministic")
@@ -86,10 +77,19 @@ abstract class ClientTestBase {
       return;
     }
 
+    Map<String, List<String>> testConfiguration =
+        Map.of(
+            "mob_capture_card.cfg",
+            List.of(
+                "mobCaptureCardKillDropChance=1.0",
+                "mobCaptureCardFishingDropChance=1.0",
+                "mobCaptureCardFoilDropChance=0.0"),
+            "mob_farm.cfg",
+            List.of("farmProgressingTime=1000"));
     Path configurationDirectory = Path.of(gameDirectory, "config", MOD_CONFIGURATION_DIRECTORY);
     try {
       Files.createDirectories(configurationDirectory);
-      for (Map.Entry<String, List<String>> configurationFile : TEST_CONFIGURATION.entrySet()) {
+      for (Map.Entry<String, List<String>> configurationFile : testConfiguration.entrySet()) {
         Files.write(
             configurationDirectory.resolve(configurationFile.getKey()),
             configurationFile.getValue(),
@@ -120,8 +120,7 @@ abstract class ClientTestBase {
   }
 
   @AfterEach
-  void clearDroppedItemsAndInventory() {
-    command("kill @e[type=item]");
-    client.clearInventory();
+  void resetScene() {
+    client.resetScene();
   }
 }

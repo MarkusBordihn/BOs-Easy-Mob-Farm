@@ -64,22 +64,21 @@ public record MobFarmLootDisplay(
     }
 
     List<MobFarmLootDisplay> displays = new ArrayList<>();
-    captureCardsByEntityType.forEach(
-        (entityType, captureCards) -> {
-          MobCaptureCardDefinition definition = MobCaptureCardDefinitionManager.get(entityType);
-          if (definition == null) {
-            return;
-          }
+    captureCardsByEntityType.forEach((entityType, captureCards) -> {
+      MobCaptureCardDefinition definition = MobCaptureCardDefinitionManager.get(entityType);
+      if (definition == null) {
+        return;
+      }
 
-          displays.add(
-              new MobFarmLootDisplay(
-                  entityType,
-                  List.copyOf(captureCards),
-                  getSpawnEggs(entityType),
-                  definition.requiresKilledByPlayer(),
-                  definition.supportsKnifeEnhancement(),
-                  getBonusDrops(entityType, definition.variants().keySet())));
-        });
+      displays.add(
+          new MobFarmLootDisplay(
+              entityType,
+              List.copyOf(captureCards),
+              getSpawnEggs(entityType),
+              definition.requiresKilledByPlayer(),
+              definition.supportsKnifeEnhancement(),
+              getBonusDrops(entityType, definition.variants().keySet())));
+    });
     return displays;
   }
 
@@ -102,9 +101,8 @@ public record MobFarmLootDisplay(
     }
 
     List<BonusDrop> bonusDrops = new ArrayList<>();
-    itemsByKey.forEach(
-        (key, item) ->
-            bonusDrops.add(new BonusDrop(item, List.copyOf(mobFarmTypesByKey.get(key)))));
+    itemsByKey.forEach((key, item) ->
+        bonusDrops.add(new BonusDrop(item, List.copyOf(mobFarmTypesByKey.get(key)))));
     return bonusDrops;
   }
 

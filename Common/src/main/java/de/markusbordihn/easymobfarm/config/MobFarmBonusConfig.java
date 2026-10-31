@@ -50,17 +50,20 @@ public class MobFarmBonusConfig extends Config {
 
  Available Mob Farm Types:
  ------------------------
- - animal_plains_farm: For animals like cows, sheep, chickens, pigs
- - bee_hive_farm: For bees and honey production
- - desert_farm: For desert mobs like husks, rabbits, camels
- - end_farm: For end mobs like endermen, shulkers, endermites
- - iron_golem_farm: For iron golems and poppy drops
- - jungle_farm: For jungle mobs like parrots, pandas, ocelots
- - monster_plains_cave_farm: For common monsters like zombies, skeletons, spiders
- - nether_fortress_farm: For nether mobs like blazes, magma cubes, wither skeletons
- - nether_wastes_farm: For nether mobs like piglins, hoglins, striders, ghasts
- - ocean_farm: For ocean mobs like cod, salmon, squid, guardians
- - swamp_farm: For swamp mobs like frogs, slimes, witches
+ Every mob farm accepts every captured mob. The farm type only decides which
+ mobs get bonus drops. Mobs with default bonus drops:
+
+ - animal_plains_farm: cows, sheep, chickens, pigs
+ - bee_hive_farm: bees
+ - desert_farm: husks, rabbits, camels (armadillos with Vanilla Backport)
+ - end_farm: endermen, shulkers, endermites
+ - iron_golem_farm: iron golems
+ - jungle_farm: parrots, pandas, ocelots
+ - monster_plains_cave_farm: zombies, skeletons, spiders, creepers
+ - nether_fortress_farm: blazes, magma cubes, wither skeletons
+ - nether_wastes_farm: piglins, zombified piglins, hoglins, striders, ghasts
+ - ocean_farm: cod, salmon, squid, guardians
+ - swamp_farm: frogs, slimes, witches
 
  Tier Levels (better farms = better bonus chances):
  -------------------------------------------------
@@ -87,7 +90,7 @@ public class MobFarmBonusConfig extends Config {
  ---------------
  - Lower chance numbers = higher drop probability (1 = always, 100 = 1% chance)
  - To disable a bonus drop, set the amount to 0
- - Each mob farm type targets specific biome-appropriate mobs
+ - Mobs without an entry for a farm type still work there, just without bonus drops
  - Higher tier farms have better default bonus chances
 
 """;
@@ -135,6 +138,7 @@ public class MobFarmBonusConfig extends Config {
     defaultMobFarmBonusMap.put(
         MobFarmType.ANIMAL_PLAINS_FARM.getId() + "::3::minecraft:chicken",
         List.of(new BonusDrop(5, new ItemStack(Items.EGG, 1))));
+    addTieredBonusDrop(MobFarmType.ANIMAL_PLAINS_FARM, "minecraft:pig", Items.PORKCHOP);
 
     // Bee Hive Farm Bonus
     defaultMobFarmBonusMap.put(
@@ -175,6 +179,7 @@ public class MobFarmBonusConfig extends Config {
     defaultMobFarmBonusMap.put(
         MobFarmType.DESERT_FARM.getId() + "::3::minecraft:rabbit",
         List.of(new BonusDrop(5, new ItemStack(Items.RABBIT_HIDE, 1))));
+    addTieredBonusDrop(MobFarmType.DESERT_FARM, "minecraft:camel", Items.CACTUS);
     addTieredBonusDrop(MobFarmType.DESERT_FARM, "minecraft:armadillo", "minecraft:armadillo_scute");
 
     // Iron Golem Farm Bonus
@@ -216,6 +221,7 @@ public class MobFarmBonusConfig extends Config {
     defaultMobFarmBonusMap.put(
         MobFarmType.JUNGLE_FARM.getId() + "::3::minecraft:panda",
         List.of(new BonusDrop(5, new ItemStack(Items.BAMBOO, 1))));
+    addTieredBonusDrop(MobFarmType.JUNGLE_FARM, "minecraft:ocelot", Items.COCOA_BEANS);
 
     // Monster Plains Cave Farm Bonus
     defaultMobFarmBonusMap.put(
@@ -238,6 +244,9 @@ public class MobFarmBonusConfig extends Config {
         List.of(
             new BonusDrop(5, new ItemStack(Items.ROTTEN_FLESH, 1)),
             new BonusDrop(10, new ItemStack(Items.IRON_NUGGET, 1))));
+    addTieredBonusDrop(MobFarmType.MONSTER_PLAINS_CAVE_FARM, "minecraft:skeleton", Items.BONE);
+    addTieredBonusDrop(MobFarmType.MONSTER_PLAINS_CAVE_FARM, "minecraft:spider", Items.STRING);
+    addTieredBonusDrop(MobFarmType.MONSTER_PLAINS_CAVE_FARM, "minecraft:creeper", Items.GUNPOWDER);
 
     // Nether Fortress Farm Bonus
     defaultMobFarmBonusMap.put(
@@ -264,6 +273,7 @@ public class MobFarmBonusConfig extends Config {
     defaultMobFarmBonusMap.put(
         MobFarmType.NETHER_FORTRESS_FARM.getId() + "::3::minecraft:magma_cube",
         List.of(new BonusDrop(5, new ItemStack(Items.MAGMA_CREAM, 1))));
+    addTieredBonusDrop(MobFarmType.NETHER_FORTRESS_FARM, "minecraft:wither_skeleton", Items.COAL);
 
     // Ocean Farm Bonus
     defaultMobFarmBonusMap.put(
@@ -290,6 +300,8 @@ public class MobFarmBonusConfig extends Config {
     defaultMobFarmBonusMap.put(
         MobFarmType.OCEAN_FARM.getId() + "::3::minecraft:squid",
         List.of(new BonusDrop(5, new ItemStack(Items.INK_SAC, 1))));
+    addTieredBonusDrop(MobFarmType.OCEAN_FARM, "minecraft:salmon", Items.SALMON);
+    addTieredBonusDrop(MobFarmType.OCEAN_FARM, "minecraft:guardian", Items.PRISMARINE_SHARD);
 
     // Swamp Farm Bonus
     defaultMobFarmBonusMap.put(
@@ -436,6 +448,10 @@ public class MobFarmBonusConfig extends Config {
       return;
     }
 
+    addTieredBonusDrop(mobFarmType, entityType, item);
+  }
+
+  private static void addTieredBonusDrop(MobFarmType mobFarmType, String entityType, Item item) {
     int[] chances = {20, 15, 10, 5};
     for (int tierLevel = 0; tierLevel < chances.length; tierLevel++) {
       defaultMobFarmBonusMap.put(
@@ -462,44 +478,40 @@ public class MobFarmBonusConfig extends Config {
     mobFarmBonusMap.clear();
 
     // Add default values to config file, handling the new List syntax
-    defaultMobFarmBonusMap.forEach(
-        (mobFarmName, bonusList) -> {
-          if (!properties.containsKey(mobFarmName)) {
-            if (bonusList.size() == 1) {
-              BonusDrop drop = bonusList.get(0);
-              String itemName =
-                  BuiltInRegistries.ITEM.getKey(drop.itemStack().getItem()).toString();
-              String value = itemName + "::" + drop.itemStack().getCount() + "::" + drop.chance();
-              properties.setProperty(mobFarmName, value);
-            } else {
-              StringJoiner joiner = new StringJoiner(", ", "[", "]");
-              for (BonusDrop drop : bonusList) {
-                String itemName =
-                    BuiltInRegistries.ITEM.getKey(drop.itemStack().getItem()).toString();
-                joiner.add(itemName + "::" + drop.itemStack().getCount() + "::" + drop.chance());
-              }
-              properties.setProperty(mobFarmName, joiner.toString());
-            }
+    defaultMobFarmBonusMap.forEach((mobFarmName, bonusList) -> {
+      if (!properties.containsKey(mobFarmName)) {
+        if (bonusList.size() == 1) {
+          BonusDrop drop = bonusList.get(0);
+          String itemName = BuiltInRegistries.ITEM.getKey(drop.itemStack().getItem()).toString();
+          String value = itemName + "::" + drop.itemStack().getCount() + "::" + drop.chance();
+          properties.setProperty(mobFarmName, value);
+        } else {
+          StringJoiner joiner = new StringJoiner(", ", "[", "]");
+          for (BonusDrop drop : bonusList) {
+            String itemName = BuiltInRegistries.ITEM.getKey(drop.itemStack().getItem()).toString();
+            joiner.add(itemName + "::" + drop.itemStack().getCount() + "::" + drop.chance());
           }
-        });
+          properties.setProperty(mobFarmName, joiner.toString());
+        }
+      }
+    });
 
     // Parse config file supporting both plain string and list [item1, item2] syntax
-    properties.forEach(
-        (key, value) -> {
-          String[] keyParts = parseKey((String) key);
-          if (keyParts == null) return;
+    properties.forEach((key, value) -> {
+      String[] keyParts = parseKey((String) key);
+      if (keyParts == null) return;
 
-          String valStr = ((String) value).trim();
+      String valStr = ((String) value).trim();
 
-          if (valStr.startsWith("[") && valStr.endsWith("]")) {
-            valStr = valStr.substring(1, valStr.length() - 1).trim();
-            for (String itemStr : valStr.split("\\s*,\\s*")) {
-              parseAndAddDrop(keyParts, itemStr);
-            }
-          } else {
-            parseAndAddDrop(keyParts, valStr);
-          }
-        });
+      if (valStr.startsWith("[") && valStr.endsWith("]")) {
+        valStr = valStr.substring(1, valStr.length() - 1).trim();
+        for (String itemStr : valStr.split("\\s*,\\s*")) {
+          parseAndAddDrop(keyParts, itemStr);
+        }
+      } else {
+        parseAndAddDrop(keyParts, valStr);
+      }
+    });
 
     // Update config file if needed
     updateConfigFileIfChanged(configFile, CONFIG_FILE_HEADER, properties, unmodifiedProperties);
@@ -717,15 +729,24 @@ public class MobFarmBonusConfig extends Config {
       String mobFarmKeyPrefix = mobFarmType.getId() + "::";
       boolean hasBonusDrop =
           mobFarmBonusMap.keySet().stream()
-              .anyMatch(
-                  mobFarmKey ->
-                      mobFarmKey.startsWith(mobFarmKeyPrefix)
-                          && mobFarmKey.endsWith(mobFarmKeySuffix));
+              .anyMatch(mobFarmKey ->
+                  mobFarmKey.startsWith(mobFarmKeyPrefix) && mobFarmKey.endsWith(mobFarmKeySuffix));
       if (hasBonusDrop) {
         mobFarmTypes.add(mobFarmType);
       }
     }
     return mobFarmTypes;
+  }
+
+  public static List<EntityType<?>> getEntityTypesWithBonusDrop(String mobFarmName, int tierLevel) {
+    String mobFarmKeyPrefix = getMobFarmKey(mobFarmName, tierLevel, "");
+    return mobFarmBonusMap.keySet().stream()
+        .filter(mobFarmKey -> mobFarmKey.startsWith(mobFarmKeyPrefix))
+        .map(mobFarmKey -> mobFarmKey.substring(mobFarmKeyPrefix.length()))
+        .sorted()
+        .flatMap(entityId ->
+            BuiltInRegistries.ENTITY_TYPE.getOptional(new ResourceLocation(entityId)).stream())
+        .toList();
   }
 
   public static List<ItemStack> getBonusDropEntries(

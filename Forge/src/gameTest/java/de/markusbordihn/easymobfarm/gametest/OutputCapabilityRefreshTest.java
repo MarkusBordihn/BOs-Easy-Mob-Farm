@@ -56,18 +56,15 @@ public class OutputCapabilityRefreshTest {
     AtomicReference<LazyOptional<IItemHandler>> requeriedItemHandler = new AtomicReference<>();
     mobFarmBlockEntity
         .getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.DOWN)
-        .addListener(
-            invalidatedItemHandler ->
-                requeriedItemHandler.set(
-                    mobFarmBlockEntity.getCapability(
-                        ForgeCapabilities.ITEM_HANDLER, Direction.DOWN)));
+        .addListener(invalidatedItemHandler ->
+            requeriedItemHandler.set(
+                mobFarmBlockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.DOWN)));
 
-    helper.succeedWhen(
-        () -> {
-          helper.assertTrue(requeriedItemHandler.get() != null, "Stalled output was not refreshed");
-          helper.assertTrue(
-              requeriedItemHandler.get().isPresent(),
-              "Listener re-querying on invalidation received an invalidated item handler");
-        });
+    helper.succeedWhen(() -> {
+      helper.assertTrue(requeriedItemHandler.get() != null, "Stalled output was not refreshed");
+      helper.assertTrue(
+          requeriedItemHandler.get().isPresent(),
+          "Listener re-querying on invalidation received an invalidated item handler");
+    });
   }
 }

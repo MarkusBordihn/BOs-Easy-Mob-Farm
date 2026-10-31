@@ -177,13 +177,12 @@ public class MobFarmLootCategory implements IRecipeCategory<MobFarmLootDisplay> 
           .addSlot(RecipeIngredientRole.OUTPUT, getDropX(i), BONUS_DROP_TOP)
           .setBackground(this.slotBackground, -1, -1)
           .addItemStack(bonusDrop.item())
-          .addTooltipCallback(
-              (recipeSlotView, tooltip) ->
-                  tooltip.add(
-                      Component.translatable(
-                              Constants.TEXT_PREFIX + "jei.bonus_drop",
-                              getMobFarmTypeNames(bonusDrop.mobFarmTypes()))
-                          .withStyle(ChatFormatting.GOLD)));
+          .addTooltipCallback((recipeSlotView, tooltip) ->
+              tooltip.add(
+                  Component.translatable(
+                          Constants.TEXT_PREFIX + "jei.bonus_drop",
+                          getMobFarmTypeNames(bonusDrop.mobFarmTypes()))
+                      .withStyle(ChatFormatting.GOLD)));
     }
   }
 

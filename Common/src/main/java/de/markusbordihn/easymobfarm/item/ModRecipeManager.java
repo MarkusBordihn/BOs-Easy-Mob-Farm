@@ -93,11 +93,10 @@ public class ModRecipeManager {
 
     // Disable mob farm upgrade recipes if disabled in config
     if (!MobFarmConfig.enableMobFarmUpgradeRecipes) {
-      recipes.removeIf(
-          recipe ->
-              recipe.getId().getNamespace().equals(Constants.MOD_ID)
-                  && recipe.getId().getPath().startsWith(MOB_FARM_PREFIX)
-                  && recipe.getId().getPath().contains(MOB_FARM_UPGRADE_SUFFIX));
+      recipes.removeIf(recipe ->
+          recipe.getId().getNamespace().equals(Constants.MOD_ID)
+              && recipe.getId().getPath().startsWith(MOB_FARM_PREFIX)
+              && recipe.getId().getPath().contains(MOB_FARM_UPGRADE_SUFFIX));
       log.info("{} Disabled mob farm upgrade recipes", LOG_PREFIX);
     }
 
@@ -179,10 +178,9 @@ public class ModRecipeManager {
     }
     String recipePath = recipePrefix + itemId;
     boolean removed =
-        recipes.removeIf(
-            recipe ->
-                recipe.getId().getNamespace().equals(Constants.MOD_ID)
-                    && recipe.getId().getPath().equals(recipePath));
+        recipes.removeIf(recipe ->
+            recipe.getId().getNamespace().equals(Constants.MOD_ID)
+                && recipe.getId().getPath().equals(recipePath));
     if (removed) {
       log.info("{} Removed {} recipe ...", LOG_PREFIX, recipePath);
     } else {

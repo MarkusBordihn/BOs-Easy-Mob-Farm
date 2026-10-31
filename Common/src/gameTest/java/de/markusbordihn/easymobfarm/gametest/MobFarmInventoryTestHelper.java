@@ -121,18 +121,17 @@ public class MobFarmInventoryTestHelper {
         "Loot of a full farm was dropped into the world instead of buffered");
 
     fillResultSlots(mobFarmBlockEntity, ItemStack.EMPTY);
-    helper.succeedWhen(
-        () -> {
-          helper.assertTrue(
-              mobFarmBlockEntity.getBufferSize() == 0,
-              "Buffer still holds " + mobFarmBlockEntity.getBufferSize() + " stacks");
-          helper.assertTrue(
-              getResultItemCount(mobFarmBlockEntity, Items.CHICKEN) == bufferedChickenCount,
-              "Expected "
-                  + bufferedChickenCount
-                  + " raw chicken from the buffer, but found "
-                  + getResultItemCount(mobFarmBlockEntity, Items.CHICKEN));
-        });
+    helper.succeedWhen(() -> {
+      helper.assertTrue(
+          mobFarmBlockEntity.getBufferSize() == 0,
+          "Buffer still holds " + mobFarmBlockEntity.getBufferSize() + " stacks");
+      helper.assertTrue(
+          getResultItemCount(mobFarmBlockEntity, Items.CHICKEN) == bufferedChickenCount,
+          "Expected "
+              + bufferedChickenCount
+              + " raw chicken from the buffer, but found "
+              + getResultItemCount(mobFarmBlockEntity, Items.CHICKEN));
+    });
   }
 
   public static void testPartialBufferTransferDoesNotDuplicate(GameTestHelper helper, Block block) {
@@ -259,18 +258,17 @@ public class MobFarmInventoryTestHelper {
     mobFarmBlockEntity.setItem(
         MobFarmSlots.RESULT_SLOTS.get(0).index(), new ItemStack(Items.FEATHER));
 
-    helper.succeedWhen(
-        () -> {
-          HopperBlockEntity hopperBlockEntity =
-              (HopperBlockEntity) helper.getBlockEntity(LOWER_POSITION);
-          helper.assertTrue(
-              hopperBlockEntity.countItem(Items.FEATHER) == 1,
-              "Hopper below the farm did not pull the result");
-          helper.assertTrue(
-              hopperBlockEntity.countItem(de.markusbordihn.easymobfarm.item.Items.LOOT_ENHANCEMENT)
-                  == 0,
-              "Hopper below the farm pulled an enhancement");
-        });
+    helper.succeedWhen(() -> {
+      HopperBlockEntity hopperBlockEntity =
+          (HopperBlockEntity) helper.getBlockEntity(LOWER_POSITION);
+      helper.assertTrue(
+          hopperBlockEntity.countItem(Items.FEATHER) == 1,
+          "Hopper below the farm did not pull the result");
+      helper.assertTrue(
+          hopperBlockEntity.countItem(de.markusbordihn.easymobfarm.item.Items.LOOT_ENHANCEMENT)
+              == 0,
+          "Hopper below the farm pulled an enhancement");
+    });
   }
 
   public static void testHopperAboveCannotInsert(GameTestHelper helper, Block block) {

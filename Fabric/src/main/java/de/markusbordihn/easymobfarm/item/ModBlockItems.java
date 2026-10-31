@@ -82,13 +82,12 @@ public class ModBlockItems {
     registerItem(MobFarmTemplateItem.ID_TIER_2, TIER_2_MOB_FARM_TEMPLATE);
     registerItem(MobFarmTemplateItem.ID_TIER_3, TIER_3_MOB_FARM_TEMPLATE);
     ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.BUILDING_BLOCKS)
-        .register(
-            entries -> {
-              entries.accept(TIER_0_MOB_FARM_TEMPLATE);
-              entries.accept(TIER_1_MOB_FARM_TEMPLATE);
-              entries.accept(TIER_2_MOB_FARM_TEMPLATE);
-              entries.accept(TIER_3_MOB_FARM_TEMPLATE);
-            });
+        .register(entries -> {
+          entries.accept(TIER_0_MOB_FARM_TEMPLATE);
+          entries.accept(TIER_1_MOB_FARM_TEMPLATE);
+          entries.accept(TIER_2_MOB_FARM_TEMPLATE);
+          entries.accept(TIER_3_MOB_FARM_TEMPLATE);
+        });
 
     log.debug("{} Mob Farms items ...", Constants.LOG_REGISTER_PREFIX);
     registerItem(MobFarmType.CREATIVE_MOB_FARM.getId(), CREATIVE_MOB_FARM);

@@ -72,14 +72,13 @@ public record SyncLootPreviewBatchMessage(Map<EntityType<?>, List<ItemStack>> pr
   @Override
   public void write(FriendlyByteBuf buffer) {
     buffer.writeVarInt(this.previews.size());
-    this.previews.forEach(
-        (entityType, items) -> {
-          buffer.writeResourceLocation(BuiltInRegistries.ENTITY_TYPE.getKey(entityType));
-          buffer.writeVarInt(items.size());
-          for (ItemStack item : items) {
-            buffer.writeItem(item);
-          }
-        });
+    this.previews.forEach((entityType, items) -> {
+      buffer.writeResourceLocation(BuiltInRegistries.ENTITY_TYPE.getKey(entityType));
+      buffer.writeVarInt(items.size());
+      for (ItemStack item : items) {
+        buffer.writeItem(item);
+      }
+    });
   }
 
   @Override

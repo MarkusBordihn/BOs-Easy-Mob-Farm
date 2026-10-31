@@ -39,64 +39,60 @@ public class ModelEventHandler {
 
   public static void registerModelEventHandler() {
 
-    ModelLoadingRegistry.INSTANCE.registerModelProvider(
-        (resourceManager, consumer) -> {
-          log.debug("Registering card models ...");
+    ModelLoadingRegistry.INSTANCE.registerModelProvider((resourceManager, consumer) -> {
+      log.debug("Registering card models ...");
 
-          // Pre-Loading default models for Mob Capture Card.
-          Set.of(
-                  UnbakedMobCaptureCardModel.MODEL,
-                  ModelManagerInterface.DEFAULT_MODEL,
-                  ModelManagerInterface.DEFAULT_UNCOMMON_MODEL,
-                  ModelManagerInterface.DEFAULT_RARE_MODEL,
-                  ModelManagerInterface.DEFAULT_EPIC_MODEL,
-                  ModelManagerInterface.DEFAULT_FISH_MODEL)
-              .forEach(
-                  resourceLocation -> {
-                    if (resourceLocation instanceof ModelResourceLocation modelResourceLocation) {
-                      resourceLocation =
-                          ModelManager.getRegistrationModelResourceLocation(modelResourceLocation);
-                    }
-                    log.debug("Registering default model {} ...", resourceLocation);
-                    consumer.accept(resourceLocation);
-                  });
+      // Pre-Loading default models for Mob Capture Card.
+      Set.of(
+              UnbakedMobCaptureCardModel.MODEL,
+              ModelManagerInterface.DEFAULT_MODEL,
+              ModelManagerInterface.DEFAULT_UNCOMMON_MODEL,
+              ModelManagerInterface.DEFAULT_RARE_MODEL,
+              ModelManagerInterface.DEFAULT_EPIC_MODEL,
+              ModelManagerInterface.DEFAULT_FISH_MODEL)
+          .forEach(resourceLocation -> {
+            if (resourceLocation instanceof ModelResourceLocation modelResourceLocation) {
+              resourceLocation =
+                  ModelManager.getRegistrationModelResourceLocation(modelResourceLocation);
+            }
+            log.debug("Registering default model {} ...", resourceLocation);
+            consumer.accept(resourceLocation);
+          });
 
-          // Pre-Loading additional models for Mob Capture Card from the resource folder.
-          int additionalModels = 0;
-          for (ResourceLocation location :
-              resourceManager
-                  .listResources(
-                      "models/item/easy_mob_farm/mob_capture_card",
-                      resourceLocation -> resourceLocation.getPath().endsWith(".json"))
-                  .keySet()) {
-            ModelResourceLocation modelResourceLocation =
-                ModelManagerInterface.getModelResourceLocation(location);
-            log.debug(
-                "Automatically registering model {} as {} ...", location, modelResourceLocation);
-            consumer.accept(modelResourceLocation);
-            additionalModels++;
-          }
-          log.debug("Registered {} additional card models from resource folder.", additionalModels);
-        });
+      // Pre-Loading additional models for Mob Capture Card from the resource folder.
+      int additionalModels = 0;
+      for (ResourceLocation location :
+          resourceManager
+              .listResources(
+                  "models/item/easy_mob_farm/mob_capture_card",
+                  resourceLocation -> resourceLocation.getPath().endsWith(".json"))
+              .keySet()) {
+        ModelResourceLocation modelResourceLocation =
+            ModelManagerInterface.getModelResourceLocation(location);
+        log.debug("Automatically registering model {} as {} ...", location, modelResourceLocation);
+        consumer.accept(modelResourceLocation);
+        additionalModels++;
+      }
+      log.debug("Registered {} additional card models from resource folder.", additionalModels);
+    });
 
-    ModelLoadingRegistry.INSTANCE.registerResourceProvider(
-        resourceManager ->
-            (location, context) -> {
-              if (location.getNamespace().equals(Constants.MOD_ID)
-                  && location.getPath().equals("item/mob_capture_card")) {
-                log.debug("Adjusting baked model for {} ...", location);
-                UnbakedModel unbakedModel = context.loadModel(UnbakedMobCaptureCardModel.MODEL);
-                if (unbakedModel == null) {
-                  log.error(
-                      "Unable to load unbaked model for resource location {} from {}",
-                      location,
-                      UnbakedMobCaptureCardModel.MODEL);
-                  return null;
-                }
-                log.debug("Baking unbaked model for {} ...", location);
-                return new UnbakedMobCaptureCardModel(unbakedModel);
-              }
+    ModelLoadingRegistry.INSTANCE.registerResourceProvider(resourceManager ->
+        (location, context) -> {
+          if (location.getNamespace().equals(Constants.MOD_ID)
+              && location.getPath().equals("item/mob_capture_card")) {
+            log.debug("Adjusting baked model for {} ...", location);
+            UnbakedModel unbakedModel = context.loadModel(UnbakedMobCaptureCardModel.MODEL);
+            if (unbakedModel == null) {
+              log.error(
+                  "Unable to load unbaked model for resource location {} from {}",
+                  location,
+                  UnbakedMobCaptureCardModel.MODEL);
               return null;
-            });
+            }
+            log.debug("Baking unbaked model for {} ...", location);
+            return new UnbakedMobCaptureCardModel(unbakedModel);
+          }
+          return null;
+        });
   }
 }

@@ -455,10 +455,9 @@ public class LootManager {
       } else if (entityType == EntityType.BEE
           && drop.is(Items.HONEYCOMB)
           && enhancements.stream()
-              .anyMatch(
-                  enhancement ->
-                      enhancement instanceof HoneyExtractorEnhancementItem
-                          && MobFarmConfig.isEnhancementEnabled(enhancement))) {
+              .anyMatch(enhancement ->
+                  enhancement instanceof HoneyExtractorEnhancementItem
+                      && MobFarmConfig.isEnhancementEnabled(enhancement))) {
         drops.add(new ItemStack(Items.HONEY_BOTTLE));
       } else {
         drops.add(drop.copy());
