@@ -9,7 +9,25 @@ base {
   archivesName = "${mod_id}-fabric-${minecraft_version}"
 }
 
+sourceSets {
+  gameTest {
+    java.srcDir project(":Common").file('src/gameTest/java')
+    resources.srcDir project(":Common").file('src/gameTest/resources')
+    compileClasspath += main.compileClasspath + main.output
+    runtimeClasspath += main.runtimeClasspath + main.output
+  }
+}
+
 loom {
+  mods {
+    "${mod_id}" {
+      sourceSet sourceSets.main
+    }
+    "${mod_id}_gametest" {
+      sourceSet sourceSets.gameTest
+    }
+  }
+
   // Access Widener
   accessWidenerPath = file("src/main/resources/${mod_namespace}.accesswidener")
 
@@ -39,6 +57,7 @@ loom {
       server()
       name "Game Test"
       vmArg "-Dfabric-api.gametest"
+      source sourceSets.gameTest
     }
   }
 }
@@ -87,7 +106,15 @@ processResources {
   }
 }
 
-tasks.withType(JavaCompile).configureEach {
+processGameTestResources {
+  inputs.property "version", project.version
+
+  filesMatching("fabric.mod.json") {
+    expand "version": project.version
+  }
+}
+
+tasks.withType(JavaCompile).matching { it.name != 'compileGameTestJava' }.configureEach {
   source(project(":Common").sourceSets.main.allSource)
 }
 

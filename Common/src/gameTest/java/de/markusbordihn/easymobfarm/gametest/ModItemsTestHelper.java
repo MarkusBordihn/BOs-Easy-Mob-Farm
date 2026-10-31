@@ -19,6 +19,7 @@
 
 package de.markusbordihn.easymobfarm.gametest;
 
+import de.markusbordihn.easymobfarm.Constants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -55,7 +56,7 @@ public class ModItemsTestHelper {
 
     String itemDefinition =
       "/assets/" + itemModel.getNamespace() + "/items/" + itemModel.getPath() + ".json";
-    if (ModItemsTestHelper.class.getResource(itemDefinition) == null) {
+    if (Constants.class.getResource(itemDefinition) == null) {
       helper.fail(Component.literal("Item " + item + " has no item definition " + itemDefinition));
     }
   }

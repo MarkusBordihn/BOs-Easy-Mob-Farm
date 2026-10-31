@@ -13,6 +13,9 @@ the [GitHub History][history] instead.
 - Fixed cards of mobs from uninstalled mods being lost on save or breaking multiplayer sync.
 - Fixed colored Frog Catalyst enhancements showing a missing texture.
 - Changed the minimum NeoForge version to 26.3.0.83, which fixes three network vulnerabilities.
+- Changed mob farm descriptions to make clear that every farm works with any captured mob.
+- Added the mobs with bonus drops to the mob farm tooltip.
+- Added bonus drops for nine more mobs, such as skeletons, spiders, creepers and wither skeletons.
 
 ### 11.0.0
 

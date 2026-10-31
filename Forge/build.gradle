@@ -13,6 +13,15 @@ base {
   archivesName = "${mod_id}-forge-${minecraft_version}"
 }
 
+sourceSets {
+  gameTest {
+    java.srcDir project(":Common").file('src/gameTest/java')
+    resources.srcDir project(":Common").file('src/gameTest/resources')
+    compileClasspath += main.compileClasspath + main.output
+    runtimeClasspath += main.runtimeClasspath + main.output
+  }
+}
+
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 
 // ForgeGradle 7 only inherits launch settings from the Forge metadata for runs named like one of
@@ -118,7 +127,7 @@ dependencies {
   implementation('net.sf.jopt-simple:jopt-simple:5.0.4') { version { strictly '5.0.4' } }
 }
 
-tasks.withType(JavaCompile).configureEach {
+tasks.withType(JavaCompile).matching { it.name != 'compileGameTestJava' }.configureEach {
   source(project(":Common").sourceSets.main.allSource)
 }
 
@@ -151,9 +160,6 @@ processResources {
 
 // Example for how to get properties into the manifest for reading by the runtime..
 jar {
-  // Test instances are only needed by development game-test runs.
-  exclude 'data/*/test_instance/**'
-
   manifest {
     attributes([
         "Specification-Title"     : "${project.mod_name}",
@@ -214,4 +220,12 @@ if (project.hasProperty('modrinth_project_id') && project.modrinth_project_id) {
     gameVersions = ["${project.minecraft_version}"]
     loaders = ["forge"]
   }
+}
+
+tasks.named('compileGameTestJava').configure {
+  dependsOn tasks.named('processGameTestResources')
+}
+
+tasks.matching { it.name == 'runGameTestServer' }.configureEach {
+  classpath(sourceSets.gameTest.output)
 }
