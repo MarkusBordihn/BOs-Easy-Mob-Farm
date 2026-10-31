@@ -4,6 +4,13 @@ plugins {
 
 archivesBaseName = "${mod_name}-common-${minecraft_version}"
 
+sourceSets {
+  gameTest {
+    compileClasspath += main.compileClasspath + main.output
+    runtimeClasspath += main.runtimeClasspath + main.output
+  }
+}
+
 minecraft {
   version(minecraft_version)
   runs {

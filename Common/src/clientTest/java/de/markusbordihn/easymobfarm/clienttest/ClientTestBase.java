@@ -45,24 +45,15 @@ abstract class ClientTestBase {
   static final int FARM_Y = PLATFORM_Y + 1;
   static final List<String> LAYOUT_CHECKS_IGNORING_ICON_BUTTON_TEXT_OVERFLOW =
       List.of("outside", "overlap", "rawTranslationKey");
-  // GameClientExtension.shared invokes configureLaunch during static initialization.
-  @RegisterExtension
-  static final GameClientExtension client =
-      GameClientExtension.shared(ClientTestBase::configureLaunch);
   private static final String SUITE_NAME = "Easy Mob Farm";
   private static final long NOON = 6000L;
   private static final TestArea ARRIVAL_PLATFORM =
       TestArea.between(-7, PLATFORM_Y, -2, 7, PLATFORM_Y, 8);
   private static final String MOD_CONFIGURATION_DIRECTORY = "easy_mob_farm";
-  private static final Map<String, List<String>> TEST_CONFIGURATION =
-      Map.of(
-          "mob_capture_card.cfg",
-          List.of(
-              "mobCaptureCardKillDropChance=1.0",
-              "mobCaptureCardFishingDropChance=1.0",
-              "mobCaptureCardFoilDropChance=0.0"),
-          "mob_farm.cfg",
-          List.of("farmProgressingTime=1000"));
+
+  @RegisterExtension
+  static final GameClientExtension client =
+      GameClientExtension.shared(ClientTestBase::configureLaunch);
 
   private static GameClientBuilder configureLaunch(GameClientBuilder builder) {
     writeTestConfiguration();
@@ -87,10 +78,19 @@ abstract class ClientTestBase {
       return;
     }
 
+    Map<String, List<String>> testConfiguration =
+        Map.of(
+            "mob_capture_card.cfg",
+            List.of(
+                "mobCaptureCardKillDropChance=1.0",
+                "mobCaptureCardFishingDropChance=1.0",
+                "mobCaptureCardFoilDropChance=0.0"),
+            "mob_farm.cfg",
+            List.of("farmProgressingTime=1000"));
     Path configurationDirectory = Path.of(gameDirectory, "config", MOD_CONFIGURATION_DIRECTORY);
     try {
       Files.createDirectories(configurationDirectory);
-      for (Map.Entry<String, List<String>> configurationFile : TEST_CONFIGURATION.entrySet()) {
+      for (Map.Entry<String, List<String>> configurationFile : testConfiguration.entrySet()) {
         Files.write(
             configurationDirectory.resolve(configurationFile.getKey()),
             configurationFile.getValue(),

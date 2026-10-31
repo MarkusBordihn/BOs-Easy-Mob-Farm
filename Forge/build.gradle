@@ -10,6 +10,15 @@ apply plugin: 'net.minecraftforge.gradle'
 
 archivesBaseName = "${mod_id}-forge-${minecraft_version}"
 
+sourceSets {
+  gameTest {
+    java.srcDir project(":Common").file('src/gameTest/java')
+    resources.srcDir project(":Common").file('src/gameTest/resources')
+    compileClasspath += main.compileClasspath + main.output
+    runtimeClasspath += main.runtimeClasspath + main.output
+  }
+}
+
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
   mappings channel: 'official', version: "${project.minecraft_version}"
@@ -79,6 +88,9 @@ minecraft {
         "${project.mod_id}" {
           source sourceSets.main
         }
+        "${project.mod_id}_gametest" {
+          source sourceSets.gameTest
+        }
       }
 
       // Mixin Support
@@ -133,7 +145,7 @@ dependencies {
   implementation('net.sf.jopt-simple:jopt-simple:5.0.4') { version { strictly '5.0.4' } }
 }
 
-tasks.withType(JavaCompile).configureEach {
+tasks.withType(JavaCompile).matching { it.name != 'compileGameTestJava' }.configureEach {
   source(project(":Common").sourceSets.main.allSource)
 }
 
