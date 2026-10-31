@@ -9,6 +9,15 @@ base {
   archivesName = "${mod_id}-neoforge-${minecraft_version}"
 }
 
+sourceSets {
+  gameTest {
+    java.srcDir project(":Common").file('src/gameTest/java')
+    resources.srcDir project(":Common").file('src/gameTest/resources')
+    compileClasspath += main.compileClasspath + main.output
+    runtimeClasspath += main.runtimeClasspath + main.output
+  }
+}
+
 neoForge {
   version = project.neoforge_version
 
@@ -43,6 +52,7 @@ neoForge {
 
     gameTestServer {
       type = 'gameTestServer'
+      sourceSet = sourceSets.gameTest
       systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
     }
   }
@@ -51,7 +61,14 @@ neoForge {
     "${project.mod_id}" {
       sourceSet sourceSets.main
     }
+    "${project.mod_id}_gametest" {
+      sourceSet sourceSets.gameTest
+    }
   }
+}
+
+neoForge.runs.matching { it.name != 'gameTestServer' }.configureEach {
+  loadedMods = [neoForge.mods."${project.mod_id}"]
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
